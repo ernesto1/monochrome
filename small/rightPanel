@@ -28,7 +28,7 @@ alignment top_right
 gap_x 4
 gap_y 151
 
-minimum_size 195 600    # horizontal vertical
+minimum_size 195 420    # horizontal vertical
 
 # .:: window settings ::.
 own_window yes
