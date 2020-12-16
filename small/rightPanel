@@ -1,0 +1,88 @@
+# update interval in seconds
+update_interval 2
+update_interval_on_battery 3
+xinerama_head 1            # for multi monitor setup: 1 (main) OR 2 (secondary)
+ 
+# this is the number of times conky will update before quitting
+# set to zero to run forever
+total_run_times 0
+
+# Use double buffering (reduces flicker, may not work for everyone)
+double_buffer yes
+
+draw_shades no
+draw_outline no
+draw_graph_borders no      # borders around the graph, ex. cpu graph, network down speed grah
+                           # does not include bars, ie. wifi strength bar, cpu bar
+# .:: window border ::.
+# you can add a border to the window by setting the border_width value to any number greater than 0 and by setting the draw_borders option to true.
+draw_borders no
+border_width 0
+stippled_borders 0
+border_inner_margin 0
+border_outer_margin 0
+
+# .:: box alignment on screen ::.
+alignment top_right
+# gap between borders of screen and text, same thing as passing -x at command line
+gap_x 4
+gap_y 151
+
+minimum_size 195 600    # horizontal vertical
+
+# .:: window settings ::.
+own_window yes
+own_window_type desktop       # values: desktop (background), panel (bar)
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+# :: transparency configuration ::
+own_window_transparent yes
+own_window_argb_visual yes  # turn on transparency
+own_window_argb_value 255   # range from 0   transparent
+                            #       to   255 opaque
+
+imlib_cache_flush_interval 300
+# use the parameter -n on ${image ..} to never cache and always update the image upon a change
+
+default_color black
+color1 e9e9e6       # grey | e5e5e5 cccccc b2b2b2 | range cccccc 999999
+color2 800020       # burgundy
+
+# note: the moment you start using $voffset for the graphs, you end up with trailing spaces
+#       hence the need to add a trailing negative $voffset on the last line to put all that space
+#       within the conky box.  Otherwise the height assigned in minimum_size will not be honored.
+
+TEXT
+# :::::::::::::::::::: cpu processes
+${image ~/scripts/conky/monochrome/small/cpuProcesses.png -n -p 0,0}\
+${voffset 3} process${alignr}cpu   pid 
+${voffset 11} ${top name 1}${alignr}${top cpu 1}% ${top pid 1} 
+${voffset 3} ${top name 2}${alignr}${top cpu 2}% ${top pid 2} 
+${voffset 3} ${top name 3}${alignr}${top cpu 3}% ${top pid 3} 
+${voffset 3} ${top name 4}${alignr}${top cpu 4}% ${top pid 4} 
+${voffset 3} ${top name 5}${alignr}${top cpu 5}% ${top pid 5} 
+${voffset 3} ${top name 6}${alignr}${top cpu 6}% ${top pid 6} 
+# :::::::::::::::::::: memory processes
+${image ~/scripts/conky/monochrome/small/memoryProcesses.png -n -p 0,135}\
+${voffset 18} process${alignr}mem   pid 
+ ${voffset 10}${color}${if_match ${top_mem mem 1} >= 49}${color2}${endif}${top_mem name 1}${alignr}${top_mem mem_res 1} ${top_mem pid 1} 
+ ${voffset 3}${color}${if_match ${top_mem mem 2} >= 49}${color2}${endif}${top_mem name 2}${alignr}${top_mem mem_res 2} ${top_mem pid 2} 
+ ${voffset 3}${color}${if_match ${top_mem mem 3} >= 49}${color2}${endif}${top_mem name 3}${alignr}${top_mem mem_res 3} ${top_mem pid 3} 
+ ${voffset 3}${color}${if_match ${top_mem mem 4} >= 49}${color2}${endif}${top_mem name 4}${alignr}${top_mem mem_res 4} ${top_mem pid 4} 
+ ${voffset 3}${color}${if_match ${top_mem mem 5} >= 49}${color2}${endif}${top_mem name 5}${alignr}${top_mem mem_res 5} ${top_mem pid 5} 
+ ${voffset 3}${color}${if_match ${top_mem mem 6} >= 49}${color2}${endif}${top_mem name 6}${alignr}${top_mem mem_res 6} ${top_mem pid 6} 
+# :::::::::::::::::::: disk space
+${image ~/scripts/conky/monochrome/small/diskSpace.png -n -p 0,270}
+${voffset 6} fedora ${goto 66}[${fs_type /}]
+${voffset 5} ${fs_used /} ${color1}/ ${color}${fs_size /}
+${color1}${if_match ${fs_used_perc /} > 90}${color2}${endif} ${fs_bar 4, 135 /}
+${voffset 8} ${color}/home ${goto 66}[${fs_type /home}]
+${voffset 2} ${fs_used /home} ${color1}/ ${color}${fs_size /home}
+${color1}${if_match ${fs_used_perc /home} > 90}${color2}${endif} ${fs_bar 4, 135 /home}${color}
+# :::::::::::::::::::: usb
+${image ~/scripts/conky/monochrome/small/usbStick.png -n -p 149, 370}\
+${if_mounted /run/media/ernesto/sandisk}\
+${voffset 6} sandisk usb stick
+${voffset 5} ${fs_used /run/media/ernesto/sandisk} ${color1}/ ${color}${fs_size /run/media/ernesto/sandisk}
+${color1}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color2}${endif} ${fs_bar 4, 135 /run/media/ernesto/sandisk}\
+${image ~/scripts/conky/monochrome/small/usbBar.png -n -p 0,370}\
+${endif}
