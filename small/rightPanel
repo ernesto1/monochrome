@@ -73,8 +73,8 @@ ${voffset 18} process${alignr}mem   pid
 # :::::::::::::::::::: usb
 ${if_mounted /run/media/ernesto/sandisk}\
 ${image ~/scripts/conky/monochrome/small/usbStick.png -n -p 0, 299}\
-${voffset 83}${color1}${if_match ${fs_used_perc /} > 90}${color2}${endif}${fs_bar 4, 45 /run/media/ernesto/sandisk}
-${goto 54}${voffset -50}${color1}fs type${goto 110}${color}${fs_type /}
+${voffset 84}${color1}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color2}${endif}${fs_bar 4, 45 /run/media/ernesto/sandisk}
+${goto 54}${voffset -49}${color1}fs type${goto 110}${color}${fs_type /run/media/ernesto/sandisk}
 ${goto 54}${voffset 3}${color1}size${goto 110}${color}${fs_size /run/media/ernesto/sandisk}
 ${goto 54}${voffset 3}${color1}free${goto 110}${color}${fs_free /run/media/ernesto/sandisk}
 ${endif}
