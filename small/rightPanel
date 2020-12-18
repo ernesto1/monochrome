@@ -23,10 +23,10 @@ border_inner_margin 0
 border_outer_margin 0
 
 # .:: box alignment on screen ::.
-alignment top_right
+alignment top_left
 # gap between borders of screen and text, same thing as passing -x at command line
-gap_x 4
-gap_y 151
+gap_x 270
+gap_y 82
 
 minimum_size 195 420    # horizontal vertical
 
@@ -70,19 +70,11 @@ ${voffset 18} process${alignr}mem   pid
  ${voffset 3}${color}${if_match ${top_mem mem 4} >= 49}${color2}${endif}${top_mem name 4}${alignr}${top_mem mem_res 4} ${top_mem pid 4} 
  ${voffset 3}${color}${if_match ${top_mem mem 5} >= 49}${color2}${endif}${top_mem name 5}${alignr}${top_mem mem_res 5} ${top_mem pid 5} 
  ${voffset 3}${color}${if_match ${top_mem mem 6} >= 49}${color2}${endif}${top_mem name 6}${alignr}${top_mem mem_res 6} ${top_mem pid 6} 
-# :::::::::::::::::::: disk space
-${image ~/scripts/conky/monochrome/small/diskSpace.png -n -p 0,270}
-${voffset 6} fedora ${goto 66}[${fs_type /}]
-${voffset 5} ${fs_used /} ${color1}/ ${color}${fs_size /}
-${color1}${if_match ${fs_used_perc /} > 90}${color2}${endif} ${fs_bar 4, 135 /}
-${voffset 8} ${color}/home ${goto 66}[${fs_type /home}]
-${voffset 2} ${fs_used /home} ${color1}/ ${color}${fs_size /home}
-${color1}${if_match ${fs_used_perc /home} > 90}${color2}${endif} ${fs_bar 4, 135 /home}${color}
 # :::::::::::::::::::: usb
-${image ~/scripts/conky/monochrome/small/usbStick.png -n -p 149, 370}\
 ${if_mounted /run/media/ernesto/sandisk}\
-${voffset 6} sandisk usb stick
-${voffset 5} ${fs_used /run/media/ernesto/sandisk} ${color1}/ ${color}${fs_size /run/media/ernesto/sandisk}
-${color1}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color2}${endif} ${fs_bar 4, 135 /run/media/ernesto/sandisk}\
-${image ~/scripts/conky/monochrome/small/usbBar.png -n -p 0,370}\
+${image ~/scripts/conky/monochrome/small/usbStick.png -n -p 0, 299}\
+${voffset 83}${color1}${if_match ${fs_used_perc /} > 90}${color2}${endif}${fs_bar 4, 45 /run/media/ernesto/sandisk}
+${goto 54}${voffset -50}${color1}fs type${goto 110}${color}${fs_type /}
+${goto 54}${voffset 3}${color1}size${goto 110}${color}${fs_size /run/media/ernesto/sandisk}
+${goto 54}${voffset 3}${color1}free${goto 110}${color}${fs_free /run/media/ernesto/sandisk}
 ${endif}
