@@ -28,9 +28,9 @@ More recent versions may have regressions that cause the theme to behave erratic
 
 # Features
 ## Network modes
-![network](small/images/network modes.png)
+![network](small/images/network-modes.png)
 ## Power modes
-![power](small/images/power modes.png)
+![power](small/images/power-modes.png)
 
 # Future enhancements
 - [] In the absence of wifi, the upload/download meters should work when connected to a LAN
