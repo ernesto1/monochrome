@@ -97,8 +97,8 @@ ${goto 72}${voffset 3}${color1}channel${goto 129}${color}${wireless_channel wlp4
 ${goto 72}${voffset 3}${color1}strength${goto 129}${color}${wireless_link_qual_perc wlp4s0}%
 ${image ~/scripts/conky/monochrome/small/wifi.png -n -p 9,482}${voffset 11}\
 ${else}\
-${image ~/scripts/conky/monochrome/small/wifi-off.png -n -p 2,482}
-${voffset 76}
+${image ~/scripts/conky/monochrome/small/wifi-off.png -n -p 9,482}
+${voffset 52}
 ${endif}\
 # :::::::::::::::::::: upload/download speeds
 ${if_gw}\
@@ -114,7 +114,7 @@ ${voffset 35}\
 ${else}\
 ${image ~/scripts/conky/monochrome/small/network-off.png -n -p 2,543 s 370x104}\
 ${image ~/scripts/conky/monochrome/small/network-off.png -n -p 2,615 s 370x104}\
-${voffset 172}
+${voffset 135}
 ${endif}
 # :::::::::::::::::::: power
 ${if_match "${acpiacadapter}"=="on-line"}\
