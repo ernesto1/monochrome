@@ -15,7 +15,7 @@ conky -c ${directory}/rightPanel &
 # --------------------------------
 # The dnf lookup to check for new available packages is delayed by 3 minutes upon boot.
 # On slow machines, running dnf at startup will slow up the boot up time.
-echo "$(date +'%D %r') - starting dnf package lookup" > /tmp/conkyDnf.log
+echo "$(date +'%D %r') - performing dnf package lookup after 3 min delay" > /tmp/conkyDnf.log
 sleep 3m
 
 while [ true ]; do
@@ -35,11 +35,10 @@ while [ true ]; do
         fi
         
         cat /tmp/conkyDnf >> /tmp/conkyDnf.log
-        echo "$(date +'%D %r') - downloaded package list, sleeping for 1 hour" >> /tmp/conkyDnf.log
-        sleep 1h
+        echo "$(date +'%D %r') - downloaded new package list" >> /tmp/conkyDnf.log
     else
-        echo "$(date +'%D %r') - load average too high, trying again in 10 minutes" >> /tmp/conkyDnf.log
-        sleep 10m
+        echo "$(date +'%D %r') - load average too high, trying again later" >> /tmp/conkyDnf.log
     fi
     
+    sleep 10m    
 done
