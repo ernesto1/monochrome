@@ -19,11 +19,11 @@ echo "$(date +'%D %r') - performing dnf package lookup after 3 min delay" > /tmp
 sleep 3m
 
 while [ true ]; do
-    # the dnf lookup is only done if the system is relatively iddle,
-    # ie. the 5 min load average is below 1 core (i have a dual core machine)
     loadAvg=$(uptime | cut -d , -f 4)       # get the 5 min load average
     echo "$(date +'%D %r') - 5 min load avg = $loadAvg" >> /tmp/conkyDnf.log
     
+    # the dnf lookup is only done if the system is relatively iddle,
+    # ie. the 5 min load average is below 1 core (i have a dual core machine)
     if [[ $loadAvg < 1 ]]; then
         # not counting the conky package due to a bug in v.1.11.6-1.fc32
         newPackages=$(dnf list updates | grep -v conky | grep -cE '(updates|code)')
