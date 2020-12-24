@@ -57,7 +57,7 @@ TEXT
 ${image ~/scripts/conky/monochrome/small/fedora.png -n -p 9,3}\
 ${goto 72}${voffset 3}${color1}kernel${goto 129}${color}${kernel}
 ${goto 72}${voffset 3}${color1}uptime${goto 129}${color}${uptime}
-${goto 72}${voffset 3}${color1}dnf${goto 129}${color}${if_existing /tmp/conkyDnf new}${color3}${endif}${tail /tmp/conkyDnf 1 5}
+${goto 72}${voffset 3}${color1}dnf${goto 129}${color}${if_existing /tmp/conkyDnf new}${color3}${endif}${tail /tmp/conkyDnf 1 2}
 # :::::::::::::::::::: cpu
 ${image ~/scripts/conky/monochrome/small/cpu.png -n -p 0,68}\
 ${voffset 24}${offset 9}${cpugraph cpu0 45,45 e9e9e6 f6f6d9 -t}
