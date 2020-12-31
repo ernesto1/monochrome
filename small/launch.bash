@@ -12,5 +12,7 @@ directory=~/scripts/conky/monochrome/small
 conky -c ${directory}/leftPanel &
 conky -c ${directory}/rightPanel &
 
-# launch dnf lookup
+# launch dnf package lookup script
+# on slow machines, running dnf at startup will slow up the boot up time.  Hence delaying the lookup by 3 min.
+sleep 3m
 ~/scripts/conky/monochrome/dnfPackageLookup.bash &
