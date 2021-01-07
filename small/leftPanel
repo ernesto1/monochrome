@@ -90,7 +90,7 @@ ${voffset 44}${offset 9}${color1}${if_match ${fs_used_perc /home} > 90}${color2}
 ${goto 72}${voffset -33}${color1}fs type${goto 129}${color}${fs_type /home}
 ${goto 72}${voffset 3}${color1}free${goto 129}${color}${fs_free /home} ${color1}/ ${color}${fs_size /home}
 # :::::::::::::::::::: wifi
-${if_existing /proc/net/route wlp4s0}\
+${if_existing /sys/class/net/wlp4s0/operstate up}\
 ${voffset 56}${offset 9}${color1}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color2}${endif}${wireless_link_bar 3,45 wlp4s0}${voffset -19}\
 ${goto 72}${voffset -15}${color1}network${goto 129}${color}${wireless_essid wlp4s0}
 ${goto 72}${voffset 3}${color1}channel${goto 129}${color}${wireless_channel wlp4s0}
@@ -102,15 +102,26 @@ ${voffset 52}
 ${endif}\
 # :::::::::::::::::::: upload/download speeds
 ${if_gw}\
-${voffset 6}${offset 4}${upspeedgraph wlp4s0 41,55 cc0000 660000 4000 -t}
-${goto 72}${voffset -36}${color1}speed${goto 129}${color}${upspeed wlp4s0}
-${goto 72}${voffset 3}${color1}total${goto 129}${color}${totalup wlp4s0}\
-${image ~/scripts/conky/monochrome/small/network.png -n -p 2,543}
-${voffset 26}${offset 4}${downspeedgraph wlp4s0 40,55 e9e9e6 f6f6d9 8000 -t}
-${goto 72}${voffset -35}${color1}speed${goto 129}${color}${downspeed wlp4s0}
-${goto 72}${voffset 3}${color1}total${goto 129}${color}${totaldown wlp4s0}\
+${image ~/scripts/conky/monochrome/small/network.png -n -p 2,543}\
 ${image ~/scripts/conky/monochrome/small/network.png -n -p 2,615}\
-${voffset 35}\
+${if_existing /sys/class/net/wlp4s0/operstate up}\
+# connected to wifi
+${voffset 8}${offset 4}${upspeedgraph wlp4s0 39,55 cc0000 660000 5000 -t}
+${goto 72}${voffset -36}${color1}speed${goto 129}${color}${upspeed wlp4s0}
+${goto 72}${voffset 3}${color1}total${goto 129}${color}${totalup wlp4s0}
+${voffset 27}${offset 4}${downspeedgraph wlp4s0 39,55 e9e9e6 f6f6d9 19000 -t}
+${goto 72}${voffset -35}${color1}speed${goto 129}${color}${downspeed wlp4s0}
+${goto 72}${voffset 3}${color1}total${goto 129}${color}${totaldown wlp4s0}
+${else}\
+# connected to ethernet
+${voffset 8}${offset 4}${upspeedgraph enp6s0 39,55 cc0000 660000 27000 -t}
+${goto 72}${voffset -36}${color1}speed${goto 129}${color}${upspeed enp6s0}
+${goto 72}${voffset 3}${color1}total${goto 129}${color}${totalup enp6s0}
+${voffset 27}${offset 4}${downspeedgraph enp6s0 39,55 e9e9e6 f6f6d9 27000 -t}
+${goto 72}${voffset -35}${color1}speed${goto 129}${color}${downspeed enp6s0}
+${goto 72}${voffset 3}${color1}total${goto 129}${color}${totaldown enp6s0}
+${endif}\
+${voffset 9}
 ${else}\
 ${image ~/scripts/conky/monochrome/small/network-off.png -n -p 2,543 s 370x104}\
 ${image ~/scripts/conky/monochrome/small/network-off.png -n -p 2,615 s 370x104}\

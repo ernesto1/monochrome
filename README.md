@@ -1,17 +1,17 @@
 # Monochrome Conky
 A graphical conky interface to monitor your **fedora** system.  Available in two flavors:
 
-## Laptop mode
+### Laptop mode
 Built for systems with small screen real state.  The desktop below is 1366 x 768.
 ![laptop](small/images/small-v04.png)
 
-## Desktop mode
+### Desktop mode
 *Coming soon*
 
-# Features
-## Network modes
+## Features
+### Network modes
 ![network](small/images/network-modes.png)
-## Power modes
+### Power modes
 ![power](small/images/power-modes.png)
 
 # How to install
