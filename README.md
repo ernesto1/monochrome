@@ -2,11 +2,12 @@
 A graphical conky interface to monitor your **fedora** system.  Available in two flavors:
 
 ### Laptop mode
-Built for systems with small screen real state.  The desktop below is 1366 x 768.
+Built for systems with small screen real state.  The desktop below is 1366 x 768 pixels.
 ![laptop](images/small-v04.png)
 
 ### Desktop mode
-*Coming soon*
+Built for systems with ample screen real state available.  The desktop below is 1920 x 1200 pixels.
+![laptop](https://i.imgur.com/Wi8KqTy.png)
 
 ## Features
 ### DNF package lookup
