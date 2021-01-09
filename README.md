@@ -3,16 +3,20 @@ A graphical conky interface to monitor your **fedora** system.  Available in two
 
 ### Laptop mode
 Built for systems with small screen real state.  The desktop below is 1366 x 768.
-![laptop](small/images/small-v04.png)
+![laptop](images/small-v04.png)
 
 ### Desktop mode
 *Coming soon*
 
 ## Features
+### DNF package lookup
+DNF is periodically queried for new packages **if the system is iddle**.  
+Slow machines will appreciate this, since a dnf package lookup may bring the cpu to a crawl.
 ### Network modes
-![network](small/images/network-modes.png)
+Network devices reflect the current way you are connected to the internet
+![network](images/network-modes.png)
 ### Power modes
-![power](small/images/power-modes.png)
+![power](images/power-modes.png)
 
 # How to install
 ## Dependencies
@@ -31,7 +35,3 @@ More recent versions may have regressions that cause the theme to behave erratic
 1. Unzip the project's zip file in the folder `~/scripts/conky`
 1. Rename the root folder `monochrome-master` to `monochrome`
 1. Run the launch script `~/scripts/conky/monochrome/small/launch.bash`
-
-# Future enhancements
-- [ ] In the absence of wifi, the upload/download meters should work when connected to a LAN
-- [ ] Implement desktop mode
