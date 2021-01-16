@@ -1,0 +1,4 @@
+*.ods
+legacy/
+raws/
+*.ods*
