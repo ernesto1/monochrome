@@ -1,0 +1,61 @@
+# update interval in seconds
+update_interval 3
+ 
+# this is the number of times conky will update before quitting
+# set to zero to run forever
+total_run_times 0
+
+# use double buffering (reduces flicker, may not work for everyone)
+double_buffer yes
+
+draw_shades no
+draw_outline no
+draw_graph_borders no      # borders around the graph, ex. cpu graph, network down speed grah
+                           # does not include bars, ie. wifi strength bar, cpu bar
+# .:: window border ::.
+# you can add a border to the window by setting the border_width value to any number greater than 0 and by setting the draw_borders option to true
+draw_borders no
+border_width 0
+stippled_borders 0
+border_inner_margin 0
+border_outer_margin 0
+
+#  .:: window size ::.
+# required if you have image backgrounds
+minimum_size 150 140
+
+# .:: box alignment on screen ::.
+alignment bottom_left
+gap_x 1272
+gap_y 13
+
+# .:: window settings ::.
+own_window yes
+own_window_type desktop
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+
+# :: transparency configuration ::
+own_window_transparent yes
+own_window_argb_visual yes
+# own_window_argb_value range: 0   transparent
+#						       255 opaque
+own_window_argb_value 255
+
+default_color black
+color1 white
+color2 800020       # burgundy
+
+# note: the moment you start using $voffset for the graphs, you end up with trailing spaces
+#       hence the need to add a trailing negative $voffset on the last line to put all that space
+#       within the conky box.  otherwise the height assigned in minimum_size will not be honored.
+#
+# use the parameter -n on ${image ..} to never cache and always update the image upon a change
+
+TEXT
+${offset 50}${voffset 4}betty${alignr}sdc
+${offset 50}${voffset 6}${fs_used /media/betty}${color1}/${color}${fs_size /media/betty}
+${offset 50}${voffset 1}${color1}${if_match ${fs_used_perc /media/betty} > 90}${color2}${endif}${fs_bar 3, 99 /media/betty}
+${voffset -3}${offset 2}${diskiograph_read /dev/sdd 42,68 f9f9f9 ffffff 245000 -t -l}${goto 79}${diskiograph_write /dev/sdd 42,68 e6003a 800020 245000 -t -l}
+${voffset 2}${color1}read${alignr}write
+${voffset 5}${color}${diskio_read /dev/sdd}${alignr}${diskio_write /dev/sdd}\
+${image ~/scripts/conky/monochrome/large/hardDisk.png -n -p 0,0}

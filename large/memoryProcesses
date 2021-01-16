@@ -1,0 +1,50 @@
+update_interval 2       # update interval in seconds
+total_run_times 0       # this is the number of times conky will update before quitting, set to zero to run forever
+double_buffer yes       # use double buffering (reduces flicker, may not work for everyone)
+
+# window alignment
+alignment bottom_left
+gap_x 279                   # gap between border of the screen and the conky window, same as passing -x at command line
+gap_y 215
+
+# window settings
+minimum_size 195 125        # horizontal vertical
+own_window yes
+own_window_type desktop     # values: desktop (background), panel (bar)
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+
+# transparency configuration
+own_window_transparent yes
+own_window_argb_visual yes  # turn on transparency
+own_window_argb_value 255   # range from 0 (transparent) to 255 (opaque)
+
+# window borders
+draw_borders no         # draw borders around the conky window
+border_width 0          # width of border window in pixels
+stippled_borders 0      # border stippling (dashing) in pixels
+border_inner_margin 0   # margin between the border and text in pixels
+border_outer_margin 0   # margin between the border and the edge of the window in pixels
+
+# graph settings
+draw_graph_borders no   # borders around the graph, ex. cpu graph, network down speed grah
+                        # does not include bars, ie. wifi strength bar, cpu bar
+
+imlib_cache_flush_interval 300
+# use the parameter -n on ${image ..} to never cache and always update the image upon a change
+
+# font settings
+draw_shades no          # black shadow on text (not good if text is black)
+draw_outline no         # black outline around text (not good if text is black)
+default_color black
+color1 e9e9e6           # grey | e5e5e5 cccccc b2b2b2 | range cccccc 999999
+color2 800020           # burgundy
+
+TEXT
+${voffset 4} process${alignr}mem   pid 
+ ${voffset 10}${color}${if_match ${top_mem mem 1} >= 49}${color2}${endif}${top_mem name 1}${alignr}${top_mem mem_res 1} ${top_mem pid 1} 
+ ${voffset 3}${color}${if_match ${top_mem mem 2} >= 49}${color2}${endif}${top_mem name 2}${alignr}${top_mem mem_res 2} ${top_mem pid 2} 
+ ${voffset 3}${color}${if_match ${top_mem mem 3} >= 49}${color2}${endif}${top_mem name 3}${alignr}${top_mem mem_res 3} ${top_mem pid 3} 
+ ${voffset 3}${color}${if_match ${top_mem mem 4} >= 49}${color2}${endif}${top_mem name 4}${alignr}${top_mem mem_res 4} ${top_mem pid 4} 
+ ${voffset 3}${color}${if_match ${top_mem mem 5} >= 49}${color2}${endif}${top_mem name 5}${alignr}${top_mem mem_res 5} ${top_mem pid 5} 
+ ${voffset 3}${color}${if_match ${top_mem mem 6} >= 49}${color2}${endif}${top_mem name 6}${alignr}${top_mem mem_res 6} ${top_mem pid 6} \
+${image ~/scripts/conky/monochrome/large/memoryProcesses.png -n -p 0,0}
