@@ -7,7 +7,7 @@ Built for systems with small screen real state.  The desktop below is 1366 x 768
 
 ### Desktop mode
 Built for systems with ample screen real state available.  The desktop below is 1920 x 1200 pixels.
-![laptop](images/large-v05.png)
+![laptop](images/large-v04.png)
 
 ## Features
 ### DNF package lookup
