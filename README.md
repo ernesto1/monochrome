@@ -18,7 +18,11 @@ Network devices reflect the current way you are connected to the internet
 ![network](images/network-modes.png)
 ### Power modes
 ![power](images/power-modes.png)
+### USB storage
+USB devices are available for you to mix and match to the hardware you have available.
 
+These elements are considered optional and will only appear when the device is connected.  See the wiki entry for how to configure these for your system.
+![usb](images/usbStorage.png)
 # How to install
 ## Dependencies
 You only require to have `conky` installed on your system.
