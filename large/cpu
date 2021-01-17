@@ -27,7 +27,7 @@ maximum_width 140
 
 # .:: box alignment on screen ::.
 alignment bottom_left
-gap_x 186
+gap_x 176
 gap_y 45
 
 # .:: window settings ::.

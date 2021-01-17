@@ -26,8 +26,8 @@ minimum_size 150 70     # horizontal vertical
 
 # .:: box alignment on screen ::.
 alignment bottom_left
-gap_x 28    #33
-gap_y 41    #49
+gap_x 18    #33
+gap_y 75    #49
 
 # .:: window settings ::.
 own_window yes
@@ -53,9 +53,7 @@ color2 800020       # burgundy
 # use the parameter -n on ${image ..} to never cache and always update the image upon a change
 
 TEXT
+${image ~/scripts/conky/monochrome/large/cpuGraph.png -n -p 0,0}\
 ${offset 2}${voffset -2}${cpugraph cpu0 64,115 ffffff f2f2f2 -t -l}
-${voffset 4}${color1}cpu${goto 44}${color}${cpu cpu0}%
-${voffset 4}${color1}load${goto 44}${color}${loadavg}
-${voffset 4}${color1}uptime${goto 44}${color}${uptime}
-${voffset 4}${color1}dnf${goto 44}${color}${texeci 3600 dnf list updates | grep updates | wc -l} new update(s)\
-${image ~/scripts/conky/monochrome/large/cpuGraph.png -n -p 0,0}
+${voffset 4}${color1}cpu${goto 50}${color}${cpu cpu0}%
+${voffset 4}${color1}load${goto 50}${color}${loadavg}

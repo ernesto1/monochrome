@@ -4,7 +4,7 @@ double_buffer yes       # use double buffering (reduces flicker, may not work fo
 
 # window alignment
 alignment top_left      # top|middle|bottom + left or right
-gap_x 59
+gap_x 49
 gap_y 80
 
 # window settings

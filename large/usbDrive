@@ -4,8 +4,8 @@ double_buffer yes       # use double buffering (reduces flicker, may not work fo
 
 # window alignment
 alignment bottom_left
-gap_x 1692                  # gap between border of the screen and the conky window, same as passing -x at command line
-gap_y 155
+gap_x 1052                  # gap between border of the screen and the conky window, same as passing -x at command line
+gap_y 230
 
 # window settings
 minimum_size 195 46         # horizontal vertical
@@ -41,10 +41,10 @@ color2 800020           # burgundy
 color3 e9e9e6 		    # cream
 
 TEXT
-${image ~/scripts/conky/monochrome/large/usbDrive.png -n -p 0,0}\
 ${if_mounted /run/media/ernesto/tamaki}\
-${offset 55}${voffset 2}tamaki
-${offset 55}${voffset 5}${fs_used /run/media/ernesto/tamaki} ${color1}/ ${color}${fs_size /run/media/ernesto/tamaki}
-${offset 54}${color1}${if_match ${fs_used_perc /run/media/ernesto/tamaki} > 90}${color2}${endif}${fs_bar 3, 101 /run/media/ernesto/tamaki}\
-${image ~/scripts/conky/monochrome/large/usbBar.png -n -p 48,0}\
-${endif}
+${image ~/scripts/conky/monochrome/large/usbDrive.png -n -p 0,0}\
+${voffset 39}${color1}${if_match ${fs_used_perc /run/media/ernesto/tamaki} > 90}${color2}${endif}${fs_bar 4, 45 /run/media/ernesto/tamaki}
+${offset 55}${voffset -49}${color1}fs type${goto 110}${color}${fs_type /run/media/ernesto/tamaki}
+${offset 55}${voffset 3}${color1}size${goto 110}${color}${fs_size /run/media/ernesto/tamaki}
+${offset 55}${voffset 3}${color1}free${goto 110}${color}${fs_free /run/media/ernesto/tamaki}\
+${endif}\

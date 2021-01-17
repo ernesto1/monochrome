@@ -1,6 +1,7 @@
 #!/bin/bash
 # script to periodically check for new dnf package updates when the system is deemed iddle
 
+cores=$1    # max number of cores in use in the in 5 min load average for the system to be considered iddle
 echo "$(date +'%D %r') - starting dnf repo package lookup" | tee /tmp/conkyDnf.log
 
 while [ true ]; do
@@ -9,7 +10,7 @@ while [ true ]; do
     
     # the dnf lookup is only done if the system is relatively iddle,
     # ie. the 5 min load average is below 1 core (i have a dual core machine)
-    if [[ $loadAvg < 1 ]]; then
+    if [[ $loadAvg < $cores ]]; then
         # not counting the conky package due to a bug in v.1.11.6-1.fc32
         newPackages=$(dnf list updates | grep -v conky | grep -cE '(updates|code)')
         echo -n "$(date +'%D %r') - " | tee -a /tmp/conkyDnf.log 
