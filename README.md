@@ -21,7 +21,8 @@ Network devices reflect the current way you are connected to the internet
 ### USB storage
 USB devices are available for you to mix and match to the hardware you have available.
 
-These elements are considered optional and will only appear when the device is connected.  See the wiki entry for how to configure these for your system.
+These elements are considered **optional** and will only **appear** when the device is connected.
+See the wiki entry for how to configure these for your system.
 
 ![usb](images/usbStorage.png)
 # How to install
@@ -31,13 +32,35 @@ You only require to have `conky` installed on your system.
 On **Fedora** install it by running:
 
 ```
-sudo dnf install conky
+$ sudo dnf install conky
 ```
 
 **n.b.** I recommend using the conky package version `1.11.5_pre`.
 More recent versions may have regressions that cause the theme to behave erratically.  Run the command `dnf downgrade conky` until you arrive at this version.
 
 ## How to run
-1. Unzip the project's zip file in the folder `~/scripts/conky`
-1. Rename the root folder `monochrome-master` to `monochrome`
-1. Run the launch script `~/scripts/conky/monochrome/small/launch.bash`
+1) Unzip the project's zip file in the folder `~/conky`
+
+```
+$ unzip -d conky monochrome-master.zip
+```
+
+2) Rename the root folder `monochrome-master` to `monochrome`
+
+```
+$ mv ~/conky/monochrome-master ~/conky/monochrome
+```
+
+3) Run the launch script of the mode you want:
+
+Laptop mode
+
+```
+$ ~/conky/monochrome/small/launch.bash
+```
+
+or desktop mode
+
+```
+$ ~/conky/monochrome/large/launch.bash
+```

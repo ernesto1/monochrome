@@ -58,4 +58,4 @@ ${offset 50}${voffset 1}${color1}${if_match ${fs_used_perc /media/betty} > 90}${
 ${voffset -3}${offset 2}${diskiograph_read /dev/sdd 42,68 f9f9f9 ffffff 245000 -t -l}${goto 79}${diskiograph_write /dev/sdd 42,68 e6003a 800020 245000 -t -l}
 ${voffset 2}${color1}read${alignr}write
 ${voffset 5}${color}${diskio_read /dev/sdd}${alignr}${diskio_write /dev/sdd}\
-${image ~/scripts/conky/monochrome/large/hardDisk.png -n -p 0,0}
+${image ~/conky/monochrome/large/hardDisk.png -n -p 0,0}

@@ -55,4 +55,4 @@ ${voffset -1}${offset 19}${if_match ${memperc} >= 90}${memgraph 111, 61 e6003a 8
 ${else}${memgraph 111, 61 f9f9f9 ffffff}${endif}
 ${voffset 7}${color1}used${alignr}total
 ${voffset 5}${color}${mem}${alignr}${memmax}\
-${image ~/scripts/conky/monochrome/large/memory.png -n -p 0,0}
+${image ~/conky/monochrome/large/memory.png -n -p 0,0}

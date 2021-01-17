@@ -47,7 +47,7 @@ color3 e9e9e6 		    # cream
 # use the parameter -n on ${image ..} to never cache and always update the image upon a change
 
 TEXT
-${image ~/scripts/conky/monochrome/small/fedora.png -n -p 0,0}\
+${image ~/conky/monochrome/small/fedora.png -n -p 0,0}\
 ${goto 55}${voffset 3}${color1}kernel${goto 100}${color}${kernel}
 ${goto 55}${voffset 3}${color1}uptime${goto 100}${color}${uptime}
 ${goto 55}${voffset 3}${color1}dnf${goto 100}${color}${if_existing /tmp/conkyDnf new}${color3}${endif}${tail /tmp/conkyDnf 1 2}
