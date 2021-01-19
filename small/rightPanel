@@ -80,10 +80,10 @@ ${goto 54}${voffset 3}${color1}free${goto 110}${color}${fs_free /run/media/ernes
 ${else}
 ${voffset 202}
 ${endif}
-${if_mounted /run/media/ernesto/tamaki}\
+${if_mounted /run/media/ernesto/MAXTOR}\
 ${image ~/conky/monochrome/small/usbDrive.png -n -p 0, 365}\
-${voffset 44}${color1}${if_match ${fs_used_perc /run/media/ernesto/tamaki} > 90}${color2}${endif}${fs_bar 4, 45 /run/media/ernesto/tamaki}
-${goto 54}${voffset -49}${color1}fs type${goto 110}${color}${fs_type /run/media/ernesto/tamaki}
-${goto 54}${voffset 3}${color1}size${goto 110}${color}${fs_size /run/media/ernesto/tamaki}
-${goto 54}${voffset 3}${color1}free${goto 110}${color}${fs_free /run/media/ernesto/tamaki}
+${voffset 44}${color1}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color2}${endif}${fs_bar 4, 45 /run/media/ernesto/MAXTOR}
+${goto 54}${voffset -49}${color1}fs type${goto 110}${color}${fs_type /run/media/ernesto/MAXTOR}
+${goto 54}${voffset 3}${color1}size${goto 110}${color}${fs_size /run/media/ernesto/MAXTOR}
+${goto 54}${voffset 3}${color1}free${goto 110}${color}${fs_free /run/media/ernesto/MAXTOR}
 ${endif}
