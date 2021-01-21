@@ -55,5 +55,5 @@ color2 800020       # burgundy
 TEXT
 ${image ~/conky/monochrome/large/cpuGraph.png -n -p 0,0}\
 ${offset 2}${voffset -2}${cpugraph cpu0 64,115 ffffff f2f2f2 -t -l}
-${voffset 4}${color1}cpu${goto 50}${color}${cpu cpu0}%
-${voffset 4}${color1}load${goto 50}${color}${loadavg}
+${voffset 4}${color1}cpu${goto 32}${color}${cpu cpu0}%
+${voffset 4}${color1}load${goto 32}${color}${loadavg}
