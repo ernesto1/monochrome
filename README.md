@@ -42,7 +42,7 @@ More recent versions may have regressions that cause the theme to behave erratic
 1) Unzip the project's zip file in the folder `~/conky`
 
 ```
-$ unzip -d conky monochrome-master.zip
+$ unzip -d ~/conky monochrome-master.zip
 ```
 
 2) Rename the root folder `monochrome-master` to `monochrome`
