@@ -72,12 +72,12 @@ ${goto 72}${voffset 5}${color1}free${goto 129}${color}${memeasyfree} ${color1}/ 
 ${voffset 8}
 # :::::::::::::::::::: disk io write
 ${offset 4}${color1}${if_match ${swapperc} >= 30}${color2}${endif}${swapbar 5, 55}
-${voffset -8}${offset 4}${diskiograph_write /dev/sda 41,55 cc0000 660000 245000 -t -l}
+${voffset -7}${offset 4}${diskiograph_write /dev/sda 41,55 cc0000 660000 100000 -t}
 ${goto 72}${voffset -59}${color1}swap${goto 129}${color}${swapperc}%
 ${goto 72}${voffset 25}${color1}write${goto 129}${color}${diskio_write /dev/sda}
 ${image ~/conky/monochrome/small/diskio-write.png -n -p 2,215}
 # :::::::::::::::::::: disk io read
-${voffset 4}${offset 4}${diskiograph_read /dev/sda 41,55 e9e9e6 f6f6d9 245000 -t -l}
+${voffset 4}${offset 4}${diskiograph_read /dev/sda 41,55 e9e9e6 f6f6d9 100000 -t}
 ${goto 72}${voffset -18}${color1}read${goto 129}${color}${diskio_read /dev/sda}\
 ${image ~/conky/monochrome/small/diskio-read.png -n -p 2,286}
 # :::::::::::::::::::: disk space
@@ -106,7 +106,7 @@ ${image ~/conky/monochrome/small/network.png -n -p 2,543}\
 ${image ~/conky/monochrome/small/network.png -n -p 2,615}\
 ${if_existing /sys/class/net/wlp4s0/operstate up}\
 # connected to wifi
-${voffset 8}${offset 4}${upspeedgraph wlp4s0 39,55 cc0000 660000 5000 -t}
+${voffset 8}${offset 4}${upspeedgraph wlp4s0 39,55 cc0000 660000 8200 -t}
 ${goto 72}${voffset -36}${color1}up${goto 129}${color}${upspeed wlp4s0}
 ${goto 72}${voffset 3}${color1}total${goto 129}${color}${totalup wlp4s0}
 ${voffset 27}${offset 4}${downspeedgraph wlp4s0 39,55 e9e9e6 f6f6d9 19000 -t}
