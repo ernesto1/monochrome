@@ -1,7 +1,7 @@
 #!/bin/bash
 
 killall conky
-sleep 5
+killall dnfPackageLookup.bash
 
 # prepare dnf package lookup file
 # this file is read by conky to get the number of package updates, see dnfPackageLookup.bash
