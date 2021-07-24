@@ -14,7 +14,10 @@ Built for systems with ample screen real state available.  The desktop below is 
 DNF is periodically queried for new packages **if the system is iddle**.  
 Slow machines will appreciate this, since a dnf package lookup may bring the cpu to a crawl.
 ### Network modes
-Network devices reflect the current way you are connected to the internet
+Network devices reflect the current way you are connected to the internet.
+
+Depending on your linux distribution, you may need to [configure the proper network device name](https://github.com/ernesto1/monochrome/wiki#network-devices).
+
 ![network](images/network-modes.png)
 ### Power modes
 ![power](images/power-modes.png)
@@ -22,7 +25,7 @@ Network devices reflect the current way you are connected to the internet
 USB devices are available for you to mix and match to the hardware you have available.
 
 These elements are considered **optional** and will only **appear** when the device is connected.
-See the wiki entry for how to configure these for your system.
+See the wiki entry for [how to configure these devices](https://github.com/ernesto1/monochrome/wiki#usb-drives) for your system.
 
 ![usb](images/usbStorage.png)
 # How to install
