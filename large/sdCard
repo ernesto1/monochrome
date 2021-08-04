@@ -3,12 +3,12 @@ total_run_times 0       # this is the number of times conky will update before q
 double_buffer yes       # use double buffering (reduces flicker, may not work for everyone)
 
 # window alignment
-alignment bottom_left
-gap_x 888                   # gap between border of the screen and the conky window, same as passing -x at command line
-gap_y 170
+alignment top_right
+gap_x 10                    # gap between border of the screen and the conky window, same as passing -x at command line
+gap_y 425
 
 # window settings
-minimum_size 195 46         # horizontal vertical
+minimum_size 150 46         # horizontal vertical
 own_window yes
 own_window_type desktop     # values: desktop (background), panel (bar)
 own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager

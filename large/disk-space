@@ -26,7 +26,7 @@ minimum_size 150 96
 
 # .:: box alignment on screen ::.
 alignment bottom_left
-gap_x 1052
+gap_x 1612
 gap_y 54
 
 # .:: window settings ::.

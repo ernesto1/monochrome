@@ -26,7 +26,7 @@ minimum_size 150 140
 
 # .:: box alignment on screen ::.
 alignment bottom_left
-gap_x 1472
+gap_x 2032
 gap_y 13
 
 # .:: window settings ::.
@@ -55,7 +55,7 @@ TEXT
 ${offset 50}${voffset 4}veronica${alignr}[${fs_type /media/veronica}]
 ${offset 50}${voffset 6}${fs_used /media/veronica} ${color1}/ ${color}${fs_size /media/veronica}
 ${offset 50}${voffset 1}${color1}${if_match ${fs_used_perc /media/veronica} > 90}${color2}${endif}${fs_bar 3, 99 /media/veronica}
-${voffset -3}${offset 2}${diskiograph_read /dev/sdc 42,68 f9f9f9 ffffff 245000 -l}${goto 79}${diskiograph_write /dev/sdc 42,68 e6003a 800020 245000 -t -l}
+${voffset -3}${offset 2}${diskiograph_read /dev/sdb 42,68 f9f9f9 ffffff 245000 -l}${goto 79}${diskiograph_write /dev/sdb 42,68 e6003a 800020 245000 -t -l}
 ${voffset 2}${color1}read${alignr}write
-${voffset 5}${color}${diskio_read /dev/sdc}${alignr}${diskio_write /dev/sdc}\
+${voffset 5}${color}${diskio_read /dev/sdb}${alignr}${diskio_write /dev/sdb}\
 ${image ~/conky/monochrome/large/hardDisk.png -n -p 0,0}

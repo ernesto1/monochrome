@@ -4,8 +4,8 @@ double_buffer yes       # use double buffering (reduces flicker, may not work fo
 
 # window alignment
 alignment bottom_left
-gap_x 269                   # gap between border of the screen and the conky window, same as passing -x at command line
-gap_y 215
+gap_x 834                   # gap between border of the screen and the conky window, same as passing -x at command line
+gap_y 50
 
 # window settings
 minimum_size 195 125        # horizontal vertical

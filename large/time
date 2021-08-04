@@ -3,9 +3,9 @@ total_run_times 0       # this is the number of times conky will update before q
 double_buffer yes       # use double buffering (reduces flicker, may not work for everyone)
 
 # window alignment
-alignment top_left      # top|middle|bottom + left or right
-gap_x 49
-gap_y 80
+alignment top_right     # top|middle|bottom + left or right
+gap_x 40
+gap_y 70
 
 # window settings
 own_window yes
