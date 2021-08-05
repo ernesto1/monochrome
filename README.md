@@ -6,8 +6,9 @@ Built for systems with small screen real state.  The desktop below is 1366 x 768
 ![laptop](images/small-v04.png)
 
 ### Desktop mode
-Built for systems with ample screen real state available.  The desktop below is 1920 x 1200 pixels.
-The code for this setup is available in the [v1.0 release](https://github.com/ernesto1/monochrome/releases/tag/v1.0).
+Built for systems with ample screen real state available.
+
+The desktop below is 1920 x 1200 pixels.  The code for this setup is available in the [v1.0 release](https://github.com/ernesto1/monochrome/releases/tag/v1.0).
 ![desktop 1920px](images/large-v04.png)
 
 Setup for a 2560x1600 pixels desktop
