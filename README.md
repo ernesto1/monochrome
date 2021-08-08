@@ -64,11 +64,11 @@ $ mv ~/conky/monochrome-master ~/conky/monochrome
 Laptop mode
 
 ```
-$ ~/conky/monochrome/small/launch.bash
+$ ~/conky/monochrome/launch.bash --laptop
 ```
 
 or desktop mode
 
 ```
-$ ~/conky/monochrome/large/launch.bash
+$ ~/conky/monochrome/launch.bash --desktop
 ```
