@@ -3,16 +3,16 @@ A graphical conky interface to monitor your **fedora** system.  Available in two
 
 ### Laptop mode
 Built for systems with small screen real state.  The desktop below is 1366 x 768 pixels.
-![laptop](images/small-v04.png)
+![laptop](images/screenshots/small-v04.png)
 
 ### Desktop mode
 Built for systems with ample screen real state available.
 
 The desktop below is 1920 x 1200 pixels.  The code for this setup is available in the [v1.0 release](https://github.com/ernesto1/monochrome/releases/tag/v1.0).
-![desktop 1920px](images/large-v04.png)
+![desktop 1920px](images/screenshots/large-v04.png)
 
 Setup for a 2560x1600 pixels desktop
-![desktop 2560px](images/large-v05.png)
+![desktop 2560px](images/screenshots/large-v05.png)
 
 ## Features
 ### DNF package lookup
@@ -23,16 +23,16 @@ Network devices reflect the current way you are connected to the internet.
 
 Depending on your linux distribution, you may need to [configure the proper network device name](https://github.com/ernesto1/monochrome/wiki#network-devices).
 
-![network](images/network-modes.png)
+![network](images/screenshots/network-modes.png)
 ### Power modes
-![power](images/power-modes.png)
+![power](images/screenshots/power-modes.png)
 ### USB storage
 USB devices are available for you to mix and match to the hardware you have.
 
 These elements are considered **optional** and will only **appear** when the device is connected.
 See the wiki entry for [how to configure these devices](https://github.com/ernesto1/monochrome/wiki#usb-drives) for your system.
 
-![usb](images/usbStorage.png)
+![usb](images/screenshots/usbStorage.png)
 # How to install
 ## Dependencies
 You only require to have `conky` installed on your system.
