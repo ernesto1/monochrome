@@ -3,16 +3,16 @@ A graphical conky interface to monitor your **fedora** system.  Available in two
 
 ### Laptop mode
 Built for systems with small screen real state.  The desktop below is 1366 x 768 pixels.
-![laptop](images/screenshots/small-v04.png)
+![laptop](images/screenshots/1366x768.png)
 
 ### Desktop mode
 Built for systems with ample screen real state available.
 
 The desktop below is 1920 x 1200 pixels.  The code for this setup is available in the [v1.0 release](https://github.com/ernesto1/monochrome/releases/tag/v1.0).
-![desktop 1920px](images/screenshots/large-v04.png)
+![desktop 1920px](images/screenshots/1920x1200.png)
 
 Setup for a 2560x1600 pixels desktop
-![desktop 2560px](images/screenshots/large-v05.png)
+![desktop 2560px](images/screenshots/2560x1600.png)
 
 ## Features
 ### DNF package lookup
