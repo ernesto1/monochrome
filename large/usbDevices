@@ -44,7 +44,7 @@ conky.config = {
 
 conky.text = [[
 ${if_mounted /run/media/ernesto/sandisk}\
-${image ~/conky/monochrome/large/usbStick.png -n -p 0,0}\
+${image ~/conky/monochrome/images/small/usbStick.png -n -p 0,0}\
 ${voffset 40}${color1}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color2}${endif}${fs_bar 4, 45 /run/media/ernesto/sandisk}
 ${offset 55}${voffset -51}${color1}fs type${goto 110}${color}${fs_type /run/media/ernesto/sandisk}
 ${offset 55}${voffset 3}${color1}size${goto 110}${color}${fs_size /run/media/ernesto/sandisk}
@@ -53,7 +53,7 @@ ${else}\
 ${voffset 47}\
 ${endif}\
 ${if_mounted /run/media/ernesto/MAXTOR}\
-${voffset 19}${image ~/conky/monochrome/large/usbDrive.png -n -p 0,66}\
+${voffset 19}${image ~/conky/monochrome/images/small/usbDrive.png -n -p 0,66}\
 ${voffset 40}${color1}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color2}${endif}${fs_bar 4, 45 /run/media/ernesto/MAXTOR}
 ${offset 55}${voffset -51}${color1}fs type${goto 110}${color}${fs_type /run/media/ernesto/MAXTOR}
 ${offset 55}${voffset 3}${color1}size${goto 110}${color}${fs_size /run/media/ernesto/MAXTOR}
@@ -62,7 +62,7 @@ ${else}\
 ${voffset 66}\
 ${endif}\
 ${if_mounted /run/media/ernesto/disk}\
-${voffset 19}${image ~/conky/monochrome/large/sdCard.png -n -p 0,132}\
+${voffset 19}${image ~/conky/monochrome/images/small/sdCard.png -n -p 0,132}\
 ${voffset 40}${color1}${if_match ${fs_used_perc /run/media/ernesto/disk} > 90}${color2}${endif}${fs_bar 4, 45 /run/media/ernesto/disk}
 ${offset 55}${voffset -51}${color1}fs type${goto 110}${color}${fs_type /run/media/ernesto/disk}
 ${offset 55}${voffset 3}${color1}size${goto 110}${color}${fs_size /run/media/ernesto/disk}
