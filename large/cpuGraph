@@ -1,59 +1,50 @@
-# update interval in seconds
-update_interval 2
- 
-# this is the number of times conky will update before quitting
-# set to zero to run forever
-total_run_times 0
+conky.config = {
+	update_interval = 2,  -- update interval in seconds
+	total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
+	double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
-# use double buffering (reduces flicker, may not work for everyone)
-double_buffer yes
+  -- window alignment
+	alignment = 'bottom_left',  -- top|middle|bottom_left|right
+	gap_x = 85,               -- same as passing -x at command line
+	gap_y = 75,
 
-draw_shades no
-draw_outline no
-draw_graph_borders no      # borders around the graph, ex. cpu graph, network down speed grah
-                           # does not include bars, ie. wifi strength bar, cpu bar
-# .:: window border ::.
-# you can add a border to the window by setting the border_width value to any number greater than 0 and by setting the draw_borders option to true
-draw_borders no
-border_width 0
-stippled_borders 0
-border_inner_margin 0
-border_outer_margin 0
+  -- window settings
+	minimum_width = 683,
+	minimum_height = 13,
+	own_window = true,
+	own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
+	own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
-#  .:: window size ::.
-# required if you have image backgrounds
-minimum_size 150 70     # horizontal vertical
+  -- transparency configuration
+	own_window_transparent = true,
+	own_window_argb_visual = true,  -- turn on transparency
+	own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
 
-# .:: box alignment on screen ::.
-alignment bottom_left
-gap_x 85    #33
-gap_y 75    #49
+  -- window borders
+	draw_borders = false,     -- draw borders around the conky window
+	border_width = 0,         -- width of border window in pixels
+	stippled_borders = 0,     -- border stippling (dashing) in pixels
+	border_inner_margin = 0,  -- margin between the border and text in pixels
+	border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
 
-# .:: window settings ::.
-own_window yes
-own_window_type desktop
-own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+  -- graph settings
+	draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
+                              -- does not include bars, ie. wifi strength bar, cpu bar
 
-# :: transparency configuration ::
-own_window_transparent yes
-own_window_argb_visual yes
-# own_window_argb_value range: 0   transparent
-#						       255 opaque
-own_window_argb_value 255
+	imlib_cache_flush_interval = 300,
+  -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
 
-default_color black
-color1 white
-color2 800020       # burgundy
+  -- font settings
+	draw_shades = false,    -- black shadow on text (not good if text is black)
+	draw_outline = false,   -- black outline around text (not good if text is black)
+	default_color = 'black',
+	color1 = 'white',
+	color2 = '800020',      -- burgundy
+};
 
-
-# note: the moment you start using $voffset for the graphs, you end up with trailing spaces
-#       hence the need to add a trailing negative $voffset on the last line to put all that space
-#       within the conky box.  otherwise the height assigned in minimum_size will not be honored.
-#
-# use the parameter -n on ${image ..} to never cache and always update the image upon a change
-
-TEXT
+conky.text = [[
 ${image ~/conky/monochrome/large/cpuGraph.png -n -p 0,0}\
 ${offset 2}${voffset -2}${cpugraph cpu0 64,115 ffffff f2f2f2 -t -l}
 ${voffset 4}${color1}cpu${goto 32}${color}${cpu cpu0}%
 ${voffset 4}${color1}load${goto 32}${color}${loadavg}
+]];
