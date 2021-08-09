@@ -4,13 +4,13 @@ conky.config = {
 	double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-	alignment = 'top_right',
-	gap_x = 20,           -- gap between border of the screen and the conky window, same as passing -x at command line
+	alignment = 'top_right',  -- top|middle|bottom_left|right
+	gap_x = 20,               -- same as passing -x at command line
 	gap_y = 295,
 
   -- window settings
 	minimum_width = 150,
-	minimum_height = 180,
+	minimum_height = 182,
 	own_window = true,
 	own_window_type = 'desktop',              -- values: desktop (background), panel (bar)
 	own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -45,16 +45,16 @@ conky.config = {
 conky.text = [[
 ${if_mounted /run/media/ernesto/sandisk}\
 ${image ~/conky/monochrome/large/usbStick.png -n -p 0,0}\
-${voffset 39}${color1}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color2}${endif}${fs_bar 4, 45 /run/media/ernesto/sandisk}
+${voffset 40}${color1}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color2}${endif}${fs_bar 4, 45 /run/media/ernesto/sandisk}
 ${offset 55}${voffset -51}${color1}fs type${goto 110}${color}${fs_type /run/media/ernesto/sandisk}
 ${offset 55}${voffset 3}${color1}size${goto 110}${color}${fs_size /run/media/ernesto/sandisk}
 ${offset 55}${voffset 3}${color1}free${goto 110}${color}${fs_free /run/media/ernesto/sandisk}
 ${else}\
-${voffset 46}\
+${voffset 47}\
 ${endif}\
 ${if_mounted /run/media/ernesto/MAXTOR}\
-${voffset 20}${image ~/conky/monochrome/large/usbDrive.png -n -p 0,66}\
-${voffset 39}${color1}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color2}${endif}${fs_bar 4, 45 /run/media/ernesto/MAXTOR}
+${voffset 19}${image ~/conky/monochrome/large/usbDrive.png -n -p 0,66}\
+${voffset 40}${color1}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color2}${endif}${fs_bar 4, 45 /run/media/ernesto/MAXTOR}
 ${offset 55}${voffset -51}${color1}fs type${goto 110}${color}${fs_type /run/media/ernesto/MAXTOR}
 ${offset 55}${voffset 3}${color1}size${goto 110}${color}${fs_size /run/media/ernesto/MAXTOR}
 ${offset 55}${voffset 3}${color1}free${goto 110}${color}${fs_free /run/media/ernesto/MAXTOR}
@@ -62,8 +62,8 @@ ${else}\
 ${voffset 66}\
 ${endif}\
 ${if_mounted /run/media/ernesto/disk}\
-${voffset 20}${image ~/conky/monochrome/large/sdCard.png -n -p 0,131}\
-${voffset 39}${color1}${if_match ${fs_used_perc /run/media/ernesto/disk} > 90}${color2}${endif}${fs_bar 4, 45 /run/media/ernesto/disk}
+${voffset 19}${image ~/conky/monochrome/large/sdCard.png -n -p 0,132}\
+${voffset 40}${color1}${if_match ${fs_used_perc /run/media/ernesto/disk} > 90}${color2}${endif}${fs_bar 4, 45 /run/media/ernesto/disk}
 ${offset 55}${voffset -51}${color1}fs type${goto 110}${color}${fs_type /run/media/ernesto/disk}
 ${offset 55}${voffset 3}${color1}size${goto 110}${color}${fs_size /run/media/ernesto/disk}
 ${offset 55}${voffset 3}${color1}free${goto 110}${color}${fs_free /run/media/ernesto/disk}
