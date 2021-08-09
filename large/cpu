@@ -62,5 +62,5 @@ ${voffset -1}${offset 25}${color1}${if_match ${cpu cpu5} >= 90}${color2}${endif}
 ${voffset -1}${offset 25}${color1}${if_match ${cpu cpu6} >= 90}${color2}${endif}${cpubar cpu6 6, 84}
 ${voffset -1}${offset 25}${color1}${if_match ${cpu cpu7} >= 90}${color2}${endif}${cpubar cpu7 6, 84}
 ${voffset -1}${offset 25}${color1}${if_match ${cpu cpu8} >= 90}${color2}${endif}${cpubar cpu8 6, 84}\
-${image ~/conky/monochrome/large/cpu.png -n -p 0,0}
+${image ~/conky/monochrome/images/large/cpu.png -n -p 0,0}
 ]];

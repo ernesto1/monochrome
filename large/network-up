@@ -47,8 +47,8 @@ ${voffset 19}${offset 4}${upspeedgraph enp0s25 91,111 e6003a 800020 2000 -t}
 ${voffset 7}${color3}up${alignr}total
 ${voffset 5}${color}${upspeed enp0s25}${alignr}${totalup enp0s25}\
 ${if_gw}\
-${image ~/conky/monochrome/large/network-up.png -n -p 0,0}\
+${image ~/conky/monochrome/images/large/network-up.png -n -p 0,0}\
 ${else}\
-${image ~/conky/monochrome/large/network-disabled.png -n -p 0,0 s 370x104}\
+${image ~/conky/monochrome/images/large/network-disabled.png -n -p 0,0 s 370x104}\
 ${endif}
 ]];

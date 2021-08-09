@@ -49,5 +49,5 @@ ${voffset -74}${goto 78}${diskiograph_read /dev/sda 42,80 ffffff f2f2f2 260000 -
 ${voffset -5}${offset 78}${diskiograph_write /dev/sda 42,80 e6003a 800020 260000 -t}
 ${voffset 6}${color1}swap ${color}${swapperc}%${alignr}${color}${diskio_read /dev/sda}  ${color1}read
 ${voffset 5}${alignr}${color}${diskio_write /dev/sda} ${color1}write\
-${image ~/conky/monochrome/large/disk.png -n -p 0,0}
+${image ~/conky/monochrome/images/large/disk.png -n -p 0,0}
 ]];

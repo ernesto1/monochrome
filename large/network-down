@@ -47,8 +47,8 @@ ${voffset 19}${offset 4}${downspeedgraph enp0s25 91,111 ffffff f2f2f2 15000 -t}
 ${voffset 7}${color3}down${alignr}total
 ${voffset 5}${color}${downspeed enp0s25}${alignr}${totaldown enp0s25}\
 ${if_gw}\
-${image ~/conky/monochrome/large/network-down.png -n -p 0,0}\
+${image ~/conky/monochrome/images/large/network-down.png -n -p 0,0}\
 ${else}\
-${image ~/conky/monochrome/large/network-disabled.png -n -p 0,0 s 370x104}\
+${image ~/conky/monochrome/images/large/network-disabled.png -n -p 0,0 s 370x104}\
 ${endif}
 ]];

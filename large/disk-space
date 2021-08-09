@@ -49,5 +49,5 @@ ${voffset 1}${offset 51}${color1}${if_match ${fs_used_perc /} > 90}${color2}${en
 ${voffset 4}${offset 51}${color}/home${alignr}[${fs_type /home}]
 ${voffset 6}${offset 51}${fs_used /home} ${color1}/ ${color}${fs_size /home}
 ${voffset 0}${offset 51}${color1}${if_match ${fs_used_perc /home} > 90}${color2}${endif}${fs_bar 3, 100 /home}\
-${image ~/conky/monochrome/large/disk-space.png -n -p 0,0}
+${image ~/conky/monochrome/images/large/disk-space.png -n -p 0,0}
 ]];
