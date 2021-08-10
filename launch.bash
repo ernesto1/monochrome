@@ -28,7 +28,7 @@ esac
 echo -e "launching conky with the following settings:\n"
 echo    "configuration folder: ${directory}"
 echo -e "cpu load avg iddle:   ${numCores}\n"
-echo    "the dnf package lookup will be executed if the 2 minute cpu load average is below $numCores"
+echo    "the dnf package lookup will be executed if the 5 minute cpu load average is below $numCores"
 
 killall conky
 killall dnfPackageLookup.bash
