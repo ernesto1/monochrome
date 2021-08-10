@@ -33,8 +33,14 @@ echo    "the dnf package lookup will be executed if the 5 minute cpu load averag
 killall conky
 killall dnfPackageLookup.bash
 
+IFS=$'\n' 
+for conkyConfig in $(find "${directory}" -maxdepth 1 -type f -not -name '*.*')
+do
+  echo "Launching conky config '${conkyConfig}'"
+  conky -c "${conkyConfig}" &
+done
+
 # prepare dnf package lookup file
 # this file is read by conky to get the number of package updates, see dnfPackageLookup.bash
 echo ':: stand by ::' > /tmp/conkyDnf
 ~/conky/monochrome/dnfPackageLookup.bash ${numCores} &
-find ${directory} -maxdepth 1 -type f -not -name '*.*' | xargs -I {} -P0 conky -c {}
