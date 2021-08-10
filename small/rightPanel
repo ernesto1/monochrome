@@ -57,7 +57,7 @@ ${voffset 3} ${top name 5}${goto 111}${top cpu 5}% ${top pid 5}
 ${voffset 3} ${top name 6}${goto 111}${top cpu 6}% ${top pid 6} 
 # :::::::::::::::::::: memory processes
 ${image ~/conky/monochrome/images/large/memoryProcesses.png -n -p 208,48}\
-${voffset -114}${goto 213}process${goto 345}mem   pid
+${voffset -115}${goto 213}process${goto 345}mem   pid
 ${goto 213}${voffset 10}${color}${if_match ${top_mem mem 1} >= 49}${color2}${endif}${top_mem name 1}${alignr}${top_mem mem_res 1} ${top_mem pid 1} 
 ${goto 213}${voffset 3}${color}${if_match ${top_mem mem 2} >= 49}${color2}${endif}${top_mem name 2}${alignr}${top_mem mem_res 2} ${top_mem pid 2} 
 ${goto 213}${voffset 3}${color}${if_match ${top_mem mem 3} >= 49}${color2}${endif}${top_mem name 3}${alignr}${top_mem mem_res 3} ${top_mem pid 3} 
@@ -67,7 +67,7 @@ ${goto 213}${voffset 3}${color}${if_match ${top_mem mem 6} >= 49}${color2}${endi
 # :::::::::::::::::::: usb
 ${if_mounted /run/media/ernesto/sandisk}\
 ${image ~/conky/monochrome/images/small/usbStick.png -n -p 0, 349}\
-${voffset 220}${color1}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color2}${endif}${fs_bar 4, 45 /run/media/ernesto/sandisk}
+${voffset 221}${color1}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color2}${endif}${fs_bar 4, 45 /run/media/ernesto/sandisk}
 ${goto 54}${voffset -49}${color1}fs type${goto 110}${color}${fs_type /run/media/ernesto/sandisk}
 ${goto 54}${voffset 3}${color1}size${goto 110}${color}${fs_size /run/media/ernesto/sandisk}
 ${goto 54}${voffset 3}${color1}free${goto 110}${color}${fs_free /run/media/ernesto/sandisk}
