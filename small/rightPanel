@@ -45,7 +45,7 @@ conky.config = {
 };
 
 conky.text = [[
-${voffset 3} ${color1}compositor${goto 80}${color}${execpi 3600 echo $XDG_SESSION_TYPE}
+${voffset 3} ${color1}compositor${goto 80}${color}${execi 3600 echo $XDG_SESSION_TYPE}
 # :::::::::::::::::::: cpu processes
 ${image ~/conky/monochrome/images/large/cpuProcesses.png -n -p 0,48}\
 ${voffset 34} process${goto 135}cpu   pid 
