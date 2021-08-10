@@ -46,47 +46,47 @@ conky.config = {
 
 conky.text = [[
 # :::::::::::::::::::: system
-${image ~/conky/monochrome/images/small/fedora.png -n -p 9,3}\
-${goto 72}${voffset 3}${color1}kernel${goto 129}${color}${kernel}
-${goto 72}${voffset 3}${color1}uptime${goto 129}${color}${uptime}
-${goto 72}${voffset 3}${color1}dnf${goto 129}${color}${if_existing /tmp/conkyDnf new}${color1}${endif}${tail /tmp/conkyDnf 1 2}
+${image ~/conky/monochrome/images/small/system.png -n -p 9,3}\
+${goto 72}${voffset 3}${color1}kernel${goto 127}${color}${kernel}
+${goto 72}${voffset 3}${color1}uptime${goto 127}${color}${uptime}
+${goto 72}${voffset 3}${color1}dnf${goto 127}${color}${if_existing /tmp/conkyDnf new}${color1}${endif}${tail /tmp/conkyDnf 1 2}
 # :::::::::::::::::::: cpu
 ${image ~/conky/monochrome/images/small/cpu.png -n -p 0,68}\
 ${voffset 24}${offset 9}${cpugraph cpu0 45,45 e9e9e6 f6f6d9 -t}
-${voffset -53}${goto 72}${color1}core 1${goto 129}${color}${cpu cpu1}% ${goto 154}@ ${freq 1}MHz
-${goto 72}${voffset 3}${color1}core 2${goto 129}${color}${cpu cpu2}% ${goto 154}@ ${freq 2}MHz
-${goto 72}${voffset 3}${color1}load avg${goto 129}${color}${loadavg}
+${voffset -53}${goto 72}${color1}core 1${goto 127}${color}${cpu cpu1}% ${goto 154}@ ${freq 1}MHz
+${goto 72}${voffset 3}${color1}core 2${goto 127}${color}${cpu cpu2}% ${goto 154}@ ${freq 2}MHz
+${goto 72}${voffset 3}${color1}load avg${goto 127}${color}${loadavg}
 # :::::::::::::::::::: memory
 ${image ~/conky/monochrome/images/small/memory.png -n -p 2,151}
 ${voffset 26}${goto 24}${memperc}%
 ${voffset 0}${offset 5}${color1}${if_match ${memperc} >= 90}${color2}${endif}${membar 4, 53}\
-${goto 72}${voffset 5}${color1}free${goto 129}${color}${memeasyfree} ${color1}/ ${color}${memmax}
+${goto 72}${voffset 5}${color1}free${goto 127}${color}${memeasyfree} ${color1}/ ${color}${memmax}
 ${voffset 8}
 # :::::::::::::::::::: disk io write
 ${offset 4}${color1}${if_match ${swapperc} >= 30}${color2}${endif}${swapbar 5, 55}
 ${voffset -7}${offset 4}${diskiograph_write /dev/sda 41,55 cc0000 660000 100000 -t}
-${goto 72}${voffset -59}${color1}swap${goto 129}${color}${swapperc}%
-${goto 72}${voffset 25}${color1}write${goto 129}${color}${diskio_write /dev/sda}
+${goto 72}${voffset -59}${color1}swap${goto 127}${color}${swapperc}%
+${goto 72}${voffset 25}${color1}write${goto 127}${color}${diskio_write /dev/sda}
 ${image ~/conky/monochrome/images/small/diskio-write.png -n -p 2,215}
 # :::::::::::::::::::: disk io read
 ${voffset 4}${offset 4}${diskiograph_read /dev/sda 41,55 e9e9e6 f6f6d9 100000 -t}
-${goto 72}${voffset -18}${color1}read${goto 129}${color}${diskio_read /dev/sda}\
+${goto 72}${voffset -18}${color1}read${goto 127}${color}${diskio_read /dev/sda}\
 ${image ~/conky/monochrome/images/small/diskio-read.png -n -p 2,286}
 # :::::::::::::::::::: disk space
 ${image ~/conky/monochrome/images/small/disk-root.png -n -p 9,349}
 ${voffset 45}${offset 9}${color1}${if_match ${fs_used_perc /} > 90}${color2}${endif}${fs_bar 4, 45 /}
-${goto 72}${voffset -33}${color1}fs type${goto 129}${color}${fs_type /}
-${goto 72}${voffset 3}${color1}free${goto 129}${color}${fs_free /} ${color1}/ ${color}${fs_size /}
+${goto 72}${voffset -33}${color1}fs type${goto 127}${color}${fs_type /}
+${goto 72}${voffset 3}${color1}free${goto 127}${color}${fs_free /} ${color1}/ ${color}${fs_size /}
 ${image ~/conky/monochrome/images/small/disk-home.png -n -p 9,414}
 ${voffset 44}${offset 9}${color1}${if_match ${fs_used_perc /home} > 90}${color2}${endif}${fs_bar 4, 45 /home}
-${goto 72}${voffset -33}${color1}fs type${goto 129}${color}${fs_type /home}
-${goto 72}${voffset 3}${color1}free${goto 129}${color}${fs_free /home} ${color1}/ ${color}${fs_size /home}
+${goto 72}${voffset -33}${color1}fs type${goto 127}${color}${fs_type /home}
+${goto 72}${voffset 3}${color1}free${goto 127}${color}${fs_free /home} ${color1}/ ${color}${fs_size /home}
 # :::::::::::::::::::: wifi
 ${if_existing /sys/class/net/wlp4s0/operstate up}\
 ${voffset 56}${offset 9}${color1}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color2}${endif}${wireless_link_bar 3,45 wlp4s0}${voffset -19}\
-${goto 72}${voffset -15}${color1}network${goto 129}${color}${wireless_essid wlp4s0}
-${goto 72}${voffset 3}${color1}channel${goto 129}${color}${wireless_channel wlp4s0}
-${goto 72}${voffset 3}${color1}strength${goto 129}${color}${wireless_link_qual_perc wlp4s0}%
+${goto 72}${voffset -15}${color1}network${goto 127}${color}${wireless_essid wlp4s0}
+${goto 72}${voffset 3}${color1}channel${goto 127}${color}${wireless_channel wlp4s0}
+${goto 72}${voffset 3}${color1}strength${goto 127}${color}${wireless_link_qual_perc wlp4s0}%
 ${image ~/conky/monochrome/images/small/wifi.png -n -p 9,482}${voffset 11}\
 ${else}\
 ${image ~/conky/monochrome/images/small/wifi-off.png -n -p 9,482}
@@ -99,19 +99,19 @@ ${image ~/conky/monochrome/images/small/network.png -n -p 2,615}\
 ${if_existing /sys/class/net/wlp4s0/operstate up}\
 # connected to wifi
 ${voffset 8}${offset 4}${upspeedgraph wlp4s0 39,55 cc0000 660000 8200 -t}
-${goto 72}${voffset -36}${color1}up${goto 129}${color}${upspeed wlp4s0}
-${goto 72}${voffset 3}${color1}total${goto 129}${color}${totalup wlp4s0}
+${goto 72}${voffset -36}${color1}up${goto 127}${color}${upspeed wlp4s0}
+${goto 72}${voffset 3}${color1}total${goto 127}${color}${totalup wlp4s0}
 ${voffset 27}${offset 4}${downspeedgraph wlp4s0 39,55 e9e9e6 f6f6d9 19000 -t}
-${goto 72}${voffset -35}${color1}down${goto 129}${color}${downspeed wlp4s0}
-${goto 72}${voffset 3}${color1}total${goto 129}${color}${totaldown wlp4s0}
+${goto 72}${voffset -35}${color1}down${goto 127}${color}${downspeed wlp4s0}
+${goto 72}${voffset 3}${color1}total${goto 127}${color}${totaldown wlp4s0}
 ${else}\
 # connected to ethernet
 ${voffset 8}${offset 4}${upspeedgraph enp6s0 39,55 cc0000 660000 27000 -t}
-${goto 72}${voffset -36}${color1}up${goto 129}${color}${upspeed enp6s0}
-${goto 72}${voffset 3}${color1}total${goto 129}${color}${totalup enp6s0}
+${goto 72}${voffset -36}${color1}up${goto 127}${color}${upspeed enp6s0}
+${goto 72}${voffset 3}${color1}total${goto 127}${color}${totalup enp6s0}
 ${voffset 27}${offset 4}${downspeedgraph enp6s0 39,55 e9e9e6 f6f6d9 27000 -t}
-${goto 72}${voffset -35}${color1}down${goto 129}${color}${downspeed enp6s0}
-${goto 72}${voffset 3}${color1}total${goto 129}${color}${totaldown enp6s0}
+${goto 72}${voffset -35}${color1}down${goto 127}${color}${downspeed enp6s0}
+${goto 72}${voffset 3}${color1}total${goto 127}${color}${totaldown enp6s0}
 ${endif}\
 ${voffset 9}
 ${else}\
@@ -126,12 +126,12 @@ ${else}\
 ${image ~/conky/monochrome/images/small/power-charging.png -n -p 9,685}\
 ${voffset 22}${offset 9}${color1}${if_match ${battery_percent BAT0} < 80}${color2}${endif}${battery_bar 4, 45 BAT0}
 ${voffset -35}${goto 72}${color1}eta full
-${voffset 3}${goto 72}${color1}charge${goto 129}${color}${battery_time BAT0}
+${voffset 3}${goto 72}${color1}charge${goto 127}${color}${battery_time BAT0}
 ${endif}\
 ${else}\
 ${image ~/conky/monochrome/images/small/power-battery.png -n -p 9,685}\
 ${voffset 22}${offset 9}${color1}${if_match ${battery_percent BAT0} < 20}${color2}${endif}${battery_bar 4, 45 BAT0}
 ${voffset -35}${goto 72}${color1}charge
-${voffset 3}${goto 72}${color1}left${goto 129}${color}${battery_time BAT0}
+${voffset 3}${goto 72}${color1}left${goto 127}${color}${battery_time BAT0}
 ${endif}
 ]];
