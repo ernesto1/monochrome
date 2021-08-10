@@ -1,5 +1,7 @@
 # Monochrome Conky
-A graphical conky interface to monitor your **fedora** system.  Available in two flavors:
+A graphical conky interface to monitor your **fedora** system.  Available in two flavors.
+
+If you use a different linux distribution, have a [look at the wiki](https://github.com/ernesto1/monochrome/wiki) in order to see what small changes you will need to make on the conky configurations to account for distro specific nuances.
 
 ### Laptop mode
 Built for systems with small screen real state.  The desktop below is 1366 x 768 pixels.
