@@ -10,7 +10,7 @@ conky.config = {
 
   -- window settings
   minimum_width = 150,
-  minimum_height = 182,
+  minimum_height = 181,
   own_window = true,
   own_window_type = 'desktop',              -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -50,10 +50,11 @@ ${offset 55}${voffset -51}${color1}fs type${goto 110}${color}${fs_type /run/medi
 ${offset 55}${voffset 3}${color1}size${goto 110}${color}${fs_size /run/media/ernesto/sandisk}
 ${offset 55}${voffset 3}${color1}free${goto 110}${color}${fs_free /run/media/ernesto/sandisk}
 ${else}\
-${voffset 18}\
-${alignr}sandisk usb drive
-${alignr}not connected
-${voffset 3}\
+${voffset 9}\
+${image ~/conky/monochrome/images/small/usbBorder.png -n -p 144,0}\
+${alignr}sandisk usb drive  
+${alignr}not connected  
+${voffset 14}\
 ${endif}\
 ${if_mounted /run/media/ernesto/MAXTOR}\
 ${image ~/conky/monochrome/images/small/usbDrive.png -n -p 0,66}\
@@ -62,10 +63,11 @@ ${offset 55}${voffset -51}${color1}fs type${goto 110}${color}${fs_type /run/medi
 ${offset 55}${voffset 3}${color1}size${goto 110}${color}${fs_size /run/media/ernesto/MAXTOR}
 ${offset 55}${voffset 3}${color1}free${goto 110}${color}${fs_free /run/media/ernesto/MAXTOR}
 ${else}\
-${voffset 31}\
-${alignr}maxtor usb drive
-${alignr}not connected
-${voffset 9}\
+${voffset 27}\
+${image ~/conky/monochrome/images/small/usbBorder.png -n -p 144,66}\
+${alignr}maxtor usb drive  
+${alignr}not connected  
+${voffset 13}\
 ${endif}\
 ${if_mounted /run/media/ernesto/disk}\
 ${image ~/conky/monochrome/images/small/sdCard.png -n -p 0,132}\
@@ -74,8 +76,9 @@ ${offset 55}${voffset -51}${color1}fs type${goto 110}${color}${fs_type /run/medi
 ${offset 55}${voffset 3}${color1}size${goto 110}${color}${fs_size /run/media/ernesto/disk}
 ${offset 55}${voffset 3}${color1}free${goto 110}${color}${fs_free /run/media/ernesto/disk}
 ${else}\
-${voffset 10}
-${alignr}sandisk sd card
-${alignr}not connected
+${voffset 26}\
+${image ~/conky/monochrome/images/small/usbBorder.png -n -p 144,132}\
+${alignr}sandisk sd card  
+${alignr}not connected  
 ${endif}\
 ]];
