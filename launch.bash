@@ -1,4 +1,14 @@
 #!/bin/bash
+# script to launch a conky configuration for a particular mode/resolution
+# the 'mode' (laptop/desktop) determines the target folder where all the conky configs will be loaded from
+#
+# position override
+# an alignment override file can be used to move the conkys around from their default setup
+# this is the case for the desktop 1920x1200 resolution, which takes advantage of this feature
+#
+# alignment override files must follow the naming convention: layout.<width>x<height>.cfg, ex. layout.1920x1200.cfg
+# the override file must be placed in the target folder
+
 source conkyLibrary.bash
 
 function usage() {
@@ -51,7 +61,8 @@ echo    "the dnf package lookup will be executed if the 5 minute cpu load averag
 
 layoutFile="$(echo ${directory}/layout.${screenWidth}x*.cfg)"   # need to use echo in order for the variable
                                                                 # to hold the actual pathname expansion
-
+# if a conky alignment override is available for the given resolution
+# create the alignment override map/dictionary
 if [[ -f ${layoutFile} ]]; then
   echo -e "\noverriding conky layout as per ${layoutFile}"
   loadOverrideMap "${layoutFile}"
@@ -66,9 +77,12 @@ fi
 killall conky
 killall dnfPackageLookup.bash
 
-old_ifs="${IFS}"     # store IFRS for later use
+old_ifs="${IFS}"     # store IFS for later use
 IFS=$'\n'
 
+# all available conky configs in the target directory will be launched
+# config files are expected to not have any extensions to them, ie. cpu vs cpu.cfg
+# if an alignment override is available for the specific config, it will be used
 for conkyConfig in $(find "${directory}" -maxdepth 1 -type f -not -name '*.*')
 do
   echo -e "\nlaunching conky config '${conkyConfig##*/}'"
