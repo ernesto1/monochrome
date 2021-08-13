@@ -33,12 +33,10 @@ function usage() {
 case $1 in
   --laptop)
     directory=${HOME}/conky/monochrome/small
-    numCores=1
     screenWidth=1366
     ;;
   --desktop)
     directory=${HOME}/conky/monochrome/large
-    numCores=7
     screenWidth=$2
 
     # ensure a supported monitor width was provided
@@ -56,8 +54,6 @@ esac
 echo -e "launching conky with the following settings:\n"
 echo    "configuration folder: ${directory}"
 echo    "monitor width:        ${screenWidth} pixels"
-echo -e "cpu load avg iddle:   ${numCores}\n"
-echo    "the dnf package lookup will be executed if the 5 minute cpu load average is below $numCores"
 
 layoutFile="$(echo ${directory}/layout.${screenWidth}x*.cfg)"   # need to use echo in order for the variable
                                                                 # to hold the actual pathname expansion
@@ -114,4 +110,4 @@ done
 # prepare dnf package lookup file
 # this file is read by the 'system' conky to get the number of package updates, see dnfPackageLookup.bash
 echo ':: stand by ::' > /tmp/conkyDnf
-~/conky/monochrome/dnfPackageLookup.bash ${numCores} &
+~/conky/monochrome/dnfPackageLookup.bash &
