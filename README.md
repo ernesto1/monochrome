@@ -29,6 +29,8 @@ Depending on your linux distribution, you may need to [configure the proper netw
 
 ![network](images/screenshots/network-modes.png)
 ### Power modes
+Different states to show how your laptop is currently consuming power 
+
 ![power](images/screenshots/power-modes.png)
 ### USB storage
 USB devices are available for you to mix and match to the hardware you have.
