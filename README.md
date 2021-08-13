@@ -41,7 +41,7 @@ See the wiki entry for [how to configure these devices](https://github.com/ernes
 ![usb](images/screenshots/usbStorage.png)
 
 ### Hard drive i/o
-If you have additional hard drives in your system (internal or external), the hard disk i/o conky allows to monitor read/writes to the disk as well as space usage accross its different partitions.
+If you have additional hard drives in your system (internal or external), the hard disk i/o conky allows you to monitor read/writes to the disk as well as space usage accross its different partitions.
 
 This conky must be fully customized to your particular setup.  Read the [wiki for more details](https://github.com/ernesto1/monochrome/wiki#hard-drive-io).
 
