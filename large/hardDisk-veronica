@@ -49,5 +49,5 @@ ${voffset 2}${offset 2}${diskiograph_read /dev/sdb 42,68 f9f9f9 ffffff 245000 -t
 ${voffset 2}${color1}rd ${color}${diskio_read /dev/sdb}${alignr}${diskio_write /dev/sdb} ${color1}wr
 ${voffset 5}${color1}partitions ${hr 1}
 ${voffset 4}${color}veronica${goto 66}${color1}${if_match ${fs_used_perc /media/veronica} > 90}${color2}${endif}${fs_bar 3, 84 /media/veronica}
-${voffset 5}${alignr}${color}${fs_used /media/veronica} ${color1}/ ${color}${fs_size /media/veronica}
+${voffset 5}${alignr}${color}${fs_used /media/veronica} / ${color}${fs_size /media/veronica}
 ]];
