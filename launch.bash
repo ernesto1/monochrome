@@ -9,8 +9,6 @@
 # alignment override files must follow the naming convention: layout.<width>x<height>.cfg, ex. layout.1920x1200.cfg
 # the override file must be placed in the target folder
 
-source conkyLibrary.bash
-
 function usage() {
   cat <<-END
 	$(basename $0) --[mode] [monitor width]
@@ -27,6 +25,17 @@ function usage() {
 	  $(basename $0) --desktop 1920
 	  $(basename $0) --desktop 2560
 	END
+}
+
+# exits the script on error if the override file has any duplicate entries for a particular conky configuration
+function detectDuplicateEntries() {
+  # remove comment lines '#' and empty lines from the file, then look for dupes
+  duplicates=$(grep -v \# $1 | grep -v '^$' | cut -d: -f1 | sort | uniq -d)
+  
+  if [[ $duplicates ]]; then
+    echo 'Invalid override file.  Duplicate entry found.' >&2
+    exit 2
+  fi
 }
 
 # determine mode from the parameters provided
@@ -52,47 +61,38 @@ case $1 in
 esac
 
 echo -e "launching conky with the following settings:\n"
-echo    "configuration folder: ${directory}"
+echo    "conky folder:         ${directory}"
 echo    "monitor width:        ${screenWidth} pixels"
 
 layoutFile="$(echo ${directory}/layout.${screenWidth}x*.cfg)"   # need to use echo in order for the variable
                                                                 # to hold the actual pathname expansion
-# if a conky alignment override is available for the given resolution
-# create the alignment override map/dictionary
 if [[ -f ${layoutFile} ]]; then
-  echo -e "\noverriding conky layout as per ${layoutFile}"
-  loadOverrideMap "${layoutFile}"
-  
-  # print layout override map
-  #for key in ${!layoutMap[@]};
-  #do
-  #  echo ""${key}" | ${layoutMap["${key}"]}"
-  #done  
+  echo -e "layout override file: ${layoutFile}\n"
+  detectDuplicateEntries "${layoutFile}"
+  # TODO ensure # of override elements is 2 or 3 elements
 fi
 
 killall conky
 killall dnfPackageLookup.bash
 
-old_ifs="${IFS}"     # store IFS for later use
 IFS=$'\n'
 
 # all available conky configs in the target directory will be launched
-# config files are expected to not have any extensions to them, ie. cpu vs cpu.cfg
+# config file anmes are expected to not have an extension, ie. cpu vs cpu.cfg
 # if an alignment override is available for the specific config, it will be used
 for conkyConfig in $(find "${directory}" -maxdepth 1 -type f -not -name '*.*')
 do
   echo -e "\nlaunching conky config '${conkyConfig##*/}'"
-  key=${conkyConfig##*/}
+  override=$(grep -v \# "${layoutFile}" | grep "${conkyConfig##*/}":)
 
-  if [[ ${layoutMap[${key}]} ]]; then
-    IFS="${old_ifs}"
-    # override is of the format: 'x y alignment'
-    #                            '10 50 top_right'  < space separated string
-    layoutOverride=(${layoutMap[${key}]})     # create an array out of the string in order to have it word split
-    # TODO ensure # of override elements is 2 or 3 elements
+  if [[ ${override} ]]; then
+    # override is of the format: configFilename:x:y:alignment
+    #                            cpu:10:50:top_right
+    IFS=:
+    layoutOverride=(${override})     # create an array out of the string in order to have it word split    
     # construct the position parameters for conky, ie. -x 10 -y 50 -a top_right
-    alignment="${layoutOverride[2]}"    # optional field, may not exist
-    layoutOverride=(-x "${layoutOverride[0]}" -y "${layoutOverride[1]}")
+    alignment="${layoutOverride[3]}"    # optional field, may not exist
+    layoutOverride=(-x "${layoutOverride[1]}" -y "${layoutOverride[2]}")
     
     # if alignment is provided, add -a flag
     if [[ "${alignment}" ]]; then
