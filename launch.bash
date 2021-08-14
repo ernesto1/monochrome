@@ -78,7 +78,7 @@ killall dnfPackageLookup.bash
 IFS=$'\n'
 
 # all available conky configs in the target directory will be launched
-# config file anmes are expected to not have an extension, ie. cpu vs cpu.cfg
+# config file names are expected to not have an extension, ie. cpu vs cpu.cfg
 # if an alignment override is available for the specific config, it will be used
 for conkyConfig in $(find "${directory}" -maxdepth 1 -type f -not -name '*.*')
 do
