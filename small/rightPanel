@@ -49,30 +49,28 @@ ${voffset 3} ${color1}compositor${goto 80}${color}${execi 3600 echo $XDG_SESSION
 # :::::::::::::::::::: cpu processes
 ${image ~/conky/monochrome/images/large/cpuProcesses.png -n -p 0,50}\
 ${voffset 37} process${goto 135}cpu   pid 
-${voffset 11} ${top name 1}${goto 111}${top cpu 1}% ${top pid 1}
-${voffset 3} ${top name 2}${goto 111}${top cpu 2}% ${top pid 2} 
-${voffset 3} ${top name 3}${goto 111}${top cpu 3}% ${top pid 3} 
-${voffset 3} ${top name 4}${goto 111}${top cpu 4}% ${top pid 4} 
-${voffset 3} ${top name 5}${goto 111}${top cpu 5}% ${top pid 5} 
-${voffset 3} ${top name 6}${goto 111}${top cpu 6}% ${top pid 6} 
+${voffset 9} ${top name 1}${goto 111}${top cpu 1}% ${top pid 1}
+${voffset 5} ${top name 2}${goto 111}${top cpu 2}% ${top pid 2} 
+${voffset 5} ${top name 3}${goto 111}${top cpu 3}% ${top pid 3} 
+${voffset 5} ${top name 4}${goto 111}${top cpu 4}% ${top pid 4} 
+${voffset 5} ${top name 5}${goto 111}${top cpu 5}% ${top pid 5} 
 # :::::::::::::::::::: memory processes
 ${image ~/conky/monochrome/images/large/memoryProcesses.png -n -p 208,50}\
-${voffset -117}${goto 213}process${goto 345}mem   pid
-${goto 213}${voffset 11}${color}${if_match ${top_mem mem 1} >= 49}${color2}${endif}${top_mem name 1}${alignr}${top_mem mem_res 1} ${top_mem pid 1} 
-${goto 213}${voffset 3}${color}${if_match ${top_mem mem 2} >= 49}${color2}${endif}${top_mem name 2}${alignr}${top_mem mem_res 2} ${top_mem pid 2} 
-${goto 213}${voffset 3}${color}${if_match ${top_mem mem 3} >= 49}${color2}${endif}${top_mem name 3}${alignr}${top_mem mem_res 3} ${top_mem pid 3} 
-${goto 213}${voffset 3}${color}${if_match ${top_mem mem 4} >= 49}${color2}${endif}${top_mem name 4}${alignr}${top_mem mem_res 4} ${top_mem pid 4} 
-${goto 213}${voffset 3}${color}${if_match ${top_mem mem 5} >= 49}${color2}${endif}${top_mem name 5}${alignr}${top_mem mem_res 5} ${top_mem pid 5} 
-${goto 213}${voffset 3}${color}${if_match ${top_mem mem 6} >= 49}${color2}${endif}${top_mem name 6}${alignr}${top_mem mem_res 6} ${top_mem pid 6} 
+${voffset -107}${goto 213}process${goto 345}mem   pid
+${goto 213}${voffset 9}${color}${if_match ${top_mem mem 1} >= 49}${color2}${endif}${top_mem name 1}${alignr}${top_mem mem_res 1} ${top_mem pid 1} 
+${goto 213}${voffset 5}${color}${if_match ${top_mem mem 2} >= 49}${color2}${endif}${top_mem name 2}${alignr}${top_mem mem_res 2} ${top_mem pid 2} 
+${goto 213}${voffset 5}${color}${if_match ${top_mem mem 3} >= 49}${color2}${endif}${top_mem name 3}${alignr}${top_mem mem_res 3} ${top_mem pid 3} 
+${goto 213}${voffset 5}${color}${if_match ${top_mem mem 4} >= 49}${color2}${endif}${top_mem name 4}${alignr}${top_mem mem_res 4} ${top_mem pid 4} 
+${goto 213}${voffset 5}${color}${if_match ${top_mem mem 5} >= 49}${color2}${endif}${top_mem name 5}${alignr}${top_mem mem_res 5} ${top_mem pid 5} 
 # :::::::::::::::::::: usb
 ${if_mounted /run/media/ernesto/sandisk}\
 ${image ~/conky/monochrome/images/small/usbStick.png -n -p 0, 349}\
-${voffset 219}${color1}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color2}${endif}${fs_bar 4, 45 /run/media/ernesto/sandisk}
+${voffset 229}${color1}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color2}${endif}${fs_bar 4, 45 /run/media/ernesto/sandisk}
 ${goto 54}${voffset -49}${color1}fs type${goto 110}${color}${fs_type /run/media/ernesto/sandisk}
 ${goto 54}${voffset 3}${color1}size${goto 110}${color}${fs_size /run/media/ernesto/sandisk}
 ${goto 54}${voffset 3}${color1}free${goto 110}${color}${fs_free /run/media/ernesto/sandisk}
 ${else}
-${voffset 204}
+${voffset 213}
 ${endif}
 ${if_mounted /run/media/ernesto/MAXTOR}\
 ${image ~/conky/monochrome/images/small/usbDrive.png -n -p 0, 414}\
