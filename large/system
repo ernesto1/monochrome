@@ -5,12 +5,10 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',
-  gap_x = 2230,         -- gap between border of the screen and the conky window, same as passing -x at command line
+  gap_x = 2189,         -- gap between border of the screen and the conky window, same as passing -x at command line
   gap_y = 89,
 
   -- window settings
-  minimum_width = 215, 
-  minimum_height = 46,
   own_window = true,
   own_window_type = 'desktop',              -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -22,7 +20,7 @@ conky.config = {
 
   -- window borders
   draw_borders = false,     -- draw borders around the conky window
-  border_width = 0,         -- width of border window in pixels
+  border_width = 1,         -- width of border window in pixels
   stippled_borders = 0,     -- border stippling (dashing) in pixels
   border_inner_margin = 0,  -- margin between the border and text in pixels
   border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
@@ -43,7 +41,7 @@ conky.config = {
 };
 
 conky.text = [[
-${voffset 3}${color1}kernel${goto 70}${color}${kernel}
+${voffset 3}${color1}kernel${goto 70}${color}${kernel}..
 ${voffset 3}${color1}uptime${goto 70}${color}${uptime}
 ${voffset 3}${color1}dnf${goto 70}${color}${if_existing /tmp/conkyDnf new}${color1}${endif}${tail /tmp/conkyDnf 1 2}
 ${voffset 3}${color1}compositor${goto 70}${color}${execi 3600 echo $XDG_SESSION_TYPE}
