@@ -6,11 +6,11 @@ conky.config = {
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
   gap_x = 440,                -- same as passing -x at command line
-  gap_y = 50,
+  gap_y = 58,
 
   -- window settings
   minimum_width = 195,
-  minimum_height = 125,
+  minimum_height = 117,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -44,11 +44,10 @@ conky.config = {
 
 conky.text = [[
 ${voffset 4} process${alignr}cpu   pid 
- ${voffset 10}${color}${if_match ${top cpu 1} >= 49}${color2}${endif}${top name 1}${alignr}${top cpu 1}% ${top pid 1} 
- ${voffset 3}${color}${if_match ${top cpu 2} >= 49}${color2}${endif}${top name 2}${alignr}${top cpu 2}% ${top pid 2} 
- ${voffset 3}${color}${if_match ${top cpu 3} >= 49}${color2}${endif}${top name 3}${alignr}${top cpu 3}% ${top pid 3} 
- ${voffset 3}${color}${if_match ${top cpu 4} >= 49}${color2}${endif}${top name 4}${alignr}${top cpu 4}% ${top pid 4} 
- ${voffset 3}${color}${if_match ${top cpu 5} >= 49}${color2}${endif}${top name 5}${alignr}${top cpu 5}% ${top pid 5} 
- ${voffset 3}${color}${if_match ${top cpu 6} >= 49}${color2}${endif}${top name 6}${alignr}${top cpu 6}% ${top pid 6}\
-${image ~/conky/monochrome/images/large/cpuProcesses.png -n -p 0,0} 
+ ${voffset 9}${color}${if_match ${top cpu 1} >= 49}${color2}${endif}${top name 1}${alignr}${top cpu 1}% ${top pid 1} 
+ ${voffset 5}${color}${if_match ${top cpu 2} >= 49}${color2}${endif}${top name 2}${alignr}${top cpu 2}% ${top pid 2} 
+ ${voffset 5}${color}${if_match ${top cpu 3} >= 49}${color2}${endif}${top name 3}${alignr}${top cpu 3}% ${top pid 3} 
+ ${voffset 5}${color}${if_match ${top cpu 4} >= 49}${color2}${endif}${top name 4}${alignr}${top cpu 4}% ${top pid 4} 
+ ${voffset 5}${color}${if_match ${top cpu 5} >= 49}${color2}${endif}${top name 5}${alignr}${top cpu 5}% ${top pid 5} \
+${image ~/conky/monochrome/images/large/cpuProcesses.png -n -p 0,0}
 ]];

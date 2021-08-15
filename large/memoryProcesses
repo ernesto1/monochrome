@@ -6,11 +6,11 @@ conky.config = {
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
   gap_x = 834,                -- same as passing -x at command line
-  gap_y = 50,
+  gap_y = 58,
 
   -- window settings
   minimum_width = 195,
-  minimum_height = 125,
+  minimum_height = 117,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -44,11 +44,10 @@ conky.config = {
 
 conky.text = [[
 ${voffset 4} process${alignr}mem   pid 
- ${voffset 10}${color}${if_match ${top_mem mem 1} >= 49}${color2}${endif}${top_mem name 1}${alignr}${top_mem mem_res 1} ${top_mem pid 1} 
- ${voffset 3}${color}${if_match ${top_mem mem 2} >= 49}${color2}${endif}${top_mem name 2}${alignr}${top_mem mem_res 2} ${top_mem pid 2} 
- ${voffset 3}${color}${if_match ${top_mem mem 3} >= 49}${color2}${endif}${top_mem name 3}${alignr}${top_mem mem_res 3} ${top_mem pid 3} 
- ${voffset 3}${color}${if_match ${top_mem mem 4} >= 49}${color2}${endif}${top_mem name 4}${alignr}${top_mem mem_res 4} ${top_mem pid 4} 
- ${voffset 3}${color}${if_match ${top_mem mem 5} >= 49}${color2}${endif}${top_mem name 5}${alignr}${top_mem mem_res 5} ${top_mem pid 5} 
- ${voffset 3}${color}${if_match ${top_mem mem 6} >= 49}${color2}${endif}${top_mem name 6}${alignr}${top_mem mem_res 6} ${top_mem pid 6} \
-${image ~/conky/monochrome/images/large/memoryProcesses.png -n -p 0,0}
+ ${voffset 9}${color}${if_match ${top_mem mem 1} >= 49}${color2}${endif}${top_mem name 1}${alignr}${top_mem mem_res 1} ${top_mem pid 1} 
+ ${voffset 5}${color}${if_match ${top_mem mem 2} >= 49}${color2}${endif}${top_mem name 2}${alignr}${top_mem mem_res 2} ${top_mem pid 2} 
+ ${voffset 5}${color}${if_match ${top_mem mem 3} >= 49}${color2}${endif}${top_mem name 3}${alignr}${top_mem mem_res 3} ${top_mem pid 3} 
+ ${voffset 5}${color}${if_match ${top_mem mem 4} >= 49}${color2}${endif}${top_mem name 4}${alignr}${top_mem mem_res 4} ${top_mem pid 4} 
+ ${voffset 5}${color}${if_match ${top_mem mem 5} >= 49}${color2}${endif}${top_mem name 5}${alignr}${top_mem mem_res 5} ${top_mem pid 5} \
+${image ~/conky/monochrome/images/large/memoryProcesses.png -n -p 0,0}\
 ]];

@@ -6,11 +6,11 @@ conky.config = {
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
   gap_x = 1448,               -- same as passing -x at command line
-  gap_y = 7,
+  gap_y = 12,
 
   -- window settings
   minimum_width = 160,
-  minimum_height = 96,
+  minimum_height = 135,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -47,7 +47,7 @@ conky.text = [[
 ${voffset 71}${offset 8}${color3}${if_match ${swapperc} > 90}${color2}${endif}${swapbar 5, 55 /}\
 ${voffset -74}${goto 78}${diskiograph_read /dev/sda 42,80 ffffff f2f2f2 260000 -t}
 ${voffset -5}${offset 78}${diskiograph_write /dev/sda 42,80 e6003a 800020 260000 -t}
-${voffset 6}${color1}swap ${color}${swapperc}%${alignr}${color}${diskio_read /dev/sda}  ${color1}read
+${voffset 1}${color1}swap ${color}${swapperc}%${alignr}${color}${diskio_read /dev/sda}  ${color1}read
 ${voffset 5}${alignr}${color}${diskio_write /dev/sda} ${color1}write\
 ${image ~/conky/monochrome/images/large/disk.png -n -p 0,0}
 ]];
