@@ -67,7 +67,7 @@ echo    "monitor width:        ${screenWidth} pixels"
 layoutFile="$(echo ${directory}/layout.${screenWidth}x*.cfg)"   # need to use echo in order for the variable
                                                                 # to hold the actual pathname expansion
 if [[ -f ${layoutFile} ]]; then
-  echo -e "layout override file: ${layoutFile}\n"
+  echo -e "layout override file: ${layoutFile}"
   detectDuplicateEntries "${layoutFile}"
   # TODO ensure # of override elements is 2 or 3 elements
 fi
@@ -83,7 +83,7 @@ IFS=$'\n'
 for conkyConfig in $(find "${directory}" -maxdepth 1 -type f -not -name '*.*')
 do
   echo -e "\nlaunching conky config '${conkyConfig##*/}'"
-  override=$(grep -v \# "${layoutFile}" | grep "${conkyConfig##*/}":)
+  [[ -f ${layoutFile} ]] && override=$(grep -v \# "${layoutFile}" | grep "${conkyConfig##*/}":)
 
   if [[ ${override} ]]; then
     # override is of the format: configFilename:x:y:alignment
