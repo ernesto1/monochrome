@@ -43,8 +43,8 @@ conky.config = {
 };
 
 conky.text = [[
-${voffset 3}${color1}kernel${goto 80}${color}${kernel}
-${voffset 3}${color1}uptime${goto 80}${color}${uptime}
-${voffset 3}${color1}dnf${goto 80}${color}${if_existing /tmp/conkyDnf new}${color1}${endif}${tail /tmp/conkyDnf 1 2}
-${voffset 3}${color1}compositor${goto 80}${color}${execi 3600 echo $XDG_SESSION_TYPE}
+${voffset 3}${color1}kernel${goto 70}${color}${kernel}
+${voffset 3}${color1}uptime${goto 70}${color}${uptime}
+${voffset 3}${color1}dnf${goto 70}${color}${if_existing /tmp/conkyDnf new}${color1}${endif}${tail /tmp/conkyDnf 1 2}
+${voffset 3}${color1}compositor${goto 70}${color}${execi 3600 echo $XDG_SESSION_TYPE}
 ]];
