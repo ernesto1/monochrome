@@ -1,6 +1,5 @@
 *.ods
-legacy/
-raws/
 *.ods*
+*-legacy/
+raws/
 blame/
-images/screenshots/large-v0*.png
