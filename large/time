@@ -1,7 +1,7 @@
 conky.config = {
   update_interval = 1,  -- update interval in seconds
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
-  xinerama_head = 1,    -- for multi monitor setup: 1 (main) OR 2 (secondary)
+  xinerama_head = 0,    -- multi monitor setup: x11 (0,1,2,..) wayland (1,2,3,..)
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment

@@ -60,7 +60,11 @@ $ sudo dnf install conky
 **n.b.** I recommend using the conky package version `1.11.5_pre`.
 More recent versions may have regressions that cause the theme to behave erratically.  Run the command `dnf downgrade conky` until you arrive at this version.
 
-## How to run
+## Configuration
+- The [wiki](https://github.com/ernesto1/monochrome/wiki) outlines items that may require configuration in order to customize this conky to your system
+- If you run a multi monitor setup, you can read on how to configure conky to show on a [particular monitor](https://github.com/ernesto1/monochrome/wiki#multi-monitor-setups)
+
+# How to run
 1) Unzip the project's zip file in the folder `~/conky`
 
 ```
