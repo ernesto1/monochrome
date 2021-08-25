@@ -1,0 +1,61 @@
+conky.config = {
+  update_interval = 2,  -- update interval in seconds
+  total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
+  xinerama_head = 0,    -- multi monitor setup: x11 (0,1,2,..) wayland (1,2,3,..)
+  double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
+
+  -- window alignment
+  alignment = 'top_right',    -- top|middle|bottom_left|right
+  gap_x = 20,               -- same as passing -x at command line
+  gap_y = 48,
+
+  -- window settings
+  minimum_width = 200,
+  minimum_height = 400,
+  own_window = true,
+  own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
+  own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+
+  -- transparency configuration
+  own_window_transparent = true,
+  own_window_argb_visual = true,  -- turn on transparency
+  own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
+
+  -- window borders
+  draw_borders = false,     -- draw borders around the conky window
+  border_width = 0,         -- width of border window in pixels
+  stippled_borders = 0,     -- border stippling (dashing) in pixels
+  border_inner_margin = 0,  -- margin between the border and text in pixels
+  border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
+
+  -- graph settings
+  draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
+                              -- does not include bars, ie. wifi strength bar, cpu bar
+
+  imlib_cache_flush_interval = 300,
+  -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
+
+  -- font settings
+  draw_shades = false,    -- black shadow on text (not good if text is black)
+  draw_outline = false,   -- black outline around text (not good if text is black)
+  default_color = 'black',
+  color1 = 'white',
+  color2 = '44006a',      -- purple
+  color3 = '800020',      -- orange
+};
+
+conky.text = [[
+${image ~/conky/monochrome/images/blame/bar-right.png -n -p 0,0}\
+${goto 20}${voffset 3}fedora${goto 106}${voffset -1}${color2}${if_match ${fs_used_perc /} > 90}${color3}${endif}${fs_bar 4, 90 /}
+${voffset 4}${alignr}${fs_used /} / ${color}${fs_size /}
+${image ~/conky/monochrome/images/blame/bar-right.png -n -p 0,50}\
+${goto 20}${voffset 21}home${goto 106}${voffset -1}${color2}${if_match ${fs_used_perc /home} > 90}${color3}${endif}${fs_bar 4, 90 /home}
+${voffset 4}${alignr}${fs_used /home} / ${color}${fs_size /home}
+${image ~/conky/monochrome/images/blame/bar-right.png -n -p 0,100}\
+${goto 20}${voffset 21}betty${goto 106}${voffset -1}${color2}${if_match ${fs_used_perc /media/betty} > 90}${color3}${endif}${fs_bar 4, 90 /media/betty}
+${voffset 4}${alignr}${fs_used /media/betty} / ${color}${fs_size /media/betty}
+${image ~/conky/monochrome/images/blame/bar-right.png -n -p 0,150}\
+${goto 20}${voffset 21}veronica${goto 106}${voffset -1}${color2}${if_match ${fs_used_perc /media/veronica} > 90}${color3}${endif}${fs_bar 4, 90 /media/veronica}
+${voffset 4}${alignr}${fs_used /media/veronica} / ${color}${fs_size /media/veronica}
+
+]];
