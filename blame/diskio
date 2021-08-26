@@ -44,7 +44,7 @@ conky.config = {
 };
 
 conky.text = [[
-${image ~/conky/monochrome/images/blame/filesystem.png -n -p 0,17}\
+${image ~/conky/monochrome/images/blame/filesystem-sda.png -n -p 0,17}\
 ${color1}write ${color}${diskio_write /dev/sda}
 ${voffset 7}${offset 11}${diskiograph_write /dev/sda 25,122 FFA400 B27300 260000 -l}
 ${voffset -10}${offset 11}${diskiograph_read /dev/sda 25,122 7200b2 44006a 260000 -l}
