@@ -5,13 +5,13 @@ conky.config = {
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'top_middle',       -- top|middle|bottom_left|middle|right
-  gap_x = 95,                     -- same as passing -x at command line
-  gap_y = 45,
+  alignment = 'top_middle',     -- top|middle|bottom_left|middle|right
+  gap_x = -350,                 -- same as passing -x at command line
+  gap_y = 74,
 
   -- window settings
-  minimum_width = 270,
-  minimum_height = 192,
+  minimum_width = 213,
+  minimum_height = 400,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -40,15 +40,23 @@ conky.config = {
   draw_outline = false,   -- black outline around text (not good if text is black)
   default_color = 'black',
   color1 = 'white',
-  color2 = '44006a',      -- purple
-  color3 = '800020',      -- orange
+  color2 = 'B27300',      -- orange
 };
 
 conky.text = [[
-${image ~/conky/monochrome/images/blame/cylinder.png -n -p 0,0}\
-${offset 21}${voffset 22}${if_match ${memperc} >= 90}${memgraph 85, 20 FFA400 B27300}\
-${else}${memgraph 85, 20 b87fd8 44006a}${endif}
-${voffset -120}${goto 80}${color1}used ${color}${mem} / ${memmax}
-${goto 88}${voffset 24}${color2}${if_match ${swapperc} > 90}${color3}${endif}${swapbar 5, 90 /}${goto 105}${voffset -3}${color}${alignr}swap    \
-${image ~/conky/monochrome/images/blame/bar-left.png -n -p 85,40}
+${image ~/conky/monochrome/images/blame/filesystem.png -n -p 0,17}\
+${color1}write ${color}${diskio_write /dev/sda}
+${voffset 7}${offset 11}${diskiograph_write /dev/sda 25,122 FFA400 B27300 260000 -l}
+${voffset -10}${offset 11}${diskiograph_read /dev/sda 25,122 7200b2 44006a 260000 -l}
+${voffset 5}${color1}read ${color}${diskio_read /dev/sda}
+${image ~/conky/monochrome/images/blame/filesystem-sdb.png -n -p 0,150}\
+${voffset 24}${color1}write ${color}${diskio_write /dev/sdb}
+${voffset 7}${offset 11}${diskiograph_write /dev/sdb 25,122 FFA400 B27300 260000 -l}
+${voffset -10}${offset 11}${diskiograph_read /dev/sdb 25,122 7200b2 44006a 260000 -l}
+${voffset 5}${color1}read ${color}${diskio_read /dev/sdb}
+${image ~/conky/monochrome/images/blame/filesystem-sdc.png -n -p 0,277}\
+${voffset 24}${color1}write ${color}${diskio_write /dev/sdc}
+${voffset 7}${offset 11}${diskiograph_write /dev/sdc 25,122 FFA400 B27300 260000 -l}
+${voffset -10}${offset 11}${diskiograph_read /dev/sdc 25,122 7200b2 44006a 260000 -l}
+${voffset 5}${color1}read ${color}${diskio_read /dev/sdc}\
 ]];

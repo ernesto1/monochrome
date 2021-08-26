@@ -5,9 +5,9 @@ conky.config = {
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'bottom_right', -- top|middle|bottom_left|right
-  gap_x = 20,               -- same as passing -x at command line
-  gap_y = 20,
+  alignment = 'top_middle',     -- top|middle|bottom_left|middle|right
+  gap_x = -110,                 -- same as passing -x at command line
+  gap_y = 74,
 
   -- window settings
   minimum_width = 123,
@@ -23,7 +23,7 @@ conky.config = {
 
   -- window borders
   draw_borders = false,     -- draw borders around the conky window
-  border_width = 0,         -- width of border window in pixels
+  border_width = 1,         -- width of border window in pixels
   stippled_borders = 0,     -- border stippling (dashing) in pixels
   border_inner_margin = 0,  -- margin between the border and text in pixels
   border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
@@ -45,13 +45,13 @@ conky.config = {
 
 conky.text = [[
 ${alignr}${upspeed enp0s25} ${color1}up
-${voffset 6}${offset 66}${upspeedgraph enp0s25 49,49 FFA400 B27300 2000}
-${voffset 6}${alignr}${color}${totalup enp0s25}
-${voffset -58}${color}${totaldown enp0s25}
-${voffset 6}${offset 7}${downspeedgraph enp0s25 49,49 7200b2 44006a 15000}
-${voffset 6}${color1}down ${color}${downspeed enp0s25}\
+${voffset 11}${offset 66}${upspeedgraph enp0s25 49,49 FFA400 B27300 2000}
+${voffset 10}${alignr}${color}${totalup enp0s25}
+${voffset -65}${color}${totaldown enp0s25}
+${voffset 9}${offset 7}${downspeedgraph enp0s25 49,49 7200b2 44006a 15000}
+${voffset 10}${color1}down ${color}${downspeed enp0s25}\
 ${if_gw}\
-${image ~/conky/monochrome/images/blame/box-pair.png -n -p 0,17}\
+${image ~/conky/monochrome/images/blame/box-pair.png -n -p 0,22}\
 ${else}\
 ${image ~/conky/monochrome/images/large/network-disabled.png -n -p 0,0 s 370x104}\
 ${endif}

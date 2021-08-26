@@ -5,12 +5,12 @@ conky.config = {
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'top_right',    -- top|middle|bottom_left|right
-  gap_x = 20,               -- same as passing -x at command line
-  gap_y = 48,
+  alignment = 'top_middle',       -- top|middle|bottom_left|middle|right
+  gap_x = 420,                     -- same as passing -x at command line
+  gap_y = 45,
 
   -- window settings
-  minimum_width = 200,
+  minimum_width = 280,
   minimum_height = 400,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -23,7 +23,7 @@ conky.config = {
 
   -- window borders
   draw_borders = false,     -- draw borders around the conky window
-  border_width = 0,         -- width of border window in pixels
+  border_width = 1,         -- width of border window in pixels
   stippled_borders = 0,     -- border stippling (dashing) in pixels
   border_inner_margin = 0,  -- margin between the border and text in pixels
   border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
@@ -45,17 +45,17 @@ conky.config = {
 };
 
 conky.text = [[
-${image ~/conky/monochrome/images/blame/bar-right.png -n -p 0,0}\
-${goto 20}${voffset 3}fedora${goto 106}${voffset -1}${color2}${if_match ${fs_used_perc /} > 90}${color3}${endif}${fs_bar 4, 90 /}
+${image ~/conky/monochrome/images/blame/bar-right.png -n -p 80,0}\
+${goto 100}${voffset 3}fedora${goto 186}${voffset -1}${color2}${if_match ${fs_used_perc /} > 90}${color3}${endif}${fs_bar 4, 90 /}
 ${voffset 4}${alignr}${fs_used /} / ${color}${fs_size /}
 ${image ~/conky/monochrome/images/blame/bar-right.png -n -p 0,50}\
 ${goto 20}${voffset 21}home${goto 106}${voffset -1}${color2}${if_match ${fs_used_perc /home} > 90}${color3}${endif}${fs_bar 4, 90 /home}
-${voffset 4}${alignr}${fs_used /home} / ${color}${fs_size /home}
-${image ~/conky/monochrome/images/blame/bar-right.png -n -p 0,100}\
-${goto 20}${voffset 21}betty${goto 106}${voffset -1}${color2}${if_match ${fs_used_perc /media/betty} > 90}${color3}${endif}${fs_bar 4, 90 /media/betty}
-${voffset 4}${alignr}${fs_used /media/betty} / ${color}${fs_size /media/betty}
-${image ~/conky/monochrome/images/blame/bar-right.png -n -p 0,150}\
-${goto 20}${voffset 21}veronica${goto 106}${voffset -1}${color2}${if_match ${fs_used_perc /media/veronica} > 90}${color3}${endif}${fs_bar 4, 90 /media/veronica}
-${voffset 4}${alignr}${fs_used /media/veronica} / ${color}${fs_size /media/veronica}
+${voffset 4}${goto 106}${fs_used /home} / ${color}${fs_size /home}
+${image ~/conky/monochrome/images/blame/bar-right.png -n -p 60,100}\
+${goto 80}${voffset 21}betty${goto 166}${voffset -1}${color2}${if_match ${fs_used_perc /media/betty} > 90}${color3}${endif}${fs_bar 4, 90 /media/betty}
+${voffset 4}${goto 166}${fs_used /media/betty} / ${color}${fs_size /media/betty}
+${image ~/conky/monochrome/images/blame/bar-right.png -n -p 50,150}\
+${goto 70}${voffset 21}veronica${goto 156}${voffset -1}${color2}${if_match ${fs_used_perc /media/veronica} > 90}${color3}${endif}${fs_bar 4, 90 /media/veronica}
+${voffset 4}${goto 156}${fs_used /media/veronica} / ${color}${fs_size /media/veronica}
 
 ]];

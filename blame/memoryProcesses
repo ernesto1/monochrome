@@ -5,9 +5,9 @@ conky.config = {
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'top_left',    -- top|middle|bottom_left|right
-  gap_x = 490,               -- same as passing -x at command line
-  gap_y = 125,
+  alignment = 'top_middle',       -- top|middle|bottom_left|middle|right
+  gap_x = 258,                    -- same as passing -x at command line
+  gap_y = 285,
 
   -- window settings
   minimum_width = 180,
@@ -23,7 +23,7 @@ conky.config = {
 
   -- window borders
   draw_borders = false,     -- draw borders around the conky window
-  border_width = 0,         -- width of border window in pixels
+  border_width = 1,         -- width of border window in pixels
   stippled_borders = 0,     -- border stippling (dashing) in pixels
   border_inner_margin = 0,  -- margin between the border and text in pixels
   border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
@@ -40,12 +40,12 @@ conky.config = {
   draw_outline = false,   -- black outline around text (not good if text is black)
   default_color = 'black',
   color1 = 'white',
-  color2 = '800020',      -- orange
-  color3 = '44006a',      -- purple
+  color2 = '44006a',      -- purple
+  color3 = '800020',      -- orange
 };
 
 conky.text = [[
-${color1}process${alignr}mem   pid
+${alignr}mem   pid
 ${voffset -5}${hr 1}
 ${voffset 3}${color}${if_match ${top_mem mem 1} >= 49}${color2}${endif}${top_mem name 1}${alignr}${top_mem mem_res 1} ${top_mem pid 1}
 ${voffset 3}${color}${if_match ${top_mem mem 2} >= 49}${color2}${endif}${top_mem name 2}${alignr}${top_mem mem_res 2} ${top_mem pid 2}
@@ -54,6 +54,4 @@ ${voffset 3}${color}${if_match ${top_mem mem 4} >= 49}${color2}${endif}${top_mem
 ${voffset 3}${color}${if_match ${top_mem mem 5} >= 49}${color2}${endif}${top_mem name 5}${alignr}${top_mem mem_res 5} ${top_mem pid 5}
 ${voffset 3}${color}${if_match ${top_mem mem 6} >= 49}${color2}${endif}${top_mem name 6}${alignr}${top_mem mem_res 6} ${top_mem pid 6}
 ${voffset 3}${color}${if_match ${top_mem mem 7} >= 49}${color2}${endif}${top_mem name 7}${alignr}${top_mem mem_res 7} ${top_mem pid 7}
-${goto 3}${voffset 15}${color3}${if_match ${swapperc} > 90}${color2}${endif}${swapbar 13, 90 /}${goto 105}${voffset 5}${swapperc}%  swap
-${image ~/conky/monochrome/images/blame/bar-left.png -n -p 0,152}
 ]];
