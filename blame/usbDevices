@@ -1,0 +1,79 @@
+conky.config = {
+  update_interval = 2,  -- update interval in seconds
+  total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
+  xinerama_head = 1,    -- multi monitor setup: x11 (0,1,2,..) wayland (1,2,3,..)
+  double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
+
+  -- window alignment
+  alignment = 'top_middle',       -- top|middle|bottom_left|middle|right
+  gap_x = -613,                     -- same as passing -x at command line
+  gap_y = 72,
+
+  -- window settings
+  minimum_width = 270,
+  minimum_height = 190,
+  own_window = true,
+  own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
+  own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+
+  -- transparency configuration
+  own_window_transparent = true,
+  own_window_argb_visual = true,  -- turn on transparency
+  own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
+
+  -- window borders
+  draw_borders = false,     -- draw borders around the conky window
+  border_width = 1,         -- width of border window in pixels
+  stippled_borders = 0,     -- border stippling (dashing) in pixels
+  border_inner_margin = 0,  -- margin between the border and text in pixels
+  border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
+
+  -- graph settings
+  draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
+                              -- does not include bars, ie. wifi strength bar, cpu bar
+
+  imlib_cache_flush_interval = 300,
+  -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
+
+  -- font settings
+  draw_shades = false,    -- black shadow on text (not good if text is black)
+  draw_outline = false,   -- black outline around text (not good if text is black)
+  default_color = 'black',
+  color1 = 'white',
+  color2 = '44006a',      -- purple
+  color3 = '800020',      -- orange
+};
+
+conky.text = [[
+${image ~/conky/monochrome/images/blame/usb-box.png -n -p 0,0}\
+${image ~/conky/monochrome/images/blame/usb-box.png -n -p 84,0}\
+${image ~/conky/monochrome/images/blame/usb-box.png -n -p 168,0}\
+${if_mounted /run/media/ernesto/sandisk}\
+${image ~/conky/monochrome/images/blame/usb-stick.png -n -p 3,3}\
+${voffset 41}${offset 3}${color2}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color3}${endif}${fs_bar 5, 48 /run/media/ernesto/sandisk}
+${voffset 8}${offset 5}${fs_free /run/media/ernesto/sandisk}
+${voffset 3}${offset 14}free
+${else}\
+${image ~/conky/monochrome/images/blame/usb-box-filler.png -n -p 0,0}\
+${endif}\
+${if_mounted /run/media/ernesto/MAXTOR}\
+${image ~/conky/monochrome/images/blame/usb-stick.png -n -p 3,3}\
+${voffset 41}${offset 3}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 5, 48 /run/media/ernesto/MAXTOR}
+${voffset 8}${offset 5}${fs_free /run/media/ernesto/MAXTOR}
+${voffset 3}${offset 14}free
+${else}\
+${image ~/conky/monochrome/images/blame/usb-box-filler.png -n -p 84,0}\
+${endif}\
+${if_mounted /run/media/ernesto/disk}\
+${image ~/conky/monochrome/images/blame/usb-stick.png -n -p 3,3}\
+${voffset 41}${offset 3}${color2}${if_match ${fs_used_perc /run/media/ernesto/disk} > 90}${color3}${endif}${fs_bar 5, 48 /run/media/ernesto/disk}
+${voffset 8}${offset 5}${fs_free /run/media/ernesto/disk}
+${voffset 3}${offset 14}free
+${else}\
+${image ~/conky/monochrome/images/blame/usb-box-filler.png -n -p 168,0}\
+${endif}\
+${voffset 20}${goto 21}${color1}kernel${goto 89}${color}${kernel}
+${voffset 3}${goto 21}${color1}uptime${goto 89}${color}${uptime}
+${voffset 3}${goto 39}${color1}dnf${goto 89}${color}${if_existing /tmp/conkyDnf new}${color1}${endif}${tail /tmp/conkyDnf 1 2}
+${voffset 3}${color1}compositor${goto 89}${color}${execi 3600 echo $XDG_SESSION_TYPE}
+]];
