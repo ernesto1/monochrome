@@ -1,7 +1,7 @@
 conky.config = {
   update_interval = 2,  -- update interval in seconds
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
-  xinerama_head = 0,    -- multi monitor setup: x11 (0,1,2,..) wayland (1,2,3,..)
+  xinerama_head = 1,    -- multi monitor setup: x11 (0,1,2,..) wayland (1,2,3,..)
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
@@ -11,7 +11,7 @@ conky.config = {
 
   -- window settings
   minimum_width = 270,
-  minimum_height = 192,
+  minimum_height = 220,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -48,7 +48,7 @@ conky.text = [[
 ${image ~/conky/monochrome/images/blame/cylinder.png -n -p 0,0}\
 ${offset 21}${voffset 22}${if_match ${memperc} >= 90}${memgraph 85, 20 FFA400 B27300}\
 ${else}${memgraph 85, 20 b87fd8 44006a}${endif}
-${voffset -120}${goto 80}${color1}used ${color}${mem} / ${memmax}
-${goto 88}${voffset 24}${color2}${if_match ${swapperc} > 90}${color3}${endif}${swapbar 5, 90 /}${goto 105}${voffset -3}${color}${alignr}swap    \
-${image ~/conky/monochrome/images/blame/bar-left.png -n -p 85,40}
+${goto 79}${voffset 40}${color2}${if_match ${swapperc} > 90}${color3}${endif}${swapbar 5, 90 /}${goto 105}${voffset -3}${color}${alignr}swap      \
+${image ~/conky/monochrome/images/blame/bar-left.png -n -p 76,163}
+${voffset 29}${goto 5}${color1}used  ${color}${mem} / ${memmax}
 ]];
