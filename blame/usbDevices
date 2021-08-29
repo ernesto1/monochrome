@@ -52,7 +52,7 @@ ${if_mounted /run/media/ernesto/sandisk}\
 ${image ~/conky/monochrome/images/blame/usb-stick.png -n -p 3,3}\
 ${voffset 41}${offset 3}${color2}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color3}${endif}${fs_bar 5, 48 /run/media/ernesto/sandisk}
 ${voffset 8}${offset 5}${fs_free /run/media/ernesto/sandisk}
-${voffset 3}${offset 14}free
+${voffset 3}${offset 14}free${voffset -78}\
 ${else}\
 ${image ~/conky/monochrome/images/blame/usb-box-filler.png -n -p 0,0}\
 ${endif}\
@@ -60,15 +60,15 @@ ${if_mounted /run/media/ernesto/MAXTOR}\
 ${image ~/conky/monochrome/images/blame/usb-stick.png -n -p 3,3}\
 ${voffset 41}${offset 3}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 5, 48 /run/media/ernesto/MAXTOR}
 ${voffset 8}${offset 5}${fs_free /run/media/ernesto/MAXTOR}
-${voffset 3}${offset 14}free
+${voffset 3}${offset 14}free${voffset -78}\
 ${else}\
 ${image ~/conky/monochrome/images/blame/usb-box-filler.png -n -p 84,0}\
 ${endif}\
 ${if_mounted /run/media/ernesto/disk}\
-${image ~/conky/monochrome/images/blame/usb-stick.png -n -p 3,3}\
-${voffset 41}${offset 3}${color2}${if_match ${fs_used_perc /run/media/ernesto/disk} > 90}${color3}${endif}${fs_bar 5, 48 /run/media/ernesto/disk}
-${voffset 8}${offset 5}${fs_free /run/media/ernesto/disk}
-${voffset 3}${offset 14}free
+${image ~/conky/monochrome/images/blame/usb-sdCard.png -n -p 171,3}\
+${voffset 41}${goto 171}${color2}${if_match ${fs_used_perc /run/media/ernesto/disk} > 90}${color3}${endif}${fs_bar 5, 48 /run/media/ernesto/disk}
+${voffset 8}${goto 176}${fs_free /run/media/ernesto/disk}
+${voffset 3}${goto 182}free
 ${else}\
 ${image ~/conky/monochrome/images/blame/usb-box-filler.png -n -p 168,0}\
 ${endif}\
