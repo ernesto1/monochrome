@@ -11,19 +11,37 @@
 
 function usage() {
   cat <<-END
-	$(basename $0) --[mode] [monitor width]
+	$(basename $0) --mode [monitor width] [--monitor 1|2|3|...]
 	
-	Options
+	Mode options
 	  --laptop
 	    Loads the conky laptop mode.  Meant for monitors with a 1366 x 768 pixel resolution.
 
 	  --desktop 1920|2560
 	    Loads the conky desktop mode for the given resolution: 1920x1200 or 2560x1600.
+	    
+	  --blame
+	    Load the conky blame theme
+
+	Optional flags
+	  --monitor 0|1|2|3|...
+	    On multi monitor setups, use this flag to specify on which monitor you would like conky
+	    to draw itself.
+	    
+	                 +--------+
+	    +-----------+|        |
+	    |           ||        |   How your monitors get assigned their number depends
+	    |     0     ||   1    |   on the compositor you are running: x11 or wayland
+	    |           ||        |   ie. monitor 0 may not be the same on both compositors
+	    +-----------+|        |
+	         |  |    +--------+
+	        /    \      /  \\
 	
 	Examples
 	  $(basename $0) --laptop
 	  $(basename $0) --desktop 1920
 	  $(basename $0) --desktop 2560
+	  $(basename $0) --desktop 2560 --monitor 2
 	END
 }
 
@@ -38,40 +56,68 @@ function detectDuplicateEntries() {
   fi
 }
 
-# determine mode from the parameters provided
-case $1 in
-  --laptop)
-    directory=${HOME}/conky/monochrome/small
-    screenWidth=1366
-    ;;
-  --desktop)
-    directory=${HOME}/conky/monochrome/large
-    screenWidth=$2
+# ---------- script begins
+set -e      # exit the script on an error
 
-    # ensure a supported monitor width was provided
-    if [[ $screenWidth -ne 1920 ]] && [[ $screenWidth -ne 2560 ]]; then
+# ensure at least one parameter was provided
+if [[ $# < 1 ]]; then
+  usage
+  exit 1
+fi
+
+while (( "$#" )); do
+  case $1 in
+    --blame)
+      directory=${HOME}/conky/monochrome/blame
+      screenWidth=2560
+      shift
+      ;;
+    --desktop)
+      directory=${HOME}/conky/monochrome/large
+      screenWidth=$2
+      shift 2
+
+      # ensure a supported monitor width was provided
+      if [[ $screenWidth -ne 1920 ]] && [[ $screenWidth -ne 2560 ]]; then
+        usage
+        exit 1
+      fi
+      ;;
+    --laptop)
+      directory=${HOME}/conky/monochrome/small
+      screenWidth=1366
+      shift
+      ;;      
+    --monitor)
+      monitor=$2
+      # TODO validate a proper number was provided to the monitor flag
+      shift 2
+      ;;
+    *)
       usage
-      exit 1
-    fi
-    ;;
-  *)            # this will also cover the use case of no arguments provided
-    usage
-    exit
-    ;;
-esac
+      exit 2
+      ;;
+  esac
+done
 
 echo -e "launching conky with the following settings:\n"
 echo    "conky folder:         ${directory}"
 echo    "monitor width:        ${screenWidth} pixels"
+
+if [[ ${monitor} ]]; then
+  echo    "window compositor:    $(echo $XDG_SESSION_TYPE)"
+  echo    "monitor:              ${monitor}"
+fi
 
 layoutFile="$(echo ${directory}/layout.${screenWidth}x*.cfg)"   # need to use echo in order for the variable
                                                                 # to hold the actual pathname expansion
 if [[ -f ${layoutFile} ]]; then
   echo -e "layout override file: ${layoutFile}"
   detectDuplicateEntries "${layoutFile}"
-  # TODO ensure # of override elements is 2 or 3 elements
+  # TODO file integrity: ensure number of override elements is 2 or 3
 fi
 
+set +e      # ignore errors
 killall conky
 killall dnfPackageLookup.bash
 
@@ -79,10 +125,11 @@ IFS=$'\n'
 
 # all available conky configs in the target directory will be launched
 # config file names are expected to not have an extension, ie. cpu vs cpu.cfg
-# if an alignment override is available for the specific config, it will be used
 for conkyConfig in $(find "${directory}" -maxdepth 1 -type f -not -name '*.*')
 do
   echo -e "\nlaunching conky config '${conkyConfig##*/}'"
+  
+  # 1. layout override
   [[ -f ${layoutFile} ]] && override=$(grep -v \# "${layoutFile}" | grep "${conkyConfig##*/}":)
 
   if [[ ${override} ]]; then
@@ -102,6 +149,12 @@ do
     echo "applying the position override: ${layoutOverride[@]}"
   fi
 
+  # 2. monitor override
+  if [[ $monitor ]]; then
+    sed -i "s/xinerama_head *= *[[:digit:]]/xinerama_head = ${monitor}/" ${conkyConfig}
+  fi
+
+  # 3. launch conky
   conky -c "${conkyConfig}" ${layoutOverride[@]} &
   unset layoutOverride
   IFS=$'\n'
