@@ -1,13 +1,13 @@
 conky.config = {
   update_interval = 2,  -- update interval in seconds
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
-  xinerama_head = 1,    -- multi monitor setup: x11 (0,1,2,..) wayland (1,2,3,..)
+  xinerama_head = 0,    -- multi monitor setup: x11 (0,1,2,..) wayland (1,2,3,..)
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
   alignment = 'top_middle',       -- top|middle|bottom_left|middle|right
   gap_x = 185,                     -- same as passing -x at command line
-  gap_y = 45,
+  gap_y = 40,
 
   -- window settings
   minimum_width = 270,
@@ -45,10 +45,10 @@ conky.config = {
 };
 
 conky.text = [[
-${image ~/conky/monochrome/images/blame/cylinder.png -n -p 0,0}\
-${offset 21}${voffset 22}${if_match ${memperc} >= 90}${memgraph 85, 20 FFA400 B27300}\
+${image ~/conky/monochrome/images/blame/cylinder.png -n -p 6,0}\
+${offset 21}${voffset 15}${if_match ${memperc} >= 90}${memgraph 84, 19 FFA400 B27300}\
 ${else}${memgraph 85, 20 b87fd8 44006a}${endif}
-${goto 79}${voffset 40}${color2}${if_match ${swapperc} > 90}${color3}${endif}${swapbar 5, 90 /}${goto 105}${voffset -3}${color}${alignr}swap      \
-${image ~/conky/monochrome/images/blame/bar-left.png -n -p 76,163}
-${voffset 29}${goto 5}${color1}used  ${color}${mem} / ${memmax}
+${goto 79}${voffset 30}${color2}${if_match ${swapperc} > 90}${color3}${endif}${swapbar 5, 90 /}${goto 105}${voffset -3}${color}${alignr}swap      \
+${image ~/conky/monochrome/images/blame/bar-left.png -n -p 76,145}
+${voffset 28}${goto 5}${color1}used  ${color}${mem} / ${memmax}
 ]];
