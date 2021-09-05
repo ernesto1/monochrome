@@ -5,13 +5,13 @@ conky.config = {
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'top_middle',     -- top|middle|bottom_left|middle|right
-  gap_x = -210,                 -- same as passing -x at command line
+  alignment = 'top_middle',       -- top|middle|bottom_left|middle|right
+  gap_x = 145,                     -- same as passing -x at command line
   gap_y = 40,
 
   -- window settings
-  minimum_width = 213,
-  minimum_height = 400,
+  minimum_width = 180,
+  minimum_height = 250,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -40,23 +40,16 @@ conky.config = {
   draw_outline = false,   -- black outline around text (not good if text is black)
   default_color = 'black',
   color1 = 'white',
-  color2 = 'B27300',      -- orange
+  color2 = '44006a',      -- purple
+  color3 = '800020',      -- orange
 };
 
 conky.text = [[
-${image ~/conky/monochrome/images/blame/filesystem-sda.png -n -p 0,17}\
-${color1}write ${color}${diskio_write /dev/sda}
-${voffset 7}${offset 11}${diskiograph_write /dev/sda 25,122 cd0033 800020 260000 -l}
-${voffset -10}${offset 11}${diskiograph_read /dev/sda 25,122 8b00c6 4c125e 260000 -l}
-${voffset 5}${color1}read  ${color}${diskio_read /dev/sda}
-${image ~/conky/monochrome/images/blame/filesystem-sdb.png -n -p 0,150}\
-${voffset 24}${color1}write ${color}${diskio_write /dev/sdb}
-${voffset 7}${offset 11}${diskiograph_write /dev/sdb 25,122 ba0568 67032F 260000 -l}
-${voffset -10}${offset 11}${diskiograph_read /dev/sdb 25,122 8b00c6 4c125e 260000 -l}
-${voffset 5}${color1}read  ${color}${diskio_read /dev/sdb}
-${image ~/conky/monochrome/images/blame/filesystem-sdc.png -n -p 0,277}\
-${voffset 24}${color1}write ${color}${diskio_write /dev/sdc}
-${voffset 7}${offset 11}${diskiograph_write /dev/sdc 25,122 ba0568 67032F 260000 -l}
-${voffset -10}${offset 11}${diskiograph_read /dev/sdc 25,122 8b00c6 4c125e 260000 -l}
-${voffset 5}${color1}read  ${color}${diskio_read /dev/sdc}\
+${image ~/conky/monochrome/images/blame/cylinder-cpu.png -n -p 0,0}\
+${image ~/conky/monochrome/images/blame/cylinder.png -n -p 65,0}\
+${offset 15}${voffset 15}${cpugraph cpu0 85, 20 8b00c6 4c125e -l}\
+${goto 81}${if_match ${memperc} >= 90}${memgraph 84, 19 FFA400 B27300}\${else}${memgraph 85, 20 8b00c6 4c125e}${endif}
+${voffset 70}${goto 34}${color1}cpu${goto 68}${color}${cpu cpu0}%
+${voffset 3}${goto 28}${color1}load${goto 68}${color}${loadavg}
+${voffset 3}${goto 34}${color1}mem${goto 68}${color}${mem} / ${memmax}
 ]];
