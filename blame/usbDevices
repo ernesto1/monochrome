@@ -1,12 +1,12 @@
 conky.config = {
   update_interval = 2,  -- update interval in seconds
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
-  xinerama_head = 0,    -- multi monitor setup: x11 (0,1,2,..) wayland (1,2,3,..)
+  xinerama_head = 1,    -- multi monitor setup: x11 (0,1,2,..) wayland (1,2,3,..)
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
   alignment = 'top_middle',       -- top|middle|bottom_left|middle|right
-  gap_x = -523,                     -- same as passing -x at command line
+  gap_x = -493,                     -- same as passing -x at command line
   gap_y = 67,
 
   -- window settings
@@ -41,7 +41,7 @@ conky.config = {
   default_color = 'black',
   color1 = 'white',
   color2 = '44006a',      -- purple
-  color3 = '800020',      -- orange
+  color3 = '800020',      -- red
 };
 
 conky.text = [[
@@ -52,33 +52,33 @@ ${if_mounted /run/media/ernesto/sandisk}\
 ${image ~/conky/monochrome/images/blame/usb-stick.png -n -p 3,3}\
 ${voffset 41}${offset 3}${color2}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color3}${endif}${fs_bar 5, 48 /run/media/ernesto/sandisk}
 ${voffset 8}${offset 5}${fs_free /run/media/ernesto/sandisk}
-${voffset 3}${offset 14}free${voffset -78}\
+${voffset 3}${offset 14}free
 ${else}\
 ${image ~/conky/monochrome/images/blame/usb-box-filler1.png -n -p 0,0}\
-${voffset 78}\
+${voffset 91}\
 ${endif}\
 ${if_mounted /run/media/ernesto/MAXTOR}\
-${voffset -78}${image ~/conky/monochrome/images/blame/usb-stick.png -n -p 3,3}\
-${voffset 41}${offset 3}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 5, 48 /run/media/ernesto/MAXTOR}
-${voffset 8}${offset 5}${fs_free /run/media/ernesto/MAXTOR}
-${voffset 3}${offset 14}free${voffset -78}\
+${voffset -91}${image ~/conky/monochrome/images/blame/usb-stick.png -n -p 87,3}\
+${voffset 41}${goto 87}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 5, 48 /run/media/ernesto/MAXTOR}
+${voffset 8}${goto 92}${fs_free /run/media/ernesto/MAXTOR}
+${voffset 3}${goto 101}free
 ${else}\
-${voffset -78}\
+${voffset -91}\
 ${image ~/conky/monochrome/images/blame/usb-box-filler2.png -n -p 84,0}\
-${voffset 78}\
+${voffset 91}\
 ${endif}\
 ${if_mounted /run/media/ernesto/disk}\
-${voffset -78}${image ~/conky/monochrome/images/blame/usb-sdCard.png -n -p 171,3}\
+${voffset -91}${image ~/conky/monochrome/images/blame/usb-sdCard.png -n -p 171,3}\
 ${voffset 41}${goto 171}${color2}${if_match ${fs_used_perc /run/media/ernesto/disk} > 90}${color3}${endif}${fs_bar 5, 48 /run/media/ernesto/disk}
 ${voffset 8}${goto 176}${fs_free /run/media/ernesto/disk}
 ${voffset 3}${goto 182}free
 ${else}\
-${voffset -78}\
+${voffset -91}\
 ${image ~/conky/monochrome/images/blame/usb-box-filler3.png -n -p 168,0}\
-${voffset 78}\
+${voffset 91}\
 ${endif}\
-${voffset 20}${goto 24}${color1}kernel${goto 86}${color}${kernel}
-${voffset 3}${goto 24}${color1}uptime${goto 86}${color}${uptime}
-${voffset 3}${goto 42}${color1}dnf${goto 86}${color}${if_existing /tmp/conkyDnf new}${color1}${endif}${tail /tmp/conkyDnf 1 2}
-${voffset 3}${color1}compositor${goto 86}${color}${execi 3600 echo $XDG_SESSION_TYPE}
+${voffset 33}${goto 24}${color1}kernel${goto 85}${color}${kernel}
+${voffset 3}${goto 24}${color1}uptime${goto 85}${color}${uptime}
+${voffset 3}${goto 42}${color1}dnf${goto 85}${color}${if_existing /tmp/conkyDnf new}${color1}${endif}${tail /tmp/conkyDnf 1 2}
+${voffset 3}${color1}compositor${goto 85}${color}${execi 3600 echo $XDG_SESSION_TYPE}
 ]];
