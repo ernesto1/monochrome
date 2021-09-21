@@ -5,9 +5,9 @@ conky.config = {
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'top_middle',     -- top|middle|bottom_left|middle|right
-  gap_x = -15,                 -- same as passing -x at command line
-  gap_y = 40,
+  alignment = 'top_left',     -- top|middle|bottom_left|middle|right
+  gap_x = 10,                 -- same as passing -x at command line
+  gap_y = 384,
 
   -- window settings
   minimum_width = 170,
@@ -40,19 +40,20 @@ conky.config = {
   draw_outline = false,   -- black outline around text (not good if text is black)
   default_color = 'black',
   color1 = 'white',
-  color2 = 'B27300',      -- orange
+  color2 = '575100',      -- forest green
+  color3 = '800020',      -- red
 };
 
 conky.text = [[
-${voffset 2}${offset 66}${upspeedgraph enp0s25 49,49 cd0033 800020 2000}
+${voffset 2}${offset 66}${upspeedgraph enp0s25 49,49 f1df00 beb000 2000}
 ${voffset 10}${goto 73}${color1}up    ${color}${upspeed enp0s25}
 ${voffset 3}${goto 73}${color1}total ${color}${totalup enp0s25}
-${voffset -59}${offset 7}${downspeedgraph enp0s25 49,49 7200b2 44006a 15000}
+${voffset -59}${offset 7}${downspeedgraph enp0s25 49,49 808000 4d4d00 15000}
 ${voffset 10}${color1}down  ${color}${downspeed enp0s25}
-${voffset 3}${color1}total ${color}${totaldown enp0s25}
+${voffset 3}${color1}total ${color}${totaldown enp0s25}\
 ${if_gw}\
 ${image ~/conky/monochrome/images/blame/box-pair.png -n -p 0,0}\
 ${else}\
 ${image ~/conky/monochrome/images/blame/box-pair-empty.png -n -p 0,0}\
-${endif}
+${endif}\
 ]];

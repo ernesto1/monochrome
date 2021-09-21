@@ -5,13 +5,13 @@ conky.config = {
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'top_middle',       -- top|middle|bottom_left|middle|right
-  gap_x = -493,                     -- same as passing -x at command line
-  gap_y = 67,
+  alignment = 'top_left',       -- top|middle|bottom_left|middle|right
+  gap_x = 10,                     -- same as passing -x at command line
+  gap_y = 1175,
 
   -- window settings
-  minimum_width = 270,
-  minimum_height = 190,
+  minimum_width = 192,
+  minimum_height = 90,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -40,45 +40,41 @@ conky.config = {
   draw_outline = false,   -- black outline around text (not good if text is black)
   default_color = 'black',
   color1 = 'white',
-  color2 = '44006a',      -- purple
+  color2 = '575100',      -- forest green
   color3 = '800020',      -- red
 };
 
 conky.text = [[
 ${image ~/conky/monochrome/images/blame/usb-box.png -n -p 0,0}\
-${image ~/conky/monochrome/images/blame/usb-box.png -n -p 84,0}\
-${image ~/conky/monochrome/images/blame/usb-box.png -n -p 168,0}\
+${image ~/conky/monochrome/images/blame/usb-box.png -n -p 69,0}\
+${image ~/conky/monochrome/images/blame/usb-box.png -n -p 138,0}\
 ${if_mounted /run/media/ernesto/sandisk}\
 ${image ~/conky/monochrome/images/blame/usb-stick.png -n -p 3,3}\
 ${voffset 41}${offset 3}${color2}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color3}${endif}${fs_bar 5, 48 /run/media/ernesto/sandisk}
-${voffset 8}${offset 5}${fs_free /run/media/ernesto/sandisk}
+${voffset 8}${offset 5}${color}${fs_free /run/media/ernesto/sandisk}
 ${voffset 3}${offset 14}free
 ${else}\
 ${image ~/conky/monochrome/images/blame/usb-box-filler1.png -n -p 0,0}\
 ${voffset 91}\
 ${endif}\
 ${if_mounted /run/media/ernesto/MAXTOR}\
-${voffset -91}${image ~/conky/monochrome/images/blame/usb-stick.png -n -p 87,3}\
-${voffset 41}${goto 87}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 5, 48 /run/media/ernesto/MAXTOR}
-${voffset 8}${goto 92}${fs_free /run/media/ernesto/MAXTOR}
-${voffset 3}${goto 101}free
+${voffset -91}${image ~/conky/monochrome/images/blame/usb-drive.png -n -p 72,3}\
+${voffset 41}${goto 72}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 5, 48 /run/media/ernesto/MAXTOR}
+${voffset 8}${goto 77}${color}${fs_free /run/media/ernesto/MAXTOR}
+${voffset 3}${goto 86}free
 ${else}\
 ${voffset -91}\
-${image ~/conky/monochrome/images/blame/usb-box-filler2.png -n -p 84,0}\
+${image ~/conky/monochrome/images/blame/usb-box-filler2.png -n -p 69,0}\
 ${voffset 91}\
 ${endif}\
 ${if_mounted /run/media/ernesto/disk}\
-${voffset -91}${image ~/conky/monochrome/images/blame/usb-sdCard.png -n -p 171,3}\
-${voffset 41}${goto 171}${color2}${if_match ${fs_used_perc /run/media/ernesto/disk} > 90}${color3}${endif}${fs_bar 5, 48 /run/media/ernesto/disk}
-${voffset 8}${goto 176}${fs_free /run/media/ernesto/disk}
-${voffset 3}${goto 182}free
+${voffset -91}${image ~/conky/monochrome/images/blame/usb-sdCard.png -n -p 141,3}\
+${voffset 41}${goto 141}${color2}${if_match ${fs_used_perc /run/media/ernesto/disk} > 90}${color3}${endif}${fs_bar 5, 48 /run/media/ernesto/disk}
+${voffset 8}${goto 145}${color}${fs_free /run/media/ernesto/disk}
+${voffset 3}${goto 153}free
 ${else}\
 ${voffset -91}\
-${image ~/conky/monochrome/images/blame/usb-box-filler3.png -n -p 168,0}\
+${image ~/conky/monochrome/images/blame/usb-box-filler3.png -n -p 141,0}\
 ${voffset 91}\
 ${endif}\
-${voffset 33}${goto 24}${color1}kernel${goto 85}${color}${kernel}
-${voffset 3}${goto 24}${color1}uptime${goto 85}${color}${uptime}
-${voffset 3}${goto 42}${color1}dnf${goto 85}${color}${if_existing /tmp/conkyDnf new}${color1}${endif}${tail /tmp/conkyDnf 1 2}
-${voffset 3}${color1}compositor${goto 85}${color}${execi 3600 echo $XDG_SESSION_TYPE}
 ]];
