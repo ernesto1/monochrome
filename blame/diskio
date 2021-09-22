@@ -7,11 +7,11 @@ conky.config = {
   -- window alignment
   alignment = 'bottom_left',     -- top|middle|bottom_left|middle|right
   gap_x = 795,                 -- same as passing -x at command line
-  gap_y = 4,
+  gap_y = 15,
 
   -- window settings
-  minimum_width = 213,
-  minimum_height = 363,
+  minimum_width = 185,
+  minimum_height = 326,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -45,19 +45,19 @@ conky.config = {
 };
 
 conky.text = [[
-${image ~/conky/monochrome/images/blame/filesystem-sda.png -n -p 0,17}\
-${color1}write ${color}${diskio_write /dev/sda}
-${voffset 7}${offset 11}${diskiograph_write /dev/sda 25,94 6b91e5 546fb2 260000 -l}
-${voffset -10}${offset 11}${diskiograph_read /dev/sda 25,94 315bb1 1a336b 260000 -l}
-${voffset 5}${color1}read  ${color}${diskio_read /dev/sda}
-${image ~/conky/monochrome/images/blame/filesystem-sdb.png -n -p 0,150}\
-${voffset 24}${color1}write ${color}${diskio_write /dev/sdb}
-${voffset 7}${offset 11}${diskiograph_write /dev/sdb 25,94 6b91e5 546fb2 260000 -l}
-${voffset -10}${offset 11}${diskiograph_read /dev/sdb 25,94 315bb1 1a336b 260000 -l}
-${voffset 5}${color1}read  ${color}${diskio_read /dev/sdb}
-${image ~/conky/monochrome/images/blame/filesystem-sdc.png -n -p 0,277}\
-${voffset 24}${color1}write ${color}${diskio_write /dev/sdc}
-${voffset 7}${offset 11}${diskiograph_write /dev/sdc 25,94 6b91e5 546fb2 260000 -l}
+${image ~/conky/monochrome/images/blame/filesystem-sdc.png -n -p 0,20}\
+${color1}write ${color}${diskio_write /dev/sdc}
+${voffset 5}${offset 11}${diskiograph_write /dev/sdc 25,94 6b91e5 546fb2 260000 -l}
 ${voffset -10}${offset 11}${diskiograph_read /dev/sdc 25,94 315bb1 1a336b 260000 -l}
-${voffset 5}${color1}read  ${color}${diskio_read /dev/sdc}\
+${color1}read  ${color}${diskio_read /dev/sdc}
+${image ~/conky/monochrome/images/blame/filesystem-sdb.png -n -p 0,135}\
+${voffset 18}${color1}write ${color}${diskio_write /dev/sdb}
+${voffset 5}${offset 11}${diskiograph_write /dev/sdb 25,94 6b91e5 546fb2 260000 -l}
+${voffset -10}${offset 11}${diskiograph_read /dev/sdb 25,94 315bb1 1a336b 260000 -l}
+${color1}read  ${color}${diskio_read /dev/sdb}
+${image ~/conky/monochrome/images/blame/filesystem-sda.png -n -p 0,250}\
+${voffset 18}${color1}write ${color}${diskio_write /dev/sda}
+${voffset 5}${offset 11}${diskiograph_write /dev/sda 25,94 6b91e5 546fb2 260000 -l}
+${voffset -10}${offset 11}${diskiograph_read /dev/sda 25,94 315bb1 1a336b 260000 -l}
+${color1}read  ${color}${diskio_read /dev/sda}${voffset -22}
 ]];

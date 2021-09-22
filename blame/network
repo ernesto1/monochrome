@@ -7,11 +7,11 @@ conky.config = {
   -- window alignment
   alignment = 'bottom_left',     -- top|middle|bottom_left|middle|right
   gap_x = 603,                 -- same as passing -x at command line
-  gap_y = 23,
+  gap_y = 14,
 
   -- window settings
   minimum_width = 160,
-  minimum_height = 145,
+  minimum_height = 172,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -45,17 +45,17 @@ conky.config = {
 };
 
 conky.text = [[
-${voffset 2}${offset 66}${upspeedgraph enp0s25 49,49 6b91e5 546fb2 2000}
-${voffset 10}${goto 73}${color1}up    ${color}${upspeed enp0s25}
-${voffset 3}${goto 73}${color1}total ${color}${totalup enp0s25}
-${voffset -59}${offset 7}${downspeedgraph enp0s25 49,49 315bb1 1a336b 15000}
-${voffset 10}${color1}down  ${color}${downspeed enp0s25}
-${voffset 3}${color1}total ${color}${totaldown enp0s25}
-${voffset 13}${color1}local ip${goto 72}${color}${addr enp0s25}
+${color1}local ip${goto 72}${color}${addr enp0s25}
 ${voffset 3}${color1}bittorrent${goto 72}${color}${tcp_portmon 43000 59000 count} peer(s)
 ${if_gw}\
-${image ~/conky/monochrome/images/blame/box-pair.png -n -p 0,0}\
+${image ~/conky/monochrome/images/blame/box-pair.png -n -p 0,36}\
 ${else}\
-${image ~/conky/monochrome/images/blame/box-pair-empty.png -n -p 0,0}\
+${image ~/conky/monochrome/images/blame/box-pair-empty.png -n -p 0,36}\
 ${endif}\
+${voffset 51}${offset 7}${downspeedgraph enp0s25 49,49 315bb1 1a336b 15000}
+${voffset 4}${color1}down  ${color}${downspeed enp0s25}
+${voffset 3}${color1}total ${color}${totaldown enp0s25}\
+${voffset -124}${offset -6}${upspeedgraph enp0s25 49,49 6b91e5 546fb2 2000}
+${voffset 4}${goto 73}${color1}up    ${color}${upspeed enp0s25}
+${voffset 3}${goto 73}${color1}total ${color}${totalup enp0s25}${voffset -30}
 ]];
