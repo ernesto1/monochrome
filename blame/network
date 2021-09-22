@@ -55,7 +55,7 @@ ${endif}\
 ${voffset 51}${offset 7}${downspeedgraph enp0s25 49,49 315bb1 1a336b 15000}
 ${voffset 4}${color1}down  ${color}${downspeed enp0s25}
 ${voffset 3}${color1}total ${color}${totaldown enp0s25}\
-${voffset -124}${offset -6}${upspeedgraph enp0s25 49,49 6b91e5 546fb2 2000}
-${voffset 4}${goto 73}${color1}up    ${color}${upspeed enp0s25}
-${voffset 3}${goto 73}${color1}total ${color}${totalup enp0s25}${voffset -30}
+${voffset -124}${offset -12}${upspeedgraph enp0s25 49,49 6b91e5 546fb2 2000}
+${voffset 4}${goto 72}${color1}up    ${color}${upspeed enp0s25}
+${voffset 3}${goto 72}${color1}total ${color}${totalup enp0s25}${voffset -30}
 ]];
