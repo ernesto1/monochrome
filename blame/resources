@@ -5,9 +5,9 @@ conky.config = {
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'top_left',       -- top|middle|bottom_left|middle|right
-  gap_x = 10,                     -- same as passing -x at command line
-  gap_y = 40,
+  alignment = 'bottom_left',       -- top|middle|bottom_left|middle|right
+  gap_x = 231,                     -- same as passing -x at command line
+  gap_y = 28,
 
   -- window settings
   minimum_width = 215,
@@ -40,21 +40,21 @@ conky.config = {
   draw_outline = false,   -- black outline around text (not good if text is black)
   default_color = 'black',
   color1 = 'white',
-  color2 = '575100',      -- forest green
+  color2 = '1a336b',      -- dark blue
   color3 = '800020',      -- red
 };
 
 conky.text = [[
-${color1}kernel${goto 72}${color}${kernel}
-${voffset 3}${color1}uptime${goto 72}${color}${uptime}
-${voffset 3}${color1}dnf${goto 72}${color}${if_existing /tmp/conkyDnf new}${color1}${endif}${tail /tmp/conkyDnf 1 2}
-${voffset 3}${color1}compositor${goto 72}${color}${execi 3600 echo $XDG_SESSION_TYPE}
-${image ~/conky/monochrome/images/blame/cylinder-cpu.png -n -p 0,75}\
-${image ~/conky/monochrome/images/blame/cylinder.png -n -p 65,75}\
-${offset 15}${voffset 28}${cpugraph cpu0 85, 20 beb000 575100}\
-${goto 81}${if_match ${memperc} >= 90}${memgraph 84, 19 cd0033 800020}\${else}${memgraph 85, 20 beb000 575100}${endif}
-${voffset 70}${color1}cpu${goto 36}${color}${cpu cpu0}%
-${voffset 3}${color1}load${goto 36}${color}${loadavg}
-${voffset 3}${color1}mem${goto 36}${color}${mem} / ${memmax}
-${voffset 3}${color1}swap${goto 36}${voffset 1}${color2}${swapbar 4,82}
+${color1}${goto 26}kernel${goto 73}${color}${kernel}
+${voffset 3}${goto 26}${color1}uptime${goto 73}${color}${uptime}
+${voffset 3}${goto 43}${color1}dnf${goto 73}${color}${if_existing /tmp/conkyDnf new}${color1}${endif}${tail /tmp/conkyDnf 1 2}
+${voffset 3}${color1}compositor${goto 73}${color}${execi 3600 echo $XDG_SESSION_TYPE}
+${image ~/conky/monochrome/images/blame/cylinder-cpu.png -n -p 7,75}\
+${image ~/conky/monochrome/images/blame/cylinder.png -n -p 72,75}\
+${offset 22}${voffset 28}${cpugraph cpu0 85, 20 315bb1 1a336b}\
+${goto 88}${if_match ${memperc} >= 90}${memgraph 84, 19 cd0033 800020}\${else}${memgraph 85, 20 315bb1 1a336b}${endif}
+${voffset 70}${goto 43}${color1}cpu${goto 73}${color}${cpu cpu0}%
+${voffset 3}${goto 13}${color1}load avg${goto 73}${color}${loadavg}
+${voffset 3}${goto 26}${color1}memory${goto 73}${color}${mem} / ${memmax}
+${voffset 3}${goto 38}${color1}swap${goto 73}${voffset 1}${color2}${swapbar 4,82}
 ]];

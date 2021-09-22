@@ -5,9 +5,9 @@ conky.config = {
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'top_left',       -- top|middle|bottom_left|middle|right
-  gap_x = 10,                  -- same as passing -x at command line
-  gap_y = 960,
+  alignment = 'bottom_left',       -- top|middle|bottom_left|middle|right
+  gap_x = 1010,                  -- same as passing -x at command line
+  gap_y = 85,
 
   -- window settings
   minimum_width = 160,
@@ -40,7 +40,7 @@ conky.config = {
   draw_outline = false,   -- black outline around text (not good if text is black)
   default_color = 'black',
   color1 = 'white',
-  color2 = '575100',      -- forest green
+  color2 = '1a336b',      -- dark blue
   color3 = '800020',      -- red
 };
 
