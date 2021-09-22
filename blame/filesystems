@@ -7,11 +7,11 @@ conky.config = {
   -- window alignment
   alignment = 'bottom_left',       -- top|middle|bottom_left|middle|right
   gap_x = 1010,                  -- same as passing -x at command line
-  gap_y = 5,
+  gap_y = 14,
 
   -- window settings
   minimum_width = 160,
-  minimum_height = 188,
+  minimum_height = 156,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -22,7 +22,7 @@ conky.config = {
   own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
 
   -- window borders
-  draw_borders = truer,     -- draw borders around the conky window
+  draw_borders = false,     -- draw borders around the conky window
   border_width = 1,         -- width of border window in pixels
   stippled_borders = 0,     -- border stippling (dashing) in pixels
   border_inner_margin = 0,  -- margin between the border and text in pixels
@@ -48,13 +48,13 @@ conky.text = [[
 ${image ~/conky/monochrome/images/blame/bar-right.png -n -p 0,0}\
 ${goto 12}${voffset 3}fedora${goto 73}${voffset -1}${color2}${if_match ${fs_used_perc /} > 90}${color3}${endif}${fs_bar 4, 84 /}
 ${voffset 4}${alignr}${color}${fs_used /} / ${fs_size /}
-${image ~/conky/monochrome/images/blame/bar-right.png -n -p 0,49}\
-${goto 12}${voffset 20}home${goto 73}${voffset -1}${color2}${if_match ${fs_used_perc /home} > 90}${color3}${endif}${fs_bar 4, 84 /home}
+${image ~/conky/monochrome/images/blame/bar-right.png -n -p 0,42}\
+${goto 12}${voffset 13}home${goto 73}${voffset -1}${color2}${if_match ${fs_used_perc /home} > 90}${color3}${endif}${fs_bar 4, 84 /home}
 ${voffset 4}${alignr}${color}${fs_used /home} / ${fs_size /home}
-${image ~/conky/monochrome/images/blame/bar-right.png -n -p 0,98}\
-${goto 12}${voffset 20}betty${goto 73}${voffset -1}${color2}${if_match ${fs_used_perc /media/betty} > 90}${color3}${endif}${fs_bar 4, 84 /media/betty}
+${image ~/conky/monochrome/images/blame/bar-right.png -n -p 0,84}\
+${goto 12}${voffset 13}betty${goto 73}${voffset -1}${color2}${if_match ${fs_used_perc /media/betty} > 90}${color3}${endif}${fs_bar 4, 84 /media/betty}
 ${voffset 4}${alignr}${color}${fs_used /media/betty} / ${fs_size /media/betty}
-${image ~/conky/monochrome/images/blame/bar-right.png -n -p 0,147}\
-${goto 12}${voffset 20}veronica${goto 73}${voffset -1}${color2}${if_match ${fs_used_perc /media/veronica} > 90}${color3}${endif}${fs_bar 4, 84 /media/veronica}
+${image ~/conky/monochrome/images/blame/bar-right.png -n -p 0,126}\
+${goto 12}${voffset 13}veronica${goto 73}${voffset -1}${color2}${if_match ${fs_used_perc /media/veronica} > 90}${color3}${endif}${fs_bar 4, 84 /media/veronica}
 ${voffset 4}${alignr}${color}${fs_used /media/veronica} / ${fs_size /media/veronica}
 ]];
