@@ -48,7 +48,7 @@ This conky must be fully customized to your particular setup.  Read the [wiki fo
 ![hard disk](images/screenshots/hard-drive-io.png)
 
 # How to install
-## Dependencies
+### Dependencies
 You only require to have `conky` installed on your system.
 
 On **Fedora** install it by running:
@@ -60,7 +60,7 @@ $ sudo dnf install conky
 **n.b.** I recommend using the conky package version `1.11.5_pre`.
 More recent versions may have regressions that cause the theme to behave erratically.  Run the command `dnf downgrade conky` until you arrive at this version.
 
-## Configuration
+### Configuration
 - The [wiki](https://github.com/ernesto1/monochrome/wiki) outlines items that may require configuration in order to customize this conky to your system
 - If you run a multi monitor setup, you can read on how to configure conky to show on a [particular monitor](https://github.com/ernesto1/monochrome/wiki#multi-monitor-setups)
 
