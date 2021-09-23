@@ -7,7 +7,7 @@ conky.config = {
   -- window alignment
   alignment = 'bottom_left',       -- top|middle|bottom_left|middle|right
   gap_x = 1200,                     -- same as passing -x at command line
-  gap_y = 1,
+  gap_y = 15,
 
   -- window settings
   minimum_width = 192,
@@ -76,5 +76,7 @@ ${else}\
 ${voffset -91}\
 ${image ~/conky/monochrome/images/blame/usb-box-filler3.png -n -p 141,0}\
 ${voffset 91}\
-${endif}\
+# the final voffset is to account for that pesky added extra vertical space due to the combination of 'voffset'
+# with text used... this seems like a bug in conky : /
+${endif}${voffset -130}
 ]];
