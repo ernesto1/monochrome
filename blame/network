@@ -46,6 +46,8 @@ conky.config = {
 
 conky.text = [[
 ${color1}local ip${goto 72}${color}${addr enp0s25}
+# until i can look in the port range that transmission uses, this port range serves as an approximation
+# of the actual peer count connected to this machine
 ${voffset 3}${color1}bittorrent${goto 72}${color}${tcp_portmon 43000 59000 count} peer(s)
 ${if_gw}\
 ${image ~/conky/monochrome/images/blame/box-pair.png -n -p 0,36}\
@@ -55,7 +57,7 @@ ${endif}\
 ${voffset 51}${offset 7}${downspeedgraph enp0s25 49,49 315bb1 1a336b 15000}
 ${voffset 4}${color1}down  ${color}${downspeed enp0s25}
 ${voffset 3}${color1}total ${color}${totaldown enp0s25}\
-${voffset -124}${offset -12}${upspeedgraph enp0s25 49,49 6b91e5 546fb2 2000}
+${voffset -124}${goto 67}${upspeedgraph enp0s25 49,49 6b91e5 546fb2 2000}
 ${voffset 4}${goto 72}${color1}up    ${color}${upspeed enp0s25}
 ${voffset 3}${goto 72}${color1}total ${color}${totalup enp0s25}${voffset -30}
 ]];
