@@ -46,9 +46,8 @@ conky.config = {
 
 conky.text = [[
 ${color1}local ip${goto 72}${color}${addr enp0s25}
-# until i can look in the port range that transmission uses, this port range serves as an approximation
-# of the actual peer count connected to this machine
-${voffset 3}${color1}bittorrent${goto 72}${color}${tcp_portmon 43000 59000 count} peer(s)
+# use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
+${voffset 3}${color1}bittorrent${goto 72}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
 ${if_gw}\
 ${image ~/conky/monochrome/images/blame/box-pair.png -n -p 0,36}\
 ${else}\
