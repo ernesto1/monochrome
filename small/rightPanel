@@ -11,7 +11,7 @@ conky.config = {
   gap_y = 32,
 
   -- window settings
-  minimum_width = 405,
+  minimum_width = 382,
   minimum_height = 420,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -48,20 +48,20 @@ conky.text = [[
 ${voffset 3} ${color1}compositor${goto 80}${color}${execi 3600 echo $XDG_SESSION_TYPE}
 # :::::::::::::::::::: cpu processes
 ${image ~/conky/monochrome/images/large/cpuProcesses.png -n -p 0,74}\
-${voffset 61} process${goto 135}cpu   pid 
-${voffset 9} ${top name 1}${goto 111}${top cpu 1}% ${top pid 1}
-${voffset 5} ${top name 2}${goto 111}${top cpu 2}% ${top pid 2} 
-${voffset 5} ${top name 3}${goto 111}${top cpu 3}% ${top pid 3} 
-${voffset 5} ${top name 4}${goto 111}${top cpu 4}% ${top pid 4} 
-${voffset 5} ${top name 5}${goto 111}${top cpu 5}% ${top pid 5} 
+${voffset 61} process${goto 126}cpu   pid 
+${voffset 9} ${top name 1}${top cpu 1}% ${top pid 1}
+${voffset 5} ${top name 2}${top cpu 2}% ${top pid 2} 
+${voffset 5} ${top name 3}${top cpu 3}% ${top pid 3} 
+${voffset 5} ${top name 4}${top cpu 4}% ${top pid 4} 
+${voffset 5} ${top name 5}${top cpu 5}% ${top pid 5} 
 # :::::::::::::::::::: memory processes
-${image ~/conky/monochrome/images/large/memoryProcesses.png -n -p 208,74}\
-${voffset -107}${goto 213}process${goto 345}mem   pid
-${goto 213}${voffset 9}${color}${if_match ${top_mem mem 1} >= 49}${color2}${endif}${top_mem name 1}${alignr}${top_mem mem_res 1} ${top_mem pid 1} 
-${goto 213}${voffset 5}${color}${if_match ${top_mem mem 2} >= 49}${color2}${endif}${top_mem name 2}${alignr}${top_mem mem_res 2} ${top_mem pid 2} 
-${goto 213}${voffset 5}${color}${if_match ${top_mem mem 3} >= 49}${color2}${endif}${top_mem name 3}${alignr}${top_mem mem_res 3} ${top_mem pid 3} 
-${goto 213}${voffset 5}${color}${if_match ${top_mem mem 4} >= 49}${color2}${endif}${top_mem name 4}${alignr}${top_mem mem_res 4} ${top_mem pid 4} 
-${goto 213}${voffset 5}${color}${if_match ${top_mem mem 5} >= 49}${color2}${endif}${top_mem name 5}${alignr}${top_mem mem_res 5} ${top_mem pid 5} 
+${image ~/conky/monochrome/images/large/memoryProcesses.png -n -p 195,74}\
+${voffset -107}${goto 200}process${alignr}mem   pid 
+${goto 200}${voffset 9}${color}${if_match ${top_mem mem 1} >= 49}${color2}${endif}${top_mem name 1}${alignr}${top_mem mem_res 1} ${top_mem pid 1} 
+${goto 200}${voffset 5}${color}${if_match ${top_mem mem 2} >= 49}${color2}${endif}${top_mem name 2}${alignr}${top_mem mem_res 2} ${top_mem pid 2} 
+${goto 200}${voffset 5}${color}${if_match ${top_mem mem 3} >= 49}${color2}${endif}${top_mem name 3}${alignr}${top_mem mem_res 3} ${top_mem pid 3} 
+${goto 200}${voffset 5}${color}${if_match ${top_mem mem 4} >= 49}${color2}${endif}${top_mem name 4}${alignr}${top_mem mem_res 4} ${top_mem pid 4} 
+${goto 200}${voffset 5}${color}${if_match ${top_mem mem 5} >= 49}${color2}${endif}${top_mem name 5}${alignr}${top_mem mem_res 5} ${top_mem pid 5} 
 # :::::::::::::::::::: usb
 ${if_mounted /run/media/ernesto/sandisk}\
 ${image ~/conky/monochrome/images/small/usbStick.png -n -p 0, 349}\
