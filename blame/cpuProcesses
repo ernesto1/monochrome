@@ -5,12 +5,12 @@ conky.config = {
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'bottom_left',       -- top|middle|bottom_left|middle|right
+  alignment = 'bottom_left',     -- top|middle|bottom_left|middle|right
   gap_x = 20,                    -- same as passing -x at command line
   gap_y = 20,
 
   -- window settings
-  minimum_width = 187,
+  minimum_width = 186,
   minimum_height = 144,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -46,12 +46,12 @@ conky.config = {
 
 conky.text = [[
 ${image ~/conky/monochrome/images/blame/box.png -n -p 0,0}\
-${voffset 8}${color1} process${alignr}cpu   pid 
- ${voffset 3}${color}${if_match ${top cpu 1} >= 49}${color2}${endif}${top name 1}${alignr}${top cpu 1}% ${top pid 1} 
- ${voffset 3}${color}${if_match ${top cpu 2} >= 49}${color2}${endif}${top name 2}${alignr}${top cpu 2}% ${top pid 2} 
- ${voffset 3}${color}${if_match ${top cpu 3} >= 49}${color2}${endif}${top name 3}${alignr}${top cpu 3}% ${top pid 3} 
- ${voffset 3}${color}${if_match ${top cpu 4} >= 49}${color2}${endif}${top name 4}${alignr}${top cpu 4}% ${top pid 4} 
- ${voffset 3}${color}${if_match ${top cpu 5} >= 49}${color2}${endif}${top name 5}${alignr}${top cpu 5}% ${top pid 5} 
- ${voffset 3}${color}${if_match ${top cpu 6} >= 49}${color2}${endif}${top name 6}${alignr}${top cpu 6}% ${top pid 6} 
- ${voffset 3}${color}${if_match ${top cpu 7} >= 49}${color2}${endif}${top name 7}${alignr}${top cpu 7}% ${top pid 7} 
+${voffset 8}${color1} process${goto 127}cpu   pid 
+ ${voffset 3}${color}${if_match ${top cpu 1} >= 49}${color2}${endif}${top name 1}${top cpu 1}% ${top pid 1}
+ ${voffset 3}${color}${if_match ${top cpu 2} >= 49}${color2}${endif}${top name 2}${top cpu 2}% ${top pid 2}
+ ${voffset 3}${color}${if_match ${top cpu 3} >= 49}${color2}${endif}${top name 3}${top cpu 3}% ${top pid 3}
+ ${voffset 3}${color}${if_match ${top cpu 4} >= 49}${color2}${endif}${top name 4}${top cpu 4}% ${top pid 4}
+ ${voffset 3}${color}${if_match ${top cpu 5} >= 49}${color2}${endif}${top name 5}${top cpu 5}% ${top pid 5}
+ ${voffset 3}${color}${if_match ${top cpu 6} >= 49}${color2}${endif}${top name 6}${top cpu 6}% ${top pid 6}
+ ${voffset 3}${color}${if_match ${top cpu 7} >= 49}${color2}${endif}${top name 7}${top cpu 7}% ${top pid 7}
 ]];
