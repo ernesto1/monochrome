@@ -11,7 +11,7 @@ conky.config = {
 
   -- window settings
   minimum_width = 160,
-  minimum_height = 156,
+  minimum_height = 150,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -46,15 +46,15 @@ conky.config = {
 
 conky.text = [[
 ${image ~/conky/monochrome/images/blame/bar-right.png -n -p 0,0}\
-${goto 12}${voffset 3}fedora${goto 73}${voffset -1}${color2}${if_match ${fs_used_perc /} > 90}${color3}${endif}${fs_bar 4, 84 /}
+${goto 12}${voffset 3}fedora${goto 74}${voffset -1}${color2}${if_match ${fs_used_perc /} > 90}${color3}${endif}${fs_bar 4, 83 /}
 ${voffset 4}${alignr}${color}${fs_used /} / ${fs_size /}
-${image ~/conky/monochrome/images/blame/bar-right.png -n -p 0,42}\
-${goto 12}${voffset 13}home${goto 73}${voffset -1}${color2}${if_match ${fs_used_perc /home} > 90}${color3}${endif}${fs_bar 4, 84 /home}
+${image ~/conky/monochrome/images/blame/bar-right.png -n -p 0,40}\
+${goto 12}${voffset 11}home${goto 74}${voffset -1}${color2}${if_match ${fs_used_perc /home} > 90}${color3}${endif}${fs_bar 4, 83 /home}
 ${voffset 4}${alignr}${color}${fs_used /home} / ${fs_size /home}
-${image ~/conky/monochrome/images/blame/bar-right.png -n -p 0,84}\
-${goto 12}${voffset 13}betty${goto 73}${voffset -1}${color2}${if_match ${fs_used_perc /media/betty} > 90}${color3}${endif}${fs_bar 4, 84 /media/betty}
+${image ~/conky/monochrome/images/blame/bar-right.png -n -p 0,80}\
+${goto 12}${voffset 11}betty${goto 74}${voffset -1}${color2}${if_match ${fs_used_perc /media/betty} > 90}${color3}${endif}${fs_bar 4, 83 /media/betty}
 ${voffset 4}${alignr}${color}${fs_used /media/betty} / ${fs_size /media/betty}
-${image ~/conky/monochrome/images/blame/bar-right.png -n -p 0,126}\
-${goto 12}${voffset 13}veronica${goto 73}${voffset -1}${color2}${if_match ${fs_used_perc /media/veronica} > 90}${color3}${endif}${fs_bar 4, 84 /media/veronica}
+${image ~/conky/monochrome/images/blame/bar-right.png -n -p 0,120}\
+${goto 12}${voffset 11}veronica${goto 74}${voffset -1}${color2}${if_match ${fs_used_perc /media/veronica} > 90}${color3}${endif}${fs_bar 4, 83 /media/veronica}
 ${voffset 4}${alignr}${color}${fs_used /media/veronica} / ${fs_size /media/veronica}
 ]];

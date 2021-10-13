@@ -11,7 +11,7 @@ conky.config = {
 
   -- window settings
   minimum_width = 215,
-  minimum_height = 321,
+  minimum_height = 294,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -54,7 +54,7 @@ ${voffset 3}${goto 13}${color1}load avg${goto 73}${color}${loadavg}
 ${voffset 3}${goto 25}${color1}memory${goto 73}${color}${mem} / ${memmax}
 ${voffset 3}${goto 37}${color1}swap${goto 73}${voffset 1}${color2}${swapbar 4,82}
 ${image ~/conky/monochrome/images/blame/cylinder-cpu.png -n -p 7,150}\
-${image ~/conky/monochrome/images/blame/cylinder.png -n -p 72,150}\
-${offset 22}${voffset 20}${cpugraph cpu0 85, 20 315bb1 1a336b}\
-${goto 88}${if_match ${memperc} >= 90}${memgraph 84, 19 cd0033 800020}\${else}${memgraph 85, 20 315bb1 1a336b}${endif}
+${image ~/conky/monochrome/images/blame/cylinder-memory.png -n -p 72,150}\
+${offset 22}${voffset 16}${cpugraph cpu0 67, 20 315bb1 1a336b}\
+${goto 88}${if_match ${memperc} >= 90}${memgraph 67, 20 cd0033 800020}\${else}${memgraph 67, 20 315bb1 1a336b}${endif}
 ]];
