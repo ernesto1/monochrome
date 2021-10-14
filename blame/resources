@@ -53,8 +53,8 @@ ${voffset 22}${goto 43}${color1}cpu${goto 73}${color}${cpu cpu0}%
 ${voffset 3}${goto 13}${color1}load avg${goto 73}${color}${loadavg}
 ${voffset 3}${goto 25}${color1}memory${goto 73}${color}${mem} / ${memmax}
 ${voffset 3}${goto 37}${color1}swap${goto 73}${voffset 1}${color2}${swapbar 4,82}
-${image ~/conky/monochrome/images/blame/cylinder-cpu.png -n -p 7,150}\
+${image ~/conky/monochrome/images/blame/cylinder-cpu.png -n -p 15,150}\
 ${image ~/conky/monochrome/images/blame/cylinder-memory.png -n -p 72,150}\
-${offset 22}${voffset 14}${cpugraph cpu0 70, 20 315bb1 1a336b}\
-${goto 88}${if_match ${memperc} >= 90}${memgraph 70, 20 cd0033 800020}\${else}${memgraph 70, 20 315bb1 1a336b}${endif}
+${offset 27}${voffset 14}${cpugraph cpu0 80, 19 315bb1 1a336b}\
+${goto 85}${if_match ${memperc} >= 90}${memgraph 80, 19 cd0033 800020}\${else}${memgraph 80, 19 315bb1 1a336b}${endif}
 ]];
