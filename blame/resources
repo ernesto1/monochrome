@@ -11,7 +11,7 @@ conky.config = {
 
   -- window settings
   minimum_width = 215,
-  minimum_height = 294,
+  minimum_height = 299,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -52,9 +52,10 @@ ${voffset 2}${color1}compositor${goto 73}${color}${execi 3600 echo $XDG_SESSION_
 ${voffset 22}${goto 43}${color1}cpu${goto 73}${color}${cpu cpu0}%
 ${voffset 3}${goto 13}${color1}load avg${goto 73}${color}${loadavg}
 ${voffset 3}${goto 25}${color1}memory${goto 73}${color}${mem} / ${memmax}
-${voffset 3}${goto 37}${color1}swap${goto 73}${voffset 1}${color2}${swapbar 4,82}
-${image ~/conky/monochrome/images/blame/cylinder-cpu.png -n -p 15,150}\
-${image ~/conky/monochrome/images/blame/cylinder-memory.png -n -p 72,150}\
-${offset 27}${voffset 14}${cpugraph cpu0 80, 19 315bb1 1a336b}\
+${voffset 3}${goto 37}${color1}swap${goto 73}${voffset 1}${color2}${swapbar 4,82}  ${voffset -1}${swapperc}%
+${image ~/conky/monochrome/images/blame/swap-bar.png -n -p 67,132}\
+${image ~/conky/monochrome/images/blame/cylinder-cpu.png -n -p 15,155}\
+${image ~/conky/monochrome/images/blame/cylinder-memory.png -n -p 72,155}\
+${offset 27}${voffset 20}${cpugraph cpu0 80, 19 315bb1 1a336b}\
 ${goto 85}${if_match ${memperc} >= 90}${memgraph 80, 19 cd0033 800020}\${else}${memgraph 80, 19 315bb1 1a336b}${endif}
 ]];
