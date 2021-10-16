@@ -11,17 +11,17 @@
 
 function usage() {
   cat <<-END
-	$(basename $0) --mode [monitor width] [--monitor 1|2|3|...]
+	$(basename $0) --mode [--monitor 1|2|3|...] [--layout-override width]
 	
 	Mode options
 	  --laptop
-	    Loads the conky laptop mode.  Meant for monitors with a 1366 x 768 pixel resolution.
+	    Loads the conky laptop theme.  Meant for monitors with a 1366 x 768 pixel resolution.
 
-	  --desktop 1920|2560
-	    Loads the conky desktop mode for the given resolution: 1920x1200 or 2560x1600.
+	  --desktop
+	    Loads the conky desktop theme.  Meant for monitors with a 2560 x 1600 pixel resolution.
 	    
 	  --blame
-	    Load the conky blame theme
+	    Load the conky blame theme.
 
 	Optional flags
 	  --monitor 0|1|2|3|...
@@ -36,12 +36,14 @@ function usage() {
 	    +-----------+|        |
 	         |  |    +--------+
 	        /    \      /  \\
-	
+
+	  --layout-override width
+	    Allows you to use a layout override file in order to modify the position of the conkys on the fly.
+
 	Examples
 	  $(basename $0) --laptop
-	  $(basename $0) --desktop 1920
-	  $(basename $0) --desktop 2560
-	  $(basename $0) --desktop 2560 --monitor 2
+	  $(basename $0) --desktop
+	  $(basename $0) --desktop --monitor 2
 	END
 }
 
@@ -69,28 +71,30 @@ while (( "$#" )); do
   case $1 in
     --blame)
       directory=${HOME}/conky/monochrome/blame
-      screenWidth=2560
       shift
       ;;
     --desktop)
       directory=${HOME}/conky/monochrome/large
-      screenWidth=$2
-      shift 2
-
-      # ensure a supported monitor width was provided
-      if [[ $screenWidth -ne 1920 ]] && [[ $screenWidth -ne 2560 ]]; then
-        usage
-        exit 1
-      fi
+      shift
       ;;
     --laptop)
       directory=${HOME}/conky/monochrome/small
-      screenWidth=1366
       shift
       ;;      
     --monitor)
-      monitor=$2
       # TODO validate a proper number was provided to the monitor flag
+      monitor=$2
+      shift 2
+      ;;
+    --layout-override)
+      screenWidth=$2
+      
+      if [[ -z $screenWidth ]]; then
+        echo -e 'error | missing argument: screen width must be provided with the --layout-override flag\n\n' >&2
+        usage
+        exit 2
+      fi
+      
       shift 2
       ;;
     *)
@@ -102,19 +106,24 @@ done
 
 echo -e "launching conky with the following settings:\n"
 echo    "conky folder:         ${directory}"
-echo    "monitor width:        ${screenWidth} pixels"
 
 if [[ ${monitor} ]]; then
   echo    "window compositor:    $(echo $XDG_SESSION_TYPE)"
   echo    "monitor:              ${monitor}"
 fi
 
-layoutFile="$(echo ${directory}/layout.${screenWidth}x*.cfg)"   # need to use echo in order for the variable
-                                                                # to hold the actual pathname expansion
-if [[ -f ${layoutFile} ]]; then
-  echo -e "layout override file: ${layoutFile}"
-  detectDuplicateEntries "${layoutFile}"
-  # TODO file integrity: ensure number of override elements is 2 or 3
+if [[ ! -z $screenWidth ]]; then
+  layoutFile="$(echo ${directory}/layout.${screenWidth}x*.cfg)"   # need to use echo in order for the variable
+                                                                  # to hold the actual pathname expansion
+  if [[ -f ${layoutFile} ]]; then
+    echo -e "layout override file: ${layoutFile}"
+    detectDuplicateEntries "${layoutFile}"
+    # TODO file integrity: ensure number of override elements is 2 or 3
+  else
+    echo -e "\nerror | override file '${layoutFile}' not found" >&2
+    echo      '        please provide a proper monitor width resolution and try again' >&2
+    exit 2
+  fi
 fi
 
 set +e      # ignore errors

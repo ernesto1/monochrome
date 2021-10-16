@@ -8,11 +8,7 @@ Built for systems with small screen real state. The desktop below is 1366 x 768 
 ![laptop](images/screenshots/1366x768.png)
 
 ### Desktop theme
-Built for systems with ample screen real state available.  
-The desktop below is 1920 x 1200 pixels.  An alternate layout of this setup is available in [v1.0](https://github.com/ernesto1/monochrome/tree/39e825bf410eb5451bf38c181b0a3c59e75d111d)
-![desktop 1920px](images/screenshots/1920x1200.png)
-
-Setup for a 2560x1600 pixels desktop
+Built for systems with ample screen real state available.  The desktop below is 2560x1600 pixels.
 ![desktop 2560px](images/screenshots/2560x1600.png)
 
 ### Blame theme
