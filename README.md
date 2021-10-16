@@ -81,16 +81,10 @@ Laptop theme
 $ ~/conky/monochrome/launch.bash --laptop
 ```
 
-Desktop theme for a screen resolution of 1920x1200 pixels
+Desktop theme
 
 ```
-$ ~/conky/monochrome/launch.bash --desktop 1920
-```
-
-Desktop theme for a screen resolution of 2560x1600 pixels
-
-```
-$ ~/conky/monochrome/launch.bash --desktop 2560
+$ ~/conky/monochrome/launch.bash --desktop
 ```
 
 Blame theme
