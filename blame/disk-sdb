@@ -1,17 +1,17 @@
 conky.config = {
   update_interval = 2,  -- update interval in seconds
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
-  xinerama_head = 0,    -- multi monitor setup: x11 (0,1,2,..) wayland (1,2,3,..)
+  xinerama_head = 1,    -- multi monitor setup: x11 (0,1,2,..) wayland (1,2,3,..)
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
   alignment = 'bottom_left',     -- top|middle|bottom_left|middle|right
-  gap_x = 728,                 -- same as passing -x at command line
-  gap_y = 15,
+  gap_x = 923,                 -- same as passing -x at command line
+  gap_y = 9,
 
   -- window settings
-  minimum_width = 185,
-  minimum_height = 326,
+  minimum_width = 175,
+  minimum_height = 112,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -45,19 +45,11 @@ conky.config = {
 };
 
 conky.text = [[
-${image ~/conky/monochrome/images/blame/filesystem-sdc.png -n -p 0,20}\
-${color1}write ${color}${diskio_write /dev/sdc}
-${voffset 5}${offset 11}${diskiograph_write /dev/sdc 25,94 6b91e5 546fb2 260000 -l}
-${voffset -10}${offset 11}${diskiograph_read /dev/sdc 25,94 315bb1 1a336b 260000 -l}
-${color1}read  ${color}${diskio_read /dev/sdc}
-${image ~/conky/monochrome/images/blame/filesystem-sdb.png -n -p 0,135}\
-${voffset 18}${color1}write ${color}${diskio_write /dev/sdb}
-${voffset 5}${offset 11}${diskiograph_write /dev/sdb 25,94 6b91e5 546fb2 260000 -l}
-${voffset -10}${offset 11}${diskiograph_read /dev/sdb 25,94 315bb1 1a336b 260000 -l}
-${color1}read  ${color}${diskio_read /dev/sdb}
-${image ~/conky/monochrome/images/blame/filesystem-sda.png -n -p 0,250}\
-${voffset 18}${color1}write ${color}${diskio_write /dev/sda}
-${voffset 5}${offset 11}${diskiograph_write /dev/sda 25,94 6b91e5 546fb2 260000 -l}
-${voffset -10}${offset 11}${diskiograph_read /dev/sda 25,94 315bb1 1a336b 260000 -l}
-${color1}read  ${color}${diskio_read /dev/sda}${voffset -22}
+${image ~/conky/monochrome/images/blame/filesystem-bar.png -n -p 68,0}\
+veronica${goto 74}${voffset -1}${color2}${if_match ${fs_used_perc /media/veronica} > 90}${color3}${endif}${fs_bar 4,97 /media/veronica}
+${voffset 3}${alignr}${color}${fs_used /media/veronica} / ${fs_size /media/veronica}
+${image ~/conky/monochrome/images/blame/diskio-sdb.png -n -p 0,34}\
+${voffset 4}${offset 42}${diskiograph_write /dev/sdb 25,115 6b91e5 546fb2 260000 -l}
+${voffset -10}${offset 42}${diskiograph_read /dev/sdb 25,115 315bb1 1a336b 260000 -l}
+${color1}write ${color}${diskio_write /dev/sdb}${alignr}${color}${diskio_read /dev/sdb} ${color1}read
 ]];

@@ -1,17 +1,17 @@
 conky.config = {
   update_interval = 2,  -- update interval in seconds
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
-  xinerama_head = 0,    -- multi monitor setup: x11 (0,1,2,..) wayland (1,2,3,..)
+  xinerama_head = 1,    -- multi monitor setup: x11 (0,1,2,..) wayland (1,2,3,..)
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'bottom_left',       -- top|middle|bottom_left|middle|right
-  gap_x = 933,                  -- same as passing -x at command line
-  gap_y = 14,
+  alignment = 'bottom_left',     -- top|middle|bottom_left|middle|right
+  gap_x = 1118,                 -- same as passing -x at command line
+  gap_y = 9,
 
   -- window settings
-  minimum_width = 160,
-  minimum_height = 150,
+  minimum_width = 175,
+  minimum_height = 112,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -40,21 +40,16 @@ conky.config = {
   draw_outline = false,   -- black outline around text (not good if text is black)
   default_color = 'black',
   color1 = 'white',
-  color2 = '1a336b',      -- dark blue
+  color2 = '315bb1',      -- dark blue
   color3 = '800020',      -- red
 };
 
 conky.text = [[
-${image ~/conky/monochrome/images/blame/bar-right.png -n -p 0,0}\
-${goto 12}${voffset 3}fedora${goto 74}${voffset -1}${color2}${if_match ${fs_used_perc /} > 90}${color3}${endif}${fs_bar 4, 83 /}
-${voffset 4}${alignr}${color}${fs_used /} / ${fs_size /}
-${image ~/conky/monochrome/images/blame/bar-right.png -n -p 0,40}\
-${goto 12}${voffset 11}home${goto 74}${voffset -1}${color2}${if_match ${fs_used_perc /home} > 90}${color3}${endif}${fs_bar 4, 83 /home}
-${voffset 4}${alignr}${color}${fs_used /home} / ${fs_size /home}
-${image ~/conky/monochrome/images/blame/bar-right.png -n -p 0,80}\
-${goto 12}${voffset 11}betty${goto 74}${voffset -1}${color2}${if_match ${fs_used_perc /media/betty} > 90}${color3}${endif}${fs_bar 4, 83 /media/betty}
-${voffset 4}${alignr}${color}${fs_used /media/betty} / ${fs_size /media/betty}
-${image ~/conky/monochrome/images/blame/bar-right.png -n -p 0,120}\
-${goto 12}${voffset 11}veronica${goto 74}${voffset -1}${color2}${if_match ${fs_used_perc /media/veronica} > 90}${color3}${endif}${fs_bar 4, 83 /media/veronica}
-${voffset 4}${alignr}${color}${fs_used /media/veronica} / ${fs_size /media/veronica}
+${image ~/conky/monochrome/images/blame/filesystem-bar.png -n -p 68,0}\
+betty${goto 74}${voffset -1}${color2}${if_match ${fs_used_perc /media/betty} > 90}${color3}${endif}${fs_bar 4,97 /media/betty}
+${voffset 3}${alignr}${color}${fs_used /media/betty} / ${fs_size /media/betty}
+${image ~/conky/monochrome/images/blame/diskio-sdc.png -n -p 0,34}\
+${voffset 4}${offset 42}${diskiograph_write /dev/sdc 25,115 6b91e5 546fb2 260000 -l}
+${voffset -10}${offset 42}${diskiograph_read /dev/sdc 25,115 315bb1 1a336b 260000 -l}
+${color1}write ${color}${diskio_write /dev/sdc}${alignr}${color}${diskio_read /dev/sdc} ${color1}read
 ]];
