@@ -1,13 +1,13 @@
 conky.config = {
   update_interval = 2,  -- update interval in seconds
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
-  xinerama_head = 0,    -- multi monitor setup: x11 (0,1,2,..) wayland (1,2,3,..)
+  xinerama_head = 1,    -- multi monitor setup: x11 (0,1,2,..) wayland (1,2,3,..)
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
   alignment = 'bottom_left',       -- top|middle|bottom_left|middle|right
-  gap_x = 1113,                     -- same as passing -x at command line
-  gap_y = 15,
+  gap_x = 1313,                     -- same as passing -x at command line
+  gap_y = 16,
 
   -- window settings
   minimum_width = 192,
