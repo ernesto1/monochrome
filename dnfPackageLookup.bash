@@ -24,7 +24,8 @@ while [ true ]; do
         # Available Upgrades
         # code.x86_64                      1.59.0-1628120127.el8              code        
         # skypeforlinux.x86_64             8.75.0.140-1                       skype-stable
-        newPackages=$(dnf list updates  | grep -cE '.+\..+')
+        dnf list updates > /tmp/dnf.updates
+        newPackages=$(grep -cE '.+\..+' /tmp/dnf.updates)
         echo -n "$(date +'%D %r') - " | tee -a /tmp/conkyDnf.log 
         
         if [[ $newPackages > 0 ]]; then
