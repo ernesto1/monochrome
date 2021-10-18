@@ -1,0 +1,61 @@
+conky.config = {
+  update_interval = 2,  -- update interval in seconds
+  total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
+  xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
+  double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
+
+  -- window alignment
+  alignment = 'top_left',       -- top|middle|bottom_left|middle|right
+  gap_x = 146,                     -- same as passing -x at command line
+  gap_y = 252,
+
+  -- window settings
+  minimum_width = 213,
+  minimum_height = 130,
+  own_window = true,
+  own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
+  own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+
+  -- transparency configuration
+  own_window_transparent = true,
+  own_window_argb_visual = true,  -- turn on transparency
+  own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
+
+  -- window borders
+  draw_borders = false,     -- draw borders around the conky window
+  border_width = 1,         -- width of border window in pixels
+  stippled_borders = 0,     -- border stippling (dashing) in pixels
+  border_inner_margin = 0,  -- margin between the border and text in pixels
+  border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
+
+  -- graph settings
+  draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
+                              -- does not include bars, ie. wifi strength bar, cpu bar
+
+  imlib_cache_flush_interval = 300,
+  -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
+
+  -- font settings
+  draw_shades = false,    -- black shadow on text (not good if text is black)
+  draw_outline = false,   -- black outline around text (not good if text is black)
+  default_color = 'black',
+  color1 = 'white',
+  color2 = '1a336b',      -- dark blue
+  color3 = '800020',      -- red
+};
+
+conky.text = [[
+${color1}${goto 12}local ip${goto 72}${color}${addr enp0s25}
+# use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
+${voffset 3}${color1}bittorrent${goto 72}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
+
+
+
+${color1}${goto 25}kernel${goto 73}${color}${kernel}
+${voffset 3}${goto 25}${color1}uptime${goto 73}${color}${uptime}
+${voffset 3}${goto 43}${color1}dnf${goto 73}${color}${if_existing /tmp/conkyDnf new}${color1}${endif}${tail /tmp/conkyDnf 1 2}
+${voffset 2}${color1}compositor${goto 73}${color}${execi 3600 echo $XDG_SESSION_TYPE}
+
+
+${color1}${goto 37}zoom${goto 73}${color}${if_running zoom}running${else}off${endif}
+]];

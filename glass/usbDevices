@@ -1,0 +1,82 @@
+conky.config = {
+  update_interval = 2,  -- update interval in seconds
+  total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
+  xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
+  double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
+
+  -- window alignment
+  alignment = 'top_left',     -- top|middle|bottom_left|middle|right
+  gap_x = 2,                 -- same as passing -x at command line
+  gap_y = 962,
+
+  -- window settings
+  minimum_width = 118,
+  minimum_height = 169,
+  own_window = true,
+  own_window_type = 'panel',    -- values: desktop (background), panel (bar)
+  own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+
+  -- transparency configuration
+  own_window_transparent = true,
+  own_window_argb_visual = true,  -- turn on transparency
+  own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
+
+  -- window borders
+  draw_borders = false,     -- draw borders around the conky window
+  border_width = 0,         -- width of border window in pixels
+  stippled_borders = 0,     -- border stippling (dashing) in pixels
+  border_inner_margin = 0,  -- margin between the border and text in pixels
+  border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
+
+  -- graph settings
+  draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
+                              -- does not include bars, ie. wifi strength bar, cpu bar
+
+  imlib_cache_flush_interval = 250,
+  -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
+
+  -- font settings
+  use_xft = true,
+  xftalpha = 0,
+  draw_shades = false,    -- black shadow on text (not good if text is black)
+  draw_outline = false,   -- black outline around text (not good if text is black)
+  font0 = 'font URW Gothic Demi:size=8',      -- title
+  font1 = 'font URW Gothic Demi:size=16',     -- big value
+  font2 = 'font URW Gothic Demi:size=12',     -- mid value
+  font3 = 'font URW Gothic Demi:size=9',      -- small value
+  font4 = 'Nimbus Mono PS Regular:size=8',    -- text
+  default_color = 'white',
+  color1 = 'black',
+  color2 = '1a336b',      -- dark blue
+  color3 = '800020',      -- red
+};
+
+conky.text = [[
+${image ~/conky/monochrome/images/glass/top.png -n -p 0,0}\
+${image ~/conky/monochrome/images/glass/block-filesystem.png -n -p 0,5}\
+${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,57}\
+${image ~/conky/monochrome/images/glass/block-filesystem.png -n -p 0,58}\
+${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,112}\
+${image ~/conky/monochrome/images/glass/block-filesystem.png -n -p 0,111}\
+${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,164}\
+# disk - sdb
+# disk write
+${voffset 4}${offset 5}${color}${font0}usb cruzer
+${voffset -14}${alignr}${font2}${fs_used_perc /run/media/ernesto/sandisk}${font3}% 
+${voffset -2}${offset 21}${color2}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color3}${endif}${fs_bar 3,93 /run/media/ernesto/sandisk}
+${voffset -4}${alignr}${color1}${font4}${fs_used /run/media/ernesto/sandisk} / ${fs_size /run/media/ernesto/sandisk} 
+${voffset 14}${offset 5}${color}${font0}sandisk SD
+${voffset -14}${alignr}${font2}${fs_used_perc /run/media/ernesto/disk}${font3}% 
+${voffset -2}${offset 21}${color2}${if_match ${fs_used_perc /run/media/ernesto/disk} > 90}${color3}${endif}${fs_bar 3,93 /run/media/ernesto/disk}
+${voffset -4}${alignr}${color1}${font4}${fs_used /run/media/ernesto/disk} / ${fs_size /run/media/ernesto/disk} 
+${voffset 16}${offset 5}${color}${font0}MAXTOR drive
+${if_mounted /run/media/ernesto/MAXTOR}\
+${voffset -14}${alignr}${font2}${fs_used_perc /run/media/ernesto/MAXTOR}${font3}% 
+${voffset -2}${offset 21}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 3,93 /run/media/ernesto/MAXTOR}
+${voffset -4}${alignr}${color1}${font4}${fs_used /run/media/ernesto/MAXTOR} / ${fs_size /run/media/ernesto/MAXTOR} 
+${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,568}
+${else}\
+${voffset 3}${alignr}${color1}${font4}device is not 
+${alignr}${color1}connected 
+${endif}\
+]];
