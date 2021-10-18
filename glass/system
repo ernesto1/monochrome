@@ -41,7 +41,7 @@ conky.config = {
   draw_shades = false,    -- black shadow on text (not good if text is black)
   draw_outline = false,   -- black outline around text (not good if text is black)
   font0 = 'font URW Gothic Demi:size=8',      -- title
-  font1 = 'font URW Gothic Demi:size=20',     -- big value
+  font1 = 'font URW Gothic Demi:size=16',     -- big value
   font2 = 'font URW Gothic Demi:size=12',     -- mid value
   font3 = 'font URW Gothic Demi:size=9',      -- small value
   font4 = 'Nimbus Mono PS Regular:size=8',    -- text
@@ -55,21 +55,21 @@ conky.text = [[
 # cpu
 ${image ~/conky/monochrome/images/glass/top.png -n -p 0,0}\
 ${offset 5}${font0}cpu
-${voffset -23}${cpugraph cpu0 48,117 315bb1 1a336b}
-${voffset -43}${alignr}${font1}${cpu cpu0}${font2}% 
+${voffset -21}${cpugraph cpu0 48,117 315bb1 1a336b}
+${voffset -38}${alignr}${font1}${cpu cpu0}${font2}% 
 # old version ${voffset 5}${offset 5}${font4}${color}load${alignr}${color1}${font4}${loadavg} 
 ${voffset 5}${alignr}${color1}${font4}${loadavg} 
 # memory
 ${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,72}\
 ${image ~/conky/monochrome/images/glass/block.png -n -p 0,72}\
 ${voffset 12}${offset 5}${color}${font0}memory
-${voffset -23}${if_match ${memperc} >= 90}${memgraph 48,117 cd0033 800020}\${else}${memgraph 48,117 315bb1 1a336b}${endif}
-${voffset -43}${alignr}${font1}${memperc}${font2}% 
+${voffset -21}${if_match ${memperc} >= 90}${memgraph 48,117 cd0033 800020}\${else}${memgraph 48,117 315bb1 1a336b}${endif}
+${voffset -38}${alignr}${font1}${memperc}${font2}% 
 ${voffset 5}${alignr}${color1}${font4}${mem} / ${memmax} 
 # swap
 ${image ~/conky/monochrome/images/glass/block.png -n -p 0,144}\
 ${voffset 12}${offset 5}${color}${font0}swap
-${voffset -3}${alignr}${font1}${swapperc}${font2}% 
+${voffset -2}${alignr}${font1}${swapperc}${font2}% 
 ${voffset -5}${offset 20}${color2}${swapbar 3,93}
 ${voffset -9}${alignr}${color1}${font4}${swap} / ${swapmax} 
 # network up
@@ -97,7 +97,7 @@ ${voffset 6}${offset 5}${color}${font0}disk read
 ${voffset -23}${diskiograph_read /dev/sda 48,117 315bb1 1a336b 260000 -l}
 ${voffset -33}${alignr}${font2}${diskio_read /dev/sda} 
 # fedora
-${voffset 12}${offset 5}${color}${font0}fedora
+${voffset 15}${offset 5}${color}${font0}fedora
 ${voffset -14}${alignr}${font2}${fs_used_perc /}${font3}% 
 ${voffset -2}${offset 20}${color2}${if_match ${fs_used_perc /} > 90}${color3}${endif}${fs_bar 3,93 /}
 ${voffset -4}${alignr}${color1}${font4}${fs_used /} / ${fs_size /} 
