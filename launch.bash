@@ -111,19 +111,19 @@ while (( "$#" )); do
   esac
 done
 
-echo -e "launching conky with the following settings:\n"
+echo -e "::: launching conky with the following settings:\n"
 echo    "conky folder:         ${directory}"
 
 if [[ ${monitor} ]]; then
-  echo    "window compositor:    $(echo $XDG_SESSION_TYPE)"
-  echo    "monitor:              ${monitor}"
+  echo  "window compositor:    $(echo $XDG_SESSION_TYPE)"
+  echo  "monitor:              ${monitor}"
 fi
 
 if [[ ! -z $screenWidth ]]; then
   layoutFile="$(echo ${directory}/layout.${screenWidth}x*.cfg)"   # need to use echo in order for the variable
                                                                   # to hold the actual pathname expansion
   if [[ -f ${layoutFile} ]]; then
-    echo -e "layout override file: ${layoutFile}"
+    echo "layout override file: ${layoutFile}"
     detectDuplicateEntries "${layoutFile}"
     # TODO file integrity: ensure number of override elements is 2 or 3
   else
@@ -134,16 +134,17 @@ if [[ ! -z $screenWidth ]]; then
 fi
 
 set +e      # ignore errors
+echo -e "\n::: killing currently running conky sessions (if any)"
 killall conky
 killall dnfPackageLookup.bash
-
+echo -e "\n::: launching conky configs\n"
 IFS=$'\n'
 
 # all available conky configs in the target directory will be launched
 # config file names are expected to not have an extension, ie. cpu vs cpu.cfg
 for conkyConfig in $(find "${directory}" -maxdepth 1 -not -name '*.*' -not -type d)
 do
-  echo -e "\nlaunching conky config '${conkyConfig##*/}'"
+  echo "- ${conkyConfig##*/}"
   
   # 1. layout override
   [[ -f ${layoutFile} ]] && override=$(grep -v \# "${layoutFile}" | grep "${conkyConfig##*/}":)
@@ -162,7 +163,7 @@ do
       layoutOverride=("${layoutOverride[@]:0:4}" -a "${alignment}")   # array index 0:4 is exclusive of the last element
     fi
     
-    echo "applying the position override: ${layoutOverride[@]}"
+    echo "  applying the position override: ${layoutOverride[@]}"
   fi
 
   # 2. monitor override
@@ -176,6 +177,7 @@ do
   IFS=$'\n'
 done
 
+echo -e "\n::: starting dnf package lookup service"
 # prepare dnf package lookup file
 # this file is read by the 'system' conky to get the number of package updates, see dnfPackageLookup.bash
 echo ':: stand by ::' > /tmp/conkyDnf
