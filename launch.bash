@@ -21,8 +21,11 @@ function usage() {
 	    Loads the conky desktop theme.  Meant for monitors with a 2560 x 1600 pixel resolution.
 	    
 	  --blame
-	    Load the conky blame theme.
+	    Load the conky blame theme
 
+	  --glass
+	    Load the conky glass theme
+	
 	Optional flags
 	  --monitor 0|1|2|3|...
 	    On multi monitor setups, use this flag to specify on which monitor you would like conky
@@ -80,7 +83,11 @@ while (( "$#" )); do
     --laptop)
       directory=${HOME}/conky/monochrome/small
       shift
-      ;;      
+      ;;
+    --glass)
+      directory=${HOME}/conky/monochrome/glass
+      shift
+      ;;
     --monitor)
       # TODO validate a proper number was provided to the monitor flag
       monitor=$2
@@ -134,7 +141,7 @@ IFS=$'\n'
 
 # all available conky configs in the target directory will be launched
 # config file names are expected to not have an extension, ie. cpu vs cpu.cfg
-for conkyConfig in $(find "${directory}" -maxdepth 1 -type f -not -name '*.*')
+for conkyConfig in $(find "${directory}" -maxdepth 1 -not -name '*.*' -not -type d)
 do
   echo -e "\nlaunching conky config '${conkyConfig##*/}'"
   
