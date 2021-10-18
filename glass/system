@@ -6,14 +6,14 @@ conky.config = {
 
   -- window alignment
   alignment = 'top_left',     -- top|middle|bottom_left|middle|right
-  gap_x = 6,                 -- same as passing -x at command line
-  gap_y = 33,
+  gap_x = 2,                 -- same as passing -x at command line
+  gap_y = 30,
 
   -- window settings
-  minimum_width = 110,
+  minimum_width = 118,
   minimum_height = 490,
   own_window = true,
-  own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
+  own_window_type = 'panel',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
   -- transparency configuration
@@ -23,10 +23,10 @@ conky.config = {
 
   -- window borders
   draw_borders = false,     -- draw borders around the conky window
-  border_width = 1,         -- width of border window in pixels
+  border_width = 0,         -- width of border window in pixels
   stippled_borders = 0,     -- border stippling (dashing) in pixels
   border_inner_margin = 0,  -- margin between the border and text in pixels
-  border_outer_margin = 1,  -- margin between the border and the edge of the window in pixels
+  border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
 
   -- graph settings
   draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
@@ -53,7 +53,7 @@ conky.config = {
 
 conky.text = [[
 # cpu
-${image ~/conky/monochrome/images/glass/top.png -n -p 0,0}\
+${image ~/conky/monochrome/images/glass/block.png -n -p 0,0}\
 ${offset 5}${font0}cpu
 ${voffset -21}${cpugraph cpu0 48,117 315bb1 1a336b}
 ${voffset -38}${alignr}${font1}${cpu cpu0}${font2}% 
@@ -70,7 +70,7 @@ ${voffset 5}${alignr}${color1}${font4}${mem} / ${memmax}
 ${image ~/conky/monochrome/images/glass/block.png -n -p 0,144}\
 ${voffset 12}${offset 5}${color}${font0}swap
 ${voffset -2}${alignr}${font1}${swapperc}${font2}% 
-${voffset -5}${offset 20}${color2}${swapbar 3,93}
+${voffset -5}${offset 21}${color2}${swapbar 3,93}
 ${voffset -9}${alignr}${color1}${font4}${swap} / ${swapmax} 
 # network up
 ${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,216}\
@@ -85,7 +85,7 @@ ${voffset 12}${offset 5}${color}${font0}network down
 ${voffset -23}${downspeedgraph enp0s25 48,117 315bb1 1a336b 15000}
 ${voffset -33}${alignr}${font2}${downspeed enp0s25} 
 ${voffset 5}${alignr}${color1}${font4}${totaldown enp0s25} total 
-# disk io - sda
+# disk - sda
 # disk write
 ${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,360}\
 ${image ~/conky/monochrome/images/glass/block-disk.png -n -p 0,360}\
@@ -99,13 +99,13 @@ ${voffset -33}${alignr}${font2}${diskio_read /dev/sda}
 # fedora
 ${voffset 15}${offset 5}${color}${font0}fedora
 ${voffset -14}${alignr}${font2}${fs_used_perc /}${font3}% 
-${voffset -2}${offset 20}${color2}${if_match ${fs_used_perc /} > 90}${color3}${endif}${fs_bar 3,93 /}
+${voffset -2}${offset 21}${color2}${if_match ${fs_used_perc /} > 90}${color3}${endif}${fs_bar 3,93 /}
 ${voffset -4}${alignr}${color1}${font4}${fs_used /} / ${fs_size /} 
 # home
 ${image ~/conky/monochrome/images/glass/block-filesystem.png -n -p 0,515}\
 ${voffset 12}${offset 5}${color}${font0}home
 ${voffset -14}${alignr}${font2}${fs_used_perc /home}${font3}% 
-${voffset -2}${offset 20}${color2}${if_match ${fs_used_perc /home} > 90}${color3}${endif}${fs_bar 3,93 /home}
+${voffset -2}${offset 21}${color2}${if_match ${fs_used_perc /home} > 90}${color3}${endif}${fs_bar 3,93 /home}
 ${voffset -4}${alignr}${color1}${font4}${fs_used /home} / ${fs_size /home} 
-${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,568}
+${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,568}${voffset -402}
 ]];
