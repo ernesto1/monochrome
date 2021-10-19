@@ -11,7 +11,7 @@ conky.config = {
 
   -- window settings
   minimum_width = 118,
-  minimum_height = 490,
+  minimum_height = 578,
   own_window = true,
   own_window_type = 'panel',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -55,48 +55,47 @@ conky.text = [[
 # cpu
 ${image ~/conky/monochrome/images/glass/top.png -n -p 0,0}\
 ${image ~/conky/monochrome/images/glass/block.png -n -p 0,5}\
-${offset 5}${font0}cpu
-${voffset -21}${cpugraph cpu0 48,117 315bb1 1a336b}
-${voffset -38}${alignr}${font1}${cpu cpu0}${font2}% 
-# old version ${voffset 5}${offset 5}${font4}${color}load${alignr}${color1}${font4}${loadavg} 
+${voffset -6}${cpugraph cpu0 48,117 315bb1 1a336b}
+${voffset -58}${offset 5}${font0}cpu
+${voffset 2}${alignr}${font1}${cpu cpu0}${font2}% 
 ${voffset 5}${alignr}${color1}${font4}${loadavg} 
 # memory
-${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,72}\
+${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,75}\
 ${image ~/conky/monochrome/images/glass/block.png -n -p 0,77}\
-${voffset 12}${offset 5}${color}${font0}memory
-${voffset -21}${if_match ${memperc} >= 90}${memgraph 48,117 cd0033 800020}\${else}${memgraph 48,117 315bb1 1a336b}${endif}
-${voffset -38}${alignr}${font1}${memperc}${font2}% 
+${voffset 1}${if_match ${memperc} >= 90}${memgraph 48,117 cd0033 800020}\${else}${memgraph 48,117 315bb1 1a336b}${endif}
+${voffset -50}${offset 5}${color}${font0}memory
+${voffset 2}${alignr}${font1}${memperc}${font2}% 
 ${voffset 5}${alignr}${color1}${font4}${mem} / ${memmax} 
 # swap
 ${image ~/conky/monochrome/images/glass/block.png -n -p 0,149}\
 ${voffset 12}${offset 5}${color}${font0}swap
 ${voffset -2}${alignr}${font1}${swapperc}${font2}% 
-${voffset -5}${offset 21}${color2}${swapbar 3,93}
+${voffset -5}${offset 21}${color2}${if_match ${memperc /home} > 75}${color3}${endif}${swapbar 3,93}
 ${voffset -9}${alignr}${color1}${font4}${swap} / ${swapmax} 
 # network up
-${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,216}\
+${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,219}\
 ${image ~/conky/monochrome/images/glass/block.png -n -p 0,221}\
-${voffset 12}${offset 5}${color}${font0}network up
-${voffset -23}${upspeedgraph enp0s25 48,117 6b91e5 546fb2 2000}
-${voffset -33}${alignr}${font2}${upspeed enp0s25} 
+${voffset 1}${upspeedgraph enp0s25 48,117 6b91e5 546fb2 2000}
+${voffset -50}${offset 5}${color}${font0}network up
+${voffset 5}${alignr}${font2}${upspeed enp0s25} 
 ${voffset 5}${alignr}${color1}${font4}${totalup enp0s25} total 
 # network down
 ${image ~/conky/monochrome/images/glass/block.png -n -p 0,293}\
-${voffset 12}${offset 5}${color}${font0}network down
-${voffset -23}${downspeedgraph enp0s25 48,117 315bb1 1a336b 15000}
-${voffset -33}${alignr}${font2}${downspeed enp0s25} 
+${voffset 1}${downspeedgraph enp0s25 48,117 315bb1 1a336b 15000}
+${voffset -50}${offset 5}${color}${font0}network down
+${voffset 5}${alignr}${font2}${downspeed enp0s25} 
 ${voffset 5}${alignr}${color1}${font4}${totaldown enp0s25} total 
 # disk - sda
 # disk write
-${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,360}\
+${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,363}\
 ${image ~/conky/monochrome/images/glass/block-disk.png -n -p 0,365}\
-${voffset 12}${offset 5}${color}${font0}disk write
-${voffset -23}${diskiograph_write /dev/sda 48,117 6b91e5 546fb2 260000 -l}
-${voffset -33}${alignr}${font2}${diskio_write /dev/sda} 
+${voffset 1}${diskiograph_write /dev/sda 48,117 6b91e5 546fb2 260000 -l}
+${voffset -50}${offset 5}${color}${font0}disk write
+${voffset 5}${alignr}${font2}${diskio_write /dev/sda} 
 # disk read
-${voffset 6}${offset 5}${color}${font0}disk read
-${voffset -23}${diskiograph_read /dev/sda 48,117 315bb1 1a336b 260000 -l}
-${voffset -33}${alignr}${font2}${diskio_read /dev/sda} 
+${voffset -3}${diskiograph_read /dev/sda 48,117 315bb1 1a336b 260000 -l}
+${voffset -58}${offset 5}${color}${font0}disk read
+${voffset 5}${alignr}${font2}${diskio_read /dev/sda} 
 # fedora
 ${voffset 15}${offset 5}${color}${font0}fedora
 ${voffset -14}${alignr}${font2}${fs_used_perc /}${font3}% 
