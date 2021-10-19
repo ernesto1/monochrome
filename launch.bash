@@ -56,7 +56,7 @@ function detectDuplicateEntries() {
   duplicates=$(grep -v \# $1 | grep -v '^$' | cut -d: -f1 | sort | uniq -d)
   
   if [[ $duplicates ]]; then
-    echo 'Invalid override file.  Duplicate entry found.' >&2
+    echo 'error | invalid override file,  duplicate entry found' >&2
     exit 2
   fi
 }
@@ -111,7 +111,7 @@ while (( "$#" )); do
   esac
 done
 
-echo -e "::: launching conky with the following settings:\n"
+echo -e "::: launching conky with the following settings"
 echo    "conky folder:         ${directory}"
 
 if [[ ${monitor} ]]; then
@@ -137,7 +137,7 @@ set +e      # ignore errors
 echo -e "\n::: killing currently running conky sessions (if any)"
 killall conky
 killall dnfPackageLookup.bash
-echo -e "\n::: launching conky configs\n"
+echo -e "\n::: launching conky configs"
 IFS=$'\n'
 
 # all available conky configs in the target directory will be launched
