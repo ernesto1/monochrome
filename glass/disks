@@ -13,7 +13,7 @@ conky.config = {
   minimum_width = 118,
   minimum_height = 320,
   own_window = true,
-  own_window_type = 'panel',    -- values: desktop (background), panel (bar)
+  own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
   -- transparency configuration
@@ -59,26 +59,26 @@ ${image ~/conky/monochrome/images/glass/block-disk.png -n -p 0,160}\
 ${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,315}\
 # disk - sdb
 # disk write
-${voffset 3}${offset 5}${color}${font0}disk write${alignr}sdb 
-${voffset -23}${diskiograph_write /dev/sdb 48,117 6b91e5 546fb2 260000 -l}
-${voffset -33}${alignr}${font2}${diskio_write /dev/sdb} 
+${voffset -5}${diskiograph_write /dev/sdb 48,117 6b91e5 546fb2 260000 -l}
+${voffset -58}${offset 5}${color}${font0}disk write${alignr}sdb 
+${voffset 5}${alignr}${font2}${diskio_write /dev/sdb} 
 # disk read
-${voffset 6}${offset 5}${color}${font0}disk read
-${voffset -23}${diskiograph_read /dev/sdb 48,117 315bb1 1a336b 260000 -l}
-${voffset -33}${alignr}${font2}${diskio_read /dev/sdb} 
+${voffset -3}${diskiograph_read /dev/sdb 48,117 315bb1 1a336b 260000 -l}
+${voffset -58}${offset 5}${color}${font0}disk read
+${voffset 5}${alignr}${font2}${diskio_read /dev/sdb} 
 # filesystem(s)
-${voffset 15}${offset 5}${color}${font0}veronica
+${voffset 14}${offset 5}${color}${font0}veronica
 ${voffset -14}${alignr}${font2}${fs_used_perc /media/veronica}${font3}% 
 ${voffset -2}${offset 21}${color2}${if_match ${fs_used_perc /media/veronica} > 90}${color3}${endif}${fs_bar 3,93 /media/veronica}
 ${voffset -4}${alignr}${color1}${font4}${fs_used /media/veronica} / ${fs_size /media/veronica} 
 # disk - sdc
-${voffset 12}${offset 5}${color}${font0}disk write${alignr}sdc 
-${voffset -23}${diskiograph_write /dev/sdc 48,117 6b91e5 546fb2 260000 -l}
-${voffset -33}${alignr}${font2}${diskio_write /dev/sdc} 
+${voffset 1}${diskiograph_write /dev/sdc 48,117 6b91e5 546fb2 260000 -l}
+${voffset -50}${offset 5}${color}${font0}disk write${alignr}sdc 
+${voffset 5}${alignr}${font2}${diskio_write /dev/sdc} 
 # disk read
-${voffset 6}${offset 5}${color}${font0}disk read
-${voffset -23}${diskiograph_read /dev/sdc 48,117 315bb1 1a336b 260000 -l}
-${voffset -33}${alignr}${font2}${diskio_read /dev/sdc} 
+${voffset -3}${diskiograph_read /dev/sdc 48,117 315bb1 1a336b 260000 -l}
+${voffset -58}${offset 5}${color}${font0}disk read
+${voffset 5}${alignr}${font2}${diskio_read /dev/sdc} 
 # filesystem(s)
 ${voffset 15}${offset 5}${color}${font0}betty
 ${voffset -14}${alignr}${font2}${fs_used_perc /media/betty}${font3}% 
