@@ -94,10 +94,10 @@ while (( "$#" )); do
       shift 2
       ;;
     --layout-override)
-      screenWidth=$2
+      overrideTag=$2
       
-      if [[ -z $screenWidth ]]; then
-        echo -e 'error | missing argument: screen width must be provided with the --layout-override flag\n\n' >&2
+      if [[ -z $overrideTag ]]; then
+        echo -e 'error | missing argument: override file name must be provided with the --layout-override flag\n\n' >&2
         usage
         exit 2
       fi
@@ -119,8 +119,8 @@ if [[ ${monitor} ]]; then
   echo  "monitor:              ${monitor}"
 fi
 
-if [[ ! -z $screenWidth ]]; then
-  layoutFile="$(echo ${directory}/layout.${screenWidth}x*.cfg)"   # need to use echo in order for the variable
+if [[ ! -z $overrideTag ]]; then
+  layoutFile="$(echo ${directory}/layout.${overrideTag}.cfg)"   # need to use echo in order for the variable
                                                                   # to hold the actual pathname expansion
   if [[ -f ${layoutFile} ]]; then
     echo "layout override file: ${layoutFile}"
@@ -128,7 +128,7 @@ if [[ ! -z $screenWidth ]]; then
     # TODO file integrity: ensure number of override elements is 2 or 3
   else
     echo -e "\nerror | override file '${layoutFile}' not found" >&2
-    echo      '        please provide a proper monitor width resolution and try again' >&2
+    echo      '        please provide the proper override file name tag' >&2
     exit 2
   fi
 fi
