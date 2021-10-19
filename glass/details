@@ -7,7 +7,7 @@ conky.config = {
   -- window alignment
   alignment = 'top_left',       -- top|middle|bottom_left|middle|right
   gap_x = 146,                     -- same as passing -x at command line
-  gap_y = 252,
+  gap_y = 255,
 
   -- window settings
   minimum_width = 213,
@@ -45,10 +45,18 @@ conky.config = {
 };
 
 conky.text = [[
+# if on wifi
+${if_existing /sys/class/net/wlp4s0/operstate up}\
+${color1}${goto 12}local ip${goto 72}${color}${addr wlp4s0}
+${voffset 3}${goto 19}${color1}network${goto 72}${color}${wireless_essid wlp4s0}
+${voffset 3}${goto 19}${color1}channel${goto 72}${color}${wireless_channel wlp4s0}
+${voffset 3}${goto 13}${color1}strength${goto 72}${color}${wireless_link_qual_perc wlp4s0}%
+#${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color2}${endif}${wireless_link_bar 3,45 wlp4s0}
+${else}\
 ${color1}${goto 12}local ip${goto 72}${color}${addr enp0s25}
+${endif}\
 # use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
 ${voffset 3}${color1}bittorrent${goto 72}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
-
 
 
 ${color1}${goto 25}kernel${goto 73}${color}${kernel}
