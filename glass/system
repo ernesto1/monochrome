@@ -55,14 +55,14 @@ conky.text = [[
 # cpu
 ${image ~/conky/monochrome/images/glass/top.png -n -p 0,0}\
 ${image ~/conky/monochrome/images/glass/block.png -n -p 0,5}\
-${voffset -6}${cpugraph cpu0 48,117 315bb1 1a336b}
+${voffset -6}${if_match ${cpu cpu0} >= 90}${cpugraph cpu0 48,117 cd0033 800020}${else}${cpugraph cpu0 48,117 315bb1 1a336b}${endif}
 ${voffset -58}${offset 5}${font0}cpu
 ${voffset 2}${alignr}${font1}${cpu cpu0}${font2}% 
 ${voffset 5}${alignr}${color1}${font4}${loadavg} 
 # memory
 ${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,75}\
 ${image ~/conky/monochrome/images/glass/block.png -n -p 0,77}\
-${voffset 1}${if_match ${memperc} >= 90}${memgraph 48,117 cd0033 800020}\${else}${memgraph 48,117 315bb1 1a336b}${endif}
+${voffset 1}${if_match ${memperc} >= 90}${memgraph 48,117 cd0033 800020}${else}${memgraph 48,117 315bb1 1a336b}${endif}
 ${voffset -50}${offset 5}${color}${font0}memory
 ${voffset 2}${alignr}${font1}${memperc}${font2}% 
 ${voffset 5}${alignr}${color1}${font4}${mem} / ${memmax} 
