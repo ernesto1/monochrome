@@ -54,21 +54,31 @@ conky.config = {
 conky.text = [[
 ${image ~/conky/monochrome/images/glass/top.png -n -p 0,0}\
 ${image ~/conky/monochrome/images/glass/block-filesystem.png -n -p 0,5}\
-${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,57}\
+${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,56}\
 ${image ~/conky/monochrome/images/glass/block-filesystem.png -n -p 0,58}\
-${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,112}\
+${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,111}\
 ${image ~/conky/monochrome/images/glass/block-filesystem.png -n -p 0,111}\
 ${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,164}\
 # disk - sdb
 # disk write
-${voffset 4}${offset 5}${color}${font0}usb cruzer
+${voffset 3}${offset 5}${color}${font0}usb cruzer
+${if_mounted /run/media/ernesto/sandisk}\
 ${voffset -14}${alignr}${font2}${fs_used_perc /run/media/ernesto/sandisk}${font3}% 
 ${voffset -2}${offset 21}${color2}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color3}${endif}${fs_bar 3,93 /run/media/ernesto/sandisk}
 ${voffset -4}${alignr}${color1}${font4}${fs_used /run/media/ernesto/sandisk} / ${fs_size /run/media/ernesto/sandisk} 
+${else}\
+${voffset 3}${alignr}${color1}${font4}device is not 
+${alignr}${color1}connected ${voffset -1}
+${endif}\
 ${voffset 14}${offset 5}${color}${font0}sandisk SD
+${if_mounted /run/media/ernesto/disk}\
 ${voffset -14}${alignr}${font2}${fs_used_perc /run/media/ernesto/disk}${font3}% 
 ${voffset -2}${offset 21}${color2}${if_match ${fs_used_perc /run/media/ernesto/disk} > 90}${color3}${endif}${fs_bar 3,93 /run/media/ernesto/disk}
 ${voffset -4}${alignr}${color1}${font4}${fs_used /run/media/ernesto/disk} / ${fs_size /run/media/ernesto/disk} 
+${else}\
+${voffset 3}${alignr}${color1}${font4}device is not 
+${alignr}${color1}connected ${voffset -1}
+${endif}\
 ${voffset 16}${offset 5}${color}${font0}MAXTOR drive
 ${if_mounted /run/media/ernesto/MAXTOR}\
 ${voffset -14}${alignr}${font2}${fs_used_perc /run/media/ernesto/MAXTOR}${font3}% 
@@ -77,6 +87,6 @@ ${voffset -4}${alignr}${color1}${font4}${fs_used /run/media/ernesto/MAXTOR} / ${
 ${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,568}
 ${else}\
 ${voffset 3}${alignr}${color1}${font4}device is not 
-${alignr}${color1}connected 
+${alignr}${color1}connected ${voffset -1}
 ${endif}\
 ]];
