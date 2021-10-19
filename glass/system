@@ -81,7 +81,7 @@ ${voffset 5}${alignr}${font2}${upspeed enp0s25}
 ${voffset 5}${alignr}${color1}${font4}${totalup enp0s25} total 
 # network down
 ${image ~/conky/monochrome/images/glass/block.png -n -p 0,293}\
-${voffset 1}${downspeedgraph enp0s25 48,117 315bb1 1a336b 15000}
+${voffset 1}${downspeedgraph enp0s25 48,117 315bb1 1a336b 30000}
 ${voffset -50}${offset 5}${color}${font0}network down
 ${voffset 5}${alignr}${font2}${downspeed enp0s25} 
 ${voffset 5}${alignr}${color1}${font4}${totaldown enp0s25} total 
