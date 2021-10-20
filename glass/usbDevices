@@ -10,7 +10,7 @@ conky.config = {
   gap_y = 956,
 
   -- window settings
-  minimum_width = 118,
+  minimum_width = 113,
   minimum_height = 169,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -64,7 +64,7 @@ ${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,164}\
 ${voffset 3}${offset 5}${color}${font0}usb cruzer
 ${if_mounted /run/media/ernesto/sandisk}\
 ${voffset -14}${alignr}${font2}${fs_used_perc /run/media/ernesto/sandisk}${font3}% 
-${voffset -2}${offset 21}${color2}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color3}${endif}${fs_bar 3,93 /run/media/ernesto/sandisk}
+${voffset -2}${offset 16}${color2}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color3}${endif}${fs_bar 3,93 /run/media/ernesto/sandisk}
 ${voffset -4}${alignr}${color1}${font4}${fs_used /run/media/ernesto/sandisk} / ${fs_size /run/media/ernesto/sandisk} 
 ${else}\
 ${voffset 3}${alignr}${color1}${font4}device is not 
@@ -73,7 +73,7 @@ ${endif}\
 ${voffset 14}${offset 5}${color}${font0}sandisk SD
 ${if_mounted /run/media/ernesto/disk}\
 ${voffset -14}${alignr}${font2}${fs_used_perc /run/media/ernesto/disk}${font3}% 
-${voffset -2}${offset 21}${color2}${if_match ${fs_used_perc /run/media/ernesto/disk} > 90}${color3}${endif}${fs_bar 3,93 /run/media/ernesto/disk}
+${voffset -2}${offset 16}${color2}${if_match ${fs_used_perc /run/media/ernesto/disk} > 90}${color3}${endif}${fs_bar 3,93 /run/media/ernesto/disk}
 ${voffset -4}${alignr}${color1}${font4}${fs_used /run/media/ernesto/disk} / ${fs_size /run/media/ernesto/disk} 
 ${else}\
 ${voffset 3}${alignr}${color1}${font4}device is not 
@@ -82,7 +82,7 @@ ${endif}\
 ${voffset 16}${offset 5}${color}${font0}MAXTOR drive
 ${if_mounted /run/media/ernesto/MAXTOR}\
 ${voffset -14}${alignr}${font2}${fs_used_perc /run/media/ernesto/MAXTOR}${font3}% 
-${voffset -2}${offset 21}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 3,93 /run/media/ernesto/MAXTOR}
+${voffset -2}${offset 16}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 3,93 /run/media/ernesto/MAXTOR}
 ${voffset -4}${alignr}${color1}${font4}${fs_used /run/media/ernesto/MAXTOR} / ${fs_size /run/media/ernesto/MAXTOR} 
 ${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,568}
 ${else}\
