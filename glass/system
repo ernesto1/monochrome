@@ -72,19 +72,35 @@ ${voffset 12}${offset 5}${color}${font0}swap
 ${voffset -2}${alignr}${font1}${swapperc}${font2}% 
 ${voffset -5}${offset 16}${color2}${if_match ${swapperc} > 75}${color3}${endif}${swapbar 3,93}
 ${voffset -9}${alignr}${color1}${font4}${swap} / ${swapmax} 
-# network up
+# network bandwith
 ${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,219}\
 ${image ~/conky/monochrome/images/glass/block.png -n -p 0,221}\
+${image ~/conky/monochrome/images/glass/block.png -n -p 0,293}\
+# priority is given to wifi | if connected to a wifi network, graphs will show wifi bandwith usage
+# /sys/class/net/wlp4s0/operstate will contain 'up' if connected to a wifi network, 'down' otherwise
+# wifi upload
+${if_existing /sys/class/net/wlp4s0/operstate up}\
+${voffset 1}${upspeedgraph wlp4s0 48,112 6b91e5 546fb2 8200}
+${voffset -50}${offset 5}${color}${font0}network up
+${voffset 5}${alignr}${font2}${upspeed wlp4s0} 
+${voffset 5}${alignr}${color1}${font4}${totalup wlp4s0} total 
+# wifi download
+${voffset 1}${downspeedgraph wlp4s0 48,112 315bb1 1a336b 19000}
+${voffset -50}${offset 5}${color}${font0}network down
+${voffset 5}${alignr}${font2}${downspeed wlp4s0} 
+${voffset 5}${alignr}${color1}${font4}${totaldown wlp4s0} total 
+${else}\
+# ethernet upload
 ${voffset 1}${upspeedgraph enp0s25 48,112 6b91e5 546fb2 3000}
 ${voffset -50}${offset 5}${color}${font0}network up
 ${voffset 5}${alignr}${font2}${upspeed enp0s25} 
 ${voffset 5}${alignr}${color1}${font4}${totalup enp0s25} total 
-# network down
-${image ~/conky/monochrome/images/glass/block.png -n -p 0,293}\
+# ethernet download
 ${voffset 1}${downspeedgraph enp0s25 48,112 315bb1 1a336b 55000}
 ${voffset -50}${offset 5}${color}${font0}network down
 ${voffset 5}${alignr}${font2}${downspeed enp0s25} 
 ${voffset 5}${alignr}${color1}${font4}${totaldown enp0s25} total 
+${endif}\
 # disk - sda
 # disk write
 ${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,363}\
