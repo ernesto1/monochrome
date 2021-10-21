@@ -56,6 +56,6 @@ ${voffset 3}${goto 37}${color1}swap${goto 73}${voffset 1}${color2}${swapbar 4,82
 ${image ~/conky/monochrome/images/blame/swap-bar.png -n -p 67,132}\
 ${image ~/conky/monochrome/images/blame/cylinder-cpu.png -n -p 15,155}\
 ${image ~/conky/monochrome/images/blame/cylinder-memory.png -n -p 72,155}\
-${offset 27}${voffset 20}${cpugraph cpu0 80, 19 315bb1 1a336b}\
-${goto 85}${if_match ${memperc} >= 90}${memgraph 80, 19 cd0033 800020}\${else}${memgraph 80, 19 315bb1 1a336b}${endif}
+${offset 27}${voffset 20}${if_match ${cpu cpu0} >= 90}${cpugraph cpu0 80, 19 cd0033 800020}${else}${cpugraph cpu0 80, 19 315bb1 1a336b}${endif}\
+${goto 85}${if_match ${memperc} >= 90}${memgraph 80, 19 cd0033 800020}${else}${memgraph 80, 19 315bb1 1a336b}${endif}
 ]];
