@@ -153,7 +153,9 @@ for conkyConfigPath in $(find "${directory}" -maxdepth 1 -not -name '*.*' -not -
 do
   conkyConfig=${conkyConfigPath##*/}    # remove the file path /home/ernesto/monochrome/.. from the file name
   echo "- ${conkyConfig}"
-  # 1. ignore override
+  # 1. filter out conky override
+  #    override is of the format: ignore:<conkyFilename>
+  #                           ex. ignore:externalDevices
   ignore=$(grep -v \# "${layoutFile}" | grep ignore:"${conkyConfig}")
   
   if [[ ${ignore} ]]; then
@@ -162,11 +164,11 @@ do
   fi
   
   # 2. layout override
+  #    override is of the format: conkyFilename:x:y:alignment
+  #                               cpu:10:50:top_right
   override=$(grep -v \# "${layoutFile}" | grep "${conkyConfig}":)
 
-  if [[ ${override} ]]; then
-    # override is of the format: configFilename:x:y:alignment
-    #                            cpu:10:50:top_right
+  if [[ ${override} ]]; then    
     IFS=:
     layoutOverride=(${override})      # create an array out of the string in order to have it word split    
     # construct the position parameters for conky, ie. -x 10 -y 50 -a top_right
