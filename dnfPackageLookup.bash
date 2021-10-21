@@ -20,12 +20,14 @@ while [ true ]; do
     if [[ $loadAvg < $halfCores ]]; then
         # sample dnf output to parse:
         #
+        # PM Fusion for Fedora 32 - Free - Updates        0.0  B/s |   0  B     02:00    
+        # RPM Fusion for Fedora 32 - Nonfree - Updates    0.0  B/s |   0  B     02:00    
         # Last metadata expiration check: 0:15:45 ago on Mon 16 Aug 2021 10:29:07 AM EDT.
         # Available Upgrades
         # code.x86_64                      1.59.0-1628120127.el8              code        
         # skypeforlinux.x86_64             8.75.0.140-1                       skype-stable
         dnf list updates > /tmp/dnf.updates
-        newPackages=$(grep -cE '.+\..+' /tmp/dnf.updates)
+        newPackages=$(grep -cE '.+\..+\..+' /tmp/dnf.updates)
         echo -n "$(date +'%D %r') - " | tee -a /tmp/conkyDnf.log 
         
         if [[ $newPackages > 0 ]]; then
