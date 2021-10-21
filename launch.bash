@@ -4,11 +4,11 @@
 #
 # layout override
 # ---------------
-# a layout override file can be used to move the conkys around from their configured position in the conky file
+# a layout override file can be used to move the conkys around from their configured position in the conky config
 # or filter out conkys you do not wish to load
 #
 # - the alignment override file must follow the naming convention: layout.<tag>.cfg, ex. layout.laptop.cfg
-# - the tag is provided by the user at runtime
+# - the tag is provided by the user at runtime with the --layout-override flag
 # - the override file must exist in the conky target folder
 
 function usage() {
@@ -55,8 +55,8 @@ function usage() {
 
 # exits the script on error if the override file has any duplicate entries for a particular conky configuration
 function detectDuplicateEntries() {
-  # remove comment lines '#' and empty lines from the file, then look for dupes
-  duplicates=$(grep -v \# $1 | grep -v '^$' | cut -d: -f1 | sort | uniq -d)
+  # remove comment lines '#', empty lines and 'ignore' entries from the file, then look for dupes
+  duplicates=$(grep -vE '#|^$|ignore' $1 | cut -d: -f1 | sort | uniq -d)
   
   if [[ $duplicates ]]; then
     echo 'error | invalid override file,  duplicate entry found' >&2
@@ -156,17 +156,17 @@ do
   # 1. filter out conky override
   #    override is of the format: ignore:<conkyFilename>
   #                           ex. ignore:externalDevices
-  ignore=$(grep -v \# "${layoutFile}" | grep ignore:"${conkyConfig}")
+  [[ -f ${layoutFile} ]] && ignore=$(grep -v \# "${layoutFile}" | grep ignore:"${conkyConfig}")
   
   if [[ ${ignore} ]]; then
-    echo '  ignoring this conky due to use of filter in layout file'
+    echo '  ignoring this conky due it being in the exclusion list of the layout file'
     continue
   fi
   
   # 2. layout override
   #    override is of the format: conkyFilename:x:y:alignment
   #                               cpu:10:50:top_right
-  override=$(grep -v \# "${layoutFile}" | grep "${conkyConfig}":)
+  [[ -f ${layoutFile} ]] && override=$(grep -v \# "${layoutFile}" | grep "${conkyConfig}":)
 
   if [[ ${override} ]]; then    
     IFS=:
@@ -189,7 +189,7 @@ do
   fi
 
   # 4. launch conky
-  conky -c "${conkyConfigPath}" ${layoutOverride[@]} &
+  conky -c "${conkyConfigPath}" ${layoutOverride[@]} 2> /dev/null &
   unset layoutOverride
   IFS=$'\n'
 done
