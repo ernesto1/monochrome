@@ -1,0 +1,81 @@
+conky.config = {
+  update_interval = 2,  -- update interval in seconds
+  total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
+  xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
+  double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
+
+  -- window alignment
+  alignment = 'top_left',     -- top|middle|bottom_left|middle|right
+  gap_x = 2,                 -- same as passing -x at command line
+  gap_y = 622,
+
+  -- window settings
+  minimum_width = 113,
+  minimum_height = 71,
+  own_window = true,
+  own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
+  own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+
+  -- transparency configuration
+  own_window_transparent = true,
+  own_window_argb_visual = true,  -- turn on transparency
+  own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
+
+  -- window borders
+  draw_borders = false,     -- draw borders around the conky window
+  border_width = 1,         -- width of border window in pixels
+  stippled_borders = 0,     -- border stippling (dashing) in pixels
+  border_inner_margin = 0,  -- margin between the border and text in pixels
+  border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
+
+  -- graph settings
+  draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
+                              -- does not include bars, ie. wifi strength bar, cpu bar
+
+  imlib_cache_flush_interval = 250,
+  -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
+
+  -- font settings
+  use_xft = true,
+  xftalpha = 0,
+  draw_shades = false,    -- black shadow on text (not good if text is black)
+  draw_outline = false,   -- black outline around text (not good if text is black)
+  font0 = 'font URW Gothic Demi:size=8',      -- title
+  font1 = 'font URW Gothic Demi:size=16',     -- big value
+  font2 = 'font URW Gothic Demi:size=12',     -- mid value
+  font3 = 'font URW Gothic Demi:size=9',      -- small value
+  font4 = 'Nimbus Mono PS Regular:size=8',    -- text
+  default_color = 'white',
+  color1 = 'black',
+  color2 = '1a336b',      -- dark blue
+  color3 = '800020',      -- red
+};
+
+conky.text = [[
+${image ~/conky/monochrome/images/glass/top.png -n -p 0,0}\
+${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,66}\
+# power
+${if_match "${acpiacadapter}"=="on-line"}\
+# on power plug
+${if_match ${battery_percent BAT0} > 80}\
+${image ~/conky/monochrome/images/glass/block-power.png -n -p 0,5}\
+${voffset 3}${offset 5}${color}${font0}power
+${voffset 6}${offset 5}${color1}${font4}device
+${voffset 3}${offset 5}${color1}plugged in
+# on power plug | charging battery
+${else}\
+${image ~/conky/monochrome/images/glass/block-single.png -n -p 0,5}\
+${voffset 1}${offset 5}${color}${font0}charging
+${voffset -2}${alignr}${font1}${battery_percent BAT0}${font2}% 
+${voffset -5}${offset 16}${color2}${if_match ${battery_percent BAT0} < 70}${color3}${endif}${battery_bar 3,93 BAT0}
+${voffset -9}${alignr}${color1}${font4}eta ${battery_time BAT0}  
+${endif}\
+# on battery
+${else}\
+${image ~/conky/monochrome/images/glass/block-single.png -n -p 0,5}\
+${voffset 1}${offset 5}${color}${font0}battery
+${voffset -2}${alignr}${font1}${battery_percent BAT0}${font2}% 
+${voffset -5}${offset 16}${color2}${if_match ${battery_percent BAT0} < 30}${color3}${endif}${battery_bar 3,93 BAT0}
+${voffset -9}${alignr}${color1}${font4}${battery_time BAT0} left 
+${endif}\
+]];
