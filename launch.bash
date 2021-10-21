@@ -2,16 +2,18 @@
 # script to launch a conky configuration for a particular mode/resolution
 # the 'mode' (laptop/desktop) determines the target folder where all the conky configs will be loaded from
 #
-# position override
-# an alignment override file can be used to move the conkys around from their default setup
-# this is the case for the desktop 1920x1200 resolution, which takes advantage of this feature
+# layout override
+# ---------------
+# a layout override file can be used to move the conkys around from their configured position in the conky file
+# or filter out conkys you do not wish to load
 #
-# alignment override files must follow the naming convention: layout.<width>x<height>.cfg, ex. layout.1920x1200.cfg
-# the override file must be placed in the target folder
+# - the alignment override file must follow the naming convention: layout.<tag>.cfg, ex. layout.laptop.cfg
+# - the tag is provided by the user at runtime
+# - the override file must exist in the conky target folder
 
 function usage() {
   cat <<-END
-	$(basename $0) --mode [--monitor 1|2|3|...] [--layout-override width]
+	$(basename $0) --mode [--monitor 1|2|3|...] [--layout-override tag]
 	
 	Mode options
 	  --laptop
@@ -40,8 +42,9 @@ function usage() {
 	         |  |    +--------+
 	        /    \      /  \\
 
-	  --layout-override width
-	    Allows you to use a layout override file in order to modify the position of the conkys on the fly.
+	  --layout-override tag
+	    allows you to use a layout override file in order to modify the position of the conkys on the fly
+	    override file follow the naming convention: layout.<tag>.cfg
 
 	Examples
 	  $(basename $0) --laptop
@@ -94,15 +97,19 @@ while (( "$#" )); do
       shift 2
       ;;
     --layout-override)
-      overrideTag=$2
+      fileTag=$2
       
-      if [[ -z $overrideTag ]]; then
+      if [[ -z $fileTag ]]; then
         echo -e 'error | missing argument: override file name must be provided with the --layout-override flag\n\n' >&2
         usage
         exit 2
       fi
       
       shift 2
+      ;;
+    --silent)
+      silent=('2>' '/dev/null')
+      shift
       ;;
     *)
       usage
@@ -119,8 +126,8 @@ if [[ ${monitor} ]]; then
   echo  "monitor:              ${monitor}"
 fi
 
-if [[ ! -z $overrideTag ]]; then
-  layoutFile="$(echo ${directory}/layout.${overrideTag}.cfg)"   # need to use echo in order for the variable
+if [[ ! -z $fileTag ]]; then
+  layoutFile="$(echo ${directory}/layout.${fileTag}.cfg)"   # need to use echo in order for the variable
                                                                   # to hold the actual pathname expansion
   if [[ -f ${layoutFile} ]]; then
     echo "layout override file: ${layoutFile}"
@@ -142,20 +149,28 @@ IFS=$'\n'
 
 # all available conky configs in the target directory will be launched
 # config file names are expected to not have an extension, ie. cpu vs cpu.cfg
-for conkyConfig in $(find "${directory}" -maxdepth 1 -not -name '*.*' -not -type d)
+for conkyConfigPath in $(find "${directory}" -maxdepth 1 -not -name '*.*' -not -type d)
 do
-  echo "- ${conkyConfig##*/}"
+  conkyConfig=${conkyConfigPath##*/}    # remove the file path /home/ernesto/monochrome/.. from the file name
+  echo "- ${conkyConfig}"
+  # 1. ignore override
+  ignore=$(grep -v \# "${layoutFile}" | grep ignore:"${conkyConfig}")
   
-  # 1. layout override
-  [[ -f ${layoutFile} ]] && override=$(grep -v \# "${layoutFile}" | grep "${conkyConfig##*/}":)
+  if [[ ${ignore} ]]; then
+    echo '  ignoring this conky due to use of filter in layout file'
+    continue
+  fi
+  
+  # 2. layout override
+  override=$(grep -v \# "${layoutFile}" | grep "${conkyConfig}":)
 
   if [[ ${override} ]]; then
     # override is of the format: configFilename:x:y:alignment
     #                            cpu:10:50:top_right
     IFS=:
-    layoutOverride=(${override})     # create an array out of the string in order to have it word split    
+    layoutOverride=(${override})      # create an array out of the string in order to have it word split    
     # construct the position parameters for conky, ie. -x 10 -y 50 -a top_right
-    alignment="${layoutOverride[3]}"    # optional field, may not exist
+    alignment="${layoutOverride[3]}"  # optional field, may not exist
     layoutOverride=(-x "${layoutOverride[1]}" -y "${layoutOverride[2]}")
     
     # if alignment is provided, add -a flag
@@ -166,13 +181,13 @@ do
     echo "  applying the position override: ${layoutOverride[@]}"
   fi
 
-  # 2. monitor override
+  # 3. monitor override
   if [[ $monitor ]]; then
-    sed -i "s/xinerama_head *= *[[:digit:]]/xinerama_head = ${monitor}/" ${conkyConfig}
+    sed -i "s/xinerama_head *= *[[:digit:]]/xinerama_head = ${monitor}/" ${conkyConfigPath}
   fi
 
-  # 3. launch conky
-  conky -c "${conkyConfig}" ${layoutOverride[@]} &
+  # 4. launch conky
+  conky -c "${conkyConfigPath}" ${layoutOverride[@]} &
   unset layoutOverride
   IFS=$'\n'
 done
