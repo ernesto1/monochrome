@@ -108,7 +108,7 @@ while (( "$#" )); do
       shift 2
       ;;
     --silent)
-      silent=('2>' '/dev/null')
+      silent=true
       shift
       ;;
     *)
@@ -189,7 +189,7 @@ do
   fi
 
   # 4. launch conky
-  conky -c "${conkyConfigPath}" ${layoutOverride[@]} 2> /dev/null &
+  conky -c "${conkyConfigPath}" ${layoutOverride[@]} &
   unset layoutOverride
   IFS=$'\n'
 done
