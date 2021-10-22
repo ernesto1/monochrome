@@ -60,7 +60,7 @@ ${if_match "${acpiacadapter}"=="on-line"}\
 ${if_match ${battery_percent BAT0} > 80}\
 ${image ~/conky/monochrome/images/glass/block-power.png -n -p 0,5}\
 ${voffset 3}${offset 5}${color}${font0}power
-${voffset 6}${offset 5}${color1}${font4}device
+${voffset 6}${offset 5}${color1}${font4}laptop is
 ${voffset 3}${offset 5}${color1}plugged in
 # on power plug | charging battery
 ${else}\
