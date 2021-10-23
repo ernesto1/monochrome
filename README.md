@@ -3,17 +3,21 @@ A collection of graphical conky interfaces to monitor your **fedora** system.
 
 If you use a different linux distribution, have a [look at the wiki](https://github.com/ernesto1/monochrome/wiki) in order to see what small changes you will need to make on the conky configurations to account for distro specific nuances.
 
-### Laptop theme
-Built for systems with small screen real state. The desktop below is 1366 x 768 pixels.
-![laptop](images/screenshots/1366x768.png)
+### Glass theme
+Setup shown in a 1920 x 1200 pixels desktop
+![desktop 2560px](images/screenshots/glass.jpg)
 
-### Desktop theme
+### Widgets | laptop
+Built for systems with small screen real state. The desktop below is 1366 x 768 pixels.
+![laptop](images/screenshots/1366x768.jpg)
+
+### Widgets | desktop
 Built for systems with ample screen real state available.  The desktop below is 2560x1600 pixels.
-![desktop 2560px](images/screenshots/2560x1600.png)
+![desktop 2560px](images/screenshots/2560x1600.jpg)
 
 ### Blame theme
 Inspired by the killy's heads up display from the anime movie Blame!. Setup shown in a 1920 x 1200 pixels desktop.
-![desktop 2560px](images/screenshots/blame.png)
+![desktop 2560px](images/screenshots/blame.jpg)
 
 ## Features
 ### DNF package lookup
@@ -75,13 +79,19 @@ $ mv ~/conky/monochrome-master ~/conky/monochrome
 
 3) Run the launch script with the theme you want:
 
-Laptop theme
+Glass theme
+
+```
+$ ~/conky/monochrome/launch.bash --glass --layout-override desktop
+```
+
+Widgets laptop theme
 
 ```
 $ ~/conky/monochrome/launch.bash --laptop
 ```
 
-Desktop theme
+Widgets desktop theme
 
 ```
 $ ~/conky/monochrome/launch.bash --desktop
