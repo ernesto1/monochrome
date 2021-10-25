@@ -140,16 +140,19 @@ if [[ ! -z $fileTag ]]; then
     detectDuplicateEntries "${layoutFile}"
     # TODO file integrity: ensure number of override elements is 2 or 3
   else
-    echo -e "\nerror | override file '${layoutFile}' not found" >&2
+    echo -e '\nerror | override file '${layoutFile}' not found' >&2
     echo      '        please provide the proper override file name tag' >&2
     exit 2
   fi
 fi
 
 set +e      # ignore errors
-echo -e "\n::: killing currently running conky sessions (if any)"
+echo -e '\n::: killing any currently running conky processes (listed below)'
+echo -e '\nPID   conky'
+ps -fC conky | awk '{if (NR!=1) print $2,$10}'
 killall conky
 killall dnfPackageLookup.bash
+
 echo -e "\n::: launching conky configs"
 IFS=$'\n'
 
