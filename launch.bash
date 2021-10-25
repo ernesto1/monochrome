@@ -13,14 +13,14 @@
 
 function usage() {
   cat <<-END
-	$(basename $0) --mode [--monitor 1|2|3|...] [--layout-override tag]
+	$(basename $0) --mode [--monitor n] [--layout-override tag] [--silent]
 	
 	Mode options
 	  --laptop
-	    Loads the conky laptop theme.  Meant for monitors with a 1366 x 768 pixel resolution.
+	    Loads the conky widgets laptop theme.  Designed for monitors with a 1366 x 768 pixel resolution.
 
 	  --desktop
-	    Loads the conky desktop theme.  Meant for monitors with a 2560 x 1600 pixel resolution.
+	    Loads the conky widgets desktop theme.  Designed for monitors with a 2560 x 1600 pixel resolution.
 	    
 	  --blame
 	    Load the conky blame theme
@@ -48,8 +48,8 @@ function usage() {
 
 	Examples
 	  $(basename $0) --laptop
-	  $(basename $0) --desktop
 	  $(basename $0) --desktop --monitor 2
+	  $(basename $0) --glass --monitor 1 --layout-override desktop --silent
 	END
 }
 
@@ -62,6 +62,12 @@ function detectDuplicateEntries() {
     echo 'error | invalid override file,  duplicate entry found' >&2
     exit 2
   fi
+}
+
+# wrapper function to launch a conky config
+# it allows you to call the function with output redirection if required (see the --silent flag)
+function launchConky() {
+  conky -c "$@" &
 }
 
 # ---------- script begins
@@ -189,8 +195,14 @@ do
   fi
 
   # 4. launch conky
-  conky -c "${conkyConfigPath}" ${layoutOverride[@]} &
-  unset layoutOverride
+  if [[ $silent ]]; then
+    launchConky "${conkyConfigPath}" ${layoutOverride[@]} 2> /dev/null
+  else
+    launchConky "${conkyConfigPath}" ${layoutOverride[@]}
+  fi  
+  
+  unset layoutOverride    # clear the variable for the next iteration, we don't want to run an override
+                          # for the wrong conky
   IFS=$'\n'
 done
 
