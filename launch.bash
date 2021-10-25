@@ -148,7 +148,7 @@ fi
 
 set +e      # ignore errors
 echo -e '\n::: killing any currently running conky processes (listed below)'
-echo -e '\nPID   conky'
+echo -e 'PID   conky'
 ps -fC conky | awk '{if (NR!=1) print $2,$10}'
 killall conky
 killall dnfPackageLookup.bash
@@ -168,7 +168,7 @@ do
   [[ -f ${layoutFile} ]] && ignore=$(grep -v \# "${layoutFile}" | grep ignore:"${conkyConfig}")
   
   if [[ ${ignore} ]]; then
-    echo '  ignoring this conky due it being in the exclusion list of the layout file'
+    echo '  ignoring this conky due to it being in the exclusion list of the layout file'
     continue
   fi
   
