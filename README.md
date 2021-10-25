@@ -1,7 +1,7 @@
 # Monochrome Conky
-A collection of graphical conky interfaces to monitor your **fedora** system.
+A collection of graphical conky interfaces to monitor your system.
 
-If you use a different linux distribution, have a [look at the wiki](https://github.com/ernesto1/monochrome/wiki) in order to see what small changes you will need to make on the conky configurations to account for distro specific nuances.
+If you are new to conky, the [project's wiki page](https://github.com/ernesto1/monochrome/wiki) has  helpful guides to show you how to customize the conky configs to your system.
 
 ### Glass theme
 Setup shown in a 1920 x 1200 pixels desktop
@@ -23,6 +23,9 @@ Inspired by the killy's heads up display from the anime movie Blame!. Setup show
 ### DNF package lookup
 DNF is periodically queried for new packages **if the system is iddle**.  
 Slow machines will appreciate this, since a dnf package lookup may bring the cpu to a crawl.
+
+**n.b.** dnf is specific to **fedora** linux.  If you use a different distro, you will have to [update the script](https://github.com/ernesto1/monochrome/wiki) to use your distro's package manager.
+
 ### Network modes
 Network devices reflect the way you are connected to the internet.  
 Depending on your linux distribution, you may need to [configure the proper network device name](https://github.com/ernesto1/monochrome/wiki#network-devices).
