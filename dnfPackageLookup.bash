@@ -2,6 +2,14 @@
 # script to periodically check for new dnf package updates when the system is "deemed iddle"
 # ie. less than half of the cores are in use in the 5 min load average
 
+function onExitSignal() {
+  echo "$(basename $0) | received shutdown signal, exiting script"
+  kill $(jobs -p)     # kill any child processes, ie. the sleep command
+  exit 0
+}
+
+trap onExitSignal SIGINT SIGTERM
+
 echo "$(date +'%D %r') - starting dnf repo package lookup" | tee /tmp/conkyDnf.log
 totalCores=$(grep -c processor /proc/cpuinfo)
 halfCores=$(( totalCores / 2 ))
@@ -39,5 +47,6 @@ while [ true ]; do
         echo "$(date +'%D %r') - load average too high, trying again later" | tee -a /tmp/conkyDnf.log
     fi
     
-    sleep 10m    
+    sleep 10m &   # run the sleep process in the background so we can kill it if we get a terminate signal
+    wait          # wait for the sleep process to complete
 done

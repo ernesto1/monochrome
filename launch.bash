@@ -152,6 +152,8 @@ echo -e 'PID   conky'
 ps -fC conky | awk '{if (NR!=1) print $2,$10}'
 killall conky
 killall dnfPackageLookup.bash
+sleep 1s      # waiting a bit in order to capture the STDOUT of the 'dnfPackageLookup.bash' script
+              # it tends to print right below the 'launching conky' banner below
 
 echo -e "\n::: launching conky configs"
 IFS=$'\n'
