@@ -4,27 +4,27 @@ A collection of graphical conky interfaces to monitor your system.
 If you are new to conky, the [project's wiki page](https://github.com/ernesto1/monochrome/wiki) has  helpful guides to show you how to customize the conky configs to your system.
 
 ### Glass theme
-Setup shown in a 1920 x 1200 pixels desktop
+Setup shown in a 1920 x 1200 pixels resolution
 ![desktop 2560px](images/screenshots/glass.jpg)
 
 ### Widgets | laptop
-Built for systems with small screen real state. The desktop below is 1366 x 768 pixels.
+Built for systems with small screen real state. The resolution below is 1366 x 768 pixels.
 ![laptop](images/screenshots/1366x768.jpg)
 
 ### Widgets | desktop
-Built for systems with ample screen real state available.  The desktop below is 2560x1600 pixels.
+Built for systems with ample screen real state available.  The resolution below is 2560x1600 pixels.
 ![desktop 2560px](images/screenshots/2560x1600.jpg)
 
 ### Blame theme
-Inspired by the killy's heads up display from the anime movie Blame!. Setup shown in a 1920 x 1200 pixels desktop.
+Inspired by the killy's heads up display from the anime movie Blame!. Setup shown in a 1920 x 1200 pixels resolution.
 ![desktop 2560px](images/screenshots/blame.jpg)
 
 ## Features
-### DNF package lookup
+### Repository package updates
 DNF is periodically queried for new packages **if the system is iddle**.  
 Slow machines will appreciate this, since a dnf package lookup may bring the cpu to a crawl.
 
-**n.b.** dnf is specific to **fedora** linux.  If you use a different distro, you will have to [update the script](https://github.com/ernesto1/monochrome/wiki) to use your distro's package manager.
+**n.b.** `dnf` is specific to **fedora** linux.  If you use a different distro, you will have to [update the script](https://github.com/ernesto1/monochrome/wiki) to use your distro's package manager.
 
 ### Network modes
 Network devices reflect the way you are connected to the internet.  
