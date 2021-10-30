@@ -1,9 +1,6 @@
-*.ods
 *.ods*
 *-legacy/
 **/legacy/
 raws/
-images/screenshots/1920x1200 prototype.xcf
+images/screenshots/*.xcf
 images/screenshots/blame top.png
-images/screenshots/power-modes.xcf
-images/screenshots/usbStorage.xcf
