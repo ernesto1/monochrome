@@ -1,13 +1,13 @@
 conky.config = {
   update_interval = 2,  -- update interval in seconds
   update_interval_on_battery = 3,
-  xinerama_head = 1,    -- for multi monitor setups, select monitor to run on: 0,1,2
+  xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
   alignment = 'top_left',  -- top|middle|bottom_left|right
-  gap_x = 270,             -- same as passing -x at command line
+  gap_x = 260,             -- same as passing -x at command line
   gap_y = 32,
 
   -- window settings
@@ -46,22 +46,23 @@ conky.config = {
 
 conky.text = [[
 ${voffset 3} ${color1}compositor${goto 80}${color}${execi 3600 echo $XDG_SESSION_TYPE}
+${voffset 3} ${color1}zoom${goto 80}${color}${if_running zoom}running${else}off${endif}
 # :::::::::::::::::::: cpu processes
-${image ~/conky/monochrome/images/large/cpuProcesses.png -n -p 0,74}\
-${voffset 61} process${goto 126}cpu   pid 
+${image ~/conky/monochrome/images/large/cpuProcesses.png -n -p 0,65}\
+${voffset 36} process${goto 126}cpu   pid 
 ${voffset 9} ${top name 1}${top cpu 1}% ${top pid 1}
-${voffset 5} ${top name 2}${top cpu 2}% ${top pid 2} 
-${voffset 5} ${top name 3}${top cpu 3}% ${top pid 3} 
-${voffset 5} ${top name 4}${top cpu 4}% ${top pid 4} 
-${voffset 5} ${top name 5}${top cpu 5}% ${top pid 5} 
+${voffset 3} ${top name 2}${top cpu 2}% ${top pid 2} 
+${voffset 3} ${top name 3}${top cpu 3}% ${top pid 3} 
+${voffset 3} ${top name 4}${top cpu 4}% ${top pid 4} 
+${voffset 3} ${top name 5}${top cpu 5}% ${top pid 5} 
 # :::::::::::::::::::: memory processes
-${image ~/conky/monochrome/images/large/memoryProcesses.png -n -p 195,74}\
-${voffset -107}${goto 200}process${alignr}mem   pid 
+${image ~/conky/monochrome/images/large/memoryProcesses.png -n -p 195,65}\
+${voffset -99}${goto 200}process${alignr}mem   pid 
 ${goto 200}${voffset 9}${color}${if_match ${top_mem mem 1} >= 49}${color2}${endif}${top_mem name 1}${alignr}${top_mem mem_res 1} ${top_mem pid 1} 
-${goto 200}${voffset 5}${color}${if_match ${top_mem mem 2} >= 49}${color2}${endif}${top_mem name 2}${alignr}${top_mem mem_res 2} ${top_mem pid 2} 
-${goto 200}${voffset 5}${color}${if_match ${top_mem mem 3} >= 49}${color2}${endif}${top_mem name 3}${alignr}${top_mem mem_res 3} ${top_mem pid 3} 
-${goto 200}${voffset 5}${color}${if_match ${top_mem mem 4} >= 49}${color2}${endif}${top_mem name 4}${alignr}${top_mem mem_res 4} ${top_mem pid 4} 
-${goto 200}${voffset 5}${color}${if_match ${top_mem mem 5} >= 49}${color2}${endif}${top_mem name 5}${alignr}${top_mem mem_res 5} ${top_mem pid 5} 
+${goto 200}${voffset 3}${color}${if_match ${top_mem mem 2} >= 49}${color2}${endif}${top_mem name 2}${alignr}${top_mem mem_res 2} ${top_mem pid 2} 
+${goto 200}${voffset 3}${color}${if_match ${top_mem mem 3} >= 49}${color2}${endif}${top_mem name 3}${alignr}${top_mem mem_res 3} ${top_mem pid 3} 
+${goto 200}${voffset 3}${color}${if_match ${top_mem mem 4} >= 49}${color2}${endif}${top_mem name 4}${alignr}${top_mem mem_res 4} ${top_mem pid 4} 
+${goto 200}${voffset 3}${color}${if_match ${top_mem mem 5} >= 49}${color2}${endif}${top_mem name 5}${alignr}${top_mem mem_res 5} ${top_mem pid 5} 
 # :::::::::::::::::::: usb
 ${if_mounted /run/media/ernesto/sandisk}\
 ${image ~/conky/monochrome/images/small/usbStick.png -n -p 0, 349}\
