@@ -70,15 +70,15 @@ ${voffset -38}${goto 58}${color1}write${goto 112}${color}${diskio_write /dev/sda
 ${voffset 6}${goto 58}${color1}read${goto 112}${color}${diskio_read /dev/sda}
 # :::::::::::::::::::: disk space
 ${image ~/conky/monochrome/images/small/disk-root.png -n -p 1,278}\
-${voffset 57}${offset 1}${color1}${if_match ${fs_used_perc /} > 90}${color2}${endif}${fs_bar 3, 45 /}
+${voffset 58}${offset 1}${color1}${if_match ${fs_used_perc /} > 90}${color2}${endif}${fs_bar 3, 45 /}
 ${goto 58}${voffset -50}${color1}fs type${goto 112}${color}${fs_type /}
-${goto 58}${voffset 3}${color1}used${goto 112}${color}${fs_used /} ${color1}
-${goto 58}${voffset 3}${color1}total${goto 112}${color}${fs_size /}
+${goto 58}${voffset 3}${color1}size${goto 112}${color}${fs_size /}
+${goto 58}${voffset 3}${color1}free${goto 112}${color}${fs_free /}
 ${image ~/conky/monochrome/images/small/disk-home.png -n -p 1,345}\
-${voffset 60}${offset 1}${color1}${if_match ${fs_used_perc /home} > 90}${color2}${endif}${fs_bar 3, 45 /home}
+${voffset 59}${offset 1}${color1}${if_match ${fs_used_perc /home} > 90}${color2}${endif}${fs_bar 3, 45 /home}
 ${goto 58}${voffset -50}${color1}fs type${goto 112}${color}${fs_type /home}
-${goto 58}${voffset 3}${color1}used${goto 112}${color}${fs_used /home}
-${goto 58}${voffset 3}${color1}free${goto 112}${color}${fs_size /home}
+${goto 58}${voffset 3}${color1}size${goto 112}${color}${fs_size /home}
+${goto 58}${voffset 3}${color1}free${goto 112}${color}${fs_free /home}
 # :::::::::::::::::::: wifi
 ${if_existing /sys/class/net/wlp4s0/operstate up}\
 ${image ~/conky/monochrome/images/small/wifi.png -n -p 0,413}${voffset 11}\
@@ -88,7 +88,7 @@ ${goto 58}${voffset 3}${color1}channel${goto 112}${color}${wireless_channel wlp4
 ${goto 58}${voffset 3}${color1}strength${goto 112}${color}${wireless_link_qual_perc wlp4s0}%
 ${else}\
 ${image ~/conky/monochrome/images/small/wifi-off.png -n -p 0,413}
-${voffset 52}
+${voffset 41}
 ${endif}\
 # :::::::::::::::::::: upload/download speeds
 ${if_gw}\
@@ -108,7 +108,7 @@ ${voffset 23}${offset 1}${upspeedgraph enp6s0 29,45 cc0000 660000 27000 -t}
 ${goto 58}${voffset -41}${color1}up${goto 112}${color}${upspeed enp6s0}
 ${goto 58}${voffset 3}${color1}total${goto 112}${color}${totalup enp6s0}
 ${voffset -1}${offset 1}${downspeedgraph enp6s0 29,45 e9e9e6 f6f6d9 27000 -t}
-${goto 58}${voffset -35}${color1}down${goto 112}${color}${downspeed enp6s0}
+${goto 58}${voffset -33}${color1}down${goto 112}${color}${downspeed enp6s0}
 ${goto 58}${voffset 3}${color1}total${goto 112}${color}${totaldown enp6s0}
 ${endif}\
 ${voffset 9}
