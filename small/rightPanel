@@ -41,7 +41,8 @@ conky.config = {
   draw_outline = false,   -- black outline around text (not good if text is black)
   default_color = 'black',
   color1 = 'white',
-  color2 = '800020',      -- burgundy
+  color2 = '1a336b',      -- dark blue
+  color3 = '800020',      -- burgundy
 };
 
 conky.text = [[
@@ -58,15 +59,15 @@ ${voffset 3} ${top name 5}${top cpu 5}% ${top pid 5}
 # :::::::::::::::::::: memory processes
 ${image ~/conky/monochrome/images/small/table-processes-memory.png -n -p 195,65}\
 ${voffset -99}${goto 200}process${alignr}mem   pid 
-${goto 200}${voffset 9}${color}${if_match ${top_mem mem 1} >= 49}${color2}${endif}${top_mem name 1}${alignr}${top_mem mem_res 1} ${top_mem pid 1} 
-${goto 200}${voffset 3}${color}${if_match ${top_mem mem 2} >= 49}${color2}${endif}${top_mem name 2}${alignr}${top_mem mem_res 2} ${top_mem pid 2} 
-${goto 200}${voffset 3}${color}${if_match ${top_mem mem 3} >= 49}${color2}${endif}${top_mem name 3}${alignr}${top_mem mem_res 3} ${top_mem pid 3} 
-${goto 200}${voffset 3}${color}${if_match ${top_mem mem 4} >= 49}${color2}${endif}${top_mem name 4}${alignr}${top_mem mem_res 4} ${top_mem pid 4} 
-${goto 200}${voffset 3}${color}${if_match ${top_mem mem 5} >= 49}${color2}${endif}${top_mem name 5}${alignr}${top_mem mem_res 5} ${top_mem pid 5} 
+${goto 200}${voffset 9}${color}${if_match ${top_mem mem 1} >= 49}${color3}${endif}${top_mem name 1}${alignr}${top_mem mem_res 1} ${top_mem pid 1} 
+${goto 200}${voffset 3}${color}${if_match ${top_mem mem 2} >= 49}${color3}${endif}${top_mem name 2}${alignr}${top_mem mem_res 2} ${top_mem pid 2} 
+${goto 200}${voffset 3}${color}${if_match ${top_mem mem 3} >= 49}${color3}${endif}${top_mem name 3}${alignr}${top_mem mem_res 3} ${top_mem pid 3} 
+${goto 200}${voffset 3}${color}${if_match ${top_mem mem 4} >= 49}${color3}${endif}${top_mem name 4}${alignr}${top_mem mem_res 4} ${top_mem pid 4} 
+${goto 200}${voffset 3}${color}${if_match ${top_mem mem 5} >= 49}${color3}${endif}${top_mem name 5}${alignr}${top_mem mem_res 5} ${top_mem pid 5} 
 # :::::::::::::::::::: usb
 ${if_mounted /run/media/ernesto/sandisk}\
 ${image ~/conky/monochrome/images/small/usbStick.png -n -p 0, 278}\
-${voffset 150}${color1}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color2}${endif}${fs_bar 3, 45 /run/media/ernesto/sandisk}
+${voffset 150}${color2}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color3}${endif}${fs_bar 3, 45 /run/media/ernesto/sandisk}
 ${goto 54}${voffset -50}${color1}fs type${goto 110}${color}${fs_type /run/media/ernesto/sandisk}
 ${goto 54}${voffset 3}${color1}size${goto 110}${color}${fs_size /run/media/ernesto/sandisk}
 ${goto 54}${voffset 3}${color1}free${goto 110}${color}${fs_free /run/media/ernesto/sandisk}
@@ -75,7 +76,7 @@ ${voffset 189}
 ${endif}
 ${if_mounted /run/media/ernesto/MAXTOR}\
 ${image ~/conky/monochrome/images/small/usbDrive.png -n -p 0, 414}\
-${voffset 44}${color1}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color2}${endif}${fs_bar 4, 45 /run/media/ernesto/MAXTOR}
+${voffset 44}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 4, 45 /run/media/ernesto/MAXTOR}
 ${goto 54}${voffset -50}${color1}fs type${goto 110}${color}${fs_type /run/media/ernesto/MAXTOR}
 ${goto 54}${voffset 3}${color1}size${goto 110}${color}${fs_size /run/media/ernesto/MAXTOR}
 ${goto 54}${voffset 3}${color1}free${goto 110}${color}${fs_free /run/media/ernesto/MAXTOR}
