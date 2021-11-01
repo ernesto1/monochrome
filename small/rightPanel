@@ -7,7 +7,7 @@ conky.config = {
 
   -- window alignment
   alignment = 'top_left',  -- top|middle|bottom_left|right
-  gap_x = 250,             -- same as passing -x at command line
+  gap_x = 205,             -- same as passing -x at command line
   gap_y = 32,
 
   -- window settings
@@ -46,8 +46,8 @@ conky.config = {
 };
 
 conky.text = [[
-${voffset 3} ${color1}compositor${goto 80}${color}${execi 3600 echo $XDG_SESSION_TYPE}
-${voffset 3} ${color1}zoom${goto 80}${color}${if_running zoom}running${else}off${endif}
+${voffset 3}${goto 54}${color1}compositor${goto 122}${color}${execi 3600 echo $XDG_SESSION_TYPE}
+${voffset 3}${goto 54}${color1}zoom${goto 122}${color}${if_running zoom}running${else}off${endif}
 # :::::::::::::::::::: cpu processes
 ${image ~/conky/monochrome/images/small/table-processes-cpu.png -n -p 0,65}\
 ${voffset 36} process${goto 126}cpu   pid 
