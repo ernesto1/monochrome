@@ -7,7 +7,7 @@ conky.config = {
 
   -- window alignment
   alignment = 'top_left',  -- top|middle|bottom_left|right
-  gap_x = 205,             -- same as passing -x at command line
+  gap_x = 209,             -- same as passing -x at command line
   gap_y = 32,
 
   -- window settings
@@ -67,8 +67,8 @@ ${goto 200}${voffset 3}${color}${if_match ${top_mem mem 5} >= 49}${color3}${endi
 # :::::::::::::::::::: usb
 ${if_mounted /run/media/ernesto/sandisk}\
 ${image ~/conky/monochrome/images/small/usbStick.png -n -p 0, 278}\
-${voffset 150}${color2}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color3}${endif}${fs_bar 3, 45 /run/media/ernesto/sandisk}
-${goto 54}${voffset -50}${color1}fs type${goto 110}${color}${fs_type /run/media/ernesto/sandisk}
+${voffset 146}${color2}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color3}${endif}${fs_bar 3, 45 /run/media/ernesto/sandisk}
+${goto 54}${voffset -48}${color1}fs type${goto 110}${color}${fs_type /run/media/ernesto/sandisk}
 ${goto 54}${voffset 3}${color1}size${goto 110}${color}${fs_size /run/media/ernesto/sandisk}
 ${goto 54}${voffset 3}${color1}free${goto 110}${color}${fs_free /run/media/ernesto/sandisk}
 ${else}
