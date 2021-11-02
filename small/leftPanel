@@ -92,7 +92,7 @@ ${goto 58}${voffset 3}${color1}channel${goto 113}${color}${wireless_channel wlp4
 ${goto 58}${voffset 3}${color1}strength${goto 113}${color}${wireless_link_qual_perc wlp4s0}%
 ${else}\
 ${image ~/conky/monochrome/images/small/wifi-off.png -n -p 0,417}
-${voffset 41}
+${voffset 43}
 ${endif}\
 # :::::::::::::::::::: upload/download speeds
 ${if_gw}\
@@ -126,13 +126,13 @@ ${if_match ${battery_percent BAT0} == 100}\
 ${image ~/conky/monochrome/images/small/power-plugged-in.png -n -p 1,566}
 ${else}\
 ${image ~/conky/monochrome/images/small/power-charging.png -n -p 1,566}\
-${voffset -1}${offset 1}${color2}${if_match ${battery_percent BAT0} < 80}${color3}${endif}${battery_bar 3, 45 BAT0}
+${voffset -3}${offset 1}${color2}${if_match ${battery_percent BAT0} < 80}${color3}${endif}${battery_bar 3, 45 BAT0}
 ${voffset -32}${goto 58}${color1}eta full
 ${voffset 3}${goto 58}${color1}charge${goto 113}${color}${battery_time BAT0}
 ${endif}\
 ${else}\
 ${image ~/conky/monochrome/images/small/power-battery.png -n -p 1,566}\
-${voffset -1}${offset 1}${color2}${if_match ${battery_percent BAT0} < 20}${color3}${endif}${battery_bar 3, 45 BAT0}
+${voffset -3}${offset 1}${color2}${if_match ${battery_percent BAT0} < 20}${color3}${endif}${battery_bar 3, 45 BAT0}
 ${voffset -32}${goto 58}${color1}charge
 ${voffset 3}${goto 58}${color1}left${goto 113}${color}${battery_time BAT0}
 ${endif}
