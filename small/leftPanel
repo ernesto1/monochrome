@@ -124,6 +124,8 @@ ${voffset 30}
 ${if_match "${acpiacadapter}"=="on-line"}\
 ${if_match ${battery_percent BAT0} == 100}\
 ${image ~/conky/monochrome/images/small/power-plugged-in.png -n -p 1,566}
+${voffset -34}${goto 58}${color}fully
+${voffset 3}${goto 58}${color}charged
 ${else}\
 ${image ~/conky/monochrome/images/small/power-charging.png -n -p 1,566}\
 ${voffset -3}${offset 1}${color2}${if_match ${battery_percent BAT0} < 80}${color3}${endif}${battery_bar 3, 45 BAT0}
