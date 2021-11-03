@@ -49,7 +49,7 @@ ${image ~/conky/monochrome/images/blame/filesystem-bar.png -n -p 68,2}\
 betty${goto 74}${voffset 1}${color2}${if_match ${fs_used_perc /media/betty} > 90}${color3}${endif}${fs_bar 4,97 /media/betty}
 ${voffset 2}${alignr}${color}${fs_used /media/betty} / ${fs_size /media/betty}
 ${image ~/conky/monochrome/images/blame/diskio-sdc.png -n -p 0,33}\
-${voffset 2}${offset 42}${diskiograph_write /dev/sdc 25,115 6b91e5 546fb2 260000 -l}
-${voffset -10}${offset 42}${diskiograph_read /dev/sdc 25,115 315bb1 1a336b 260000 -l}
+${voffset 2}${offset 42}${diskiograph_write /dev/sdc 25,115 6b91e5 546fb2 3000}
+${voffset -10}${offset 42}${diskiograph_read /dev/sdc 25,115 315bb1 1a336b 3000}
 ${color1}write ${color}${diskio_write /dev/sdc}${alignr}${color}${diskio_read /dev/sdc} ${color1}read
 ]];
