@@ -60,8 +60,8 @@ On **Fedora** install it by running:
 $ sudo dnf install conky
 ```
 
-**n.b.** I recommend using the conky package version `1.11.5_pre`.
-More recent versions may have regressions that cause the theme to behave erratically.  Run the command `dnf downgrade conky` until you arrive at this version.
+**n.b.** I recommend using the conky package version `1.11.5_pre`  
+more recent versions may have regressions/bugs ([issue 1](https://github.com/brndnmtthws/conky/issues/960), [issue 2](https://github.com/brndnmtthws/conky/issues/979)) that cause the theme to behave erratically.  Run the command `dnf downgrade conky` until you arrive at this version.
 
 ### Configuration
 - The [wiki](https://github.com/ernesto1/monochrome/wiki) outlines items that may require configuration in order to customize this conky to your system
