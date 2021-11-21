@@ -52,8 +52,7 @@ This conky must be fully customized to your particular setup.  Read the [wiki fo
 
 # How to install
 ### Dependencies
-You only require to have `conky` installed on your system.
-
+You only require to have `conky` installed on your system.  
 On **Fedora** install it by running:
 
 ```
