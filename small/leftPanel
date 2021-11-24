@@ -84,21 +84,21 @@ ${goto 58}${voffset 3}${color1}size${goto 102}${color}${fs_size /home}
 ${goto 58}${voffset 3}${color1}free${goto 102}${color}${fs_free /home}
 # :::::::::::::::::::: wifi
 ${if_existing /sys/class/net/wlp4s0/operstate up}\
-${image ~/conky/monochrome/images/small/wifi.png -n -p 0,417}\
-${image ~/conky/monochrome/images/small/bar.png -n -p 0,451}\
-${voffset 57}${offset 1}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 3,45 wlp4s0}${voffset -19}\
+${image ~/conky/monochrome/images/small/wifi.png -n -p 0,412}\
+${image ~/conky/monochrome/images/small/bar.png -n -p 0,446}\
+${voffset 52}${offset 1}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 3,45 wlp4s0}${voffset -19}\
 ${goto 58}${voffset -14}${color1}network${goto 113}${color}${wireless_essid wlp4s0}
 ${goto 58}${voffset 3}${color1}channel${goto 113}${color}${wireless_channel wlp4s0}
 ${goto 58}${voffset 3}${color1}strength${goto 113}${color}${wireless_link_qual_perc wlp4s0}%
 ${else}\
-${image ~/conky/monochrome/images/small/wifi-off.png -n -p 0,417}
+${image ~/conky/monochrome/images/small/wifi-off.png -n -p 0,412}
 ${voffset 43}
 ${endif}\
 # :::::::::::::::::::: upload/download speeds
 ${if_gw}\
-${image ~/conky/monochrome/images/small/network.png -n -p 0,480}\
-${image ~/conky/monochrome/images/small/highlight.png -n -p 98,484}\
-${image ~/conky/monochrome/images/small/highlight.png -n -p 98,518}\
+${image ~/conky/monochrome/images/small/network.png -n -p 0,475}\
+${image ~/conky/monochrome/images/small/highlight.png -n -p 98,479}\
+${image ~/conky/monochrome/images/small/highlight.png -n -p 98,513}\
 ${if_existing /sys/class/net/wlp4s0/operstate up}\
 # connected to wifi
 ${voffset 23}${offset 1}${upspeedgraph wlp4s0 29,45 b7caf1 b7eaff 8200}
@@ -117,24 +117,24 @@ ${goto 58}${voffset -34}${color1}down${goto 102}${color}${downspeed enp6s0}
 ${goto 58}${voffset 3}${color1}total${goto 102}${color}${totaldown enp6s0}
 ${endif}\
 ${else}\
-${image ~/conky/monochrome/images/small/network-off.png -n -p 0,480}\
+${image ~/conky/monochrome/images/small/network-off.png -n -p 0,475}\
 ${voffset 76}
 ${endif}
 # :::::::::::::::::::: power
 ${voffset 30}
 ${if_match "${acpiacadapter}"=="on-line"}\
 ${if_match ${battery_percent BAT0} == 100}\
-${image ~/conky/monochrome/images/small/power-plugged-in.png -n -p 1,566}
+${image ~/conky/monochrome/images/small/power-plugged-in.png -n -p 1,561}
 ${voffset -34}${goto 58}${color}fully
 ${voffset 3}${goto 58}${color}charged
 ${else}\
-${image ~/conky/monochrome/images/small/power-charging.png -n -p 1,566}\
+${image ~/conky/monochrome/images/small/power-charging.png -n -p 1,561}\
 ${voffset -3}${offset 1}${color2}${if_match ${battery_percent BAT0} < 80}${color3}${endif}${battery_bar 3, 45 BAT0}
 ${voffset -32}${goto 58}${color1}eta full
 ${voffset 3}${goto 58}${color1}charge${goto 102}${color}${battery_time BAT0}
 ${endif}\
 ${else}\
-${image ~/conky/monochrome/images/small/power-battery.png -n -p 1,566}\
+${image ~/conky/monochrome/images/small/power-battery.png -n -p 1,561}\
 ${voffset -3}${offset 1}${color2}${if_match ${battery_percent BAT0} < 20}${color3}${endif}${battery_bar 3, 45 BAT0}
 ${voffset -32}${goto 58}${color1}charge
 ${voffset 3}${goto 58}${color1}left${goto 102}${color}${battery_time BAT0}
