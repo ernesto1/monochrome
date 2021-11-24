@@ -72,7 +72,7 @@ ${goto 54}${voffset -48}${color1}fs${goto 86}${color}${fs_type /run/media/ernest
 ${goto 54}${voffset 3}${color1}size${goto 86}${color}${fs_size /run/media/ernesto/sandisk}
 ${goto 54}${voffset 3}${color1}free${goto 86}${color}${fs_free /run/media/ernesto/sandisk}
 ${else}
-${voffset 186}
+${voffset 130}
 ${endif}
 ${if_mounted /run/media/ernesto/MAXTOR}\
 ${image ~/conky/monochrome/images/small/usbDrive.png -n -p 0, 345}\
