@@ -109,10 +109,10 @@ ${goto 58}${voffset -34}${color1}down${goto 102}${color}${downspeed wlp4s0}
 ${goto 58}${voffset 3}${color1}total${goto 102}${color}${totaldown wlp4s0}
 ${else}\
 # connected to ethernet
-${voffset 23}${offset 1}${upspeedgraph enp6s0 29,45 b7caf1 b7eaff 27000}
+${voffset 23}${offset 1}${upspeedgraph enp6s0 29,45 b7caf1 b7eaff 4000}
 ${goto 58}${voffset -39}${color1}up${goto 102}${color}${upspeed enp6s0}
 ${goto 58}${voffset 3}${color1}total${goto 102}${color}${totalup enp6s0}
-${voffset -3}${offset 1}${downspeedgraph enp6s0 29,45 315bb1 1a336b 27000}
+${voffset -3}${offset 1}${downspeedgraph enp6s0 29,45 315bb1 1a336b 34500}
 ${goto 58}${voffset -34}${color1}down${goto 102}${color}${downspeed enp6s0}
 ${goto 58}${voffset 3}${color1}total${goto 102}${color}${totaldown enp6s0}
 ${endif}\
