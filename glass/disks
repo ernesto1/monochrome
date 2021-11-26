@@ -59,11 +59,11 @@ ${image ~/conky/monochrome/images/glass/block-disk.png -n -p 0,160}\
 ${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,315}\
 # disk - sdb
 # disk write
-${voffset -5}${diskiograph_write /dev/sdb 48,112 6b91e5 546fb2 260000 -l}
+${voffset -5}${diskiograph_write /dev/sdb 48,112 6b91e5 546fb2 200000}
 ${voffset -58}${offset 5}${color}${font0}disk write${alignr}sdb 
 ${voffset 5}${alignr}${font2}${diskio_write /dev/sdb} 
 # disk read
-${voffset -3}${diskiograph_read /dev/sdb 48,112 315bb1 1a336b 260000 -l}
+${voffset -3}${diskiograph_read /dev/sdb 48,112 315bb1 1a336b 200000}
 ${voffset -58}${offset 5}${color}${font0}disk read
 ${voffset 5}${alignr}${font2}${diskio_read /dev/sdb} 
 # filesystem(s)
@@ -72,11 +72,11 @@ ${voffset -14}${alignr}${font2}${fs_used_perc /media/veronica}${font3}%
 ${voffset -2}${offset 16}${color2}${if_match ${fs_used_perc /media/veronica} > 90}${color3}${endif}${fs_bar 3,93 /media/veronica}
 ${voffset -4}${alignr}${color1}${font4}${fs_used /media/veronica} / ${fs_size /media/veronica} 
 # disk - sdc
-${voffset 1}${diskiograph_write /dev/sdc 48,112 6b91e5 546fb2 260000 -l}
+${voffset 1}${diskiograph_write /dev/sdc 48,112 6b91e5 546fb2 200000}
 ${voffset -50}${offset 5}${color}${font0}disk write${alignr}sdc 
 ${voffset 5}${alignr}${font2}${diskio_write /dev/sdc} 
 # disk read
-${voffset -3}${diskiograph_read /dev/sdc 48,112 315bb1 1a336b 260000 -l}
+${voffset -3}${diskiograph_read /dev/sdc 48,112 315bb1 1a336b 200000}
 ${voffset -58}${offset 5}${color}${font0}disk read
 ${voffset 5}${alignr}${font2}${diskio_read /dev/sdc} 
 # filesystem(s)

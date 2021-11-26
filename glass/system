@@ -102,14 +102,14 @@ ${voffset 5}${alignr}${font2}${downspeed enp0s25}
 ${voffset 5}${alignr}${color1}${font4}${totaldown enp0s25} total 
 ${endif}\
 # disk - sda
-# disk write
+# disk write 140MiB
 ${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,363}\
 ${image ~/conky/monochrome/images/glass/block-disk.png -n -p 0,365}\
-${voffset 1}${diskiograph_write /dev/sda 48,112 6b91e5 546fb2 3000}
+${voffset 1}${diskiograph_write /dev/sda 48,112 6b91e5 546fb2 280000}
 ${voffset -50}${offset 5}${color}${font0}disk write
 ${voffset 5}${alignr}${font2}${diskio_write /dev/sda} 
 # disk read
-${voffset -3}${diskiograph_read /dev/sda 48,112 315bb1 1a336b 3000}
+${voffset -3}${diskiograph_read /dev/sda 48,112 315bb1 1a336b 200000}
 ${voffset -58}${offset 5}${color}${font0}disk read
 ${voffset 5}${alignr}${font2}${diskio_read /dev/sda} 
 # fedora
