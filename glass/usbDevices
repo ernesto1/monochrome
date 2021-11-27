@@ -86,7 +86,6 @@ ${if_mounted /run/media/ernesto/MAXTOR}\
 ${voffset -14}${alignr}${font2}${fs_used_perc /run/media/ernesto/MAXTOR}${font3}% 
 ${voffset -2}${offset 16}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 3,93 /run/media/ernesto/MAXTOR}
 ${voffset -4}${alignr}${color1}${font4}${fs_used /run/media/ernesto/MAXTOR} / ${fs_size /run/media/ernesto/MAXTOR} 
-${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,568}
 ${else}\
 ${voffset 3}${alignr}${color1}${font4}device is not 
 ${alignr}${color1}connected ${voffset -1}
