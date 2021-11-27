@@ -59,8 +59,7 @@ ${image ~/conky/monochrome/images/glass/block-filesystem.png -n -p 0,58}\
 ${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,111}\
 ${image ~/conky/monochrome/images/glass/block-filesystem.png -n -p 0,111}\
 ${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,164}\
-# disk - sdb
-# disk write
+# :::::::::::::::::::: memory stick
 ${voffset 3}${offset 5}${color}${font0}usb cruzer
 ${if_mounted /run/media/ernesto/sandisk}\
 ${voffset -14}${alignr}${font2}${fs_used_perc /run/media/ernesto/sandisk}${font3}% 
@@ -70,6 +69,7 @@ ${else}\
 ${voffset 3}${alignr}${color1}${font4}device is not 
 ${alignr}${color1}connected ${voffset -1}
 ${endif}\
+# :::::::::::::::::::: memory card
 ${voffset 14}${offset 5}${color}${font0}sandisk SD
 ${if_mounted /run/media/ernesto/disk}\
 ${voffset -14}${alignr}${font2}${fs_used_perc /run/media/ernesto/disk}${font3}% 
@@ -79,7 +79,9 @@ ${else}\
 ${voffset 3}${alignr}${color1}${font4}device is not 
 ${alignr}${color1}connected ${voffset -1}
 ${endif}\
-${voffset 16}${offset 5}${color}${font0}MAXTOR drive
+# :::::::::::::::::::: external hard drive
+#                      write: 287MiB  read: 22.6MiB
+${voffset 16}${offset 5}${color}${font0}maxtor HD
 ${if_mounted /run/media/ernesto/MAXTOR}\
 ${voffset -14}${alignr}${font2}${fs_used_perc /run/media/ernesto/MAXTOR}${font3}% 
 ${voffset -2}${offset 16}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 3,93 /run/media/ernesto/MAXTOR}
