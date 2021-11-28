@@ -52,13 +52,14 @@ conky.config = {
 };
 
 conky.text = [[
+# construct the bar panel image background
+# n.b. the connected/disconnected state of the last device, ie. the maxtor external hd
+#      will alter the total height of the background image, it will place its own images
 ${image ~/conky/monochrome/images/glass/top.png -n -p 0,0}\
 ${image ~/conky/monochrome/images/glass/block-filesystem.png -n -p 0,5}\
 ${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,56}\
 ${image ~/conky/monochrome/images/glass/block-filesystem.png -n -p 0,58}\
 ${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,111}\
-${image ~/conky/monochrome/images/glass/block-filesystem.png -n -p 0,111}\
-${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,164}\
 # :::::::::::::::::::: memory stick
 ${voffset 3}${offset 5}${color}${font0}usb cruzer
 ${if_mounted /run/media/ernesto/sandisk}\
@@ -83,11 +84,18 @@ ${endif}\
 #                      write: 287MiB  read: 22.6MiB
 ${voffset 16}${offset 5}${color}${font0}maxtor HD
 ${if_mounted /run/media/ernesto/MAXTOR}\
+${image ~/conky/monochrome/images/glass/block-disk-usb.png -n -p 0,111}\
+${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,194}\
 ${voffset -14}${alignr}${font2}${fs_used_perc /run/media/ernesto/MAXTOR}${font3}% 
 ${voffset -2}${offset 16}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 3,93 /run/media/ernesto/MAXTOR}
 ${voffset -4}${alignr}${color1}${font4}${fs_used /run/media/ernesto/MAXTOR} / ${fs_size /run/media/ernesto/MAXTOR} 
+${diskiograph_write /dev/sdf1 28,57 6b91e5 546fb2 60000}${diskiograph_read /dev/sdf1 28,57 315bb1 1a336b 60000}
+${voffset -36}${color1} write${alignr}read 
+${voffset 1} ${color1}${diskio_write /dev/sdf1} ${alignr}${diskio_read /dev/sdf1} 
 ${else}\
+${image ~/conky/monochrome/images/glass/block-filesystem.png -n -p 0,111}\
+${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,164}\
 ${voffset 3}${alignr}${color1}${font4}device is not 
-${alignr}${color1}connected ${voffset -1}
+${alignr}connected ${voffset -1}\
 ${endif}\
 ]];
