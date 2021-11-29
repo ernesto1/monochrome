@@ -85,13 +85,14 @@ ${endif}\
 ${voffset 16}${offset 5}${color}${font0}maxtor HD
 ${if_mounted /run/media/ernesto/MAXTOR}\
 ${image ~/conky/monochrome/images/glass/block-disk-usb.png -n -p 0,111}\
-${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,194}\
+${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,231}\
 ${voffset -14}${alignr}${font2}${fs_used_perc /run/media/ernesto/MAXTOR}${font3}% 
 ${voffset -2}${offset 16}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 3,93 /run/media/ernesto/MAXTOR}
 ${voffset -4}${alignr}${color1}${font4}${fs_used /run/media/ernesto/MAXTOR} / ${fs_size /run/media/ernesto/MAXTOR} 
-${diskiograph_write /dev/sdf1 28,57 6b91e5 546fb2 60000}${diskiograph_read /dev/sdf1 28,57 315bb1 1a336b 60000}
-${voffset -36}${color1} write${alignr}read 
-${voffset 1} ${color1}${diskio_write /dev/sdf1} ${alignr}${diskio_read /dev/sdf1} 
+${voffset 2}${offset 4}${diskiograph_write /dev/sdf1 27,57 6b91e5 546fb2 60000}${alignr}${voffset -24}${color}write 
+${voffset 2}${alignr}${color1}${diskio_write /dev/sdf1} 
+${voffset 3}${offset 4}${diskiograph_read /dev/sdf1 27,57 315bb1 1a336b 60000}${alignr}${voffset -24}${color}read 
+${voffset 2}${alignr}${color1}${diskio_read /dev/sdf1} 
 ${else}\
 ${image ~/conky/monochrome/images/glass/block-filesystem.png -n -p 0,111}\
 ${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,164}\
