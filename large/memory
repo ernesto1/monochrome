@@ -44,7 +44,7 @@ conky.config = {
 };
 
 conky.text = [[
-${voffset -2}${offset 17}${if_match ${memperc} >= 90}${memgraph 89, 57 e6003a 800020 -t}\
+${voffset -2}${offset 17}${if_match ${memperc} >= 90}${memgraph 89, 57 e6003a 800020}\
 ${else}${memgraph 89, 57 f9f9f9 ffffff}${endif}
 ${voffset 4}${color1}used${alignr}total
 ${voffset 5}${color}${mem}${alignr}${memmax}\
