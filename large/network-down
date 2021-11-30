@@ -44,7 +44,7 @@ conky.config = {
 };
 
 conky.text = [[
-${voffset 4}${offset 3}${downspeedgraph enp0s25 83,103 ffffff f2f2f2 15000 -t}
+${voffset 4}${offset 3}${downspeedgraph enp0s25 83,103 ffffff f2f2f2 55000}
 ${voffset 4}${color3}down${alignr}total
 ${voffset 5}${color}${downspeed enp0s25}${alignr}${totaldown enp0s25}\
 ${if_gw}\
