@@ -92,7 +92,7 @@ ${goto 58}${voffset 3}${color1}channel${goto 113}${color}${wireless_channel wlp4
 ${goto 58}${voffset 3}${color1}strength${goto 113}${color}${wireless_link_qual_perc wlp4s0}%
 ${else}\
 ${image ~/conky/monochrome/images/small/wifi-off.png -n -p 0,412}
-${voffset 43}
+${voffset 38}
 ${endif}\
 # :::::::::::::::::::: upload/download speeds
 ${if_gw}\
