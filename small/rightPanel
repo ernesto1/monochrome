@@ -68,16 +68,16 @@ ${goto 200}${voffset 3}${top_mem name 5}${alignr}${top_mem mem_res 5} ${top_mem 
 ${if_mounted /run/media/ernesto/sandisk}\
 ${image ~/conky/monochrome/images/small/usbStick.png -n -p 0, 278}\
 ${voffset 146}${color2}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color3}${endif}${fs_bar 3, 45 /run/media/ernesto/sandisk}
-${goto 54}${voffset -48}${color1}fs${goto 86}${color}${fs_type /run/media/ernesto/sandisk}
+${goto 54}${voffset -47}${color1}fs${goto 86}${color}${fs_type /run/media/ernesto/sandisk}
 ${goto 54}${voffset 3}${color1}size${goto 86}${color}${fs_size /run/media/ernesto/sandisk}
 ${goto 54}${voffset 3}${color1}free${goto 86}${color}${fs_free /run/media/ernesto/sandisk}
 ${else}
-${voffset 130}
+${voffset 131}
 ${endif}
 ${if_mounted /run/media/ernesto/MAXTOR}\
 ${image ~/conky/monochrome/images/small/usbDrive.png -n -p 0, 345}\
-${voffset 44}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 3, 45 /run/media/ernesto/MAXTOR}
-${goto 54}${voffset -48}${color1}fs${goto 86}${color}${fs_type /run/media/ernesto/MAXTOR}
+${voffset 43}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 3, 45 /run/media/ernesto/MAXTOR}
+${goto 54}${voffset -47}${color1}fs${goto 86}${color}${fs_type /run/media/ernesto/MAXTOR}
 ${goto 54}${voffset 3}${color1}size${goto 86}${color}${fs_size /run/media/ernesto/MAXTOR}
 ${goto 54}${voffset 3}${color1}free${goto 86}${color}${fs_free /run/media/ernesto/MAXTOR}
 ${endif}
