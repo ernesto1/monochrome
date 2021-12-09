@@ -67,32 +67,32 @@ ${voffset 3}${goto 58}${color1}total${goto 102}${color}${memmax}
 ${voffset 10}${offset 1}${color2}${if_match ${swapperc} >= 70}${color3}${endif}${swapbar 3, 45}${voffset -1}${goto 58}${color1}swap${goto 102}${color}${swapperc}%
 # :::::::::::::::::::: disk io
 ${image ~/conky/monochrome/images/small/diskio.png -n -p 0,218}
-${voffset -1}${offset 1}${diskiograph_write /dev/sda 19,45 b7caf1 b7eaff 30000}
-${voffset -13}${offset 1}${diskiograph_read /dev/sda 19,45 315bb1 1a336b 30000}
+${voffset -1}${offset 1}${diskiograph_write /dev/sda 19,45 b7caf1 b7eaff 40000}
+${voffset -13}${offset 1}${diskiograph_read /dev/sda 19,45 315bb1 1a336b 40000}
 ${voffset -38}${goto 58}${color1}write${goto 102}${color}${diskio_write /dev/sda}
 ${voffset 6}${goto 58}${color1}read${goto 102}${color}${diskio_read /dev/sda}
 # :::::::::::::::::::: disk space
 ${image ~/conky/monochrome/images/small/disk-root.png -n -p 1,278}\
 ${voffset 54}${offset 1}${color2}${if_match ${fs_used_perc /} > 90}${color3}${endif}${fs_bar 3, 45 /}
-${goto 58}${voffset -48}${color1}fs${goto 102}${color}${fs_type /}
+${goto 58}${voffset -47}${color1}fs${goto 102}${color}${fs_type /}
 ${goto 58}${voffset 3}${color1}size${goto 102}${color}${fs_size /}
 ${goto 58}${voffset 3}${color1}free${goto 102}${color}${fs_free /}
 ${image ~/conky/monochrome/images/small/disk-home.png -n -p 1,345}\
-${voffset 57}${offset 1}${color2}${if_match ${fs_used_perc /home} > 90}${color3}${endif}${fs_bar 3, 45 /home}
-${goto 58}${voffset -48}${color1}fs${goto 102}${color}${fs_type /home}
+${voffset 56}${offset 1}${color2}${if_match ${fs_used_perc /home} > 90}${color3}${endif}${fs_bar 3, 45 /home}
+${goto 58}${voffset -47}${color1}fs${goto 102}${color}${fs_type /home}
 ${goto 58}${voffset 3}${color1}size${goto 102}${color}${fs_size /home}
 ${goto 58}${voffset 3}${color1}free${goto 102}${color}${fs_free /home}
 # :::::::::::::::::::: wifi
 ${if_existing /sys/class/net/wlp4s0/operstate up}\
 ${image ~/conky/monochrome/images/small/wifi.png -n -p 0,412}\
 ${image ~/conky/monochrome/images/small/bar.png -n -p 0,446}\
-${voffset 52}${offset 1}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 3,45 wlp4s0}${voffset -19}\
+${voffset 51}${offset 1}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 3,45 wlp4s0}${voffset -19}\
 ${goto 58}${voffset -14}${color1}network${goto 113}${color}${wireless_essid wlp4s0}
-${goto 58}${voffset 3}${color1}channel${goto 113}${color}${wireless_channel wlp4s0}
-${goto 58}${voffset 3}${color1}strength${goto 113}${color}${wireless_link_qual_perc wlp4s0}%
+${goto 58}${voffset 3}${color1}channel${goto 113}${color}${wireless_channel wlp4s0}${goto 157}${color1}bitrate${goto 214}${color}${wireless_bitrate wlp4s0}
+${goto 58}${voffset 3}${color1}strength${goto 113}${color}${wireless_link_qual_perc wlp4s0}%${goto 157}${color1}local ip${goto 214}${color}${addr wlp4s0}
 ${else}\
 ${image ~/conky/monochrome/images/small/wifi-off.png -n -p 0,412}
-${voffset 38}
+${voffset 37}
 ${endif}\
 # :::::::::::::::::::: upload/download speeds
 ${if_gw}\
@@ -106,15 +106,16 @@ ${goto 58}${voffset -39}${color1}up${goto 102}${color}${upspeed wlp4s0}
 ${goto 58}${voffset 3}${color1}total${goto 102}${color}${totalup wlp4s0}
 ${voffset -3}${offset 1}${downspeedgraph wlp4s0 29,45 315bb1 1a336b 19000}
 ${goto 58}${voffset -34}${color1}down${goto 102}${color}${downspeed wlp4s0}
-${goto 58}${voffset 3}${color1}total${goto 102}${color}${totaldown wlp4s0}
+# use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
+${goto 58}${voffset 3}${color1}total${goto 102}${color}${totaldown wlp4s0}${goto 157}${color1}torrent${goto 214}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
 ${else}\
 # connected to ethernet
 ${voffset 23}${offset 1}${upspeedgraph enp6s0 29,45 b7caf1 b7eaff 4000}
 ${goto 58}${voffset -39}${color1}up${goto 102}${color}${upspeed enp6s0}
 ${goto 58}${voffset 3}${color1}total${goto 102}${color}${totalup enp6s0}
 ${voffset -3}${offset 1}${downspeedgraph enp6s0 29,45 315bb1 1a336b 34500}
-${goto 58}${voffset -34}${color1}down${goto 102}${color}${downspeed enp6s0}
-${goto 58}${voffset 3}${color1}total${goto 102}${color}${totaldown enp6s0}
+${goto 58}${voffset -34}${color1}down${goto 102}${color}${downspeed enp6s0}${goto 157}${color1}local ip${goto 214}${color}${addr enp6s0}
+${goto 58}${voffset 3}${color1}total${goto 102}${color}${totaldown enp6s0}${goto 157}${color1}torrent${goto 214}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
 ${endif}\
 ${else}\
 ${image ~/conky/monochrome/images/small/network-off.png -n -p 0,475}\
