@@ -72,11 +72,13 @@ ${voffset -13}${offset 1}${diskiograph_read /dev/sda 19,45 315bb1 1a336b 40000}
 ${voffset -38}${goto 58}${color1}write${goto 102}${color}${diskio_write /dev/sda}
 ${voffset 6}${goto 58}${color1}read${goto 102}${color}${diskio_read /dev/sda}
 # :::::::::::::::::::: disk space
+${image ~/conky/monochrome/images/small/circuitry.png -n -p 18,259}\
 ${image ~/conky/monochrome/images/small/disk-root.png -n -p 1,278}\
 ${voffset 54}${offset 1}${color2}${if_match ${fs_used_perc /} > 90}${color3}${endif}${fs_bar 3, 45 /}
 ${goto 58}${voffset -47}${color1}fs${goto 102}${color}${fs_type /}
 ${goto 58}${voffset 3}${color1}size${goto 102}${color}${fs_size /}
 ${goto 58}${voffset 3}${color1}free${goto 102}${color}${fs_free /}
+${image ~/conky/monochrome/images/small/circuitry-flipped.png -n -p 18,325}\
 ${image ~/conky/monochrome/images/small/disk-home.png -n -p 1,345}\
 ${voffset 56}${offset 1}${color2}${if_match ${fs_used_perc /home} > 90}${color3}${endif}${fs_bar 3, 45 /home}
 ${goto 58}${voffset -47}${color1}fs${goto 102}${color}${fs_type /home}
