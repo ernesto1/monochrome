@@ -7,7 +7,7 @@ conky.config = {
 
   -- window alignment
   alignment = 'top_left',  -- top|middle|bottom_left|right
-  gap_x = 207,             -- same as passing -x at command line
+  gap_x = 216,             -- same as passing -x at command line
   gap_y = 32,
 
   -- window settings
@@ -46,8 +46,8 @@ conky.config = {
 };
 
 conky.text = [[
-${voffset 3}${goto 54}${color1}compositor${goto 122}${color}${execi 3600 echo $XDG_SESSION_TYPE}
-${voffset 3}${goto 54}${color1}zoom${goto 122}${color}${if_running zoom}running${else}off${endif}
+${voffset 3}${goto 45}${color1}compositor${goto 122}${color}${execi 3600 echo $XDG_SESSION_TYPE}
+${voffset 3}${goto 45}${color1}zoom${goto 122}${color}${if_running zoom}running${else}off${endif}
 # :::::::::::::::::::: cpu processes
 ${image ~/conky/monochrome/images/small/table-processes-cpu.png -n -p 0,65}\
 ${voffset 36} process${goto 126}cpu   pid 
@@ -64,21 +64,29 @@ ${goto 200}${voffset 3}${top_mem name 2}${alignr}${top_mem mem_res 2} ${top_mem 
 ${goto 200}${voffset 3}${top_mem name 3}${alignr}${top_mem mem_res 3} ${top_mem pid 3} 
 ${goto 200}${voffset 3}${top_mem name 4}${alignr}${top_mem mem_res 4} ${top_mem pid 4} 
 ${goto 200}${voffset 3}${top_mem name 5}${alignr}${top_mem mem_res 5} ${top_mem pid 5} 
-# :::::::::::::::::::: usb
-${if_mounted /run/media/ernesto/sandisk}\
-${image ~/conky/monochrome/images/small/usbStick.png -n -p 0, 278}\
-${voffset 146}${color2}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color3}${endif}${fs_bar 3, 45 /run/media/ernesto/sandisk}
-${goto 54}${voffset -47}${color1}fs${goto 86}${color}${fs_type /run/media/ernesto/sandisk}
-${goto 54}${voffset 3}${color1}size${goto 86}${color}${fs_size /run/media/ernesto/sandisk}
-${goto 54}${voffset 3}${color1}free${goto 86}${color}${fs_free /run/media/ernesto/sandisk}
-${else}
-${voffset 131}
-${endif}
+# :::::::::::::::::::: usb devices
+# :::: maxtor external drive
 ${if_mounted /run/media/ernesto/MAXTOR}\
-${image ~/conky/monochrome/images/small/usbDrive.png -n -p 0, 345}\
-${voffset 43}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 3, 45 /run/media/ernesto/MAXTOR}
-${goto 54}${voffset -47}${color1}fs${goto 86}${color}${fs_type /run/media/ernesto/MAXTOR}
-${goto 54}${voffset 3}${color1}size${goto 86}${color}${fs_size /run/media/ernesto/MAXTOR}
-${goto 54}${voffset 3}${color1}free${goto 86}${color}${fs_free /run/media/ernesto/MAXTOR}
+# disk io
+${image ~/conky/monochrome/images/small/diskio.png -n -p 0,218}
+${image ~/conky/monochrome/images/small/circuitry.png -n -p 18,259}\
+${voffset 34}${offset 1}${diskiograph_write /dev/sdb1 19,45 b7caf1 b7eaff 48000}
+${voffset -13}${offset 1}${diskiograph_read /dev/sdb1 19,45 315bb1 1a336b 48000}
+${voffset -38}${goto 58}${color1}write${goto 102}${color}${diskio_write /dev/sdb1}
+${voffset 6}${goto 58}${color1}read${goto 102}${color}${diskio_read /dev/sdb1}
+# filesystem
+${image ~/conky/monochrome/images/small/usbDrive.png -n -p 1, 278}\
+${voffset 54}${offset 1}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 3, 45 /run/media/ernesto/MAXTOR}
+${goto 58}${voffset -47}${color1}fs${goto 102}${color}${fs_type /run/media/ernesto/MAXTOR}
+${goto 58}${voffset 3}${color1}size${goto 102}${color}${fs_size /run/media/ernesto/MAXTOR}
+${goto 58}${voffset 3}${color1}free${goto 102}${color}${fs_free /run/media/ernesto/MAXTOR}
+${endif}
+# :::: sandisk memory stick
+${if_mounted /run/media/ernesto/sandisk}\
+${image ~/conky/monochrome/images/small/usbStick.png -n -p 195, 278}
+${voffset -37}${offset 195}${color2}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color3}${endif}${fs_bar 3, 45 /run/media/ernesto/sandisk}
+${goto 249}${voffset -47}${color1}fs${goto 293}${color}${fs_type /run/media/ernesto/sandisk}
+${goto 249}${voffset 3}${color1}size${goto 293}${color}${fs_size /run/media/ernesto/sandisk}
+${goto 249}${voffset 3}${color1}free${goto 293}${color}${fs_free /run/media/ernesto/sandisk}
 ${endif}
 ]];
