@@ -80,6 +80,8 @@ ${voffset 54}${offset 1}${color2}${if_match ${fs_used_perc /run/media/ernesto/MA
 ${goto 58}${voffset -47}${color1}fs${goto 102}${color}${fs_type /run/media/ernesto/MAXTOR}
 ${goto 58}${voffset 3}${color1}size${goto 102}${color}${fs_size /run/media/ernesto/MAXTOR}
 ${goto 58}${voffset 3}${color1}free${goto 102}${color}${fs_free /run/media/ernesto/MAXTOR}
+${else}
+${voffset 131}
 ${endif}
 # :::: sandisk memory stick
 ${if_mounted /run/media/ernesto/sandisk}\
