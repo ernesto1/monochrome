@@ -12,7 +12,7 @@ conky.config = {
 
   -- window settings
   minimum_width = 382,
-  minimum_height = 420,
+  minimum_height = 324,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -24,7 +24,7 @@ conky.config = {
 
   -- window borders
   draw_borders = false,     -- draw borders around the conky window
-  border_width = 0,         -- width of border window in pixels
+  border_width = 1,         -- width of border window in pixels
   stippled_borders = 0,     -- border stippling (dashing) in pixels
   border_inner_margin = 0,  -- margin between the border and text in pixels
   border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
@@ -91,4 +91,7 @@ ${goto 249}${voffset -47}${color1}fs${goto 293}${color}${fs_type /run/media/erne
 ${goto 249}${voffset 3}${color1}size${goto 293}${color}${fs_size /run/media/ernesto/sandisk}
 ${goto 249}${voffset 3}${color1}free${goto 293}${color}${fs_free /run/media/ernesto/sandisk}
 ${endif}
+# this voffset is just to remove the extra trailing space that makes the conky window
+# longer (height) than it needs to be
+${voffset -40}
 ]];
