@@ -55,7 +55,7 @@ ${voffset 3}${color1}strength${goto 59}${voffset 2}${color2}${if_match ${wireles
 ########## power
 ${image ~/conky/monochrome/images/blame/battery.png -n -p 170,90}\
 ${voffset 24}${alignr 42}${color}${acpiacadapter}  ${color1}power  
-${voffset 3}${color}${if_match ${battery_percent BAT0} == 100}${alignr}bat fully charged${else}${offset 13}${battery_percent BAT0}%${alignr 42}${battery_time BAT0}${endif}  ${color1}charge 
-${voffset 4}${goto 14}${color2}${if_match ${battery_percent BAT0} < 30}${color3}${endif}${battery_bar 4,97 BAT0}${voffset -1}${alignr 42}${color1}battery\
-${image ~/conky/monochrome/images/blame/filesystem-bar.png -n -p 8,121}\
+${voffset 3}${color}${if_match ${battery_percent BAT0} == 100}${alignr 42}bat fully charged${else}${offset 14}${battery_percent BAT0}%${alignr 42}${battery_time BAT0}${endif}  ${color1}charge 
+${voffset 4}${goto 15}${color2}${if_match ${battery_percent BAT0} < 30}${color3}${endif}${battery_bar 4,97 BAT0}${voffset -1}${alignr 42}${color1}battery\
+${image ~/conky/monochrome/images/blame/filesystem-bar.png -n -p 9,121}\
 ]];
