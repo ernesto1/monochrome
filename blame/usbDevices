@@ -5,13 +5,13 @@ conky.config = {
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'bottom_left',       -- top|middle|bottom_left|middle|right
-  gap_x = 1313,                     -- same as passing -x at command line
-  gap_y = 16,
+  alignment = 'bottom_middle',       -- top|middle|bottom_left|middle|right
+  gap_x = 500,                     -- same as passing -x at command line
+  gap_y = 13,
 
   -- window settings
-  minimum_width = 192,
-  minimum_height = 90,
+  minimum_width = 54,
+  minimum_height = 144,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -45,38 +45,25 @@ conky.config = {
 };
 
 conky.text = [[
+# ------------ work in progress ------------
+# ------------------------------------------
 ${image ~/conky/monochrome/images/blame/usb-box.png -n -p 0,0}\
-${image ~/conky/monochrome/images/blame/usb-box.png -n -p 69,0}\
-${image ~/conky/monochrome/images/blame/usb-box.png -n -p 138,0}\
+${image ~/conky/monochrome/images/blame/usb-box.png -n -p 0,75}\
 ${if_mounted /run/media/ernesto/sandisk}\
 ${image ~/conky/monochrome/images/blame/usb-stick.png -n -p 3,3}\
 ${voffset 41}${offset 3}${color2}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color3}${endif}${fs_bar 5, 48 /run/media/ernesto/sandisk}
-${voffset 8}${offset 5}${color}${fs_free /run/media/ernesto/sandisk}
-${voffset 3}${offset 14}free
+${voffset 3}${alignc}${color}${fs_free /run/media/ernesto/sandisk}
 ${else}\
 ${image ~/conky/monochrome/images/blame/usb-box-filler1.png -n -p 0,0}\
-${voffset 91}\
+${voffset 20}\
 ${endif}\
 ${if_mounted /run/media/ernesto/MAXTOR}\
-${voffset -91}${image ~/conky/monochrome/images/blame/usb-drive.png -n -p 72,3}\
+${image ~/conky/monochrome/images/blame/usb-drive.png -n -p 72,3}\
 ${voffset 41}${goto 72}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 5, 48 /run/media/ernesto/MAXTOR}
 ${voffset 8}${goto 77}${color}${fs_free /run/media/ernesto/MAXTOR}
 ${voffset 3}${goto 86}free
 ${else}\
 ${voffset -91}\
-${image ~/conky/monochrome/images/blame/usb-box-filler2.png -n -p 69,0}\
-${voffset 91}\
+${image ~/conky/monochrome/images/blame/usb-box-filler2.png -n -p 0,78}\
 ${endif}\
-${if_mounted /run/media/ernesto/disk}\
-${voffset -91}${image ~/conky/monochrome/images/blame/usb-sdCard.png -n -p 141,3}\
-${voffset 41}${goto 141}${color2}${if_match ${fs_used_perc /run/media/ernesto/disk} > 90}${color3}${endif}${fs_bar 5, 48 /run/media/ernesto/disk}
-${voffset 8}${goto 145}${color}${fs_free /run/media/ernesto/disk}
-${voffset 3}${goto 153}free
-${else}\
-${voffset -91}\
-${image ~/conky/monochrome/images/blame/usb-box-filler3.png -n -p 141,0}\
-${voffset 91}\
-# the final voffset is to account for that pesky added extra vertical space due to the combination of 'voffset'
-# with text used... this seems like a bug in conky : /
-${endif}${voffset -130}
 ]];
