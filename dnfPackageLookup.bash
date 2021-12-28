@@ -4,6 +4,7 @@
 
 function onExitSignal() {
   echo "$(basename $0) | received shutdown signal, exiting script"
+  rm /tmp/dnf.updates # delete temp files
   kill $(jobs -p)     # kill any child processes, ie. the sleep command
   exit 0
 }
@@ -35,7 +36,7 @@ while [ true ]; do
         # code.x86_64                      1.59.0-1628120127.el8              code        
         # skypeforlinux.x86_64             8.75.0.140-1                       skype-stable
         dnf list updates > /tmp/dnf.updates
-        newPackages=$(grep -cvE '\||^Last|^Available' /tmp/dnf.updates)
+        newPackages=$(grep -cE '^(([[:alnum:]]|\.|_|-)+[[:space:]]+){2}([[:alnum:]]|\.|_|-)+$' /tmp/dnf.updates)
         echo -n "$(date +'%D %r') - " | tee -a /tmp/conkyDnf.log 
         
         if [[ $newPackages > 0 ]]; then
