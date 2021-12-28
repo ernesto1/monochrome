@@ -5,9 +5,9 @@ conky.config = {
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'bottom_left',     -- top|middle|bottom_left|middle|right
-  gap_x = 551,                 -- same as passing -x at command line
-  gap_y = 14,
+  alignment = 'bottom_middle',     -- top|middle|bottom_left|middle|right
+  gap_x = -353,                 -- same as passing -x at command line
+  gap_y = 7,
 
   -- window settings
   minimum_width = 160,
@@ -45,18 +45,32 @@ conky.config = {
 };
 
 conky.text = [[
-${color1}local ip${goto 72}${color}${addr enp0s25}
 # use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
-${voffset 3}${color1}bittorrent${goto 72}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
+${color1}bittorrent${goto 72}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
 ${if_gw}\
 ${image ~/conky/monochrome/images/blame/box-pair.png -n -p 0,36}\
+${image ~/conky/monochrome/images/small/highlight.png -n -p 104,103}\
+${image ~/conky/monochrome/images/small/highlight.png -n -p 33,145}\
 ${else}\
 ${image ~/conky/monochrome/images/blame/box-pair-empty.png -n -p 0,36}\
 ${endif}\
+############# wifi
+${if_existing /sys/class/net/wlp4s0/operstate up}\
+${voffset 3}${color1}  local ip${goto 72}${color}${addr wlp4s0}
+${voffset 51}${offset 7}${downspeedgraph wlp4s0 49,49 315bb1 1a336b 19000}
+${voffset 4}${color1} down ${color}${downspeed wlp4s0}
+${voffset 3}${color1}total ${color}${totaldown wlp4s0}\
+${voffset -124}${goto 67}${upspeedgraph wlp4s0 49,49 6b91e5 546fb2 8200}
+${voffset 4}${goto 72}${color1}   up ${color}${upspeed wlp4s0}
+${voffset 3}${goto 72}${color1}total ${color}${totalup wlp4s0}${voffset -30}
+${else}\
+############# ethernet
+${voffset 3}${color1}local ip${goto 72}${color}${addr enp0s25}
 ${voffset 51}${offset 7}${downspeedgraph enp0s25 49,49 315bb1 1a336b 15000}
-${voffset 4}${color1}down  ${color}${downspeed enp0s25}
+${voffset 4}${color1} down ${color}${downspeed enp0s25}
 ${voffset 3}${color1}total ${color}${totaldown enp0s25}\
 ${voffset -124}${goto 67}${upspeedgraph enp0s25 49,49 6b91e5 546fb2 2000}
-${voffset 4}${goto 72}${color1}up    ${color}${upspeed enp0s25}
+${voffset 4}${goto 72}${color1}   up ${color}${upspeed enp0s25}
 ${voffset 3}${goto 72}${color1}total ${color}${totalup enp0s25}${voffset -30}
+${endif}\
 ]];
