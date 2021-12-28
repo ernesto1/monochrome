@@ -16,7 +16,7 @@ Built for systems with ample screen real state available.  The resolution below 
 ![desktop 2560px](images/screenshots/2560x1600.jpg)
 
 ### Blame theme
-Inspired by the killy's heads up display from the anime movie Blame!. Setup shown in a 1920 x 1200 pixels resolution.
+Inspired by the killy's heads up display from the anime movie Blame!. Setup shown in a 1366 x 768 pixels resolution.
 ![desktop 2560px](images/screenshots/blame.jpg)
 
 ## Features
@@ -102,5 +102,5 @@ $ ~/conky/monochrome/launch.bash --desktop
 Blame theme
 
 ```
-$ ~/conky/monochrome/launch.bash --blame
+$ ~/conky/monochrome/launch.bash --blame --layout-override laptop
 ```
