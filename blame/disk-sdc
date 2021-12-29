@@ -45,7 +45,7 @@ conky.config = {
 };
 
 conky.text = [[
-${image ~/conky/monochrome/images/blame/filesystem-bar.png -n -p 68,2}\
+${image ~/conky/monochrome/images/blame/bar.png -n -p 68,2}\
 betty${goto 74}${voffset 1}${color2}${if_match ${fs_used_perc /media/betty} > 90}${color3}${endif}${fs_bar 4,97 /media/betty}
 ${voffset 2}${alignr}${color}${fs_used /media/betty} / ${fs_size /media/betty}
 ${image ~/conky/monochrome/images/blame/diskio-sdc.png -n -p 0,33}\
