@@ -48,11 +48,11 @@ conky.text = [[
 # use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
 ${color1}bittorrent${goto 72}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
 ${if_gw}\
-${image ~/conky/monochrome/images/blame/box-pair.png -n -p 0,36}\
+${image ~/conky/monochrome/images/blame/network.png -n -p 0,36}\
 ${image ~/conky/monochrome/images/small/highlight.png -n -p 104,103}\
 ${image ~/conky/monochrome/images/small/highlight.png -n -p 33,145}\
 ${else}\
-${image ~/conky/monochrome/images/blame/box-pair-empty.png -n -p 0,36}\
+${image ~/conky/monochrome/images/blame/network-down.png -n -p 0,36}\
 ${endif}\
 ############# wifi
 ${if_existing /sys/class/net/wlp4s0/operstate up}\
