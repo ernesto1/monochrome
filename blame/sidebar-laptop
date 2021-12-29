@@ -1,0 +1,94 @@
+conky.config = {
+  update_interval = 2,  -- update interval in seconds
+  total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
+  xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
+  double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
+
+  -- window alignment
+  alignment = 'top_left',       -- top|middle|bottom_left|middle|right
+  gap_x = 3,                     -- same as passing -x at command line
+  gap_y = 31,
+
+  -- window settings
+  minimum_width = 185,
+  minimum_height = 700,
+  own_window = true,
+  own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
+  own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+
+  -- transparency configuration
+  own_window_transparent = true,
+  own_window_argb_visual = true,  -- turn on transparency
+  own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
+
+  -- window borders
+  draw_borders = false,     -- draw borders around the conky window
+  border_width = 1,         -- width of border window in pixels
+  stippled_borders = 0,     -- border stippling (dashing) in pixels
+  border_inner_margin = 0,  -- margin between the border and text in pixels
+  border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
+
+  -- graph settings
+  draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
+                              -- does not include bars, ie. wifi strength bar, cpu bar
+
+  imlib_cache_flush_interval = 300,
+  -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
+
+  -- font settings
+  draw_shades = false,    -- black shadow on text (not good if text is black)
+  draw_outline = false,   -- black outline around text (not good if text is black)
+  default_color = 'black',
+  color1 = 'white',
+  color2 = '1a336b',      -- dark blue
+  color3 = '800020',      -- red
+};
+
+conky.text = [[
+# -------------- cpu
+${image ~/conky/monochrome/images/blame/gauge-cpu.png -n -p 0,0}
+${voffset -18}${offset 40}${cpugraph cpu0 35,143 315bb1 1a336b}
+${voffset -2}${offset 2}${color1}load ${color}${loadavg}${alignr 3}${color}${cpu cpu0}%
+${image ~/conky/monochrome/images/blame/table-header.png -n -p 2,63}\
+${voffset 9}${color1} process${goto 127}cpu   pid 
+${voffset 3}${color} ${top name 1}${top cpu 1}% ${top pid 1}
+${voffset 3}${color} ${top name 2}${top cpu 2}% ${top pid 2}
+${voffset 3}${color} ${top name 3}${top cpu 3}% ${top pid 3}
+${voffset 3}${color} ${top name 4}${top cpu 4}% ${top pid 4}
+# -------------- memory
+${image ~/conky/monochrome/images/blame/gauge-memory.png -n -p 0,153}
+${voffset -5}${offset 40}${memgraph 35,143 315bb1 1a336b}
+${voffset -2}${offset 2}${color1}used  ${color}${mem} / ${memmax}${alignr 3}${color}${memperc}%
+${image ~/conky/monochrome/images/blame/bar.png -n -p 32,212}\
+${voffset 3}${offset 2}${color1}swap${goto 38}${voffset 1}${color2}${swapbar 4,97}${alignr 3}${voffset -1}${swapperc}%
+${image ~/conky/monochrome/images/blame/table-header.png -n -p 2,232}\
+${voffset 9}${color1} process${goto 127}mem   pid 
+${voffset 3}${color} ${top_mem name 1} ${top_mem mem_res 1} ${top_mem pid 1} 
+${voffset 3}${color} ${top_mem name 2} ${top_mem mem_res 2} ${top_mem pid 2} 
+${voffset 3}${color} ${top_mem name 3} ${top_mem mem_res 3} ${top_mem pid 3} 
+${voffset 3}${color} ${top_mem name 4} ${top_mem mem_res 4} ${top_mem pid 4} 
+# -------------- network
+${image ~/conky/monochrome/images/blame/gauge-internet.png -n -p 0,322}
+${voffset -5}${offset 40}${upspeedgraph wlp4s0 35,70 6b91e5 546fb2 8200}${offset 3}${downspeedgraph wlp4s0 35,70 315bb1 1a336b 19000}
+${voffset -2}${offset 2}${color1}up    ${color}${upspeed wlp4s0}${alignr 3}${color}${downspeed wlp4s0}  ${color1}down
+${voffset 3}${offset 2}${color1}total ${color}${totalup wlp4s0}${alignr 3}${color}${totaldown wlp4s0} ${color1}total
+${voffset 8}${offset 2}${color1}torrent${goto 59}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
+${voffset 3}${offset 2}${color1}zoom${goto 59}${color}${if_running zoom}running${else}off${endif}
+${image ~/conky/monochrome/images/blame/wifi.png -n -p 146,439}\
+${voffset 8}${offset 2}${color1}local ip${goto 59}${color}${addr wlp4s0}
+${voffset 3}${offset 2}${color1}network${goto 59}${color}${wireless_essid wlp4s0}
+${voffset 3}${offset 2}${color1}channel${goto 59}${color}${wireless_channel wlp4s0}
+${voffset 3}${offset 2}${color1}bitrate${goto 59}${color}${wireless_bitrate wlp4s0}
+${image ~/conky/monochrome/images/blame/bar.png -n -p 53,504}\
+${voffset 3}${offset 2}${color1}strength${goto 59}${voffset 2}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 4,97 wlp4s0}${voffset -1}${alignr 3}${wireless_link_qual_perc wlp4s0}%
+# -------------- hard disk
+${image ~/conky/monochrome/images/blame/gauge-disk.png -n -p 0,527}
+${voffset -5}${offset 40}${diskiograph_write /dev/sda 35,70 6b91e5 546fb2 40000}${offset 3}${diskiograph_read /dev/sda 35,70 315bb1 1a336b 40000}
+${voffset -2}${offset 2}${color1}read ${color}${diskio_read /dev/sda}${alignr 3}${color}${diskio_write /dev/sda} ${color1}write
+${image ~/conky/monochrome/images/blame/bar.png -n -p 77,592}\
+${voffset 8 }${color}fedora${goto 83}${voffset 1}${color2}${if_match ${fs_used_perc /} > 90}${color3}${endif}${fs_bar 4,97 /}
+${voffset 2}${alignr 3}${color}${fs_used /} / ${fs_size /}
+${image ~/conky/monochrome/images/blame/bar.png -n -p 77,623}\
+${voffset 2}home${goto 83}${voffset 1}${color2}${if_match ${fs_used_perc /home} > 90}${color3}${endif}${fs_bar 4,97 /home}
+${voffset 2}${alignr 3}${color}${fs_used /home} / ${fs_size /home}
+]];
