@@ -102,5 +102,5 @@ $ ~/conky/monochrome/launch.bash --desktop
 Blame theme
 
 ```
-$ ~/conky/monochrome/launch.bash --blame --layout-override laptop.hud
+$ ~/conky/monochrome/launch.bash --blame --layout-override laptop
 ```
