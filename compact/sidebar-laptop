@@ -46,36 +46,36 @@ conky.config = {
 
 conky.text = [[
 # -------------- cpu
-${image ~/conky/monochrome/images/blame/gauge-cpu.png -n -p 0,0}
+${image ~/conky/monochrome/images/compact/gauge-cpu.png -n -p 0,0}
 ${voffset -18}${offset 40}${cpugraph cpu0 35,143 315bb1 1a336b}
 ${voffset -2}${offset 2}${color1}load ${color}${loadavg}${alignr 3}${color}${cpu cpu0}%
-${image ~/conky/monochrome/images/blame/table-header.png -n -p 2,63}\
+${image ~/conky/monochrome/images/compact/table-header.png -n -p 2,63}\
 ${voffset 9}${color1} process${goto 127}cpu   pid
 ${voffset 3}${color} ${top name 1}${top cpu 1}% ${top pid 1}
 ${voffset 3}${color} ${top name 2}${top cpu 2}% ${top pid 2}
 ${voffset 3}${color} ${top name 3}${top cpu 3}% ${top pid 3}
 ${voffset 3}${color} ${top name 4}${top cpu 4}% ${top pid 4}
 # -------------- memory
-${image ~/conky/monochrome/images/blame/gauge-memory.png -n -p 0,149}
+${image ~/conky/monochrome/images/compact/gauge-memory.png -n -p 0,149}
 ${voffset -9}${offset 40}${memgraph 35,143 315bb1 1a336b}
 ${voffset -2}${offset 2}${color1}used  ${color}${mem} / ${memmax}${alignr 3}${color}${memperc}%
 ${image ~/conky/monochrome/images/blame/bar.png -n -p 32,208}\
 ${voffset 3}${offset 2}${color1}swap${goto 38}${voffset 1}${color2}${swapbar 4,97}${alignr 3}${voffset -1}${swapperc}%
-${image ~/conky/monochrome/images/blame/table-header.png -n -p 2,228}\
+${image ~/conky/monochrome/images/compact/table-header.png -n -p 2,228}\
 ${voffset 9}${color1} process${goto 127}mem   pid
 ${voffset 3}${color} ${top_mem name 1}${alignr 6}${top_mem mem_res 1} ${top_mem pid 1}
 ${voffset 3}${color} ${top_mem name 2}${alignr 6}${top_mem mem_res 2} ${top_mem pid 2}
 ${voffset 3}${color} ${top_mem name 3}${alignr 6}${top_mem mem_res 3} ${top_mem pid 3}
 ${voffset 3}${color} ${top_mem name 4}${alignr 6}${top_mem mem_res 4} ${top_mem pid 4}
 # -------------- network
-${image ~/conky/monochrome/images/blame/gauge-internet.png -n -p 0,314}
+${image ~/conky/monochrome/images/compact/gauge-internet.png -n -p 0,314}
 ${voffset -9}${offset 40}${upspeedgraph wlp4s0 35,70 6b91e5 546fb2 8200}${offset 3}${downspeedgraph wlp4s0 35,70 315bb1 1a336b 19000}
 ${voffset -2}${offset 2}${color1}up    ${color}${upspeed wlp4s0}${alignr 3}${color}${downspeed wlp4s0}  ${color1}down
 ${voffset 3}${offset 2}${color1}total ${color}${totalup wlp4s0}${alignr 3}${color}${totaldown wlp4s0} ${color1}total
 ${voffset 8}${offset 2}${color1}bittorrent ${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
 ${voffset 3}${offset 2}${color1}zoom       ${color}${if_running zoom}running${else}off${endif}
 ${if_existing /sys/class/net/wlp4s0/operstate up}\
-${image ~/conky/monochrome/images/blame/wifi.png -n -p 0,431}\
+${image ~/conky/monochrome/images/compact/wifi.png -n -p 0,431}\
 ${voffset 8}${alignr 3}${color}${addr wlp4s0} ${color1}local ip
 ${voffset 3}${alignr 3}${color}${wireless_essid wlp4s0} ${color1}network 
 ${voffset 3}${alignr 3}${color}${wireless_channel wlp4s0} ${color1}channel 
@@ -83,12 +83,12 @@ ${voffset 3}${alignr 3}${color}${wireless_bitrate wlp4s0} ${color1}bitrate
 ${image ~/conky/monochrome/images/blame/bar.png -n -p 24,496  }\
 ${voffset 3}${offset 0}${color}${wireless_link_qual_perc wlp4s0}%${voffset 2}${goto 30}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 4,97 wlp4s0}${voffset -2}${alignr 3}${color1}signal  
 ${else}\
-${image ~/conky/monochrome/images/blame/wifi.png -n -p 75,444}\
+${image ~/conky/monochrome/images/compact/wifi.png -n -p 75,444}\
 ${voffset 62}${alignc}no wifi
 ${voffset -3}
 ${endif}\
 # -------------- hard disk
-${image ~/conky/monochrome/images/blame/gauge-disk.png -n -p 0,518}
+${image ~/conky/monochrome/images/compact/gauge-disk.png -n -p 0,518}
 ${voffset -6}${offset 40}${diskiograph_read /dev/sda 35,70 6b91e5 546fb2 100000}${offset 3}${diskiograph_write /dev/sda 35,70 315bb1 1a336b 140000}
 ${voffset -2}${offset 2}${color1}read  ${color}${diskio_read /dev/sda}${alignr 3}${color}${diskio_write /dev/sda} ${color1}write
 ${image ~/conky/monochrome/images/blame/bar.png -n -p 77,582}\
@@ -98,7 +98,7 @@ ${image ~/conky/monochrome/images/blame/bar.png -n -p 77,613}\
 ${voffset 2}home${goto 83}${voffset 1}${color2}${if_match ${fs_used_perc /home} > 90}${color3}${endif}${fs_bar 4,97 /home}
 ${voffset 2}${alignr 6}${color}${fs_used /home} / ${fs_size /home}
 # -------------- battery
-${image ~/conky/monochrome/images/blame/battery.png -n -p 0,645}\
+${image ~/conky/monochrome/images/compact/battery.png -n -p 0,645}\
 ${voffset 10}${alignr 3}${color}${acpiacadapter} ${color1}power  
 ${voffset 3}${alignr 3}${color}${if_match ${battery_percent BAT0} == 100}fully charged${else}${battery_time BAT0}${endif} ${color1}charge 
 ${voffset 3}${offset 2}$color}${battery_percent BAT0}%${goto 35}${color2}${if_match ${battery_percent BAT0} < 30}${color3}${endif}${battery_bar 4,97 BAT0}${voffset -1}${alignr 3}${color1}battery

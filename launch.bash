@@ -16,6 +16,7 @@ function usage() {
 	$(basename $0) --mode [--monitor n] [--layout-override tag] [--silent]
 	
 	Mode options
+	These are the conky themes available
 	  --laptop
 	    Loads the conky widgets laptop theme.  Designed for monitors with a 1366 x 768 pixel resolution.
 
@@ -23,10 +24,8 @@ function usage() {
 	    Loads the conky widgets desktop theme.  Designed for monitors with a 2560 x 1600 pixel resolution.
 	    
 	  --blame
-	    Load the conky blame theme
-
-	  --glass
-	    Load the conky glass theme
+	  --glass    
+    --compact
 	
 	Optional flags
 	  --monitor 0|1|2|3|...
@@ -44,7 +43,7 @@ function usage() {
 
 	  --layout-override tag
 	    allows you to use a layout override file in order to modify the position of the conkys on the fly
-	    override file follow the naming convention: layout.<tag>.cfg
+	    override file follows the naming convention: layout.<tag>.cfg
 
 	Examples
 	  $(basename $0) --laptop
@@ -97,6 +96,10 @@ while (( "$#" )); do
       directory=${HOME}/conky/monochrome/glass
       shift
       ;;
+    --compact)
+      directory=${HOME}/conky/monochrome/compact
+      shift
+      ;;
     --monitor)
       # TODO validate a proper number was provided to the monitor flag
       monitor=$2
@@ -106,7 +109,7 @@ while (( "$#" )); do
       fileTag=$2
       
       if [[ -z $fileTag ]]; then
-        echo -e 'error | missing argument: override file name must be provided with the --layout-override flag\n\n' >&2
+        echo -e 'error | missing argument: override file tag must be provided with the --layout-override flag\n\n' >&2
         usage
         exit 2
       fi
@@ -116,6 +119,10 @@ while (( "$#" )); do
     --silent)
       silent=true
       shift
+      ;;
+    -h)
+      usage
+      exit
       ;;
     *)
       usage
