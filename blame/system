@@ -54,8 +54,8 @@ ${voffset 3}${goto 13}${color1}load avg${goto 73}${color}${loadavg}
 ${voffset 3}${goto 25}${color1}memory${goto 73}${color}${mem} / ${memmax}
 ${voffset 3}${goto 37}${color1}swap${goto 73}${voffset 1}${color2}${swapbar 4,82}  ${voffset -1}${swapperc}%
 ${image ~/conky/monochrome/images/blame/swap-bar.png -n -p 67,132}\
-${image ~/conky/monochrome/images/blame/cylinder-cpu.png -n -p 15,155}\
-${image ~/conky/monochrome/images/blame/cylinder-memory.png -n -p 72,155}\
+${image ~/conky/monochrome/images/blame/gauge-cpu.png -n -p 15,155}\
+${image ~/conky/monochrome/images/blame/gauge-memory.png -n -p 72,155}\
 ${offset 27}${voffset 20}${cpugraph cpu0 80, 19 315bb1 1a336b}\
 ${goto 85}${if_match ${memperc} >= 90}${memgraph 80, 19 cd0033 800020}${else}${memgraph 80, 19 315bb1 1a336b}${endif}
 ]];
