@@ -13,16 +13,12 @@
 
 function usage() {
   cat <<-END
-	$(basename $0) --mode [--monitor n] [--layout-override tag] [--silent]
+	$(basename $0) --theme [--monitor n] [--layout-override <tag>] [--silent]
 	
-	Mode options
-	These are the conky themes available
-	  --laptop
-	    Loads the conky widgets laptop theme.  Designed for monitors with a 1366 x 768 pixel resolution.
-
+	Theme options
+	  --widgets-small
 	  --desktop
-	    Loads the conky widgets desktop theme.  Designed for monitors with a 2560 x 1600 pixel resolution.
-	    
+	    Loads the conky widgets desktop theme.  Designed for monitors with a 2560 x 1600 pixel resolution.	    
 	  --blame
 	  --glass    
     --compact
@@ -44,9 +40,12 @@ function usage() {
 	  --layout-override tag
 	    allows you to use a layout override file in order to modify the position of the conkys on the fly
 	    override file follows the naming convention: layout.<tag>.cfg
+	    
+    --silent
+      all conky output (STDOUT and STDERR) is suppressed
 
 	Examples
-	  $(basename $0) --laptop
+	  $(basename $0) --widgets-small
 	  $(basename $0) --desktop --monitor 2
 	  $(basename $0) --glass --monitor 1 --layout-override desktop --silent
 	END
@@ -88,8 +87,8 @@ while (( "$#" )); do
       directory=${HOME}/conky/monochrome/large
       shift
       ;;
-    --laptop)
-      directory=${HOME}/conky/monochrome/small
+    --widgets-small)
+      directory=${HOME}/conky/monochrome/widgets-small
       shift
       ;;
     --glass)

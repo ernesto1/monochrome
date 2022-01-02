@@ -11,9 +11,9 @@ Setup shown in a 1920 x 1200 pixels resolution
 Setup shown in a 1366 x 768 pixels resolution
 ![compact](images/screenshots/compact.jpg)
 
-### Widgets | laptop
+### Widgets | small
 Built for systems with small screen real state. The resolution below is 1366 x 768 pixels.
-![widgets laptop](images/screenshots/1366x768.jpg)
+![widgets small](images/screenshots/widgets-small.jpg)
 
 ### Widgets | desktop
 Built for systems with ample screen real state available.  The resolution below is 2560x1600 pixels.
@@ -85,31 +85,31 @@ $ mv ~/conky/monochrome-master ~/conky/monochrome
 
 3) Run the launch script with the theme you want:
 
-Glass theme
+Glass
 
 ```
 $ ~/conky/monochrome/launch.bash --glass --layout-override desktop
 ```
 
-Compact theme
+Compact
 
 ```
 $ ~/conky/monochrome/launch.bash --compact
 ```
 
-Widgets laptop theme
+Widgets small
 
 ```
-$ ~/conky/monochrome/launch.bash --laptop
+$ ~/conky/monochrome/launch.bash --widgets-small
 ```
 
-Widgets desktop theme
+Widgets desktop
 
 ```
 $ ~/conky/monochrome/launch.bash --desktop
 ```
 
-Blame theme
+Blame
 
 ```
 $ ~/conky/monochrome/launch.bash --blame --layout-override laptop
