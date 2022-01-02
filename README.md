@@ -1,15 +1,19 @@
 # Monochrome Conky
 A collection of graphical conky interfaces to monitor your system.
 
-If you are new to conky, the [project's wiki page](https://github.com/ernesto1/monochrome/wiki) has  helpful guides to show you how to customize the conky configs to your system.
+If you are new to conky, this [project's wiki page](https://github.com/ernesto1/monochrome/wiki) has  helpful guides to show you how to customize the conky configs to your system.
 
 ### Glass theme
 Setup shown in a 1920 x 1200 pixels resolution
 ![desktop 2560px](images/screenshots/glass.jpg)
 
+### Compact theme
+Setup shown in a 1920 x 1200 pixels resolution
+![compact](images/screenshots/compact.jpg)
+
 ### Widgets | laptop
 Built for systems with small screen real state. The resolution below is 1366 x 768 pixels.
-![laptop](images/screenshots/1366x768.jpg)
+![widgets laptop](images/screenshots/1366x768.jpg)
 
 ### Widgets | desktop
 Built for systems with ample screen real state available.  The resolution below is 2560x1600 pixels.
@@ -17,7 +21,7 @@ Built for systems with ample screen real state available.  The resolution below 
 
 ### Blame theme
 Inspired by the killy's heads up display from the anime movie Blame!. Setup shown in a 1366 x 768 pixels resolution.
-![desktop 2560px](images/screenshots/blame.jpg)
+![widgets desktop](images/screenshots/blame.jpg)
 
 ## Features
 ### Repository package updates
