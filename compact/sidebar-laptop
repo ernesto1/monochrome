@@ -89,7 +89,7 @@ ${voffset -3}
 ${endif}\
 # -------------- hard disk
 ${image ~/conky/monochrome/images/compact/gauge-disk.png -n -p 0,518}
-${voffset -6}${offset 40}${diskiograph_read /dev/sda 35,70 6b91e5 546fb2 100000}${offset 3}${diskiograph_write /dev/sda 35,70 315bb1 1a336b 140000}
+${voffset -6}${offset 40}${diskiograph_read /dev/sda 35,70 6b91e5 546fb2 128000}${offset 3}${diskiograph_write /dev/sda 35,70 315bb1 1a336b 140000}
 ${voffset -2}${offset 2}${color1}read  ${color}${diskio_read /dev/sda}${alignr 3}${color}${diskio_write /dev/sda} ${color1}write
 ${image ~/conky/monochrome/images/blame/bar.png -n -p 77,582}\
 ${voffset 8 }${color}fedora${goto 83}${voffset 1}${color2}${if_match ${fs_used_perc /} > 90}${color3}${endif}${fs_bar 4,97 /}
