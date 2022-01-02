@@ -8,7 +8,7 @@ Setup shown in a 1920 x 1200 pixels resolution
 ![desktop 2560px](images/screenshots/glass.jpg)
 
 ### Compact theme
-Setup shown in a 1920 x 1200 pixels resolution
+Setup shown in a 1366 x 768 pixels resolution
 ![compact](images/screenshots/compact.jpg)
 
 ### Widgets | laptop
@@ -89,6 +89,12 @@ Glass theme
 
 ```
 $ ~/conky/monochrome/launch.bash --glass --layout-override desktop
+```
+
+Compact theme
+
+```
+$ ~/conky/monochrome/launch.bash --compact
 ```
 
 Widgets laptop theme
