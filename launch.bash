@@ -16,12 +16,12 @@ function usage() {
 	$(basename $0) --theme [--monitor n] [--layout-override <tag>] [--silent]
 	
 	Theme options
-	  --widgets-small
-	  --desktop
-	    Loads the conky widgets desktop theme.  Designed for monitors with a 2560 x 1600 pixel resolution.	    
 	  --blame
-	  --glass    
-    --compact
+	  --compact
+	  --desktop
+	    Loads the conky widgets desktop theme.  Designed for monitors with a 2560 x 1600 pixel resolution.
+	  --glass
+	  --widgets-small
 	
 	Optional flags
 	  --monitor 0|1|2|3|...
@@ -38,11 +38,14 @@ function usage() {
 	        /    \      /  \\
 
 	  --layout-override tag
-	    allows you to use a layout override file in order to modify the position of the conkys on the fly
+	    allows you to use a layout override file in order to modify the position of the conkys on the fly.
+	    conkys in the target directory can also be excluded from being loaded, ex. you have a conky that
+	    you would like to run on your laptop but not on your desktop
+
 	    override file follows the naming convention: layout.<tag>.cfg
 	    
-    --silent
-      all conky output (STDOUT and STDERR) is suppressed
+	  --silent
+	    all conky output (STDOUT and STDERR) is suppressed
 
 	Examples
 	  $(basename $0) --widgets-small
