@@ -18,9 +18,8 @@ function usage() {
 	Theme options
 	  --blame
 	  --compact
-	  --desktop
-	    Loads the conky widgets desktop theme.  Designed for monitors with a 2560 x 1600 pixel resolution.
 	  --glass
+	  --widgets-large
 	  --widgets-small
 	
 	Optional flags
@@ -49,7 +48,7 @@ function usage() {
 
 	Examples
 	  $(basename $0) --widgets-small
-	  $(basename $0) --desktop --monitor 2
+	  $(basename $0) --compact --monitor 2
 	  $(basename $0) --glass --monitor 1 --layout-override desktop --silent
 	END
 }
@@ -86,8 +85,8 @@ while (( "$#" )); do
       directory=${HOME}/conky/monochrome/blame
       shift
       ;;
-    --desktop)
-      directory=${HOME}/conky/monochrome/large
+    --widgets-large)
+      directory=${HOME}/conky/monochrome/widgets-large
       shift
       ;;
     --widgets-small)

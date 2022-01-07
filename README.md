@@ -15,9 +15,9 @@ Setup shown in a 1366 x 768 pixels resolution
 Built for systems with small screen real state. The resolution below is 1366 x 768 pixels.
 ![widgets small](images/screenshots/widgets-small.jpg)
 
-### Widgets | desktop
+### Widgets | large
 Built for systems with ample screen real state available.  The resolution below is 2560x1600 pixels.
-![desktop 2560px](images/screenshots/2560x1600.jpg)
+![desktop 2560px](images/screenshots/widgets-large.jpg)
 
 ### Blame theme
 Inspired by the killy's heads up display from the anime movie Blame!. Setup shown in a 1366 x 768 pixels resolution.
@@ -103,10 +103,10 @@ Widgets small
 $ ~/conky/monochrome/launch.bash --widgets-small
 ```
 
-Widgets desktop
+Widgets large
 
 ```
-$ ~/conky/monochrome/launch.bash --desktop
+$ ~/conky/monochrome/launch.bash --widgets-large
 ```
 
 Blame

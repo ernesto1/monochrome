@@ -6,12 +6,12 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 914,                -- same as passing -x at command line
-  gap_y = 37,
+  gap_x = 1292,               -- same as passing -x at command line
+  gap_y = 19,
 
   -- window settings
-  minimum_width = 186,
-  minimum_height = 117,
+  minimum_width = 110,
+  minimum_height = 135,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -44,11 +44,12 @@ conky.config = {
 };
 
 conky.text = [[
-${image ~/conky/monochrome/images/large/memoryProcesses.png -n -p 0,0}\
-${voffset 4} process${alignr}mem   pid 
- ${voffset 9}${top_mem name 1}${alignr}${top_mem mem_res 1} ${top_mem pid 1} 
- ${voffset 5}${top_mem name 2}${alignr}${top_mem mem_res 2} ${top_mem pid 2} 
- ${voffset 5}${top_mem name 3}${alignr}${top_mem mem_res 3} ${top_mem pid 3} 
- ${voffset 5}${top_mem name 4}${alignr}${top_mem mem_res 4} ${top_mem pid 4} 
- ${voffset 5}${top_mem name 5}${alignr}${top_mem mem_res 5} ${top_mem pid 5} 
+${voffset 4}${offset 3}${upspeedgraph enp0s25 83,103 e6003a 800020 3000}
+${voffset 4}${color1}up${alignr}total
+${voffset 5}${color}${upspeed enp0s25}${alignr}${totalup enp0s25}\
+${if_gw}\
+${image ~/conky/monochrome/images/widgets-large/network-up.png -n -p 0,0}\
+${else}\
+${image ~/conky/monochrome/images/widgets-large/network-disabled.png -n -p 0,0 s 370x104}\
+${endif}\
 ]];

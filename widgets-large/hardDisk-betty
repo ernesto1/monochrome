@@ -6,12 +6,12 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 1443,               -- same as passing -x at command line
-  gap_y = 11,
+  gap_x = 1798,               -- same as passing -x at command line
+  gap_y = 38,
 
   -- window settings
-  minimum_width = 160,
-  minimum_height = 96,
+  minimum_width = 150,
+  minimum_height = 90,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -41,14 +41,14 @@ conky.config = {
   default_color = 'black',
   color1 = 'white',
   color2 = '800020',      -- burgundy
-  color3 = 'B27300',      -- orange
 };
 
 conky.text = [[
-${voffset 71}${offset 8}${color3}${if_match ${swapperc} > 90}${color2}${endif}${swapbar 5, 55 /}\
-${voffset -74}${goto 78}${diskiograph_read /dev/sda 42,80 ffffff f2f2f2 200000}
-${voffset -5}${offset 78}${diskiograph_write /dev/sda 42,80 e6003a 800020 280000}
-${voffset 2}${color1}swap ${color}${swapperc}%${alignr}${color}${diskio_read /dev/sda}  ${color1}read
-${voffset 5}${alignr}${color}${diskio_write /dev/sda} ${color1}write\
-${image ~/conky/monochrome/images/large/disk.png -n -p 0,0}
+${image ~/conky/monochrome/images/widgets-large/diskio.png -n -p 0,18}\
+${alignc}/dev/sdc
+${voffset 2}${offset 2}${diskiograph_read /dev/sdc 42,68 f9f9f9 ffffff 200000}${goto 79}${diskiograph_write /dev/sdc 42,68 e6003a 800020 200000}
+${voffset 2}${color1}rd ${color}${diskio_read /dev/sdc}${alignr}${diskio_write /dev/sdc} ${color1}wr
+${voffset 5}${color1}partitions ${hr 1}
+${voffset 4}${color}betty${goto 66}${color1}${if_match ${fs_used_perc /media/betty} > 90}${color2}${endif}${fs_bar 3, 84 /media/betty}
+${voffset 3}${alignr}${color}${fs_used /media/betty} / ${color}${fs_size /media/betty}
 ]];

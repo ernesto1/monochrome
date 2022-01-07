@@ -1,17 +1,17 @@
 conky.config = {
-  update_interval = 3,  -- update interval in seconds
+  update_interval = 2,  -- update interval in seconds
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
   xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 1607,               -- same as passing -x at command line
-  gap_y = 55,
+  gap_x = 773,                -- same as passing -x at command line
+  gap_y = 17,
 
   -- window settings
-  minimum_width = 150,
-  minimum_height = 96,
+  minimum_width = 100,
+  minimum_height = 100,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -44,11 +44,9 @@ conky.config = {
 };
 
 conky.text = [[
-${voffset 4}${offset 51}fedora${alignr}[${fs_type /}]
-${voffset 6}${offset 51}${fs_used /} / ${color}${fs_size /}
-${voffset 1}${offset 51}${color1}${if_match ${fs_used_perc /} > 90}${color2}${endif}${fs_bar 3, 97 /}
-${voffset 4}${offset 51}${color}/home${alignr}[${fs_type /home}]
-${voffset 6}${offset 51}${fs_used /home} / ${color}${fs_size /home}
-${voffset 0}${offset 51}${color1}${if_match ${fs_used_perc /home} > 90}${color2}${endif}${fs_bar 3, 97 /home}\
-${image ~/conky/monochrome/images/large/disk-space.png -n -p 0,0}
+${voffset -2}${offset 17}${if_match ${memperc} >= 90}${memgraph 89, 57 e6003a 800020}\
+${else}${memgraph 89, 57 f9f9f9 ffffff}${endif}
+${voffset 4}${color1}used${alignr}total
+${voffset 5}${color}${mem}${alignr}${memmax}\
+${image ~/conky/monochrome/images/widgets-large/memory.png -n -p 3,0}
 ]];
