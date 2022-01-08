@@ -34,25 +34,25 @@ Slow machines will appreciate this, since a dnf package lookup may bring the cpu
 Network devices reflect the way you are connected to the internet.  
 Depending on your linux distribution, you may need to [configure the proper network device name](https://github.com/ernesto1/monochrome/wiki#network-devices).
 
-![network](images/screenshots/network-modes.png)
+![network](images/screenshots/network-modes.jpg)
 ### Power modes
 Different states to show how your laptop is consuming power 
 
-![power](images/screenshots/power-modes.png)
+![power](images/screenshots/power-modes.jpg)
 ### USB storage
 USB devices are available for you to mix and match to the hardware you have.
 
 These elements are considered **optional**.  Their state will change depending on whether the device is plugged in or not.
 See the wiki entry for [how to configure these devices](https://github.com/ernesto1/monochrome/wiki#usb-drives) for your system.
 
-![usb](images/screenshots/usbStorage.png)
+![usb](images/screenshots/usbStorage.jpg)
 
 ### Hard drive i/o
 If you have additional hard drives in your system (internal or external), the hard disk i/o conky allows you to monitor read/writes to the disk as well as space usage accross its different partitions.
 
 This conky must be fully customized to your particular setup.  Read the [wiki for more details](https://github.com/ernesto1/monochrome/wiki#hard-drive-io).
 
-![hard disk](images/screenshots/hard-drive-io.png)
+![hard disk](images/screenshots/hard-drive-io.jpg)
 
 # How to install
 ### Dependencies
