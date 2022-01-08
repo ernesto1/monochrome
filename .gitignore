@@ -1,7 +1,7 @@
 *.ods*
-*-legacy/
-**/legacy/
+legacy/
 raws/
+# only .jpg images will be used for screenshots
 images/screenshots/*.xcf
-images/screenshots/blame top.png
+images/screenshots/*.png
 images/glass/new shepard hud.png
