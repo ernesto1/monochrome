@@ -55,6 +55,7 @@ conky.text = [[
 ################### cpu
 ${image ~/conky/monochrome/images/glass/top.png -n -p 0,0}\
 ${image ~/conky/monochrome/images/glass/block.png -n -p 0,5}\
+${image ~/conky/monochrome/images/glass/cpu.png -n -p 0,5}\
 ${voffset -6}${if_match ${cpu cpu0} >= 90}${cpugraph cpu0 48,112 cd0033 800020}${else}${cpugraph cpu0 48,112 315bb1 1a336b}${endif}
 ${voffset -58}${offset 5}${font0}cpu
 ${voffset 2}${alignr}${font1}${cpu cpu0}${font2}% 
@@ -68,6 +69,7 @@ ${voffset 2}${alignr}${font1}${memperc}${font2}%
 ${voffset 5}${alignr}${color1}${font4}${mem} / ${memmax} 
 ################### swap
 ${image ~/conky/monochrome/images/glass/block.png -n -p 0,149}\
+${image ~/conky/monochrome/images/glass/memory.png -n -p 12,111}\
 ${voffset 12}${offset 5}${color}${font0}swap
 ${voffset -2}${alignr}${font1}${swapperc}${font2}% 
 ${voffset -5}${offset 16}${color2}${if_match ${swapperc} > 75}${color3}${endif}${swapbar 3,93}
@@ -77,6 +79,7 @@ ${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,219}\
 ${if_gw}\
 ${image ~/conky/monochrome/images/glass/block.png -n -p 0,221}\
 ${image ~/conky/monochrome/images/glass/block.png -n -p 0,293}\
+${image ~/conky/monochrome/images/glass/internet.png -n -p 18,255}\
 # priority is given to wifi | if connected to a wifi network, graphs will show wifi bandwith usage
 # /sys/class/net/wlp4s0/operstate will contain 'up' if connected to a wifi network, 'down' otherwise
 ${if_existing /sys/class/net/wlp4s0/operstate up}\
