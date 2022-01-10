@@ -7,19 +7,18 @@ If you are new to conky, this [project's wiki page](https://github.com/ernesto1/
 ![desktop 2560px](images/screenshots/glass.jpg)
 
 ### Compact theme
-Setup shown in a 1366 x 768 pixels resolution
 ![compact](images/screenshots/compact.jpg)
 
 ### Widgets | small
-Built for systems with small screen real state. The resolution below is 1366 x 768 pixels.
+Built for systems with small screen real state. The resolution below is 1366 x 768 pixels.  
 ![widgets small](images/screenshots/widgets-small.jpg)
 
 ### Widgets | large
-Built for systems with ample screen real state available.  The resolution below is 2560x1600 pixels.
+Built for systems with ample screen real state available  
 ![desktop 2560px](images/screenshots/widgets-large.jpg)
 
 ### Blame theme
-Inspired by the killy's heads up display from the anime movie Blame!. Setup shown in a 1366 x 768 pixels resolution.
+Inspired by the killy's heads up display from the anime movie Blame!  
 ![widgets desktop](images/screenshots/blame.jpg)
 
 ## Features
