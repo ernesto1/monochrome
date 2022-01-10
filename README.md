@@ -4,7 +4,7 @@ A collection of graphical conky interfaces to monitor your system.
 If you are new to conky, this [project's wiki page](https://github.com/ernesto1/monochrome/wiki) has  helpful guides to show you how to customize the conky configs to your system.
 
 ### Glass theme
-Setup shown in a 1920 x 1200 pixels resolution
+Setup shown in a 2560x1600 pixels resolution
 ![desktop 2560px](images/screenshots/glass.jpg)
 
 ### Compact theme
