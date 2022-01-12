@@ -69,9 +69,17 @@ ${voffset 3}${color} ${top_mem name 3}${alignr 6}${top_mem mem_res 3} ${top_mem 
 ${voffset 3}${color} ${top_mem name 4}${alignr 6}${top_mem mem_res 4} ${top_mem pid 4}
 # -------------- network
 ${image ~/conky/monochrome/images/compact/gauge-internet.png -n -p 0,314}
+# if connected on wifi
+${if_existing /sys/class/net/wlp4s0/operstate up}\
 ${voffset -9}${offset 40}${upspeedgraph wlp4s0 35,70 6b91e5 546fb2 8200}${offset 3}${downspeedgraph wlp4s0 35,70 315bb1 1a336b 19000}
 ${voffset -2}${offset 2}${color1}up    ${color}${upspeed wlp4s0}${alignr 3}${color}${downspeed wlp4s0}  ${color1}down
 ${voffset 3}${offset 2}${color1}total ${color}${totalup wlp4s0}${alignr 3}${color}${totaldown wlp4s0} ${color1}total
+${else}\
+# otherwise fall back on ethernet
+${voffset -9}${offset 40}${upspeedgraph enp6s0 35,70 6b91e5 546fb2 3050}${offset 3}${downspeedgraph enp6s0 35,70 315bb1 1a336b 25500}
+${voffset -2}${offset 2}${color1}up    ${color}${upspeed enp6s0}${alignr 3}${color}${downspeed enp6s0}  ${color1}down
+${voffset 3}${offset 2}${color1}total ${color}${totalup enp6s0}${alignr 3}${color}${totaldown enp6s0} ${color1}total
+${endif}\
 ${voffset 8}${offset 2}${color1}bittorrent ${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
 ${voffset 3}${offset 2}${color1}zoom       ${color}${if_running zoom}running${else}off${endif}
 ${if_existing /sys/class/net/wlp4s0/operstate up}\
@@ -98,7 +106,7 @@ ${image ~/conky/monochrome/images/blame/bar.png -n -p 77,613}\
 ${voffset 2}home${goto 83}${voffset 1}${color2}${if_match ${fs_used_perc /home} > 90}${color3}${endif}${fs_bar 4,97 /home}
 ${voffset 2}${alignr 6}${color}${fs_used /home} / ${fs_size /home}
 # -------------- battery
-${image ~/conky/monochrome/images/compact/battery.png -n -p 0,645}\
+${image ~/conky/monochrome/images/compact/battery.png -n -p 0,647}\
 ${voffset 10}${alignr 3}${color}${acpiacadapter} ${color1}power  
 ${voffset 3}${alignr 3}${color}${if_match ${battery_percent BAT0} == 100}fully charged${else}${battery_time BAT0}${endif} ${color1}charge 
 ${voffset 3}${offset 2}$color}${battery_percent BAT0}%${goto 35}${color2}${if_match ${battery_percent BAT0} < 30}${color3}${endif}${battery_bar 4,97 BAT0}${voffset -1}${alignr 3}${color1}battery
