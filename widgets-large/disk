@@ -7,11 +7,11 @@ conky.config = {
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
   gap_x = 1443,               -- same as passing -x at command line
-  gap_y = 11,
+  gap_y = 9,
 
   -- window settings
   minimum_width = 160,
-  minimum_height = 96,
+  minimum_height = 130,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -23,7 +23,7 @@ conky.config = {
 
   -- window borders
   draw_borders = false,     -- draw borders around the conky window
-  border_width = 0,         -- width of border window in pixels
+  border_width = 1,         -- width of border window in pixels
   stippled_borders = 0,     -- border stippling (dashing) in pixels
   border_inner_margin = 0,  -- margin between the border and text in pixels
   border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
@@ -45,10 +45,9 @@ conky.config = {
 };
 
 conky.text = [[
-${voffset 71}${offset 8}${color3}${if_match ${swapperc} > 90}${color2}${endif}${swapbar 5, 55 /}\
-${voffset -74}${goto 78}${diskiograph_read /dev/sda 42,80 ffffff f2f2f2 200000}
-${voffset -5}${offset 78}${diskiograph_write /dev/sda 42,80 e6003a 800020 280000}
-${voffset 2}${color1}swap ${color}${swapperc}%${alignr}${color}${diskio_read /dev/sda}  ${color1}read
-${voffset 5}${alignr}${color}${diskio_write /dev/sda} ${color1}write\
-${image ~/conky/monochrome/images/widgets-large/disk.png -n -p 0,0}
+${image ~/conky/monochrome/images/widgets-large/disk.png -n -p 0,0}\
+${voffset -4}${goto 2}${diskiograph_read /dev/sda 43,80 ffffff f2f2f2 200000}
+${voffset -6}${goto 2}${diskiograph_write /dev/sda 43,80 e6003a 800020 280000}
+${voffset 2}${color1}read  ${color}${diskio_read /dev/sda}
+${voffset 5}${color1}write ${color}${diskio_write /dev/sda} 
 ]];
