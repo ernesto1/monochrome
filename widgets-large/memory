@@ -23,7 +23,7 @@ conky.config = {
 
   -- window borders
   draw_borders = false,     -- draw borders around the conky window
-  border_width = 0,         -- width of border window in pixels
+  border_width = 1,         -- width of border window in pixels
   stippled_borders = 0,     -- border stippling (dashing) in pixels
   border_inner_margin = 0,  -- margin between the border and text in pixels
   border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
@@ -44,9 +44,10 @@ conky.config = {
 };
 
 conky.text = [[
-${voffset -2}${offset 13}${if_match ${memperc} >= 90}${memgraph 89, 57 e6003a 800020}\
-${else}${memgraph 89, 57 f9f9f9 ffffff}${endif}
+${offset 10}${color1}swap${alignr 10}${color}${swapperc}%
+${offset 10}${color1}${if_match ${swapperc} > 90}${color2}${endif}${swapbar 3, 63}
+${image ~/conky/monochrome/images/widgets-large/memory.png -n -p 0,30}\
+${voffset 2}${color}${offset 13}${memgraph 89, 57 f9f9f9 ffffff}
 ${voffset 2}${color1}used${alignr}${color}${mem}
-${voffset 5}${color1}total${alignr}${color}${memmax}\
-${image ~/conky/monochrome/images/widgets-large/memory.png -n -p 0,0}
+${voffset 5}${color1}total${alignr}${color}${memmax}
 ]];
