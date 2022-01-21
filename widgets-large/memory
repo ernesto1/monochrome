@@ -1,7 +1,7 @@
 conky.config = {
   update_interval = 2,  -- update interval in seconds
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
-  xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
+  xinerama_head = 1,    -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
@@ -10,7 +10,7 @@ conky.config = {
   gap_y = 17,
 
   -- window settings
-  minimum_width = 100,
+  minimum_width = 84,
   minimum_height = 100,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -44,9 +44,9 @@ conky.config = {
 };
 
 conky.text = [[
-${voffset -2}${offset 17}${if_match ${memperc} >= 90}${memgraph 89, 57 e6003a 800020}\
+${voffset -2}${offset 13}${if_match ${memperc} >= 90}${memgraph 89, 57 e6003a 800020}\
 ${else}${memgraph 89, 57 f9f9f9 ffffff}${endif}
-${voffset 4}${color1}used${alignr}total
-${voffset 5}${color}${mem}${alignr}${memmax}\
-${image ~/conky/monochrome/images/widgets-large/memory.png -n -p 3,0}
+${voffset 2}${color1}used${alignr}${color}${mem}
+${voffset 5}${color1}total${alignr}${color}${memmax}\
+${image ~/conky/monochrome/images/widgets-large/memory.png -n -p 0,0}
 ]];
