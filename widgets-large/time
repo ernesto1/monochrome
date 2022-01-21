@@ -44,6 +44,6 @@ conky.text = [[
 #  %A day 
 #  %B month (full)
 #  %d day of the month (1-31)
-${font URW Gothic:size=48}${time %I}${offset 5}${color}${font URW Gothic:size=34}${time %M}
-${voffset -14}${offset 15}${color}${font URW Gothic:size=12}${time %a, %B %d}${voffset -12}
+${font URW Gothic:size=48}${time %I}${offset 5}${color}${font URW Gothic:size=37}${time %M}
+${voffset -20}${alignc}${color}${font URW Gothic:size=12}${time %a, %B %d}${voffset -12}
 ]];
