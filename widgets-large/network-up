@@ -6,12 +6,12 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 1271,               -- same as passing -x at command line
-  gap_y = 19,
+  gap_x = 1148,               -- same as passing -x at command line
+  gap_y = 16,
 
   -- window settings
   minimum_width = 110,
-  minimum_height = 135,
+  minimum_height = 133,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -45,7 +45,7 @@ conky.config = {
 
 conky.text = [[
 ${voffset 4}${offset 3}${upspeedgraph enp0s25 83,103 e6003a 800020 3000}
-${voffset 4}${color1}total${alignr}up
+${voffset 2}${color1}total${alignr}up
 ${voffset 5}${color}${totalup enp0s25}${alignr}${upspeed enp0s25}\
 ${if_gw}\
 ${image ~/conky/monochrome/images/widgets-large/network-up.png -n -p 0,0}\
