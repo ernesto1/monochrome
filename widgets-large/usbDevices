@@ -1,17 +1,17 @@
 conky.config = {
-  update_interval = 2,  -- update interval in seconds
+  update_interval = 3,  -- update interval in seconds
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
   xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'top_right',  -- top|middle|bottom_left|right
-  gap_x = 20,               -- same as passing -x at command line
-  gap_y = 265,
+  alignment = 'bottom_left',  -- top|middle|bottom_left|right
+  gap_x = 2216,               -- same as passing -x at command line
+  gap_y = 50,
 
   -- window settings
   minimum_width = 150,
-  minimum_height = 181,
+  minimum_height = 96,
   own_window = true,
   own_window_type = 'desktop',              -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -51,35 +51,22 @@ ${offset 55}${voffset -47}${color1}fs type${goto 110}${color}${fs_type /run/medi
 ${offset 55}${voffset 3}${color1}size${goto 110}${color}${fs_size /run/media/ernesto/sandisk}
 ${offset 55}${voffset 3}${color1}free${goto 110}${color}${fs_free /run/media/ernesto/sandisk}
 ${else}\
-${voffset 9}\
+${voffset 10}\
 ${image ~/conky/monochrome/images/widgets-small/usbBorder.png -n -p 144,0}\
 ${alignr}sandisk usb drive  
 ${alignr}not connected  
-${voffset 11}\
-${endif}\
-${if_mounted /run/media/ernesto/MAXTOR}\
-${image ~/conky/monochrome/images/widgets-small/usbDrive.png -n -p 0,66}\
-${voffset 55}${color1}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color2}${endif}${fs_bar 3, 45 /run/media/ernesto/MAXTOR}
-${offset 55}${voffset -47}${color1}fs type${goto 110}${color}${fs_type /run/media/ernesto/MAXTOR}
-${offset 55}${voffset 3}${color1}size${goto 110}${color}${fs_size /run/media/ernesto/MAXTOR}
-${offset 55}${voffset 3}${color1}free${goto 110}${color}${fs_free /run/media/ernesto/MAXTOR}
-${else}\
-${voffset 29}\
-${image ~/conky/monochrome/images/widgets-small/usbBorder.png -n -p 144,66}\
-${alignr}maxtor usb drive  
-${alignr}not connected  
-${voffset 11}\
+${voffset 10}\
 ${endif}\
 ${if_mounted /run/media/ernesto/disk}\
-${image ~/conky/monochrome/images/widgets-small/sdCard.png -n -p 0,132}\
-${voffset 55}${color1}${if_match ${fs_used_perc /run/media/ernesto/disk} > 90}${color2}${endif}${fs_bar 3, 45 /run/media/ernesto/disk}
+${image ~/conky/monochrome/images/widgets-small/sdCard.png -n -p 0,50}\
+${voffset 39}${color1}${if_match ${fs_used_perc /run/media/ernesto/disk} > 90}${color2}${endif}${fs_bar 3, 45 /run/media/ernesto/disk}
 ${offset 55}${voffset -47}${color1}fs type${goto 110}${color}${fs_type /run/media/ernesto/disk}
 ${offset 55}${voffset 3}${color1}size${goto 110}${color}${fs_size /run/media/ernesto/disk}
 ${offset 55}${voffset 3}${color1}free${goto 110}${color}${fs_free /run/media/ernesto/disk}
 ${else}\
-${voffset 29}\
-${image ~/conky/monochrome/images/widgets-small/usbBorder.png -n -p 144,132}\
-${alignr}sandisk sd card  
+${voffset 14}\
+${image ~/conky/monochrome/images/widgets-small/usbBorder.png -n -p 144,50}\
+${alignr}disk usb drive  
 ${alignr}not connected  
 ${endif}\
 ]];
