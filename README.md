@@ -71,44 +71,30 @@ more recent versions may have regressions/bugs ([issue 1](https://github.com/brn
 # How to run
 1) Unzip the project's zip file in the folder `~/conky`
 
-```
-$ unzip -d ~/conky monochrome-master.zip
-```
+        $ unzip -d ~/conky monochrome-master.zip
 
 2) Rename the root folder `monochrome-master` to `monochrome`
 
-```
-$ mv ~/conky/monochrome-master ~/conky/monochrome
-```
+        $ mv ~/conky/monochrome-master ~/conky/monochrome
 
 3) Run the launch script with the theme you want:
 
-Glass
+    - Glass
 
-```
-$ ~/conky/monochrome/launch.bash --glass --layout-override desktop
-```
+            $ ~/conky/monochrome/launch.bash --glass --layout-override desktop
 
-Compact
+    - Compact
 
-```
-$ ~/conky/monochrome/launch.bash --compact
-```
+            $ ~/conky/monochrome/launch.bash --compact
 
-Widgets small
+    - Widgets small
 
-```
-$ ~/conky/monochrome/launch.bash --widgets-small
-```
+            $ ~/conky/monochrome/launch.bash --widgets-small
 
-Widgets large
+    - Widgets large
 
-```
-$ ~/conky/monochrome/launch.bash --widgets-large
-```
+            $ ~/conky/monochrome/launch.bash --widgets-large
 
-Blame
+    - Blame
 
-```
-$ ~/conky/monochrome/launch.bash --blame --layout-override laptop
-```
+            $ ~/conky/monochrome/launch.bash --blame --layout-override laptop
