@@ -40,11 +40,12 @@ conky.config = {
   draw_outline = false,   -- black outline around text (not good if text is black)
   default_color = 'black',
   color1 = 'white',
-  color2 = '800020',      -- burgundy
+  color2 = '1a336b',      -- dark blue
+  color3 = '800020',      -- burgundy
 };
 
 conky.text = [[
-${voffset 4}${offset 3}${downspeedgraph enp0s25 83,103 ffffff f2f2f2 55000}
+${voffset 4}${offset 3}${downspeedgraph enp0s25 83,103 315bb1 1a336b 55000}
 ${voffset 2}${color3}total${alignr}down
 ${voffset 5}${color}${totaldown enp0s25}${alignr}${downspeed enp0s25}\
 ${if_gw}\

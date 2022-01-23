@@ -40,19 +40,20 @@ conky.config = {
   draw_outline = false,   -- black outline around text (not good if text is black)
   default_color = 'black',
   color1 = 'white',
-  color2 = '800020',      -- burgundy
+  color2 = '1a336b',      -- dark blue
+  color3 = '800020',      -- burgundy
 };
 
 conky.text = [[
 # disk io
 ${image ~/conky/monochrome/images/widgets-large/disk.png -n -p 0,0}\
-${voffset -4}${goto 2}${diskiograph_read /dev/sdb 43,80 ffffff f2f2f2 200000}
-${voffset -6}${goto 2}${diskiograph_write /dev/sdb 43,80 e6003a 800020 250000}
+${voffset -4}${goto 2}${diskiograph_read /dev/sdb 43,80 315bb1 1a336b 200000}
+${voffset -6}${goto 2}${diskiograph_write /dev/sdb 43,80 8cb9d6 7b9de2 250000}
 ${voffset 2}${color1}read  ${color}${diskio_read /dev/sdb}
 ${voffset 5}${color1}write ${color}${diskio_write /dev/sdb}
 # partitions
 ${voffset -102}${goto 87}${color1}partitions ${hr 1}
 ${voffset 4}${goto 87}${color}veronica${alignr}[${fs_type /media/veronica}]
 ${voffset 6}${goto 87}${color}${fs_used /media/veronica} / ${color}${fs_size /media/veronica}
-${voffset 1}${goto 87}${color1}${if_match ${fs_used_perc /media/veronica} > 90}${color2}${endif}${fs_bar 3, 100 /media/veronica}
+${voffset 1}${goto 87}${color2}${if_match ${fs_used_perc /media/veronica} > 90}${color3}${endif}${fs_bar 3, 100 /media/veronica}
 ]];

@@ -40,17 +40,18 @@ conky.config = {
   draw_outline = false,   -- black outline around text (not good if text is black)
   default_color = 'black',
   color1 = 'white',
-  color2 = '800020',      -- burgundy
+  color2 = '1a336b',      -- dark blue
+  color3 = '800020',      -- burgundy
 };
 
 conky.text = [[
-${voffset 22}${offset 25}${color1}${if_match ${cpu cpu1} >= 90}${color2}${endif}${cpubar cpu1 6, 84}
-${voffset -1}${offset 25}${color1}${if_match ${cpu cpu2} >= 90}${color2}${endif}${cpubar cpu2 6, 84}
-${voffset -1}${offset 25}${color1}${if_match ${cpu cpu3} >= 90}${color2}${endif}${cpubar cpu3 6, 84}
-${voffset -1}${offset 25}${color1}${if_match ${cpu cpu4} >= 90}${color2}${endif}${cpubar cpu4 6, 84}
-${voffset -1}${offset 25}${color1}${if_match ${cpu cpu5} >= 90}${color2}${endif}${cpubar cpu5 6, 84}
-${voffset -1}${offset 25}${color1}${if_match ${cpu cpu6} >= 90}${color2}${endif}${cpubar cpu6 6, 84}
-${voffset -1}${offset 25}${color1}${if_match ${cpu cpu7} >= 90}${color2}${endif}${cpubar cpu7 6, 84}
-${voffset -1}${offset 25}${color1}${if_match ${cpu cpu8} >= 90}${color2}${endif}${cpubar cpu8 6, 84}\
+${voffset 22}${offset 25}${color2}${if_match ${cpu cpu1} >= 90}${color3}${endif}${cpubar cpu1 6, 84}
+${voffset -1}${offset 25}${color2}${if_match ${cpu cpu2} >= 90}${color3}${endif}${cpubar cpu2 6, 84}
+${voffset -1}${offset 25}${color2}${if_match ${cpu cpu3} >= 90}${color3}${endif}${cpubar cpu3 6, 84}
+${voffset -1}${offset 25}${color2}${if_match ${cpu cpu4} >= 90}${color3}${endif}${cpubar cpu4 6, 84}
+${voffset -1}${offset 25}${color2}${if_match ${cpu cpu5} >= 90}${color3}${endif}${cpubar cpu5 6, 84}
+${voffset -1}${offset 25}${color2}${if_match ${cpu cpu6} >= 90}${color3}${endif}${cpubar cpu6 6, 84}
+${voffset -1}${offset 25}${color2}${if_match ${cpu cpu7} >= 90}${color3}${endif}${cpubar cpu7 6, 84}
+${voffset -1}${offset 25}${color2}${if_match ${cpu cpu8} >= 90}${color3}${endif}${cpubar cpu8 6, 84}\
 ${image ~/conky/monochrome/images/widgets-large/cpu.png -n -p 0,0}
 ]];

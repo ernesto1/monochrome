@@ -40,14 +40,15 @@ conky.config = {
   draw_outline = false,   -- black outline around text (not good if text is black)
   default_color = 'black',
   color1 = 'white',
-  color2 = '800020',      -- burgundy
+  color2 = '1a336b',      -- dark blue
+  color3 = '800020',      -- burgundy
 };
 
 conky.text = [[
 ${offset 10}${color1}swap${alignr 10}${color}${swapperc}%
-${offset 10}${color1}${if_match ${swapperc} > 90}${color2}${endif}${swapbar 3, 63}
+${offset 10}${color2}${if_match ${swapperc} > 90}${color3}${endif}${swapbar 3, 63}
 ${image ~/conky/monochrome/images/widgets-large/memory.png -n -p 0,30}\
-${voffset 2}${color}${offset 13}${memgraph 89, 57 f9f9f9 ffffff}
+${voffset 2}${color}${offset 13}${memgraph 89, 57 315bb1 1a336b}
 ${voffset 2}${color1}used${alignr}${color}${mem}
 ${voffset 5}${color1}total${alignr}${color}${memmax}
 ]];

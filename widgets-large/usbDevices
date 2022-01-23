@@ -40,13 +40,14 @@ conky.config = {
   draw_outline = false,   -- black outline around text (not good if text is black)
   default_color = 'black',
   color1 = 'white',
-  color2 = '800020',      -- burgundy
+  color2 = '1a336b',      -- dark blue
+  color3 = '800020',      -- burgundy
 };
 
 conky.text = [[
 ${if_mounted /run/media/ernesto/sandisk}\
 ${image ~/conky/monochrome/images/widgets-small/usbStick.png -n -p 0,0}\
-${voffset 35}${color1}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color2}${endif}${fs_bar 3, 45 /run/media/ernesto/sandisk}
+${voffset 35}${color2}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color3}${endif}${fs_bar 3, 45 /run/media/ernesto/sandisk}
 ${offset 55}${voffset -47}${color1}fs type${goto 110}${color}${fs_type /run/media/ernesto/sandisk}
 ${offset 55}${voffset 3}${color1}size${goto 110}${color}${fs_size /run/media/ernesto/sandisk}
 ${offset 55}${voffset 3}${color1}free${goto 110}${color}${fs_free /run/media/ernesto/sandisk}
@@ -59,7 +60,7 @@ ${voffset 10}\
 ${endif}\
 ${if_mounted /run/media/ernesto/disk}\
 ${image ~/conky/monochrome/images/widgets-small/sdCard.png -n -p 0,50}\
-${voffset 39}${color1}${if_match ${fs_used_perc /run/media/ernesto/disk} > 90}${color2}${endif}${fs_bar 3, 45 /run/media/ernesto/disk}
+${voffset 39}${color2}${if_match ${fs_used_perc /run/media/ernesto/disk} > 90}${color3}${endif}${fs_bar 3, 45 /run/media/ernesto/disk}
 ${offset 55}${voffset -47}${color1}fs type${goto 110}${color}${fs_type /run/media/ernesto/disk}
 ${offset 55}${voffset 3}${color1}size${goto 110}${color}${fs_size /run/media/ernesto/disk}
 ${offset 55}${voffset 3}${color1}free${goto 110}${color}${fs_free /run/media/ernesto/disk}

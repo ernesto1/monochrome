@@ -40,12 +40,12 @@ conky.config = {
   draw_outline = false,   -- black outline around text (not good if text is black)
   default_color = 'black',
   color1 = 'white',
-  color2 = '800020',      -- burgundy
+  color3 = '800020',      -- burgundy
 };
 
 conky.text = [[
 ${image ~/conky/monochrome/images/widgets-large/cpuGraph.png -n -p 0,0}\
-${offset 2}${voffset -2}${cpugraph cpu0 64,115 ffffff f2f2f2}
+${offset 2}${voffset -2}${cpugraph cpu0 64,115 315bb1 1a336b}
 ${voffset 4}${color1}cpu${goto 32}${color}${cpu cpu0}%
 ${voffset 4}${color1}load${goto 32}${color}${loadavg}
 ]];
