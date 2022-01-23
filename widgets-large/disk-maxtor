@@ -6,8 +6,8 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 2008,               -- same as passing -x at command line
-  gap_y = 13,
+  gap_x = 1989,               -- same as passing -x at command line
+  gap_y = 11,
 
   -- window settings
   minimum_width = 187,
@@ -51,7 +51,7 @@ ${if_mounted /run/media/ernesto/MAXTOR}\
 ${image ~/conky/monochrome/images/widgets-large/disk.png -n -p 0,0}\
 ${voffset -4}${goto 2}${diskiograph_read /dev/sdg1 43,80 315bb1 1a336b 60000}
 ${voffset -6}${goto 2}${diskiograph_write /dev/sdg1 43,80 8cb9d6 7b9de2 60000}
-${voffset 2}${color1}read  ${color}${diskio_read /dev/sdg1}
+${color1}read  ${color}${diskio_read /dev/sdg1}
 ${voffset 5}${color1}write ${color}${diskio_write /dev/sdg1}
 # partitions
 ${voffset -102}${goto 87}${color1}partitions ${hr 1}

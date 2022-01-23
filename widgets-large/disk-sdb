@@ -6,8 +6,8 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 1593,               -- same as passing -x at command line
-  gap_y = 13,
+  gap_x = 1574,               -- same as passing -x at command line
+  gap_y = 11,
 
   -- window settings
   minimum_width = 187,
@@ -49,7 +49,7 @@ conky.text = [[
 ${image ~/conky/monochrome/images/widgets-large/disk.png -n -p 0,0}\
 ${voffset -4}${goto 2}${diskiograph_read /dev/sdb 43,80 315bb1 1a336b 200000}
 ${voffset -6}${goto 2}${diskiograph_write /dev/sdb 43,80 8cb9d6 7b9de2 250000}
-${voffset 2}${color1}read  ${color}${diskio_read /dev/sdb}
+${color1}read  ${color}${diskio_read /dev/sdb}
 ${voffset 5}${color1}write ${color}${diskio_write /dev/sdb}
 # partitions
 ${voffset -102}${goto 87}${color1}partitions ${hr 1}
