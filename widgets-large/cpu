@@ -6,12 +6,12 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 404,               -- same as passing -x at command line
-  gap_y = 13,
+  gap_x = 442,               -- same as passing -x at command line
+  gap_y = 37,
 
   -- window settings
-  minimum_width = 135,
-  minimum_height = 141,
+  minimum_width = 107,
+  minimum_height = 107,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -45,13 +45,13 @@ conky.config = {
 };
 
 conky.text = [[
-${voffset 22}${offset 25}${color2}${if_match ${cpu cpu1} >= 90}${color3}${endif}${cpubar cpu1 6, 84}
-${voffset -1}${offset 25}${color2}${if_match ${cpu cpu2} >= 90}${color3}${endif}${cpubar cpu2 6, 84}
-${voffset -1}${offset 25}${color2}${if_match ${cpu cpu3} >= 90}${color3}${endif}${cpubar cpu3 6, 84}
-${voffset -1}${offset 25}${color2}${if_match ${cpu cpu4} >= 90}${color3}${endif}${cpubar cpu4 6, 84}
-${voffset -1}${offset 25}${color2}${if_match ${cpu cpu5} >= 90}${color3}${endif}${cpubar cpu5 6, 84}
-${voffset -1}${offset 25}${color2}${if_match ${cpu cpu6} >= 90}${color3}${endif}${cpubar cpu6 6, 84}
-${voffset -1}${offset 25}${color2}${if_match ${cpu cpu7} >= 90}${color3}${endif}${cpubar cpu7 6, 84}
-${voffset -1}${offset 25}${color2}${if_match ${cpu cpu8} >= 90}${color3}${endif}${cpubar cpu8 6, 84}\
+${voffset 10}${offset 15}${color2}${if_match ${cpu cpu1} >= 90}${color3}${endif}${cpubar cpu1 3, 66}
+${voffset -4}${offset 15}${color2}${if_match ${cpu cpu2} >= 90}${color3}${endif}${cpubar cpu2 3, 66}
+${voffset -4}${offset 15}${color2}${if_match ${cpu cpu3} >= 90}${color3}${endif}${cpubar cpu3 3, 66}
+${voffset -4}${offset 15}${color2}${if_match ${cpu cpu4} >= 90}${color3}${endif}${cpubar cpu4 3, 66}
+${voffset -4}${offset 15}${color2}${if_match ${cpu cpu5} >= 90}${color3}${endif}${cpubar cpu5 3, 66}
+${voffset -4}${offset 15}${color2}${if_match ${cpu cpu6} >= 90}${color3}${endif}${cpubar cpu6 3, 66}
+${voffset -4}${offset 15}${color2}${if_match ${cpu cpu7} >= 90}${color3}${endif}${cpubar cpu7 3, 66}
+${voffset -4}${offset 15}${color2}${if_match ${cpu cpu8} >= 90}${color3}${endif}${cpubar cpu8 3, 66}\
 ${image ~/conky/monochrome/images/widgets-large/cpu.png -n -p 0,0}
 ]];
