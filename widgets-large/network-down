@@ -10,7 +10,7 @@ conky.config = {
   gap_y = 11,
 
   -- window settings
-  minimum_width = 110,
+  minimum_width = 96,
   minimum_height = 133,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -45,9 +45,9 @@ conky.config = {
 };
 
 conky.text = [[
-${voffset 4}${offset 3}${downspeedgraph enp0s25 83,103 315bb1 1a336b 55000}
-${voffset 2}${color1}total${alignr}down
-${voffset 5}${color}${totaldown enp0s25}${alignr}${downspeed enp0s25}\
+${voffset 4}${offset 3}${downspeedgraph enp0s25 83,89 315bb1 1a336b 55000}
+${voffset 2}${color1}download${alignr}${color}${downspeed enp0s25}
+${voffset 5}${color1}total${alignr}${color}${totaldown enp0s25}\
 ${if_gw}\
 ${image ~/conky/monochrome/images/widgets-large/network-down.png -n -p 0,0}\
 ${else}\
