@@ -54,7 +54,7 @@ ${voffset -6}${goto 2}${diskiograph_write /dev/sdg1 43,80 8cb9d6 7b9de2 60000}
 ${color1}read  ${color}${diskio_read /dev/sdg1}
 ${voffset 5}${color1}write ${color}${diskio_write /dev/sdg1}
 # partitions
-${voffset -102}${goto 87}${color1}partitions ${hr 1}
+${voffset -99}${goto 87}${color1}partitions ${hr 1}
 ${voffset 4}${goto 87}${color}maxtor${alignr}[${fs_type /run/media/ernesto/MAXTOR}]
 ${voffset 6}${goto 87}${color}${fs_used /run/media/ernesto/MAXTOR} / ${color}${fs_size /run/media/ernesto/MAXTOR}
 ${voffset 1}${goto 87}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 3, 100 /run/media/ernesto/MAXTOR}

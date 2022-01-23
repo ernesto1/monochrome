@@ -52,7 +52,7 @@ ${voffset -6}${goto 2}${diskiograph_write /dev/sdc 43,80 8cb9d6 7b9de2 250000}
 ${color1}read  ${color}${diskio_read /dev/sdc}
 ${voffset 5}${color1}write ${color}${diskio_write /dev/sdc}
 # partitions
-${voffset -102}${goto 87}${color1}partitions ${hr 1}
+${voffset -99}${goto 87}${color1}partitions ${hr 1}
 ${voffset 4}${goto 87}${color}betty${alignr}[${fs_type /media/betty}]
 ${voffset 6}${goto 87}${color}${fs_used /media/betty} / ${color}${fs_size /media/betty}
 ${voffset 1}${goto 87}${color2}${if_match ${fs_used_perc /media/betty} > 90}${color3}${endif}${fs_bar 3, 100 /media/betty}
