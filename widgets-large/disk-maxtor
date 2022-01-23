@@ -6,7 +6,7 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 1994,               -- same as passing -x at command line
+  gap_x = 1976,               -- same as passing -x at command line
   gap_y = 11,
 
   -- window settings
@@ -23,8 +23,8 @@ conky.config = {
 
   -- window borders
   draw_borders = false,     -- draw borders around the conky window
-  border_width = 0,         -- width of border window in pixels
-  stippled_borders = 0,     -- border stippling (dashing) in pixels
+  border_width = 1,         -- width of border window in pixels
+  stippled_borders = 1,     -- border stippling (dashing) in pixels
   border_inner_margin = 0,  -- margin between the border and text in pixels
   border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
 
