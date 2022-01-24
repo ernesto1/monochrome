@@ -12,7 +12,7 @@ conky.config = {
 
   -- window settings
   minimum_width = 237,
-  minimum_height = 617,
+  minimum_height = 636,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -30,7 +30,7 @@ conky.config = {
   border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
 
   -- graph settings
-  draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
+  draw_graph_borders = true, -- borders around the graph, ex. cpu graph, network down speed grah
                               -- does not include bars, ie. wifi strength bar, cpu bar
 
   imlib_cache_flush_interval = 300,
@@ -53,14 +53,14 @@ ${image ~/conky/monochrome/images/widgets-small/system-update.png -n -p 1,3}\
 ${else}\
 ${image ~/conky/monochrome/images/widgets-small/system.png -n -p 1,3}\
 ${endif}\
-${goto 58}${voffset 3}${color1}kernel${goto 102}${color}${kernel}
-${goto 58}${voffset 3}${color1}uptime${goto 102}${color}${uptime}
-${goto 58}${voffset 3}${color1}dnf${goto 102}${color}${tail /tmp/conkyDnf 1 2}
+${voffset 3}${goto 58}${color1}kernel${goto 102}${color}${kernel}
+${voffset 3}${goto 58}${color1}uptime${goto 102}${color}${uptime}
+${voffset 3}${goto 58}${color1}dnf${goto 102}${color}${tail /tmp/conkyDnf 1 2}
 # :::::::::::::::::::: cpu
 ${image ~/conky/monochrome/images/widgets-small/cpu.png -n -p 0,68}\
 ${voffset 22}${offset 7}${cpugraph cpu0 33,33 315bb1 1a336b}
 ${voffset -32}${goto 58}${color1}cpu${goto 102}${color}${cpu cpu0}%
-${goto 58}${voffset 3}${color1}load${goto 102}${color}${loadavg}
+${voffset 3}${goto 58}${color1}load${goto 102}${color}${loadavg}
 # :::::::::::::::::::: memory
 ${image ~/conky/monochrome/images/widgets-small/memory.png -n -p 6,135}
 ${image ~/conky/monochrome/images/widgets-small/bar.png -n -p 0,194}\
@@ -80,70 +80,75 @@ ${image ~/conky/monochrome/images/widgets-small/circuitry.png -n -p 18,259}\
 ${image ~/conky/monochrome/images/widgets-small/disk-root.png -n -p 1,278}\
 ${voffset 54}${offset 1}${color2}${if_match ${fs_used_perc /} > 90}${color3}${endif}${fs_bar 3, 45 /}
 ${goto 58}${voffset -47}${color1}fs${goto 102}${color}${fs_type /}
-${goto 58}${voffset 3}${color1}size${goto 102}${color}${fs_size /}
-${goto 58}${voffset 3}${color1}free${goto 102}${color}${fs_free /}
+${voffset 3}${goto 58}${color1}size${goto 102}${color}${fs_size /}
+${voffset 3}${goto 58}${color1}free${goto 102}${color}${fs_free /}
 ${image ~/conky/monochrome/images/widgets-small/circuitry-flipped.png -n -p 18,325}\
 ${image ~/conky/monochrome/images/widgets-small/disk-home.png -n -p 1,345}\
 ${voffset 56}${offset 1}${color2}${if_match ${fs_used_perc /home} > 90}${color3}${endif}${fs_bar 3, 45 /home}
 ${goto 58}${voffset -47}${color1}fs${goto 102}${color}${fs_type /home}
-${goto 58}${voffset 3}${color1}size${goto 102}${color}${fs_size /home}
-${goto 58}${voffset 3}${color1}free${goto 102}${color}${fs_free /home}
+${voffset 3}${goto 58}${color1}size${goto 102}${color}${fs_size /home}
+${voffset 3}${goto 58}${color1}free${goto 102}${color}${fs_free /home}
 # :::::::::::::::::::: wifi
 ${if_existing /sys/class/net/wlp4s0/operstate up}\
 ${image ~/conky/monochrome/images/widgets-small/wifi.png -n -p 0,412}\
 ${image ~/conky/monochrome/images/widgets-small/bar.png -n -p 0,446}\
 ${voffset 51}${offset 1}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 3,45 wlp4s0}${voffset -19}\
-${goto 58}${voffset -14}${color1}network${goto 113}${color}${wireless_essid wlp4s0}
-${goto 58}${voffset 3}${color1}channel${goto 113}${color}${wireless_channel wlp4s0}${goto 157}${color1}bitrate${goto 214}${color}${wireless_bitrate wlp4s0}
-${goto 58}${voffset 3}${color1}strength${goto 113}${color}${wireless_link_qual_perc wlp4s0}%${goto 157}${color1}local ip${goto 214}${color}${addr wlp4s0}
+${voffset -14}${goto 58}${color1}network${goto 113}${color}${wireless_essid wlp4s0}
+${voffset 3}${goto 58}${color1}bitrate${goto 113}${color}${wireless_bitrate wlp4s0}
+${voffset 3}${goto 58}${color1}strength${goto 113}${color}${wireless_link_qual_perc wlp4s0}%
+${voffset 3}${goto 58}${color1}channel${goto 113}${color}${wireless_channel wlp4s0}
 ${else}\
 ${image ~/conky/monochrome/images/widgets-small/wifi-off.png -n -p 0,412}
+${voffset 43}${offset 4}no wifi
 ${voffset 37}
 ${endif}\
 # :::::::::::::::::::: upload/download speeds
+# if a gateway is available (we are connected to a router)
 ${if_gw}\
-${image ~/conky/monochrome/images/widgets-small/network.png -n -p 0,475}\
-${image ~/conky/monochrome/images/widgets-small/highlight.png -n -p 98,479}\
-${image ~/conky/monochrome/images/widgets-small/highlight.png -n -p 98,513}\
+${image ~/conky/monochrome/images/widgets-small/network.png -n -p 0,486}\
+${image ~/conky/monochrome/images/widgets-small/highlight.png -n -p 109,489}\
+${image ~/conky/monochrome/images/widgets-small/highlight.png -n -p 109,524}\
+# if connected through wifi
 ${if_existing /sys/class/net/wlp4s0/operstate up}\
-# connected to wifi
-${voffset 23}${offset 1}${upspeedgraph wlp4s0 29,45 b7caf1 b7eaff 8200}
-${goto 58}${voffset -39}${color1}up${goto 102}${color}${upspeed wlp4s0}
-${goto 58}${voffset 3}${color1}total${goto 102}${color}${totalup wlp4s0}
-${voffset -3}${offset 1}${downspeedgraph wlp4s0 29,45 315bb1 1a336b 19000}
-${goto 58}${voffset -34}${color1}down${goto 102}${color}${downspeed wlp4s0}
-# use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
-${goto 58}${voffset 3}${color1}total${goto 102}${color}${totaldown wlp4s0}${goto 157}${color1}torrent${goto 214}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
+${voffset 18}${offset 1}${upspeedgraph wlp4s0 29,45 b7caf1 b7eaff 8200}
+${voffset -57}${goto 58}${color1}local ip${goto 113}${color}${addr wlp4s0}
+${voffset 4}${goto 58}${color1}upload${goto 113}${color}${upspeed wlp4s0}
+${voffset 3}${goto 58}${color1}total${goto 113}${color}${totalup wlp4s0}
+${voffset -2}${offset 1}${downspeedgraph wlp4s0 29,45 315bb1 1a336b 19000}
+${goto 58}${voffset -34}${color1}download${goto 113}${color}${downspeed wlp4s0}
+${voffset 3}${goto 58}${color1}total${goto 113}${color}${totaldown wlp4s0}
 ${else}\
-# connected to ethernet
+# otherwise fall back on ethernet
 ${voffset 23}${offset 1}${upspeedgraph enp6s0 29,45 b7caf1 b7eaff 4000}
-${goto 58}${voffset -39}${color1}up${goto 102}${color}${upspeed enp6s0}
-${goto 58}${voffset 3}${color1}total${goto 102}${color}${totalup enp6s0}
+${voffset -39}${goto 58}${color1}up${goto 102}${color}${upspeed enp6s0}
+${voffset 3}${goto 58}${color1}total${goto 102}${color}${totalup enp6s0}
 ${voffset -3}${offset 1}${downspeedgraph enp6s0 29,45 315bb1 1a336b 34500}
 ${goto 58}${voffset -34}${color1}down${goto 102}${color}${downspeed enp6s0}${goto 157}${color1}local ip${goto 214}${color}${addr enp6s0}
-${goto 58}${voffset 3}${color1}total${goto 102}${color}${totaldown enp6s0}${goto 157}${color1}torrent${goto 214}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
+${voffset 3}${goto 58}${color1}total${goto 102}${color}${totaldown enp6s0}
 ${endif}\
+# use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
+${voffset 4}${goto 58}${color1}torrent${goto 113}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
 ${else}\
-${image ~/conky/monochrome/images/widgets-small/network-off.png -n -p 0,475}\
+${image ~/conky/monochrome/images/widgets-small/network-off.png -n -p 0,486}\
 ${voffset 76}
 ${endif}
 # :::::::::::::::::::: power
 ${voffset 30}
 ${if_match "${acpiacadapter}"=="on-line"}\
 ${if_match ${battery_percent BAT0} == 100}\
-${image ~/conky/monochrome/images/widgets-small/power-plugged-in.png -n -p 1,561}
+${image ~/conky/monochrome/images/widgets-small/power-plugged-in.png -n -p 1,589}
 ${voffset -34}${goto 58}${color}fully
 ${voffset 3}${goto 58}${color}charged
 ${else}\
-${image ~/conky/monochrome/images/widgets-small/power-charging.png -n -p 1,561}\
+${image ~/conky/monochrome/images/widgets-small/power-charging.png -n -p 1,589}\
 ${voffset -3}${offset 1}${color2}${if_match ${battery_percent BAT0} < 80}${color3}${endif}${battery_bar 3, 45 BAT0}
 ${voffset -32}${goto 58}${color1}eta full
-${voffset 3}${goto 58}${color1}charge${goto 102}${color}${battery_time BAT0}
+${voffset 3}${goto 58}${color1}charge${goto 113}${color}${battery_time BAT0}
 ${endif}\
 ${else}\
-${image ~/conky/monochrome/images/widgets-small/power-battery.png -n -p 1,561}\
+${image ~/conky/monochrome/images/widgets-small/power-battery.png -n -p 1,589}\
 ${voffset -3}${offset 1}${color2}${if_match ${battery_percent BAT0} < 20}${color3}${endif}${battery_bar 3, 45 BAT0}
 ${voffset -32}${goto 58}${color1}charge
-${voffset 3}${goto 58}${color1}left${goto 102}${color}${battery_time BAT0}
+${voffset 3}${goto 58}${color1}left${goto 113}${color}${battery_time BAT0}
 ${endif}
 ]];
