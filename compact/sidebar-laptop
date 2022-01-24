@@ -91,7 +91,7 @@ ${voffset 3}${alignr 2}${color}${wireless_bitrate wlp4s0} ${color1}bitrate
 ${image ~/conky/monochrome/images/compact/bar.png -n -p 30,497}\
 ${voffset 3}${offset 2}${color}${wireless_link_qual_perc wlp4s0}%${goto 32}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 3,97 wlp4s0}${voffset -1}${alignr 2}${color1}signal${voffset 1}
 ${else}\
-${image ~/conky/monochrome/images/compact/wifi.png -n -p 75,444}\
+${image ~/conky/monochrome/images/compact/wifi.png -n -p 71,444}\
 ${voffset 62}${alignc}no wifi
 ${voffset -3}
 ${endif}\
