@@ -172,7 +172,7 @@ for conkyConfigPath in $(find "${directory}" -maxdepth 1 -not -name '*.*' -not -
 do
   conkyConfig=${conkyConfigPath##*/}    # remove the file path /home/ernesto/monochrome/.. from the file name
   echo "- ${conkyConfig}"
-  # 1. filter out conky override
+  # 1. filter conky override, ie. exclude a configuration from being loaded
   #    override is of the format: ignore:<conkyFilename>
   #                           ex. ignore:externalDevices
   [[ -f ${layoutFile} ]] && ignore=$(grep -v \# "${layoutFile}" | grep ignore:"${conkyConfig}")
