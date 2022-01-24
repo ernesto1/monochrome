@@ -59,8 +59,8 @@ ${voffset 3}${color}${offset 2}${top name 4}${alignr 2}${top cpu 4}% ${top pid 4
 ${image ~/conky/monochrome/images/compact/gauge-memory.png -n -p 0,149}
 ${voffset -9}${offset 40}${memgraph 35,137 315bb1 1a336b}
 ${voffset -2}${offset 2}${color1}used  ${color}${mem} / ${memmax}${alignr 2}${color}${memperc}%
-${image ~/conky/monochrome/images/blame/bar.png -n -p 32,208}\
-${voffset 3}${offset 2}${color1}swap${goto 38}${voffset 1}${color2}${swapbar 4,97}${alignr 2}${voffset -1}${swapperc}%
+${image ~/conky/monochrome/images/compact/bar.png -n -p 36,211}\
+${voffset 3}${offset 2}${color1}swap${goto 38}${voffset 1}${color2}${swapbar 3,97}${alignr 2}${voffset -1}${swapperc}%
 ${image ~/conky/monochrome/images/compact/table-header.png -n -p 0,228}\
 ${voffset 9}${color1}${offset 2}process${alignr 2}mem   pid
 ${voffset 3}${color}${offset 2}${top_mem name 1}${alignr 2}${top_mem mem_res 1} ${top_mem pid 1}
@@ -71,7 +71,7 @@ ${voffset 3}${color}${offset 2}${top_mem name 4}${alignr 2}${top_mem mem_res 4} 
 ${image ~/conky/monochrome/images/compact/gauge-internet.png -n -p 0,314}
 # if connected on wifi
 ${if_existing /sys/class/net/wlp4s0/operstate up}\
-${voffset -9}${offset 40}${upspeedgraph wlp4s0 35,68 6b91e5 546fb2 8200}${offset 3}${downspeedgraph wlp4s0 35,68 315bb1 1a336b 19000}
+${voffset -9}${offset 40}${upspeedgraph wlp4s0 35,67 6b91e5 546fb2 8200}${offset 3}${downspeedgraph wlp4s0 35,67 315bb1 1a336b 19000}
 ${voffset -2}${offset 2}${color1}up    ${color}${upspeed wlp4s0}${alignr 2}${color}${downspeed wlp4s0}  ${color1}down
 ${voffset 3}${offset 2}${color1}total ${color}${totalup wlp4s0}${alignr 2}${color}${totaldown wlp4s0} ${color1}total
 ${else}\
@@ -88,8 +88,8 @@ ${voffset 8}${alignr 2}${color}${addr wlp4s0} ${color1}     ip
 ${voffset 3}${alignr 2}${color}${wireless_essid wlp4s0} ${color1}network
 ${voffset 3}${alignr 2}${color}${wireless_channel wlp4s0} ${color1}channel
 ${voffset 3}${alignr 2}${color}${wireless_bitrate wlp4s0} ${color1}bitrate
-${image ~/conky/monochrome/images/blame/bar.png -n -p 26,494}\
-${voffset 3}${offset 2}${color}${wireless_link_qual_perc wlp4s0}%${goto 32}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 4,97 wlp4s0}${voffset -1}${alignr 2}${color1}signal${voffset 1}
+${image ~/conky/monochrome/images/compact/bar.png -n -p 30,497}\
+${voffset 3}${offset 2}${color}${wireless_link_qual_perc wlp4s0}%${goto 32}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 3,97 wlp4s0}${voffset -1}${alignr 2}${color1}signal${voffset 1}
 ${else}\
 ${image ~/conky/monochrome/images/compact/wifi.png -n -p 75,444}\
 ${voffset 62}${alignc}no wifi
@@ -97,20 +97,20 @@ ${voffset -3}
 ${endif}\
 # -------------- hard disk
 ${image ~/conky/monochrome/images/compact/gauge-disk.png -n -p 0,518}
-${voffset -6}${offset 40}${diskiograph_read /dev/sda 35,68 6b91e5 546fb2 128000}${offset 3}${diskiograph_write /dev/sda 35,68 315bb1 1a336b 140000}
+${voffset -6}${offset 40}${color}${diskiograph_read /dev/sda 35,67 6b91e5 546fb2 128000}${offset 3}${diskiograph_write /dev/sda 35,67 315bb1 1a336b 140000}
 ${voffset -2}${offset 2}${color1}read  ${color}${diskio_read /dev/sda}${alignr 3}${color}${diskio_write /dev/sda} ${color1}write
-${image ~/conky/monochrome/images/blame/bar.png -n -p 73,582}\
-${voffset 8 }${offset 2}${color}fedora${goto 79}${voffset 1}${color2}${if_match ${fs_used_perc /} > 90}${color3}${endif}${fs_bar 4,97 /}
+${image ~/conky/monochrome/images/compact/bar.png -n -p 77,585}\
+${voffset 8 }${offset 2}${color}fedora${goto 79}${voffset 1}${color2}${if_match ${fs_used_perc /} > 90}${color3}${endif}${fs_bar 3,97 /}
 ${voffset 2}${alignr 3}${color}${fs_used /} / ${fs_size /}
-${image ~/conky/monochrome/images/blame/bar.png -n -p 73,613}\
-${voffset 2}${offset 2}home${goto 79}${voffset 1}${color2}${if_match ${fs_used_perc /home} > 90}${color3}${endif}${fs_bar 4,97 /home}
+${image ~/conky/monochrome/images/compact/bar.png -n -p 77,616}\
+${voffset 2}${offset 2}home${goto 79}${voffset 1}${color2}${if_match ${fs_used_perc /home} > 90}${color3}${endif}${fs_bar 3,97 /home}
 ${voffset 2}${alignr 3}${color}${fs_used /home} / ${fs_size /home}
 # -------------- battery
 ${image ~/conky/monochrome/images/compact/battery.png -n -p 0,647}\
 ${voffset 10}${alignr 3}${color}${acpiacadapter}  ${color1}power
 ${voffset 3}${alignr 3}${color}${if_match ${battery_percent BAT0} == 100}fully charged${else}${battery_time BAT0}${endif} ${color1}charge
-${voffset 3}${offset 2}${color}${battery_percent BAT0}%${goto 37}${color2}${if_match ${battery_percent BAT0} < 30}${color3}${endif}${battery_bar 4,97 BAT0}${voffset -1}${alignr 3}${color1}bat
-${image ~/conky/monochrome/images/blame/bar.png -n -p 31,683}\
+${voffset 3}${offset 2}${color}${battery_percent BAT0}%${goto 37}${color2}${if_match ${battery_percent BAT0} < 30}${color3}${endif}${battery_bar 3,97 BAT0}${voffset -1}${alignr 3}${color1}bat
+${image ~/conky/monochrome/images/compact/bar.png -n -p 35,686}\
 # -------------- system
 ${voffset 10}${offset 2}${color1}uptime ${color}${uptime}
 ${voffset 3}${offset 2}${color1}dnf    ${color}${if_existing /tmp/conkyDnf new}${color1}${endif}${tail /tmp/conkyDnf 1 2}
