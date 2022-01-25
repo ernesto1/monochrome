@@ -93,47 +93,47 @@ ${if_existing /sys/class/net/wlp4s0/operstate up}\
 ${image ~/conky/monochrome/images/widgets-small/wifi.png -n -p 0,412}\
 ${image ~/conky/monochrome/images/widgets-small/bar.png -n -p 0,446}\
 ${voffset 51}${offset 1}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 3,45 wlp4s0}${voffset -19}\
-${voffset -14}${goto 58}${color1}network${goto 113}${color}${wireless_essid wlp4s0}
-${voffset 3}${goto 58}${color1}bitrate${goto 113}${color}${wireless_bitrate wlp4s0}
-${voffset 3}${goto 58}${color1}strength${goto 113}${color}${wireless_link_qual_perc wlp4s0}%
-${voffset 3}${goto 58}${color1}channel${goto 113}${color}${wireless_channel wlp4s0}
+${voffset -14}${goto 58}${color1}network${goto 114}${color}${wireless_essid wlp4s0}
+${voffset 3}${goto 58}${color1}bitrate${goto 114}${color}${wireless_bitrate wlp4s0}
+${voffset 3}${goto 58}${color1}strength${goto 114}${color}${wireless_link_qual_perc wlp4s0}%
+${voffset 3}${goto 58}${color1}channel${goto 114}${color}${wireless_channel wlp4s0}
 ${else}\
 ${image ~/conky/monochrome/images/widgets-small/wifi-off.png -n -p 0,412}
-${voffset 43}${offset 4}no wifi
-${voffset 37}
+${voffset 43}${offset 4}no wifi${voffset 10}
 ${endif}\
 # :::::::::::::::::::: upload/download speeds
 # if a gateway is available (we are connected to a router)
 ${if_gw}\
-${image ~/conky/monochrome/images/widgets-small/network.png -n -p 0,486}\
-${image ~/conky/monochrome/images/widgets-small/highlight.png -n -p 109,489}\
-${image ~/conky/monochrome/images/widgets-small/highlight.png -n -p 109,524}\
+${image ~/conky/monochrome/images/widgets-small/network.png -n -p 0,487}\
+${image ~/conky/monochrome/images/widgets-small/highlight.png -n -p 110,490}\
+${image ~/conky/monochrome/images/widgets-small/highlight.png -n -p 110,525}\
 # if connected through wifi
 ${if_existing /sys/class/net/wlp4s0/operstate up}\
 ${voffset 18}${offset 1}${upspeedgraph wlp4s0 29,45 b7caf1 b7eaff 8200}
-${voffset -57}${goto 58}${color1}local ip${goto 113}${color}${addr wlp4s0}
-${voffset 4}${goto 58}${color1}upload${goto 113}${color}${upspeed wlp4s0}
-${voffset 3}${goto 58}${color1}total${goto 113}${color}${totalup wlp4s0}
+${voffset -57}${goto 58}${color1}local ip${goto 114}${color}${addr wlp4s0}
+${voffset 4}${goto 58}${color1}upload${alignr 86}${color}${upspeed wlp4s0}
+${voffset 3}${goto 58}${color1}total${alignr 86}${color}${totalup wlp4s0}
 ${voffset -2}${offset 1}${downspeedgraph wlp4s0 29,45 315bb1 1a336b 19000}
-${goto 58}${voffset -34}${color1}download${goto 113}${color}${downspeed wlp4s0}
-${voffset 3}${goto 58}${color1}total${goto 113}${color}${totaldown wlp4s0}
+${goto 58}${voffset -34}${color1}download${alignr 86}${color}${downspeed wlp4s0}
+${voffset 3}${goto 58}${color1}total${alignr 86}${color}${totaldown wlp4s0}
 ${else}\
 # otherwise fall back on ethernet
-${voffset 23}${offset 1}${upspeedgraph enp6s0 29,45 b7caf1 b7eaff 4000}
-${voffset -39}${goto 58}${color1}up${goto 102}${color}${upspeed enp6s0}
-${voffset 3}${goto 58}${color1}total${goto 102}${color}${totalup enp6s0}
-${voffset -3}${offset 1}${downspeedgraph enp6s0 29,45 315bb1 1a336b 34500}
-${goto 58}${voffset -34}${color1}down${goto 102}${color}${downspeed enp6s0}${goto 157}${color1}local ip${goto 214}${color}${addr enp6s0}
-${voffset 3}${goto 58}${color1}total${goto 102}${color}${totaldown enp6s0}
+${voffset 19}${offset 1}${upspeedgraph enp6s0 29,45 b7caf1 b7eaff 4000}
+${voffset -58}${goto 58}${color1}local ip${goto 114}${color}${addr enp6s0}
+${voffset 5}${goto 58}${color1}upload${alignr 86}${color}${upspeed enp6s0}
+${voffset 3}${goto 58}${color1}total${alignr 86}${color}${totalup enp6s0}
+${voffset -2}${offset 1}${downspeedgraph enp6s0 29,45 315bb1 1a336b 34500}
+${goto 58}${voffset -34}${color1}download${alignr 86}${color}${downspeed enp6s0}
+${voffset 3}${goto 58}${color1}total${alignr 86}${color}${totaldown enp6s0}
 ${endif}\
 # use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
-${voffset 4}${goto 58}${color1}torrent${goto 113}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
+${voffset 5}${goto 58}${color1}torrent${goto 114}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
 ${else}\
 ${image ~/conky/monochrome/images/widgets-small/network-off.png -n -p 0,486}\
-${voffset 76}
+${voffset 90}
 ${endif}
 # :::::::::::::::::::: power
-${voffset 30}
+${voffset 28}
 ${if_match "${acpiacadapter}"=="on-line"}\
 ${if_match ${battery_percent BAT0} == 100}\
 ${image ~/conky/monochrome/images/widgets-small/power-plugged-in.png -n -p 1,589}
@@ -143,12 +143,12 @@ ${else}\
 ${image ~/conky/monochrome/images/widgets-small/power-charging.png -n -p 1,589}\
 ${voffset -3}${offset 1}${color2}${if_match ${battery_percent BAT0} < 80}${color3}${endif}${battery_bar 3, 45 BAT0}
 ${voffset -32}${goto 58}${color1}eta full
-${voffset 3}${goto 58}${color1}charge${goto 113}${color}${battery_time BAT0}
+${voffset 3}${goto 58}${color1}charge${goto 114}${color}${battery_time BAT0}
 ${endif}\
 ${else}\
 ${image ~/conky/monochrome/images/widgets-small/power-battery.png -n -p 1,589}\
 ${voffset -3}${offset 1}${color2}${if_match ${battery_percent BAT0} < 20}${color3}${endif}${battery_bar 3, 45 BAT0}
 ${voffset -32}${goto 58}${color1}charge
-${voffset 3}${goto 58}${color1}left${goto 113}${color}${battery_time BAT0}
+${voffset 3}${goto 58}${color1}left${goto 114}${color}${battery_time BAT0}
 ${endif}
 ]];
