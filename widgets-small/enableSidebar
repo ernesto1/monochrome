@@ -46,7 +46,7 @@ conky.config = {
 };
 
 conky.text = [[
-# this conky will create a sidebar on the monitor
-# the widgets will be shown even when an application window is maximized
+# this conky uses the 'panel' window type in order to create a sidebar panel effect on the monitor
+# when an application window is maximized, the widgets will be visible
 ${alignc}...
 ]];
