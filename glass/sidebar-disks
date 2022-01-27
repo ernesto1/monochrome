@@ -64,8 +64,8 @@ ${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,315}\
 ${voffset -5}${diskiograph_write /dev/sdb 48,112 6b91e5 546fb2 200000}
 ${voffset -58}${offset 5}${color}${font0}disk write${alignr}${color1}sdb 
 ${voffset 5}${alignr}${color}${font2}${diskio_write /dev/sdb} 
-# disk read
-${voffset -3}${diskiograph_read /dev/sdb 48,112 315bb1 1a336b 200000}
+# disk read: 115MiB
+${voffset -3}${diskiograph_read /dev/sdb 48,112 315bb1 1a336b 250000}
 ${voffset -58}${offset 5}${color}${font0}disk read
 ${voffset 5}${alignr}${font2}${diskio_read /dev/sdb} 
 # filesystem(s)
@@ -77,8 +77,8 @@ ${voffset -4}${alignr}${color1}${font4}${fs_used /media/veronica} / ${fs_size /m
 ${voffset 1}${diskiograph_write /dev/sdc 48,112 6b91e5 546fb2 200000}
 ${voffset -50}${offset 5}${color}${font0}disk write${alignr}${color1}sdc 
 ${voffset 5}${alignr}${color}${font2}${diskio_write /dev/sdc} 
-# disk read
-${voffset -3}${diskiograph_read /dev/sdc 48,112 315bb1 1a336b 200000}
+# disk read: 115MiB
+${voffset -3}${diskiograph_read /dev/sdc 48,112 315bb1 1a336b 250000}
 ${voffset -58}${offset 5}${color}${font0}disk read
 ${voffset 5}${alignr}${font2}${diskio_read /dev/sdc} 
 # filesystem(s)
