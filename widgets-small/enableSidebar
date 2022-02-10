@@ -5,16 +5,22 @@ conky.config = {
 
   -- window alignment
   alignment = 'top_left',  -- top|middle|bottom_left|right
-  gap_x = 3,               -- same as passing -x at command line
+  gap_x = 0,               -- same as passing -x at command line
   gap_y = 750,
 
   -- window settings
-  minimum_width = 48,
+  minimum_width = 49,       -- conky will add an extra pixel to this
   minimum_height = 10,
   own_window = true,
   own_window_type = 'panel',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
+  -- window borders
+  draw_borders = false,     -- draw borders around the conky window
+  border_width = 1,         -- width of border window in pixels
+  border_inner_margin = 0,  -- margin between the border and text in pixels
+  border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
+  
   -- transparency configuration
   own_window_transparent = true,
   own_window_argb_visual = true,  -- turn on transparency
