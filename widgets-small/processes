@@ -12,7 +12,7 @@ conky.config = {
 
   -- window settings
   minimum_width = 382,
-  minimum_height = 324,
+  minimum_height = 174,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -64,34 +64,4 @@ ${goto 200}${voffset 3}${top_mem name 2}${alignr}${top_mem mem_res 2} ${top_mem 
 ${goto 200}${voffset 3}${top_mem name 3}${alignr}${top_mem mem_res 3} ${top_mem pid 3} 
 ${goto 200}${voffset 3}${top_mem name 4}${alignr}${top_mem mem_res 4} ${top_mem pid 4} 
 ${goto 200}${voffset 3}${top_mem name 5}${alignr}${top_mem mem_res 5} ${top_mem pid 5} 
-# :::::::::::::::::::: usb devices
-# :::: maxtor external drive
-${if_mounted /run/media/ernesto/MAXTOR}\
-# disk io
-${image ~/conky/monochrome/images/widgets-small/diskio.png -n -p 0,218}
-${image ~/conky/monochrome/images/widgets-small/circuitry.png -n -p 18,259}\
-${voffset 34}${offset 1}${diskiograph_write /dev/sdb1 19,45 b7caf1 b7eaff 48000}
-${voffset -13}${offset 1}${diskiograph_read /dev/sdb1 19,45 315bb1 1a336b 48000}
-${voffset -38}${goto 58}${color1}write${goto 102}${color}${diskio_write /dev/sdb1}
-${voffset 6}${goto 58}${color1}read${goto 102}${color}${diskio_read /dev/sdb1}
-# filesystem
-${image ~/conky/monochrome/images/widgets-small/usbDrive.png -n -p 1, 278}\
-${voffset 54}${offset 1}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 3, 45 /run/media/ernesto/MAXTOR}
-${goto 58}${voffset -47}${color1}fs${goto 102}${color}${fs_type /run/media/ernesto/MAXTOR}
-${goto 58}${voffset 3}${color1}size${goto 102}${color}${fs_size /run/media/ernesto/MAXTOR}
-${goto 58}${voffset 3}${color1}free${goto 102}${color}${fs_free /run/media/ernesto/MAXTOR}
-${else}
-${voffset 131}
-${endif}
-# :::: sandisk memory stick
-${if_mounted /run/media/ernesto/sandisk}\
-${image ~/conky/monochrome/images/widgets-small/usbStick.png -n -p 195, 278}
-${voffset -37}${offset 195}${color2}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color3}${endif}${fs_bar 3, 45 /run/media/ernesto/sandisk}
-${goto 249}${voffset -47}${color1}fs${goto 293}${color}${fs_type /run/media/ernesto/sandisk}
-${goto 249}${voffset 3}${color1}size${goto 293}${color}${fs_size /run/media/ernesto/sandisk}
-${goto 249}${voffset 3}${color1}free${goto 293}${color}${fs_free /run/media/ernesto/sandisk}
-${endif}
-# this voffset is just to remove the extra trailing space that makes the conky window
-# longer (height) than it needs to be
-${voffset -40}
 ]];
