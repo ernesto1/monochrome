@@ -1,0 +1,131 @@
+conky.config = {
+  update_interval = 2,    -- update interval in seconds
+  update_interval_on_battery = 3,
+  xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
+  total_run_times = 0,    -- this is the number of times conky will update before quitting, set to zero to run forever
+  double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
+
+  -- window alignment
+  alignment = 'top_left',  -- top|middle|bottom_left|right
+  gap_x = 2,               -- same as passing -x at command line
+  gap_y = 2,
+
+  -- window settings
+  minimum_width = 238,
+  minimum_height = 755,
+  own_window = true,
+  own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
+  own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+
+  -- transparency configuration
+  own_window_transparent = true,
+  own_window_argb_visual = true,  -- turn on transparency
+  own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
+
+  -- window borders
+  draw_borders = false,     -- draw borders around the conky window
+  border_width = 1,         -- width of border window in pixels
+  stippled_borders = 0,     -- border stippling (dashing) in pixels
+  border_inner_margin = 0,  -- margin between the border and text in pixels
+  border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
+
+  -- graph settings
+  draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
+                              -- does not include bars, ie. wifi strength bar, cpu bar
+
+  imlib_cache_flush_interval = 300,
+  -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
+
+  -- font settings
+  draw_shades = false,    -- black shadow on text (not good if text is black)
+  draw_outline = false,   -- black outline around text (not good if text is black)
+  default_color = 'black',
+  color1 = 'white',
+  color2 = '1a336b',      -- dark blue
+  color3 = '800020',      -- burgundy
+};
+
+conky.text = [[
+# :::::::::::::::::::: system
+# system image 'lights up' if package updates are available
+${if_existing /tmp/conkyDnf new}\
+${image ~/conky/monochrome/images/widgets-small/system-update.png -n -p 1,3}\
+${else}\
+${image ~/conky/monochrome/images/widgets-small/system.png -n -p 1,3}\
+${endif}\
+${voffset 3}${goto 58}${color1}kernel${goto 102}${color}${kernel}
+${voffset 3}${goto 58}${color1}uptime${goto 102}${color}${uptime}
+${voffset 3}${goto 58}${color1}dnf${goto 102}${color}${tail /tmp/conkyDnf 1 2}
+# :::::::::::::::::::: cpu
+${image ~/conky/monochrome/images/widgets-small/cpu.png -n -p 0,68}\
+${voffset 22}${offset 7}${cpugraph cpu0 33,33 315bb1 1a336b}
+${voffset -32}${goto 58}${color}${cpu cpu0}%
+${voffset 3}${goto 58}${color}${loadavg}
+# :::::::::::::::::::: memory
+${image ~/conky/monochrome/images/widgets-small/memory.png -n -p 6,135}
+${image ~/conky/monochrome/images/widgets-small/bar.png -n -p 0,194}\
+${voffset 6}${offset 13}${memgraph 43,21 315bb1 1a336b}
+${voffset -38}${goto 58}${color}${memperc}%
+${voffset 4}${goto 58}${mem} / ${memmax}
+${voffset 10}${offset 1}${color2}${if_match ${swapperc} >= 70}${color3}${endif}${swapbar 3, 45}${voffset -1}${goto 58}${color}${swapperc}% ${color1}swap
+# :::::::::::::::::::: disk io
+${image ~/conky/monochrome/images/widgets-small/diskio.png -n -p 0,218}
+${voffset -1}${offset 1}${diskiograph_read /dev/sda 38,23 b7caf1 b7eaff 200000}${offset -1}${diskiograph_write /dev/sda 38,23 315bb1 1a336b 280000}
+${voffset -36}${alignr 110}${color}${diskio_read /dev/sda}${offset 9}${color1}read 
+${voffset 4}${alignr 110}${color}${diskio_write /dev/sda}${offset 9}${color1}write
+# :::::::::::::::::::: disk space
+${image ~/conky/monochrome/images/widgets-small/circuitry.png -n -p 18,259}\
+${image ~/conky/monochrome/images/widgets-small/disk-root.png -n -p 1,278}\
+${voffset 54}${offset 1}${color2}${if_match ${fs_used_perc /} > 90}${color3}${endif}${fs_bar 3, 45 /}
+${voffset -32}${goto 58}${color}fedora (${fs_type /})
+${voffset 4}${goto 58}${color}${fs_used /} / ${fs_size /}
+${image ~/conky/monochrome/images/widgets-small/circuitry-flipped.png -n -p 18,324}\
+${image ~/conky/monochrome/images/widgets-small/disk-home.png -n -p 1,343}\
+${voffset 54}${offset 1}${color2}${if_match ${fs_used_perc /home} > 90}${color3}${endif}${fs_bar 3, 45 /home}
+${voffset -32}${goto 58}${color}home (${fs_type /home})
+${voffset 4}${goto 58}${color}${fs_used /home} / ${fs_size /home}
+# :::::::::::::::::::: upload/download speeds
+# if a gateway is available (we are connected to a router)
+${if_gw}\
+${image ~/conky/monochrome/images/widgets-small/network.png -n -p 0,425}\
+${image ~/conky/monochrome/images/widgets-small/highlight.png -n -p 110,422}\
+${image ~/conky/monochrome/images/widgets-small/highlight.png -n -p 110,457}\
+${voffset 32}${offset 1}${upspeedgraph enp0s25 58,23 b7caf1 b7eaff 3000}${offset -1}${downspeedgraph enp0s25 58,23 315bb1 1a336b 55000}
+${voffset -88}${goto 58}${color1}local ip${goto 114}${color}${addr enp0s25}
+${voffset 6}${goto 58}${color1}upload${alignr 83}${color}${upspeed enp0s25}
+${voffset 3}${goto 58}${color1}total${alignr 83}${color}${totalup enp0s25}
+${voffset 6}${goto 58}${color1}download${alignr 83}${color}${downspeed enp0s25}
+${voffset 3}${goto 58}${color1}total${alignr 83}${color}${totaldown enp0s25}
+# use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
+${voffset 5}${goto 58}${color1}torrent${goto 114}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
+${else}\
+${image ~/conky/monochrome/images/widgets-small/network-disabled.png -n -p 0,431}\
+${voffset 52}${goto 58}no network
+${voffset 3}${goto 58}connection
+${voffset 22}
+${endif}
+# :::::::::::::::::::: hard drive | sdb
+# disk io | read 250000
+${image ~/conky/monochrome/images/widgets-small/diskio.png -n -p 0,522}\
+${offset 1}${diskiograph_read /dev/sdb 38,23 b7caf1 b7eaff 6500}${offset -1}${diskiograph_write /dev/sdb 38,23 315bb1 1a336b 200000}
+${voffset -36}${alignr 110}${color}${diskio_read /dev/sdb}${offset 9}${color1}read 
+${voffset 4}${alignr 110}${color}${diskio_write /dev/sdb}${offset 9}${color1}write
+# disk space
+${image ~/conky/monochrome/images/widgets-small/circuitry.png -n -p 18,563}\
+${image ~/conky/monochrome/images/widgets-small/disk-partition.png -n -p 1,582}\
+${voffset 54}${offset 1}${color2}${if_match ${fs_used_perc /media/veronica} > 90}${color3}${endif}${fs_bar 3, 45 /media/veronica}
+${voffset -32}${goto 58}${color}veronica (${fs_type /media/veronica})
+${voffset 4}${goto 58}${color}${fs_used /media/veronica} / ${fs_size /media/veronica}
+# :::::::::::::::::::: hard drive | sdc
+# disk io | read 250000
+${image ~/conky/monochrome/images/widgets-small/diskio.png -n -p 0,647}\
+${voffset 15}${offset 1}${diskiograph_read /dev/sdc 38,23 b7caf1 b7eaff 6500}${offset -1}${diskiograph_write /dev/sdc 38,23 315bb1 1a336b 200000}
+${voffset -36}${alignr 110}${color}${diskio_read /dev/sdc}${offset 9}${color1}read 
+${voffset 4}${alignr 110}${color}${diskio_write /dev/sdc}${offset 9}${color1}write
+# disk space
+${image ~/conky/monochrome/images/widgets-small/circuitry.png -n -p 18,688}\
+${image ~/conky/monochrome/images/widgets-small/disk-partition.png -n -p 1,707}\
+${voffset 54}${offset 1}${color2}${if_match ${fs_used_perc /media/betty} > 90}${color3}${endif}${fs_bar 3, 45 /media/betty}
+${voffset -32}${goto 58}${color}betty (${fs_type /media/betty})
+${voffset 4}${goto 58}${color}${fs_used /media/betty} / ${fs_size /media/betty}
+]];
