@@ -12,7 +12,7 @@ conky.config = {
 
   -- window settings
   minimum_width = 382,
-  minimum_height = 174,
+  minimum_height = 190,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -49,15 +49,15 @@ conky.text = [[
 ${voffset 3}${goto 45}${color1}compositor${goto 122}${color}${execi 3600 echo $XDG_SESSION_TYPE}
 ${voffset 3}${goto 45}${color1}zoom${goto 122}${color}${if_running zoom}running${else}off${endif}
 # :::::::::::::::::::: cpu processes
-${image ~/conky/monochrome/images/widgets-small/table-processes-cpu.png -n -p 0,65}\
-${voffset 36} process${goto 126}cpu   pid 
+${image ~/conky/monochrome/images/widgets-small/table-processes-cpu.png -n -p 0,75}\
+${voffset 46} process${goto 126}cpu   pid 
 ${voffset 9} ${top name 1}${top cpu 1}% ${top pid 1}
 ${voffset 3} ${top name 2}${top cpu 2}% ${top pid 2} 
 ${voffset 3} ${top name 3}${top cpu 3}% ${top pid 3} 
 ${voffset 3} ${top name 4}${top cpu 4}% ${top pid 4} 
 ${voffset 3} ${top name 5}${top cpu 5}% ${top pid 5} 
 # :::::::::::::::::::: memory processes
-${image ~/conky/monochrome/images/widgets-small/table-processes-memory.png -n -p 195,65}\
+${image ~/conky/monochrome/images/widgets-small/table-processes-memory.png -n -p 195,75}\
 ${voffset -99}${goto 200}process${alignr}mem   pid 
 ${goto 200}${voffset 9}${top_mem name 1}${alignr}${top_mem mem_res 1} ${top_mem pid 1} 
 ${goto 200}${voffset 3}${top_mem name 2}${alignr}${top_mem mem_res 2} ${top_mem pid 2} 
