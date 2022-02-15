@@ -175,7 +175,7 @@ do
   # 1. filter conky override, ie. exclude a configuration from being loaded
   #    override is of the format: ignore:<conkyFilename>
   #                           ex. ignore:externalDevices
-  [[ -f ${layoutFile} ]] && ignore=$(grep -v \# "${layoutFile}" | grep ignore:"${conkyConfig}")
+  [[ -f ${layoutFile} ]] && ignore=$(grep -v \# "${layoutFile}" | grep ignore:"${conkyConfig}$")
   
   if [[ ${ignore} ]]; then
     echo '  ignoring this conky due to it being in the exclusion list of the layout file'
