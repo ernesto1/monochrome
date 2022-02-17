@@ -52,7 +52,7 @@ ${if_mounted /run/media/ernesto/MAXTOR}\
 # disk io
 ${image ~/conky/monochrome/images/widgets-small/diskio.png -n -p 0,0}\
 ${image ~/conky/monochrome/images/widgets-small/circuitry.png -n -p 18,41}\
-${voffset -4}${offset 1}${diskiograph_read /dev/sdf1 38,23 b7caf1 b7eaff 6000}${offset -1}${diskiograph_write /dev/sdf1 38,23 315bb1 1a336b 48000}
+${voffset -4}${offset 1}${diskiograph_read /dev/sdf1 38,22 b7caf1 b7eaff 6000}${offset 1}${diskiograph_write /dev/sdf1 38,22 315bb1 1a336b 48000}
 ${voffset -36}${alignr 41}${color}${diskio_read /dev/sdf1}${offset 9}${color1}read 
 ${voffset 4}${alignr 41}${color}${diskio_write /dev/sdf1}${offset 9}${color1}write
 # filesystem
