@@ -7,11 +7,11 @@ conky.config = {
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
   gap_x = 1068,               -- same as passing -x at command line
-  gap_y = 11,
+  gap_y = 14,
 
   -- window settings
-  minimum_width = 96,
-  minimum_height = 133,
+  minimum_width = 140,
+  minimum_height = 181,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -45,12 +45,16 @@ conky.config = {
 };
 
 conky.text = [[
-${voffset 4}${offset 3}${downspeedgraph enp0s25 83,89 315bb1 1a336b 55000}
-${voffset 2}${color1}download${alignr}${color}${downspeed enp0s25}
-${voffset 5}${color1}total${alignr}${color}${totaldown enp0s25}\
+${color1}local ip${goto 66}${color}${addr enp0s25}
+# use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
+${voffset 3}${color1}bittorrent${goto 66}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
+${voffset 3}${color1}zoom${goto 66}${color}${if_running zoom}running${else}off${endif}
 ${if_gw}\
-${image ~/conky/monochrome/images/widgets-large/network-down.png -n -p 0,0}\
+${image ~/conky/monochrome/images/widgets-large/network-down.png -n -p 0,51}\
 ${else}\
-${image ~/conky/monochrome/images/widgets-large/network-disabled.png -n -p 0,0 s 370x104}\
-${endif}
+${image ~/conky/monochrome/images/widgets-large/network-disabled.png -n -p 0,51}\
+${endif}\
+${voffset 13}${offset 4}${downspeedgraph enp0s25 79,87 315bb1 1a336b 55000}
+${voffset 2}${color1}download${alignr 44}${color}${downspeed enp0s25}
+${voffset 5}${color1}total${alignr 44}${color}${totaldown enp0s25}\
 ]];
