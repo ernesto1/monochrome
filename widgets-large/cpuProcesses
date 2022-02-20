@@ -7,11 +7,11 @@ conky.config = {
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
   gap_x = 554,                -- same as passing -x at command line
-  gap_y = 23,
+  gap_y = 48,
 
   -- window settings
   minimum_width = 186,
-  minimum_height = 117,
+  minimum_height = 96,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -45,10 +45,9 @@ conky.config = {
 
 conky.text = [[
 ${image ~/conky/monochrome/images/widgets-large/cpuProcesses.png -n -p 0,0}\
-${voffset 4} process${alignr}cpu   pid 
+ process${alignr}cpu   pid 
  ${voffset 9}${top name 1}${alignr}${top cpu 1}% ${top pid 1} 
  ${voffset 5}${top name 2}${alignr}${top cpu 2}% ${top pid 2} 
  ${voffset 5}${top name 3}${alignr}${top cpu 3}% ${top pid 3} 
  ${voffset 5}${top name 4}${alignr}${top cpu 4}% ${top pid 4} 
- ${voffset 5}${top name 5}${alignr}${top cpu 5}% ${top pid 5} 
 ]];
