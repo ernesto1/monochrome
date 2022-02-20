@@ -10,7 +10,7 @@ conky.config = {
   gap_y = 50,
 
   -- window settings
-  minimum_width = 110,
+  minimum_width = 136,
   minimum_height = 50,
   own_window = true,
   own_window_type = 'desktop',  -- values: desktop (background), panel (bar)
@@ -45,6 +45,6 @@ conky.text = [[
 #  %A day 
 #  %B month (full)
 #  %d day of the month (1-31)
-${voffset -8}${color1}${font Fira Sans UltraLight:size=48}${time %I}${offset 5}${color1}${font Fira Sans Thin:size=37}${time %M}
+${voffset -8}${alignc}${color1}${font Fira Sans UltraLight:size=48}${offset 6}${time %I}${offset 5}${color1}${font Fira Sans Thin:size=37}${time %M}
 ${voffset -34}${alignc}${color1}${font URW Gothic:size=12}${time %a, %B %d}${voffset -15}
 ]];
