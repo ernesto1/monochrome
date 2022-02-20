@@ -23,15 +23,12 @@ Inspired by the killy's heads up display from the anime movie Blame!
 
 ## Features
 ### Repository package updates
-DNF is periodically queried for new packages **if the system is iddle**.  
-Slow machines will appreciate this, since a dnf package lookup may bring the cpu to a crawl.
+`dnf` (the fedora package manager) is **periodically** queried for new packages if the system is **iddle**. Slow machines will appreciate this, since a dnf package lookup may bring the cpu to a crawl.
 
 **n.b.** `dnf` is specific to **fedora** linux.  If you use a different distro, you will have to [update the script](https://github.com/ernesto1/monochrome/wiki) to use your distro's package manager.
 
 ### Network modes
 Network devices reflect the way you are connected to the internet.  
-Depending on your linux distribution, you may need to [configure the proper network device name](https://github.com/ernesto1/monochrome/wiki#network-devices).
-
 ![network](images/screenshots/network-modes.jpg)
 ### Power modes
 Different states to show how your laptop is consuming power 
@@ -65,7 +62,7 @@ $ sudo dnf install conky
 more recent versions may have regressions/bugs ([issue 1](https://github.com/brndnmtthws/conky/issues/960), [issue 2](https://github.com/brndnmtthws/conky/issues/979)) that cause the theme to behave erratically.  Run the command `dnf downgrade conky` until you arrive at this version.
 
 ### Configuration
-- The [wiki](https://github.com/ernesto1/monochrome/wiki) outlines items that may require configuration in order to customize this conky to your system
+- The [wiki](https://github.com/ernesto1/monochrome/wiki) outlines items that may require configuration in order to customize this conky to your system, ex. device names such as network cards and hard drives
 - If you run a multi monitor setup, you can read on how to configure conky to show on a [particular monitor](https://github.com/ernesto1/monochrome/wiki#multi-monitor-setups)
 
 # How to run
