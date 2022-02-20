@@ -86,7 +86,7 @@ more recent versions may have regressions/bugs ([issue 1](https://github.com/brn
 
     - Widgets small
 
-            $ ~/conky/monochrome/launch.bash --widgets-small
+            $ ~/conky/monochrome/launch.bash --widgets-small --layout-override laptop
 
     - Widgets large
 
