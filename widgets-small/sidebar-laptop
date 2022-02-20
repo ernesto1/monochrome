@@ -95,7 +95,7 @@ ${voffset 3}${goto 58}${color1}strength${goto 114}${color}${wireless_link_qual_p
 ${voffset 3}${goto 58}${color1}channel${goto 114}${color}${wireless_channel wlp4s0}
 ${else}\
 ${image ~/conky/monochrome/images/widgets-small/wifi-off.png -n -p 0,409}
-${voffset 40}${offset 4}no wifi${voffset 9}
+${voffset 40}${offset 4}no wifi${voffset 13}
 ${endif}\
 # :::::::::::::::::::: upload/download speeds
 # if a gateway is available (we are connected to a router)
@@ -113,19 +113,18 @@ ${voffset 6}${goto 58}${color1}download${alignr 86}${color}${downspeed wlp4s0}
 ${voffset 3}${goto 58}${color1}total${alignr 86}${color}${totaldown wlp4s0}
 ${else}\
 # otherwise fall back on ethernet
-${voffset 19}${offset 1}${upspeedgraph enp6s0 29,45 b7caf1 b7eaff 4000}
-${voffset -58}${goto 58}${color1}local ip${goto 114}${color}${addr enp6s0}
-${voffset 5}${goto 58}${color1}upload${alignr 86}${color}${upspeed enp6s0}
+${voffset 20}${offset 1}${upspeedgraph enp6s0 58,22 b7caf1 b7eaff 4000}${offset 1}${downspeedgraph enp6s0 58,22 315bb1 1a336b 34500}
+${voffset -88}${goto 58}${color1}local ip${goto 114}${color}${addr enp6s0}
+${voffset 6}${goto 58}${color1}upload${alignr 86}${color}${upspeed enp6s0}
 ${voffset 3}${goto 58}${color1}total${alignr 86}${color}${totalup enp6s0}
-${voffset -2}${offset 1}${downspeedgraph enp6s0 29,45 315bb1 1a336b 34500}
-${goto 58}${voffset -34}${color1}download${alignr 86}${color}${downspeed enp6s0}
+${voffset 6}${goto 58}${color1}download${alignr 86}${color}${downspeed enp6s0}
 ${voffset 3}${goto 58}${color1}total${alignr 86}${color}${totaldown enp6s0}
 ${endif}\
 # use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
 ${voffset 5}${goto 58}${color1}torrent${goto 114}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
 ${else}\
 ${image ~/conky/monochrome/images/widgets-small/network-disabled.png -n -p 0,493}\
-${voffset 95}
+${voffset 91}
 ${endif}
 # :::::::::::::::::::: power
 ${voffset 29}
