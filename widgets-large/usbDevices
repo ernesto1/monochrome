@@ -45,6 +45,7 @@ conky.config = {
 };
 
 conky.text = [[
+# sandisk usb memory stick
 ${if_mounted /run/media/ernesto/sandisk}\
 ${image ~/conky/monochrome/images/widgets-small/usbStick.png -n -p 0,0}\
 ${voffset 35}${color2}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color3}${endif}${fs_bar 3, 45 /run/media/ernesto/sandisk}
@@ -58,6 +59,7 @@ ${alignr}sandisk usb drive
 ${alignr}not connected  
 ${voffset 10}\
 ${endif}\
+# sandisk sd card
 ${if_mounted /run/media/ernesto/disk}\
 ${image ~/conky/monochrome/images/widgets-small/sdCard.png -n -p 0,50}\
 ${voffset 39}${color2}${if_match ${fs_used_perc /run/media/ernesto/disk} > 90}${color3}${endif}${fs_bar 3, 45 /run/media/ernesto/disk}
@@ -67,7 +69,7 @@ ${offset 55}${voffset 3}${color1}free${goto 110}${color}${fs_free /run/media/ern
 ${else}\
 ${voffset 14}\
 ${image ~/conky/monochrome/images/widgets-small/usbBorder.png -n -p 144,50}\
-${alignr}disk usb drive  
+${alignr}sandisk sd card  
 ${alignr}not connected  
 ${endif}\
 ]];
