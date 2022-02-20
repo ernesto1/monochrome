@@ -45,7 +45,7 @@ conky.config = {
 };
 
 conky.text = [[
-${voffset 4}${offset 3}${upspeedgraph enp0s25 83,89 8cb9d6 7b9de2 3000}
+${voffset 7}${offset 4}${upspeedgraph enp0s25 79,87 8cb9d6 7b9de2 3000}
 ${voffset 2}${color1}upload${alignr}${color}${upspeed enp0s25}
 ${voffset 5}${color1}total${alignr}${color}${totalup enp0s25}\
 ${if_gw}\
