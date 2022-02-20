@@ -49,10 +49,10 @@ conky.text = [[
 # disk io | write: 28.7MiB  read: 22.6MiB
 ${if_mounted /run/media/ernesto/MAXTOR}\
 ${image ~/conky/monochrome/images/widgets-large/disk.png -n -p 0,0}\
-${voffset -4}${goto 2}${diskiograph_read /dev/sdg1 43,80 315bb1 1a336b 60000}
-${voffset -6}${goto 2}${diskiograph_write /dev/sdg1 43,80 8cb9d6 7b9de2 60000}
-${color1}read  ${color}${diskio_read /dev/sdg1}
-${voffset 5}${color1}write ${color}${diskio_write /dev/sdg1}
+${voffset -4}${goto 2}${diskiograph_read /dev/sdf1 43,80 315bb1 1a336b 60000}
+${voffset -6}${goto 2}${diskiograph_write /dev/sdf1 43,80 8cb9d6 7b9de2 60000}
+${color1}read  ${color}${diskio_read /dev/sdf1}
+${voffset 5}${color1}write ${color}${diskio_write /dev/sdf1}
 # partitions
 ${voffset -99}${goto 87}${color1}partitions ${hr 1}
 ${voffset 4}${goto 87}${color}maxtor${alignr}[${fs_type /run/media/ernesto/MAXTOR}]
