@@ -61,6 +61,12 @@ $ sudo dnf install conky
 **n.b.** I recommend using the conky package version `1.11.5_pre`  
 more recent versions may have regressions/bugs ([issue 1](https://github.com/brndnmtthws/conky/issues/960), [issue 2](https://github.com/brndnmtthws/conky/issues/979)) that cause the theme to behave erratically.  Run the command `dnf downgrade conky` until you arrive at this version.
 
+### Fonts
+The small widgets [time conky](https://github.com/ernesto1/monochrome/blob/master/widgets-small/time) requires the following fonts:
+
+- [Promenade de la Croisette](https://www.fontspace.com/promenade-de-la-croisette-font-f23769)
+- Noto Sans CJK JP Thin (default on fedora)
+
 ### Configuration
 - The [wiki](https://github.com/ernesto1/monochrome/wiki) outlines items that may require configuration in order to customize this conky to your system, ex. device names such as network cards and hard drives
 - If you run a multi monitor setup, you can read on how to configure conky to show on a [particular monitor](https://github.com/ernesto1/monochrome/wiki#multi-monitor-setups)
