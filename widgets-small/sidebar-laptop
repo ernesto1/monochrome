@@ -67,7 +67,7 @@ ${image ~/conky/monochrome/images/widgets-small/bar.png -n -p 0,194}\
 ${voffset 6}${offset 13}${memgraph 43,21 315bb1 1a336b}
 ${voffset -38}${goto 58}${color}${memperc}%
 ${voffset 4}${goto 58}${mem} / ${memmax}
-${voffset 10}${offset 1}${color2}${if_match ${swapperc} >= 70}${color3}${endif}${swapbar 3, 45}${voffset -1}${goto 58}${color}${swapperc}% ${color1}swap${color}
+${voffset 10}${offset 1}${color2}${if_match ${swapperc} >= 70}${color3}${endif}${swapbar 3, 45}${voffset -1}${goto 58}${color}${swapperc}%${offset 9}${color1}swap${color}
 # :::::::::::::::::::: disk io
 ${image ~/conky/monochrome/images/widgets-small/diskio.png -n -p 0,218}
 ${voffset -1}${offset 1}${diskiograph_read /dev/sda 38,22 b7caf1 b7eaff 40000}${offset 1}${diskiograph_write /dev/sda 38,22 315bb1 1a336b 40000}
@@ -84,35 +84,28 @@ ${image ~/conky/monochrome/images/widgets-small/disk-home.png -n -p 1,343}\
 ${voffset 54}${offset 1}${color2}${if_match ${fs_used_perc /home} > 90}${color3}${endif}${fs_bar 3, 45 /home}
 ${voffset -32}${goto 58}${color}home (${fs_type /home})
 ${voffset 4}${goto 58}${color}${fs_used /home} / ${fs_size /home}
-# :::::::::::::::::::: wifi
-${if_existing /sys/class/net/wlp4s0/operstate up}\
-${image ~/conky/monochrome/images/widgets-small/wifi.png -n -p 0,405}\
-${image ~/conky/monochrome/images/widgets-small/bar.png -n -p 0,444}\
-${voffset 51}${offset 1}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 3,45 wlp4s0}${voffset -19}\
-${voffset -14}${goto 58}${color1}network${goto 114}${color}${wireless_essid wlp4s0}
-${voffset 3}${goto 58}${color1}bitrate${goto 114}${color}${wireless_bitrate wlp4s0}
-${voffset 3}${goto 58}${color1}strength${goto 114}${color}${wireless_link_qual_perc wlp4s0}%
-${voffset 3}${goto 58}${color1}channel${goto 114}${color}${wireless_channel wlp4s0}
-${else}\
-${image ~/conky/monochrome/images/widgets-small/wifi-off.png -n -p 0,409}
-${voffset 40}${offset 4}no wifi${voffset 13}
-${endif}\
-# :::::::::::::::::::: upload/download speeds
+# :::::::::::::::::::: network
 # if a gateway is available (we are connected to a router)
 ${if_gw}\
-${image ~/conky/monochrome/images/widgets-small/network.png -n -p 0,492}\
-${image ~/conky/monochrome/images/widgets-small/highlight.png -n -p 110,489}\
-${image ~/conky/monochrome/images/widgets-small/highlight.png -n -p 110,524}\
-# if connected through wifi
+# :::::: wifi
 ${if_existing /sys/class/net/wlp4s0/operstate up}\
-${voffset 20}${offset 1}${upspeedgraph wlp4s0 58,22 b7caf1 b7eaff 8200}${offset 1}${downspeedgraph wlp4s0 58,22 315bb1 1a336b 55000}
-${voffset -88}${goto 58}${color1}local ip${goto 114}${color}${addr wlp4s0}
-${voffset 6}${goto 58}${color1}upload${alignr 86}${color}${upspeed wlp4s0}
-${voffset 3}${goto 58}${color1}total${alignr 86}${color}${totalup wlp4s0}
-${voffset 6}${goto 58}${color1}download${alignr 86}${color}${downspeed wlp4s0}
-${voffset 3}${goto 58}${color1}total${alignr 86}${color}${totaldown wlp4s0}
+${image ~/conky/monochrome/images/widgets-small/wifi.png -n -p 1,407}\
+${voffset 53}${offset 1}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 3,45 wlp4s0}${voffset -20}\
+${voffset -14}${goto 58}${color}${wireless_essid wlp4s0}
+${voffset 3}${goto 58}${color}${wireless_bitrate wlp4s0}${goto 113}| channel ${wireless_channel wlp4s0}
+${voffset 3}${goto 58}${color}${wireless_link_qual_perc wlp4s0}%${goto 113}| ${addr wlp4s0}
+# :: upload/download speeds
+${image ~/conky/monochrome/images/widgets-small/internet.png -n -p 0,471}\
+${voffset 14}${offset 1}${upspeedgraph wlp4s0 58,22 b7caf1 b7eaff 8200}${offset 1}${downspeedgraph wlp4s0 58,22 315bb1 1a336b 55000}
+# use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
+${voffset -67}${goto 58}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)${goto 125}${color1}bittorrent
+${voffset 18}${alignr 110}${color}${upspeed wlp4s0}${offset 9}${color1}up   
+${voffset 4}${alignr 110}${color}${downspeed wlp4s0}${offset 9}${color1}down 
 ${else}\
-# otherwise fall back on ethernet
+# :::::: ethernet
+${image ~/conky/monochrome/images/widgets-small/ethernet.png -n -p 0,407}\
+# :: upload/download speeds
+${image ~/conky/monochrome/images/widgets-small/internet.png -n -p 0,471}\
 ${voffset 20}${offset 1}${upspeedgraph enp6s0 58,22 b7caf1 b7eaff 4000}${offset 1}${downspeedgraph enp6s0 58,22 315bb1 1a336b 34500}
 ${voffset -88}${goto 58}${color1}local ip${goto 114}${color}${addr enp6s0}
 ${voffset 6}${goto 58}${color1}upload${alignr 86}${color}${upspeed enp6s0}
@@ -120,26 +113,25 @@ ${voffset 3}${goto 58}${color1}total${alignr 86}${color}${totalup enp6s0}
 ${voffset 6}${goto 58}${color1}download${alignr 86}${color}${downspeed enp6s0}
 ${voffset 3}${goto 58}${color1}total${alignr 86}${color}${totaldown enp6s0}
 ${endif}\
-# use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
-${voffset 5}${goto 58}${color1}torrent${goto 114}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
 ${else}\
-${image ~/conky/monochrome/images/widgets-small/network-disabled.png -n -p 0,493}\
-${voffset 91}
-${endif}
+${image ~/conky/monochrome/images/widgets-small/wifi-disconnected.png -n -p 0,411}
+${image ~/conky/monochrome/images/widgets-small/internet-offline.png -n -p 0,471}\
+${voffset 117}
+${endif}\
 # :::::::::::::::::::: power
-${voffset 29}
+${voffset 43}
 ${if_match "${acpiacadapter}"=="on-line"}\
 ${if_match ${battery_percent BAT0} == 100}\
-${image ~/conky/monochrome/images/widgets-small/power-plugged-in.png -n -p 1,589}
+${image ~/conky/monochrome/images/widgets-small/power-plugged-in.png -n -p 1,550}
 ${voffset -34}${goto 58}${color}fully
 ${voffset 3}${goto 58}${color}charged
 ${else}\
-${image ~/conky/monochrome/images/widgets-small/power-charging.png -n -p 1,589}\
+${image ~/conky/monochrome/images/widgets-small/power-charging.png -n -p 1,550}\
 ${voffset -3}${offset 1}${color2}${if_match ${battery_percent BAT0} < 80}${color3}${endif}${battery_bar 3, 45 BAT0}
 ${voffset -15}${goto 58}${color}${battery_time BAT0}
 ${endif}\
 ${else}\
-${image ~/conky/monochrome/images/widgets-small/power-battery.png -n -p 1,589}\
+${image ~/conky/monochrome/images/widgets-small/power-battery.png -n -p 1,550}\
 ${voffset -3}${offset 1}${color2}${if_match ${battery_percent BAT0} < 20}${color3}${endif}${battery_bar 3, 45 BAT0}
 ${voffset -15}${goto 58}${color}${battery_time BAT0}
 ${endif}
