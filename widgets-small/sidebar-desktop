@@ -70,7 +70,7 @@ ${voffset 4}${goto 58}${mem} / ${memmax}
 ${voffset 10}${offset 1}${color2}${if_match ${swapperc} >= 70}${color3}${endif}${swapbar 3, 45}${voffset -1}${goto 58}${color}${swapperc}% ${color1}swap${color}
 # :::::::::::::::::::: disk io
 ${image ~/conky/monochrome/images/widgets-small/diskio.png -n -p 0,218}
-${voffset -1}${offset 1}${diskiograph_read /dev/sda 38,22 b7caf1 b7eaff 200000}${offset 1}${diskiograph_write /dev/sda 38,22 315bb1 1a336b 280000}
+${voffset -1}${offset 1}${diskiograph_read /dev/sda 38,22 adccea 85c3ff 200000}${offset 1}${diskiograph_write /dev/sda 38,22 315bb1 1a336b 280000}
 ${voffset -36}${alignr 110}${color}${diskio_read /dev/sda}${offset 9}${color1}read 
 ${voffset 4}${alignr 110}${color}${diskio_write /dev/sda}${offset 9}${color1}write
 # :::::::::::::::::::: disk space
@@ -87,44 +87,40 @@ ${voffset 4}${goto 58}${color}${fs_used /home} / ${fs_size /home}
 # :::::::::::::::::::: upload/download speeds
 # if a gateway is available (we are connected to a router)
 ${if_gw}\
-${image ~/conky/monochrome/images/widgets-small/network.png -n -p 0,425}\
-${image ~/conky/monochrome/images/widgets-small/highlight.png -n -p 110,422}\
-${image ~/conky/monochrome/images/widgets-small/highlight.png -n -p 110,457}\
-${voffset 32}${offset 1}${upspeedgraph enp0s25 58,22 b7caf1 b7eaff 3000}${offset 1}${downspeedgraph enp0s25 58,22 315bb1 1a336b 55000}
-${voffset -88}${goto 58}${color1}local ip${goto 114}${color}${addr enp0s25}
-${voffset 6}${goto 58}${color1}upload${alignr 83}${color}${upspeed enp0s25}
-${voffset 3}${goto 58}${color1}total${alignr 83}${color}${totalup enp0s25}
-${voffset 6}${goto 58}${color1}download${alignr 83}${color}${downspeed enp0s25}
-${voffset 3}${goto 58}${color1}total${alignr 83}${color}${totaldown enp0s25}
+${image ~/conky/monochrome/images/widgets-small/internet.png -n -p 0,408}\
+${voffset 15}${offset 1}${upspeedgraph enp0s25 58,22 adccea 85c3ff 3000}${offset 1}${downspeedgraph enp0s25 58,22 315bb1 1a336b 55000}
+${voffset -69}${goto 58}${color}${addr enp0s25}${offset 9}${color1}local ip
 # use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
-${voffset 5}${goto 58}${color1}torrent${goto 114}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
+${voffset 3}${alignr 67}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)${offset 9}${color1}torrent
+${voffset 6}${alignr 110}${color}${upspeed enp0s25}${offset 9}${color1}up   
+${voffset 4}${alignr 110}${color}${downspeed enp0s25}${offset 9}${color1}down 
 ${else}\
-${image ~/conky/monochrome/images/widgets-small/network-disabled.png -n -p 0,431}\
-${voffset 52}${goto 58}no network
+${image ~/conky/monochrome/images/widgets-small/ethernet-disconnected.png -n -p 0,414}\
+${voffset 35}${goto 58}no network
 ${voffset 3}${goto 58}connection
-${voffset 22}
+${voffset 5}
 ${endif}
 # :::::::::::::::::::: hard drive | sdb
 # disk io | read 250000
-${image ~/conky/monochrome/images/widgets-small/diskio.png -n -p 0,522}\
-${offset 1}${diskiograph_read /dev/sdb 38,22 b7caf1 b7eaff 6500}${offset 1}${diskiograph_write /dev/sdb 38,22 315bb1 1a336b 200000}
+${image ~/conky/monochrome/images/widgets-small/diskio.png -n -p 0,488}\
+${offset 1}${diskiograph_read /dev/sdb 38,22 adccea 85c3ff 6500}${offset 1}${diskiograph_write /dev/sdb 38,22 315bb1 1a336b 200000}
 ${voffset -36}${alignr 110}${color}${diskio_read /dev/sdb}${offset 9}${color1}read 
 ${voffset 4}${alignr 110}${color}${diskio_write /dev/sdb}${offset 9}${color1}write
 # disk space
-${image ~/conky/monochrome/images/widgets-small/circuitry.png -n -p 18,563}\
-${image ~/conky/monochrome/images/widgets-small/disk-partition.png -n -p 1,582}\
+${image ~/conky/monochrome/images/widgets-small/circuitry.png -n -p 18,529}\
+${image ~/conky/monochrome/images/widgets-small/disk-partition.png -n -p 1,548}\
 ${voffset 54}${offset 1}${color2}${if_match ${fs_used_perc /media/veronica} > 90}${color3}${endif}${fs_bar 3, 45 /media/veronica}
 ${voffset -32}${goto 58}${color}veronica (${fs_type /media/veronica})
 ${voffset 4}${goto 58}${color}${fs_used /media/veronica} / ${fs_size /media/veronica}
 # :::::::::::::::::::: hard drive | sdc
 # disk io | read 250000
-${image ~/conky/monochrome/images/widgets-small/diskio.png -n -p 0,647}\
-${voffset 15}${offset 1}${diskiograph_read /dev/sdc 38,22 b7caf1 b7eaff 6500}${offset 1}${diskiograph_write /dev/sdc 38,22 315bb1 1a336b 200000}
+${image ~/conky/monochrome/images/widgets-small/diskio.png -n -p 0,613}\
+${voffset 15}${offset 1}${diskiograph_read /dev/sdc 38,22 adccea 85c3ff 6500}${offset 1}${diskiograph_write /dev/sdc 38,22 315bb1 1a336b 200000}
 ${voffset -36}${alignr 110}${color}${diskio_read /dev/sdc}${offset 9}${color1}read 
 ${voffset 4}${alignr 110}${color}${diskio_write /dev/sdc}${offset 9}${color1}write
 # disk space
-${image ~/conky/monochrome/images/widgets-small/circuitry.png -n -p 18,688}\
-${image ~/conky/monochrome/images/widgets-small/disk-partition.png -n -p 1,707}\
+${image ~/conky/monochrome/images/widgets-small/circuitry.png -n -p 18,654}\
+${image ~/conky/monochrome/images/widgets-small/disk-partition.png -n -p 1,673}\
 ${voffset 54}${offset 1}${color2}${if_match ${fs_used_perc /media/betty} > 90}${color3}${endif}${fs_bar 3, 45 /media/betty}
 ${voffset -32}${goto 58}${color}betty (${fs_type /media/betty})
 ${voffset 4}${goto 58}${color}${fs_used /media/betty} / ${fs_size /media/betty}
