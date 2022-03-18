@@ -104,7 +104,7 @@ ${voffset 4}${alignr 110}${color}${downspeed wlp4s0}${offset 9}${color1}down
 ${else}\
 # :::::: ethernet
 ${image ~/conky/monochrome/images/widgets-small/ethernet.png -n -p 1,407}\
-${voffset 51}${goto 58}${addr wlp4s0}
+${voffset 51}${goto 58}${addr enp6s0}
 # :: upload/download speeds
 ${image ~/conky/monochrome/images/widgets-small/internet.png -n -p 0,471}\
 ${voffset 14}${offset 1}${upspeedgraph enp6s0 58,22 adccea 85c3ff 4000}${offset 1}${downspeedgraph enp6s0 58,22 315bb1 1a336b 34500}
