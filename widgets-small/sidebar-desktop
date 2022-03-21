@@ -88,14 +88,14 @@ ${voffset 4}${goto 58}${color}${fs_used /home} / ${fs_size /home}
 # if a gateway is available (we are connected to a router)
 ${if_gw}\
 ${image ~/conky/monochrome/images/widgets-small/internet.png -n -p 0,408}\
-${voffset 15}${offset 1}${upspeedgraph enp0s25 58,22 adccea 85c3ff 3000}${offset 1}${downspeedgraph enp0s25 58,22 315bb1 1a336b 55000}
-${voffset -69}${goto 58}${color}${addr enp0s25}${offset 9}${color1}local ip
+${voffset 13}${offset -1}${upspeedgraph enp0s25 62,24 adccea 85c3ff 3000}${offset 1}${downspeedgraph enp0s25 62,24 315bb1 1a336b 55000}
+${voffset -71}${goto 58}${color}${addr enp0s25}${offset 9}${color1}local ip
 # use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
-${voffset 3}${alignr 67}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)${offset 9}${color1}torrent
+${voffset 3}${alignr 62}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)${offset 9}${color1}torrent
 ${voffset 6}${alignr 110}${color}${upspeed enp0s25}${offset 9}${color1}up   
 ${voffset 4}${alignr 110}${color}${downspeed enp0s25}${offset 9}${color1}down 
 ${else}\
-${image ~/conky/monochrome/images/widgets-small/ethernet-disconnected.png -n -p 0,414}\
+${image ~/conky/monochrome/images/widgets-small/ethernet-disconnected.png -n -p 1,414}\
 ${voffset 35}${goto 58}no network
 ${voffset 3}${goto 58}connection
 ${voffset 5}
