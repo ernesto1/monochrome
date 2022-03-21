@@ -70,7 +70,7 @@ ${voffset 4}${goto 58}${mem} / ${memmax}
 ${voffset 10}${offset 1}${color2}${if_match ${swapperc} >= 70}${color3}${endif}${swapbar 3, 45}${voffset -1}${goto 58}${color}${swapperc}%${offset 9}${color1}swap${color}
 # :::::::::::::::::::: disk io
 ${image ~/conky/monochrome/images/widgets-small/diskio.png -n -p 0,218}
-${voffset -1}${offset 1}${diskiograph_read /dev/sda 38,22 adccea 85c3ff 40000}${offset 1}${diskiograph_write /dev/sda 38,22 315bb1 1a336b 40000}
+${voffset -1}${offset 1}${diskiograph_read /dev/sda 38,22 adccea 85c3ff 126000}${offset 1}${diskiograph_write /dev/sda 38,22 315bb1 1a336b 106000}
 ${voffset -36}${alignr 110}${color}${diskio_read /dev/sda}${offset 9}${color1}read 
 ${voffset 4}${alignr 110}${color}${diskio_write /dev/sda}${offset 9}${color1}write
 # :::::::::::::::::::: disk space
@@ -92,13 +92,13 @@ ${if_existing /sys/class/net/wlp4s0/operstate up}\
 ${image ~/conky/monochrome/images/widgets-small/wifi.png -n -p 1,407}\
 ${voffset 53}${offset 1}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 3,45 wlp4s0}${voffset -20}\
 ${voffset -14}${goto 58}${color}${wireless_essid wlp4s0}
-${voffset 3}${goto 58}${color}${wireless_bitrate wlp4s0}${goto 113}| channel ${wireless_channel wlp4s0}
-${voffset 3}${goto 58}${color}${wireless_link_qual_perc wlp4s0}%${goto 113}| ${addr wlp4s0}
+${voffset 3}${goto 58}${color}${wireless_bitrate wlp4s0}${goto 123}| channel ${wireless_channel wlp4s0}
+${voffset 3}${goto 58}${color}${wireless_link_qual_perc wlp4s0}%${goto 123}| ${addr wlp4s0}
 # :: upload/download speeds
 ${image ~/conky/monochrome/images/widgets-small/internet.png -n -p 0,471}\
-${voffset 14}${offset 1}${upspeedgraph wlp4s0 58,22 adccea 85c3ff 8200}${offset 1}${downspeedgraph wlp4s0 58,22 315bb1 1a336b 55000}
+${voffset 12}${offset -1}${upspeedgraph wlp4s0 62,24 adccea 85c3ff 8200}${offset 1}${downspeedgraph wlp4s0 62,24 315bb1 1a336b 55000}
 # use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
-${voffset -67}${goto 58}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)${goto 125}${color1}bittorrent
+${voffset -69}${goto 58}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)${goto 125}${color1}bittorrent
 ${voffset 18}${alignr 110}${color}${upspeed wlp4s0}${offset 9}${color1}up   
 ${voffset 4}${alignr 110}${color}${downspeed wlp4s0}${offset 9}${color1}down 
 ${else}\
