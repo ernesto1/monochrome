@@ -1,4 +1,5 @@
 conky.config = {
+  lua_load = '~/conky/monochrome/library.lua',
   update_interval = 2,    -- update interval in seconds
   update_interval_on_battery = 3,
   xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
@@ -71,8 +72,8 @@ ${voffset 10}${offset 1}${color2}${if_match ${swapperc} >= 70}${color3}${endif}$
 # :::::::::::::::::::: disk io
 ${image ~/conky/monochrome/images/widgets-small/diskio.png -n -p 0,218}
 ${voffset -1}${offset 1}${diskiograph_read /dev/sda 38,22 adccea 85c3ff 126000}${offset 1}${diskiograph_write /dev/sda 38,22 315bb1 1a336b 106000}
-${voffset -36}${alignr 110}${color}${diskio_read /dev/sda}${offset 9}${color1}read 
-${voffset 4}${alignr 110}${color}${diskio_write /dev/sda}${offset 9}${color1}write
+${voffset -36}${goto 60}${color}${lua_parse pad ${diskio_read /dev/sda}}${offset 9}${color1}read 
+${voffset 4}${goto 60}${color}${lua_parse pad ${diskio_write /dev/sda}}${offset 9}${color1}write
 # :::::::::::::::::::: disk space
 ${image ~/conky/monochrome/images/widgets-small/circuitry.png -n -p 18,259}\
 ${image ~/conky/monochrome/images/widgets-small/disk-root.png -n -p 1,278}\
@@ -99,8 +100,8 @@ ${image ~/conky/monochrome/images/widgets-small/internet.png -n -p 0,471}\
 ${voffset 12}${offset -1}${upspeedgraph wlp4s0 62,24 adccea 85c3ff 8200}${offset 1}${downspeedgraph wlp4s0 62,24 315bb1 1a336b 55000}
 # use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
 ${voffset -69}${goto 58}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)${goto 125}${color1}bittorrent
-${voffset 18}${alignr 110}${color}${upspeed wlp4s0}${offset 9}${color1}up   
-${voffset 4}${alignr 110}${color}${downspeed wlp4s0}${offset 9}${color1}down 
+${voffset 18}${goto 60}${color}${lua_parse pad ${upspeed wlp4s0}}${offset 9}${color1}up  ${offset 9}${color}${lua_parse pad ${totalup wlp4s0}} ${color1}uploaded
+${voffset 4}${goto 60}${color}${lua_parse pad ${downspeed wlp4s0}}${offset 9}${color1}down${offset 9}${color}${lua_parse pad ${totaldown wlp4s0}} ${color1}downloaded
 ${else}\
 # :::::: ethernet
 ${image ~/conky/monochrome/images/widgets-small/ethernet.png -n -p 1,407}\
