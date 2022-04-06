@@ -1,5 +1,4 @@
 conky.config = {
-  lua_load = '~/conky/monochrome/library.lua',
   update_interval = 2,    -- update interval in seconds
   update_interval_on_battery = 3,
   xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
@@ -12,7 +11,7 @@ conky.config = {
   gap_y = 32,
 
   -- window settings
-  minimum_width = 237,
+  minimum_width = 247,
   minimum_height = 636,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -54,37 +53,37 @@ ${image ~/conky/monochrome/images/widgets-small/system-update.png -n -p 1,3}\
 ${else}\
 ${image ~/conky/monochrome/images/widgets-small/system.png -n -p 1,3}\
 ${endif}\
-${voffset 3}${goto 58}${color1}kernel${goto 102}${color}${kernel}
-${voffset 3}${goto 58}${color1}uptime${goto 102}${color}${uptime}
-${voffset 3}${goto 58}${color1}dnf${goto 102}${color}${tail /tmp/conkyDnf 1 2}
+${voffset 3}${goto 57}${color1}kernel${goto 101}${color}${kernel}
+${voffset 3}${goto 57}${color1}uptime${goto 101}${color}${uptime}
+${voffset 3}${goto 57}${color1}dnf${goto 101}${color}${tail /tmp/conkyDnf 1 2}
 # :::::::::::::::::::: cpu
 ${image ~/conky/monochrome/images/widgets-small/cpu.png -n -p 0,68}\
 ${voffset 22}${offset 7}${cpugraph cpu0 33,33 315bb1 1a336b}
-${voffset -32}${goto 58}${color}${cpu cpu0}%
-${voffset 3}${goto 58}${color}${loadavg}
+${voffset -32}${goto 57}${color}${cpu cpu0}%
+${voffset 3}${goto 57}${color}${loadavg}
 # :::::::::::::::::::: memory
 ${image ~/conky/monochrome/images/widgets-small/memory.png -n -p 6,135}
 ${image ~/conky/monochrome/images/widgets-small/bar.png -n -p 0,194}\
 ${voffset 6}${offset 13}${memgraph 43,21 315bb1 1a336b}
-${voffset -38}${goto 58}${color}${memperc}%
-${voffset 4}${goto 58}${mem} / ${memmax}
-${voffset 10}${offset 1}${color2}${if_match ${swapperc} >= 70}${color3}${endif}${swapbar 3, 45}${voffset -1}${goto 58}${color}${swapperc}%${offset 9}${color1}swap${color}
+${voffset -38}${goto 57}${color}${memperc}%
+${voffset 4}${goto 57}${mem} / ${memmax}
+${voffset 10}${offset 1}${color2}${if_match ${swapperc} >= 70}${color3}${endif}${swapbar 3, 45}${voffset -1}${goto 57}${color}${swapperc}%${offset 9}${color1}swap${color}
 # :::::::::::::::::::: disk io
 ${image ~/conky/monochrome/images/widgets-small/diskio.png -n -p 0,218}
-${voffset -1}${offset 1}${diskiograph_read /dev/sda 38,22 adccea 85c3ff 126000}${offset 1}${diskiograph_write /dev/sda 38,22 315bb1 1a336b 106000}
-${voffset -36}${goto 60}${color}${lua_parse pad ${diskio_read /dev/sda}}${offset 9}${color1}read 
-${voffset 4}${goto 60}${color}${lua_parse pad ${diskio_write /dev/sda}}${offset 9}${color1}write
+${voffset -1}${offset 1}${diskiograph_read /dev/sda 38,22 d6926d ffd799 126000}${offset 1}${diskiograph_write /dev/sda 38,22 315bb1 1a336b 106000}
+${voffset -36}${alignr 120}${color}${diskio_read /dev/sda}${offset 9}${color1}read 
+${voffset 4}${alignr 120}${color}${diskio_write /dev/sda}${offset 9}${color1}write
 # :::::::::::::::::::: disk space
 ${image ~/conky/monochrome/images/widgets-small/circuitry.png -n -p 18,259}\
 ${image ~/conky/monochrome/images/widgets-small/disk-root.png -n -p 1,278}\
 ${voffset 54}${offset 1}${color2}${if_match ${fs_used_perc /} > 90}${color3}${endif}${fs_bar 3, 45 /}
-${voffset -32}${goto 58}${color}fedora (${fs_type /})
-${voffset 4}${goto 58}${color}${fs_used /} / ${fs_size /}
+${voffset -32}${goto 57}${color}fedora (${fs_type /})
+${voffset 4}${goto 57}${color}${fs_used /} / ${fs_size /}
 ${image ~/conky/monochrome/images/widgets-small/circuitry-flipped.png -n -p 18,324}\
 ${image ~/conky/monochrome/images/widgets-small/disk-home.png -n -p 1,343}\
 ${voffset 54}${offset 1}${color2}${if_match ${fs_used_perc /home} > 90}${color3}${endif}${fs_bar 3, 45 /home}
-${voffset -32}${goto 58}${color}home (${fs_type /home})
-${voffset 4}${goto 58}${color}${fs_used /home} / ${fs_size /home}
+${voffset -32}${goto 57}${color}home (${fs_type /home})
+${voffset 4}${goto 57}${color}${fs_used /home} / ${fs_size /home}
 # :::::::::::::::::::: network
 # if a gateway is available (we are connected to a router)
 ${if_gw}\
@@ -92,24 +91,26 @@ ${if_gw}\
 ${if_existing /sys/class/net/wlp4s0/operstate up}\
 ${image ~/conky/monochrome/images/widgets-small/wifi.png -n -p 1,407}\
 ${voffset 53}${offset 1}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 3,45 wlp4s0}${voffset -20}\
-${voffset -14}${goto 58}${color}${wireless_essid wlp4s0}
-${voffset 3}${goto 58}${color}${wireless_bitrate wlp4s0}${goto 123}| channel ${wireless_channel wlp4s0}
-${voffset 3}${goto 58}${color}${wireless_link_qual_perc wlp4s0}%${goto 123}| ${addr wlp4s0}
+${voffset -14}${goto 57}${color}${wireless_essid wlp4s0}
+${voffset 3}${goto 57}${color}${wireless_bitrate wlp4s0}${goto 123}| channel ${wireless_channel wlp4s0}
+${voffset 3}${goto 57}${color}${wireless_link_qual_perc wlp4s0}%${goto 123}| ${addr wlp4s0}
 # :: upload/download speeds
 ${image ~/conky/monochrome/images/widgets-small/internet.png -n -p 0,471}\
-${voffset 12}${offset -1}${upspeedgraph wlp4s0 62,24 adccea 85c3ff 8200}${offset 1}${downspeedgraph wlp4s0 62,24 315bb1 1a336b 55000}
+${voffset 12}${offset -1}${upspeedgraph wlp4s0 62,24 d6926d ffd799 8200}${offset 1}${downspeedgraph wlp4s0 62,24 315bb1 1a336b 55000}
 # use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
-${voffset -69}${goto 58}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)${goto 125}${color1}bittorrent
-${voffset 18}${goto 60}${color}${lua_parse pad ${upspeed wlp4s0}}${offset 9}${color1}up  ${offset 9}${color}${lua_parse pad ${totalup wlp4s0}} ${color1}uploaded
-${voffset 4}${goto 60}${color}${lua_parse pad ${downspeed wlp4s0}}${offset 9}${color1}down${offset 9}${color}${lua_parse pad ${totaldown wlp4s0}} ${color1}downloaded
+${voffset -69}${goto 57}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)${goto 125}${color1}bittorrent
+${voffset 18}${alignr 120}${color}${upspeed wlp4s0}${offset 9}${color1}up   
+${voffset 4}${alignr 120}${color}${downspeed wlp4s0}${offset 9}${color1}down 
+${voffset -30}${alignr 19}${color}${totalup wlp4s0}${offset 9}${color1}uploaded
+${voffset 4}${alignr}${color}${totaldown wlp4s0}${offset 9}${color1}downloaded 
 ${else}\
 # :::::: ethernet
 ${image ~/conky/monochrome/images/widgets-small/ethernet.png -n -p 1,407}\
-${voffset 51}${goto 58}${addr enp6s0}
+${voffset 51}${goto 57}${addr enp6s0}
 # :: upload/download speeds
 ${image ~/conky/monochrome/images/widgets-small/internet.png -n -p 0,471}\
-${voffset 14}${offset 1}${upspeedgraph enp6s0 58,22 adccea 85c3ff 4000}${offset 1}${downspeedgraph enp6s0 58,22 315bb1 1a336b 34500}
-${voffset -67}${goto 58}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)${goto 125}${color1}bittorrent
+${voffset 14}${offset 1}${upspeedgraph enp6s0 58,22 d6926d ffd799 4000}${offset 1}${downspeedgraph enp6s0 58,22 315bb1 1a336b 34500}
+${voffset -67}${goto 57}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)${goto 125}${color1}bittorrent
 ${voffset 18}${alignr 110}${color}${upspeed enp6s0}${offset 9}${color1}up   
 ${voffset 4}${alignr 110}${color}${downspeed enp6s0}${offset 9}${color1}down 
 ${endif}\
@@ -123,16 +124,16 @@ ${voffset 43}
 ${if_match "${acpiacadapter}"=="on-line"}\
 ${if_match ${battery_percent BAT0} == 100}\
 ${image ~/conky/monochrome/images/widgets-small/power-plugged-in.png -n -p 1,550}
-${voffset -34}${goto 58}${color}fully
-${voffset 3}${goto 58}${color}charged
+${voffset -34}${goto 57}${color}fully
+${voffset 3}${goto 57}${color}charged
 ${else}\
 ${image ~/conky/monochrome/images/widgets-small/power-charging.png -n -p 1,550}\
 ${voffset -3}${offset 1}${color2}${if_match ${battery_percent BAT0} < 80}${color3}${endif}${battery_bar 3, 45 BAT0}
-${voffset -15}${goto 58}${color}${battery_time BAT0}
+${voffset -15}${goto 57}${color}${battery_time BAT0}
 ${endif}\
 ${else}\
 ${image ~/conky/monochrome/images/widgets-small/power-battery.png -n -p 1,550}\
 ${voffset -3}${offset 1}${color2}${if_match ${battery_percent BAT0} < 20}${color3}${endif}${battery_bar 3, 45 BAT0}
-${voffset -15}${goto 58}${color}${battery_time BAT0}
+${voffset -15}${goto 57}${color}${battery_time BAT0}
 ${endif}
 ]];
