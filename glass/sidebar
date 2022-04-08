@@ -34,7 +34,10 @@ conky.config = {
 
   imlib_cache_flush_interval = 250,
   -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
-
+  
+  if_up_strictness = 'address', -- network device must be up, having link and an assigned IP address
+                                -- to be considered "up" by ${if_up}
+                                -- values are: up, link or address
   -- font settings
   use_xft = true,
   xftalpha = 0,
@@ -82,7 +85,7 @@ ${image ~/conky/monochrome/images/glass/block.png -n -p 0,293}\
 ${image ~/conky/monochrome/images/glass/internet.png -n -p 18,255}\
 # priority is given to wifi | if connected to a wifi network, graphs will show wifi bandwith usage
 # /sys/class/net/wlp4s0/operstate will contain 'up' if connected to a wifi network, 'down' otherwise
-${if_existing /sys/class/net/wlp4s0/operstate up}\
+${if_up wlp4s0}\
 # wifi upload
 ${voffset 1}${upspeedgraph wlp4s0 48,112 6b91e5 546fb2 8200}
 ${voffset -50}${offset 5}${color}${font0}wifi up

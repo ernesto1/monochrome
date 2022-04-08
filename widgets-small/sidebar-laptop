@@ -35,6 +35,10 @@ conky.config = {
 
   imlib_cache_flush_interval = 300,
   -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
+  
+  if_up_strictness = 'address', -- network device must be up, having link and an assigned IP address
+                                -- to be considered "up" by ${if_up}
+                                -- values are: up, link or address
 
   -- font settings
   draw_shades = false,    -- black shadow on text (not good if text is black)
@@ -85,10 +89,9 @@ ${voffset 54}${offset 1}${color2}${if_match ${fs_used_perc /home} > 90}${color3}
 ${voffset -32}${goto 57}${color}home (${fs_type /home})
 ${voffset 4}${goto 57}${color}${fs_used /home} / ${fs_size /home}
 # :::::::::::::::::::: network
-# if a gateway is available (we are connected to a router)
-${if_gw}\
+# if both wify and ethernet are connected, we give priority to the wifi
 # :::::: wifi
-${if_existing /sys/class/net/wlp4s0/operstate up}\
+${if_up wlp4s0}\
 ${image ~/conky/monochrome/images/widgets-small/wifi.png -n -p 1,407}\
 ${voffset 53}${offset 1}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 3,45 wlp4s0}${voffset -20}\
 ${voffset -14}${goto 57}${color}${wireless_essid wlp4s0}
@@ -98,13 +101,14 @@ ${voffset 3}${goto 57}${color}${wireless_link_qual_perc wlp4s0}%${goto 123}| ${a
 ${image ~/conky/monochrome/images/widgets-small/internet.png -n -p 0,471}\
 ${voffset 12}${offset -1}${upspeedgraph wlp4s0 62,24 d6926d ffd799 8200}${offset 1}${downspeedgraph wlp4s0 62,24 315bb1 1a336b 55000}
 # use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
-${voffset -69}${goto 57}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)${goto 125}${color1}bittorrent
+${voffset -69}${goto 57}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)${offset 9}${color1}bittorrent
 ${voffset 18}${alignr 120}${color}${upspeed wlp4s0}${offset 9}${color1}up   
 ${voffset 4}${alignr 120}${color}${downspeed wlp4s0}${offset 9}${color1}down 
 ${voffset -30}${alignr 19}${color}${totalup wlp4s0}${offset 9}${color1}uploaded
 ${voffset 4}${alignr}${color}${totaldown wlp4s0}${offset 9}${color1}downloaded 
 ${else}\
 # :::::: ethernet
+${if_up enp6s0}\
 ${image ~/conky/monochrome/images/widgets-small/ethernet.png -n -p 1,407}\
 ${voffset 51}${goto 57}${addr enp6s0}
 # :: upload/download speeds
@@ -113,11 +117,11 @@ ${voffset 14}${offset 1}${upspeedgraph enp6s0 58,22 d6926d ffd799 4000}${offset 
 ${voffset -67}${goto 57}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)${goto 125}${color1}bittorrent
 ${voffset 18}${alignr 110}${color}${upspeed enp6s0}${offset 9}${color1}up   
 ${voffset 4}${alignr 110}${color}${downspeed enp6s0}${offset 9}${color1}down 
-${endif}\
 ${else}\
 ${image ~/conky/monochrome/images/widgets-small/wifi-disconnected.png -n -p 0,411}
 ${image ~/conky/monochrome/images/widgets-small/internet-offline.png -n -p 0,471}\
 ${voffset 117}
+${endif}\
 ${endif}\
 # :::::::::::::::::::: power
 ${voffset 43}
