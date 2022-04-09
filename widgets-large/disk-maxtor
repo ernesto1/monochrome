@@ -1,13 +1,13 @@
 conky.config = {
   update_interval = 3,  -- update interval in seconds
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
-  xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
+  xinerama_head = 1,    -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 1976,               -- same as passing -x at command line
-  gap_y = 11,
+  gap_x = 1900,               -- same as passing -x at command line
+  gap_y = 14,
 
   -- window settings
   minimum_width = 187,
@@ -51,10 +51,10 @@ ${if_mounted /run/media/ernesto/MAXTOR}\
 ${image ~/conky/monochrome/images/widgets-large/disk.png -n -p 0,0}\
 ${voffset -4}${goto 2}${diskiograph_read /dev/sdf1 43,80 315bb1 1a336b 60000}
 ${voffset -6}${goto 2}${diskiograph_write /dev/sdf1 43,80 8cb9d6 7b9de2 60000}
-${color1}read  ${color}${diskio_read /dev/sdf1}
+${voffset 2}${color1}read  ${color}${diskio_read /dev/sdf1}
 ${voffset 5}${color1}write ${color}${diskio_write /dev/sdf1}
 # partitions
-${voffset -99}${goto 87}${color1}partitions ${hr 1}
+${voffset -101}${goto 87}${color1}partitions ${hr 1}
 ${voffset 4}${goto 87}${color}maxtor${alignr}[${fs_type /run/media/ernesto/MAXTOR}]
 ${voffset 6}${goto 87}${color}${fs_used /run/media/ernesto/MAXTOR} / ${color}${fs_size /run/media/ernesto/MAXTOR}
 ${voffset 1}${goto 87}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 3, 100 /run/media/ernesto/MAXTOR}

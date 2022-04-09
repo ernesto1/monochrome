@@ -1,12 +1,12 @@
 conky.config = {
   update_interval = 6,  -- update interval in seconds
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
-  xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
+  xinerama_head = 1,    -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
   alignment = 'bottom_left',
-  gap_x = 89,         -- gap between border of the screen and the conky window, same as passing -x at command line
+  gap_x = 157,         -- gap between border of the screen and the conky window, same as passing -x at command line
   gap_y = 82,
 
   -- window settings
@@ -45,6 +45,6 @@ conky.config = {
 conky.text = [[
 ${voffset 3}${color1}kernel${goto 68}${color}${kernel}..
 ${voffset 3}${color1}uptime${goto 68}${color}${uptime}
-${voffset 3}${color1}dnf${goto 68}${color}${if_existing /tmp/conkyDnf new}${color1}${endif}${tail /tmp/conkyDnf 1 2}
 ${voffset 3}${color1}compositor${goto 68}${color}${execi 3600 echo $XDG_SESSION_TYPE}
+${voffset 3}${color1}dnf${goto 68}${color}${tail /tmp/conkyDnf 1 2}
 ]];
