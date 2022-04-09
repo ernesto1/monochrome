@@ -59,10 +59,10 @@ ${image ~/conky/monochrome/images/widgets-large/ethernet.png -n -p 98,51}\
 ${else}\
 ${image ~/conky/monochrome/images/widgets-large/ethernet-offline.png -n -p 35,51}\
 ${endif}\
-${voffset 13}${offset 4}${upspeedgraph enp0s25 70,79 8cb9d6 7b9de2 3000}
+${voffset 11}${offset 3}${upspeedgraph enp0s25 73,81 8cb9d6 7b9de2 3000}
 ${voffset 9}${color1}up${alignr 98}${color}${upspeed enp0s25}
 ${voffset 5}${color1}total${alignr 98}${color}${totalup enp0s25}
-${voffset -123}${offset 102}${downspeedgraph enp0s25 70,79 315bb1 1a336b 55000}
+${voffset -126}${offset 101}${downspeedgraph enp0s25 73,81 315bb1 1a336b 55000}
 ${voffset 9}${goto 98}${color1}down${alignr}${color}${downspeed enp0s25}
 ${voffset 5}${goto 98}${color1}total${alignr}${color}${totaldown enp0s25}
 # we need to remove the trailing spacing added the moment we added voffset'ed the upload graph
