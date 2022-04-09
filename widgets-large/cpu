@@ -6,12 +6,12 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 437,               -- same as passing -x at command line
-  gap_y = 47,
+  gap_x = 365,               -- same as passing -x at command line
+  gap_y = 11,
 
   -- window settings
-  minimum_width = 97,
-  minimum_height = 97,
+  minimum_width = 318,
+  minimum_height = 150,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -23,7 +23,7 @@ conky.config = {
 
   -- window borders
   draw_borders = false,     -- draw borders around the conky window
-  border_width = 0,         -- width of border window in pixels
+  border_width = 1,         -- width of border window in pixels
   stippled_borders = 0,     -- border stippling (dashing) in pixels
   border_inner_margin = 0,  -- margin between the border and text in pixels
   border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
@@ -31,6 +31,9 @@ conky.config = {
   -- graph settings
   draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
                               -- does not include bars, ie. wifi strength bar, cpu bar
+
+  top_name_verbose = true,    -- show full command in ${top ...}
+  top_name_width = 21,        -- how many characters to print
 
   imlib_cache_flush_interval = 300,
   -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
@@ -45,13 +48,23 @@ conky.config = {
 };
 
 conky.text = [[
-${voffset 10}${offset 15}${color2}${if_match ${cpu cpu1} >= 90}${color3}${endif}${cpubar cpu1 3, 66}
+${image ~/conky/monochrome/images/widgets-large/cpu.png -n -p 0,14}\
+${voffset 24}${offset 15}${color2}${if_match ${cpu cpu1} >= 90}${color3}${endif}${cpubar cpu1 3, 66}
 ${voffset -4}${offset 15}${color2}${if_match ${cpu cpu2} >= 90}${color3}${endif}${cpubar cpu2 3, 66}
 ${voffset -4}${offset 15}${color2}${if_match ${cpu cpu3} >= 90}${color3}${endif}${cpubar cpu3 3, 66}
 ${voffset -4}${offset 15}${color2}${if_match ${cpu cpu4} >= 90}${color3}${endif}${cpubar cpu4 3, 66}
 ${voffset -4}${offset 15}${color2}${if_match ${cpu cpu5} >= 90}${color3}${endif}${cpubar cpu5 3, 66}
 ${voffset -4}${offset 15}${color2}${if_match ${cpu cpu6} >= 90}${color3}${endif}${cpubar cpu6 3, 66}
 ${voffset -4}${offset 15}${color2}${if_match ${cpu cpu7} >= 90}${color3}${endif}${cpubar cpu7 3, 66}
-${voffset -4}${offset 15}${color2}${if_match ${cpu cpu8} >= 90}${color3}${endif}${cpubar cpu8 3, 66}\
-${image ~/conky/monochrome/images/widgets-large/cpu.png -n -p 0,0}
+${voffset -4}${offset 15}${color2}${if_match ${cpu cpu8} >= 90}${color3}${endif}${cpubar cpu8 3, 66}
+${voffset 5}${cpugraph cpu0 39,96 315bb1 1a336b}
+${voffset -157}${goto 108}${color1}process${alignr}cpu   pid
+${goto 108}${voffset -3}${hr}${color}
+${goto 108}${voffset 2}${top name 1}${top cpu 1}% ${top pid 1}
+${goto 108}${voffset 3}${top name 2}${top cpu 2}% ${top pid 2}
+${goto 108}${voffset 3}${top name 3}${top cpu 3}% ${top pid 3}
+${goto 108}${voffset 3}${top name 4}${top cpu 4}% ${top pid 4}
+${goto 108}${voffset 3}${top name 5}${top cpu 5}% ${top pid 5}
+${goto 108}${voffset 16}${color1}cpu  ${color}${cpu cpu0}%
+${goto 108}${voffset 3}${color1}load ${color}${loadavg}  
 ]];
