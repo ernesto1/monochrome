@@ -6,12 +6,12 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 863,                -- same as passing -x at command line
-  gap_y = 48,
+  gap_x = 783,                -- same as passing -x at command line
+  gap_y = 59,
 
   -- window settings
-  minimum_width = 186,
-  minimum_height = 96,
+  minimum_width = 210,
+  minimum_height = 94,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -23,7 +23,7 @@ conky.config = {
 
   -- window borders
   draw_borders = false,     -- draw borders around the conky window
-  border_width = 0,         -- width of border window in pixels
+  border_width = 1,         -- width of border window in pixels
   stippled_borders = 0,     -- border stippling (dashing) in pixels
   border_inner_margin = 0,  -- margin between the border and text in pixels
   border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
@@ -31,6 +31,9 @@ conky.config = {
   -- graph settings
   draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
                               -- does not include bars, ie. wifi strength bar, cpu bar
+
+  top_name_verbose = true,    -- show full command in ${top ...}
+  top_name_width = 20,        -- how many characters to print
 
   imlib_cache_flush_interval = 300,
   -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
@@ -44,10 +47,11 @@ conky.config = {
 };
 
 conky.text = [[
-${image ~/conky/monochrome/images/widgets-large/memoryProcesses.png -n -p 0,0}\
- process${alignr}mem   pid 
- ${voffset 9}${top_mem name 1}${alignr}${top_mem mem_res 1} ${top_mem pid 1} 
- ${voffset 5}${top_mem name 2}${alignr}${top_mem mem_res 2} ${top_mem pid 2} 
- ${voffset 5}${top_mem name 3}${alignr}${top_mem mem_res 3} ${top_mem pid 3} 
- ${voffset 5}${top_mem name 4}${alignr}${top_mem mem_res 4} ${top_mem pid 4} 
+${color1}process${alignr}mem   pid
+${voffset -3}${hr}${color}
+${voffset 2}${top_mem name 1}${alignr}${top_mem mem_res 1} ${top_mem pid 1}
+${voffset 3}${top_mem name 2}${alignr}${top_mem mem_res 2} ${top_mem pid 2}
+${voffset 3}${top_mem name 3}${alignr}${top_mem mem_res 3} ${top_mem pid 3}
+${voffset 3}${top_mem name 4}${alignr}${top_mem mem_res 4} ${top_mem pid 4}
+${voffset 3}${top_mem name 5}${alignr}${top_mem mem_res 5} ${top_mem pid 5}
 ]];
