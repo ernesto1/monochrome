@@ -47,8 +47,8 @@ conky.config = {
 conky.text = [[
 # disk io
 ${image ~/conky/monochrome/images/widgets-large/disk.png -n -p 0,0}\
-${voffset -4}${goto 2}${diskiograph_read /dev/sda 43,80 315bb1 1a336b 200000}
-${voffset -6}${goto 2}${diskiograph_write /dev/sda 43,80 8cb9d6 7b9de2 280000}
+${voffset -4}${goto 2}${diskiograph_read /dev/sda 43,80 8cb9d6 7b9de2 200000}
+${voffset -6}${goto 2}${diskiograph_write /dev/sda 43,80 315bb1 1a336b 280000}
 ${voffset 2}${color1}read  ${color}${diskio_read /dev/sda}
 ${voffset 5}${color1}write ${color}${diskio_write /dev/sda}
 # partitions
