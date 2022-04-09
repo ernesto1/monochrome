@@ -1,17 +1,17 @@
 conky.config = {
   update_interval = 2,  -- update interval in seconds
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
-  xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
+  xinerama_head = 1,    -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 1184,               -- same as passing -x at command line
-  gap_y = 11,
+  gap_x = 1018,               -- same as passing -x at command line
+  gap_y = 12,
 
   -- window settings
-  minimum_width = 96,
-  minimum_height = 133,
+  minimum_width = 186,
+  minimum_height = 181,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -23,7 +23,7 @@ conky.config = {
 
   -- window borders
   draw_borders = false,     -- draw borders around the conky window
-  border_width = 0,         -- width of border window in pixels
+  border_width = 1,         -- width of border window in pixels
   stippled_borders = 0,     -- border stippling (dashing) in pixels
   border_inner_margin = 0,  -- margin between the border and text in pixels
   border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
@@ -35,6 +35,10 @@ conky.config = {
   imlib_cache_flush_interval = 300,
   -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
 
+  if_up_strictness = 'address', -- network device must be up, having link and an assigned IP address
+                                -- to be considered "up" by ${if_up}
+                                -- values are: up, link or address
+
   -- font settings
   draw_shades = false,    -- black shadow on text (not good if text is black)
   draw_outline = false,   -- black outline around text (not good if text is black)
@@ -45,12 +49,22 @@ conky.config = {
 };
 
 conky.text = [[
-${voffset 7}${offset 4}${upspeedgraph enp0s25 79,87 8cb9d6 7b9de2 3000}
-${voffset 2}${color1}upload${alignr}${color}${upspeed enp0s25}
-${voffset 5}${color1}total${alignr}${color}${totalup enp0s25}\
-${if_gw}\
-${image ~/conky/monochrome/images/widgets-large/network-up.png -n -p 0,0}\
+${color1}local ip${goto 66}${color}${addr enp0s25}
+# use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
+${voffset 3}${color1}bittorrent${goto 66}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
+${voffset 3}${color1}zoom${goto 66}${color}${if_running zoom}running${else}off${endif}
+${if_up enp0s25}\
+${image ~/conky/monochrome/images/widgets-large/ethernet.png -n -p 0,51}\
+${image ~/conky/monochrome/images/widgets-large/ethernet.png -n -p 98,51}\
 ${else}\
-${image ~/conky/monochrome/images/widgets-large/network-disabled.png -n -p 0,0 s 370x104}\
+${image ~/conky/monochrome/images/widgets-large/ethernet-offline.png -n -p 35,51}\
 ${endif}\
+${voffset 13}${offset 4}${upspeedgraph enp0s25 70,79 8cb9d6 7b9de2 3000}
+${voffset 9}${color1}up${alignr 98}${color}${upspeed enp0s25}
+${voffset 5}${color1}total${alignr 98}${color}${totalup enp0s25}
+${voffset -123}${offset 102}${downspeedgraph enp0s25 70,79 315bb1 1a336b 55000}
+${voffset 9}${goto 98}${color1}down${alignr}${color}${downspeed enp0s25}
+${voffset 5}${goto 98}${color1}total${alignr}${color}${totaldown enp0s25}
+# we need to remove the trailing spacing added the moment we added voffset'ed the upload graph
+${voffset -200}
 ]];
