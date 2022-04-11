@@ -6,11 +6,11 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 704,                -- same as passing -x at command line
+  gap_x = 789,                -- same as passing -x at command line
   gap_y = 12,
 
   -- window settings
-  minimum_width = 84,
+  minimum_width = 170,
   minimum_height = 130,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -47,6 +47,6 @@ conky.config = {
 conky.text = [[
 ${image ~/conky/monochrome/images/widgets-large/memory.png -n -p 0,0}\
 ${voffset -2}${color}${offset 13}${memgraph 80, 44 315bb1 1a336b}
-${voffset 8}${color1}mem  ${color}${memperc}%${goto 60}${mem} / ${memmax}
-${voffset 3}${color1}swap ${color}${swapperc}%${goto 60}${if_match ${swapperc} > 90}${color3}${endif}${swapbar 3, 100}
+${voffset 7}${color1}mem  ${color}${memperc}%${goto 60}${mem} / ${memmax}
+${voffset 4}${color1}swap ${color}${swapperc}%${goto 60}${if_match ${swapperc} > 90}${color3}${endif}${swapbar 3, 100}
 ]];
