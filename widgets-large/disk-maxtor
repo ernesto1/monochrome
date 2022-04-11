@@ -6,12 +6,12 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 1900,               -- same as passing -x at command line
-  gap_y = 14,
+  gap_x = 1985,               -- same as passing -x at command line
+  gap_y = 10,
 
   -- window settings
   minimum_width = 187,
-  minimum_height = 133,
+  minimum_height = 130,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -49,13 +49,14 @@ conky.text = [[
 # disk io | write: 28.7MiB  read: 22.6MiB
 ${if_mounted /run/media/ernesto/MAXTOR}\
 ${image ~/conky/monochrome/images/widgets-large/disk.png -n -p 0,0}\
-${voffset -4}${goto 2}${diskiograph_read /dev/sdf1 43,80 8cb9d6 7b9de2 60000}
-${voffset -6}${goto 2}${diskiograph_write /dev/sdf1 43,80 315bb1 1a336b 60000}
-${voffset 2}${color1}read  ${color}${diskio_read /dev/sdf1}
-${voffset 5}${color1}write ${color}${diskio_write /dev/sdf1}
+${voffset -6}${diskiograph_read /dev/sdf1 44,77 d6926d ffd799 60000}
+${voffset -13}${diskiograph_write /dev/sdf1 44,77 315bb1 1a336b 60000}
+${voffset 1}${color1}read  ${color}${diskio_read /dev/sdf1}
+${voffset 4}${color1}write ${color}${diskio_write /dev/sdf1}
 # partitions
-${voffset -101}${goto 87}${color1}partitions ${hr 1}
-${voffset 4}${goto 87}${color}maxtor${alignr}[${fs_type /run/media/ernesto/MAXTOR}]
+${voffset -125}${goto 87}external drive
+${voffset 18}${goto 87}${color1}partitions ${hr 1}
+${goto 87}${color}maxtor${alignr}[${fs_type /run/media/ernesto/MAXTOR}]
 ${voffset 6}${goto 87}${color}${fs_used /run/media/ernesto/MAXTOR} / ${color}${fs_size /run/media/ernesto/MAXTOR}
 ${voffset 1}${goto 87}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 3, 100 /run/media/ernesto/MAXTOR}
 ${else}\

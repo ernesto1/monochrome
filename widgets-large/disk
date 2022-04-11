@@ -6,12 +6,12 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 1224,               -- same as passing -x at command line
-  gap_y = 14,
+  gap_x = 1309,               -- same as passing -x at command line
+  gap_y = 10,
 
   -- window settings
   minimum_width = 239,
-  minimum_height = 133,
+  minimum_height = 130,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -47,16 +47,16 @@ conky.config = {
 conky.text = [[
 # disk io
 ${image ~/conky/monochrome/images/widgets-large/disk.png -n -p 0,0}\
-${voffset -4}${goto 2}${diskiograph_read /dev/sda 43,80 8cb9d6 7b9de2 200000}
-${voffset -6}${goto 2}${diskiograph_write /dev/sda 43,80 315bb1 1a336b 280000}
-${voffset 2}${color1}read  ${color}${diskio_read /dev/sda}
-${voffset 5}${color1}write ${color}${diskio_write /dev/sda}
+${voffset -6}${diskiograph_read /dev/sda 44,77 d6926d ffd799 200000}
+${voffset -13}${diskiograph_write /dev/sda 44,77 315bb1 1a336b 280000}
+${voffset 1}${color1}read  ${color}${diskio_read /dev/sda}
+${voffset 4}${color1}write ${color}${diskio_write /dev/sda}
 # partitions
-${image ~/conky/monochrome/images/widgets-large/disk-space.png -n -p 87,0}\
-${voffset -134}${goto 139}fedora${alignr}[${fs_type /}]
-${voffset 6}${offset 139}${fs_used /} / ${color}${fs_size /}
-${voffset 1}${offset 139}${color2}${if_match ${fs_used_perc /} > 90}${color3}${endif}${fs_bar 3, 100 /}
-${voffset 4}${offset 139}${color}home${alignr}[${fs_type /home}]
-${voffset 6}${offset 139}${fs_used /home} / ${color}${fs_size /home}
-${voffset 1}${offset 139}${color2}${if_match ${fs_used_perc /home} > 90}${color3}${endif}${fs_bar 3, 100 /home}
+${image ~/conky/monochrome/images/widgets-large/partitions.png -n -p 87,0}\
+${voffset -125}${goto 139}fedora${alignr}[${fs_type /}]
+${voffset 5}${offset 139}${fs_used /} / ${color}${fs_size /}
+${offset 139}${color2}${if_match ${fs_used_perc /} > 90}${color3}${endif}${fs_bar 3, 100 /}
+${offset 139}${color}home${alignr}[${fs_type /home}]
+${voffset 5}${offset 139}${fs_used /home} / ${color}${fs_size /home}
+${offset 139}${color2}${if_match ${fs_used_perc /home} > 90}${color3}${endif}${fs_bar 3, 100 /home}
 ]];
