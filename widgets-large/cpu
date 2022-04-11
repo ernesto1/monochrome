@@ -6,7 +6,7 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 365,               -- same as passing -x at command line
+  gap_x = 450,               -- same as passing -x at command line
   gap_y = 11,
 
   -- window settings
@@ -65,6 +65,6 @@ ${goto 108}${voffset 3}${top name 2}${top cpu 2}% ${top pid 2}
 ${goto 108}${voffset 3}${top name 3}${top cpu 3}% ${top pid 3}
 ${goto 108}${voffset 3}${top name 4}${top cpu 4}% ${top pid 4}
 ${goto 108}${voffset 3}${top name 5}${top cpu 5}% ${top pid 5}
-${goto 108}${voffset 16}${color1}cpu  ${color}${cpu cpu0}%
-${goto 108}${voffset 3}${color1}load ${color}${loadavg}  
+${goto 108}${voffset 15}${color1}cpu  ${color}${cpu cpu0}%
+${goto 108}${voffset 4}${color1}load ${color}${loadavg}  
 ]];
