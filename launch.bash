@@ -220,7 +220,4 @@ do
 done
 
 echo -e "\n::: starting dnf package lookup service"
-# prepare dnf package lookup file
-# this file is read by the 'system' conky to get the number of package updates, see dnfPackageLookup.bash
-echo ':: stand by ::' > /tmp/conkyDnf
 ~/conky/monochrome/dnfPackageLookup.bash &

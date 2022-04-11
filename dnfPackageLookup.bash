@@ -3,18 +3,20 @@
 # ie. less than half of the cores are in use in the 5 min load average
 
 function onExitSignal() {
-  echo "$(basename $0) | received shutdown signal, exiting script"
-  rm /tmp/dnf.updates # delete temp files
+  echo "$(basename $0) | received shutdown signal, cleaning up temporary files and exiting script"
+  rm -f /tmp/dnf.*    # delete temp files
   kill $(jobs -p)     # kill any child processes, ie. the sleep command
   exit 0
 }
 
 trap onExitSignal SIGINT SIGTERM
-
-echo "$(date +'%D %r') - starting dnf repo package lookup" | tee /tmp/conkyDnf.log
+scriptName=$(basename $0 .bash)
+logFile=/tmp/${scriptName}.log
+packagesFile=/tmp/dnf.packages    # file to list the new packages
+echo "$(date +'%D %r') - starting dnf repo package lookup" | tee ${logFile}
 totalCores=$(grep -c processor /proc/cpuinfo)
 halfCores=$(( totalCores / 2 ))
-echo "$(date +'%D %r') - system is deemed iddle if the 5 min cpu load average is less than ${halfCores}" | tee /tmp/conkyDnf.log
+echo "$(date +'%D %r') - system is deemed iddle if the 5 min cpu load average is less than ${halfCores}" | tee ${logFile}
 
 while [ true ]; do
     # the output format of `uptime` changes if the machine runs for longer than a day
@@ -23,7 +25,7 @@ while [ true ]; do
     #  more than a day: 22:54:03 up 2 days,  2:12,  1 user,  load average: 0.53, 1.16, 1.40
     loadAvg=$(uptime)
     loadAvg=$(echo ${loadAvg#*load average: } | cut -d, -f2)
-    echo "$(date +'%D %r') - 5 min load avg = $loadAvg" | tee -a /tmp/conkyDnf.log
+    echo "$(date +'%D %r') - 5 min load avg = $loadAvg" | tee -a ${logFile}
     
     # perform dnf lookup if the system is iddle
     if [[ $loadAvg < $halfCores ]]; then
@@ -36,16 +38,19 @@ while [ true ]; do
         # code.x86_64                      1.59.0-1628120127.el8              code        
         # skypeforlinux.x86_64             8.75.0.140-1                       skype-stable
         dnf list updates > /tmp/dnf.updates
-        newPackages=$(grep -cE '^(([[:alnum:]]|\.|_|-)+[[:space:]]+){2}([[:alnum:]]|\.|_|-)+$' /tmp/dnf.updates)
-        echo -n "$(date +'%D %r') - " | tee -a /tmp/conkyDnf.log 
+        packages=$(grep -cE '^(([[:alnum:]]|\.|_|-)+[[:blank:]]+){2}([[:alnum:]]|\.|_|-|[[:blank:]])+$' /tmp/dnf.updates)
+        echo -n "$(date +'%D %r') - " | tee -a ${logFile} 
         
-        if [[ $newPackages > 0 ]]; then
-            echo "$newPackages new update(s)" | tee /tmp/conkyDnf | tee -a /tmp/conkyDnf.log
+        if [[ $packages > 0 ]]; then
+            echo "$packages new update(s)" | tee -a ${logFile}
+            # package name and version is formatted into a tabular format of 35 characters for conky to print
+            grep -E '^(([[:alnum:]]|\.|_|-)+[[:blank:]]+){2}([[:alnum:]]|\.|_|-|[[:blank:]])+$' /tmp/dnf.updates | column --table --table-right 2 --table-truncate 2 --table-hide 3 --output-width 35 > ${packagesFile}
         else
-            echo 'no updates available' | tee /tmp/conkyDnf | tee -a /tmp/conkyDnf.log
+            echo 'no updates available' | tee -a ${logFile}
+            rm -f ${packagesFile}
         fi
     else
-        echo "$(date +'%D %r') - load average too high, trying again later" | tee -a /tmp/conkyDnf.log
+        echo "$(date +'%D %r') - load average too high, trying again later" | tee -a ${logFile}
     fi
     
     sleep 10m &   # run the sleep process in the background so we can kill it if we get a terminate signal

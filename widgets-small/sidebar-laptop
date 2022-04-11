@@ -52,14 +52,14 @@ conky.config = {
 conky.text = [[
 # :::::::::::::::::::: system
 # system image 'lights up' if package updates are available
-${if_existing /tmp/conkyDnf new}\
+${if_existing /tmp/dnf.packages}\
 ${image ~/conky/monochrome/images/widgets-small/system-update.png -n -p 1,3}\
 ${else}\
 ${image ~/conky/monochrome/images/widgets-small/system.png -n -p 1,3}\
 ${endif}\
 ${voffset 3}${goto 57}${color1}kernel${goto 101}${color}${kernel}
 ${voffset 3}${goto 57}${color1}uptime${goto 101}${color}${uptime}
-${voffset 3}${goto 57}${color1}dnf${goto 101}${color}${tail /tmp/conkyDnf 1 2}
+${voffset 3}${goto 57}${color1}dnf${goto 101}${color}${if_existing /tmp/dnf.packages}${lines /tmp/dnf.packages} new update(s)${else}no updates available${endif}
 # :::::::::::::::::::: cpu
 ${image ~/conky/monochrome/images/widgets-small/cpu.png -n -p 0,68}\
 ${voffset 22}${offset 7}${cpugraph cpu0 33,33 315bb1 1a336b}

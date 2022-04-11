@@ -62,6 +62,6 @@ ${color1}${goto 37}zoom${goto 73}${color}${if_running zoom}running${else}off${en
 
 ${color1}${goto 25}kernel${goto 73}${color}${kernel}
 ${voffset 3}${goto 25}${color1}uptime${goto 73}${color}${uptime}
-${voffset 3}${goto 43}${color1}dnf${goto 73}${color}${if_existing /tmp/conkyDnf new}${color1}${endif}${tail /tmp/conkyDnf 1 2}
+${voffset 3}${goto 43}${color1}dnf${goto 73}${color}${if_existing /tmp/dnf.packages}${lines /tmp/dnf.packages} new update(s)${else}no updates available${endif}
 ${voffset 2}${color1}compositor${goto 73}${color}${execi 3600 echo $XDG_SESSION_TYPE}
 ]];

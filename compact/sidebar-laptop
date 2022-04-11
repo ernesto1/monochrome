@@ -113,5 +113,5 @@ ${voffset 3}${offset 2}${color}${battery_percent BAT0}%${goto 37}${color2}${if_m
 ${image ~/conky/monochrome/images/compact/bar.png -n -p 35,686}\
 # -------------- system
 ${voffset 10}${offset 2}${color1}uptime ${color}${uptime}
-${voffset 3}${offset 2}${color1}dnf    ${color}${if_existing /tmp/conkyDnf new}${color1}${endif}${tail /tmp/conkyDnf 1 2}
+${voffset 3}${offset 2}${color1}dnf    ${color}${if_existing /tmp/dnf.packages}${lines /tmp/dnf.packages} new update(s)${else}no updates available${endif}
 ]];
