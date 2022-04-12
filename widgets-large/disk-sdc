@@ -49,8 +49,8 @@ conky.text = [[
 ${image ~/conky/monochrome/images/widgets-large/disk.png -n -p 0,0}\
 ${voffset -6}${diskiograph_read /dev/sdc 44,77 d6926d ffd799 240000}
 ${voffset -13}${diskiograph_write /dev/sdc 44,77 315bb1 1a336b 250000}
-${voffset 1}${color1}read  ${color}${diskio_read /dev/sdc}
-${voffset 4}${color1}write ${color}${diskio_write /dev/sdc}
+${voffset 1}${color1}read${alignr 111}${color}${diskio_read /dev/sdc}
+${voffset 4}${color1}write${alignr 111}${color}${diskio_write /dev/sdc}
 # partitions
 ${voffset -98}${goto 87}${color1}partitions ${hr 1}
 ${voffset 4}${goto 87}${color}betty${alignr}[${fs_type /media/betty}]

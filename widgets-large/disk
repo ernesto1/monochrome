@@ -49,8 +49,8 @@ conky.text = [[
 ${image ~/conky/monochrome/images/widgets-large/disk.png -n -p 0,0}\
 ${voffset -6}${diskiograph_read /dev/sda 44,77 d6926d ffd799 200000}
 ${voffset -13}${diskiograph_write /dev/sda 44,77 315bb1 1a336b 280000}
-${voffset 1}${color1}read  ${color}${diskio_read /dev/sda}
-${voffset 4}${color1}write ${color}${diskio_write /dev/sda}
+${voffset 1}${color1}read${alignr 164}${color}${diskio_read /dev/sda}
+${voffset 4}${color1}write${alignr 164}${color}${diskio_write /dev/sda}
 # partitions
 ${image ~/conky/monochrome/images/widgets-large/partitions.png -n -p 87,0}\
 ${voffset -125}${goto 139}fedora${alignr}[${fs_type /}]
