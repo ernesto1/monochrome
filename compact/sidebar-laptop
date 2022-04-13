@@ -34,6 +34,10 @@ conky.config = {
 
   imlib_cache_flush_interval = 300,
   -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
+  
+  if_up_strictness = 'address', -- network device must be up, having link and an assigned IP address
+                                -- to be considered "up" by ${if_up}
+                                -- values are: up, link or address
 
   -- font settings
   draw_shades = false,    -- black shadow on text (not good if text is black)
@@ -70,7 +74,7 @@ ${voffset 3}${color}${offset 2}${top_mem name 4}${alignr 2}${top_mem mem_res 4} 
 # -------------- network
 ${image ~/conky/monochrome/images/compact/gauge-internet.png -n -p 0,314}
 # if connected on wifi
-${if_existing /sys/class/net/wlp4s0/operstate up}\
+${if_up wlp4s0}\
 ${voffset -9}${offset 40}${upspeedgraph wlp4s0 35,67 6b91e5 546fb2 8200}${offset 3}${downspeedgraph wlp4s0 35,67 315bb1 1a336b 19000}
 ${voffset -2}${offset 2}${color1}up    ${color}${upspeed wlp4s0}${alignr 2}${color}${downspeed wlp4s0}  ${color1}down
 ${voffset 3}${offset 2}${color1}total ${color}${totalup wlp4s0}${alignr 2}${color}${totaldown wlp4s0} ${color1}total
@@ -82,7 +86,7 @@ ${voffset 3}${offset 2}${color1}total ${color}${totalup enp6s0}${alignr 2}${colo
 ${endif}\
 ${voffset 8}${offset 2}${color1}bittorrent ${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
 ${voffset 3}${offset 2}${color1}zoom       ${color}${if_running zoom}running${else}off${endif}
-${if_existing /sys/class/net/wlp4s0/operstate up}\
+${if_up wlp4s0}\
 ${image ~/conky/monochrome/images/compact/wifi.png -n -p 0,431}\
 ${voffset 8}${alignr 2}${color}${addr wlp4s0} ${color1}     ip
 ${voffset 3}${alignr 2}${color}${wireless_essid wlp4s0} ${color1}network
