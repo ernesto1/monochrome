@@ -38,13 +38,14 @@ while [ true ]; do
         # code.x86_64                      1.59.0-1628120127.el8              code        
         # skypeforlinux.x86_64             8.75.0.140-1                       skype-stable
         dnf list updates > /tmp/dnf.updates
-        packages=$(grep -cE '^(([[:alnum:]]|\.|_|-)+[[:blank:]]+){2}([[:alnum:]]|\.|_|-|[[:blank:]])+$' /tmp/dnf.updates)
+        regex='^(([[:alnum:]]|\.|_|-)+[[:blank:]]+){2}([[:alnum:]]|\.|_|-|[[:blank:]])+$'
+        packages=$(grep -cE $regex /tmp/dnf.updates)
         echo -n "$(date +'%D %r') - " | tee -a ${logFile} 
         
         if [[ $packages > 0 ]]; then
             echo "$packages new update(s)" | tee -a ${logFile}
-            # package name and version is formatted into a tabular format of 35 characters for conky to print
-            grep -E '^(([[:alnum:]]|\.|_|-)+[[:blank:]]+){2}([[:alnum:]]|\.|_|-|[[:blank:]])+$' /tmp/dnf.updates | column --table --table-right 2 --table-truncate 2 --table-hide 3 --output-width 35 > ${packagesFile}
+            # package name and version is formatted into a tabular layout of 35 characters for conky to print
+            grep -E $regex /tmp/dnf.updates | column --table --table-right 2 --table-truncate 2 --table-hide 3 --output-width 35 > ${packagesFile}
         else
             echo 'no updates available' | tee -a ${logFile}
             rm -f ${packagesFile}
