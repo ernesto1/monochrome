@@ -7,11 +7,11 @@ conky.config = {
 
   -- window alignment
   alignment = 'top_left',  -- top|middle|bottom_left|right
-  gap_x = 174,             -- same as passing -x at command line
+  gap_x = 184,             -- same as passing -x at command line
   gap_y = 32,
 
-  -- window settings
-  minimum_width = 382,
+  -- window settings +31
+  minimum_width = 439,
   minimum_height = 190,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -35,6 +35,9 @@ conky.config = {
 
   imlib_cache_flush_interval = 300,
   -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
+  
+  top_name_verbose = true,    -- show full command in ${top ...}
+  top_name_width = 20,        -- how many characters to print
 
   -- font settings
   draw_shades = false,    -- black shadow on text (not good if text is black)
@@ -46,24 +49,31 @@ conky.config = {
 };
 
 conky.text = [[
-${voffset 3}${goto 80}${color1}compositor${goto 147}${color}${execi 3600 echo $XDG_SESSION_TYPE}
-${voffset 3}${goto 80}${color1}zoom${goto 147}${color}${if_running zoom}running${else}off${endif}
+${voffset 3} ${color1}kernel${offset 9}${color}${kernel}
+${voffset 3} ${color1}zoom  ${offset 9}${color}${if_running zoom}running${else}off${endif}
 # :::::::::::::::::::: cpu processes
 ${image ~/conky/monochrome/images/widgets-small/table-processes-cpu.png -n -p 0,68}\
-${voffset 36} process${goto 126}cpu   pid 
+${voffset 36} process${goto 157}cpu   pid 
 ${voffset 6} ${top name 1}${top cpu 1}% ${top pid 1}
-${voffset 3} ${top name 2}${top cpu 2}% ${top pid 2} 
-${voffset 3} ${top name 3}${top cpu 3}% ${top pid 3} 
-${voffset 3} ${top name 4}${top cpu 4}% ${top pid 4} 
-${voffset 3} ${top name 5}${top cpu 5}% ${top pid 5} 
-${voffset 3} ${top name 6}${top cpu 6}% ${top pid 6} 
+${voffset 3} ${top name 2}${top cpu 2}% ${top pid 2}
+${voffset 3} ${top name 3}${top cpu 3}% ${top pid 3}
+${voffset 3} ${top name 4}${top cpu 4}% ${top pid 4}
+${voffset 3} ${top name 5}${top cpu 5}% ${top pid 5}
+${voffset 3} ${top name 6}${top cpu 6}% ${top pid 6}
 # :::::::::::::::::::: memory processes
-${image ~/conky/monochrome/images/widgets-small/table-processes-memory.png -n -p 195,68}\
-${voffset -112}${goto 200}process${alignr}mem   pid 
-${goto 200}${voffset 6}${top_mem name 1}${alignr}${top_mem mem_res 1} ${top_mem pid 1} 
-${goto 200}${voffset 3}${top_mem name 2}${alignr}${top_mem mem_res 2} ${top_mem pid 2} 
-${goto 200}${voffset 3}${top_mem name 3}${alignr}${top_mem mem_res 3} ${top_mem pid 3} 
-${goto 200}${voffset 3}${top_mem name 4}${alignr}${top_mem mem_res 4} ${top_mem pid 4} 
-${goto 200}${voffset 3}${top_mem name 5}${alignr}${top_mem mem_res 5} ${top_mem pid 5} 
-${goto 200}${voffset 3}${top_mem name 6}${alignr}${top_mem mem_res 6} ${top_mem pid 6} 
+${image ~/conky/monochrome/images/widgets-small/table-processes-memory.png -n -p 224,68}\
+${voffset -112}${goto 231}process${alignr}mem   pid 
+${goto 231}${voffset 6}${top_mem name 1}${alignr}${top_mem mem_res 1} ${top_mem pid 1} 
+${goto 231}${voffset 3}${top_mem name 2}${alignr}${top_mem mem_res 2} ${top_mem pid 2} 
+${goto 231}${voffset 3}${top_mem name 3}${alignr}${top_mem mem_res 3} ${top_mem pid 3} 
+${goto 231}${voffset 3}${top_mem name 4}${alignr}${top_mem mem_res 4} ${top_mem pid 4} 
+${goto 231}${voffset 3}${top_mem name 5}${alignr}${top_mem mem_res 5} ${top_mem pid 5} 
+${goto 231}${voffset 3}${top_mem name 6}${alignr}${top_mem mem_res 6} ${top_mem pid 6} 
+${if_existing /tmp/dnf.packages}\
+${voffset 31}${goto 16}${color1}::: DNF package management :::
+${voffset 5}${color}${lines /tmp/dnf.packages} package update(s) are available
+${voffset 4}${color1}package${goto 170}version
+# the dnf package lookup script refreshes the package list every 10m
+${voffset 4}${color}${head /tmp/dnf.packages 11 6000}\
+${endif}\
 ]];
