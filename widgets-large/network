@@ -54,16 +54,16 @@ ${color1}local ip${goto 66}${color}${addr enp0s25}
 # use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
 ${voffset 3}${color1}bittorrent${goto 66}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
 ${voffset 3}${color1}zoom${goto 66}${color}${if_running zoom}running${else}off${endif}
-${image ~/conky/monochrome/images/widgets-large/internet.png -n -p 0,51}\
-${offset 42}${upspeedgraph enp0s25 44,118 d6926d ffd799 3000}
+${image ~/conky/monochrome/images/widgets-large/internet.png -n -p 0,53}\
+${voffset 2}${offset 42}${upspeedgraph enp0s25 44,118 d6926d ffd799 3000}
 ${voffset -13}${offset 42}${downspeedgraph enp0s25 44,118 315bb1 1a336b 55000}
-${voffset 3}${color1}up${alignr 51}${color}${upspeed enp0s25} ${color1}total
+${voffset 1}${color1}up${alignr 51}${color}${upspeed enp0s25} ${color1}total
 ${voffset 4}${color1}down${alignr 51}${color}${downspeed enp0s25} ${color1}total
 ${voffset -30}${alignr}${color}${totalup enp0s25}
 ${voffset 4}${alignr}${color}${totaldown enp0s25}
 # we need to remove the trailing spacing added the moment we added voffset'ed the upload graph
 ${voffset -200}
 ${else}\
-${image ~/conky/monochrome/images/widgets-large/ethernet-offline.png -n -p 21,51}\
+${image ~/conky/monochrome/images/widgets-large/ethernet-offline.png -n -p 21,53}\
 ${endif}\
 ]];
