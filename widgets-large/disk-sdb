@@ -7,7 +7,7 @@ conky.config = {
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
   gap_x = 1556,               -- same as passing -x at command line
-  gap_y = 10,
+  gap_y = 12,
 
   -- window settings
   minimum_width = 187,
@@ -49,10 +49,10 @@ conky.text = [[
 ${image ~/conky/monochrome/images/widgets-large/disk.png -n -p 0,0}\
 ${voffset -6}${diskiograph_read /dev/sdb 44,77 d6926d ffd799 240000}
 ${voffset -13}${diskiograph_write /dev/sdb 44,77 315bb1 1a336b 250000}
-${voffset 1}${color1}read${alignr 111}${color}${diskio_read /dev/sdb}
+${voffset 3}${color1}read${alignr 111}${color}${diskio_read /dev/sdb}
 ${voffset 4}${color1}write${alignr 111}${color}${diskio_write /dev/sdb}
 # partitions
-${voffset -98}${goto 87}${color1}partitions ${hr 1}
+${voffset -100}${goto 87}${color1}partitions ${hr 1}
 ${voffset 4}${goto 87}${color}veronica${alignr}[${fs_type /media/veronica}]
 ${voffset 6}${goto 87}${color}${fs_used /media/veronica} / ${color}${fs_size /media/veronica}
 ${voffset 1}${goto 87}${color2}${if_match ${fs_used_perc /media/veronica} > 90}${color3}${endif}${fs_bar 3, 100 /media/veronica}
