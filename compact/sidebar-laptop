@@ -51,7 +51,7 @@ conky.config = {
 conky.text = [[
 # -------------- cpu
 ${image ~/conky/monochrome/images/compact/gauge-cpu.png -n -p 0,0}
-${voffset -18}${offset 40}${cpugraph cpu0 35,137 315bb1 1a336b}
+${voffset -18}${offset 39}${cpugraph cpu0 35,139 315bb1 1a336b}
 ${voffset -2}${offset 2}${color1}load ${color}${loadavg}${alignr 2}${color}${cpu cpu0}%
 ${image ~/conky/monochrome/images/compact/table-header.png -n -p 0,63}\
 ${voffset 9}${color1}${offset 2}process${alignr 2}cpu   pid
@@ -61,7 +61,7 @@ ${voffset 3}${color}${offset 2}${top name 3}${alignr 2}${top cpu 3}% ${top pid 3
 ${voffset 3}${color}${offset 2}${top name 4}${alignr 2}${top cpu 4}% ${top pid 4}
 # -------------- memory
 ${image ~/conky/monochrome/images/compact/gauge-memory.png -n -p 0,149}
-${voffset -9}${offset 40}${memgraph 35,137 315bb1 1a336b}
+${voffset -9}${offset 39}${memgraph 35,139 315bb1 1a336b}
 ${voffset -2}${offset 2}${color1}used  ${color}${mem} / ${memmax}${alignr 2}${color}${memperc}%
 ${image ~/conky/monochrome/images/compact/bar.png -n -p 36,211}\
 ${voffset 3}${offset 2}${color1}swap${goto 38}${voffset 1}${color2}${swapbar 3,97}${alignr 2}${voffset -1}${swapperc}%
@@ -81,9 +81,9 @@ ${voffset 3}${alignr 2}${color}${wireless_bitrate wlp4s0} ${color1}bitrate
 ${image ~/conky/monochrome/images/compact/bar.png -n -p 30,382}\
 ${voffset 3}${offset 2}${color}${wireless_link_qual_perc wlp4s0}%${goto 32}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 3,97 wlp4s0}${voffset -1}${alignr 2}${color1}signal${voffset 1}
 ${else}\
-${image ~/conky/monochrome/images/compact/wifi.png -n -p 71,326}\
-${voffset 63}${alignc}no wifi
-${voffset -3}
+${image ~/conky/monochrome/images/compact/wifi-block.png -n -p 0,309}\
+${voffset 54}${alignc}no wifi
+${voffset 6}
 ${endif}\
 # -------------- network bandwith
 # due to conky's lack of 'if else' conditional statement, an ugly nested 'if block' is used
@@ -92,11 +92,12 @@ ${endif}\
 #   if wifi
 #   else
 #     if ethernet
-#      else
-#         offline - no network available to this device      
+#     else
+#        offline - no network available to this device
+#
 ${if_up wlp4s0}\
 ${image ~/conky/monochrome/images/compact/gauge-internet.png -n -p 0,400}
-${voffset -9}${offset 40}${color}${upspeedgraph wlp4s0 35,67 d6926d ffd799 8200}${offset 3}${downspeedgraph wlp4s0 35,67 315bb1 1a336b 19000}
+${voffset -9}${offset 39}${color}${upspeedgraph wlp4s0 35,68 d6926d ffd799 8200}${offset 3}${downspeedgraph wlp4s0 35,68 315bb1 1a336b 19000}
 ${voffset -2}${offset 2}${color1}up    ${color}${upspeed wlp4s0}${alignr 2}${color}${downspeed wlp4s0}  ${color1}down
 ${voffset 3}${offset 2}${color1}total ${color}${totalup wlp4s0}${alignr 2}${color}${totaldown wlp4s0} ${color1}total
 ${voffset 8}${offset 2}${color1}bittorrent ${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
@@ -105,20 +106,20 @@ ${else}\
 # are we on ethernet?
 ${if_up enp6s0}\
 ${image ~/conky/monochrome/images/compact/gauge-internet.png -n -p 0,400}
-${voffset -9}${offset 40}${upspeedgraph enp6s0 35,67 d6926d ffd799 3050}${offset 3}${downspeedgraph enp6s0 35,67 315bb1 1a336b 25500}
+${voffset -9}${offset 39}${upspeedgraph enp6s0 35,68 d6926d ffd799 3050}${offset 3}${downspeedgraph enp6s0 35,68 315bb1 1a336b 25500}
 ${voffset -2}${offset 2}${color1}up    ${color}${upspeed enp6s0}${alignr 2}${color}${downspeed enp6s0}  ${color1}down
 ${voffset 3}${offset 2}${color1}total ${color}${totalup enp6s0}${alignr 2}${color}${totaldown enp6s0} ${color1}total
 ${voffset 8}${offset 2}${color1}bittorrent ${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
 ${voffset 3}${offset 2}${color1}zoom       ${color}${if_running zoom}running${else}off${endif}
 ${else}\
-${image ~/conky/monochrome/images/compact/internet.png -n -p 71,423}
-${voffset 60}${alignc}${color}no network available
-${voffset 30}\
+${image ~/conky/monochrome/images/compact/internet-block.png -n -p 0,400}
+${voffset 64}${alignc}${color}no network available
+${voffset 26}\
 ${endif}\
 ${endif}\
 # -------------- hard disk
 ${image ~/conky/monochrome/images/compact/gauge-disk.png -n -p 0,519}
-${voffset -6}${offset 40}${color}${diskiograph_read /dev/sda 35,67 d6926d ffd799 128000}${offset 3}${diskiograph_write /dev/sda 35,67 315bb1 1a336b 140000}
+${voffset -6}${offset 39}${color}${diskiograph_read /dev/sda 35,68 d6926d ffd799 128000}${offset 3}${diskiograph_write /dev/sda 35,68 315bb1 1a336b 140000}
 ${voffset -2}${offset 2}${color1}read  ${color}${diskio_read /dev/sda}${alignr 3}${color}${diskio_write /dev/sda} ${color1}write
 ${image ~/conky/monochrome/images/compact/bar.png -n -p 77,586}\
 ${voffset 8 }${offset 2}${color}fedora${goto 79}${voffset 1}${color2}${if_match ${fs_used_perc /} > 90}${color3}${endif}${fs_bar 3,97 /}
