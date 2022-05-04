@@ -128,7 +128,11 @@ ${image ~/conky/monochrome/images/compact/bar.png -n -p 77,617}\
 ${voffset 2}${offset 2}home${goto 79}${voffset 1}${color2}${if_match ${fs_used_perc /home} > 90}${color3}${endif}${fs_bar 3,97 /home}
 ${voffset 2}${alignr 3}${color}${fs_used /home} / ${fs_size /home}
 # -------------- battery
+${if_match "${acpiacadapter}"=="on-line"}\
+${image ~/conky/monochrome/images/compact/power-outlet.png -n -p 0,648}\
+${else}\
 ${image ~/conky/monochrome/images/compact/battery.png -n -p 0,648}\
+${endif}\
 ${voffset 10}${alignr 3}${color}${acpiacadapter}  ${color1}power
 ${voffset 3}${alignr 3}${color}${if_match ${battery_percent BAT0} == 100}fully charged${else}${battery_time BAT0}${endif} ${color1}charge
 ${voffset 3}${offset 2}${color}${battery_percent BAT0}%${goto 37}${color2}${if_match ${battery_percent BAT0} < 30}${color3}${endif}${battery_bar 3,97 BAT0}${voffset -1}${alignr 3}${color1}bat
