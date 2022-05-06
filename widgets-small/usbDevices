@@ -7,8 +7,8 @@ conky.config = {
 
   -- window alignment
   alignment = 'top_left',  -- top|middle|bottom_left|right
-  gap_x = 174,             -- same as passing -x at command line
-  gap_y = 250,
+  gap_x = 270,             -- same as passing -x at command line
+  gap_y = 523,
 
   -- window settings
   minimum_width = 169,
@@ -51,13 +51,13 @@ conky.text = [[
 ${if_mounted /run/media/ernesto/MAXTOR}\
 # disk io
 ${image ~/conky/monochrome/images/widgets-small/diskio.png -n -p 0,0}\
-${image ~/conky/monochrome/images/widgets-small/circuitry.png -n -p 18,41}\
-${voffset -4}${offset 1}${diskiograph_read /dev/sdd1 38,22 d6926d ffd799 6000}${offset 1}${diskiograph_write /dev/sdd1 38,22 315bb1 1a336b 52000}
-${voffset -36}${alignr 41}${color}${diskio_read /dev/sdd1}${offset 9}${color1}read 
-${voffset 4}${alignr 41}${color}${diskio_write /dev/sdd1}${offset 9}${color1}write
+${image ~/conky/monochrome/images/widgets-small/circuitry-flipped.png -n -p 5,41}\
+${voffset -6}${offset -1}${diskiograph_read /dev/sdf1 42,25 d6926d ffd799 6000}${offset -1}${diskiograph_write /dev/sdf1 42,25 315bb1 1a336b 52000}
+${voffset -36}${alignr 41}${color}${diskio_read /dev/sdf1}${offset 9}${color1}read 
+${voffset 4}${alignr 41}${color}${diskio_write /dev/sdf1}${offset 9}${color1}write
 # filesystem
 ${image ~/conky/monochrome/images/widgets-small/usbDrive.png -n -p 1, 60}\
-${voffset 54}${offset 1}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 3, 45 /run/media/ernesto/MAXTOR}
+${voffset 52}${offset 1}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 3, 45 /run/media/ernesto/MAXTOR}
 ${voffset -32}${goto 58}${color}maxtor (${fs_type /run/media/ernesto/MAXTOR})
 ${voffset 4}${goto 58}${color}${fs_used /run/media/ernesto/MAXTOR} / ${fs_size /run/media/ernesto/MAXTOR}
 ${else}\
