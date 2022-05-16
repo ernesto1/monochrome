@@ -45,7 +45,7 @@ while [ true ]; do
         if [[ $packages > 0 ]]; then
             echo "$packages new update(s)" | tee -a ${logFile}
             # package name and version is formatted into a tabular layout of 35 characters for conky to print
-            grep -E $regex /tmp/dnf.updates | column --table --table-right 2 --table-truncate 2 --table-hide 3 --output-width 35 > ${packagesFile}
+            grep -E $regex /tmp/dnf.updates | column --table --table-right 2 --table-truncate 1,2 --table-hide 3 --output-width 35 > ${packagesFile}
         else
             echo 'no updates available' | tee -a ${logFile}
             rm -f ${packagesFile}
