@@ -42,13 +42,6 @@ See the wiki entry for [how to configure these devices](https://github.com/ernes
 
 ![usb](images/screenshots/usbStorage.jpg)
 
-### Hard drive i/o
-If you have additional hard drives in your system (internal or external), the hard disk i/o conky allows you to monitor read/writes to the disk as well as space usage accross its different partitions.
-
-This conky must be fully customized to your particular setup.  Read the [wiki for more details](https://github.com/ernesto1/monochrome/wiki#hard-drive-io).
-
-![hard disk](images/screenshots/hard-drive-io.jpg)
-
 # How to install
 ### Dependencies
 You only require to have `conky` installed on your system.  
@@ -59,7 +52,9 @@ $ sudo dnf install conky
 ```
 
 **n.b.** I recommend using the conky package version `1.11.5_pre`  
-more recent versions may have regressions/bugs ([issue 1](https://github.com/brndnmtthws/conky/issues/960), [issue 2](https://github.com/brndnmtthws/conky/issues/979)) that cause the theme to behave erratically.  Run the command `dnf downgrade conky` until you arrive at this version.
+more recent versions may have regressions/bugs ([issue 1](https://github.com/brndnmtthws/conky/issues/960), [issue 2](https://github.com/brndnmtthws/conky/issues/979)) that cause the theme to behave erratically.
+
+Run the command `dnf downgrade conky` until you arrive at this version or download the RPM [from the web](https://rpm.pbone.net/info_idpl_70128821_distro_fedora32_com_conky-1.11.5-3.fc32.x86_64.rpm.html).
 
 ### Fonts
 The small widgets [time conky](https://github.com/ernesto1/monochrome/blob/master/widgets-small/sidebar-time) requires the following fonts:
