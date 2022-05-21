@@ -71,7 +71,16 @@ ${voffset 3}${color}${offset 2}${top_mem name 1}${alignr 2}${top_mem mem_res 1} 
 ${voffset 3}${color}${offset 2}${top_mem name 2}${alignr 2}${top_mem mem_res 2} ${top_mem pid 2}
 ${voffset 3}${color}${offset 2}${top_mem name 3}${alignr 2}${top_mem mem_res 3} ${top_mem pid 3}
 ${voffset 3}${color}${offset 2}${top_mem name 4}${alignr 2}${top_mem mem_res 4} ${top_mem pid 4}
-# -------------- wifi
+# -------------- wifi/ethernet
+# due to conky's lack of a 'if else' conditional statement, an ugly nested 'if block' is used
+# to identify what network device is connected to the internet
+#
+#   if wifi
+#   else
+#     if ethernet
+#     else
+#        offline - no network available to this device
+#
 ${if_up wlp4s0}\
 ${image ~/conky/monochrome/images/compact/wifi.png -n -p 0,315}\
 ${voffset 9}${alignr 2}${color}${addr wlp4s0} ${color1}     ip
@@ -81,20 +90,18 @@ ${voffset 3}${alignr 2}${color}${wireless_bitrate wlp4s0} ${color1}bitrate
 ${image ~/conky/monochrome/images/compact/bar.png -n -p 30,382}\
 ${voffset 3}${offset 2}${color}${wireless_link_qual_perc wlp4s0}%${goto 32}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 3,97 wlp4s0}${voffset -1}${alignr 2}${color1}signal${voffset 1}
 ${else}\
+# are we on ethernet?
+${if_up enp6s0}\
+${image ~/conky/monochrome/images/compact/wifi-ethernet-block.png -n -p 0,309}\
+${voffset 57}${goto 26}no wifi${goto 100}${addr enp6s0}
+${voffset 3}
+${else}\
 ${image ~/conky/monochrome/images/compact/wifi-block.png -n -p 0,309}\
 ${voffset 54}${alignc}no wifi
 ${voffset 6}
 ${endif}\
+${endif}\
 # -------------- network bandwith
-# due to conky's lack of 'if else' conditional statement, an ugly nested 'if block' is used
-# to identify what network device is connected to the internet
-#
-#   if wifi
-#   else
-#     if ethernet
-#     else
-#        offline - no network available to this device
-#
 ${if_up wlp4s0}\
 ${image ~/conky/monochrome/images/compact/gauge-internet.png -n -p 0,400}
 ${voffset -9}${offset 39}${color}${upspeedgraph wlp4s0 35,68 d6926d ffd799 8200}${offset 3}${downspeedgraph wlp4s0 35,68 315bb1 1a336b 19000}

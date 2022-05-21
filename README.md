@@ -7,10 +7,14 @@ If you are new to conky, this [project's wiki page](https://github.com/ernesto1/
 ![desktop 2560px](images/screenshots/glass.jpg)
 
 ### Compact theme
+Conky reflects how your system is connected to the internet, wether it is through wifi or ethernet.  
+Different states to show how your laptop is consuming power.
+
 ![compact](images/screenshots/compact.jpg)
 
 ### Widgets | small
 Built for systems with small screen real state. The resolution below is 1366 x 768 pixels.  
+
 ![widgets small](images/screenshots/widgets-small.jpg)
 
 ### Widgets | large
@@ -27,13 +31,6 @@ Inspired by the killy's heads up display from the anime movie Blame!
 
 **n.b.** `dnf` is specific to **fedora** linux.  If you use a different distro, you will have to [update the script](https://github.com/ernesto1/monochrome/wiki) to use your distro's package manager.
 
-### Network modes
-Network devices reflect the way you are connected to the internet.  
-![network](images/screenshots/network-modes.jpg)
-### Power modes
-Different states to show how your laptop is consuming power 
-
-![power](images/screenshots/power-modes.jpg)
 ### USB storage
 USB devices are available for you to mix and match to the hardware you have.
 
