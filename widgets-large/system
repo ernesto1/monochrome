@@ -50,12 +50,12 @@ ${voffset 3}${color1}uptime${goto 68}${color}${uptime}
 ${voffset 3}${color1}compositor${goto 68}${color}${execi 3600 echo $XDG_SESSION_TYPE}
 # :::::::::::: package updates
 ${if_existing /tmp/dnf.packages}\
-${voffset 14}${color1}DNF package management ${hr}
+${voffset 14}${color1}dnf package management ${hr}
 ${voffset 5}${color}${lines /tmp/dnf.packages} package update(s) available
 ${if_existing /tmp/dnf.packages}\
 ${voffset 5}${color1}package${alignr}version
 # the dnf package lookup script refreshes the package list every 10m
-${voffset 3}${color}${head /tmp/dnf.packages 25 60}\
+${voffset 3}${color}${head /tmp/dnf.packages.preview 30 60}\
 ${endif}\
 ${else}\
 ${voffset 3}${color1}dnf${goto 68}${color}no updates available${voffset 14}

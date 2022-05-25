@@ -104,19 +104,21 @@ ${voffset 12}${offset -1}${upspeedgraph wlp4s0 62,25 d6926d ffd799 8200}${offset
 ${voffset -69}${goto 57}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)${offset 9}${color1}bittorrent
 ${voffset 18}${alignr 120}${color}${upspeed wlp4s0}${offset 9}${color1}up   
 ${voffset 4}${alignr 120}${color}${downspeed wlp4s0}${offset 9}${color1}down 
-${voffset -30}${alignr 19}${color}${totalup wlp4s0}${offset 9}${color1}uploaded
-${voffset 4}${alignr}${color}${totaldown wlp4s0}${offset 9}${color1}downloaded 
+${voffset -30}${alignr 35}${color}${totalup wlp4s0}${offset 9}${color1}total
+${voffset 4}${alignr 35}${color}${totaldown wlp4s0}${offset 9}${color1}total
 ${else}\
 # :::::: ethernet
 ${if_up enp6s0}\
 ${image ~/conky/monochrome/images/widgets-small/ethernet.png -n -p 1,407}\
-${voffset 51}${goto 57}${addr enp6s0}
+${voffset 44}${goto 57}${addr enp6s0}
 # :: upload/download speeds
 ${image ~/conky/monochrome/images/widgets-small/internet.png -n -p 0,471}\
-${voffset 14}${offset -1}${upspeedgraph enp6s0 62,25 d6926d ffd799 4000}${offset -1}${downspeedgraph enp6s0 62,25 315bb1 1a336b 34500}
-${voffset -67}${goto 57}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)${goto 125}${color1}bittorrent
-${voffset 18}${alignr 110}${color}${upspeed enp6s0}${offset 9}${color1}up   
-${voffset 4}${alignr 110}${color}${downspeed enp6s0}${offset 9}${color1}down 
+${voffset 19}${offset -1}${upspeedgraph enp6s0 62,25 d6926d ffd799 4000}${offset -1}${downspeedgraph enp6s0 62,25 315bb1 1a336b 34500}
+${voffset -67}${goto 57}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)${offset 9}${color1}bittorrent
+${voffset 18}${alignr 120}${color}${upspeed enp6s0}${offset 9}${color1}up   
+${voffset 4}${alignr 120}${color}${downspeed enp6s0}${offset 9}${color1}down 
+${voffset -30}${alignr 35}${color}${totalup enp6s0}${offset 9}${color1}total
+${voffset 4}${alignr 35}${color}${totaldown enp6s0}${offset 9}${color1}total
 ${else}\
 ${image ~/conky/monochrome/images/widgets-small/wifi-disconnected.png -n -p 0,411}
 ${image ~/conky/monochrome/images/widgets-small/internet-offline.png -n -p 0,471}\

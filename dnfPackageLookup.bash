@@ -12,7 +12,6 @@ function onExitSignal() {
 trap onExitSignal SIGINT SIGTERM
 scriptName=$(basename $0 .bash)
 logFile=/tmp/${scriptName}.log
-packagesFile=/tmp/dnf.packages    # file to list the new packages
 echo "$(date +'%D %r') - starting dnf repo package lookup" | tee ${logFile}
 totalCores=$(grep -c processor /proc/cpuinfo)
 halfCores=$(( totalCores / 2 ))
@@ -29,6 +28,7 @@ while [ true ]; do
     
     # perform dnf lookup if the system is iddle
     if [[ $loadAvg < $halfCores ]]; then
+        packagesRawFile=/tmp/dnf.updates.source    # raw output from the dnf command
         # sample dnf output to parse:
         #
         # PM Fusion for Fedora 32 - Free - Updates        5.8 kB/s | 2.9 kB     02:00
@@ -36,19 +36,22 @@ while [ true ]; do
         # Last metadata expiration check: 0:15:45 ago on Mon 16 Aug 2021 10:29:07 AM EDT.
         # Available Upgrades
         # code.x86_64                      1.59.0-1628120127.el8              code        
-        # skypeforlinux.x86_64             8.75.0.140-1                       skype-stable
-        dnf list updates > /tmp/dnf.updates
+        # skypeforlinux.x86_64             8.75.0.140-1                       skype-stable        
+        dnf list updates > ${packagesRawFile}
         regex='^(([[:alnum:]]|\.|_|-)+[[:blank:]]+){2}([[:alnum:]]|\.|_|-|[[:blank:]])+$'
-        packages=$(grep -cE $regex /tmp/dnf.updates)
+        packages=$(grep -cE $regex ${packagesRawFile})
         echo -n "$(date +'%D %r') - " | tee -a ${logFile} 
         
         if [[ $packages > 0 ]]; then
             echo "$packages new update(s)" | tee -a ${logFile}
+            packagesFile=/tmp/dnf.packages    # file to list the new packages
+            # extract the actual packages from the raw dnf data
+            grep -E $regex ${packagesRawFile} > ${packagesFile}
             # package name and version is formatted into a tabular layout of 35 characters for conky to print
-            grep -E $regex /tmp/dnf.updates | column --table --table-right 2 --table-truncate 1,2 --table-hide 3 --output-width 35 > ${packagesFile}
+            column --table --table-right 2 --table-truncate 1,2 --table-hide 3 --output-width 35 ${packagesFile} | head -n 36 > /tmp/dnf.packages.preview
         else
             echo 'no updates available' | tee -a ${logFile}
-            rm -f ${packagesFile}
+            rm -f /tmp/dnf.packages*
         fi
     else
         echo "$(date +'%D %r') - load average too high, trying again later" | tee -a ${logFile}

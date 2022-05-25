@@ -93,7 +93,7 @@ ${image ~/conky/monochrome/images/widgets-small/internet.png -n -p 0,408}\
 ${voffset 13}${offset -1}${upspeedgraph enp0s25 62,25 d6926d ffd799 3000}${offset -1}${downspeedgraph enp0s25 62,25 315bb1 1a336b 55000}
 ${voffset -71}${goto 58}${color}${addr enp0s25}${offset 9}${color1}local ip
 # use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
-${voffset 3}${alignr 74}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)${offset 9}${color1}torrent
+${voffset 3}${alignr 79}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)${offset 9}${color1}torrent
 ${voffset 6}${alignr 122}${color}${upspeed enp0s25}${offset 9}${color1}up   
 ${voffset 4}${alignr 122}${color}${downspeed enp0s25}${offset 9}${color1}down 
 ${voffset -30}${alignr 19}${color}${totalup enp0s25}${offset 9}${color1}uploaded
