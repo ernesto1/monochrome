@@ -34,6 +34,10 @@ conky.config = {
 
   imlib_cache_flush_interval = 300,
   -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
+  
+  if_up_strictness = 'address', -- network device must be up, having link and an assigned IP address
+                                -- to be considered "up" by ${if_up}
+                                -- values are: up, link or address
 
   -- font settings
   draw_shades = false,    -- black shadow on text (not good if text is black)
@@ -46,13 +50,15 @@ conky.config = {
 
 conky.text = [[
 # if on wifi
-${if_existing /sys/class/net/wlp4s0/operstate up}\
+${if_up wlp4s0}\
+${image ~/conky/monochrome/images/compact/wifi.png -n -p 165,27}\
 ${color1}${goto 12}local ip${goto 72}${color}${addr wlp4s0}
 ${voffset 3}${goto 19}${color1}network${goto 72}${color}${wireless_essid wlp4s0}
 ${voffset 3}${goto 19}${color1}channel${goto 72}${color}${wireless_channel wlp4s0}
 ${voffset 3}${goto 13}${color1}strength${goto 72}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 3,54 wlp4s0} ${color}${wireless_link_qual_perc wlp4s0}%
-#${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color2}${endif}${wireless_link_bar 3,45 wlp4s0}
-${else}\
+${endif}\
+${if_up enp0s25}\
+${image ~/conky/monochrome/images/compact/ethernet.png -n -p 166,9}\
 ${color1}${goto 12}local ip${goto 72}${color}${addr enp0s25}
 ${endif}\
 # use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
@@ -62,6 +68,6 @@ ${color1}${goto 37}zoom${goto 73}${color}${if_running zoom}running${else}off${en
 
 ${color1}${goto 25}kernel${goto 73}${color}${kernel}
 ${voffset 3}${goto 25}${color1}uptime${goto 73}${color}${uptime}
+${voffset 3}${color1}compositor${goto 73}${color}${execi 3600 echo $XDG_SESSION_TYPE}
 ${voffset 3}${goto 43}${color1}dnf${goto 73}${color}${if_existing /tmp/dnf.packages}${lines /tmp/dnf.packages} new update(s)${else}no updates available${endif}
-${voffset 2}${color1}compositor${goto 73}${color}${execi 3600 echo $XDG_SESSION_TYPE}
 ]];
