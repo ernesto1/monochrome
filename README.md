@@ -21,10 +21,6 @@ Built for systems with small screen real state. The resolution below is 1366 x 7
 Built for systems with ample screen real state available  
 ![desktop 2560px](images/screenshots/widgets-large.jpg)
 
-### Blame theme
-Inspired by the killy's heads up display from the anime movie Blame!  
-![widgets desktop](images/screenshots/blame.jpg)
-
 ## Features
 ### Repository package updates
 `dnf` (the fedora package manager) is **periodically** queried for new packages if the system is **iddle**. Slow machines will appreciate this, since a dnf package lookup may bring the cpu to a crawl.
@@ -89,7 +85,3 @@ The small widgets [time conky](https://github.com/ernesto1/monochrome/blob/maste
     - Widgets large
 
             $ ~/conky/monochrome/launch.bash --widgets-large
-
-    - Blame
-
-            $ ~/conky/monochrome/launch.bash --blame --layout-override laptop

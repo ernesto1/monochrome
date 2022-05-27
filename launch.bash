@@ -16,7 +16,6 @@ function usage() {
 	$(basename $0) --theme [--monitor n] [--layout-override <tag>] [--silent]
 	
 	Theme options
-	  --blame
 	  --compact
 	  --glass
 	  --widgets-large
@@ -81,10 +80,6 @@ fi
 
 while (( "$#" )); do
   case $1 in
-    --blame)
-      directory=${HOME}/conky/monochrome/blame
-      shift
-      ;;
     --widgets-large)
       directory=${HOME}/conky/monochrome/widgets-large
       shift
