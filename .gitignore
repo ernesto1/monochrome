@@ -5,3 +5,4 @@ raws/
 images/screenshots/*.xcf
 images/screenshots/*.png
 images/glass/new shepard hud.png
+**/blame
