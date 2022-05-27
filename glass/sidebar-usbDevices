@@ -1,7 +1,7 @@
 conky.config = {
   update_interval = 2,  -- update interval in seconds
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
-  xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
+  xinerama_head = 1,    -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
@@ -90,10 +90,10 @@ ${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,231}\
 ${voffset -14}${alignr}${font2}${fs_used_perc /run/media/ernesto/MAXTOR}${font3}% 
 ${voffset -2}${offset 16}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 3,93 /run/media/ernesto/MAXTOR}
 ${voffset -4}${alignr}${color1}${font4}${fs_used /run/media/ernesto/MAXTOR} / ${fs_size /run/media/ernesto/MAXTOR} 
-${voffset 1}${offset 4}${diskiograph_write /dev/sdg1 27,57 6b91e5 546fb2 60000}${alignr}${voffset -21}${color}write 
-${voffset 2}${alignr}${color1}${diskio_write /dev/sdg1} 
-${offset 4}${diskiograph_read /dev/sdg1 27,57 315bb1 1a336b 60000}${alignr}${voffset -21}${color}read 
-${voffset 2}${alignr}${color1}${diskio_read /dev/sdg1} 
+${voffset 1}${offset 4}${diskiograph_write /dev/sdf1 27,57 6b91e5 546fb2 60000}${alignr}${voffset -21}${color}write 
+${voffset 2}${alignr}${color1}${diskio_write /dev/sdf1} 
+${offset 4}${diskiograph_read /dev/sdf1 27,57 315bb1 1a336b 60000}${alignr}${voffset -21}${color}read 
+${voffset 2}${alignr}${color1}${diskio_read /dev/sdf1} 
 ${else}\
 ${image ~/conky/monochrome/images/glass/block-filesystem.png -n -p 0,111}\
 ${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,164}\
