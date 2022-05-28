@@ -59,14 +59,14 @@ conky.text = [[
 ${image ~/conky/monochrome/images/glass/top.png -n -p 0,0}\
 ${image ~/conky/monochrome/images/glass/block.png -n -p 0,5}\
 ${image ~/conky/monochrome/images/glass/cpu.png -n -p 0,5}\
-${voffset -6}${if_match ${cpu cpu0} >= 90}${cpugraph cpu0 48,112 cd0033 800020}${else}${cpugraph cpu0 48,112 315bb1 1a336b}${endif}
+${voffset -6}${cpugraph cpu0 48,112 315bb1 1a336b}
 ${voffset -58}${offset 5}${font0}cpu
 ${voffset 2}${alignr}${font1}${cpu cpu0}${font2}% 
 ${voffset 5}${alignr}${color1}${font4}${loadavg} 
 ################### memory
 ${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,75}\
 ${image ~/conky/monochrome/images/glass/block.png -n -p 0,77}\
-${voffset 1}${if_match ${memperc} >= 90}${memgraph 48,112 cd0033 800020}${else}${memgraph 48,112 315bb1 1a336b}${endif}
+${voffset 1}${memgraph 48,112 315bb1 1a336b}
 ${voffset -50}${offset 5}${color}${font0}memory
 ${voffset 2}${alignr}${font1}${memperc}${font2}% 
 ${voffset 5}${alignr}${color1}${font4}${mem} / ${memmax} 
@@ -117,13 +117,13 @@ ${endif}\
 ${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,363}\
 ${image ~/conky/monochrome/images/glass/block-disk.png -n -p 0,365}\
 ${image ~/conky/monochrome/images/glass/hard-drive.png -n -p 2,366}\
-${voffset 1}${diskiograph_write /dev/sda 48,112 6b91e5 546fb2 302000}
-${voffset -50}${offset 5}${color}${font0}disk write
-${voffset 5}${alignr}${font2}${diskio_write /dev/sda} 
-# disk read
-${voffset -3}${diskiograph_read /dev/sda 48,112 315bb1 1a336b 280000}
-${voffset -58}${offset 5}${color}${font0}disk read
+${voffset 1}${diskiograph_read /dev/sda 48,112 6b91e5 546fb2 280000}
+${voffset -50}${offset 5}${color}${font0}disk read
 ${voffset 5}${alignr}${font2}${diskio_read /dev/sda} 
+# disk read
+${voffset -3}${diskiograph_write /dev/sda 48,112 315bb1 1a336b 302000}
+${voffset -58}${offset 5}${color}${font0}disk write
+${voffset 5}${alignr}${font2}${diskio_write /dev/sda} 
 # fedora
 ${voffset 15}${offset 5}${color}${font0}fedora
 ${voffset -14}${alignr}${font2}${fs_used_perc /}${font3}% 
