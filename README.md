@@ -60,28 +60,26 @@ The small widgets [time conky](https://github.com/ernesto1/monochrome/blob/maste
 - If you run a multi monitor setup, you can read on how to configure conky to show on a [particular monitor](https://github.com/ernesto1/monochrome/wiki#multi-monitor-setups)
 
 # How to run
-1) Unzip the project's zip file in the folder `~/conky`
+1) Create the `~/conky` directory and clone this repository
 
-        $ unzip -d ~/conky monochrome-master.zip
+       $ mkdir -p ~/conky
+       $ cd ~/conky
+       $ git clone https://github.com/ernesto1/monochrome.git
 
-2) Rename the root folder `monochrome-master` to `monochrome`
-
-        $ mv ~/conky/monochrome-master ~/conky/monochrome
-
-3) Run the launch script with the theme you want:
+2) Run the launch script with the theme you want:
 
     - Glass
 
-            $ ~/conky/monochrome/launch.bash --glass --layout-override desktop
+          $ ~/conky/monochrome/launch.bash --glass --layout-override desktop
 
     - Compact
 
-            $ ~/conky/monochrome/launch.bash --compact
+          $ ~/conky/monochrome/launch.bash --compact
 
     - Widgets small
 
-            $ ~/conky/monochrome/launch.bash --widgets-small --layout-override laptop
+          $ ~/conky/monochrome/launch.bash --widgets-small --layout-override laptop
 
     - Widgets large
 
-            $ ~/conky/monochrome/launch.bash --widgets-large
+          $ ~/conky/monochrome/launch.bash --widgets-large
