@@ -81,22 +81,28 @@ ${voffset 3}${alignr}${color1}${font4}device is not
 ${alignr}${color1}connected ${voffset -1}
 ${endif}\
 # :::::::::::::::::::: external hard drive
-#                      write: 287MiB  read: 22.6MiB
-${voffset 16}${offset 5}${color}${font0}maxtor HD
+#                      write: 24MiB  read: 24MiB
 ${if_mounted /run/media/ernesto/MAXTOR}\
-${image ~/conky/monochrome/images/glass/block-disk-usb.png -n -p 0,111}\
-${image ~/conky/monochrome/images/glass/hard-drive.png -n -p 2,134}\
-${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,231}\
+${image ~/conky/monochrome/images/glass/block-disk.png -n -p 0,111}\
+${image ~/conky/monochrome/images/glass/hard-drive.png -n -p 2,114}\
+${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,266}\
+# disk read graph
+${voffset 3}${diskiograph_read /dev/sdf1 48,112 6b91e5 546fb2 6000}
+${voffset -50}${offset 5}${color}${font0}disk read
+${voffset 5}${alignr}${font2}${diskio_read /dev/sdf1} 
+# disk write graph
+${voffset -3}${diskiograph_write /dev/sdf1 48,112 315bb1 1a336b 42000}
+${voffset -58}${offset 5}${color}${font0}disk write
+${voffset 5}${alignr}${font2}${diskio_write /dev/sdf1} 
+# partition
+${voffset 15}${offset 5}${color}${font0}maxtor HD
 ${voffset -14}${alignr}${font2}${fs_used_perc /run/media/ernesto/MAXTOR}${font3}% 
 ${voffset -2}${offset 16}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 3,93 /run/media/ernesto/MAXTOR}
 ${voffset -4}${alignr}${color1}${font4}${fs_used /run/media/ernesto/MAXTOR} / ${fs_size /run/media/ernesto/MAXTOR} 
-${voffset 1}${offset 4}${diskiograph_read /dev/sdf1 27,57 6b91e5 546fb2 6000}${alignr}${voffset -21}${color}read 
-${voffset 2}${alignr}${color1}${diskio_read /dev/sdf1} 
-${offset 4}${diskiograph_write /dev/sdf1 27,57 315bb1 1a336b 42000}${alignr}${voffset -21}${color}write 
-${voffset 2}${alignr}${color1}${diskio_write /dev/sdf1} 
 ${else}\
 ${image ~/conky/monochrome/images/glass/block-filesystem.png -n -p 0,111}\
 ${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,164}\
+${voffset 16}${offset 5}${color}${font0}maxtor HD
 ${voffset 3}${alignr}${color1}${font4}device is not 
 ${alignr}connected ${voffset -1}\
 ${endif}\
