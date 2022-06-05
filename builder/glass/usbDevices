@@ -1,0 +1,24 @@
+################### usb devices
+${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,988}\
+${image ~/conky/monochrome/images/glass/block-small.png -n -p 0,989}\
+${image ~/conky/monochrome/images/glass/block-small.png -n -p 0,1043}\
+# :::: memory stick
+${voffset 6}${template3 usb\ cruzer /run/media/ernesto/sandisk}
+# :::: memory card
+${template3 sandisd\ SD /run/media/ernesto/disk}
+# :::: external hard drive
+${if_mounted /run/media/ernesto/MAXTOR}\
+${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,1099}\
+${image ~/conky/monochrome/images/glass/block-disk.png -n -p 0,1100}\
+${image ~/conky/monochrome/images/glass/hard-drive.png -n -p 2,1100}\
+${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,1250}\
+# speeds | read: 24MiB  write: 24MiB (the usb2 max speed)
+${voffset -3}${template1 sdf1 6000 42000}
+${template2 maxtor\ HD /run/media/ernesto/MAXTOR}
+${else}\
+${image ~/conky/monochrome/images/glass/block-small.png -n -p 0,1097}\
+${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,1150}\
+${voffset 7}${offset 5}${color}${font0}maxtor HD
+${voffset 3}${alignr}${color1}${font4}device is not 
+${alignr}connected ${voffset -1}\
+${endif}\

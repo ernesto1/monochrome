@@ -6,12 +6,12 @@ conky.config = {
 
   -- window alignment
   alignment = 'top_left',       -- top|middle|bottom_left|middle|right
-  gap_x = 141,                     -- same as passing -x at command line
-  gap_y = 255,
+  gap_x = 136,                     -- same as passing -x at command line
+  gap_y = 197,
 
   -- window settings
   minimum_width = 213,
-  minimum_height = 130,
+  minimum_height = 110,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -49,25 +49,30 @@ conky.config = {
 };
 
 conky.text = [[
+${color1}${goto 25}kernel${goto 73}${color}${kernel}
+${voffset 3}${goto 25}${color1}uptime${goto 73}${color}${uptime}
+${voffset 3}${color1}compositor${goto 73}${color}${execi 3600 echo $XDG_SESSION_TYPE}
+${voffset 16}\
 # if on wifi
 ${if_up wlp4s0}\
-${image ~/conky/monochrome/images/compact/wifi.png -n -p 165,27}\
-${color1}${goto 12}local ip${goto 72}${color}${addr wlp4s0}
+${voffset 3}${color1}${goto 12}local ip${goto 72}${color}${addr wlp4s0}
 ${voffset 3}${goto 19}${color1}network${goto 72}${color}${wireless_essid wlp4s0}
 ${voffset 3}${goto 19}${color1}channel${goto 72}${color}${wireless_channel wlp4s0}
 ${voffset 3}${goto 13}${color1}strength${goto 72}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 3,54 wlp4s0} ${color}${wireless_link_qual_perc wlp4s0}%
 ${endif}\
-${if_up enp0s25}\
-${image ~/conky/monochrome/images/compact/ethernet.png -n -p 166,9}\
-${color1}${goto 12}local ip${goto 72}${color}${addr enp0s25}
-${endif}\
 # use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
 ${voffset 3}${color1}bittorrent${goto 72}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
 ${color1}${goto 37}zoom${goto 73}${color}${if_running zoom}running${else}off${endif}
-
-
-${color1}${goto 25}kernel${goto 73}${color}${kernel}
-${voffset 3}${goto 25}${color1}uptime${goto 73}${color}${uptime}
-${voffset 3}${color1}compositor${goto 73}${color}${execi 3600 echo $XDG_SESSION_TYPE}
-${voffset 3}${goto 43}${color1}dnf${goto 73}${color}${if_existing /tmp/dnf.packages}${lines /tmp/dnf.packages} new update(s)${else}no updates available${endif}
+# :::::::::::: package updates
+${if_existing /tmp/dnf.packages}\
+${voffset 26}${alignc}${color1}dnf package management
+${voffset 3}${alignc}${color}${lines /tmp/dnf.packages} package update(s) available
+${if_existing /tmp/dnf.packages}\
+${voffset 5}${color1}package${alignr}version
+# the dnf package lookup script refreshes the package list every 10m
+${voffset 3}${color}${head /tmp/dnf.packages.preview 30 180}\
+${endif}\
+${else}\
+${voffset 3}${goto 43}${color1}dnf${goto 73}${color}no updates available
+${endif}\
 ]];

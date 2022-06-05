@@ -5,12 +5,12 @@ conky.config = {
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'bottom_middle',     -- top|middle|bottom_left|middle|right
-  gap_x = 165,                    -- same as passing -x at command line
-  gap_y = 13,
+  alignment = 'top_left',     -- top|middle|bottom_left|middle|right
+  gap_x = 130,                    -- same as passing -x at command line
+  gap_y = 34,
 
   -- window settings
-  minimum_width = 186,
+  minimum_width = 390,
   minimum_height = 144,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -42,16 +42,21 @@ conky.config = {
   color1 = 'white',
   color2 = '315bb1',      -- dark blue
   color3 = '800020',      -- red
+  
+  -- template
+  template0 = [[
+ ${voffset 3}${color}${top name \1}${top cpu \1}% ${top pid \1}${goto 212}${top_mem name \1}${alignr}${top_mem mem_res \1} ${top_mem pid \1} ]]
 };
 
 conky.text = [[
 ${image ~/conky/monochrome/images/glass/box.png -n -p 0,0}\
-${voffset 8}${color1} process${goto 127}cpu   pid 
- ${voffset 3}${color}${top name 1}${top cpu 1}% ${top pid 1}
- ${voffset 3}${color}${top name 2}${top cpu 2}% ${top pid 2}
- ${voffset 3}${color}${top name 3}${top cpu 3}% ${top pid 3}
- ${voffset 3}${color}${top name 4}${top cpu 4}% ${top pid 4}
- ${voffset 3}${color}${top name 5}${top cpu 5}% ${top pid 5}
- ${voffset 3}${color}${top name 6}${top cpu 6}% ${top pid 6}
- ${voffset 3}${color}${top name 7}${top cpu 7}% ${top pid 7}
+${image ~/conky/monochrome/images/glass/box.png -n -p 205,0}\
+${voffset 8}${color1} process${goto 127}cpu   pid${goto 212}${color1}process${alignr}mem   pid 
+${template0 1}
+${template0 2}
+${template0 3}
+${template0 4}
+${template0 5}
+${template0 6}
+${template0 7}
 ]];
