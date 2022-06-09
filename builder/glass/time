@@ -1,5 +1,5 @@
 ################### time
-${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,931}\
-${image ~/conky/monochrome/images/glass/block-small.png -n -p 0,932}\
+${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,1085}\
+${image ~/conky/monochrome/images/glass/block-small.png -n -p 0,1086}\
 ${voffset 10}${offset 6}${color}${font Promenade de la Croisette:size=40}${time %I}${font Promenade de la Croisette:size=37}:${time %M}${font0}${voffset -15}${goto 46}${color1}${time %A}
 ${voffset 2}${goto 46}${time %B %d}

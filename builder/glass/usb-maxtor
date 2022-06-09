@@ -1,0 +1,14 @@
+################### external hard drive
+${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,931}\
+${image ~/conky/monochrome/images/glass/block-disk.png -n -p 0,932}\
+${if_mounted /run/media/ernesto/MAXTOR}\
+${image ~/conky/monochrome/images/glass/hard-drive.png -n -p 2,932}\
+# speeds | read: 24MiB  write: 24MiB (the usb2 max speed)
+${template1 sdf1 6000 42000}
+${template2 maxtor\ HD /run/media/ernesto/MAXTOR}
+${else}\
+${image ~/conky/monochrome/images/glass/usb-drive-disconnected.png -n -p 0,932}\
+${voffset 12}${alignc}${color}${font0}maxtor HD
+${voffset 103}${alignc}${color1}${font4}device is not
+${alignc}connected
+${endif}\

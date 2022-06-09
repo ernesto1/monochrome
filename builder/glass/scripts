@@ -1,8 +1,9 @@
 cd ~/conky/monochrome/builder/glass
 
 # desktop sidebar
-cat config cpu-mem network-desktop disk disks-desktop time usbDevices > ~/conky/monochrome/glass/sidebar;\
+cat config cpu-mem network-desktop disk disks-desktop usb-maxtor time usb-devices > ~/conky/monochrome/glass/sidebar;\
 echo '${voffset -684}' >> ~/conky/monochrome/glass/sidebar;\
+echo '${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,1250}\' >> ~/conky/monochrome/glass/sidebar;\
 echo ']];' >> ~/conky/monochrome/glass/sidebar
 
 # laptop sidebar
