@@ -12,7 +12,7 @@ ${else}\
 # no network/internet
 ${image ~/conky/monochrome/images/glass/noNetwork-desktop.png -n -p 0,223}\
 ${voffset 12}${offset 5}${color}${font0}network
-${voffset 130}${alignc}${color1}${font4}no ethernet
+${voffset 143}${alignc}${color1}${font4}no ethernet
 ${alignc}connection
-${voffset 3}
+${voffset -10}
 ${endif}\

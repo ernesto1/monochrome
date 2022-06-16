@@ -4,12 +4,12 @@ A collection of graphical conky interfaces to monitor your system.
 If you are new to conky, this [project's wiki page](https://github.com/ernesto1/monochrome/wiki) has  helpful guides to show you how to customize the conky configs to your system.
 
 ### Glass theme
+Conky reflects how your system is connected to the internet, wether it is through wifi or ethernet.  
+Different states are used to show how your laptop is consuming power.
+
 ![desktop 2560px](images/screenshots/glass.jpg)
 
 ### Compact theme
-Conky reflects how your system is connected to the internet, wether it is through wifi or ethernet.  
-Different states to show how your laptop is consuming power.
-
 ![compact](images/screenshots/compact.jpg)
 
 ### Widgets | small
@@ -57,7 +57,7 @@ The small widgets [time conky](https://github.com/ernesto1/monochrome/blob/maste
 
 ### Configuration
 - The [wiki](https://github.com/ernesto1/monochrome/wiki) outlines items that may require configuration in order to customize this conky to your system, ex. device names such as network cards and hard drives
-- If you run a multi monitor setup, you can read on how to configure conky to show on a [particular monitor](https://github.com/ernesto1/monochrome/wiki#multi-monitor-setups)
+- If you run a multi monitor setup, you can read how to configure conky to show on a [particular monitor](https://github.com/ernesto1/monochrome/wiki#multi-monitor-setups)
 
 # How to run
 1) Create the `~/conky` directory and clone this repository
@@ -70,7 +70,7 @@ The small widgets [time conky](https://github.com/ernesto1/monochrome/blob/maste
 
     - Glass
 
-          $ ~/conky/monochrome/launch.bash --glass --layout-override desktop
+          $ ~/conky/monochrome/launch.bash --glass
 
     - Compact
 
