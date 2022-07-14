@@ -1,0 +1,11 @@
+# :::::::::::::::::::: disk sda
+# disk io
+${image ~/conky/monochrome/images/widgets-small/diskio.png -n -p 0,364}
+${template3 sda 200000 280000}
+# disk space
+${image ~/conky/monochrome/images/widgets-small/circuitry-flipped.png -n -p 5,405}\
+${image ~/conky/monochrome/images/widgets-small/disk-root.png -n -p 1,424}\
+${template4 fedora /}
+${image ~/conky/monochrome/images/widgets-small/circuitry.png -n -p 5,470}\
+${image ~/conky/monochrome/images/widgets-small/disk-home.png -n -p 1,489}\
+${template4 home /home}

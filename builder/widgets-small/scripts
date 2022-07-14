@@ -1,0 +1,14 @@
+# desktop sidebar
+cd ~/conky/monochrome/builder/widgets-small;\
+# ... usb-devices
+cat config system-cpu-mem network-desktop disk disks-desktop usb-maxtor > ~/conky/monochrome/widgets-small/sidebar;\
+echo ']];' >> ~/conky/monochrome/widgets-small/sidebar
+
+echo '${voffset -684}' >> ~/conky/monochrome/glass/sidebar;\
+
+
+
+# laptop sidebar
+cd ~/conky/monochrome/builder/widgets-small;\
+cat config system-cpu-mem network-laptop disk power > ~/conky/monochrome/widgets-small/sidebar;\
+echo ']];' >> ~/conky/monochrome/widgets-small/sidebar
