@@ -42,10 +42,9 @@ conky.config = {
   -- font settings
   draw_shades = false,    -- black shadow on text (not good if text is black)
   draw_outline = false,   -- black outline around text (not good if text is black)
-  default_color = 'black',
-  color1 = 'white',
-  color2 = '1a336b',      -- dark blue
-  color3 = '800020',      -- burgundy
+  -- colors
+  default_color = 'black',  -- regular text
+  color1 = 'white',         -- text labels
 };
 
 conky.text = [[

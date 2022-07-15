@@ -3,6 +3,6 @@ ${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,1142}\
 ${image ~/conky/monochrome/images/glass/block-small.png -n -p 0,1143}\
 ${image ~/conky/monochrome/images/glass/block-small.png -n -p 0,1197}\
 # :::: memory stick
-${voffset 6}${template3 usb\ cruzer /run/media/ernesto/sandisk}
+${voffset 6}${template7 usb\ cruzer /run/media/ernesto/sandisk}
 # :::: memory card
-${template3 sandisd\ SD /run/media/ernesto/disk}
+${template7 sandisd\ SD /run/media/ernesto/disk}

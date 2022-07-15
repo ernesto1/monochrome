@@ -8,10 +8,12 @@ ${voffset 3}${goto 57}${color}charged
 ${else}\
 ${image ~/conky/monochrome/images/widgets-small/power-charging.png -n -p 1,554}\
 ${offset 1}${color2}${if_match ${battery_percent BAT0} < 80}${color3}${endif}${battery_bar 3, 45 BAT0}
-${voffset -15}${goto 57}${color}${battery_time BAT0}
+${voffset -32}${goto 57}${color}${battery_percent BAT0}%
+${voffset 4}${goto 57}${color}${battery_time BAT0}
 ${endif}\
 ${else}\
 ${image ~/conky/monochrome/images/widgets-small/power-battery.png -n -p 1,554}\
 ${offset 1}${color2}${if_match ${battery_percent BAT0} < 20}${color3}${endif}${battery_bar 3, 45 BAT0}
-${voffset -15}${goto 57}${color}${battery_time BAT0}
+${voffset -32}${goto 57}${color}${battery_percent BAT0}%
+${voffset 4}${goto 57}${color}${battery_time BAT0}
 ${endif}

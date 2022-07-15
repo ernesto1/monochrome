@@ -61,24 +61,24 @@ ${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,56}\
 ${image ~/conky/monochrome/images/glass/block-filesystem.png -n -p 0,58}\
 ${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,111}\
 # :::::::::::::::::::: memory stick
-${voffset 3}${offset 5}${color}${font0}usb cruzer
+${voffset 3}${offset 5}${color1}${font0}usb cruzer
 ${if_mounted /run/media/ernesto/sandisk}\
 ${voffset -14}${alignr}${font2}${fs_used_perc /run/media/ernesto/sandisk}${font3}% 
 ${voffset -2}${offset 16}${color2}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color3}${endif}${fs_bar 3,93 /run/media/ernesto/sandisk}
-${voffset -4}${alignr}${color1}${font4}${fs_used /run/media/ernesto/sandisk} / ${fs_size /run/media/ernesto/sandisk} 
+${voffset -4}${alignr}${color}${font4}${fs_used /run/media/ernesto/sandisk} / ${fs_size /run/media/ernesto/sandisk} 
 ${else}\
-${voffset 3}${alignr}${color1}${font4}device is not 
-${alignr}${color1}connected ${voffset -1}
+${voffset 3}${alignr}${color}${font4}device is not 
+${alignr}${color}connected ${voffset -1}
 ${endif}\
 # :::::::::::::::::::: memory card
-${voffset 14}${offset 5}${color}${font0}sandisk SD
+${voffset 14}${offset 5}${color1}${font0}sandisk SD
 ${if_mounted /run/media/ernesto/disk}\
 ${voffset -14}${alignr}${font2}${fs_used_perc /run/media/ernesto/disk}${font3}% 
 ${voffset -2}${offset 16}${color2}${if_match ${fs_used_perc /run/media/ernesto/disk} > 90}${color3}${endif}${fs_bar 3,93 /run/media/ernesto/disk}
-${voffset -4}${alignr}${color1}${font4}${fs_used /run/media/ernesto/disk} / ${fs_size /run/media/ernesto/disk} 
+${voffset -4}${alignr}${color}${font4}${fs_used /run/media/ernesto/disk} / ${fs_size /run/media/ernesto/disk} 
 ${else}\
-${voffset 3}${alignr}${color1}${font4}device is not 
-${alignr}${color1}connected ${voffset -1}
+${voffset 3}${alignr}${color}${font4}device is not 
+${alignr}${color}connected ${voffset -1}
 ${endif}\
 # :::::::::::::::::::: external hard drive
 #                      write: 24MiB  read: 24MiB
@@ -88,22 +88,22 @@ ${image ~/conky/monochrome/images/glass/hard-drive.png -n -p 2,114}\
 ${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,266}\
 # disk read graph
 ${voffset 3}${diskiograph_read /dev/sdf1 48,112 6b91e5 546fb2 6000}
-${voffset -50}${offset 5}${color}${font0}disk read
+${voffset -50}${offset 5}${color1}${font0}disk read
 ${voffset 5}${alignr}${font2}${diskio_read /dev/sdf1} 
 # disk write graph
 ${voffset -3}${diskiograph_write /dev/sdf1 48,112 315bb1 1a336b 42000}
-${voffset -58}${offset 5}${color}${font0}disk write
+${voffset -58}${offset 5}${color1}${font0}disk write
 ${voffset 5}${alignr}${font2}${diskio_write /dev/sdf1} 
 # partition
-${voffset 15}${offset 5}${color}${font0}maxtor HD
+${voffset 15}${offset 5}${color1}${font0}maxtor HD
 ${voffset -14}${alignr}${font2}${fs_used_perc /run/media/ernesto/MAXTOR}${font3}% 
 ${voffset -2}${offset 16}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 3,93 /run/media/ernesto/MAXTOR}
-${voffset -4}${alignr}${color1}${font4}${fs_used /run/media/ernesto/MAXTOR} / ${fs_size /run/media/ernesto/MAXTOR} 
+${voffset -4}${alignr}${color}${font4}${fs_used /run/media/ernesto/MAXTOR} / ${fs_size /run/media/ernesto/MAXTOR} 
 ${else}\
 ${image ~/conky/monochrome/images/glass/block-filesystem.png -n -p 0,111}\
 ${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,164}\
-${voffset 16}${offset 5}${color}${font0}maxtor HD
-${voffset 3}${alignr}${color1}${font4}device is not 
+${voffset 16}${offset 5}${color1}${font0}maxtor HD
+${voffset 3}${alignr}${color}${font4}device is not 
 ${alignr}connected ${voffset -1}\
 ${endif}\
 ]];

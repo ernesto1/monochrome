@@ -39,39 +39,45 @@ conky.config = {
                                 -- to be considered "up" by ${if_up}
                                 -- values are: up, link or address
   -- font settings
-  draw_shades = false,    -- black shadow on text (not good if text is black)
-  draw_outline = false,   -- black outline around text (not good if text is black)
-  default_color = 'black',
-  color1 = 'white',
-  color2 = '1a336b',      -- dark blue
-  color3 = '800020',      -- burgundy
+  draw_shades = false,      -- black shadow on text (not good if text is black)
+  draw_outline = false,     -- black outline around text (not good if text is black)
+  -- colors
+  default_color = 'black',  -- regular text
+  color1 = 'white',         -- text labels
+  color2 = '1a336b',        -- bar color default
+  color3 = '800020',        -- bar color warning
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   --  n.b. the line break escape character '\' is not supported in templates :(
   
-  -- ethernet box: ${template1 ethernetDevice}
+  -- cpu/mem/download/disk write graph color
+  template1 = [[315bb1 1a336b]],
+  -- upload/disk read graph
+  template2 = [[6b91e5 546fb2]],
+  
+  -- ethernet box: ${template3 ethernetDevice}
   -- common for both desktop and laptop
-  template1 = [[
+  template3 = [[
 ${voffset 31}${goto 57}${execi 180 ethtool \1 2>/dev/null | grep -i speed | cut -d ' ' -f 2} 
 ${voffset 3}${goto 57}${addr \1}]],
 
-  -- network bandwith: ${template2 device uploadSpeed downloadSpeed}
-  template2 = [[
-${voffset 17}${offset 0}${upspeedgraph \1 60,24 6b91e5 546fb2 \2}${offset -1}${downspeedgraph \1 60,24 315bb1 1a336b \3}
+  -- network bandwith: ${template4 device uploadSpeed downloadSpeed}
+  template4 = [[
+${voffset 17}${offset 0}${upspeedgraph \1 60,23 ${template2} \2}${offset 0}${downspeedgraph \1 60,23 ${template1} \3}
 ${voffset -65}${goto 57}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)${offset 9}${color1}bittorrent
 ${voffset 12}${alignr 120}${color}${upspeed \1}${offset 9}${color1}up   
 ${voffset 4}${alignr 120}${color}${downspeed \1}${offset 9}${color1}down 
 ${voffset -30}${alignr 35}${color}${totalup \1}${offset 9}${color1}total
 ${voffset 4}${alignr 35}${color}${totaldown \1}${offset 9}${color1}total]],
 
-  -- hard disk: ${template3 device readSpeed writeSpeed}
-  template3 = [[
-${voffset 4}${offset 0}${diskiograph_read /dev/\1 40,24 6b91e5 546fb2 \2}${offset -1}${diskiograph_write /dev/\1 40,24 315bb1 1a336b \3}
+  -- hard disk: ${template5 device readSpeed writeSpeed}
+  template5 = [[
+${voffset 4}${offset 0}${diskiograph_read /dev/\1 40,23 ${template2} \2}${offset 0}${diskiograph_write /dev/\1 40,23 ${template1} \3}
 ${voffset -37}${alignr 122}${color}${diskio_read /dev/\1}${offset 9}${color1}read 
 ${voffset 4}${alignr 122}${color}${diskio_write /dev/\1}${offset 9}${color1}write${voffset -3}]],
 
-  -- filesystem: ${template4 filesystemName fileSystemPath}
-  template4 = [[
+  -- filesystem: ${template6 filesystemName fileSystemPath}
+  template6 = [[
 ${voffset 57}${offset 1}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3, 45 \2}
 ${voffset -32}${goto 57}${color}\1 (${fs_type \2})
 ${voffset 4}${goto 57}${color}${fs_used \2} / ${fs_size \2}${voffset -3}]]
@@ -91,13 +97,13 @@ ${voffset 3}${goto 57}${color}${execi 3600 echo $XDG_SESSION_TYPE}${offset 9}${g
 ${voffset 3}${goto 57}
 # :::::::::::::::::::: cpu
 ${image ~/conky/monochrome/images/widgets-small/cpu.png -n -p 0,68}\
-${voffset 22}${offset 7}${cpugraph cpu0 33,33 315bb1 1a336b}
+${voffset 22}${offset 7}${cpugraph cpu0 33,33 ${template1}}
 ${voffset -32}${goto 57}${color}${cpu cpu0}%
 ${voffset 3}${goto 57}${color}${loadavg}
 # :::::::::::::::::::: memory
 ${image ~/conky/monochrome/images/widgets-small/memory.png -n -p 6,135}
 ${image ~/conky/monochrome/images/widgets-small/bar.png -n -p 0,194}\
-${voffset 6}${offset 13}${memgraph 43,21 315bb1 1a336b}
+${voffset 6}${offset 13}${memgraph 43,21 ${template1}}
 ${voffset -38}${goto 57}${color}${memperc}%
 ${voffset 4}${goto 57}${mem} / ${memmax}
 ${voffset 10}${offset 1}${color2}${if_match ${swapperc} >= 70}${color3}${endif}${swapbar 3, 45}${voffset -1}${goto 57}${color}${swapperc}%${offset 9}${color1}swap${color}
@@ -112,15 +118,15 @@ ${voffset 3}${goto 57}${color}${wireless_bitrate wlp4s0}${goto 123}| channel ${w
 ${voffset 3}${goto 57}${color}${wireless_link_qual_perc wlp4s0}%${goto 123}| ${addr wlp4s0}${voffset -3}
 # :: upload/download speeds
 ${image ~/conky/monochrome/images/widgets-small/internet.png -n -p 0,284}\
-${template2 wlp4s0 8200 55100}
+${template4 wlp4s0 8200 55100}
 ${else}\
 # :::::: ethernet
 ${if_up enp6s0}\
 ${image ~/conky/monochrome/images/widgets-small/ethernet.png -n -p 1,219}\
-${template1 enp6s0}
+${template3 enp6s0}
 # :: upload/download speeds
 ${image ~/conky/monochrome/images/widgets-small/internet.png -n -p 0,284}\
-${template2 enp6s0 3000 60000}
+${template4 enp6s0 3000 60000}
 ${else}\
 ${image ~/conky/monochrome/images/widgets-small/wifi-disconnected.png -n -p 0,225}
 ${image ~/conky/monochrome/images/widgets-small/internet-offline.png -n -p 0,284}\
@@ -130,14 +136,14 @@ ${endif}\
 # :::::::::::::::::::: disk sda
 # disk io
 ${image ~/conky/monochrome/images/widgets-small/diskio.png -n -p 0,364}
-${template3 sda 200000 280000}
+${template5 sda 200000 280000}
 # disk space
 ${image ~/conky/monochrome/images/widgets-small/circuitry-flipped.png -n -p 5,405}\
 ${image ~/conky/monochrome/images/widgets-small/disk-root.png -n -p 1,424}\
-${template4 fedora /}
+${template6 fedora /}
 ${image ~/conky/monochrome/images/widgets-small/circuitry.png -n -p 5,470}\
 ${image ~/conky/monochrome/images/widgets-small/disk-home.png -n -p 1,489}\
-${template4 home /home}
+${template6 home /home}
 # :::::::::::::::::::: power
 ${voffset 57}\
 ${if_match "${acpiacadapter}"=="on-line"}\
@@ -148,11 +154,13 @@ ${voffset 3}${goto 57}${color}charged
 ${else}\
 ${image ~/conky/monochrome/images/widgets-small/power-charging.png -n -p 1,554}\
 ${offset 1}${color2}${if_match ${battery_percent BAT0} < 80}${color3}${endif}${battery_bar 3, 45 BAT0}
-${voffset -15}${goto 57}${color}${battery_time BAT0}
+${voffset -32}${goto 57}${color}${battery_percent BAT0}%
+${voffset 4}${goto 57}${color}${battery_time BAT0}
 ${endif}\
 ${else}\
 ${image ~/conky/monochrome/images/widgets-small/power-battery.png -n -p 1,554}\
 ${offset 1}${color2}${if_match ${battery_percent BAT0} < 20}${color3}${endif}${battery_bar 3, 45 BAT0}
-${voffset -15}${goto 57}${color}${battery_time BAT0}
+${voffset -32}${goto 57}${color}${battery_percent BAT0}%
+${voffset 4}${goto 57}${color}${battery_time BAT0}
 ${endif}
 ]];

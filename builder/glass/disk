@@ -3,7 +3,7 @@ ${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,419}\
 ${image ~/conky/monochrome/images/glass/block-disk.png -n -p 0,420}\
 ${image ~/conky/monochrome/images/glass/hard-drive.png -n -p 2,422}\
 # speeds | read: 140MiB  write: 151MiB
-${template1 sda 280000 302000}
-${template2 fedora /}
+${template5 sda 280000 302000}
+${template6 fedora /}
 ${image ~/conky/monochrome/images/glass/block-filesystem.png -n -p 0,570}\
-${template2 home /home}
+${template6 home /home}

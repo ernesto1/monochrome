@@ -2,11 +2,11 @@
 ${if_mounted /run/media/ernesto/MAXTOR}\
 # disk io
 ${image ~/conky/monochrome/images/widgets-small/diskio.png -n -p 0,804}
-${template3 sdd1 6000 52000}
+${template5 sdf1 6000 52000}
 # filesystem
 ${image ~/conky/monochrome/images/widgets-small/circuitry-flipped.png -n -p 5,845}\
 ${image ~/conky/monochrome/images/widgets-small/usbDrive.png -n -p 1, 864}\
-${template4 maxtor /run/media/ernesto/MAXTOR}
+${template6 maxtor /run/media/ernesto/MAXTOR}
 ${else}\
 ${voffset 93}
 ${endif}\

@@ -1,5 +1,5 @@
 :: time with clock on the right side
 
-${voffset 30}${goto 5}${color1}${time %A}
-${voffset 2}${goto 5}${time %B %d}${voffset -33}${alignr}${color}${font Promenade de la Croisette:size=40}${time %I}${font Promenade de la Croisette:size=37}:${time %M}${font0} 
+${voffset 30}${goto 5}${color}${time %A}
+${voffset 2}${goto 5}${time %B %d}${voffset -33}${alignr}${color1}${font Promenade de la Croisette:size=40}${time %I}${font Promenade de la Croisette:size=37}:${time %M}${font0} 
 

@@ -6,13 +6,13 @@ ${image ~/conky/monochrome/images/glass/block.png -n -p 0,346}\
 ${if_up enp0s25}\
 ${image ~/conky/monochrome/images/glass/ethernet.png -n -p 4,235}\
 ${image ~/conky/monochrome/images/glass/internet.png -n -p 18,307}\
-${template4 enp0s25}
-${template5 enp0s25 3000 60000}
+${template3 enp0s25}
+${template4 enp0s25 3000 60000}
 ${else}\
 # no network/internet
 ${image ~/conky/monochrome/images/glass/noNetwork-desktop.png -n -p 0,223}\
-${voffset 12}${offset 5}${color}${font0}network
-${voffset 143}${alignc}${color1}${font4}no ethernet
+${voffset 12}${offset 5}${color1}${font0}network
+${voffset 143}${alignc}${color}${font4}no ethernet
 ${alignc}connection
 ${voffset -10}
 ${endif}\
