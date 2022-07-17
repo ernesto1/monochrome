@@ -44,16 +44,16 @@ conky.config = {
   -- colors
   default_color = 'black',  -- regular text
   color1 = 'white',         -- text labels
-  color2 = '1a336b',        -- bar color default
-  color3 = '800020',        -- bar color warning
+  color2 = '800020',        -- bar color default
+  color3 = 'cc0000',        -- bar color warning
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   --  n.b. the line break escape character '\' is not supported in templates :(
   
   -- cpu/mem/download/disk write graph color
-  template1 = [[315bb1 1a336b]],
+  template1 = [[6e312e ac5c53]],
   -- upload/disk read graph
-  template2 = [[6b91e5 546fb2]],
+  template2 = [[79512d d2a264]],
   
   -- ethernet box: ${template3 ethernetDevice}
   -- common for both desktop and laptop
@@ -63,7 +63,8 @@ ${voffset 3}${goto 57}${addr \1}]],
 
   -- network bandwith: ${template4 device uploadSpeed downloadSpeed}
   template4 = [[
-${voffset 17}${offset 0}${upspeedgraph \1 60,23 ${template2} \2}${offset 0}${downspeedgraph \1 60,23 ${template1} \3}
+${voffset 17}${offset 0}${upspeedgraph \1 30,47 ${template2} \2}
+${voffset -13}${downspeedgraph \1 30,47 ${template1} \3}
 ${voffset -65}${goto 57}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)${offset 9}${color1}bittorrent
 ${voffset 12}${alignr 120}${color}${upspeed \1}${offset 9}${color1}up   
 ${voffset 4}${alignr 120}${color}${downspeed \1}${offset 9}${color1}down 
@@ -72,9 +73,10 @@ ${voffset 4}${alignr 35}${color}${totaldown \1}${offset 9}${color1}total]],
 
   -- hard disk: ${template5 device readSpeed writeSpeed}
   template5 = [[
-${voffset 4}${offset 0}${diskiograph_read /dev/\1 40,23 ${template2} \2}${offset 0}${diskiograph_write /dev/\1 40,23 ${template1} \3}
-${voffset -37}${alignr 122}${color}${diskio_read /dev/\1}${offset 9}${color1}read 
-${voffset 4}${alignr 122}${color}${diskio_write /dev/\1}${offset 9}${color1}write${voffset -3}]],
+${voffset 4}${color}${diskiograph_read /dev/\1 20,47 ${template2} \2}
+${voffset -13}${diskiograph_write /dev/\1 20,47 ${template1} \3}
+${voffset -39}${alignr 122}${color}${diskio_read /dev/\1}${offset 9}${color1}read 
+${voffset 6}${alignr 122}${color}${diskio_write /dev/\1}${offset 9}${color1}write${voffset -3}]],
 
   -- filesystem: ${template6 filesystemName fileSystemPath}
   template6 = [[
