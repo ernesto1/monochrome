@@ -1,7 +1,7 @@
 conky.config = {
   update_interval = 2,  -- update interval in seconds
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
-  xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
+  xinerama_head = 1,    -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
@@ -63,20 +63,20 @@ ${voffset 3}${goto 57}${addr \1}]],
 
   -- network bandwith: ${template4 device uploadSpeed downloadSpeed}
   template4 = [[
-${voffset 17}${offset 0}${upspeedgraph \1 30,47 ${template2} \2}
-${voffset -13}${downspeedgraph \1 30,47 ${template1} \3}
-${voffset -65}${goto 57}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)${offset 9}${color1}bittorrent
-${voffset 12}${alignr 120}${color}${upspeed \1}${offset 9}${color1}up   
+${voffset 17}${offset 0}${upspeedgraph \1 29,47 ${template2} \2}
+${voffset -8}${downspeedgraph \1 29,47 ${template1} \3}
+${voffset -68}${goto 57}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)${offset 9}${color1}bittorrent
+${voffset 15}${alignr 120}${color}${upspeed \1}${offset 9}${color1}up   
 ${voffset 4}${alignr 120}${color}${downspeed \1}${offset 9}${color1}down 
 ${voffset -30}${alignr 35}${color}${totalup \1}${offset 9}${color1}total
 ${voffset 4}${alignr 35}${color}${totaldown \1}${offset 9}${color1}total]],
 
   -- hard disk: ${template5 device readSpeed writeSpeed}
   template5 = [[
-${voffset 4}${color}${diskiograph_read /dev/\1 20,47 ${template2} \2}
-${voffset -13}${diskiograph_write /dev/\1 20,47 ${template1} \3}
-${voffset -39}${alignr 122}${color}${diskio_read /dev/\1}${offset 9}${color1}read 
-${voffset 6}${alignr 122}${color}${diskio_write /dev/\1}${offset 9}${color1}write${voffset -3}]],
+${voffset 4}${color}${diskiograph_read /dev/\1 21,47 ${template2} \2}
+${voffset -8}${diskiograph_write /dev/\1 21,47 ${template1} \3}
+${voffset -37}${alignr 122}${color}${diskio_read /dev/\1}${offset 9}${color1}read 
+${voffset 4}${alignr 122}${color}${diskio_write /dev/\1}${offset 9}${color1}write${voffset -3}]],
 
   -- filesystem: ${template6 filesystemName fileSystemPath}
   template6 = [[
@@ -132,35 +132,35 @@ ${template4 enp6s0 3000 60000}
 ${else}\
 ${image ~/conky/monochrome/images/widgets-small/wifi-disconnected.png -n -p 0,225}
 ${image ~/conky/monochrome/images/widgets-small/internet-offline.png -n -p 0,284}\
-${voffset 114}
+${voffset 117}
 ${endif}\
 ${endif}\
 # :::::::::::::::::::: disk sda
 # disk io
-${image ~/conky/monochrome/images/widgets-small/diskio.png -n -p 0,364}
+${image ~/conky/monochrome/images/widgets-small/diskio.png -n -p 0,367}
 ${template5 sda 200000 280000}
 # disk space
-${image ~/conky/monochrome/images/widgets-small/circuitry-flipped.png -n -p 5,405}\
-${image ~/conky/monochrome/images/widgets-small/disk-root.png -n -p 1,424}\
+${image ~/conky/monochrome/images/widgets-small/circuitry-flipped.png -n -p 5,415}\
+${image ~/conky/monochrome/images/widgets-small/disk-root.png -n -p 1,434}\
 ${template6 fedora /}
-${image ~/conky/monochrome/images/widgets-small/circuitry.png -n -p 5,470}\
-${image ~/conky/monochrome/images/widgets-small/disk-home.png -n -p 1,489}\
+${image ~/conky/monochrome/images/widgets-small/circuitry.png -n -p 5,480}\
+${image ~/conky/monochrome/images/widgets-small/disk-home.png -n -p 1,499}\
 ${template6 home /home}
 # :::::::::::::::::::: power
 ${voffset 57}\
 ${if_match "${acpiacadapter}"=="on-line"}\
 ${if_match ${battery_percent BAT0} == 100}\
-${image ~/conky/monochrome/images/widgets-small/power-plugged-in.png -n -p 1,554}
+${image ~/conky/monochrome/images/widgets-small/power-plugged-in.png -n -p 1,564}
 ${voffset -34}${goto 57}${color}fully
 ${voffset 3}${goto 57}${color}charged
 ${else}\
-${image ~/conky/monochrome/images/widgets-small/power-charging.png -n -p 1,554}\
+${image ~/conky/monochrome/images/widgets-small/power-charging.png -n -p 1,564}\
 ${offset 1}${color2}${if_match ${battery_percent BAT0} < 80}${color3}${endif}${battery_bar 3, 45 BAT0}
 ${voffset -32}${goto 57}${color}${battery_percent BAT0}%
 ${voffset 4}${goto 57}${color}${battery_time BAT0}
 ${endif}\
 ${else}\
-${image ~/conky/monochrome/images/widgets-small/power-battery.png -n -p 1,554}\
+${image ~/conky/monochrome/images/widgets-small/power-battery.png -n -p 1,564}\
 ${offset 1}${color2}${if_match ${battery_percent BAT0} < 20}${color3}${endif}${battery_bar 3, 45 BAT0}
 ${voffset -32}${goto 57}${color}${battery_percent BAT0}%
 ${voffset 4}${goto 57}${color}${battery_time BAT0}

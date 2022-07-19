@@ -63,20 +63,20 @@ ${voffset 3}${goto 57}${addr \1}]],
 
   -- network bandwith: ${template4 device uploadSpeed downloadSpeed}
   template4 = [[
-${voffset 17}${offset 0}${upspeedgraph \1 30,47 ${template2} \2}
-${voffset -13}${downspeedgraph \1 30,47 ${template1} \3}
-${voffset -65}${goto 57}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)${offset 9}${color1}bittorrent
-${voffset 12}${alignr 120}${color}${upspeed \1}${offset 9}${color1}up   
+${voffset 17}${offset 0}${upspeedgraph \1 29,47 ${template2} \2}
+${voffset -8}${downspeedgraph \1 29,47 ${template1} \3}
+${voffset -68}${goto 57}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)${offset 9}${color1}bittorrent
+${voffset 15}${alignr 120}${color}${upspeed \1}${offset 9}${color1}up   
 ${voffset 4}${alignr 120}${color}${downspeed \1}${offset 9}${color1}down 
 ${voffset -30}${alignr 35}${color}${totalup \1}${offset 9}${color1}total
 ${voffset 4}${alignr 35}${color}${totaldown \1}${offset 9}${color1}total]],
 
   -- hard disk: ${template5 device readSpeed writeSpeed}
   template5 = [[
-${voffset 4}${color}${diskiograph_read /dev/\1 20,47 ${template2} \2}
-${voffset -13}${diskiograph_write /dev/\1 20,47 ${template1} \3}
-${voffset -39}${alignr 122}${color}${diskio_read /dev/\1}${offset 9}${color1}read 
-${voffset 6}${alignr 122}${color}${diskio_write /dev/\1}${offset 9}${color1}write${voffset -3}]],
+${voffset 4}${color}${diskiograph_read /dev/\1 21,47 ${template2} \2}
+${voffset -8}${diskiograph_write /dev/\1 21,47 ${template1} \3}
+${voffset -37}${alignr 122}${color}${diskio_read /dev/\1}${offset 9}${color1}read 
+${voffset 4}${alignr 122}${color}${diskio_write /dev/\1}${offset 9}${color1}write${voffset -3}]],
 
   -- filesystem: ${template6 filesystemName fileSystemPath}
   template6 = [[

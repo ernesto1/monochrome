@@ -1,14 +1,14 @@
 # :::::::::::::::::::: maxtor external hard drive
 ${if_mounted /run/media/ernesto/MAXTOR}\
 # disk io
-${image ~/conky/monochrome/images/widgets-small/diskio.png -n -p 0,804}
+${image ~/conky/monochrome/images/widgets-small/diskio.png -n -p 0,828}
 ${template5 sdf1 6000 52000}
 # filesystem
-${image ~/conky/monochrome/images/widgets-small/circuitry-flipped.png -n -p 5,845}\
-${image ~/conky/monochrome/images/widgets-small/usbDrive.png -n -p 1, 864}\
+${image ~/conky/monochrome/images/widgets-small/circuitry-flipped.png -n -p 5,876}\
+${image ~/conky/monochrome/images/widgets-small/usbDrive.png -n -p 1, 895}\
 ${template6 maxtor /run/media/ernesto/MAXTOR}
 ${else}\
-${image ~/conky/monochrome/images/widgets-small/usb-placeholder.png -n -p 0,804}
+${image ~/conky/monochrome/images/widgets-small/usb-placeholder.png -n -p 0,828}
 ${voffset 12}${goto 14}hard
 ${voffset 27}${goto 57}external device
 ${voffset 3}${goto 57}is not connected

@@ -1,6 +1,6 @@
 conky.config = {
   update_interval = 60,     -- update interval in seconds
-  xinerama_head = 0,       -- for multi monitor setups, select monitor to run on: 0,1,2
+  xinerama_head = 1,       -- for multi monitor setups, select monitor to run on: 0,1,2
   total_run_times = 0,     -- this is the number of times conky will update before quitting, set to zero to run forever
   double_buffer = true,    -- use double buffering (reduces flicker, may not work for everyone)
 

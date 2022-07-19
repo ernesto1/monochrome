@@ -1,14 +1,14 @@
 # :::::::::::::::::::: disk sdb
 # disk io | read 250000
-${image ~/conky/monochrome/images/widgets-small/diskio.png -n -p 0,554}
+${image ~/conky/monochrome/images/widgets-small/diskio.png -n -p 0,564}
 ${template5 sdb 6500 200000}
-${image ~/conky/monochrome/images/widgets-small/circuitry-flipped.png -n -p 5,595}\
-${image ~/conky/monochrome/images/widgets-small/disk-partition.png -n -p 1,614}\
+${image ~/conky/monochrome/images/widgets-small/circuitry-flipped.png -n -p 5,612}\
+${image ~/conky/monochrome/images/widgets-small/disk-partition.png -n -p 1,631}\
 ${template6 veronica /media/veronica}
 # :::::::::::::::::::: disk sdc
 # disk io | read 250000
-${image ~/conky/monochrome/images/widgets-small/diskio.png -n -p 0,679}
+${image ~/conky/monochrome/images/widgets-small/diskio.png -n -p 0,696}
 ${template5 sdc 6500 200000}
-${image ~/conky/monochrome/images/widgets-small/circuitry-flipped.png -n -p 5,720}\
-${image ~/conky/monochrome/images/widgets-small/disk-partition.png -n -p 1,739}\
+${image ~/conky/monochrome/images/widgets-small/circuitry-flipped.png -n -p 5,744}\
+${image ~/conky/monochrome/images/widgets-small/disk-partition.png -n -p 1,763}\
 ${template6 betty /media/betty}

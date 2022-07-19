@@ -8,5 +8,5 @@ ${template4 enp0s25 3000 60000}
 ${else}\
 ${image ~/conky/monochrome/images/widgets-small/ethernet-disconnected.png -n -p 0,219}
 ${image ~/conky/monochrome/images/widgets-small/internet-offline.png -n -p 0,284}\
-${voffset 114}
+${voffset 117}
 ${endif}\

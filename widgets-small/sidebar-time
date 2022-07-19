@@ -1,12 +1,12 @@
 conky.config = {
   update_interval = 1,    -- update interval in seconds
-  xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
+  xinerama_head = 1,      -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
   alignment = 'top_left',  -- top|middle|bottom_left|right
   gap_x = 2,               -- same as passing -x at command line
-  gap_y = 647,
+  gap_y = 657,
 
   -- window settings
   minimum_width = 47,      -- conky will add an extra pixel to this
