@@ -1,0 +1,64 @@
+### monochrome blue  
+  
+  -- colors
+  default_color = 'black',  -- regular text
+  color1 = 'white',         -- text labels
+  color2 = '1a336b',        -- bar color default
+  color3 = '800020',        -- bar color warning
+  
+  -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
+  --  n.b. the line break escape character '\' is not supported in templates :(
+  
+  -- cpu/mem/download/disk write graph color
+  template1 = [[315bb1 1a336b]],
+  -- upload/disk read graph
+  template2 = [[79512d d2a264]],
+
+
+other choices for the upload graph:
+  
+  d6926d ffd799   soft orange
+
+
+
+### earth red/ocre
+
+  -- colors
+  default_color = 'black',  -- regular text
+  color1 = 'white',         -- text labels
+  color2 = '800020',        -- bar color default
+  color3 = 'cc0000',        -- bar color warning
+  
+  -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
+  --  n.b. the line break escape character '\' is not supported in templates :(
+  
+  -- cpu/mem/download/disk write graph color
+  template1 = [[6e312e ac5c53]],
+  -- upload/disk read graph
+  template2 = [[905c4f ca977c]],
+  
+
+other choices for the upload graph:
+  
+  fdd168 fcea88   light yellow              not a good match :/
+  4d2428 724b4c   dark brownish, taupe?
+  de996b ffdea8   azur lane nelson tan
+  7e0e0d c23532   red                       kind of hard to distinguish up/down
+  d6926d ffd799   soft orange
+
+
+### purple/orange
+
+  -- colors
+  default_color = 'black',  -- regular text
+  color1 = 'white',         -- text labels
+  color2 = '4c0c40',        -- bar color default
+  color3 = 'cc0000',        -- bar color warning
+  
+  -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
+  --  n.b. the line break escape character '\' is not supported in templates :(
+  
+  -- cpu/mem/download/disk write graph color
+  template1 = [[4c0c40 660c52]],
+  -- upload/disk read graph
+  template2 = [[cd862c eac574]],
