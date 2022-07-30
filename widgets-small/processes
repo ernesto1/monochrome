@@ -12,7 +12,7 @@ conky.config = {
 
   -- window settings +31
   minimum_width = 439,
-  minimum_height = 190,
+  minimum_height = 210,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -63,4 +63,5 @@ ${template0 3}
 ${template0 4}
 ${template0 5}
 ${template0 6}
+${template0 7}
 ]];
