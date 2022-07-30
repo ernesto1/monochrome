@@ -45,27 +45,22 @@ conky.config = {
   -- colors
   default_color = 'black',  -- regular text
   color1 = 'white',         -- text labels
+  
+  -- template
+  template0 = [[${voffset 3} ${top name \1}${top cpu \1}% ${top pid \1}${goto 231}${top_mem name \1}${alignr}${top_mem mem_res \1} ${top_mem pid \1} ]]
 };
 
 conky.text = [[
 ${voffset 3} ${color1}kernel${offset 9}${color}${kernel}
 ${voffset 3} ${color1}zoom  ${offset 9}${color}${if_running zoom}running${else}off${endif}
-# :::::::::::::::::::: cpu processes
+# :::::::::::::::::::: processes
 ${image ~/conky/monochrome/images/widgets-small/table-processes-cpu.png -n -p 0,68}\
-${voffset 36} process${goto 157}cpu   pid 
-${voffset 6} ${top name 1}${top cpu 1}% ${top pid 1}
-${voffset 3} ${top name 2}${top cpu 2}% ${top pid 2}
-${voffset 3} ${top name 3}${top cpu 3}% ${top pid 3}
-${voffset 3} ${top name 4}${top cpu 4}% ${top pid 4}
-${voffset 3} ${top name 5}${top cpu 5}% ${top pid 5}
-${voffset 3} ${top name 6}${top cpu 6}% ${top pid 6}
-# :::::::::::::::::::: memory processes
 ${image ~/conky/monochrome/images/widgets-small/table-processes-memory.png -n -p 224,68}\
-${voffset -112}${goto 231}process${alignr}mem   pid 
-${goto 231}${voffset 6}${top_mem name 1}${alignr}${top_mem mem_res 1} ${top_mem pid 1} 
-${goto 231}${voffset 3}${top_mem name 2}${alignr}${top_mem mem_res 2} ${top_mem pid 2} 
-${goto 231}${voffset 3}${top_mem name 3}${alignr}${top_mem mem_res 3} ${top_mem pid 3} 
-${goto 231}${voffset 3}${top_mem name 4}${alignr}${top_mem mem_res 4} ${top_mem pid 4} 
-${goto 231}${voffset 3}${top_mem name 5}${alignr}${top_mem mem_res 5} ${top_mem pid 5} 
-${goto 231}${voffset 3}${top_mem name 6}${alignr}${top_mem mem_res 6} ${top_mem pid 6} 
+${voffset 36} process${goto 157}cpu   pid${goto 231}process${alignr}mem   pid ${voffset 3}
+${template0 1}
+${template0 2}
+${template0 3}
+${template0 4}
+${template0 5}
+${template0 6}
 ]];
