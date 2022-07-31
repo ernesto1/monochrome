@@ -48,7 +48,7 @@ The small widgets [time conky](https://github.com/ernesto1/monochrome/blob/maste
 # How to run
 1) Create the `~/conky` directory and clone this repository
 
-       $ mkdir -p ~/conky
+       $ mkdir ~/conky
        $ cd ~/conky
        $ git clone https://github.com/ernesto1/monochrome.git
 
@@ -64,7 +64,7 @@ The small widgets [time conky](https://github.com/ernesto1/monochrome/blob/maste
 
     - Widgets small
 
-          $ ~/conky/monochrome/launch.bash --widgets-small --layout-override laptop
+          $ ~/conky/monochrome/launch.bash --widgets-small
 
     - Widgets large
 
