@@ -47,7 +47,7 @@ conky.config = {
   color1 = 'white',         -- text labels
   
   -- template
-  template0 = [[${voffset 3} ${top name \1}${top cpu \1}% ${top pid \1}${goto 231}${top_mem name \1}${alignr}${top_mem mem_res \1} ${top_mem pid \1} ]]
+  template0 = [[${voffset 3} ${top name \1}${top cpu \1}% ${top pid \1}${offset 20}${top_mem name \1} ${top_mem mem_res \1} ${top_mem pid \1} ]]
 };
 
 conky.text = [[
