@@ -10,7 +10,7 @@ conky.config = {
   gap_y = 32,
 
   -- window settings
-  minimum_width = 247,
+  minimum_width = 190,
   minimum_height = 950,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -44,18 +44,18 @@ conky.config = {
   -- colors
   default_color = 'black',  -- regular text
   color1 = 'white',         -- text labels
-  color2 = '800020',        -- bar color default
+  color2 = '4c0c40',        -- bar color default
   color3 = 'cc0000',        -- bar color warning
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   --  n.b. the line break escape character '\' is not supported in templates :(
   
   -- cpu/mem/download/disk write graph color
-  template1 = [[6e312e ac5c53]],
+  template1 = [[4c0c40 660c52]],
   -- upload/disk read graph
-  template2 = [[79512d d2a264]],
+  template2 = [[cd862c eac574]],
   
-  -- ethernet box: ${template3 ethernetDevice}
+  -- ethernet block: ${template3 ethernetDevice}
   -- common for both desktop and laptop
   template3 = [[
 ${voffset 31}${goto 57}${execi 180 ethtool \1 2>/dev/null | grep -i speed | cut -d ' ' -f 2} 
@@ -65,18 +65,18 @@ ${voffset 3}${goto 57}${addr \1}]],
   template4 = [[
 ${voffset 17}${offset 0}${upspeedgraph \1 29,47 ${template2} \2}
 ${voffset -8}${downspeedgraph \1 29,47 ${template1} \3}
-${voffset -68}${goto 57}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)${offset 9}${color1}bittorrent
-${voffset 15}${alignr 120}${color}${upspeed \1}${offset 9}${color1}up   
-${voffset 4}${alignr 120}${color}${downspeed \1}${offset 9}${color1}down 
-${voffset -30}${alignr 35}${color}${totalup \1}${offset 9}${color1}total
-${voffset 4}${alignr 35}${color}${totaldown \1}${offset 9}${color1}total]],
+${voffset -68}${goto 57}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peers${offset 9}${color1}bittorrent
+${voffset 15}${alignr 81}${color}${upspeed \1} |
+${voffset 4}${alignr 81}${color}${downspeed \1} |
+${voffset -30}${alignr 8}${color}${totalup \1}${offset 9}${color1}up  
+${voffset 4}${alignr 8}${color}${totaldown \1}${offset 9}${color1}down]],
 
   -- hard disk: ${template5 device readSpeed writeSpeed}
   template5 = [[
 ${voffset 4}${color}${diskiograph_read /dev/\1 21,47 ${template2} \2}
 ${voffset -8}${diskiograph_write /dev/\1 21,47 ${template1} \3}
-${voffset -37}${alignr 122}${color}${diskio_read /dev/\1}${offset 9}${color1}read 
-${voffset 4}${alignr 122}${color}${diskio_write /dev/\1}${offset 9}${color1}write${voffset -3}]],
+${voffset -37}${alignr 63}${color}${diskio_read /dev/\1}${offset 9}${color1}read 
+${voffset 4}${alignr 63}${color}${diskio_write /dev/\1}${offset 9}${color1}write${voffset -3}]],
 
   -- filesystem: ${template6 filesystemName fileSystemPath}
   template6 = [[
