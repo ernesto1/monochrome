@@ -3,7 +3,7 @@
 # ie. less than half of the cores are in use in the 5 min load average
 
 function onExitSignal() {
-  echo "$(basename $0) | received shutdown signal, cleaning up temporary files and exiting script"
+  echo "$(basename $0) | received shutdown signal, cleaning up temporary files and exiting script" | tee -a ${logFile}
   rm -f /tmp/dnf.*    # delete temp files
   kill $(jobs -p)     # kill any child processes, ie. the sleep command
   exit 0
@@ -64,7 +64,7 @@ while [ true ]; do
             # extract the actual packages from the raw dnf data
             grep -E $regex ${packagesRawFile} > ${packagesFile}
             # package name and version is formatted into a tabular layout of 35 characters for conky to print
-            column --table --table-right 2 --table-truncate 1,2 --table-hide 3 --output-width ${width} ${packagesFile} | head -n 36 > /tmp/dnf.packages.preview
+            column --table --table-right 2 --table-truncate 1,2 --table-hide 3 --output-width ${width} ${packagesFile} > /tmp/dnf.packages.preview
         else
             echo 'no updates available' | tee -a ${logFile}
             rm -f /tmp/dnf.packages*

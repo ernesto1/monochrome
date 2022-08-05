@@ -78,6 +78,8 @@ if [[ $# < 1 ]]; then
   exit 1
 fi
 
+width=35    # default width for the package update list text
+
 while (( "$#" )); do
   case $1 in
     --widgets-large)
@@ -86,6 +88,7 @@ while (( "$#" )); do
       ;;
     --widgets-small)
       directory=${HOME}/conky/monochrome/widgets-small
+      width=45
       shift
       ;;
     --glass)
@@ -150,7 +153,7 @@ if [[ ! -z $fileTag ]]; then
 fi
 
 set +e      # ignore errors
-echo -e '\n::: killing any currently running conky processes (listed below)'
+echo -e '\n::: killing the currently running conky processes listed below:'
 echo -e 'PID   conky'
 ps -fC conky | awk '{if (NR!=1) print $2,$10}'
 killall conky
@@ -215,4 +218,4 @@ do
 done
 
 echo -e "\n::: starting dnf package lookup service"
-~/conky/monochrome/dnfPackageLookup.bash &
+~/conky/monochrome/dnfPackageLookup.bash --width ${width} &
