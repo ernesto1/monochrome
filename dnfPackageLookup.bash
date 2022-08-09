@@ -10,6 +10,22 @@ function onExitSignal() {
 }
 
 trap onExitSignal SIGINT SIGTERM
+
+width=35      # default width in number of characters for the 'new package updates' table
+
+while (( "$#" )); do
+  case $1 in
+    --width)
+      width=$2
+      shift 2
+      ;;
+    *)
+      echo $(basename $0) [--width n] >&2
+      exit 1
+      ;;
+  esac
+done
+
 scriptName=$(basename $0 .bash)
 logFile=/tmp/${scriptName}.log
 echo "$(date +'%D %r') - starting dnf repo package lookup" | tee ${logFile}
@@ -48,7 +64,7 @@ while [ true ]; do
             # extract the actual packages from the raw dnf data
             grep -E $regex ${packagesRawFile} > ${packagesFile}
             # package name and version is formatted into a tabular layout of 35 characters for conky to print
-            column --table --table-right 2 --table-truncate 1,2 --table-hide 3 --output-width 35 ${packagesFile} | head -n 36 > /tmp/dnf.packages.preview
+            column --table --table-right 2 --table-truncate 1,2 --table-hide 3 --output-width ${width} ${packagesFile} | head -n 36 > /tmp/dnf.packages.preview
         else
             echo 'no updates available' | tee -a ${logFile}
             rm -f /tmp/dnf.packages*
