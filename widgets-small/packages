@@ -1,5 +1,5 @@
 conky.config = {
-  update_interval = 60,     -- update interval in seconds
+  update_interval = 2,     -- update interval in seconds
   xinerama_head = 1,       -- for multi monitor setups, select monitor to run on: 0,1,2
   total_run_times = 0,     -- this is the number of times conky will update before quitting, set to zero to run forever
   double_buffer = true,    -- use double buffering (reduces flicker, may not work for everyone)
@@ -7,7 +7,7 @@ conky.config = {
   -- window alignment
   alignment = 'top_left',  -- top|middle|bottom_left|right
   gap_x = 410,             -- same as passing -x at command line
-  gap_y = 228,
+  gap_y = 251,
 
   -- window settings
   minimum_width = 210,
@@ -49,7 +49,7 @@ ${if_existing /tmp/dnf.packages}\
 #${alignc}${color1}.::: DNF package management :::.
 ${color1}dnf package management ${hr}
 ${voffset 5}${color}${lines /tmp/dnf.packages} package update(s) are available
-${voffset 4}${color1}package${goto 170}version
+${voffset 4}${color1}package${alignr}version
 # the dnf package lookup script refreshes the package list every 10m
 ${voffset 4}${color}${cat /tmp/dnf.packages.preview}
 ${color1}${hr}
