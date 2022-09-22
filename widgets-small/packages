@@ -7,16 +7,16 @@ conky.config = {
   -- window alignment
   alignment = 'top_left',  -- top|middle|bottom_left|right
   gap_x = 474,             -- same as passing -x at command line
-  gap_y = 251,
+  gap_y = 281,
 
   -- window settings
-  minimum_width = 210,
+  minimum_width = 267,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
 
   -- transparency configuration
-  own_window_transparent = true,
-  own_window_argb_visual = true,  -- turn on transparency
+  own_window_transparent = false,
+  own_window_argb_visual = false,  -- turn on transparency
   own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
 
   -- window borders
@@ -39,18 +39,21 @@ conky.config = {
   draw_outline = false,   -- black outline around text (not good if text is black)
 
   -- color scheme
-  default_color = 'black',  -- regular text
-  color1 = 'white'          -- text labels
+  own_window_colour = '201e2c',
+  default_color = '81738c',
+  color1 = 'd16862'
 };
 
 conky.text = [[
+#${alignc}${color1}.::: dnf package management :::.
+${color1}dnf package management ${hr}
 ${if_existing /tmp/dnf.packages}\
-${alignc}${color1}.::: dnf package management :::.
-#${color1}dnf package management ${hr}
 ${voffset 5}${color}${lines /tmp/dnf.packages} package updates are available
 ${voffset 4}${color1}package${alignr}version
 # the dnf package lookup script refreshes the package list every 10m
 ${voffset 4}${color}${cat /tmp/dnf.packages.preview}
-${color1}${hr}\
+${color1}${hr}
+${else}\
+${voffset 5}${color}no updates available
 ${endif}\
 ]];
