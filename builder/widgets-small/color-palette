@@ -62,3 +62,20 @@ other choices for the upload graph:
   template1 = [[4c0c40 660c52]],
   -- upload/disk read graph
   template2 = [[cd862c eac574]],
+
+
+### honolulu w/ gray background
+
+  -- colors
+  default_color = 'black',  -- regular text
+  color1 = '777487',         -- text labels
+  color2 = '1d1927',        -- bar color default
+  color3 = 'cc0000',        -- bar color warning
+  
+  -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
+  --  n.b. the line break escape character '\' is not supported in templates :(
+  
+  -- cpu/mem/download/disk write graph color
+  template1 = [[1d1927 61557d]],
+  -- upload/disk read graph
+  template2 = [[5c1f1e a9423d]],
