@@ -15,11 +15,13 @@ If you are new to conky, this [project's wiki page](https://github.com/ernesto1/
 ### Widgets | large
 ![desktop 2560px](images/screenshots/widgets-large.jpg)
 
-## Scripts
-### Repository package updates
-`dnf`, the fedora package manager is **periodically** queried for new packages if the system is **iddle**. Slow machines will appreciate this, since a dnf package lookup may bring the cpu to a crawl.
+# Scripts
+These shell scripts were written two support this conky setup:
 
-**n.b.** `dnf` is specific to **fedora** linux.  If you use a different distro, you will have to [update the script](https://github.com/ernesto1/monochrome/wiki) to use your distro's package manager.
+- A launcher script for executing multiple conky configs
+- A new package update script
+
+For more details on these scripts [see this wiki](https://github.com/ernesto1/monochrome/wiki/Scripts).
 
 # How to install
 ### Dependencies
@@ -41,31 +43,32 @@ The small widgets [time conky](https://github.com/ernesto1/monochrome/blob/maste
 - [Promenade de la Croisette](https://www.fontspace.com/promenade-de-la-croisette-font-f23769)
 - Noto Sans CJK JP Thin (default on fedora)
 
-### Configuration
-- The [wiki](https://github.com/ernesto1/monochrome/wiki) outlines items that may require configuration in order to customize this conky to your system, ex. device names such as network cards and hard drives
-- If you run a multi monitor setup, you can read how to configure conky to show on a [particular monitor](https://github.com/ernesto1/monochrome/wiki#multi-monitor-setups)
-
-# How to run
-1) Create the `~/conky` directory and clone this repository
+### Download the code for these conky scripts
+Create the `~/conky` directory and clone this repository
 
        $ mkdir ~/conky
        $ cd ~/conky
        $ git clone https://github.com/ernesto1/monochrome.git
 
-2) Run the launch script with the theme you want:
+### Configuration
+- The [wiki](https://github.com/ernesto1/monochrome/wiki) outlines items that may require configuration in order to customize this conky to your system, ex. device names such as network cards and hard drives
+- If you run a multi monitor setup, you can read how to configure conky to show on a [particular monitor](https://github.com/ernesto1/monochrome/wiki#multi-monitor-setups)
+
+# How to run
+Run the launch script with the theme you want:
 
     - Glass
 
-          $ ~/conky/monochrome/launch.bash --glass
+      $ ~/conky/monochrome/launch.bash --glass
 
     - Compact
 
-          $ ~/conky/monochrome/launch.bash --compact
+      $ ~/conky/monochrome/launch.bash --compact
 
     - Widgets small
 
-          $ ~/conky/monochrome/launch.bash --widgets-small
+      $ ~/conky/monochrome/launch.bash --widgets-small
 
     - Widgets large
 
-          $ ~/conky/monochrome/launch.bash --widgets-large
+      $ ~/conky/monochrome/launch.bash --widgets-large
