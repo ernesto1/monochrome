@@ -1,0 +1,4 @@
+# -------------- usb external disk
+${image ~/conky/monochrome/images/compact/red-disk.png -n -p 0,825}\
+${template5 sdg1 6000 52000}
+${voffset 6}${template6 maxtor /run/media/ernesto/MAXTOR}

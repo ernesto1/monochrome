@@ -1,0 +1,7 @@
+# -------------- desktop internal disks
+${image ~/conky/monochrome/images/compact/red-disk.png -n -p 0,619}\
+${template5 sdb 6500 200000}
+${voffset 6}${template6 veronica /media/veronica}
+${image ~/conky/monochrome/images/compact/red-disk.png -n -p 0,722}\
+${template5 sdc 6500 200000}
+${voffset 6}${template6 betty /media/betty}

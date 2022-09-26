@@ -1,0 +1,12 @@
+# desktop sidebar
+cd ~/conky/monochrome/builder/compact;\
+# ... usb-devices
+cat config cpu-mem network-desktop disk disk-desktop disk-usb > ~/conky/monochrome/compact/sidebar;\
+echo '${image ~/conky/monochrome/images/compact/red-sidebar-bottom.png -n -p 0,924}]];' >> ~/conky/monochrome/compact/sidebar
+
+system
+
+# laptop sidebar
+cd ~/conky/monochrome/builder/compact;\
+cat config system-cpu-mem network-laptop disk power > ~/conky/monochrome/compact/sidebar;\
+echo ']];' >> ~/conky/monochrome/compact/sidebar

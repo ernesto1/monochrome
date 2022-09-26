@@ -1,0 +1,4 @@
+${voffset 10}${color1}SYSTEM ${hr}
+${voffset 5}${offset 5}${color1}kernel${goto 68}${color}${kernel}
+${voffset 3}${offset 5}${color1}uptime${goto 68}${color}${uptime}
+${voffset 3}${offset 5}${color1}compositor${goto 68}${color}${execi 3600 echo $XDG_SESSION_TYPE}
