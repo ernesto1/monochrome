@@ -1,8 +1,11 @@
 *.ods*
 legacy/
 raws/
+**/blame
 # only .jpg images will be used for screenshots
 images/screenshots/*.xcf
 images/screenshots/*.png
 images/glass/new shepard hud.png
-**/blame
+# unofficial conkys
+widgets-large/layout.desktop.cfg
+widgets-large/sidebar-time
