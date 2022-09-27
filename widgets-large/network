@@ -55,7 +55,7 @@ ${color1}local ip${goto 66}${color}${addr enp0s25}
 ${voffset 3}${color1}bittorrent${goto 66}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
 ${voffset 3}${color1}zoom${goto 66}${color}${if_running zoom}running${else}off${endif}
 ${image ~/conky/monochrome/images/widgets-large/internet.png -n -p 0,51}\
-${offset 41}${upspeedgraph enp0s25 44,119 d6926d ffd799 3000}
+${offset 41}${upspeedgraph enp0s25 44,119 ffd799 d6926d 3000}
 ${voffset -13}${offset 41}${downspeedgraph enp0s25 44,119 315bb1 1a336b 55000}
 ${voffset 3}${color1}up${alignr 51}${color}${upspeed enp0s25} ${color1}total
 ${voffset 4}${color1}down${alignr 51}${color}${downspeed enp0s25} ${color1}total
