@@ -1,4 +1,4 @@
-# :::::::::::::::::::: upload/download speeds
+# :::::::::::::::::::: network
 ${if_up enp0s25}\
 ${image ~/conky/monochrome/images/widgets-small/ethernet.png -n -p 1,219}\
 ${template3 enp0s25}

@@ -56,7 +56,6 @@ conky.config = {
   template2 = [[cd862c eac574]],
   
   -- ethernet block: ${template3 ethernetDevice}
-  -- common for both desktop and laptop
   template3 = [[
 ${voffset 31}${goto 57}${execi 180 ethtool \1 2>/dev/null | grep -i speed | cut -d ' ' -f 2} 
 ${voffset 3}${goto 57}${addr \1}]],
