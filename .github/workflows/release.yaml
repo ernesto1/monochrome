@@ -1,0 +1,31 @@
+on:
+  push:
+    # sequence of patterns matched against refs/tags
+    tags:
+    - 'v*' # push events to matching v*, i.e. v1.0, v20.15.10
+
+name: Add conky release zip to the release
+
+jobs:
+  build:
+    name: Upload zip file
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build project
+        run: |
+          shopt -s extglob
+          echo ':::: adding the files:'
+          ls !(builder|images) images/*/*.{png,jpg}
+          echo -e '\n:::: creating the zip file:'
+          mkdir monochrome
+          cp -r --parents !(builder|images|monochrome) images/*/*.{png,jpg} monochrome
+          mkdir build
+          zip -r build/monochrome.zip monochrome
+      - name: Add the zip to the release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: build/monochrome.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
