@@ -1,6 +1,5 @@
 # Monochrome Conky
-A collection of graphical conky interfaces to monitor your system.
-
+A collection of graphical [conky](https://github.com/brndnmtthws/conky) interfaces to monitor your system.  
 If you are new to conky, this [project's wiki page](https://github.com/ernesto1/monochrome/wiki) has  helpful guides to customize the conky configs to your system.
 
 ### Compact Dock
@@ -19,7 +18,7 @@ If you are new to conky, this [project's wiki page](https://github.com/ernesto1/
 These shell scripts were written two support this conky setup:
 
 - A launcher script for executing multiple conky configs
-- A new package update script
+- A script to monitor for new package updates
 
 For more details on these scripts [see this wiki](https://github.com/ernesto1/monochrome/wiki/Scripts).
 
@@ -50,7 +49,7 @@ Create the `~/conky` directory and clone this repository
        $ cd ~/conky
        $ git clone https://github.com/ernesto1/monochrome.git
 
-Alternatively you can download the latest `monochrome.zip` file form the releases page.
+Alternatively you can download the latest `monochrome.zip` file from the releases page.
 
 ### Configuration
 The [wiki](https://github.com/ernesto1/monochrome/wiki) outlines items that may require configuration in order to customize this conky to your system, ex. device names such as network cards and hard drives
