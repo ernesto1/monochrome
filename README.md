@@ -1,13 +1,13 @@
 # Monochrome Conky
 A collection of graphical conky interfaces to monitor your system.
 
-If you are new to conky, this [project's wiki page](https://github.com/ernesto1/monochrome/wiki) has  helpful guides to show you how to customize the conky configs to your system.
+If you are new to conky, this [project's wiki page](https://github.com/ernesto1/monochrome/wiki) has  helpful guides to customize the conky configs to your system.
 
-### Glass theme
+### Compact Dock
+![compact](images/screenshots/compact.gif)
+
+### Glass Dock
 ![desktop 2560px](images/screenshots/glass.jpg)
-
-### Compact theme
-![compact](images/screenshots/compact.jpg)
 
 ### Widgets | small
 ![widgets small](images/screenshots/widgets-small.jpg)
@@ -38,7 +38,7 @@ more recent versions may have regressions/bugs ([issue 1](https://github.com/brn
 Run the command `dnf downgrade conky` until you arrive at this version or download the RPM [from the web](https://rpm.pbone.net/info_idpl_70128821_distro_fedora32_com_conky-1.11.5-3.fc32.x86_64.rpm.html).
 
 ### Fonts
-The small widgets [time conky](https://github.com/ernesto1/monochrome/blob/master/widgets-small/sidebar-time) requires the following fonts:
+Time conkys use these fonts:
 
 - [Promenade de la Croisette](https://www.fontspace.com/promenade-de-la-croisette-font-f23769)
 - Noto Sans CJK JP Thin (default on fedora)
@@ -50,9 +50,11 @@ Create the `~/conky` directory and clone this repository
        $ cd ~/conky
        $ git clone https://github.com/ernesto1/monochrome.git
 
+Alternatively you can download the latest `monochrome.zip` file form the releases page.
+
 ### Configuration
-- The [wiki](https://github.com/ernesto1/monochrome/wiki) outlines items that may require configuration in order to customize this conky to your system, ex. device names such as network cards and hard drives
-- If you run a multi monitor setup, you can read how to configure conky to show on a [particular monitor](https://github.com/ernesto1/monochrome/wiki#multi-monitor-setups)
+The [wiki](https://github.com/ernesto1/monochrome/wiki) outlines items that may require configuration in order to customize this conky to your system, ex. device names such as network cards and hard drives
+
 
 # How to run
 Run the launch script with the theme you want:
