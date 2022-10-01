@@ -1,14 +1,10 @@
 ################### disk - sdb
-${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,623}\
-${image ~/conky/monochrome/images/glass/block-disk.png -n -p 0,624}\
-${image ~/conky/monochrome/images/glass/hard-drive.png -n -p 2,626}\
+${image ~/conky/monochrome/images/glass/blue-disk.png -n -p 0,620}\
 # speeds | read: 151MiB  write: 100MiB
 ${template5 sdb 6000 200000}
 ${template6 veronica /media/veronica}
 ################### disk - sdc
-${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,777}\
-${image ~/conky/monochrome/images/glass/block-disk.png -n -p 0,778}\
-${image ~/conky/monochrome/images/glass/hard-drive.png -n -p 2,780}\
+${image ~/conky/monochrome/images/glass/blue-disk.png -n -p 0,774}\
 # speeds | read: 151MiB  write: 100MiB
 ${template5 sdc 6000 200000}
 ${template6 betty /media/betty}

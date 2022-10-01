@@ -1,21 +1,22 @@
 conky.config = {
   update_interval = 2,  -- update interval in seconds
-  xinerama_head = 1,    -- for multi monitor setups, select monitor to run on: 0,1,2
+  xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'top_left',    -- top|middle|bottom_left|middle|right
-  gap_x = 2,                 -- same as passing -x at command line
-  gap_y = 35,
+  alignment = 'middle_left',    -- top|middle|bottom_left|middle|right
+  gap_x = 5,                 -- same as passing -x at command line
+  gap_y = 0,
 
   -- window settings
   minimum_width = 113,
   minimum_height = 1255,
   own_window = true,
-  own_window_type = 'panel',    -- values: desktop (background), panel (bar)
+  own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
   -- transparency configuration
+  draw_blended = false,
   own_window_transparent = true,
   own_window_argb_visual = true,  -- turn on transparency
   own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
@@ -23,7 +24,6 @@ conky.config = {
   -- window borders
   draw_borders = false,     -- draw borders around the conky window
   border_width = 1,         -- width of border window in pixels
-  stippled_borders = 0,     -- border stippling (dashing) in pixels
   border_inner_margin = 0,  -- margin between the border and text in pixels
   border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
 
@@ -48,155 +48,138 @@ conky.config = {
   font3 = 'font URW Gothic Demi:size=9',      -- small value
   font4 = 'Nimbus Mono PS Regular:size=8',    -- text
   -- colors
-  default_color = 'black',  -- regular text
-  color1 = 'white',         -- text labels
-  color2 = '1a336b',        -- bar color default
+  default_color = 'white',  -- regular text
+  color1 = 'dfa22f',         -- text labels
+  color2 = '4a71bc',        -- bar color default
   color3 = '800020',        -- bar color warning
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   --  n.b. the line break escape character '\' is not supported in templates :(
 
   -- cpu/mem/download/disk write graph color
-  template1 = [[315bb1 1a336b]],
+  template1 = [[6b91e5 546fb2]],
   -- upload/disk read graph
-  template2 = [[6b91e5 546fb2]],
+  template2 = [[d08220 bc701c]],
   
   -- ethernet box: ${template3 ethernetDevice}
   -- common for both desktop and laptop
   template3 = [[
 ${voffset 12}${offset 5}${color1}${font0}ethernet
-${voffset 4}${alignr}${color}${font4}${execi 180 ethtool \1 2>/dev/null | grep -i speed | cut -d ' ' -f 2} 
-${voffset 3}${alignr}${color}${font4}${addr \1} ]],
+${voffset 4}${alignr 6}${color}${font4}${execi 180 ethtool \1 2>/dev/null | grep -i speed | cut -d ' ' -f 2}
+${voffset 3}${alignr 6}${color}${font4}${addr \1}]],
 
   -- network bandwith: ${template4 device uploadSpeed downloadSpeed}
   template4 = [[
 # upload
 ${voffset -4}${upspeedgraph \1 48,112 ${template2} \2}
 ${voffset -50}${offset 5}${color1}${font0}upload
-${voffset 5}${alignr}${font2}${upspeed \1} 
-${voffset 5}${alignr}${color}${font4}${totalup \1} total 
+${voffset 5}${alignr}${color}${font2}${upspeed \1} 
+${voffset 5}${alignr 6}${color}${font4}${totalup \1} total 
 # download
 ${voffset 1}${downspeedgraph \1 48,112 ${template1} \3}
 ${voffset -50}${offset 5}${color1}${font0}download
-${voffset 5}${alignr}${font2}${downspeed \1} 
-${voffset 5}${alignr}${color}${font4}${totaldown \1} total ]],
+${voffset 5}${alignr}${color}${font2}${downspeed \1} 
+${voffset 5}${alignr 6}${color}${font4}${totaldown \1} total ]],
   
   -- hard disk: ${template5 device readSpeed writeSpeed}
   template5 = [[
 # disk read
 ${voffset 3}${diskiograph_read /dev/\1 48,112 ${template2} \2}
-${voffset -52}${offset 5}${color1}${font0}disk read${alignr}${color}\1 
-${voffset 7}${alignr}${color1}${font2}${diskio_read /dev/\1} 
+${voffset -52}${offset 5}${color1}${font0}disk read${alignr 6}${color}\1
+${voffset 7}${alignr}${color}${font2}${diskio_read /dev/\1} 
 # disk write
 ${voffset -3}${diskiograph_write /dev/\1 48,112 ${template1} \3}
 ${voffset -60}${offset 5}${color1}${font0}disk write
-${voffset 7}${alignr}${font2}${diskio_write /dev/\1} ]],
+${voffset 7}${alignr}${color}${font2}${diskio_write /dev/\1} ]],
 
   -- filesystem: ${template6 filesystemName fileSystemPath}
   template6 = [[
 ${voffset 9}${offset 5}${color1}${font0}\1
-${voffset -14}${alignr}${font2}${fs_used_perc \2}${font3}% 
-${voffset -2}${offset 16}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3,93 \2}
-${voffset -4}${alignr}${color}${font4}${fs_used \2} / ${fs_size \2} ]],
+${voffset -14}${alignr 6}${color}${font2}${fs_used_perc \2}${font3}%
+${voffset -2}${offset 13}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3,94 \2}
+${voffset -4}${alignr 6}${color}${font4}${fs_used \2} / ${fs_size \2}]],
 
   -- filesystem usb device: ${template7 filesystemName fileSystemPath}
   template7 = [[
 ${voffset 7}${offset 5}${color1}${font0}\1
 ${if_mounted \2}${voffset -13}${alignr}${font2}${fs_used_perc \2}${font3}% 
-${voffset -2}${offset 16}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3,93 \2}
-${voffset -4}${alignr}${color}${font4}${fs_used \2} / ${fs_size \2} ${voffset -8}
-${else}${voffset 4}${alignr}${color}${font4}device is not 
-${alignr}${color}connected ${voffset 4}${endif}]]
-
+${voffset -2}${offset 13}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3,94 \2}
+${voffset -4}${alignr}${color}${font4}${fs_used \2} / ${fs_size \2}${voffset -8}
+${else}${voffset 4}${alignr 6}${color}${font4}device is not 
+${alignr 6}${color}connected ${voffset 4}${endif}]]
 };
 
 conky.text = [[
 ################### cpu
-${image ~/conky/monochrome/images/glass/top.png -n -p 0,0}\
-${image ~/conky/monochrome/images/glass/block.png -n -p 0,5}\
-${image ~/conky/monochrome/images/glass/cpu.png -n -p 0,0}\
-${voffset -6}${color1}${cpugraph cpu0 48,112 ${template1}}
-${voffset -58}${offset 5}${font0}cpu
-${voffset 2}${alignr}${font1}${cpu cpu0}${font2}% 
-${voffset 5}${alignr}${color}${font4}${loadavg} 
+${image ~/conky/monochrome/images/glass/blue-cpu-mem.png -n -p 0,0}\
+${voffset -6}${color}${cpugraph cpu0 48,112 ${template1}}
+${voffset -58}${offset 5}${color1}${font0}cpu
+${voffset 2}${alignr}${color}${font1}${cpu cpu0}${font2}% 
+${voffset 5}${alignr 6}${color}${font4}${loadavg}
 ################### memory
-${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,78}\
-${image ~/conky/monochrome/images/glass/block.png -n -p 0,79}\
 ${voffset 4}${memgraph 48,112 ${template1}}
 ${voffset -52}${offset 5}${color1}${font0}memory
-${voffset 2}${alignr}${font1}${memperc}${font2}% 
-${voffset 5}${alignr}${color}${font4}${mem} / ${memmax} 
+${voffset 2}${alignr}${color}${font1}${memperc}${font2}% 
+${voffset 5}${alignr 6}${color}${font4}${mem} / ${memmax}
 ################### swap
-${image ~/conky/monochrome/images/glass/block.png -n -p 0,149}\
-${image ~/conky/monochrome/images/glass/memory.png -n -p 12,112}\
 ${voffset 12}${offset 5}${color1}${font0}swap
-${voffset -2}${alignr}${font1}${swapperc}${font2}% 
-${voffset -5}${offset 16}${color2}${if_match ${swapperc} > 75}${color3}${endif}${swapbar 3,94}
-${voffset -9}${alignr}${color}${font4}${swap} / ${swapmax} 
+${voffset -2}${alignr}${color}${font1}${swapperc}${font2}% 
+${voffset -5}${offset 13}${color2}${if_match ${swapperc} > 75}${color3}${endif}${swapbar 3,94}
+${voffset -9}${alignr 6}${color}${font4}${swap} / ${swapmax}
 ################### network
-${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,222}\
-${image ~/conky/monochrome/images/glass/block-small.png -n -p 0,223}\
-${image ~/conky/monochrome/images/glass/block.png -n -p 0,276}\
-${image ~/conky/monochrome/images/glass/block.png -n -p 0,346}\
-# if on wifi
-${if_up wlp4s0}\
-${image ~/conky/monochrome/images/glass/wifi.png -n -p 24,232}\
-${image ~/conky/monochrome/images/glass/internet.png -n -p 18,307}\
-${voffset 12}${offset 5}${color1}${font0}wifi
-${voffset -9}${alignr}${font2}${wireless_link_qual_perc wlp4s0}${font3}% 
-${voffset -2}${offset 16}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 3,93 wlp4s0}
-${voffset -4}${offset 5}${color}${font4}ch. ${wireless_channel wlp4s0}${alignr}${wireless_bitrate wlp4s0} ${voffset 0}
-${template4 wlp4s0 3000 60000}
-${else}\
-# is the ethernet up?
-${if_up enp6s0}\
-${image ~/conky/monochrome/images/glass/ethernet.png -n -p 4,235}\
-${image ~/conky/monochrome/images/glass/internet.png -n -p 18,307}\
-${template3 enp6s0}
-${template4 enp6s0 3000 60000}
+${if_up enp0s25}\
+${image ~/conky/monochrome/images/glass/blue-network-ethernet.png -n -p 0,219}\
+${image ~/conky/monochrome/images/glass/blue-network-internet.png -n -p 0,276}\
+${template3 enp0s25}
+${template4 enp0s25 3000 60000}
 ${else}\
 # no network/internet
-${image ~/conky/monochrome/images/glass/noNetwork-laptop.png -n -p 0,223}\
-${voffset 12}${offset 5}${color1}${font0}network
-${voffset 143}${alignc}${color}${font4}no network
+${image ~/conky/monochrome/images/glass/blue-network-internet-disconnected-desktop.png -n -p 0,219}\
+${voffset 12}${offset 5}${color}${font0}network
+${voffset 143}${alignc}${color}${font4}no ethernet
 ${alignc}connection
 ${voffset -10}
 ${endif}\
-${endif}\
 ################### disk - sda
-${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,419}\
-${image ~/conky/monochrome/images/glass/block-disk.png -n -p 0,420}\
-${image ~/conky/monochrome/images/glass/hard-drive.png -n -p 2,422}\
+${image ~/conky/monochrome/images/glass/blue-disk.png -n -p 0,416}\
 # speeds | read: 140MiB  write: 151MiB
 ${template5 sda 280000 302000}
 ${template6 fedora /}
-${image ~/conky/monochrome/images/glass/block-filesystem.png -n -p 0,570}\
+${image ~/conky/monochrome/images/glass/blue-filesystem.png -n -p 0,570}\
 ${template6 home /home}
-################### power
-${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,623}\
-${image ~/conky/monochrome/images/glass/block-small.png -n -p 0,624}\
-${if_match "${acpiacadapter}"=="on-line"}\
-# on power plug
-${if_match ${battery_percent BAT0} > 80}\
-${image ~/conky/monochrome/images/glass/plug.png -n -p 2,635}\
-${voffset 12}${offset 5}${color1}${font0}power
-${alignr}${color}${font4}laptop is 
-${voffset 3}${alignr}${color}plugged in 
-# on power plug | charging battery
+################### disk - sdb
+${image ~/conky/monochrome/images/glass/blue-disk.png -n -p 0,620}\
+# speeds | read: 151MiB  write: 100MiB
+${template5 sdb 6000 200000}
+${template6 veronica /media/veronica}
+################### disk - sdc
+${image ~/conky/monochrome/images/glass/blue-disk.png -n -p 0,774}\
+# speeds | read: 151MiB  write: 100MiB
+${template5 sdc 6000 200000}
+${template6 betty /media/betty}
+################### external hard drive
+${if_mounted /run/media/ernesto/MAXTOR}\
+${image ~/conky/monochrome/images/glass/blue-disk.png -n -p 0,928}\
+# speeds | read: 24MiB  write: 24MiB (the usb2 max speed)
+${template5 sdf1 6000 42000}
+${template6 maxtor\ HD /run/media/ernesto/MAXTOR}
 ${else}\
-${image ~/conky/monochrome/images/glass/battery-full.png -n -p 2,635}\
-${voffset 12}${offset 5}${color1}${font0}charging
-${voffset -14}${alignr}${font1}${battery_percent BAT0}${font3}% 
-${voffset -2}${offset 16}${color2}${if_match ${battery_percent BAT0} < 70}${color3}${endif}${battery_bar 3,93 BAT0}
-${voffset -4}${alignr}${color}${font4}eta ${battery_time BAT0} 
+${image ~/conky/monochrome/images/glass/blue-disk-disconnected.png -n -p 0,928}\
+${voffset 12}${alignc}${color}${font0}maxtor HD
+${voffset 103}${alignc}${color}${font4}device is not
+${alignc}connected
 ${endif}\
-# on battery
-${else}\
-${image ~/conky/monochrome/images/glass/battery-full.png -n -p 2,635}\
-${voffset 12}${offset 5}${color1}${font0}battery
-${voffset -14}${alignr}${font1}${battery_percent BAT0}${font3}% 
-${voffset -2}${offset 16}${color2}${if_match ${battery_percent BAT0} < 30}${color3}${endif}${battery_bar 3,93 BAT0}
-${voffset -4}${alignr}${color}${font4}${battery_time BAT0} left 
-${endif}\
-${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,677}\
+################### time
+${image ~/conky/monochrome/images/glass/blue-block-small.png -n -p 0,1082}\
+${voffset 10}${offset 5}${color1}${font Promenade de la Croisette:size=40}${time %I}${font Promenade de la Croisette:size=37}:${time %M}${font0}${voffset -30}${alignr 6}${color}${time %A}
+${voffset 2}${alignr 6}${time %B}
+${voffset 2}${alignr 6}${time %d}
+################### usb devices
+${image ~/conky/monochrome/images/glass/blue-usb-devices.png -n -p 0,1139}\
+# :::: memory stick
+${voffset 6}${template7 usb\ cruzer /run/media/ernesto/sandisk}
+# :::: memory card
+${template7 sandisd\ SD /run/media/ernesto/disk}
+${voffset -684}
+${image ~/conky/monochrome/images/glass/blue-edge-bottom.png -n -p 0,1250}\
 ]];

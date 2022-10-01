@@ -1,17 +1,13 @@
 ################### network
-${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,222}\
-${image ~/conky/monochrome/images/glass/block-small.png -n -p 0,223}\
-${image ~/conky/monochrome/images/glass/block.png -n -p 0,276}\
-${image ~/conky/monochrome/images/glass/block.png -n -p 0,346}\
 ${if_up enp0s25}\
-${image ~/conky/monochrome/images/glass/ethernet.png -n -p 4,235}\
-${image ~/conky/monochrome/images/glass/internet.png -n -p 18,307}\
+${image ~/conky/monochrome/images/glass/blue-network-ethernet.png -n -p 0,219}\
+${image ~/conky/monochrome/images/glass/blue-network-internet.png -n -p 0,276}\
 ${template3 enp0s25}
 ${template4 enp0s25 3000 60000}
 ${else}\
 # no network/internet
-${image ~/conky/monochrome/images/glass/noNetwork-desktop.png -n -p 0,223}\
-${voffset 12}${offset 5}${color1}${font0}network
+${image ~/conky/monochrome/images/glass/blue-network-internet-disconnected-desktop.png -n -p 0,219}\
+${voffset 12}${offset 5}${color}${font0}network
 ${voffset 143}${alignc}${color}${font4}no ethernet
 ${alignc}connection
 ${voffset -10}
