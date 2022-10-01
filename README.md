@@ -3,16 +3,16 @@ A collection of graphical [conky](https://github.com/brndnmtthws/conky) interfac
 If you are new to conky, this [project's wiki page](https://github.com/ernesto1/monochrome/wiki) has  helpful guides to customize the conky configs to your system.
 
 ### Compact Dock
-![compact](images/screenshots/compact.gif)
+![edition edition](images/screenshots/compact.gif)
 
 ### Glass Dock
-![desktop 2560px](images/screenshots/glass.jpg)
+![desktop edition](images/screenshots/glass.gif)
 
 ### Widgets | small
-![widgets small](images/screenshots/widgets-small.jpg)
+![laptop edition](images/screenshots/widgets-small.jpg)
 
 ### Widgets | large
-![desktop 2560px](images/screenshots/widgets-large.jpg)
+![desktop edition](images/screenshots/widgets-large.jpg)
 
 # Scripts
 These shell scripts were written two support this conky setup:
