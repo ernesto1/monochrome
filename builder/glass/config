@@ -103,11 +103,11 @@ ${voffset -4}${alignr 6}${color}${font4}${fs_used \2} / ${fs_size \2}]],
   -- filesystem usb device: ${template7 filesystemName fileSystemPath}
   template7 = [[
 ${voffset 7}${offset 5}${color1}${font0}\1
-${if_mounted \2}${voffset -13}${alignr}${font2}${fs_used_perc \2}${font3}% 
+${if_mounted \2}${voffset -13}${alignr 6}${font2}${fs_used_perc \2}${font3}%
 ${voffset -2}${offset 13}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3,94 \2}
-${voffset -4}${alignr}${color}${font4}${fs_used \2} / ${fs_size \2}${voffset -8}
-${else}${voffset 4}${alignr 6}${color}${font4}device is not 
-${alignr 6}${color}connected ${voffset 4}${endif}]]
+${voffset -4}${alignr 6}${color}${font4}${fs_used \2} / ${fs_size \2}${voffset -8}
+${else}${voffset 4}${alignr 6}${color}${font4}device is not
+${alignr 6}${color}connected${voffset 4}${endif}]]
 };
 
 conky.text = [[
