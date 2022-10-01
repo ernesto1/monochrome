@@ -1,13 +1,13 @@
 conky.config = {
   update_interval = 2,  -- update interval in seconds
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
-  xinerama_head = 1,    -- for multi monitor setups, select monitor to run on: 0,1,2
+  xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'top_left',       -- top|middle|bottom_left|middle|right
-  gap_x = 136,                     -- same as passing -x at command line
-  gap_y = 197,
+  alignment = 'middle_left',       -- top|middle|bottom_left|middle|right
+  gap_x = 150,                     -- same as passing -x at command line
+  gap_y = 410,
 
   -- window settings
   minimum_width = 213,
@@ -17,15 +17,15 @@ conky.config = {
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
   -- transparency configuration
-  own_window_transparent = true,
-  own_window_argb_visual = true,  -- turn on transparency
+  own_window_transparent = false,
+  own_window_argb_visual = false,  -- turn on transparency
   own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
 
   -- window borders
   draw_borders = false,     -- draw borders around the conky window
-  border_width = 1,         -- width of border window in pixels
+  border_width = 0,         -- width of border window in pixels
   stippled_borders = 0,     -- border stippling (dashing) in pixels
-  border_inner_margin = 0,  -- margin between the border and text in pixels
+  border_inner_margin = 8,  -- margin between the border and text in pixels
   border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
 
   -- graph settings
@@ -42,25 +42,29 @@ conky.config = {
   -- font settings
   draw_shades = false,    -- black shadow on text (not good if text is black)
   draw_outline = false,   -- black outline around text (not good if text is black)
+
   -- colors
-  default_color = 'black',  -- regular text
-  color1 = 'white',         -- text labels
+  default_color = 'e5e5e5',  -- regular text
+  color1 = '839bc1',         -- text labels
+  color2 = '4a71bc',        -- bar color default
+  color3 = '800020',        -- bar color warning
+  own_window_colour = '2f3757'
 };
 
 conky.text = [[
-${color1}${goto 25}kernel${goto 73}${color}${kernel}
-${voffset 3}${goto 25}${color1}uptime${goto 73}${color}${uptime}
-${voffset 3}${color1}compositor${goto 73}${color}${execi 3600 echo $XDG_SESSION_TYPE}
+${color1}${goto 25}kernel${goto 75}${color}${kernel}
+${voffset 3}${goto 25}${color1}uptime${goto 75}${color}${uptime}
+${voffset 3}${color1}compositor${goto 75}${color}${execi 3600 echo $XDG_SESSION_TYPE}
 ${voffset 16}\
 # if on wifi
 ${if_up wlp4s0}\
-${voffset 3}${goto 19}${color1}network${goto 72}${color}${wireless_essid wlp4s0}
-${voffset 3}${color1}${goto 12}local ip${goto 72}${color}${addr wlp4s0}
+${voffset 3}${goto 19}${color1}network${goto 75}${color}${wireless_essid wlp4s0}
+${voffset 3}${color1}${goto 12}local ip${goto 75}${color}${addr wlp4s0}
 ${voffset 8}\
 ${endif}\
 # use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
-${voffset 3}${color1}bittorrent${goto 72}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
-${voffset 3}${color1}${goto 37}zoom${goto 73}${color}${if_running zoom}running${else}off${endif}
+${voffset 3}${color1}bittorrent${goto 75}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
+${voffset 3}${color1}${goto 37}zoom${goto 75}${color}${if_running zoom}running${else}off${endif}
 # :::::::::::: package updates
 ${if_existing /tmp/dnf.packages}\
 ${voffset 26}${alignc}${color1}dnf package management
@@ -71,6 +75,6 @@ ${voffset 5}${color1}package${alignr}version
 ${voffset 3}${color}${head /tmp/dnf.packages.preview 30 180}\
 ${endif}\
 ${else}\
-${voffset 3}${goto 43}${color1}dnf${goto 73}${color}no updates available
+${voffset 3}${goto 43}${color1}dnf${goto 75}${color}no updates available
 ${endif}\
 ]];

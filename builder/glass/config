@@ -47,6 +47,7 @@ conky.config = {
   font2 = 'font URW Gothic Demi:size=12',     -- mid value
   font3 = 'font URW Gothic Demi:size=9',      -- small value
   font4 = 'Nimbus Mono PS Regular:size=8',    -- text
+  
   -- colors
   default_color = 'white',  -- regular text
   color1 = 'dfa22f',         -- text labels

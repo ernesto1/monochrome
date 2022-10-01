@@ -1,30 +1,30 @@
 conky.config = {
   update_interval = 2,  -- update interval in seconds
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
-  xinerama_head = 1,    -- for multi monitor setups, select monitor to run on: 0,1,2
+  xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'top_left',     -- top|middle|bottom_left|middle|right
-  gap_x = 130,                    -- same as passing -x at command line
-  gap_y = 34,
+  alignment = 'middle_left',     -- top|middle|bottom_left|middle|right
+  gap_x = 160,                    -- same as passing -x at command line
+  gap_y = 570,
 
   -- window settings
-  minimum_width = 390,
+  minimum_width = 398,
   minimum_height = 144,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
   -- transparency configuration
+  draw_blended = false,
   own_window_transparent = true,
   own_window_argb_visual = true,  -- turn on transparency
   own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
 
   -- window borders
   draw_borders = false,     -- draw borders around the conky window
-  border_width = 1,         -- width of border window in pixels
-  stippled_borders = 0,     -- border stippling (dashing) in pixels
+  border_width = 0,         -- width of border window in pixels
   border_inner_margin = 0,  -- margin between the border and text in pixels
   border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
 
@@ -38,19 +38,22 @@ conky.config = {
   -- font settings
   draw_shades = false,    -- black shadow on text (not good if text is black)
   draw_outline = false,   -- black outline around text (not good if text is black)
+  
   -- colors
-  default_color = 'black',  -- regular text
-  color1 = 'white',         -- text labels
+  default_color = 'e5e5e5',  -- regular text
+  color1 = '839bc1',         -- text labels
+  color2 = '4a71bc',        -- bar color default
+  color3 = '800020',        -- bar color warning
   
   -- template
   template0 = [[
- ${voffset 3}${color}${top name \1}${top cpu \1}% ${top pid \1}${goto 212}${top_mem name \1}${alignr}${top_mem mem_res \1} ${top_mem pid \1} ]]
+ ${voffset 3}${offset 4}${color}${top name \1}${top cpu \1}% ${top pid \1}${goto 215}${top_mem name \1}${alignr}${top_mem mem_res \1} ${top_mem pid \1} ]]
 };
 
 conky.text = [[
-${image ~/conky/monochrome/images/glass/box.png -n -p 0,0}\
-${image ~/conky/monochrome/images/glass/box.png -n -p 205,0}\
-${voffset 8}${color1} process${goto 127}cpu   pid${goto 212}${color1}process${alignr}mem   pid 
+${image ~/conky/monochrome/images/glass/blue-processes.png -n -p 0,0}\
+${image ~/conky/monochrome/images/glass/blue-processes.png -n -p 205,0}\
+${voffset 8}${offset 8}${color1}process${goto 130}cpu   pid${goto 215}${color1}process${alignr}mem   pid 
 ${template0 1}
 ${template0 2}
 ${template0 3}
