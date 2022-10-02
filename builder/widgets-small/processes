@@ -43,7 +43,7 @@ conky.config = {
   draw_outline = false,   -- black outline around text (not good if text is black)
 
   -- colors
-  default_color = '91597e',  -- regular text
+  default_color = 'black',  -- regular text
   color1 = 'white',         -- text labels
   
   -- templates  

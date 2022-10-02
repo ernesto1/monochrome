@@ -4,12 +4,12 @@ conky.config = {
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'top_left',  -- top|middle|bottom_left|right
+  alignment = 'middle_left',  -- top|middle|bottom_left|right
   gap_x = 2,               -- same as passing -x at command line
-  gap_y = 657,
+  gap_y = -280,
 
   -- window settings
-  minimum_width = 47,      -- conky will add an extra pixel to this
+  minimum_width = 54,      -- conky will add an extra pixel to this
   minimum_height = 10,
   own_window = true,
   own_window_type = 'panel',    -- values: desktop (background), panel (bar)
@@ -17,7 +17,7 @@ conky.config = {
 
   -- window borders
   draw_borders = false,     -- draw borders around the conky window
-  border_width = 1,         -- width of border window in pixels
+  border_width = 0,         -- width of border window in pixels
   border_inner_margin = 0,  -- margin between the border and text in pixels
   border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
   
@@ -33,7 +33,7 @@ conky.config = {
   draw_shades = false,      -- black shadow on text (not good if text is black)
   draw_outline = false,     -- black outline around text (not good if text is black)
   -- colors
-  default_color = '4c0c40'  -- regular text
+  default_color = '906c9c'  -- regular text
 };
 
 conky.text = [[
