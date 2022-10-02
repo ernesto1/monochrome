@@ -10,7 +10,7 @@ conky.config = {
   gap_y = 570,
 
   -- window settings
-  minimum_width = 485,
+  minimum_width = 486,
   minimum_height = 144,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)

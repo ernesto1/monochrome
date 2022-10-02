@@ -2,7 +2,7 @@
 ${if_mounted /run/media/ernesto/MAXTOR}\
 ${image ~/conky/monochrome/images/glass/blue-disk.png -n -p 0,928}\
 # speeds | read: 24MiB  write: 24MiB (the usb2 max speed)
-${template5 sdf1 6000 42000}
+${template5 sdf1 6000 52000}
 ${template6 maxtor\ HD /run/media/ernesto/MAXTOR}
 ${else}\
 ${image ~/conky/monochrome/images/glass/blue-disk-disconnected.png -n -p 0,928}\
