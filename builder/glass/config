@@ -60,7 +60,7 @@ conky.config = {
   -- cpu/mem/download/disk write graph color
   template1 = [[6b91e5 546fb2]],
   -- upload/disk read graph
-  template2 = [[d08220 bc701c]],
+  template2 = [[dd9a2f bc701c]],
   
   -- ethernet box: ${template3 ethernetDevice}
   -- common for both desktop and laptop
