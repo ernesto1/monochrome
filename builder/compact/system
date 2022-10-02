@@ -1,6 +1,6 @@
 # -------------- system
 ${image ~/conky/monochrome/images/compact/red-system.png -n -p 0,928}\
-${voffset 15}${goto 47}${color1}o/s ${color}${execi 5000 grep PRETTY_NAME /etc/os-release | cut -d '"' -f 2 | cut -d '(' -f 1 | tr 'A-Z' 'a-z'}
+${voffset 14}${goto 47}${color1}o/s ${color}${execi 5000 grep PRETTY_NAME /etc/os-release | cut -d '"' -f 2 | cut -d '(' -f 1 | tr 'A-Z' 'a-z'}
 ${voffset 3}${goto 47}${color1}uptime ${color}${uptime}
 ${voffset 10}${offset 5}${color1}kernel ${color}${kernel}
 ${voffset 8}${offset 5}${color1}device${alignr 59}temperature
