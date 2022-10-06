@@ -1,7 +1,7 @@
 # desktop sidebar
 cd ~/conky/monochrome/builder/widgets-small;\
-# ... usb-devices
-cat config cpu-mem network-desktop disk disks-desktop usb-maxtor > ~/conky/monochrome/widgets-small/sidebar;\
+# disks-desktop usb-maxtor ... usb-devices
+cat config cpu-mem network-desktop disk power > ~/conky/monochrome/widgets-small/sidebar;\
 echo '${voffset -300}]];' >> ~/conky/monochrome/widgets-small/sidebar
 
 
