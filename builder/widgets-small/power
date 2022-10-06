@@ -1,19 +1,21 @@
 # :::::::::::::::::::: power
-${voffset 57}\
+${voffset 49}\
 ${if_match "${acpiacadapter}"=="on-line"}\
 ${if_match ${battery_percent BAT0} == 100}\
-${image ~/conky/monochrome/images/widgets-small/power-plugged-in.png -n -p 1,564}
-${voffset -34}${goto 57}${color}fully
-${voffset 3}${goto 57}${color}charged
+${image ~/conky/monochrome/images/widgets-small/power-plugged-in.png -n -p 0,489}
 ${else}\
-${image ~/conky/monochrome/images/widgets-small/power-charging.png -n -p 1,564}\
-${offset 1}${color2}${if_match ${battery_percent BAT0} < 80}${color3}${endif}${battery_bar 3, 45 BAT0}
-${voffset -32}${goto 57}${color}${battery_percent BAT0}%
-${voffset 4}${goto 57}${color}${battery_time BAT0}
+${image ~/conky/monochrome/images/widgets-small/power-charging.png -n -p 0,489}\
+${offset 6}${color2}${if_match ${battery_percent BAT0} < 80}${color3}${endif}${battery_bar 3, 45 BAT0}
+#${battery_time BAT0}
+${voffset -50}${goto 66}${color}${font1}
+${voffset 4}${goto 66}${color}${font0}${battery_percent BAT0}${font}%
 ${endif}\
 ${else}\
-${image ~/conky/monochrome/images/widgets-small/power-battery.png -n -p 1,564}\
-${offset 1}${color2}${if_match ${battery_percent BAT0} < 20}${color3}${endif}${battery_bar 3, 45 BAT0}
-${voffset -32}${goto 57}${color}${battery_percent BAT0}%
-${voffset 4}${goto 57}${color}${battery_time BAT0}
-${endif}
+${image ~/conky/monochrome/images/widgets-small/power-battery.png -n -p 0,489}\
+${offset 6}${color2}${if_match ${battery_percent BAT0} < 20}${color3}${endif}${battery_bar 3, 45 BAT0}
+#${battery_time BAT0}
+${voffset -50}${goto 66}${color}${font1}
+${voffset 4}${goto 66}${color}${font0}${battery_percent BAT0}${font}%
+${endif}\
+${image ~/conky/monochrome/images/widgets-small/time.png -n -p 0,553}
+${image ~/conky/monochrome/images/widgets-small/edge-bottom.png -n -p 0,625}

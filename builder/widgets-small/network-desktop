@@ -1,3 +1,4 @@
+# :::::::::::::::::::: network
 ${if_up enp0s25}\
 ${image ~/conky/monochrome/images/widgets-small/ethernet.png -n -p 0,149}\
 ${template3 enp0s25}
