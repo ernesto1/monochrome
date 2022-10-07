@@ -51,15 +51,15 @@ conky.config = {
 
   -- colors
   default_color = 'white',  -- regular text
-  color1 = '3c1d2f',        -- text labels
-  color2 = 'c33855',        -- bar color default
-  color3 = 'red',           -- bar color warning
+  color1 = 'ebbeff',        -- text labels
+  color2 = 'a36dec',        -- bar color default
+  color3 = 'c33855',        -- bar color warning
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   --  n.b. the line break escape character '\' is not supported in templates :(
   
   -- cpu/mem/download/disk write graph color
-  template1 = [[890c2a da2c5d]],
+  template1 = [[51295e a36dec]],
   -- upload/disk read graph
   template2 = [[a7323b e17d87]],
   

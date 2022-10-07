@@ -33,12 +33,13 @@ conky.config = {
   draw_shades = false,      -- black shadow on text (not good if text is black)
   draw_outline = false,     -- black outline around text (not good if text is black)
   -- colors
-  default_color = '906c9c'  -- regular text
+  default_color = '906c9c',  -- regular text
+  color1 = 'f2c7ff'
 };
 
 conky.text = [[
 # this conky uses the 'panel' window type in order to create a sidebar panel effect on the monitor
 # when an application window is maximized, the widgets will still be visible
 ${alignc}${color}${font Promenade de la Croisette:size=40}${time %I}${font Promenade de la Croisette:size=37}:${time %M}
-${voffset -29}${alignc}${color}${font Noto Sans CJK JP Thin:size=11}${time %a}
+${voffset -29}${alignc}${color1}${font Noto Sans CJK JP Thin:size=11}${time %a}
 ]];
