@@ -5,4 +5,4 @@ ${voffset -34}${goto 66}${color}${font0}${cpu cpu0}${font}%
 # :::::::::::::::::::: memory
 ${voffset 17}${offset 18}${memgraph 43,21 ${template1}}
 ${voffset -33}${goto 66}${color}${font0}${memperc}${font}%
-${voffset 4}${offset 6}${color2}${if_match ${swapperc} >= 69}${color3}${endif}${swapbar 3, 45}${voffset -2}${goto 66}${font1}${color}${swapperc}%${offset 9}${color1}swap${color}${font}
+${voffset 4}${offset 6}${color2}${if_match ${swapperc} >= 69}${color3}${endif}${swapbar 3, 45}${voffset -2}${goto 66}${font1}${color}${swapperc}%${offset 9}${color1}swap${color}

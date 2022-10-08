@@ -20,7 +20,7 @@ jobs:
           ls !(builder|images) images/*/*.{png,jpg}
           echo -e '\n:::: creating the zip file:'
           mkdir monochrome
-          cp -r --parents !(builder|images|monochrome) images/*/*.{png,jpg} monochrome
+          cp -r --parents !(builder|images|monochrome) images/*/*.{png,jpg,gif} monochrome
           mkdir build
           zip -r build/monochrome.zip monochrome
       - name: Add the zip to the release

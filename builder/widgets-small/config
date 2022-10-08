@@ -66,14 +66,14 @@ conky.config = {
   -- ethernet block: ${template3 ethernetDevice}
   -- common for both desktop and laptop
   template3 = [[
-${voffset 21}${goto 63}${font1}${execi 180 ethtool \1 2>/dev/null | grep -i speed | cut -d ' ' -f 2} 
-${voffset 4}${goto 63}${addr \1}${font}${voffset 1}]],
+${voffset 28}${goto 63}${font1}${execi 180 ethtool \1 2>/dev/null | grep -i speed | cut -d ' ' -f 2} 
+${voffset 4}${goto 63}${addr \1}${voffset -2}]],
 
   -- network bandwith: ${template4 device uploadSpeed downloadSpeed}
   template4 = [[
-${voffset 9}${offset 5}${upspeedgraph \1 29,47 ${template2} \2}
-${voffset -12}${offset 5}${downspeedgraph \1 29,47 ${template1} \3}
-${voffset -43}${goto 66}${color}${font1}${upspeed \1} ↑
+${voffset 17}${offset 5}${upspeedgraph \1 29,47 ${template2} \2}
+${voffset -8}${offset 5}${downspeedgraph \1 29,47 ${template1} \3}
+${voffset -37}${goto 66}${color}${font1}${upspeed \1} ↑
 ${voffset 4}${goto 66}${color}${font1}${downspeed \1} ↓]],
 
   -- hard disk: ${template5 device readSpeed writeSpeed}

@@ -66,14 +66,14 @@ conky.config = {
   -- ethernet block: ${template3 ethernetDevice}
   -- common for both desktop and laptop
   template3 = [[
-${voffset 21}${goto 63}${font1}${execi 180 ethtool \1 2>/dev/null | grep -i speed | cut -d ' ' -f 2} 
-${voffset 4}${goto 63}${addr \1}${font}${voffset 1}]],
+${voffset 28}${goto 63}${font1}${execi 180 ethtool \1 2>/dev/null | grep -i speed | cut -d ' ' -f 2} 
+${voffset 4}${goto 63}${addr \1}${voffset -2}]],
 
   -- network bandwith: ${template4 device uploadSpeed downloadSpeed}
   template4 = [[
-${voffset 9}${offset 5}${upspeedgraph \1 29,47 ${template2} \2}
-${voffset -12}${offset 5}${downspeedgraph \1 29,47 ${template1} \3}
-${voffset -43}${goto 66}${color}${font1}${upspeed \1} ↑
+${voffset 17}${offset 5}${upspeedgraph \1 29,47 ${template2} \2}
+${voffset -8}${offset 5}${downspeedgraph \1 29,47 ${template1} \3}
+${voffset -37}${goto 66}${color}${font1}${upspeed \1} ↑
 ${voffset 4}${goto 66}${color}${font1}${downspeed \1} ↓]],
 
   -- hard disk: ${template5 device readSpeed writeSpeed}
@@ -99,16 +99,16 @@ ${voffset -34}${goto 66}${color}${font0}${cpu cpu0}${font}%
 # :::::::::::::::::::: memory
 ${voffset 17}${offset 18}${memgraph 43,21 ${template1}}
 ${voffset -33}${goto 66}${color}${font0}${memperc}${font}%
-${voffset 4}${offset 6}${color2}${if_match ${swapperc} >= 69}${color3}${endif}${swapbar 3, 45}${voffset -2}${goto 66}${font1}${color}${swapperc}%${offset 9}${color1}swap${color}${font}
+${voffset 4}${offset 6}${color2}${if_match ${swapperc} >= 69}${color3}${endif}${swapbar 3, 45}${voffset -2}${goto 66}${font1}${color}${swapperc}%${offset 9}${color1}swap${color}
 # :::::::::::::::::::: network
-# if both wify and ethernet are connected, we give priority to the wifi
+# if both wifi and ethernet are connected, we give priority to the wifi
 # :::::: wifi
 ${if_up wlp4s0}\
 ${image ~/conky/monochrome/images/widgets-small/purple-wifi.png -n -p 0,149}\
-${voffset 44}${offset 6}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 3,45 wlp4s0}
+${voffset 49}${offset 6}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 3,45 wlp4s0}
 #${wireless_essid wlp4s0}
 ${voffset -50}${goto 66}${color}${font1}
-${voffset 4}${goto 66}${color}${font0}${wireless_link_qual_perc wlp4s0}${font}%
+${voffset 4}${goto 66}${color}${font0}${wireless_link_qual_perc wlp4s0}${font}%${font1}
 # :: upload/download speeds
 ${image ~/conky/monochrome/images/widgets-small/purple-internet.png -n -p 0,213}\
 ${template4 wlp4s0 8200 55100}
@@ -123,13 +123,13 @@ ${template4 enp6s0 3000 60000}
 ${else}\
 ${image ~/conky/monochrome/images/widgets-small/purple-wifi-disconnected.png -n -p 0,149}
 ${image ~/conky/monochrome/images/widgets-small/purple-internet-offline.png -n -p 0,213}\
-${voffset 93}
+${voffset 116}
 ${endif}\
 ${endif}\
 # :::::::::::::::::::: disk sda
 # disk io
 ${image ~/conky/monochrome/images/widgets-small/purple-diskio.png -n -p 0,295}\
-${template5 sda 200000 280000}
+${template5 sda 140000 140000}
 ${image ~/conky/monochrome/images/widgets-small/purple-disk-root.png -n -p 0,361}\
 ${template6 \  /}
 ${image ~/conky/monochrome/images/widgets-small/purple-disk-home.png -n -p 0,425}\

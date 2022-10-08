@@ -9,7 +9,7 @@ If you are new to conky, this [project's wiki page](https://github.com/ernesto1/
 ![desktop edition](images/screenshots/glass.gif)
 
 ### Widgets | small
-![laptop edition](images/screenshots/widgets-small.jpg)
+![laptop edition](images/screenshots/widgets-small.gif)
 
 ### Widgets | large
 ![desktop edition](images/screenshots/widgets-large.jpg)
