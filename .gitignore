@@ -6,6 +6,7 @@ raws/
 images/screenshots/*.xcf
 images/screenshots/*.png
 images/glass/new shepard hud.png
+images/glass/glass-*
 # unofficial conkys
 widgets-large/layout.desktop.cfg
 widgets-large/sidebar-time
