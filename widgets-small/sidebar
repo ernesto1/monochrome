@@ -51,15 +51,15 @@ conky.config = {
 
   -- colors
   default_color = 'white',  -- regular text
-  color1 = '3c1d2f',        -- text labels
-  color2 = 'c33855',        -- bar color default
-  color3 = 'red',           -- bar color warning
+  color1 = 'ebbeff',        -- text labels
+  color2 = 'a36dec',        -- bar color default
+  color3 = 'c33855',        -- bar color warning
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   --  n.b. the line break escape character '\' is not supported in templates :(
   
   -- cpu/mem/download/disk write graph color
-  template1 = [[890c2a da2c5d]],
+  template1 = [[51295e a36dec]],
   -- upload/disk read graph
   template2 = [[a7323b e17d87]],
   
@@ -93,7 +93,7 @@ ${voffset 4}${goto 66}${color}${font0}${fs_used_perc \2}${font}%]]
 
 conky.text = [[
 # :::::::::::::::::::: cpu
-${image ~/conky/monochrome/images/widgets-small/cpu-mem.png -n -p 0,0}\
+${image ~/conky/monochrome/images/widgets-small/purple-cpu-mem.png -n -p 0,0}\
 ${voffset 11}${offset 12}${cpugraph cpu0 33,33 ${template1}}
 ${voffset -34}${goto 66}${color}${font0}${cpu cpu0}${font}%
 # :::::::::::::::::::: memory
@@ -104,55 +104,55 @@ ${voffset 4}${offset 6}${color2}${if_match ${swapperc} >= 69}${color3}${endif}${
 # if both wify and ethernet are connected, we give priority to the wifi
 # :::::: wifi
 ${if_up wlp4s0}\
-${image ~/conky/monochrome/images/widgets-small/wifi.png -n -p 0,149}\
+${image ~/conky/monochrome/images/widgets-small/purple-wifi.png -n -p 0,149}\
 ${voffset 44}${offset 6}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 3,45 wlp4s0}
 #${wireless_essid wlp4s0}
 ${voffset -50}${goto 66}${color}${font1}
 ${voffset 4}${goto 66}${color}${font0}${wireless_link_qual_perc wlp4s0}${font}%
 # :: upload/download speeds
-${image ~/conky/monochrome/images/widgets-small/internet.png -n -p 0,213}\
+${image ~/conky/monochrome/images/widgets-small/purple-internet.png -n -p 0,213}\
 ${template4 wlp4s0 8200 55100}
 ${else}\
 # :::::: ethernet
 ${if_up enp6s0}\
-${image ~/conky/monochrome/images/widgets-small/ethernet.png -n -p 0,149}\
+${image ~/conky/monochrome/images/widgets-small/purple-ethernet.png -n -p 0,149}\
 ${template3 enp6s0}
 # :: upload/download speeds
-${image ~/conky/monochrome/images/widgets-small/internet.png -n -p 0,213}\
+${image ~/conky/monochrome/images/widgets-small/purple-internet.png -n -p 0,213}\
 ${template4 enp6s0 3000 60000}
 ${else}\
-${image ~/conky/monochrome/images/widgets-small/wifi-disconnected.png -n -p 0,149}
-${image ~/conky/monochrome/images/widgets-small/internet-offline.png -n -p 0,213}\
+${image ~/conky/monochrome/images/widgets-small/purple-wifi-disconnected.png -n -p 0,149}
+${image ~/conky/monochrome/images/widgets-small/purple-internet-offline.png -n -p 0,213}\
 ${voffset 93}
 ${endif}\
 ${endif}\
 # :::::::::::::::::::: disk sda
 # disk io
-${image ~/conky/monochrome/images/widgets-small/diskio.png -n -p 0,295}\
+${image ~/conky/monochrome/images/widgets-small/purple-diskio.png -n -p 0,295}\
 ${template5 sda 200000 280000}
-${image ~/conky/monochrome/images/widgets-small/disk-root.png -n -p 0,361}\
+${image ~/conky/monochrome/images/widgets-small/purple-disk-root.png -n -p 0,361}\
 ${template6 \  /}
-${image ~/conky/monochrome/images/widgets-small/disk-home.png -n -p 0,425}\
+${image ~/conky/monochrome/images/widgets-small/purple-disk-home.png -n -p 0,425}\
 ${template6 \  /home}
 # :::::::::::::::::::: power
 ${voffset 49}\
 ${if_match "${acpiacadapter}"=="on-line"}\
 ${if_match ${battery_percent BAT0} == 100}\
-${image ~/conky/monochrome/images/widgets-small/power-plugged-in.png -n -p 0,489}
+${image ~/conky/monochrome/images/widgets-small/purple-power-plugged-in.png -n -p 0,489}
 ${else}\
-${image ~/conky/monochrome/images/widgets-small/power-charging.png -n -p 0,489}\
+${image ~/conky/monochrome/images/widgets-small/purple-power-charging.png -n -p 0,489}\
 ${offset 6}${color2}${if_match ${battery_percent BAT0} < 80}${color3}${endif}${battery_bar 3, 45 BAT0}
 #${battery_time BAT0}
 ${voffset -50}${goto 66}${color}${font1}
 ${voffset 4}${goto 66}${color}${font0}${battery_percent BAT0}${font}%
 ${endif}\
 ${else}\
-${image ~/conky/monochrome/images/widgets-small/power-battery.png -n -p 0,489}\
+${image ~/conky/monochrome/images/widgets-small/purple-power-battery.png -n -p 0,489}\
 ${offset 6}${color2}${if_match ${battery_percent BAT0} < 20}${color3}${endif}${battery_bar 3, 45 BAT0}
 #${battery_time BAT0}
 ${voffset -50}${goto 66}${color}${font1}
 ${voffset 4}${goto 66}${color}${font0}${battery_percent BAT0}${font}%
 ${endif}\
-${image ~/conky/monochrome/images/widgets-small/time.png -n -p 0,553}
-${image ~/conky/monochrome/images/widgets-small/edge-bottom.png -n -p 0,625}
+${image ~/conky/monochrome/images/widgets-small/purple-time.png -n -p 0,553}
+${image ~/conky/monochrome/images/widgets-small/purple-edge-bottom.png -n -p 0,625}
 ${voffset -300}]];

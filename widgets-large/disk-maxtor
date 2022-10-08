@@ -60,7 +60,7 @@ ${goto 87}${color}maxtor${alignr}[${fs_type /run/media/ernesto/MAXTOR}]
 ${voffset 6}${goto 87}${color}${fs_used /run/media/ernesto/MAXTOR} / ${color}${fs_size /run/media/ernesto/MAXTOR}
 ${voffset 1}${goto 87}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 3, 100 /run/media/ernesto/MAXTOR}
 ${else}\
-${image ~/conky/monochrome/images/widgets-small/usbBorder.png -n -p 181,50}\
+${image ~/conky/monochrome/images/widgets-large/usbBorder.png -n -p 181,50}\
 ${voffset 60}${alignr}maxtor external hard disk  
 ${alignr}not connected  
 ${endif}\

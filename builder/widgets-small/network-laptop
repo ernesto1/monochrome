@@ -2,25 +2,25 @@
 # if both wify and ethernet are connected, we give priority to the wifi
 # :::::: wifi
 ${if_up wlp4s0}\
-${image ~/conky/monochrome/images/widgets-small/wifi.png -n -p 0,149}\
+${image ~/conky/monochrome/images/widgets-small/purple-wifi.png -n -p 0,149}\
 ${voffset 44}${offset 6}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 3,45 wlp4s0}
 #${wireless_essid wlp4s0}
 ${voffset -50}${goto 66}${color}${font1}
 ${voffset 4}${goto 66}${color}${font0}${wireless_link_qual_perc wlp4s0}${font}%
 # :: upload/download speeds
-${image ~/conky/monochrome/images/widgets-small/internet.png -n -p 0,213}\
+${image ~/conky/monochrome/images/widgets-small/purple-internet.png -n -p 0,213}\
 ${template4 wlp4s0 8200 55100}
 ${else}\
 # :::::: ethernet
 ${if_up enp6s0}\
-${image ~/conky/monochrome/images/widgets-small/ethernet.png -n -p 0,149}\
+${image ~/conky/monochrome/images/widgets-small/purple-ethernet.png -n -p 0,149}\
 ${template3 enp6s0}
 # :: upload/download speeds
-${image ~/conky/monochrome/images/widgets-small/internet.png -n -p 0,213}\
+${image ~/conky/monochrome/images/widgets-small/purple-internet.png -n -p 0,213}\
 ${template4 enp6s0 3000 60000}
 ${else}\
-${image ~/conky/monochrome/images/widgets-small/wifi-disconnected.png -n -p 0,149}
-${image ~/conky/monochrome/images/widgets-small/internet-offline.png -n -p 0,213}\
+${image ~/conky/monochrome/images/widgets-small/purple-wifi-disconnected.png -n -p 0,149}
+${image ~/conky/monochrome/images/widgets-small/purple-internet-offline.png -n -p 0,213}\
 ${voffset 93}
 ${endif}\
 ${endif}\
