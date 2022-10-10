@@ -1,5 +1,5 @@
 # :::::::::::::::::::: cpu
-${image ~/conky/monochrome/images/widgets-small/purple-cpu-mem.png -n -p 0,0}\
+${image ~/conky/monochrome/images/widgets-dock/purple-cpu-mem.png -n -p 0,0}\
 ${voffset 11}${offset 12}${cpugraph cpu0 33,33 ${template1}}
 ${voffset -34}${goto 66}${color}${font0}${cpu cpu0}${font}%
 # :::::::::::::::::::: memory

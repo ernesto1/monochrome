@@ -19,7 +19,7 @@ function usage() {
 	  --compact
 	  --glass
 	  --widgets-large
-	  --widgets-small
+	  --widgets-dock
 	
 	Optional flags
 	  --monitor 0|1|2|3|...
@@ -46,7 +46,7 @@ function usage() {
 	    all conky output (STDOUT and STDERR) is suppressed
 
 	Examples
-	  $(basename $0) --widgets-small
+	  $(basename $0) --widgets-dock
 	  $(basename $0) --compact --monitor 2
 	  $(basename $0) --glass --monitor 1 --layout-override desktop --silent
 	END
@@ -86,8 +86,8 @@ while (( "$#" )); do
       directory=${HOME}/conky/monochrome/widgets-large
       shift
       ;;
-    --widgets-small)
-      directory=${HOME}/conky/monochrome/widgets-small
+    --widgets-dock)
+      directory=${HOME}/conky/monochrome/widgets-dock
       width=45
       shift
       ;;

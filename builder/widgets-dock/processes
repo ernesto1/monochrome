@@ -58,8 +58,8 @@ conky.text = [[
 ${voffset 3} ${color1}kernel${offset 9}${color}${kernel}
 ${voffset 3} ${color1}zoom  ${offset 9}${color}${if_running zoom}running${else}off${endif}
 # :::::::::::::::::::: processes
-${image ~/conky/monochrome/images/widgets-small/purple-table-processes-cpu.png -n -p 0,57}\
-${image ~/conky/monochrome/images/widgets-small/purple-table-processes-memory.png -n -p 284,57}\
+${image ~/conky/monochrome/images/widgets-dock/purple-table-processes-cpu.png -n -p 0,57}\
+${image ~/conky/monochrome/images/widgets-dock/purple-table-processes-memory.png -n -p 284,57}\
 ${voffset 27}${color1} process${goto 217}cpu   pid${offset 20}process${alignr}mem   pid ${voffset 3}
 ${template0 1}
 ${template0 2}

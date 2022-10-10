@@ -1,0 +1,14 @@
+# :::::::::::::::::::: disk sdb
+# disk io | read 250000
+${image ~/conky/monochrome/images/widgets-dock/purple-diskio.png -n -p 0,564}
+${template5 sdb 6500 200000}
+${image ~/conky/monochrome/images/widgets-dock/purple-circuitry-flipped.png -n -p 5,612}\
+${image ~/conky/monochrome/images/widgets-dock/purple-disk-partition.png -n -p 1,631}\
+${template6 veronica /media/veronica}
+# :::::::::::::::::::: disk sdc
+# disk io | read 250000
+${image ~/conky/monochrome/images/widgets-dock/purple-diskio.png -n -p 0,696}
+${template5 sdc 6500 200000}
+${image ~/conky/monochrome/images/widgets-dock/purple-circuitry-flipped.png -n -p 5,744}\
+${image ~/conky/monochrome/images/widgets-dock/purple-disk-partition.png -n -p 1,763}\
+${template6 betty /media/betty}

@@ -1,6 +1,6 @@
 # :::: sandisk memory stick
 ${if_mounted /run/media/ernesto/sandisk}\
-${image ~/conky/monochrome/images/widgets-small/purple-usbStick.png -n -p 1,125}
+${image ~/conky/monochrome/images/widgets-dock/purple-usbStick.png -n -p 1,125}
 ${voffset 41}${offset 1}${color2}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color3}${endif}${fs_bar 3, 45 /run/media/ernesto/sandisk}
 ${voffset -49}${goto 58}${color}sandisk usb
 ${voffset 4}${goto 58}memory stick (${fs_type /run/media/ernesto/sandisk})

@@ -1,14 +1,14 @@
 # Monochrome Conky
 A collection of graphical [conky](https://github.com/brndnmtthws/conky) interfaces to monitor your system.  
-If you are new to conky, this [project's wiki page](https://github.com/ernesto1/monochrome/wiki) has  helpful guides to customize the conky configs to your system.
+Keep tabs on your system's cpu, memory, disk, network, battery usage and device temperatures.
 
-### Compact Dock
+### Compact dock
 ![edition edition](images/screenshots/compact.gif)
 
-### Glass Dock
+### Glass dock
 ![desktop edition](images/screenshots/glass.gif)
 
-### Widgets | small
+### Widgets dock
 ![laptop edition](images/screenshots/widgets-small.gif)
 
 ### Widgets | large
@@ -66,9 +66,9 @@ Run the launch script with the theme you want:
 
       $ ~/conky/monochrome/launch.bash --compact
 
-    - Widgets small
+    - Widgets dock
 
-      $ ~/conky/monochrome/launch.bash --widgets-small
+      $ ~/conky/monochrome/launch.bash --widgets-dock
 
     - Widgets large
 
