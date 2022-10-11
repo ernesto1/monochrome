@@ -45,9 +45,9 @@ conky.config = {
   draw_shades = false,      -- black shadow on text (not good if text is black)
   draw_outline = false,     -- black outline around text (not good if text is black)
 
-  font = 'URW Gothic:size=12',    -- default: medium
-  font0 = 'URW Gothic:size=23',   -- big
-  font1 = 'URW Gothic:size=9',    -- small
+  font = 'URW Gothic:size=9',    -- default: small
+  font0 = 'URW Gothic:size=12',   -- medium
+  font1 = 'URW Gothic:size=23',    -- big
 
   -- colors
   default_color = 'white',  -- regular text
@@ -64,42 +64,41 @@ conky.config = {
   template2 = [[a7323b e17d87]],
   
   -- ethernet block: ${template3 ethernetDevice}
-  -- common for both desktop and laptop
   template3 = [[
-${voffset 23}${goto 63}${font1}${execi 180 ethtool \1 2>/dev/null | grep -i speed | cut -d ' ' -f 2} 
-${voffset 4}${goto 63}${addr \1}${voffset 3}]],
+${voffset 23}${goto 63}${font}${execi 180 ethtool \1 2>/dev/null | grep -i speed | cut -d ' ' -f 2} 
+${voffset 4}${goto 63}${addr \1}${voffset 8}]],
 
   -- network bandwith: ${template4 device uploadSpeed downloadSpeed}
   template4 = [[
-${voffset 17}${offset 5}${upspeedgraph \1 29,47 ${template2} \2}
+${voffset 12}${offset 5}${upspeedgraph \1 29,47 ${template2} \2}
 ${voffset -8}${offset 5}${downspeedgraph \1 29,47 ${template1} \3}
-${voffset -53}${goto 66}${color}${font1}${upspeed \1} ↑
-${voffset 4}${goto 66}${color}${font1}${downspeed \1} ↓${voffset 16}]],
+${voffset -53}${goto 66}${color}${font}${upspeed \1} ↑
+${voffset 4}${goto 66}${color}${font}${downspeed \1} ↓${voffset 16}]],
 
   -- hard disk: ${template5 device readSpeed writeSpeed}
   template5 = [[
 ${voffset 13}${offset 5}${color}${diskiograph_read /dev/\1 21,47 ${template2} \2}
 ${voffset -8}${offset 5}${diskiograph_write /dev/\1 21,47 ${template1} \3}
-${voffset -45}${goto 66}${color}${font1}${diskio_read /dev/\1}
-${voffset 4}${goto 66}${color}${font1}${diskio_write /dev/\1}${font}${voffset 7}]],
+${voffset -45}${goto 66}${color}${font}${diskio_read /dev/\1}
+${voffset 4}${goto 66}${color}${font}${diskio_write /dev/\1}${voffset 7}]],
 
   -- filesystem: ${template6 filesystemName fileSystemPath}
   template6 = [[
-${voffset 49}${offset 6}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3, 45 \2}
-${voffset -50}${goto 66}${color}${font1}\1
-${voffset 4}${goto 66}${color}${font0}${fs_used_perc \2}${font}%]]
+${voffset 54}${offset 6}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3, 45 \2}
+${voffset -45}${goto 66}${color}${font}\1
+${voffset 4}${goto 66}${color}${font1}${fs_used_perc \2}${font0}%${font}${voffset -2}]]
 
 };
 
 conky.text = [[
 # :::::::::::::::::::: cpu
 ${image ~/conky/monochrome/images/widgets-dock/purple-cpu-mem.png -n -p 0,0}\
-${voffset 11}${offset 12}${cpugraph cpu0 33,33 ${template1}}
-${voffset -34}${goto 66}${color}${font0}${cpu cpu0}${font}%
+${voffset 12}${offset 12}${cpugraph cpu0 33,33 ${template1}}
+${voffset -31}${goto 66}${color}${font1}${cpu cpu0}${font0}%
 # :::::::::::::::::::: memory
 ${voffset 17}${offset 18}${memgraph 43,21 ${template1}}
-${voffset -33}${goto 66}${color}${font0}${memperc}${font}%
-${voffset 4}${offset 6}${color2}${if_match ${swapperc} >= 69}${color3}${endif}${swapbar 3, 45}${voffset -2}${goto 66}${font1}${color}${swapperc}%${offset 9}${color1}swap${color}
+${voffset -33}${goto 66}${color}${font1}${memperc}${font0}%
+${voffset 4}${offset 6}${color2}${if_match ${swapperc} >= 69}${color3}${endif}${swapbar 3, 45}${voffset -2}${goto 66}${font}${color}${swapperc}%${offset 9}${color1}swap${color}
 # :::::::::::::::::::: network
 # if both wifi and ethernet are connected, we give priority to the wifi
 # :::::: wifi
@@ -107,8 +106,8 @@ ${if_up wlp4s0}\
 ${image ~/conky/monochrome/images/widgets-dock/purple-wifi.png -n -p 0,149}\
 ${voffset 49}${offset 6}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 3,45 wlp4s0}
 #${wireless_essid wlp4s0}
-${voffset -50}${goto 66}${color}${font1}
-${voffset 4}${goto 66}${color}${font0}${wireless_link_qual_perc wlp4s0}${font}%${font1}
+${voffset -45}${goto 66}${color}${font}
+${voffset 4}${goto 66}${color}${font1}${wireless_link_qual_perc wlp4s0}${font0}%${font}
 # :: upload/download speeds
 ${image ~/conky/monochrome/images/widgets-dock/purple-internet.png -n -p 0,213}\
 ${template4 wlp4s0 8200 55100}
@@ -135,7 +134,7 @@ ${template6 \  /}
 ${image ~/conky/monochrome/images/widgets-dock/purple-disk-home.png -n -p 0,425}\
 ${template6 \  /home}
 # :::::::::::::::::::: power
-${voffset 49}\
+${voffset 54}\
 ${if_match "${acpiacadapter}"=="on-line"}\
 ${if_match ${battery_percent BAT0} == 100}\
 ${image ~/conky/monochrome/images/widgets-dock/purple-power-plugged-in.png -n -p 0,489}
@@ -143,16 +142,16 @@ ${else}\
 ${image ~/conky/monochrome/images/widgets-dock/purple-power-charging.png -n -p 0,489}\
 ${offset 6}${color2}${if_match ${battery_percent BAT0} < 80}${color3}${endif}${battery_bar 3, 45 BAT0}
 #${battery_time BAT0}
-${voffset -50}${goto 66}${color}${font1}
-${voffset 4}${goto 66}${color}${font0}${battery_percent BAT0}${font}%
+${voffset -45}${goto 66}${color}${font}
+${voffset 4}${goto 66}${color}${font1}${battery_percent BAT0}${font0}%${font}
 ${endif}\
 ${else}\
 ${image ~/conky/monochrome/images/widgets-dock/purple-power-battery.png -n -p 0,489}\
 ${offset 6}${color2}${if_match ${battery_percent BAT0} < 20}${color3}${endif}${battery_bar 3, 45 BAT0}
 #${battery_time BAT0}
-${voffset -50}${goto 66}${color}${font1}
-${voffset 4}${goto 66}${color}${font0}${battery_percent BAT0}${font}%
+${voffset -45}${goto 66}${color}${font}
+${voffset 4}${goto 66}${color}${font1}${battery_percent BAT0}${font0}%${font}
 ${endif}\
-${image ~/conky/monochrome/images/widgets-dock/purple-time.png -n -p 0,553}
-${image ~/conky/monochrome/images/widgets-dock/purple-edge-bottom.png -n -p 0,625}
+${image ~/conky/monochrome/images/widgets-dock/purple-time.png -n -p 0,553}\
+${image ~/conky/monochrome/images/widgets-dock/purple-edge-bottom.png -n -p 0,625}\
 ${voffset -300}]];

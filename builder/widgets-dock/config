@@ -45,9 +45,9 @@ conky.config = {
   draw_shades = false,      -- black shadow on text (not good if text is black)
   draw_outline = false,     -- black outline around text (not good if text is black)
 
-  font = 'URW Gothic:size=12',    -- default: medium
-  font0 = 'URW Gothic:size=23',   -- big
-  font1 = 'URW Gothic:size=9',    -- small
+  font = 'URW Gothic:size=9',    -- default: small
+  font0 = 'URW Gothic:size=12',   -- medium
+  font1 = 'URW Gothic:size=23',    -- big
 
   -- colors
   default_color = 'white',  -- regular text
@@ -64,30 +64,29 @@ conky.config = {
   template2 = [[a7323b e17d87]],
   
   -- ethernet block: ${template3 ethernetDevice}
-  -- common for both desktop and laptop
   template3 = [[
-${voffset 23}${goto 63}${font1}${execi 180 ethtool \1 2>/dev/null | grep -i speed | cut -d ' ' -f 2} 
-${voffset 4}${goto 63}${addr \1}${voffset 3}]],
+${voffset 23}${goto 63}${font}${execi 180 ethtool \1 2>/dev/null | grep -i speed | cut -d ' ' -f 2} 
+${voffset 4}${goto 63}${addr \1}${voffset 8}]],
 
   -- network bandwith: ${template4 device uploadSpeed downloadSpeed}
   template4 = [[
-${voffset 17}${offset 5}${upspeedgraph \1 29,47 ${template2} \2}
+${voffset 12}${offset 5}${upspeedgraph \1 29,47 ${template2} \2}
 ${voffset -8}${offset 5}${downspeedgraph \1 29,47 ${template1} \3}
-${voffset -53}${goto 66}${color}${font1}${upspeed \1} ↑
-${voffset 4}${goto 66}${color}${font1}${downspeed \1} ↓${voffset 16}]],
+${voffset -53}${goto 66}${color}${font}${upspeed \1} ↑
+${voffset 4}${goto 66}${color}${font}${downspeed \1} ↓${voffset 16}]],
 
   -- hard disk: ${template5 device readSpeed writeSpeed}
   template5 = [[
 ${voffset 13}${offset 5}${color}${diskiograph_read /dev/\1 21,47 ${template2} \2}
 ${voffset -8}${offset 5}${diskiograph_write /dev/\1 21,47 ${template1} \3}
-${voffset -45}${goto 66}${color}${font1}${diskio_read /dev/\1}
-${voffset 4}${goto 66}${color}${font1}${diskio_write /dev/\1}${font}${voffset 7}]],
+${voffset -45}${goto 66}${color}${font}${diskio_read /dev/\1}
+${voffset 4}${goto 66}${color}${font}${diskio_write /dev/\1}${voffset 7}]],
 
   -- filesystem: ${template6 filesystemName fileSystemPath}
   template6 = [[
-${voffset 49}${offset 6}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3, 45 \2}
-${voffset -50}${goto 66}${color}${font1}\1
-${voffset 4}${goto 66}${color}${font0}${fs_used_perc \2}${font}%]]
+${voffset 54}${offset 6}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3, 45 \2}
+${voffset -45}${goto 66}${color}${font}\1
+${voffset 4}${goto 66}${color}${font1}${fs_used_perc \2}${font0}%${font}${voffset -2}]]
 
 };
 

@@ -5,8 +5,8 @@ ${if_up wlp4s0}\
 ${image ~/conky/monochrome/images/widgets-dock/purple-wifi.png -n -p 0,149}\
 ${voffset 49}${offset 6}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 3,45 wlp4s0}
 #${wireless_essid wlp4s0}
-${voffset -50}${goto 66}${color}${font1}
-${voffset 4}${goto 66}${color}${font0}${wireless_link_qual_perc wlp4s0}${font}%${font1}
+${voffset -45}${goto 66}${color}${font}
+${voffset 4}${goto 66}${color}${font1}${wireless_link_qual_perc wlp4s0}${font0}%${font}
 # :: upload/download speeds
 ${image ~/conky/monochrome/images/widgets-dock/purple-internet.png -n -p 0,213}\
 ${template4 wlp4s0 8200 55100}
