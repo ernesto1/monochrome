@@ -7,6 +7,7 @@ ${template5 sdg1 6000 52000}
 ${image ~/conky/monochrome/images/widgets-dock/purple-disk-usbdrive.png -n -p 0,66}\
 ${template6 maxtor /run/media/ernesto/MAXTOR}
 ${else}\
-${voffset 50}${goto 57}external disk
-${voffset 3}${goto 57}is not connected
+${image ~/conky/monochrome/images/widgets-dock/purple-disk-usbdrive-disconnected.png -n -p 0,0}\
+${voffset 60}${goto 66}external disk
+${voffset 3}${goto 66}is not connected
 ${endif}\
