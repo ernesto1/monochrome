@@ -1,14 +1,14 @@
-# desktop sidebar
-cd ~/conky/monochrome/builder/widgets-dock;\
-# disks-desktop usb-maxtor ... usb-devices
-cat config cpu-mem network-desktop disk power time-block > ~/conky/monochrome/widgets-dock/sidebar;\
-echo '${image ~/conky/monochrome/images/widgets-dock/purple-edge-bottom.png -n -p 0,625}\' >> ~/conky/monochrome/widgets-dock/sidebar
+###### desktop sidebar
+
+# ... usb-devices
+cat config > ~/conky/monochrome/widgets-dock/sidebar;\
+buildSidebar.bash cpu-mem network-desktop disk disk-desktop disk-maxtor time-block bottom-edge;\
 echo '${voffset -300}]];' >> ~/conky/monochrome/widgets-dock/sidebar
 
-buildSidebar.bash cpu-mem network-desktop disk power
 
-# laptop sidebar
-cd ~/conky/monochrome/builder/widgets-dock;\
+
+
+##### laptop sidebar
 cat config cpu-mem network-laptop disk power time-block > ~/conky/monochrome/widgets-dock/sidebar;\
 echo '${image ~/conky/monochrome/images/widgets-dock/purple-edge-bottom.png -n -p 0,625}\' >> ~/conky/monochrome/widgets-dock/sidebar
 echo '${voffset -300}]];' >> ~/conky/monochrome/widgets-dock/sidebar

@@ -1,1 +1,3 @@
-${image ~/conky/monochrome/images/widgets-dock/purple-time.png -n -p 0,553}\
+# :::::::::::::::::::: time 
+# bar placeholder, the actual time is a separate conky used to create the sidebar effect on the desktop
+${image ~/conky/monochrome/images/widgets-dock/purple-time.png -n -p 0,0}\

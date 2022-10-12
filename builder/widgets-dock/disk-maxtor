@@ -1,0 +1,12 @@
+# :::::::::::::::::::: maxtor external hard drive
+${if_mounted /run/media/ernesto/MAXTOR}\
+# disk io
+${image ~/conky/monochrome/images/widgets-dock/purple-diskio.png -n -p 0,0}\
+${template5 sdg1 6000 52000}
+# filesystem
+${image ~/conky/monochrome/images/widgets-dock/purple-disk-usbdrive.png -n -p 0,66}\
+${template6 maxtor /run/media/ernesto/MAXTOR}
+${else}\
+${voffset 50}${goto 57}external disk
+${voffset 3}${goto 57}is not connected
+${endif}\
