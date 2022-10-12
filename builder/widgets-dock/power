@@ -17,5 +17,3 @@ ${offset 6}${color2}${if_match ${battery_percent BAT0} < 20}${color3}${endif}${b
 ${voffset -45}${goto 66}${color}${font}
 ${voffset 4}${goto 66}${color}${font1}${battery_percent BAT0}${font0}%${font}
 ${endif}\
-${image ~/conky/monochrome/images/widgets-dock/purple-time.png -n -p 0,553}\
-${image ~/conky/monochrome/images/widgets-dock/purple-edge-bottom.png -n -p 0,625}\
