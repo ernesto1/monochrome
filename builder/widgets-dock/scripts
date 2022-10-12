@@ -9,6 +9,6 @@ echo '${voffset -300}]];' >> ~/conky/monochrome/widgets-dock/sidebar
 
 
 ##### laptop sidebar
-cat config cpu-mem network-laptop disk power time-block > ~/conky/monochrome/widgets-dock/sidebar;\
-echo '${image ~/conky/monochrome/images/widgets-dock/purple-edge-bottom.png -n -p 0,625}\' >> ~/conky/monochrome/widgets-dock/sidebar
+cat config > ~/conky/monochrome/widgets-dock/sidebar;\
+buildSidebar.bash cpu-mem network-laptop disk power time-block bottom-edge;\
 echo '${voffset -300}]];' >> ~/conky/monochrome/widgets-dock/sidebar

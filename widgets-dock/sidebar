@@ -73,20 +73,20 @@ ${voffset 4}${goto 63}${addr \1}${voffset 8}]],
 ${voffset 12}${offset 5}${upspeedgraph \1 29,47 ${template2} \2}
 ${voffset -8}${offset 5}${downspeedgraph \1 29,47 ${template1} \3}
 ${voffset -53}${goto 66}${color}${font}${upspeed \1} ↑
-${voffset 4}${goto 66}${color}${font}${downspeed \1} ↓${voffset 16}]],
+${voffset 4}${goto 66}${color}${font}${downspeed \1} ↓${voffset 17}]],
 
-  -- hard disk: ${template5 device readSpeed writeSpeed}
+  -- hard disk io: ${template5 device readSpeed writeSpeed}
   template5 = [[
-${voffset 13}${offset 5}${color}${diskiograph_read /dev/\1 21,47 ${template2} \2}
+${voffset 12}${offset 5}${color}${diskiograph_read /dev/\1 21,47 ${template2} \2}
 ${voffset -8}${offset 5}${diskiograph_write /dev/\1 21,47 ${template1} \3}
 ${voffset -45}${goto 66}${color}${font}${diskio_read /dev/\1}
-${voffset 4}${goto 66}${color}${font}${diskio_write /dev/\1}${voffset 7}]],
+${voffset 4}${goto 66}${color}${font}${diskio_write /dev/\1}${voffset 9}]],
 
   -- filesystem: ${template6 filesystemName fileSystemPath}
   template6 = [[
-${voffset 54}${offset 6}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3, 45 \2}
+${voffset 52}${offset 6}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3, 45 \2}
 ${voffset -45}${goto 66}${color}${font}\1
-${voffset 4}${goto 66}${color}${font1}${fs_used_perc \2}${font0}%${font}${voffset -2}]]
+${voffset 4}${goto 66}${color}${font1}${fs_used_perc \2}${font0}%${font}]]
 
 };
 
@@ -134,7 +134,7 @@ ${template6 \  /}
 ${image ~/conky/monochrome/images/widgets-dock/purple-disk-home.png -n -p 0,425}\
 ${template6 \  /home}
 # :::::::::::::::::::: power
-${voffset 54}\
+${voffset 52}\
 ${if_match "${acpiacadapter}"=="on-line"}\
 ${if_match ${battery_percent BAT0} == 100}\
 ${image ~/conky/monochrome/images/widgets-dock/purple-power-plugged-in.png -n -p 0,489}
@@ -152,6 +152,9 @@ ${offset 6}${color2}${if_match ${battery_percent BAT0} < 20}${color3}${endif}${b
 ${voffset -45}${goto 66}${color}${font}
 ${voffset 4}${goto 66}${color}${font1}${battery_percent BAT0}${font0}%${font}
 ${endif}\
+# :::::::::::::::::::: time 
+# bar placeholder, the actual time is a separate conky used to create the sidebar effect on the desktop
 ${image ~/conky/monochrome/images/widgets-dock/purple-time.png -n -p 0,553}\
+# :::::::::::::::::::: bar's bottom edge
 ${image ~/conky/monochrome/images/widgets-dock/purple-edge-bottom.png -n -p 0,625}\
 ${voffset -300}]];
