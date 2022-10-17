@@ -16,7 +16,7 @@ do
   IFS_BAK=${IFS}
   IFS=$'\n'
   images=($(grep '${image ~' $file))
-  IFRS=${IFS_BAK}
+  IFS=${IFS_BAK}
   
   for imageCommand in "${images[@]}"
   do
