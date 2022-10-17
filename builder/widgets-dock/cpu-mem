@@ -4,13 +4,13 @@ ${image ~/conky/monochrome/images/widgets-dock/purple-cpu.png -n -p 0,0}\
 ${else}\
 ${image ~/conky/monochrome/images/widgets-dock/purple-cpu-high.png -n -p 0,0}\
 ${endif}\
-${voffset 12}${offset 12}${cpugraph cpu0 33,33 ${template1}}
+${voffset 44}${offset 12}${cpugraph cpu0 33,33 ${template1}}
 ${voffset -31}${goto 66}${color}${font1}${cpu cpu0}${font0}%
 # :::::::::::::::::::: memory
 ${if_match ${memperc} < 90}\
-${image ~/conky/monochrome/images/widgets-dock/purple-mem.png -n -p 0,66}\
+${image ~/conky/monochrome/images/widgets-dock/purple-mem.png -n -p 0,98}\
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/purple-mem-high.png -n -p 0,66}\
+${image ~/conky/monochrome/images/widgets-dock/purple-mem-high.png -n -p 0,98}\
 ${endif}\
 ${voffset 17}${offset 18}${memgraph 43,21 ${template1}}
 ${voffset -33}${goto 66}${color}${font1}${memperc}${font0}%
