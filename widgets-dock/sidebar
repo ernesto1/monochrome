@@ -6,12 +6,12 @@ conky.config = {
 
   -- window alignment
   alignment = 'middle_left',     -- top|middle|bottom_left|middle|right
-  gap_x = 0,                 -- same as passing -x at command line
-  gap_y = 0, --32
+  gap_x = 0,                     -- same as passing -x at command line
+  gap_y = -12,
 
   -- window settings
   minimum_width = 145,
-  minimum_height = 696,
+  minimum_height = 760,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -46,14 +46,16 @@ conky.config = {
   draw_outline = false,     -- black outline around text (not good if text is black)
 
   font = 'URW Gothic:size=9',    -- default: small
-  font0 = 'URW Gothic:size=12',   -- medium
-  font1 = 'URW Gothic:size=23',    -- big
+  font0 = 'URW Gothic:size=12',  -- medium
+  font1 = 'URW Gothic:size=23',  -- big
+  font2 = 'Promenade de la Croisette:size=40',   -- device temperature reading
 
   -- colors
   default_color = 'white',  -- regular text
   color1 = 'ebbeff',        -- text labels
   color2 = 'a36dec',        -- bar color default
   color3 = 'c33855',        -- bar color warning
+  color4 = '906c9c',        -- temperature text
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   --  n.b. the line break escape character '\' is not supported in templates :(
@@ -131,7 +133,7 @@ ${template4 enp6s0 3000 60000}
 ${else}\
 ${image ~/conky/monochrome/images/widgets-dock/purple-wifi-disconnected.png -n -p 0,181}
 ${image ~/conky/monochrome/images/widgets-dock/purple-internet-offline.png -n -p 0,245}\
-${voffset 116}
+${voffset 117}
 ${endif}\
 ${endif}\
 # :::::::::::::::::::: disk sda
@@ -146,7 +148,7 @@ ${template6 \  /home}
 ${voffset 52}\
 ${if_match "${acpiacadapter}"=="on-line"}\
 ${if_match ${battery_percent BAT0} == 100}\
-${image ~/conky/monochrome/images/widgets-dock/purple-power-plugged-in.png -n -p 0,521}
+${image ~/conky/monochrome/images/widgets-dock/purple-power-plugged-in.png -n -p 0,521}${voffset -1}
 ${else}\
 ${image ~/conky/monochrome/images/widgets-dock/purple-power-charging.png -n -p 0,521}\
 ${offset 6}${color2}${if_match ${battery_percent BAT0} < 80}${color3}${endif}${battery_bar 3, 45 BAT0}
@@ -161,9 +163,12 @@ ${offset 6}${color2}${if_match ${battery_percent BAT0} < 20}${color3}${endif}${b
 ${voffset -45}${goto 66}${color}${font}
 ${voffset 4}${goto 66}${color}${font1}${battery_percent BAT0}${font0}%${font}
 ${endif}\
+# :::::::::::::::::::: cpu temperature 
+${image ~/conky/monochrome/images/widgets-dock/purple-temp-cpu.png -n -p 0,585}\
+${voffset 15}${offset 12}${font2}${color4}${if_match ${hwmon coretemp temp 2} > ${hwmon coretemp temp 3}}${hwmon coretemp temp 2}${else}${hwmon coretemp temp 3}${endif}${voffset -28}${font0}°${offset 4}${voffset -4}${font2}C${font}
 # :::::::::::::::::::: time 
 # bar placeholder, the actual time is a separate conky used to create the sidebar effect on the desktop
-${image ~/conky/monochrome/images/widgets-dock/purple-time.png -n -p 0,585}\
+${image ~/conky/monochrome/images/widgets-dock/purple-time.png -n -p 0,649}\
 # :::::::::::::::::::: bar's bottom edge
-${image ~/conky/monochrome/images/widgets-dock/purple-edge-bottom.png -n -p 0,657}\
+${image ~/conky/monochrome/images/widgets-dock/purple-edge-bottom.png -n -p 0,721}\
 ${voffset -300}]];

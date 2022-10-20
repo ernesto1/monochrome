@@ -6,8 +6,8 @@ conky.config = {
 
   -- window alignment
   alignment = 'middle_left',     -- top|middle|bottom_left|middle|right
-  gap_x = 0,                 -- same as passing -x at command line
-  gap_y = 0, --32
+  gap_x = 0,                     -- same as passing -x at command line
+  gap_y = -12,
 
   -- window settings
   minimum_width = 145,
@@ -46,14 +46,16 @@ conky.config = {
   draw_outline = false,     -- black outline around text (not good if text is black)
 
   font = 'URW Gothic:size=9',    -- default: small
-  font0 = 'URW Gothic:size=12',   -- medium
-  font1 = 'URW Gothic:size=23',    -- big
+  font0 = 'URW Gothic:size=12',  -- medium
+  font1 = 'URW Gothic:size=23',  -- big
+  font2 = 'Promenade de la Croisette:size=40',   -- device temperature reading
 
   -- colors
   default_color = 'white',  -- regular text
   color1 = 'ebbeff',        -- text labels
   color2 = 'a36dec',        -- bar color default
   color3 = 'c33855',        -- bar color warning
+  color4 = '906c9c',        -- temperature text
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   --  n.b. the line break escape character '\' is not supported in templates :(

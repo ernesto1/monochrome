@@ -21,6 +21,6 @@ ${template4 enp6s0 3000 60000}
 ${else}\
 ${image ~/conky/monochrome/images/widgets-dock/purple-wifi-disconnected.png -n -p 0,0}
 ${image ~/conky/monochrome/images/widgets-dock/purple-internet-offline.png -n -p 0,64}\
-${voffset 116}
+${voffset 117}
 ${endif}\
 ${endif}\

@@ -10,5 +10,5 @@ echo '${voffset -420}]];' >> ~/conky/monochrome/widgets-dock/sidebar
 
 ##### laptop sidebar
 cat config > ~/conky/monochrome/widgets-dock/sidebar;\
-buildSidebar.bash cpu-mem network-laptop disk power time-block bottom-edge;\
+buildSidebar.bash cpu-mem network-laptop disk power temp-cpu time-block bottom-edge;\
 echo '${voffset -300}]];' >> ~/conky/monochrome/widgets-dock/sidebar
