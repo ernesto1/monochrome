@@ -1,0 +1,7 @@
+# :::::::::::::::::::: hard disk temperatures
+${image ~/conky/monochrome/images/widgets-dock/purple-temp-disk.png -n -p 0,0}\
+${template7 1 1}
+${image ~/conky/monochrome/images/widgets-dock/purple-temp-disk.png -n -p 0,64}\
+${template7 2 1}
+${image ~/conky/monochrome/images/widgets-dock/purple-temp-disk.png -n -p 0,128}\
+${template7 3 1}

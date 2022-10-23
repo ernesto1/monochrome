@@ -2,7 +2,7 @@
 
 # ... usb-devices
 cat config > ~/conky/monochrome/widgets-dock/sidebar;\
-buildSidebar.bash cpu-mem network-desktop disk disk-desktop disk-maxtor time-block bottom-edge;\
+buildSidebar.bash cpu-mem network-desktop disk disk-desktop disk-maxtor temp-cpu temp-disk time-block bottom-edge;\
 echo '${voffset -420}]];' >> ~/conky/monochrome/widgets-dock/sidebar
 
 
