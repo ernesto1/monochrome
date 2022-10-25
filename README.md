@@ -3,16 +3,16 @@ A collection of graphical [conky](https://github.com/brndnmtthws/conky) interfac
 Keep tabs on your system's cpu, memory, disk, network, battery usage and device temperatures.
 
 ### Compact dock
-![edition edition](images/screenshots/compact.gif)
+![compact dock](images/screenshots/compact.gif)
 
 ### Glass dock
-![desktop edition](images/screenshots/glass.gif)
+![glass dock](images/screenshots/glass.gif)
 
 ### Widgets dock
-![laptop edition](images/screenshots/widgets-small.gif)
+![widgets dock](images/screenshots/widgets-dock.gif)
 
 ### Widgets | large
-![desktop edition](images/screenshots/widgets-large.jpg)
+![widgets](images/screenshots/widgets-large.jpg)
 
 # Scripts
 These shell scripts were written two support this conky setup:
@@ -37,10 +37,12 @@ more recent versions may have regressions/bugs ([issue 1](https://github.com/brn
 Run the command `dnf downgrade conky` until you arrive at this version or download the RPM [from the web](https://rpm.pbone.net/info_idpl_70128821_distro_fedora32_com_conky-1.11.5-3.fc32.x86_64.rpm.html).
 
 ### Fonts
-Time conkys use these fonts:
+Most fonts used should come by default in your distro:
 
 - [Promenade de la Croisette](https://www.fontspace.com/promenade-de-la-croisette-font-f23769)
-- Noto Sans CJK JP Thin (default on fedora)
+- Noto Sans CJK JP Thin
+- URW Gothic Demi
+- Nimbus Mono PS Regular
 
 ### Download the code for these conky scripts
 Create the `~/conky` directory and clone this repository
