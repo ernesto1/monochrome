@@ -63,7 +63,7 @@ conky.config = {
   -- cpu/mem/download/disk write graph color
   template1 = [[51295e a36dec]],
   -- upload/disk read graph
-  template2 = [[a7323b e17d87]],
+  template2 = [[943145 e1778d]],
   
   -- ethernet block: ${template3 ethernetDevice}
   template3 = [[
