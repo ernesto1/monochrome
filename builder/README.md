@@ -1,19 +1,22 @@
-# Dynamically build conky sidebar configurations
+# Dynamically building a conky sidebar configuration
 ## Design Overview
-The goal is to be able to build a conky sidebar using *components* akin to building a lego with lego blocks.  
-Each section of the sidebar can be thought of as a **block**.  These blocks can then be put together in order to build a conky sidebar.
+Each section of a sidebar can be thought of as a **block**.  These blocks can assembled together in order to build a conky sidebar.
 
-Component examples:
+Blocks:
 
-- CPU and memory
+- CPU
+- Memory
 - Network interface (wifi, ethernet)
 - Disk
 - Power/battery
+- Device temperatures
+
+With this setup, we have the flexibility to easily rearrange/add blocks in order to customize the sidebar for the type of system we wish to monitor.
 
 ![system differences](system-differences.png)
 
-In the case of a pc, you will most likely have multiple disks to monitor.  While a laptop introduces power considerations (on battery, charging, plugged in).
+If we compare the use case of monitoring a laptop vs a desktop; a pc will most likely have multiple disks to monitor, while a laptop introduces power implications (on battery, charging, plugged in) not applicable to a desktop.
 
-## Challenges
+## Design considerations
 1. If a block contains an image, the image's `y coordinate` would **change** depending where in the stack the particular block is placed.
-2. The `vertical offset` of the last line or graph in a block must be consistent.  We want to be able to place a block anywhere in the sidebar stack and not have to worry about it's text/graph alignment shifting.
+1. The `vertical offset` of the last line or graph in a block must be consistent.  We want to be able to place a block anywhere in the sidebar stack and not have to worry about it's text/graph alignment shifting.

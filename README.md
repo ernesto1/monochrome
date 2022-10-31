@@ -15,7 +15,7 @@ Keep tabs on your system's cpu, memory, disk, network, battery usage and device 
 ![widgets](images/screenshots/widgets-large.jpg)
 
 # Scripts
-These shell scripts were written two support this conky setup:
+These shell scripts were written to support this conky setup:
 
 - A launcher script for executing multiple conky configs
 - A script to monitor for new package updates
@@ -51,7 +51,7 @@ Create the `~/conky` directory and clone this repository
        $ cd ~/conky
        $ git clone https://github.com/ernesto1/monochrome.git
 
-Alternatively you can download the latest `monochrome.zip` file from the releases page.
+Alternatively if you only want the conky configurations and their images, you can download the latest `monochrome.zip` file from the [releases page](https://github.com/ernesto1/monochrome/releases).  This way you don't get any of the build assets.
 
 ### Configuration
 The [wiki](https://github.com/ernesto1/monochrome/wiki) outlines items that may require configuration in order to customize this conky to your system, ex. device names such as network cards and hard drives
