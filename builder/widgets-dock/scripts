@@ -1,14 +1,21 @@
-###### desktop sidebar
+# notes
+# config file is created in a temp folder and then the target file is overriden
+# due to all the on the fly modifications done to the file while building the sidebar
+# a running conky seems to stop monitoring its source file for changes
+# causing further edits to not be automatically reflected by the running conky
 
-# ... usb-devices
-cat config > ~/conky/monochrome/widgets-dock/sidebar;\
+# ::::::: desktop sidebar
+# components left: usb-devices
+mkdir -p /tmp/monochrome;\
+cat config > /tmp/monochrome/sidebar;\
 buildSidebar.bash cpu-mem network-desktop disk disk-desktop disk-maxtor temp-cpu temp-pc time-block bottom-edge;\
-echo '${voffset -420}]];' >> ~/conky/monochrome/widgets-dock/sidebar
+echo '${voffset -420}]];' >> /tmp/monochrome/sidebar;\
+mv /tmp/monochrome/sidebar ~/conky/monochrome/widgets-dock/sidebar
 
 
-
-
-##### laptop sidebar
-cat config > ~/conky/monochrome/widgets-dock/sidebar;\
+# ::::::: laptop sidebar
+mkdir -p /tmp/monochrome;\
+cat config > /tmp/monochrome/sidebar;\
 buildSidebar.bash cpu-mem network-laptop disk power temp-cpu time-block bottom-edge;\
-echo '${voffset -300}]];' >> ~/conky/monochrome/widgets-dock/sidebar
+echo '${voffset -300}]];' >> /tmp/monochrome/sidebar;\
+mv /tmp/monochrome/sidebar ~/conky/monochrome/widgets-dock/sidebar

@@ -10,7 +10,7 @@ for file in "$@"
 do
   echo '>>>>' $file
   echo -e starting height: $totalHeight '\n'
-  cat $file >> ~/conky/monochrome/widgets-dock/sidebar
+  cat $file >> /tmp/monochrome/sidebar
   
   
   IFS_BAK=${IFS}
@@ -34,7 +34,7 @@ do
     echo y: $yCoordinate
     ((newYCoordinate=yCoordinate+totalHeight))
     echo new y: $newYCoordinate    
-    sed -i "s#${image} -n -p ${xCoordinate},${yCoordinate}#${image} -n -p ${xCoordinate},${newYCoordinate}#" ~/conky/monochrome/widgets-dock/sidebar
+    sed -i "s#${image} -n -p ${xCoordinate},${yCoordinate}#${image} -n -p ${xCoordinate},${newYCoordinate}#" /tmp/monochrome/sidebar
     echo
   done
   
@@ -48,6 +48,6 @@ do
 done
 
 # update the sidebar height
-sed -i "s/minimum_height *=.\+,/minimum_height = ${totalHeight},/" ~/conky/monochrome/widgets-dock/sidebar
+sed -i "s/minimum_height *=.\+,/minimum_height = ${totalHeight},/" /tmp/monochrome/sidebar
 echo -e "conky height updated to"
-grep minimum_height ~/conky/monochrome/widgets-dock/sidebar
+grep minimum_height /tmp/monochrome/sidebar
