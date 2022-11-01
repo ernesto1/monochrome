@@ -84,7 +84,7 @@ ${voffset -8}${offset 5}${diskiograph_write /dev/\1 21,47 ${template1} \3}
 ${voffset -45}${goto 66}${color}${font}${diskio_read /dev/\1}
 ${voffset 4}${goto 66}${color}${font}${diskio_write /dev/\1}${voffset 9}]],
 
-  -- filesystem: ${template6 hwmon-device number}
+  -- filesystem: ${template6 filesystemName fileSystemPath}
   template6 = [[
 ${voffset 52}${offset 6}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3, 45 \2}
 ${voffset -46}${goto 66}${color}${font}\1
