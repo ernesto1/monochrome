@@ -133,8 +133,8 @@ ${template3 enp6s0}
 ${image ~/conky/monochrome/images/widgets-dock/purple-internet.png -n -p 0,245}\
 ${template4 enp6s0 3000 60000}
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/purple-wifi-disconnected.png -n -p 0,181}
-${image ~/conky/monochrome/images/widgets-dock/purple-internet-offline.png -n -p 0,245}\
+${image ~/conky/monochrome/images/widgets-dock/pink-wifi-disconnected.png -n -p 0,181}
+${image ~/conky/monochrome/images/widgets-dock/pink-internet-offline.png -n -p 0,245}\
 ${voffset 117}
 ${endif}\
 ${endif}\
