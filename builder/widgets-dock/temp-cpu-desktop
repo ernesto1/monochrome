@@ -1,0 +1,4 @@
+# :::::::::::::::::::: cpu temperature 
+${image ~/conky/monochrome/images/widgets-dock/purple-temp-cpu-desktop.png -n -p 0,0}\
+${voffset 15}${offset 12}${font2}${color4}${if_match ${hwmon atk0110 temp 1} > 60}${color3}${endif}${hwmon atk0110 temp 1}${voffset -28}${font0}°${offset 4}${voffset -4}${font2}C${font}${color}${voffset -23}${goto 66}${hwmon coretemp temp 2}°C${offset 10}${hwmon coretemp temp 3}°C
+${voffset 4}${goto 66}${hwmon coretemp temp 4}°C${offset 10}${hwmon coretemp temp 5}°C${color4}${voffset 15}

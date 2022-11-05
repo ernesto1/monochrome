@@ -1,12 +1,24 @@
-cd ~/conky/monochrome/builder/compact;
+# notes
+# by default conky will reload its configuration if detects a change on the file
+# 
+# the new conky configuration is created in a temporary folder and then the target file is overriden
+# it turns out that if too many sequential file changes happen to the conky file, conky stops reloading the file
+# hence why we use the temp folder in order to replace the file only once
 
-# desktop sidebar
-# TODO usb-devices 
+# ::::::: desktop sidebar
+mkdir -p /tmp/monochrome;\
+buildSidebar.bash config cpu-mem network-desktop disk disk-desktop disk-usb system bottom-edge;\
+echo ']];' >> /tmp/monochrome/sidebar;\
+mv /tmp/monochrome/sidebar ~/conky/monochrome/compact/sidebar
 
-cat config cpu-mem network-desktop disk disk-desktop disk-usb system > ~/conky/monochrome/compact/sidebar;\
-echo '${image ~/conky/monochrome/images/compact/red-edge-bottom.png -n -p 0,1142}]];' >> ~/conky/monochrome/compact/sidebar
+# :::::::  laptop sidebar | under construction
+mkdir -p /tmp/monochrome;\
+buildSidebar.bash config system-cpu-mem network-laptop disk power bottom-edge;\
+echo ']];' >> /tmp/monochrome/sidebar;\
+mv /tmp/monochrome/sidebar ~/conky/monochrome/compact/sidebar
 
 
-# laptop sidebar
-cat config system-cpu-mem network-laptop disk power > ~/conky/monochrome/compact/sidebar;\
-echo ']];' >> ~/conky/monochrome/compact/sidebar
+
+# design notes
+- images should have a top/bottom border of 7px
+- left border for text is 5px

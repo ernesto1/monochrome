@@ -1,14 +1,14 @@
 # notes
-# config file is created in a temp folder and then the target file is overriden
-# due to all the on the fly modifications done to the file while building the sidebar
-# a running conky seems to stop monitoring its source file for changes
-# causing further edits to not be automatically reflected by the running conky
+# by default conky will reload its configuration if detects a change on the file
+# 
+# the new conky configuration is created in a temporary folder and then the target file is overriden
+# it turns out that if too many sequential file changes happen to the conky file, conky stops reloading the file
+# hence why we use the temp folder in order to replace the file only once
 
 # ::::::: desktop sidebar
-# components left: usb-devices
 mkdir -p /tmp/monochrome;\
 cat config > /tmp/monochrome/sidebar;\
-buildSidebar.bash cpu-mem network-desktop disk disk-desktop disk-maxtor temp-cpu temp-pc time-block bottom-edge;\
+buildSidebar.bash cpu-mem network-desktop disk disk-desktop disk-maxtor temp-cpu-desktop temp-desktop time-block bottom-edge;\
 echo '${voffset -420}]];' >> /tmp/monochrome/sidebar;\
 mv /tmp/monochrome/sidebar ~/conky/monochrome/widgets-dock/sidebar
 
@@ -16,6 +16,14 @@ mv /tmp/monochrome/sidebar ~/conky/monochrome/widgets-dock/sidebar
 # ::::::: laptop sidebar
 mkdir -p /tmp/monochrome;\
 cat config > /tmp/monochrome/sidebar;\
-buildSidebar.bash cpu-mem network-laptop disk power temp-cpu time-block bottom-edge;\
+buildSidebar.bash cpu-mem network-laptop disk power temp-cpu-laptop time-block bottom-edge;\
 echo '${voffset -300}]];' >> /tmp/monochrome/sidebar;\
 mv /tmp/monochrome/sidebar ~/conky/monochrome/widgets-dock/sidebar
+
+
+
+
+# design notes
+- images should have a top/bottom border of 9px
+- vertical offsets have to be done using the default font $(font)
+  offsets accross different fonts are not compatible

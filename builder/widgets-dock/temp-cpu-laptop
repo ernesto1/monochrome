@@ -1,3 +1,3 @@
 # :::::::::::::::::::: cpu temperature 
-${image ~/conky/monochrome/images/widgets-dock/purple-temp-cpu.png -n -p 0,0}\
+${image ~/conky/monochrome/images/widgets-dock/purple-temp-cpu-laptop.png -n -p 0,0}\
 ${voffset 15}${offset 12}${font2}${color4}${if_match ${hwmon coretemp temp 2} > ${hwmon coretemp temp 3}}${hwmon coretemp temp 2}${else}${hwmon coretemp temp 3}${endif}${voffset -28}${font0}°${offset 4}${voffset -4}${font2}C${font}${voffset 9}

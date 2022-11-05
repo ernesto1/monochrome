@@ -1,7 +1,7 @@
 conky.config = {
   update_interval = 2,  -- update interval in seconds
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
-  xinerama_head = 1,    -- for multi monitor setups, select monitor to run on: 0,1,2
+  xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
@@ -11,7 +11,7 @@ conky.config = {
 
   -- window settings
   minimum_width = 241,
-  minimum_height = 1193,
+  minimum_height = 1287,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -144,6 +144,7 @@ ${voffset 14}${goto 47}${color1}o/s ${color}${execi 5000 grep PRETTY_NAME /etc/o
 ${voffset 3}${goto 47}${color1}uptime ${color}${uptime}
 ${voffset 10}${offset 5}${color1}kernel ${color}${kernel}
 ${voffset 8}${offset 5}${color1}device${alignr 59}temperature
+${voffset 4}${offset 5}${color}cpu${alignr 53}${hwmon atk0110 temp 1}°C
 ${voffset 4}${offset 5}${color}cpu core 1${alignr 53}${hwmon coretemp temp 2}°C
 ${voffset 3}${offset 5}${color}cpu core 2${alignr 53}${hwmon coretemp temp 3}°C
 ${voffset 3}${offset 5}${color}cpu core 3${alignr 53}${hwmon coretemp temp 4}°C
@@ -152,4 +153,9 @@ ${voffset 3}${offset 5}${color}AMD Radeon HD7570${alignr 53}${hwmon radeon temp 
 ${voffset 3}${offset 5}${color}samsung SSD HD${alignr 53}${hwmon 1 temp 1}°C
 ${voffset 3}${offset 5}${color}seagate HD${alignr 53}${hwmon 2 temp 1}°C
 ${voffset 3}${offset 5}${color}seagate HD${alignr 53}${hwmon 3 temp 1}°C
-${image ~/conky/monochrome/images/compact/red-edge-bottom.png -n -p 0,1142}]];
+${voffset 8}${offset 5}${color1}fan${alignr 59}revolutions
+${voffset 3}${offset 5}${color}cpu fan${alignr 59}${hwmon atk0110 fan 1} rpm
+${voffset 3}${offset 5}${color}chasis back exhaust${alignr 59}${hwmon atk0110 fan 4} rpm
+${voffset 3}${offset 5}${color}chasis top exhaust${alignr 59}${hwmon atk0110 fan 2} rpm
+${image ~/conky/monochrome/images/compact/red-edge-bottom.png -n -p 0,1228}
+]];

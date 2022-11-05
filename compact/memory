@@ -1,19 +1,19 @@
 conky.config = {
   update_interval = 2,  -- update interval in seconds
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
-  xinerama_head = 1,    -- for multi monitor setups, select monitor to run on: 0,1,2
+  xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
   alignment = 'middle_left',       -- top|middle|bottom_left|middle|right
   gap_x = 0,                    -- same as passing -x at command line
-  gap_y = 342,
+  gap_y = 389,
 
   -- window settings
   minimum_width = 186,
   minimum_height = 200,
   own_window = true,
-  own_window_type = 'panel',    -- values: desktop (background), panel (bar)
+  own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below, sticky,skip_taskbar,skip_pager',
 
   -- transparency configuration
