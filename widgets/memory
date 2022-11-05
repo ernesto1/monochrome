@@ -45,7 +45,7 @@ conky.config = {
 };
 
 conky.text = [[
-${image ~/conky/monochrome/images/widgets-large/memory.png -n -p 0,0}\
+${image ~/conky/monochrome/images/widgets/memory.png -n -p 0,0}\
 ${voffset -2}${color}${offset 13}${memgraph 80, 44 315bb1 1a336b}
 ${voffset 7}${color1}mem  ${color}${memperc}%${goto 60}${mem} / ${memmax}
 ${voffset 4}${color1}swap ${color}${swapperc}%${goto 60}${if_match ${swapperc} > 90}${color3}${endif}${swapbar 3, 100}

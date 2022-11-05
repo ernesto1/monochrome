@@ -1,17 +1,17 @@
 conky.config = {
-  update_interval = 2,  -- update interval in seconds
+  update_interval = 3,  -- update interval in seconds
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
   xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 1115,               -- same as passing -x at command line
+  gap_x = 1296,               -- same as passing -x at command line
   gap_y = 12,
 
   -- window settings
-  minimum_width = 160,
-  minimum_height = 181,
+  minimum_width = 239,
+  minimum_height = 130,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -35,35 +35,28 @@ conky.config = {
   imlib_cache_flush_interval = 300,
   -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
 
-  if_up_strictness = 'address', -- network device must be up, having link and an assigned IP address
-                                -- to be considered "up" by ${if_up}
-                                -- values are: up, link or address
-
   -- font settings
   draw_shades = false,    -- black shadow on text (not good if text is black)
   draw_outline = false,   -- black outline around text (not good if text is black)
   default_color = 'black',
   color1 = 'white',
   color2 = '1a336b',      -- dark blue
-  color3 = '800020',      -- burgundy
+  color3 = '800020'       -- burgundy
 };
 
 conky.text = [[
-${if_up enp0s25}\
-${color1}local ip${goto 66}${color}${addr enp0s25}
-# use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
-${voffset 3}${color1}bittorrent${goto 66}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
-${voffset 3}${color1}zoom${goto 66}${color}${if_running zoom}running${else}off${endif}
-${image ~/conky/monochrome/images/widgets-large/internet.png -n -p 0,51}\
-${offset 41}${upspeedgraph enp0s25 44,119 ffd799 d6926d 3000}
-${voffset -13}${offset 41}${downspeedgraph enp0s25 44,119 315bb1 1a336b 55000}
-${voffset 3}${color1}up${alignr 51}${color}${upspeed enp0s25} ${color1}total
-${voffset 4}${color1}down${alignr 51}${color}${downspeed enp0s25} ${color1}total
-${voffset -30}${alignr}${color}${totalup enp0s25}
-${voffset 4}${alignr}${color}${totaldown enp0s25}
-# we need to remove the trailing spacing added the moment we added voffset'ed the upload graph
-${voffset -200}
-${else}\
-${image ~/conky/monochrome/images/widgets-large/ethernet-offline.png -n -p 21,51}\
-${endif}\
+# disk io
+${image ~/conky/monochrome/images/widgets/disk.png -n -p 0,0}\
+${voffset -6}${diskiograph_read /dev/sda 44,77 d6926d ffd799 200000}
+${voffset -13}${diskiograph_write /dev/sda 44,77 315bb1 1a336b 280000}
+${voffset 3}${color1}read${alignr 164}${color}${diskio_read /dev/sda}
+${voffset 4}${color1}write${alignr 164}${color}${diskio_write /dev/sda}
+# partitions
+${image ~/conky/monochrome/images/widgets/partitions.png -n -p 87,0}\
+${voffset -127}${goto 139}fedora${alignr}[${fs_type /}]
+${voffset 5}${offset 139}${fs_used /} / ${color}${fs_size /}
+${offset 139}${color2}${if_match ${fs_used_perc /} > 90}${color3}${endif}${fs_bar 3, 100 /}
+${offset 139}${color}home${alignr}[${fs_type /home}]
+${voffset 5}${offset 139}${fs_used /home} / ${color}${fs_size /home}
+${offset 139}${color2}${if_match ${fs_used_perc /home} > 90}${color3}${endif}${fs_bar 3, 100 /home}
 ]];

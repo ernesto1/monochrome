@@ -6,14 +6,14 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 2179,               -- same as passing -x at command line
-  gap_y = 48,
+  gap_x = 1556,               -- same as passing -x at command line
+  gap_y = 12,
 
   -- window settings
-  minimum_width = 150,
-  minimum_height = 96,
+  minimum_width = 187,
+  minimum_height = 130,
   own_window = true,
-  own_window_type = 'desktop',              -- values: desktop (background), panel (bar)
+  own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
   -- transparency configuration
@@ -45,31 +45,15 @@ conky.config = {
 };
 
 conky.text = [[
-# sandisk usb memory stick
-${if_mounted /run/media/ernesto/sandisk}\
-${image ~/conky/monochrome/images/widgets-large/usbStick.png -n -p 0,0}\
-${voffset 35}${color2}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color3}${endif}${fs_bar 3, 45 /run/media/ernesto/sandisk}
-${offset 55}${voffset -47}${color1}fs type${goto 110}${color}${fs_type /run/media/ernesto/sandisk}
-${offset 55}${voffset 3}${color1}size${goto 110}${color}${fs_size /run/media/ernesto/sandisk}
-${offset 55}${voffset 3}${color1}free${goto 110}${color}${fs_free /run/media/ernesto/sandisk}
-${else}\
-${voffset 10}\
-${image ~/conky/monochrome/images/widgets-large/usbBorder.png -n -p 144,0}\
-${alignr}sandisk usb drive  
-${alignr}not connected  
-${voffset 10}\
-${endif}\
-# sandisk sd card
-${if_mounted /run/media/ernesto/disk}\
-${image ~/conky/monochrome/images/widgets-large/sdCard.png -n -p 0,50}\
-${voffset 39}${color2}${if_match ${fs_used_perc /run/media/ernesto/disk} > 90}${color3}${endif}${fs_bar 3, 45 /run/media/ernesto/disk}
-${offset 55}${voffset -47}${color1}fs type${goto 110}${color}${fs_type /run/media/ernesto/disk}
-${offset 55}${voffset 3}${color1}size${goto 110}${color}${fs_size /run/media/ernesto/disk}
-${offset 55}${voffset 3}${color1}free${goto 110}${color}${fs_free /run/media/ernesto/disk}
-${else}\
-${voffset 14}\
-${image ~/conky/monochrome/images/widgets-large/usbBorder.png -n -p 144,50}\
-${alignr}sandisk sd card  
-${alignr}not connected  
-${endif}\
+# disk io | read: 115MiB
+${image ~/conky/monochrome/images/widgets/disk.png -n -p 0,0}\
+${voffset -6}${diskiograph_read /dev/sdb 44,77 d6926d ffd799 240000}
+${voffset -13}${diskiograph_write /dev/sdb 44,77 315bb1 1a336b 250000}
+${voffset 3}${color1}read${alignr 111}${color}${diskio_read /dev/sdb}
+${voffset 4}${color1}write${alignr 111}${color}${diskio_write /dev/sdb}
+# partitions
+${voffset -100}${goto 87}${color1}partitions ${hr 1}
+${voffset 4}${goto 87}${color}veronica${alignr}[${fs_type /media/veronica}]
+${voffset 6}${goto 87}${color}${fs_used /media/veronica} / ${color}${fs_size /media/veronica}
+${voffset 1}${goto 87}${color2}${if_match ${fs_used_perc /media/veronica} > 90}${color3}${endif}${fs_bar 3, 100 /media/veronica}
 ]];

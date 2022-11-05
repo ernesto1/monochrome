@@ -11,8 +11,8 @@ Keep tabs on your system's cpu, memory, disk, network, battery usage and device 
 ### Widgets dock
 ![widgets dock](images/screenshots/widgets-dock.gif)
 
-### Widgets | large
-![widgets](images/screenshots/widgets-large.jpg)
+### Widgets
+![widgets](images/screenshots/widgets.jpg)
 
 # Scripts
 These shell scripts were written to support this conky setup:
@@ -40,9 +40,10 @@ Run the command `dnf downgrade conky` until you arrive at this version or downlo
 Most fonts used should come by default in your distro:
 
 - [Promenade de la Croisette](https://www.fontspace.com/promenade-de-la-croisette-font-f23769)
-- Noto Sans CJK JP Thin
-- URW Gothic Demi
 - Nimbus Mono PS Regular
+- Noto Sans CJK JP Thin
+- URW Gothic
+- URW Gothic Demi
 
 ### Download the code for these conky scripts
 Create the `~/conky` directory and clone this repository
@@ -72,6 +73,6 @@ Run the launch script with the theme you want:
 
       $ ~/conky/monochrome/launch.bash --widgets-dock
 
-    - Widgets large
+    - Widgets
 
-      $ ~/conky/monochrome/launch.bash --widgets-large
+      $ ~/conky/monochrome/launch.bash --widgets

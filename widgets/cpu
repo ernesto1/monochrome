@@ -48,7 +48,7 @@ conky.config = {
 };
 
 conky.text = [[
-${image ~/conky/monochrome/images/widgets-large/cpu.png -n -p 0,14}\
+${image ~/conky/monochrome/images/widgets/cpu.png -n -p 0,14}\
 ${voffset 24}${offset 15}${color2}${if_match ${cpu cpu1} >= 90}${color3}${endif}${cpubar cpu1 3, 66}
 ${voffset -4}${offset 15}${color2}${if_match ${cpu cpu2} >= 90}${color3}${endif}${cpubar cpu2 3, 66}
 ${voffset -4}${offset 15}${color2}${if_match ${cpu cpu3} >= 90}${color3}${endif}${cpubar cpu3 3, 66}

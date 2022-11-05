@@ -18,7 +18,7 @@ function usage() {
 	Theme options
 	  --compact
 	  --glass
-	  --widgets-large
+	  --widgets
 	  --widgets-dock
 	
 	Optional flags
@@ -82,8 +82,8 @@ width=35    # default width for the package update list text
 
 while (( "$#" )); do
   case $1 in
-    --widgets-large)
-      directory=${HOME}/conky/monochrome/widgets-large
+    --widgets)
+      directory=${HOME}/conky/monochrome/widgets
       shift
       ;;
     --widgets-dock)

@@ -6,7 +6,7 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 1556,               -- same as passing -x at command line
+  gap_x = 1972,               -- same as passing -x at command line
   gap_y = 12,
 
   -- window settings
@@ -45,15 +45,23 @@ conky.config = {
 };
 
 conky.text = [[
-# disk io | read: 115MiB
-${image ~/conky/monochrome/images/widgets-large/disk.png -n -p 0,0}\
-${voffset -6}${diskiograph_read /dev/sdb 44,77 d6926d ffd799 240000}
-${voffset -13}${diskiograph_write /dev/sdb 44,77 315bb1 1a336b 250000}
-${voffset 3}${color1}read${alignr 111}${color}${diskio_read /dev/sdb}
-${voffset 4}${color1}write${alignr 111}${color}${diskio_write /dev/sdb}
+# external usb hard disk
+# disk io | write: 28.7MiB  read: 22.6MiB
+${if_mounted /run/media/ernesto/MAXTOR}\
+${image ~/conky/monochrome/images/widgets/disk.png -n -p 0,0}\
+${voffset -6}${diskiograph_read /dev/sdf1 44,77 d6926d ffd799 60000}
+${voffset -13}${diskiograph_write /dev/sdf1 44,77 315bb1 1a336b 60000}
+${voffset 3}${color1}read${alignr 111}${color}${diskio_read /dev/sdf1}
+${voffset 4}${color1}write${alignr 111}${color}${diskio_write /dev/sdf1}
 # partitions
-${voffset -100}${goto 87}${color1}partitions ${hr 1}
-${voffset 4}${goto 87}${color}veronica${alignr}[${fs_type /media/veronica}]
-${voffset 6}${goto 87}${color}${fs_used /media/veronica} / ${color}${fs_size /media/veronica}
-${voffset 1}${goto 87}${color2}${if_match ${fs_used_perc /media/veronica} > 90}${color3}${endif}${fs_bar 3, 100 /media/veronica}
+${voffset -127}${goto 87}external drive
+${voffset 18}${goto 87}${color1}partitions ${hr 1}
+${goto 87}${color}maxtor${alignr}[${fs_type /run/media/ernesto/MAXTOR}]
+${voffset 6}${goto 87}${color}${fs_used /run/media/ernesto/MAXTOR} / ${color}${fs_size /run/media/ernesto/MAXTOR}
+${voffset 1}${goto 87}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 3, 100 /run/media/ernesto/MAXTOR}
+${else}\
+${image ~/conky/monochrome/images/widgets/usbBorder.png -n -p 181,50}\
+${voffset 60}${alignr}maxtor external hard disk  
+${alignr}not connected  
+${endif}\
 ]];
