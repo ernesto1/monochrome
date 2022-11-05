@@ -60,11 +60,11 @@ The [wiki](https://github.com/ernesto1/monochrome/wiki) outlines items that may 
 # How to run
 Run the launch script with the theme you want:
 
-    - Glass
+    - Glass dock
 
       $ ~/conky/monochrome/launch.bash --glass
 
-    - Compact
+    - Compact dock
 
       $ ~/conky/monochrome/launch.bash --compact
 
