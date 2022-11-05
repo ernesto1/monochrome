@@ -1,22 +1,22 @@
 conky.config = {
   update_interval = 2,  -- update interval in seconds
-  total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
   xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 880,                -- same as passing -x at command line
-  gap_y = 59,
+  gap_x = 875,                -- same as passing -x at command line
+  gap_y = 48,
 
   -- window settings
-  minimum_width = 210,
+  minimum_width = 215,
   minimum_height = 94,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
   -- transparency configuration
+  draw_blended = false,
   own_window_transparent = true,
   own_window_argb_visual = true,  -- turn on transparency
   own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
@@ -38,20 +38,25 @@ conky.config = {
   imlib_cache_flush_interval = 300,
   -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
 
-  -- font settings
-  draw_shades = false,    -- black shadow on text (not good if text is black)
-  draw_outline = false,   -- black outline around text (not good if text is black)
-  default_color = 'black',
-  color1 = 'white',
-  color3 = '800020',      -- burgundy
+  -- colors
+  default_color = 'a0a81f', -- regular text
+  color1 = 'bf8766',        -- text labels
+  color2 = 'cbb590',        -- bar color default
+  color3 = '800020',        -- bar color warning
+  
+  -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
+  --  n.b. the line break escape character '\' is not supported in templates :(
+  
+  -- memory process
+  template9 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${alignr 2}${top_mem mem_res \1} ${top_mem pid \1}]]
 };
 
 conky.text = [[
-${color1}process${alignr}mem   pid
-${voffset -3}${hr}${color}
-${voffset 2}${top_mem name 1}${alignr}${top_mem mem_res 1} ${top_mem pid 1}
-${voffset 3}${top_mem name 2}${alignr}${top_mem mem_res 2} ${top_mem pid 2}
-${voffset 3}${top_mem name 3}${alignr}${top_mem mem_res 3} ${top_mem pid 3}
-${voffset 3}${top_mem name 4}${alignr}${top_mem mem_res 4} ${top_mem pid 4}
-${voffset 3}${top_mem name 5}${alignr}${top_mem mem_res 5} ${top_mem pid 5}
-]];
+# a bug in conky causes the memory graph to jitter if the ${top_mem} variables are used in the same file
+# hence why the memory processes had to be placed in their own conky : /
+${image ~/conky/monochrome/images/widgets/processes.png -n -p 0,0}\
+${voffset 3}${offset 5}${color1}process${alignr 2}mem   pid${voffset 1}
+${template9 1}
+${template9 2}
+${template9 3}
+${template9 4}]];

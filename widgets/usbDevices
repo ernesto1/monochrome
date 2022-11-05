@@ -1,22 +1,22 @@
 conky.config = {
-  update_interval = 3,  -- update interval in seconds
-  total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
+  update_interval = 2,  -- update interval in seconds
   xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 2179,               -- same as passing -x at command line
-  gap_y = 48,
+  gap_x = 2188,               -- same as passing -x at command line
+  gap_y = 33,
 
   -- window settings
   minimum_width = 150,
-  minimum_height = 96,
+  minimum_height = 105,
   own_window = true,
   own_window_type = 'desktop',              -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
   -- transparency configuration
+  draw_blended = false,
   own_window_transparent = true,
   own_window_argb_visual = true,  -- turn on transparency
   own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
@@ -24,7 +24,7 @@ conky.config = {
   -- window borders
   draw_borders = false,     -- draw borders around the conky window
   border_width = 1,         -- width of border window in pixels
-  stippled_borders = 1,     -- border stippling (dashing) in pixels
+  stippled_borders = 0,     -- border stippling (dashing) in pixels
   border_inner_margin = 0,  -- margin between the border and text in pixels
   border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
 
@@ -32,44 +32,42 @@ conky.config = {
   draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
                               -- does not include bars, ie. wifi strength bar, cpu bar
 
-  imlib_cache_flush_interval = 300,
-  -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
-
   -- font settings
   draw_shades = false,    -- black shadow on text (not good if text is black)
-  draw_outline = false,   -- black outline around text (not good if text is black)
-  default_color = 'black',
-  color1 = 'white',
-  color2 = '1a336b',      -- dark blue
-  color3 = '800020',      -- burgundy
+  
+  -- colors
+  default_color = 'a0a81f', -- regular text
+  color1 = 'bf8766',        -- text labels
+  color2 = 'cbb590',        -- bar color default
+  color3 = '800020',        -- bar color warning
+  color4  ='fda15e',
+  
+  -- :::::::::::::::: templates  
+  -- usb memory device file system: ${template1 devicePath}
+  template1 = [[${voffset 37}${offset 2}${color2}${if_match ${fs_used_perc \1} > 90}${color3}${endif}${fs_bar 3, 45 \1}
+${offset 53}${voffset -47}${color1}fs type${goto 103}${color}${fs_type \1}
+${offset 53}${voffset 3}${color1}size${goto 103}${color}${fs_size \1}
+${offset 53}${voffset 3}${color1}free${goto 103}${color}${fs_free \1}${voffset 7}]],
+
+  template2 = [[${voffset 12}\${alignr}${color4}\1  
+${alignr}not connected  ${voffset 17}]]
 };
 
 conky.text = [[
 # sandisk usb memory stick
 ${if_mounted /run/media/ernesto/sandisk}\
-${image ~/conky/monochrome/images/widgets/usbStick.png -n -p 0,0}\
-${voffset 35}${color2}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color3}${endif}${fs_bar 3, 45 /run/media/ernesto/sandisk}
-${offset 55}${voffset -47}${color1}fs type${goto 110}${color}${fs_type /run/media/ernesto/sandisk}
-${offset 55}${voffset 3}${color1}size${goto 110}${color}${fs_size /run/media/ernesto/sandisk}
-${offset 55}${voffset 3}${color1}free${goto 110}${color}${fs_free /run/media/ernesto/sandisk}
+${image ~/conky/monochrome/images/widgets/usb-slot-memory.png -n -p 0,0}\
+${template1 /run/media/ernesto/sandisk}
 ${else}\
-${voffset 10}\
-${image ~/conky/monochrome/images/widgets/usbBorder.png -n -p 144,0}\
-${alignr}sandisk usb drive  
-${alignr}not connected  
-${voffset 10}\
+${image ~/conky/monochrome/images/widgets/usb-slot-disconnected.png -n -p 0,0}\
+${template2 sandisk\ usb\ drive}
 ${endif}\
 # sandisk sd card
 ${if_mounted /run/media/ernesto/disk}\
-${image ~/conky/monochrome/images/widgets/sdCard.png -n -p 0,50}\
-${voffset 39}${color2}${if_match ${fs_used_perc /run/media/ernesto/disk} > 90}${color3}${endif}${fs_bar 3, 45 /run/media/ernesto/disk}
-${offset 55}${voffset -47}${color1}fs type${goto 110}${color}${fs_type /run/media/ernesto/disk}
-${offset 55}${voffset 3}${color1}size${goto 110}${color}${fs_size /run/media/ernesto/disk}
-${offset 55}${voffset 3}${color1}free${goto 110}${color}${fs_free /run/media/ernesto/disk}
+${image ~/conky/monochrome/images/widgets/usb-slot-sdcard.png -n -p 0,55}\
+${template1 /run/media/ernesto/disk}
 ${else}\
-${voffset 14}\
-${image ~/conky/monochrome/images/widgets/usbBorder.png -n -p 144,50}\
-${alignr}sandisk sd card  
-${alignr}not connected  
+${image ~/conky/monochrome/images/widgets/usb-slot-disconnected.png -n -p 0,55}\
+${template2 sandisk\ sd\ card}
 ${endif}\
 ]];

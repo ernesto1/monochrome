@@ -1,22 +1,22 @@
 conky.config = {
   update_interval = 2,  -- update interval in seconds
-  total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
   xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 1115,               -- same as passing -x at command line
-  gap_y = 12,
+  gap_x = 1110,               -- same as passing -x at command line
+  gap_y = 10,
 
   -- window settings
-  minimum_width = 160,
-  minimum_height = 181,
+  minimum_width = 170,
+  minimum_height = 187,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
   -- transparency configuration
+  draw_blended = false,
   own_window_transparent = true,
   own_window_argb_visual = true,  -- turn on transparency
   own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
@@ -32,38 +32,42 @@ conky.config = {
   draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
                               -- does not include bars, ie. wifi strength bar, cpu bar
 
-  imlib_cache_flush_interval = 300,
-  -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
-
   if_up_strictness = 'address', -- network device must be up, having link and an assigned IP address
                                 -- to be considered "up" by ${if_up}
                                 -- values are: up, link or address
 
   -- font settings
   draw_shades = false,    -- black shadow on text (not good if text is black)
-  draw_outline = false,   -- black outline around text (not good if text is black)
-  default_color = 'black',
-  color1 = 'white',
-  color2 = '1a336b',      -- dark blue
-  color3 = '800020',      -- burgundy
+  
+  -- colors
+  default_color = 'a0a81f', -- regular text
+  color1 = 'bf8766',        -- text labels
+  color2 = 'cbb590',        -- bar color default
+  color3 = '800020',        -- bar color warning
+  
+  -- :::::::::::::::: templates  
+  -- cpu/mem/download/disk write graph color
+  template1 = [[a78f6b cbb590]],
+  -- upload/disk read graph
+  template2 = [[a86135 fda15e]]
 };
 
 conky.text = [[
 ${if_up enp0s25}\
-${color1}local ip${goto 66}${color}${addr enp0s25}
+${image ~/conky/monochrome/images/widgets/internet.png -n -p 0,0}\
+${voffset 3}${offset 5}${color1}local ip${goto 71}${color}${addr enp0s25}
 # use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
-${voffset 3}${color1}bittorrent${goto 66}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
-${voffset 3}${color1}zoom${goto 66}${color}${if_running zoom}running${else}off${endif}
-${image ~/conky/monochrome/images/widgets/internet.png -n -p 0,51}\
-${offset 41}${upspeedgraph enp0s25 44,119 ffd799 d6926d 3000}
-${voffset -13}${offset 41}${downspeedgraph enp0s25 44,119 315bb1 1a336b 55000}
-${voffset 3}${color1}up${alignr 51}${color}${upspeed enp0s25} ${color1}total
-${voffset 4}${color1}down${alignr 51}${color}${downspeed enp0s25} ${color1}total
-${voffset -30}${alignr}${color}${totalup enp0s25}
-${voffset 4}${alignr}${color}${totaldown enp0s25}
-# we need to remove the trailing spacing added the moment we added voffset'ed the upload graph
-${voffset -200}
+${voffset 3}${offset 5}${color1}bittorrent${goto 71}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
+${voffset 3}${offset 5}${color1}zoom${goto 71}${color}${if_running zoom}running${else}off${endif}
+${voffset 2}${offset 46}${upspeedgraph enp0s25 44,119 ${template2} 3000}
+${voffset -13}${offset 46}${downspeedgraph enp0s25 44,119 ${template1} 55000}
+${voffset 2}${offset 5}${color1}up${alignr 56}${color}${upspeed enp0s25} ${color1}total
+${voffset 4}${offset 5}${color1}down${alignr 56}${color}${downspeed enp0s25} ${color1}total
+${voffset -30}${alignr 5}${color}${totalup enp0s25}
+${voffset 4}${alignr 5}${color}${totaldown enp0s25}
+# we need to remove the trailing spacing added the moment we voffset'ed the upload graph 
+${voffset -20}
 ${else}\
-${image ~/conky/monochrome/images/widgets/ethernet-offline.png -n -p 21,51}\
+${image ~/conky/monochrome/images/widgets/ethernet-offline.png -n -p 20,54}
 ${endif}\
 ]];

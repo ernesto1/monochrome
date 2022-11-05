@@ -1,22 +1,21 @@
 conky.config = {
-  update_interval = 3,  -- update interval in seconds
-  total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
-  xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
+  update_interval = 2,  -- update interval in seconds
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 1972,               -- same as passing -x at command line
-  gap_y = 12,
+  gap_x = 1966,               -- same as passing -x at command line
+  gap_y = 10,
 
   -- window settings
-  minimum_width = 187,
-  minimum_height = 130,
+  minimum_width = 202,
+  minimum_height = 133,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
   -- transparency configuration
+  draw_blended = false,
   own_window_transparent = true,
   own_window_argb_visual = true,  -- turn on transparency
   own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
@@ -31,37 +30,43 @@ conky.config = {
   -- graph settings
   draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
                               -- does not include bars, ie. wifi strength bar, cpu bar
-
-  imlib_cache_flush_interval = 300,
-  -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
-
+                                
   -- font settings
   draw_shades = false,    -- black shadow on text (not good if text is black)
-  draw_outline = false,   -- black outline around text (not good if text is black)
-  default_color = 'black',
-  color1 = 'white',
-  color2 = '1a336b',      -- dark blue
-  color3 = '800020',      -- burgundy
+  
+  -- colors
+  default_color = 'a0a81f', -- regular text
+  color1 = 'bf8766',        -- text labels
+  color2 = 'cbb590',        -- bar color default
+  color3 = '800020',        -- bar color warning
+  
+  -- :::::::::::::::: templates
+  -- cpu/mem/download/disk write graph color
+  template1 = [[a78f6b cbb590]],
+  -- upload/disk read graph
+  template2 = [[a86135 fda15e]],
+  
+  -- disk io: ${template3 device readSpeed writeSpeed}
+  template3 = [[${voffset -6}${offset 4}${diskiograph_read \1 44,78 ${template2} \2}
+${voffset -13}${offset 4}${diskiograph_write \1 44,78 ${template1} \3}
+${voffset 3}${offset 5}${color1}read${alignr 120}${color}${diskio_read \1}
+${voffset 4}${offset 5}${color1}write${alignr 120}${color}${diskio_write \1}]],
+
+  -- disk partition: ${template4 partition name}
+  template4 = [[${voffset 4}${goto 97}${color}\2${alignr 4}${fs_type \1}
+${voffset 4}${goto 97}${color}${fs_used \1} /${alignr 4}${color}${fs_size \1}
+${voffset 1}${goto 97}${color2}${if_match ${fs_used_perc \1} > 90}${color3}${endif}${fs_bar 3, 100 \1}]]
 };
 
 conky.text = [[
-# external usb hard disk
-# disk io | write: 28.7MiB  read: 22.6MiB
 ${if_mounted /run/media/ernesto/MAXTOR}\
-${image ~/conky/monochrome/images/widgets/disk.png -n -p 0,0}\
-${voffset -6}${diskiograph_read /dev/sdf1 44,77 d6926d ffd799 60000}
-${voffset -13}${diskiograph_write /dev/sdf1 44,77 315bb1 1a336b 60000}
-${voffset 3}${color1}read${alignr 111}${color}${diskio_read /dev/sdf1}
-${voffset 4}${color1}write${alignr 111}${color}${diskio_write /dev/sdf1}
+${image ~/conky/monochrome/images/widgets/disk-single-partition.png -n -p 0,0}\
+${template3 sdf1 6000 60000}
+${voffset -13}${goto 97}${color1}temp ${color}n/a
 # partitions
-${voffset -127}${goto 87}external drive
-${voffset 18}${goto 87}${color1}partitions ${hr 1}
-${goto 87}${color}maxtor${alignr}[${fs_type /run/media/ernesto/MAXTOR}]
-${voffset 6}${goto 87}${color}${fs_used /run/media/ernesto/MAXTOR} / ${color}${fs_size /run/media/ernesto/MAXTOR}
-${voffset 1}${goto 87}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 3, 100 /run/media/ernesto/MAXTOR}
+${voffset -126}${goto 97}${color1}partitions
+${template4 /run/media/ernesto/MAXTOR maxtor}
 ${else}\
-${image ~/conky/monochrome/images/widgets/usbBorder.png -n -p 181,50}\
-${voffset 60}${alignr}maxtor external hard disk  
-${alignr}not connected  
+${image ~/conky/monochrome/images/widgets/disk-usb-disconnected.png -n -p 0,0}\
 ${endif}\
 ]];

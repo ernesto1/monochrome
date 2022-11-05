@@ -1,30 +1,29 @@
 conky.config = {
-  update_interval = 5,  -- update interval in seconds
-  total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
+  update_interval = 2,  -- update interval in seconds
   xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
   alignment = 'bottom_left',
-  gap_x = 231,         -- gap between border of the screen and the conky window, same as passing -x at command line
-  gap_y = 45,
+  gap_x = 232,         -- gap between border of the screen and the conky window, same as passing -x at command line
+  gap_y = 60,
 
   -- window settings
-  minimum_width = 210,
+  minimum_width = 208,
   own_window = true,
   own_window_type = 'desktop',              -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
   -- transparency configuration
-  own_window_transparent = true,
+  own_window_transparent = false,
   own_window_argb_visual = true,  -- turn on transparency
   own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
 
   -- window borders
   draw_borders = false,     -- draw borders around the conky window
-  border_width = 1,         -- width of border window in pixels
+  border_width = 0,         -- width of border window in pixels
   stippled_borders = 0,     -- border stippling (dashing) in pixels
-  border_inner_margin = 0,  -- margin between the border and text in pixels
+  border_inner_margin = 5,  -- margin between the border and text in pixels
   border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
 
   -- graph settings
@@ -36,29 +35,34 @@ conky.config = {
 
   -- font settings
   draw_shades = false,    -- black shadow on text (not good if text is black)
-  draw_outline = false,   -- black outline around text (not good if text is black)
-  default_color = 'black',
-  color1 = 'white',
+  
+  -- colors
+  own_window_colour = '303715',
+  default_color = 'a0a81f',
+  color1 = 'bf8766',
   color2 = '1a336b',      -- dark blue
   color3 = '800020',      -- burgundy
 };
 
 conky.text = [[
 ${color1}SYSTEM ${hr}
-${voffset 5}${color1}kernel${goto 68}${color}${kernel}
-${voffset 3}${color1}uptime${goto 68}${color}${uptime}
-${voffset 3}${color1}compositor${goto 68}${color}${execi 3600 echo $XDG_SESSION_TYPE}
+${voffset 5}${color1}kernel${goto 70}${color}${kernel}
+${voffset 3}${color1}uptime${goto 70}${color}${uptime}
+${voffset 3}${color1}compositor${goto 70}${color}${execi 3600 echo $XDG_SESSION_TYPE}
+# :::::::::::: temperatures & cooling
+${voffset 10}${color1}Temperature & Cooling ${hr}
+${voffset 5}${color1}device${alignr}temperature
+${voffset 3}${color}AMD Radeon HD7570${alignr}${hwmon radeon temp 1}°C
+${voffset 5}${color1}fan${alignr}revolutions
+${voffset 3}${color}cpu fan${alignr}${hwmon atk0110 fan 1} rpm
+${voffset 3}${color}case back exhaust fan${alignr}${hwmon atk0110 fan 4} rpm
+${voffset 3}${color}case top exhaust fan${alignr}${hwmon atk0110 fan 2} rpm
 # :::::::::::: package updates
 ${if_existing /tmp/dnf.packages}\
-${voffset 14}${color1}dnf package management ${hr}
+${voffset 10}${color1}DNF Package Management ${hr}
 ${voffset 5}${color}${lines /tmp/dnf.packages} package update(s) available
-${if_existing /tmp/dnf.packages}\
 ${voffset 5}${color1}package${alignr}version
 # the dnf package lookup script refreshes the package list every 10m
-${voffset 3}${color}${head /tmp/dnf.packages.preview 30 60}\
+${voffset 3}${color}${head /tmp/dnf.packages.preview 30 60}
 ${endif}\
-${else}\
-${voffset 3}${color1}dnf${goto 68}${color}no updates available${voffset 14}
-${endif}\
-${hr}
 ]];
