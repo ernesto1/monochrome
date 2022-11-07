@@ -41,11 +41,10 @@ conky.config = {
   -- colors
   default_color = 'a0a81f', -- regular text
   color1 = 'bf8766',        -- text labels
-  color2 = 'cbb590',        -- bar color default
-  color3 = '800020',        -- bar color warning
+  color2 = '788e60',        -- bar color default
+  color3 = 'ad2724',        -- bar color warning
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
-  --  n.b. the line break escape character '\' is not supported in templates :(
   
   -- memory process
   template9 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${alignr 2}${top_mem mem_res \1} ${top_mem pid \1}]]

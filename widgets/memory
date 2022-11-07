@@ -1,7 +1,7 @@
 conky.config = {
   update_interval = 2,  -- update interval in seconds
   xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
-  double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
+  double_buffer = true, -- use double buffering (reduces flicker, may not work for eveoryone)
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
@@ -41,18 +41,17 @@ conky.config = {
   -- colors
   default_color = 'a0a81f', -- regular text
   color1 = 'bf8766',        -- text labels
-  color2 = 'cbb590',        -- bar color default
-  color3 = '800020',        -- bar color warning
+  color2 = '788e60',        -- bar color default
+  color3 = 'ad2724',        -- bar color warning
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
-  --  n.b. the line break escape character '\' is not supported in templates :(
   
   -- cpu/mem/download/disk write graph color
-  template1 = [[a78f6b cbb590]]
+  template1 = [[4c5c41 788e60]]
 };
 
 conky.text = [[
-${image ~/conky/monochrome/images/widgets/green-memory.png -n -p 0,0}\
+${if_match ${memperc} > 90}${image ~/conky/monochrome/images/widgets/green-memory-high.png -n -p 0,0}${else}${image ~/conky/monochrome/images/widgets/green-memory.png -n -p 0,0}${endif}\
 ${voffset -2}${color}${offset 13}${memgraph 80, 44 ${template1}}
 ${voffset 7}${goto 85}${color1}mem  ${color}${memperc}%${goto 140}${mem} / ${memmax}
 ${voffset 4}${goto 85}${color1}swap ${color}${swapperc}%${goto 140}${color2}${if_match ${swapperc} > 90}${color3}${endif}${swapbar 3, 100}

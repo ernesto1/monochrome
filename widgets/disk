@@ -37,12 +37,12 @@ conky.config = {
   -- colors
   default_color = 'a0a81f', -- regular text
   color1 = 'bf8766',        -- text labels
-  color2 = 'cbb590',        -- bar color default
-  color3 = '800020',        -- bar color warning
+  color2 = '788e60',        -- bar color default
+  color3 = 'ad2724',        -- bar color warning
   
-  -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::  
+  -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   -- cpu/mem/download/disk write graph color
-  template1 = [[a78f6b cbb590]],
+  template1 = [[4c5c41 788e60]],
   -- upload/disk read graph
   template2 = [[a86135 fda15e]],
   
@@ -55,14 +55,17 @@ ${voffset 4}${offset 5}${color1}write${alignr 120}${color}${diskio_write \1}]],
   -- disk partition: ${template4 partition name}
   template4 = [[${voffset 4}${goto 97}${color}\2${alignr 4}${fs_type \1}
 ${voffset 4}${goto 97}${color}${fs_used \1} /${alignr 4}${color}${fs_size \1}
-${voffset 1}${goto 97}${color2}${if_match ${fs_used_perc \1} > 90}${color3}${endif}${fs_bar 3, 100 \1}]]
+${voffset 1}${goto 97}${color2}${if_match ${fs_used_perc \1} > 90}${color3}${endif}${fs_bar 3, 100 \1}]],
+  
+  -- hwmon entry: index/device type index threshold
+  template5 = [[${if_match ${hwmon \1 \2 \3} > \4}${color3}${else}${color}${endif}${hwmon \1 \2 \3}]]
 };
 
 conky.text = [[
 # disk io
 ${image ~/conky/monochrome/images/widgets/green-disk.png -n -p 0,0}\
 ${template3 sda 200000 280000}
-${voffset -13}${goto 97}${color1}temp ${color}${hwmon 1 temp 1}°C
+${voffset -13}${goto 97}${color1}temp ${color}${template5 1 temp 1 40}°C
 # partitions
 ${voffset -126}${goto 97}${color1}partitions
 ${template4 / fedora}

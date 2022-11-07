@@ -38,9 +38,9 @@ conky.config = {
   -- colors
   default_color = 'a0a81f', -- regular text
   color1 = 'bf8766',        -- text labels
-  color2 = 'cbb590',        -- bar color default
-  color3 = '800020',        -- bar color warning
-  color4  ='fda15e',
+  color2 = '788e60',        -- bar color default
+  color3 = 'ad2724',        -- bar color warning
+  color4  ='fda15e',        -- regular text for disconnected device
   
   -- :::::::::::::::: templates  
   -- usb memory device file system: ${template1 devicePath}

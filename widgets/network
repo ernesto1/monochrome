@@ -42,12 +42,12 @@ conky.config = {
   -- colors
   default_color = 'a0a81f', -- regular text
   color1 = 'bf8766',        -- text labels
-  color2 = 'cbb590',        -- bar color default
-  color3 = '800020',        -- bar color warning
+  color2 = '788e60',        -- bar color default
+  color3 = 'ad2724',        -- bar color warning
   
-  -- :::::::::::::::: templates  
+  -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   -- cpu/mem/download/disk write graph color
-  template1 = [[a78f6b cbb590]],
+  template1 = [[4c5c41 788e60]],
   -- upload/disk read graph
   template2 = [[a86135 fda15e]]
 };
