@@ -2,7 +2,11 @@
 # script to periodically check for new dnf package updates when the system is "deemed iddle"
 # ie. less than half of the cores are in use in the 5 min load average
 
-function onExitSignal() {
+function usage {
+  echo $(basename $0) [--width n] >&2
+}
+
+function onExitSignal {
   echo "$(basename $0) | received shutdown signal, cleaning up temporary files and exiting script" | tee -a ${logFile}
   rm -f /tmp/dnf.*    # delete temp files
   kill $(jobs -p)     # kill any child processes, ie. the sleep command
@@ -11,7 +15,12 @@ function onExitSignal() {
 
 trap onExitSignal SIGINT SIGTERM
 
-width=35      # default width in number of characters for the 'new package updates' table
+if [[ $# -gt 0 && $# -ne 2 ]]; then
+  usage
+  exit 1
+fi
+
+width=35
 
 while (( "$#" )); do
   case $1 in
@@ -20,7 +29,7 @@ while (( "$#" )); do
       shift 2
       ;;
     *)
-      echo $(basename $0) [--width n] >&2
+      usage
       exit 1
       ;;
   esac
@@ -29,10 +38,11 @@ done
 scriptName=$(basename $0 .bash)
 logFile=/tmp/${scriptName}.log
 echo "$(date +'%D %r') - starting dnf repo package lookup" | tee ${logFile}
+echo "$(date +'%D %r') - output list of new packages will be of ${width} caracters" | tee ${logFile}
 totalCores=$(grep -c processor /proc/cpuinfo)
 halfCores=$(( totalCores / 2 ))
 echo "$(date +'%D %r') - system is deemed iddle if the 5 min cpu load average is less than ${halfCores}" | tee ${logFile}
-
+exit
 while [ true ]; do
     # the output format of `uptime` changes if the machine runs for longer than a day
     #                                                               1m    5m    15m
@@ -73,6 +83,6 @@ while [ true ]; do
         echo "$(date +'%D %r') - load average too high, trying again later" | tee -a ${logFile}
     fi
     
-    sleep 10m &   # run the sleep process in the background so we can kill it if we get a terminate signal
+    sleep 60m &   # run the sleep process in the background so we can kill it if we get a terminate signal
     wait          # wait for the sleep process to complete
 done

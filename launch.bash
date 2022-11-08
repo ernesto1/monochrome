@@ -78,12 +78,11 @@ if [[ $# < 1 ]]; then
   exit 1
 fi
 
-width=35    # default width for the package update list text
-
 while (( "$#" )); do
   case $1 in
     --widgets)
       directory=${HOME}/conky/monochrome/widgets
+      width=34
       shift
       ;;
     --widgets-dock)
@@ -217,4 +216,9 @@ do
 done
 
 echo -e "\n::: starting dnf package lookup service"
-~/conky/monochrome/dnfPackageLookup.bash --width ${width} &
+
+if [[ "${width}" ]]; then
+  dnfParameters=(--width ${width})
+fi
+
+~/conky/monochrome/dnfPackageLookup.bash ${dnfParameters[@]} &
