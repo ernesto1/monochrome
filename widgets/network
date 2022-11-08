@@ -10,7 +10,7 @@ conky.config = {
 
   -- window settings
   minimum_width = 170,
-  minimum_height = 187,
+  minimum_height = 188,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -59,15 +59,15 @@ ${voffset 3}${offset 5}${color1}local ip${goto 71}${color}${addr enp0s25}
 # use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
 ${voffset 3}${offset 5}${color1}bittorrent${goto 71}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
 ${voffset 3}${offset 5}${color1}zoom${goto 71}${color}${if_running zoom}running${else}off${endif}
-${voffset 2}${offset 46}${upspeedgraph enp0s25 44,119 ${template2} 3000}
-${voffset -13}${offset 46}${downspeedgraph enp0s25 44,119 ${template1} 55000}
-${voffset 2}${offset 5}${color1}up${alignr 56}${color}${upspeed enp0s25} ${color1}total
+${voffset 4}${offset 46}${upspeedgraph enp0s25 41,119 ${template2} 3000}
+${voffset -11}${offset 46}${downspeedgraph enp0s25 41,119 ${template1} 55000}
+${voffset 4}${offset 5}${color1}up${alignr 56}${color}${upspeed enp0s25} ${color1}total
 ${voffset 4}${offset 5}${color1}down${alignr 56}${color}${downspeed enp0s25} ${color1}total
 ${voffset -30}${alignr 5}${color}${totalup enp0s25}
 ${voffset 4}${alignr 5}${color}${totaldown enp0s25}
 # we need to remove the trailing spacing added the moment we voffset'ed the upload graph 
 ${voffset -20}
 ${else}\
-${image ~/conky/monochrome/images/widgets/green-ethernet-offline.png -n -p 20,54}
+${image ~/conky/monochrome/images/widgets/orange-ethernet-offline.png -n -p 20,54}
 ${endif}\
 ]];

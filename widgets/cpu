@@ -63,7 +63,7 @@ conky.config = {
 };
 
 conky.text = [[
-${if_match ${cpu cpu0} > 90}${image ~/conky/monochrome/images/widgets/green-cpu-high.png -n -p 0,0}${else}${image ~/conky/monochrome/images/widgets/green-cpu.png -n -p 0,0}${endif}\
+${image ~/conky/monochrome/images/widgets/green-cpu.png -n -p 0,0}\
 ${voffset 11}${template2 1}
 ${template2 2}
 ${template2 3}
@@ -78,6 +78,6 @@ ${template3 1}
 ${template3 2}
 ${template3 3}
 ${template3 4}
-${voffset 16}${goto 109}${color1}cpu  ${color}${cpu cpu0}%${alignr 5}${template4 atk0110 temp 1 60}°C${color1} cpu temp
-${voffset 4}${goto 109}${color1}load ${color}${loadavg}${alignr 5}${template4 coretemp temp 2 70}°C${color1}core temp
+${voffset 16}${goto 109}${color1}cpu  ${color}${cpu cpu0}%${alignr 5}${template4 atk0110 temp 1 78}°C${color1} cpu temp
+${voffset 4}${goto 109}${color1}load ${color}${loadavg}${alignr 5}${template4 coretemp temp 2 88}°C${color1}core temp
 ]];

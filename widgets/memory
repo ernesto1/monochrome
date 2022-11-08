@@ -9,7 +9,7 @@ conky.config = {
   gap_y = 10,
 
   -- window settings
-  minimum_width = 293,
+  minimum_width = 296,
   minimum_height = 132,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -53,6 +53,6 @@ conky.config = {
 conky.text = [[
 ${if_match ${memperc} > 90}${image ~/conky/monochrome/images/widgets/green-memory-high.png -n -p 0,0}${else}${image ~/conky/monochrome/images/widgets/green-memory.png -n -p 0,0}${endif}\
 ${voffset -2}${color}${offset 13}${memgraph 80, 44 ${template1}}
-${voffset 7}${goto 85}${color1}mem  ${color}${memperc}%${goto 140}${mem} / ${memmax}
-${voffset 4}${goto 85}${color1}swap ${color}${swapperc}%${goto 140}${color2}${if_match ${swapperc} > 90}${color3}${endif}${swapbar 3, 100}
+${voffset 7}${goto 84}${color1}mem  ${color}${memperc}%${goto 140}${mem} / ${memmax}
+${voffset 4}${goto 84}${color1}swap ${color}${swapperc}%${goto 140}${color2}${if_match ${swapperc} > 90}${color3}${endif}${swapbar 3, 100}
 ]];

@@ -38,6 +38,9 @@ conky.config = {
   imlib_cache_flush_interval = 300,
   -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
 
+  -- font settings
+  draw_shades = false,    -- black shadow on text (not good if text is black)
+  
   -- colors
   default_color = 'a0a81f', -- regular text
   color1 = 'bf8766',        -- text labels

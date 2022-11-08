@@ -56,11 +56,11 @@ ${voffset 3}${color1}compositor${goto 70}${color}${execi 3600 echo $XDG_SESSION_
 # :::::::::::: temperatures & cooling
 ${voffset 10}${color1}Temperature & Cooling ${hr}
 ${voffset 5}${color1}device${alignr}temperature
-${voffset 3}${color}AMD Radeon HD7570${alignr}${template1 radeon temp 1 63}°C
+${voffset 3}${color}AMD Radeon HD7570${alignr}${template1 radeon temp 1 75}°C
 ${voffset 5}${color1}fan${alignr}revolutions
-${voffset 3}${color}cpu fan${alignr}${hwmon atk0110 fan 1} rpm
-${voffset 3}${color}case back exhaust fan${alignr}${hwmon atk0110 fan 4} rpm
-${voffset 3}${color}case top exhaust fan${alignr}${hwmon atk0110 fan 2} rpm
+${voffset 3}${color}cpu fan${alignr}${template1 atk0110 fan 1 2500} rpm
+${voffset 3}${color}case back exhaust fan${alignr}${template1 atk0110 fan 4 2500} rpm
+${voffset 3}${color}case top exhaust fan${alignr}${template1 atk0110 fan 2 2500} rpm
 # :::::::::::: package updates
 ${if_existing /tmp/dnf.packages}\
 ${voffset 10}${color1}DNF Package Management ${hr}
