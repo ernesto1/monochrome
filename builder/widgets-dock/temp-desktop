@@ -1,10 +1,10 @@
 # :::::::::::::::::::: ati video card temperature
 ${image ~/conky/monochrome/images/widgets-dock/purple-temp-videocard.png -n -p 0,0}\
-${template7 radeon 1}
+${template8 radeon temp 1 75}
 # :::::::::::::::::::: hard disk temperatures
 ${image ~/conky/monochrome/images/widgets-dock/purple-temp-disk.png -n -p 0,64}\
-${template7 1 1}
+${template8 1 temp 1 40}
 ${image ~/conky/monochrome/images/widgets-dock/purple-temp-disk.png -n -p 0,128}\
-${template7 2 1}
+${template8 2 temp 1 40}
 ${image ~/conky/monochrome/images/widgets-dock/purple-temp-disk.png -n -p 0,192}\
-${template7 3 1}
+${template8 3 temp 1 40}

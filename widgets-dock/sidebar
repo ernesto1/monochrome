@@ -90,8 +90,11 @@ ${voffset 52}${offset 6}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${e
 ${voffset -46}${goto 66}${color}${font}\1
 ${voffset 4}${goto 66}${color}${font1}${fs_used_perc \2}${font0}%${font}${voffset 1}]],
 
-  -- hard disk temperature: ${template6 filesystemName fileSystemPath}
-  template7 = [[${voffset 7}${offset 12}${font2}${color4}${hwmon \1 temp \2}${voffset -28}${font0}°${offset 4}${voffset -4}${font2}C${font}${voffset 9}]]
+  -- color coded hwmon entry: index/device type index threshold
+  template7 = [[${if_match ${hwmon \1 \2 \3} > \4}${color3}${else}${color4}${endif}${hwmon \1 \2 \3}]], 
+    
+  -- temperature: ${template8 index/device type index threshold}
+  template8 = [[${voffset 7}${offset 12}${font2}${template7 \1 \2 \3 \4}${voffset -28}${font0}°${offset 4}${voffset -4}${font2}C${font}${color}${voffset 9}]]
 };
 
 conky.text = [[
@@ -168,10 +171,10 @@ ${endif}\
 # :::::::::::::::::::: cpu temperature
 # laptop only reports cpu core temperatures, displaying the hottest of the two cores
 ${image ~/conky/monochrome/images/widgets-dock/purple-temp-cpu-laptop.png -n -p 0,585}\
-${voffset 15}${offset 12}${font2}${color4}${if_match ${hwmon coretemp temp 2} > ${hwmon coretemp temp 3}}${hwmon coretemp temp 2}${else}${hwmon coretemp temp 3}${endif}${voffset -28}${font0}°${offset 4}${voffset -4}${font2}C${font}${voffset 9}
+${voffset 8}${if_match ${hwmon coretemp temp 2} > ${hwmon coretemp temp 3}}${template8 coretemp temp 2 75}${else}${template8 coretemp temp 3 75}${endif}
 # :::::::::::::::::::: time 
 # bar placeholder, the actual time is a separate conky used to create the sidebar effect on the desktop
 ${image ~/conky/monochrome/images/widgets-dock/purple-time.png -n -p 0,649}\
 # :::::::::::::::::::: bar's bottom edge
 ${image ~/conky/monochrome/images/widgets-dock/purple-edge-bottom.png -n -p 0,721}\
-${voffset -300}]];
+${voffset -260}]];

@@ -18,7 +18,6 @@ echo ']];' >> /tmp/monochrome/sidebar;\
 mv /tmp/monochrome/sidebar ~/conky/monochrome/compact/sidebar
 
 
-
 # design notes
 - images should have a top/bottom border of 7px
 - left border for text is 5px
