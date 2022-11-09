@@ -42,7 +42,7 @@ echo "$(date +'%D %r') - output list of new packages will be of ${width} caracte
 totalCores=$(grep -c processor /proc/cpuinfo)
 halfCores=$(( totalCores / 2 ))
 echo "$(date +'%D %r') - system is deemed iddle if the 5 min cpu load average is less than ${halfCores}" | tee ${logFile}
-exit
+
 while [ true ]; do
     # the output format of `uptime` changes if the machine runs for longer than a day
     #                                                               1m    5m    15m
