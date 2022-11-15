@@ -107,14 +107,14 @@ ${endif}\
 ${voffset 44}${offset 12}${cpugraph cpu0 33,33 ${template1}}
 ${voffset -31}${goto 66}${color}${font1}${cpu cpu0}${font0}%
 # :::::::::::::::::::: memory
-${if_match ${memperc} < 90}\
+${if_match ${memperc} < 85}\
 ${image ~/conky/monochrome/images/widgets-dock/purple-mem.png -n -p 0,98}\
 ${else}\
 ${image ~/conky/monochrome/images/widgets-dock/purple-mem-high.png -n -p 0,98}\
 ${endif}\
 ${voffset 17}${offset 18}${memgraph 43,21 ${template1}}
 ${voffset -33}${goto 66}${color}${font1}${memperc}${font0}%
-${voffset 4}${offset 6}${color2}${if_match ${swapperc} >= 69}${color3}${endif}${swapbar 3, 45}${voffset -2}${goto 66}${font}${color}${swapperc}%${offset 9}${color1}swap${color}
+${voffset 4}${offset 6}${color2}${if_match ${swapperc} >= 70}${color3}${endif}${swapbar 3, 45}${voffset -2}${goto 66}${font}${color}${swapperc}%${offset 9}${color1}swap${color}
 # :::::::::::::::::::: network
 # if both wifi and ethernet are connected, we give priority to the wifi
 # :::::: wifi
