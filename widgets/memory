@@ -51,8 +51,12 @@ conky.config = {
 };
 
 conky.text = [[
-${if_match ${memperc} > 90}${image ~/conky/monochrome/images/widgets/green-memory-high.png -n -p 0,0}${else}${image ~/conky/monochrome/images/widgets/green-memory.png -n -p 0,0}${endif}\
+${if_match ${memperc} < 85}\
+${image ~/conky/monochrome/images/widgets/green-memory.png -n -p 0,0}\
+${else}\
+${image ~/conky/monochrome/images/widgets/green-memory-high.png -n -p 0,0}\
+${endif}\
 ${voffset -2}${color}${offset 13}${memgraph 80, 44 ${template1}}
 ${voffset 7}${goto 84}${color1}mem  ${color}${memperc}%${goto 140}${mem} / ${memmax}
-${voffset 4}${goto 84}${color1}swap ${color}${swapperc}%${goto 140}${color2}${if_match ${swapperc} > 90}${color3}${endif}${swapbar 3, 100}
+${voffset 4}${goto 84}${color1}swap ${color}${swapperc}%${goto 140}${color2}${if_match ${swapperc} >= 70}${color3}${endif}${swapbar 3, 100}
 ]];
