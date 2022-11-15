@@ -7,11 +7,11 @@ conky.config = {
   -- window alignment
   alignment = 'middle_left',       -- top|middle|bottom_left|middle|right
   gap_x = 0,                    -- same as passing -x at command line
-  gap_y = 389,
+  gap_y = 459,
 
   -- window settings
-  minimum_width = 186,
-  minimum_height = 200,
+  minimum_width = 241,
+  minimum_height = 60,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below, sticky,skip_taskbar,skip_pager',
@@ -52,8 +52,9 @@ conky.config = {
   template1 = [[5c111f c01e20]],
 };
 
--- memory graph and usage are displayed on a separate conky due to a bug with these memory variables computing bad data if other variables like ${top ...} and one of the network upload/download exists in the same conky
+-- memory graph and usage are displayed on a separate conky due to a bug with these memory variables computing bad data if other variables like ${top ...} and one of the network upload/download ones exists in the same conky
 
 conky.text = [[
+${image ~/conky/monochrome/images/compact/red-mem.png -n -p 0,0}\
 ${offset 43}${memgraph 35,139 ${template1}}
-${voffset -2}${offset 5}${color1}used  ${color}${mem} / ${memmax}${alignr 4}${color}${memperc}%]];
+${voffset -2}${offset 5}${color1}used  ${color}${mem} / ${memmax}${alignr 59}${color}${memperc}%]];
