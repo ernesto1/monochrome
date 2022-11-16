@@ -176,5 +176,5 @@ ${voffset 8}${if_match ${hwmon coretemp temp 2} > ${hwmon coretemp temp 3}}${tem
 # bar placeholder, the actual time is a separate conky used to create the sidebar effect on the desktop
 ${image ~/conky/monochrome/images/widgets-dock/purple-time.png -n -p 0,649}\
 # :::::::::::::::::::: bar's bottom edge
-${image ~/conky/monochrome/images/widgets-dock/purple-edge-bottom.png -n -p 0,721}\
+${image ~/conky/monochrome/images/widgets-dock/purple-edge-bottom.png -n -p 0,700}\
 ${voffset -260}]];

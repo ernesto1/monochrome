@@ -1,2 +1,2 @@
 # :::::::::::::::::::: bar's bottom edge
-${image ~/conky/monochrome/images/widgets-dock/purple-edge-bottom.png -n -p 0,-7}\
+${image ~/conky/monochrome/images/widgets-dock/purple-edge-bottom.png -n -p 0,-28}\

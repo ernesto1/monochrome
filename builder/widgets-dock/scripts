@@ -1,5 +1,5 @@
 # notes
-# by default conky will reload its configuration if detects a change on the file
+# by default conky will reload its configuration if it detects a change on the file
 # 
 # the new conky configuration is created in a temporary folder and then the target file is overriden
 # it turns out that if too many sequential file changes happen to the conky file, conky stops reloading the file
@@ -9,7 +9,7 @@
 mkdir -p /tmp/monochrome;\
 cat config > /tmp/monochrome/sidebar;\
 buildSidebar.bash cpu-mem network-desktop disk disk-desktop disk-maxtor temp-cpu-desktop temp-desktop time-block bottom-edge;\
-echo '${voffset -260}]];' >> /tmp/monochrome/sidebar;\
+echo '${voffset -320}]];' >> /tmp/monochrome/sidebar;\
 mv /tmp/monochrome/sidebar ~/conky/monochrome/widgets-dock/sidebar
 
 
