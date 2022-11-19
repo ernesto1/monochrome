@@ -42,9 +42,9 @@ conky.config = {
   draw_shades = false,    -- black shadow on text (not good if text is black)
   
   -- colors
-  default_color = 'a0a81f', -- regular text
+  default_color = 'a7aa71', -- regular text
   color1 = 'bf8766',        -- text labels
-  color2 = '788e60',        -- bar color default
+  color2 = '7c7a13',        -- bar color default
   color3 = 'ad2724',        -- bar color warning
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::

@@ -42,7 +42,7 @@ conky.config = {
   draw_shades = false,    -- black shadow on text (not good if text is black)
   
   -- colors
-  default_color = 'a0a81f', -- regular text
+  default_color = 'a7aa71', -- regular text
   color1 = 'bf8766',        -- text labels
   color2 = '7c7a13',        -- cpu bar color (exception to the theme)
   color3 = 'ad2724',        -- bar color warning
@@ -50,7 +50,7 @@ conky.config = {
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   
   -- cpu/mem/download/disk write graph color
-  template1 = [[4c5c41 788e60]],
+  template1 = [[756b24 b19953]],
   
   -- cpu bar: ${template2 cpuCore}
   template2 = [[${voffset -3}${offset 16}${color2}${if_match ${cpu cpu\1} >= 90}${color3}${endif}${cpubar cpu\1 4, 66}]],
