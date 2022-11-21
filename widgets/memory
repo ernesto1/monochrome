@@ -5,7 +5,7 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 813,                -- same as passing -x at command line
+  gap_x = 803,                -- same as passing -x at command line
   gap_y = 10,
 
   -- window settings
@@ -41,13 +41,13 @@ conky.config = {
   -- colors
   default_color = 'a7aa71', -- regular text
   color1 = 'bf8766',        -- text labels
-  color2 = '7c7a13',        -- bar color default
+  color2 = '9fc14a',        -- bar color default
   color3 = 'ad2724',        -- bar color warning
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   
-  -- cpu/mem/download/diskad944fwrite graph color
-  template1 = [[756b24 b19953]]
+  -- cpu/mem/download/disk write graph color 6c8e39 9fc14a
+  template1 = [[4c6e3b 9fc14a]]
 };
 
 conky.text = [[
@@ -56,7 +56,7 @@ ${image ~/conky/monochrome/images/widgets/green-memory.png -n -p 0,0}\
 ${else}\
 ${image ~/conky/monochrome/images/widgets/green-memory-high.png -n -p 0,0}\
 ${endif}\
-${voffset -2}${color}${offset 13}${memgraph 80, 44 ${template1}}
-${voffset 7}${goto 84}${color1}mem  ${color}${memperc}%${goto 140}${mem} / ${memmax}
+${voffset 0}${color}${offset 15}${memgraph 78, 42 ${template1}}
+${voffset 6}${goto 84}${color1}mem  ${color}${memperc}%${goto 140}${mem} / ${memmax}
 ${voffset 4}${goto 84}${color1}swap ${color}${swapperc}%${goto 140}${color2}${if_match ${swapperc} >= 70}${color3}${endif}${swapbar 3, 100}
 ]];

@@ -5,7 +5,7 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 891,                -- same as passing -x at command line
+  gap_x = 881,                -- same as passing -x at command line
   gap_y = 48,
 
   -- window settings
@@ -44,13 +44,13 @@ conky.config = {
   -- colors
   default_color = 'a7aa71', -- regular text
   color1 = 'bf8766',        -- text labels
-  color2 = '7c7a13',        -- bar color default
+  color2 = '9fc14a',        -- bar color default
   color3 = 'ad2724',        -- bar color warning
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   
   -- memory process
-  template9 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${alignr 2}${top_mem mem_res \1} ${top_mem pid \1}]]
+  template9 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${alignr 3}${top_mem mem_res \1} ${top_mem pid \1}]]
 };
 
 conky.text = [[

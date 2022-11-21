@@ -5,12 +5,12 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 471,               -- same as passing -x at command line
+  gap_x = 460,               -- same as passing -x at command line
   gap_y = 10,
 
   -- window settings
-  minimum_width = 322,
-  minimum_height = 137,
+  minimum_width = 323,
+  minimum_height = 138,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -50,13 +50,13 @@ conky.config = {
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   
   -- cpu/mem/download/disk write graph color
-  template1 = [[756b24 b19953]],
+  template1 = [[4c6e3b 9fc14a]],
   
   -- cpu bar: ${template2 cpuCore}
   template2 = [[${voffset -3}${offset 16}${color2}${if_match ${cpu cpu\1} >= 90}${color3}${endif}${cpubar cpu\1 4, 66}]],
 
   -- top cpu process: ${template3 process#}
-  template3 = [[${voffset 3}${goto 109}${color}${top name \1}${top cpu \1}% ${top pid \1}]],
+  template3 = [[${voffset 3}${goto 110}${color}${top name \1}${top cpu \1}% ${top pid \1}]],
   
   -- hwmon entry: index/device type index threshold
   template4 = [[${if_match ${hwmon \1 \2 \3} > \4}${color3}${else}${color}${endif}${hwmon \1 \2 \3}]]
@@ -64,7 +64,7 @@ conky.config = {
 
 conky.text = [[
 ${image ~/conky/monochrome/images/widgets/green-cpu.png -n -p 0,0}\
-${voffset 11}${template2 1}
+${voffset 12}${template2 1}
 ${template2 2}
 ${template2 3}
 ${template2 4}
@@ -72,8 +72,8 @@ ${template2 5}
 ${template2 6}
 ${template2 7}
 ${template2 8}
-${voffset 8}${offset 8}${cpugraph cpu0 31,82 ${template1}}
-${voffset -134}${goto 109}${color1}process${alignr 5}cpu   pid${voffset 1}
+${voffset 8}${offset 9}${cpugraph cpu0 31,82 ${template1}}
+${voffset -135}${goto 109}${color1}process${alignr 5}cpu   pid${voffset 1}
 ${template3 1}
 ${template3 2}
 ${template3 3}

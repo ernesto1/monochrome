@@ -5,7 +5,7 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 2204,               -- same as passing -x at command line
+  gap_x = 2197,               -- same as passing -x at command line
   gap_y = 33,
 
   -- window settings
@@ -38,7 +38,7 @@ conky.config = {
   -- colors
   default_color = 'a7aa71', -- regular text
   color1 = 'bf8766',        -- text labels
-  color2 = '7c7a13',        -- bar color default
+  color2 = '9fc14a',        -- bar color default
   color3 = 'ad2724',        -- bar color warning
   color4  ='fda15e',        -- regular text for disconnected device
   
