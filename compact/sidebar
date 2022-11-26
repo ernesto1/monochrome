@@ -11,7 +11,7 @@ conky.config = {
 
   -- window settings
   minimum_width = 241,
-  minimum_height = 1287,
+  minimum_height = 1306,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -133,7 +133,7 @@ ${voffset 6}${template6 betty /media/betty}
 # -------------- usb external disk
 ${if_mounted /run/media/ernesto/MAXTOR}\
 ${image ~/conky/monochrome/images/compact/red-disk.png -n -p 0,825}\
-${template5 sdg1 6000 52000}
+${template5 sdd1 6000 52000}
 ${voffset 6}${template6 maxtor /run/media/ernesto/MAXTOR}
 ${else}\
 ${image ~/conky/monochrome/images/compact/red-disk-disconnected.png -n -p 0,825}\
@@ -147,7 +147,7 @@ ${voffset 14}${goto 47}${color1}o/s ${color}${execi 5000 grep PRETTY_NAME /etc/o
 ${voffset 3}${goto 47}${color1}uptime ${color}${uptime}
 ${voffset 10}${offset 5}${color1}kernel ${color}${kernel}
 ${voffset 8}${offset 5}${color1}device${alignr 59}temperature
-${voffset 4}${offset 5}${color}cpu${alignr 53}${template9 atk0110 temp 1 78}°C
+${voffset 5}${offset 5}${color}cpu${alignr 53}${template9 atk0110 temp 1 78}°C
 ${voffset 4}${offset 5}${color}cpu core 1${alignr 53}${template9 coretemp temp 2 75}°C
 ${voffset 3}${offset 5}${color}cpu core 2${alignr 53}${template9 coretemp temp 3 75}°C
 ${voffset 3}${offset 5}${color}cpu core 3${alignr 53}${template9 coretemp temp 4 75}°C
@@ -157,8 +157,9 @@ ${voffset 3}${offset 5}${color}samsung SSD HD${alignr 53}${template9 1 temp 1 42
 ${voffset 3}${offset 5}${color}seagate HD${alignr 53}${template9 2 temp 1 42}°C
 ${voffset 3}${offset 5}${color}seagate HD${alignr 53}${template9 3 temp 1 42}°C
 ${voffset 8}${offset 5}${color1}fan${alignr 59}revolutions
+${voffset 5}${offset 5}${color}chasis front intake${alignr 59}${template9 atk0110 fan 3 2400} rpm
 ${voffset 3}${offset 5}${color}cpu fan${alignr 59}${template9 atk0110 fan 1 2400} rpm
-${voffset 3}${offset 5}${color}chasis back exhaust${alignr 59}${template9 atk0110 fan 4 2400} rpm
 ${voffset 3}${offset 5}${color}chasis top exhaust${alignr 59}${template9 atk0110 fan 2 2400} rpm
-${image ~/conky/monochrome/images/compact/red-edge-bottom.png -n -p 0,1228}
+${voffset 3}${offset 5}${color}chasis back exhaust${alignr 59}${template9 atk0110 fan 4 2400} rpm
+${image ~/conky/monochrome/images/compact/red-edge-bottom.png -n -p 0,1247}
 ]];
