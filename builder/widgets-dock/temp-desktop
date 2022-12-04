@@ -8,3 +8,11 @@ ${image ~/conky/monochrome/images/widgets-dock/purple-temp-disk.png -n -p 0,128}
 ${template8 2 temp 1 40}
 ${image ~/conky/monochrome/images/widgets-dock/purple-temp-disk.png -n -p 0,192}\
 ${template8 3 temp 1 40}
+# :::::::::::::::::::: fans
+${if_updatenr 1}\
+${image ~/conky/monochrome/images/widgets-dock/purple-temp-fan1.png -n -p 0,256}\
+${endif}\
+${if_updatenr 2}\
+${image ~/conky/monochrome/images/widgets-dock/purple-temp-fan2.png -n -p 0,256}\
+${endif}\
+${voffset 7}${offset 7}${font2}${template7 atk0110 fan 1 2400}

@@ -9,7 +9,7 @@
 mkdir -p /tmp/monochrome;\
 cat config > /tmp/monochrome/sidebar;\
 buildSidebar.bash cpu-mem network-desktop disk disk-desktop disk-maxtor temp-cpu-desktop temp-desktop time-block bottom-edge;\
-echo '${voffset -320}]];' >> /tmp/monochrome/sidebar;\
+echo ']];' >> /tmp/monochrome/sidebar;\
 mv /tmp/monochrome/sidebar ~/conky/monochrome/widgets-dock/sidebar
 
 
