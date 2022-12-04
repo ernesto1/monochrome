@@ -1,13 +1,23 @@
+# git ingnore only works with untracked files!
+
+# local build files
 *.ods*
 legacy/
 raws/
 **/blame
+system-differences.xcf
+
 # only .jpg images will be used for screenshots
 images/screenshots/*.xcf
 images/screenshots/*.png
 images/glass/new shepard hud.png
 images/glass/glass-*
+
 # unofficial conkys
-widgets-large/layout.desktop.cfg
-widgets-large/sidebar-time
-system-differences.xcf
+*/layout.desktop.cfg
+*/widgets-dock-time
+*/widgets-dock
+# the regex above will exclude a couple of legit folders
+!images/widgets-dock
+!builder/widgets-dock
+
