@@ -2,25 +2,25 @@
 # if both wifi and ethernet are connected, we give priority to the wifi
 # :::::: wifi
 ${if_up wlp4s0}\
-${image ~/conky/monochrome/images/widgets-dock/purple-wifi.png -n -p 0,0}\
+${image ~/conky/monochrome/images/widgets-dock/purple-wifi.png -p 0,0}\
 ${voffset 49}${offset 6}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 3,45 wlp4s0}
 #${wireless_essid wlp4s0}
 ${voffset -46}${goto 66}${color}${font}
 ${voffset 4}${goto 66}${color}${font1}${wireless_link_qual_perc wlp4s0}${font0}%${font}${voffset 1}
 # :: upload/download speeds
-${image ~/conky/monochrome/images/widgets-dock/purple-internet.png -n -p 0,64}\
+${image ~/conky/monochrome/images/widgets-dock/purple-internet.png -p 0,64}\
 ${template4 wlp4s0 8200 55100}
 ${else}\
 # :::::: ethernet
 ${if_up enp6s0}\
-${image ~/conky/monochrome/images/widgets-dock/purple-ethernet.png -n -p 0,0}\
+${image ~/conky/monochrome/images/widgets-dock/purple-ethernet.png -p 0,0}\
 ${template3 enp6s0}
 # :: upload/download speeds
-${image ~/conky/monochrome/images/widgets-dock/purple-internet.png -n -p 0,64}\
+${image ~/conky/monochrome/images/widgets-dock/purple-internet.png -p 0,64}\
 ${template4 enp6s0 3000 60000}
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/pink-wifi-disconnected.png -n -p 0,0}
-${image ~/conky/monochrome/images/widgets-dock/pink-internet-offline.png -n -p 0,64}\
+${image ~/conky/monochrome/images/widgets-dock/pink-wifi-disconnected.png -p 0,0}
+${image ~/conky/monochrome/images/widgets-dock/pink-internet-offline.png -p 0,64}\
 ${voffset 117}
 ${endif}\
 ${endif}\

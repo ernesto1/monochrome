@@ -21,9 +21,9 @@ do
   for imageCommand in "${images[@]}"
   do
     echo $imageCommand
-    # ${image ~/conky/monochrome/images/widgets-dock/purple-power-charging.png -n -p 0,489}\
+    # ${image ~/conky/monochrome/images/widgets-dock/purple-power-charging.png -p 0,489}\
     image=${imageCommand#*image }   # remove '${image '
-    image=${image% -n *}            # remove ' -n -p 0,489}\'
+    image=${image% -p *}            # remove ' -p 0,489}\'
     imagePath=$(echo "echo $image" | bash)
     echo image: $imagePath    
     coordinates=$(echo ${imageCommand} | grep -Eo '[[:digit:]]+,-*[[:digit:]]+')
@@ -34,7 +34,7 @@ do
     echo y: $yCoordinate
     ((newYCoordinate=yCoordinate+totalHeight))
     echo new y: $newYCoordinate    
-    sed -i "s#${image} -n -p ${xCoordinate},${yCoordinate}#${image} -n -p ${xCoordinate},${newYCoordinate}#" /tmp/monochrome/sidebar
+    sed -i "s#${image} -p ${xCoordinate},${yCoordinate}#${image} -p ${xCoordinate},${newYCoordinate}#" /tmp/monochrome/sidebar
     echo
   done
   

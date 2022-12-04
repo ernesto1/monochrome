@@ -1,8 +1,8 @@
 # :::::::::::::::::::: disk sda
 # disk io
-${image ~/conky/monochrome/images/widgets-dock/purple-diskio.png -n -p 0,0}\
+${image ~/conky/monochrome/images/widgets-dock/purple-diskio.png -p 0,0}\
 ${template5 sda 140000 140000}
-${image ~/conky/monochrome/images/widgets-dock/purple-disk-root.png -n -p 0,66}\
+${image ~/conky/monochrome/images/widgets-dock/purple-disk-root.png -p 0,66}\
 ${template6 \  /}
-${image ~/conky/monochrome/images/widgets-dock/purple-disk-home.png -n -p 0,130}\
+${image ~/conky/monochrome/images/widgets-dock/purple-disk-home.png -p 0,130}\
 ${template6 \  /home}

@@ -100,17 +100,17 @@ ${voffset 4}${goto 66}${color}${font1}${fs_used_perc \2}${font0}%${font}${voffse
 conky.text = [[
 # :::::::::::::::::::: cpu
 ${if_match ${cpu cpu0} < 90}\
-${image ~/conky/monochrome/images/widgets-dock/purple-cpu.png -n -p 0,0}\
+${image ~/conky/monochrome/images/widgets-dock/purple-cpu.png -p 0,0}\
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/purple-cpu-high.png -n -p 0,0}\
+${image ~/conky/monochrome/images/widgets-dock/purple-cpu-high.png -p 0,0}\
 ${endif}\
 ${voffset 44}${offset 12}${cpugraph cpu0 33,33 ${template1}}
 ${voffset -31}${goto 66}${color}${font1}${cpu cpu0}${font0}%
 # :::::::::::::::::::: memory
 ${if_match ${memperc} < 85}\
-${image ~/conky/monochrome/images/widgets-dock/purple-mem.png -n -p 0,98}\
+${image ~/conky/monochrome/images/widgets-dock/purple-mem.png -p 0,98}\
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/purple-mem-high.png -n -p 0,98}\
+${image ~/conky/monochrome/images/widgets-dock/purple-mem-high.png -p 0,98}\
 ${endif}\
 ${voffset 17}${offset 18}${memgraph 43,21 ${template1}}
 ${voffset -33}${goto 66}${color}${font1}${memperc}${font0}%
@@ -119,50 +119,50 @@ ${voffset 4}${offset 6}${color2}${if_match ${swapperc} >= 70}${color3}${endif}${
 # if both wifi and ethernet are connected, we give priority to the wifi
 # :::::: wifi
 ${if_up wlp4s0}\
-${image ~/conky/monochrome/images/widgets-dock/purple-wifi.png -n -p 0,181}\
+${image ~/conky/monochrome/images/widgets-dock/purple-wifi.png -p 0,181}\
 ${voffset 49}${offset 6}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 3,45 wlp4s0}
 #${wireless_essid wlp4s0}
 ${voffset -46}${goto 66}${color}${font}
 ${voffset 4}${goto 66}${color}${font1}${wireless_link_qual_perc wlp4s0}${font0}%${font}${voffset 1}
 # :: upload/download speeds
-${image ~/conky/monochrome/images/widgets-dock/purple-internet.png -n -p 0,245}\
+${image ~/conky/monochrome/images/widgets-dock/purple-internet.png -p 0,245}\
 ${template4 wlp4s0 8200 55100}
 ${else}\
 # :::::: ethernet
 ${if_up enp6s0}\
-${image ~/conky/monochrome/images/widgets-dock/purple-ethernet.png -n -p 0,181}\
+${image ~/conky/monochrome/images/widgets-dock/purple-ethernet.png -p 0,181}\
 ${template3 enp6s0}
 # :: upload/download speeds
-${image ~/conky/monochrome/images/widgets-dock/purple-internet.png -n -p 0,245}\
+${image ~/conky/monochrome/images/widgets-dock/purple-internet.png -p 0,245}\
 ${template4 enp6s0 3000 60000}
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/pink-wifi-disconnected.png -n -p 0,181}
-${image ~/conky/monochrome/images/widgets-dock/pink-internet-offline.png -n -p 0,245}\
+${image ~/conky/monochrome/images/widgets-dock/pink-wifi-disconnected.png -p 0,181}
+${image ~/conky/monochrome/images/widgets-dock/pink-internet-offline.png -p 0,245}\
 ${voffset 117}
 ${endif}\
 ${endif}\
 # :::::::::::::::::::: disk sda
 # disk io
-${image ~/conky/monochrome/images/widgets-dock/purple-diskio.png -n -p 0,327}\
+${image ~/conky/monochrome/images/widgets-dock/purple-diskio.png -p 0,327}\
 ${template5 sda 140000 140000}
-${image ~/conky/monochrome/images/widgets-dock/purple-disk-root.png -n -p 0,393}\
+${image ~/conky/monochrome/images/widgets-dock/purple-disk-root.png -p 0,393}\
 ${template6 \  /}
-${image ~/conky/monochrome/images/widgets-dock/purple-disk-home.png -n -p 0,457}\
+${image ~/conky/monochrome/images/widgets-dock/purple-disk-home.png -p 0,457}\
 ${template6 \  /home}
 # :::::::::::::::::::: power
 ${voffset 52}\
 ${if_match "${acpiacadapter}"=="on-line"}\
 ${if_match ${battery_percent BAT0} == 100}\
-${image ~/conky/monochrome/images/widgets-dock/purple-power-plugged-in.png -n -p 0,521}${voffset -1}
+${image ~/conky/monochrome/images/widgets-dock/purple-power-plugged-in.png -p 0,521}${voffset -1}
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/purple-power-charging.png -n -p 0,521}\
+${image ~/conky/monochrome/images/widgets-dock/purple-power-charging.png -p 0,521}\
 ${offset 6}${color2}${if_match ${battery_percent BAT0} < 80}${color3}${endif}${battery_bar 3, 45 BAT0}
 #${battery_time BAT0}
 ${voffset -46}${goto 66}${color}${font}
 ${voffset 4}${goto 66}${color}${font1}${battery_percent BAT0}${font0}%${font}${voffset 1}
 ${endif}\
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/purple-power-battery.png -n -p 0,521}\
+${image ~/conky/monochrome/images/widgets-dock/purple-power-battery.png -p 0,521}\
 ${offset 6}${color2}${if_match ${battery_percent BAT0} < 20}${color3}${endif}${battery_bar 3, 45 BAT0}
 #${battery_time BAT0}
 ${voffset -46}${goto 66}${color}${font}
@@ -170,11 +170,11 @@ ${voffset 4}${goto 66}${color}${font1}${battery_percent BAT0}${font0}%${font}${v
 ${endif}\
 # :::::::::::::::::::: cpu temperature
 # laptop only reports cpu core temperatures, displaying the hottest of the two cores
-${image ~/conky/monochrome/images/widgets-dock/purple-temp-cpu-laptop.png -n -p 0,585}\
+${image ~/conky/monochrome/images/widgets-dock/purple-temp-cpu-laptop.png -p 0,585}\
 ${voffset 8}${if_match ${hwmon coretemp temp 2} > ${hwmon coretemp temp 3}}${template8 coretemp temp 2 75}${else}${template8 coretemp temp 3 75}${endif}
 # :::::::::::::::::::: time 
 # bar placeholder, the actual time is a separate conky used to create the sidebar effect on the desktop
-${image ~/conky/monochrome/images/widgets-dock/purple-time.png -n -p 0,649}\
+${image ~/conky/monochrome/images/widgets-dock/purple-time.png -p 0,649}\
 # :::::::::::::::::::: bar's bottom edge
-${image ~/conky/monochrome/images/widgets-dock/purple-edge-bottom.png -n -p 0,700}\
+${image ~/conky/monochrome/images/widgets-dock/purple-edge-bottom.png -p 0,700}\
 ${voffset -260}]];

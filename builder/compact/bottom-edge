@@ -1,1 +1,1 @@
-${image ~/conky/monochrome/images/compact/red-edge-bottom.png -n -p 0,-3}
+${image ~/conky/monochrome/images/compact/red-edge-bottom.png -p 0,-3}

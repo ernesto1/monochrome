@@ -1,5 +1,5 @@
 ################### cpu
-${image ~/conky/monochrome/images/glass/blue-cpu-mem.png -n -p 0,0}\
+${image ~/conky/monochrome/images/glass/blue-cpu-mem.png -p 0,0}\
 ${voffset -6}${color}${cpugraph cpu0 48,112 ${template1}}
 ${voffset -58}${offset 5}${color1}${font0}cpu
 ${voffset 2}${alignr}${color}${font1}${cpu cpu0}${font2}% 

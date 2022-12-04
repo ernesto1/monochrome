@@ -54,8 +54,8 @@ ${voffset 3}${offset 10}${color}${top name \1}${offset 3}${top cpu \1}% ${top pi
 };
 
 conky.text = [[
-${image ~/conky/monochrome/images/glass/blue-processes.png -n -p 0,0}\
-${image ~/conky/monochrome/images/glass/blue-processes.png -n -p 255,0}\
+${image ~/conky/monochrome/images/glass/blue-processes.png -p 0,0}\
+${image ~/conky/monochrome/images/glass/blue-processes.png -p 255,0}\
 ${voffset 8}${offset 10}${color1}process${goto 167}cpu   pid${offset 43}${color1}process${alignr}mem   pid 
 ${template0 1}
 ${template0 2}

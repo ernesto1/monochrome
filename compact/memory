@@ -56,9 +56,9 @@ conky.config = {
 
 conky.text = [[
 ${if_match ${memperc} < 85}\
-${image ~/conky/monochrome/images/compact/red-mem.png -n -p 0,0}\
+${image ~/conky/monochrome/images/compact/red-mem.png -p 0,0}\
 ${else}\
-${image ~/conky/monochrome/images/compact/red-mem-high.png -n -p 0,0}\
+${image ~/conky/monochrome/images/compact/red-mem-high.png -p 0,0}\
 ${endif}\
 ${offset 43}${memgraph 35,139 ${template1}}
 ${voffset -2}${offset 5}${color1}used  ${color}${mem} / ${memmax}${alignr 59}${color}${memperc}%]];

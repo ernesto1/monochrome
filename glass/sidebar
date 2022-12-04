@@ -112,7 +112,7 @@ ${alignr 6}${color}connected${voffset 4}${endif}]]
 
 conky.text = [[
 ################### cpu
-${image ~/conky/monochrome/images/glass/blue-cpu-mem.png -n -p 0,0}\
+${image ~/conky/monochrome/images/glass/blue-cpu-mem.png -p 0,0}\
 ${voffset -6}${color}${cpugraph cpu0 48,112 ${template1}}
 ${voffset -58}${offset 5}${color1}${font0}cpu
 ${voffset 2}${alignr}${color}${font1}${cpu cpu0}${font2}% 
@@ -129,58 +129,58 @@ ${voffset -5}${offset 13}${color2}${if_match ${swapperc} > 75}${color3}${endif}$
 ${voffset -9}${alignr 6}${color}${font4}${swap} / ${swapmax}
 ################### network
 ${if_up enp0s25}\
-${image ~/conky/monochrome/images/glass/blue-network-ethernet.png -n -p 0,219}\
-${image ~/conky/monochrome/images/glass/blue-network-internet.png -n -p 0,276}\
+${image ~/conky/monochrome/images/glass/blue-network-ethernet.png -p 0,219}\
+${image ~/conky/monochrome/images/glass/blue-network-internet.png -p 0,276}\
 ${template3 enp0s25}
 ${template4 enp0s25 3000 60000}
 ${else}\
 # no network/internet
-${image ~/conky/monochrome/images/glass/blue-network-internet-disconnected-desktop.png -n -p 0,219}\
+${image ~/conky/monochrome/images/glass/blue-network-internet-disconnected-desktop.png -p 0,219}\
 ${voffset 12}${offset 5}${color}${font0}network
 ${voffset 143}${alignc}${color}${font4}no ethernet
 ${alignc}connection
 ${voffset -10}
 ${endif}\
 ################### disk - sda
-${image ~/conky/monochrome/images/glass/blue-disk.png -n -p 0,416}\
+${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,416}\
 # speeds | read: 140MiB  write: 151MiB
 ${template5 sda 280000 302000}
 ${template6 fedora /}
-${image ~/conky/monochrome/images/glass/blue-filesystem.png -n -p 0,570}\
+${image ~/conky/monochrome/images/glass/blue-filesystem.png -p 0,570}\
 ${template6 home /home}
 ################### disk - sdb
-${image ~/conky/monochrome/images/glass/blue-disk.png -n -p 0,620}\
+${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,620}\
 # speeds | read: 151MiB  write: 100MiB
 ${template5 sdb 6000 200000}
 ${template6 veronica /media/veronica}
 ################### disk - sdc
-${image ~/conky/monochrome/images/glass/blue-disk.png -n -p 0,774}\
+${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,774}\
 # speeds | read: 151MiB  write: 100MiB
 ${template5 sdc 6000 200000}
 ${template6 betty /media/betty}
 ################### external hard drive
 ${if_mounted /run/media/ernesto/MAXTOR}\
-${image ~/conky/monochrome/images/glass/blue-disk.png -n -p 0,928}\
+${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,928}\
 # speeds | read: 24MiB  write: 24MiB (the usb2 max speed)
-${template5 sde1 6000 52000}
+${template5 sdg1 6000 52000}
 ${template6 maxtor\ HD /run/media/ernesto/MAXTOR}
 ${else}\
-${image ~/conky/monochrome/images/glass/blue-disk-disconnected.png -n -p 0,928}\
+${image ~/conky/monochrome/images/glass/blue-disk-disconnected.png -p 0,928}\
 ${voffset 12}${alignc}${color}${font0}maxtor HD
 ${voffset 103}${alignc}${color}${font4}device is not
 ${alignc}connected
 ${endif}\
 ################### time
-${image ~/conky/monochrome/images/glass/blue-block-small.png -n -p 0,1082}\
+${image ~/conky/monochrome/images/glass/blue-block-small.png -p 0,1082}\
 ${voffset 10}${offset 5}${color1}${font Promenade de la Croisette:size=40}${time %I}${font Promenade de la Croisette:size=37}:${time %M}${font0}${voffset -30}${alignr 6}${color}${time %A}
 ${voffset 2}${alignr 6}${time %B}
 ${voffset 2}${alignr 6}${time %d}
 ################### usb devices
-${image ~/conky/monochrome/images/glass/blue-usb-devices.png -n -p 0,1139}\
+${image ~/conky/monochrome/images/glass/blue-usb-devices.png -p 0,1139}\
 # :::: memory stick
 ${voffset 6}${template7 usb\ cruzer /run/media/ernesto/sandisk}
 # :::: memory card
 ${template7 sandisd\ SD /run/media/ernesto/disk}
 ${voffset -684}
-${image ~/conky/monochrome/images/glass/blue-edge-bottom.png -n -p 0,1250}\
+${image ~/conky/monochrome/images/glass/blue-edge-bottom.png -p 0,1250}\
 ]];

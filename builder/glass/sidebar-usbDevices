@@ -55,11 +55,11 @@ conky.text = [[
 # construct the bar panel image background
 # n.b. the connected/disconnected state of the last device, ie. the maxtor external hd
 #      will alter the total height of the background image, it will place its own images
-${image ~/conky/monochrome/images/glass/top.png -n -p 0,0}\
-${image ~/conky/monochrome/images/glass/block-filesystem.png -n -p 0,5}\
-${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,56}\
-${image ~/conky/monochrome/images/glass/block-filesystem.png -n -p 0,58}\
-${image ~/conky/monochrome/images/glass/sidebar.png -n -p 0,111}\
+${image ~/conky/monochrome/images/glass/top.png -p 0,0}\
+${image ~/conky/monochrome/images/glass/block-filesystem.png -p 0,5}\
+${image ~/conky/monochrome/images/glass/sidebar.png -p 0,56}\
+${image ~/conky/monochrome/images/glass/block-filesystem.png -p 0,58}\
+${image ~/conky/monochrome/images/glass/sidebar.png -p 0,111}\
 # :::::::::::::::::::: memory stick
 ${voffset 3}${offset 5}${color1}${font0}usb cruzer
 ${if_mounted /run/media/ernesto/sandisk}\
@@ -83,9 +83,9 @@ ${endif}\
 # :::::::::::::::::::: external hard drive
 #                      write: 24MiB  read: 24MiB
 ${if_mounted /run/media/ernesto/MAXTOR}\
-${image ~/conky/monochrome/images/glass/block-disk.png -n -p 0,111}\
-${image ~/conky/monochrome/images/glass/hard-drive.png -n -p 2,114}\
-${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,266}\
+${image ~/conky/monochrome/images/glass/block-disk.png -p 0,111}\
+${image ~/conky/monochrome/images/glass/hard-drive.png -p 2,114}\
+${image ~/conky/monochrome/images/glass/bottom.png -p 0,266}\
 # disk read graph
 ${voffset 3}${diskiograph_read /dev/sdf1 48,112 6b91e5 546fb2 6000}
 ${voffset -50}${offset 5}${color1}${font0}disk read
@@ -100,8 +100,8 @@ ${voffset -14}${alignr}${font2}${fs_used_perc /run/media/ernesto/MAXTOR}${font3}
 ${voffset -2}${offset 16}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 3,93 /run/media/ernesto/MAXTOR}
 ${voffset -4}${alignr}${color}${font4}${fs_used /run/media/ernesto/MAXTOR} / ${fs_size /run/media/ernesto/MAXTOR} 
 ${else}\
-${image ~/conky/monochrome/images/glass/block-filesystem.png -n -p 0,111}\
-${image ~/conky/monochrome/images/glass/bottom.png -n -p 0,164}\
+${image ~/conky/monochrome/images/glass/block-filesystem.png -p 0,111}\
+${image ~/conky/monochrome/images/glass/bottom.png -p 0,164}\
 ${voffset 16}${offset 5}${color1}${font0}maxtor HD
 ${voffset 3}${alignr}${color}${font4}device is not 
 ${alignr}connected ${voffset -1}\

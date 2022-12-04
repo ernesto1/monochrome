@@ -88,9 +88,9 @@ ${voffset 2}${alignr 59}${color}${fs_used \2} / ${fs_size \2}]],
 conky.text = [[
 # -------------- cpu
 ${if_match ${cpu cpu0} < 85}\
-${image ~/conky/monochrome/images/compact/red-cpu-mem.png -n -p 0,0}
+${image ~/conky/monochrome/images/compact/red-cpu-mem.png -p 0,0}
 ${else}\
-${image ~/conky/monochrome/images/compact/red-cpu-mem-high.png -n -p 0,0}
+${image ~/conky/monochrome/images/compact/red-cpu-mem-high.png -p 0,0}
 ${endif}\
 ${voffset -11}${offset 43}${cpugraph cpu0 35,139 ${template1}}
 ${voffset -2}${offset 5}${color1}load ${color}${loadavg}${alignr 59}${color}${cpu cpu0}%
@@ -110,43 +110,43 @@ ${template8 3}
 ${template8 4}
 # -------------- network
 ${if_up enp0s25}\
-${image ~/conky/monochrome/images/compact/red-network-desktop.png -n -p 0,321}\
+${image ~/conky/monochrome/images/compact/red-network-desktop.png -p 0,321}\
 ${voffset 17}${goto 47}${color1}local ip${goto 102}${color}${addr enp0s25}
 ${voffset 3}${goto 47}${color1}speed${goto 102}${color}${template3 enp0s25}
 # :: upload/download speeds
 ${template4 enp0s25 3000 60000}
 ${else}\
-${image ~/conky/monochrome/images/compact/red-network-no-internet.png -n -p 0,321}\
+${image ~/conky/monochrome/images/compact/red-network-no-internet.png -p 0,321}\
 ${voffset 13}${offset 5}${color1}no internet
 ${voffset 3}${offset 5}connection
 ${voffset 109}
 ${endif}\
 # -------------- disk
-${image ~/conky/monochrome/images/compact/red-disk.png -n -p 0,485}\
+${image ~/conky/monochrome/images/compact/red-disk.png -p 0,485}\
 ${template5 sda 60000 60000}
 ${voffset 6}${template6 fedora /}
-${image ~/conky/monochrome/images/compact/red-filesystem.png -n -p 0,588}\
+${image ~/conky/monochrome/images/compact/red-filesystem.png -p 0,588}\
 ${template6 home /home}
 # -------------- desktop internal disks
-${image ~/conky/monochrome/images/compact/red-disk.png -n -p 0,619}\
+${image ~/conky/monochrome/images/compact/red-disk.png -p 0,619}\
 ${template5 sdb 6500 200000}
 ${voffset 6}${template6 veronica /media/veronica}
-${image ~/conky/monochrome/images/compact/red-disk.png -n -p 0,722}\
+${image ~/conky/monochrome/images/compact/red-disk.png -p 0,722}\
 ${template5 sdc 6500 200000}
 ${voffset 6}${template6 betty /media/betty}
 # -------------- usb external disk
 ${if_mounted /run/media/ernesto/MAXTOR}\
-${image ~/conky/monochrome/images/compact/red-disk.png -n -p 0,825}\
+${image ~/conky/monochrome/images/compact/red-disk.png -p 0,825}\
 ${template5 sdg1 6000 52000}
 ${voffset 6}${template6 maxtor /run/media/ernesto/MAXTOR}
 ${else}\
-${image ~/conky/monochrome/images/compact/red-disk-disconnected.png -n -p 0,825}\
+${image ~/conky/monochrome/images/compact/red-disk-disconnected.png -p 0,825}\
 ${voffset 13}${offset 5}${color1}usb maxtor HD
 ${voffset 3}${offset 5}${color1}${font4}is not connected
 ${voffset 48}
 ${endif}\
 # -------------- system
-${image ~/conky/monochrome/images/compact/red-system.png -n -p 0,928}\
+${image ~/conky/monochrome/images/compact/red-system.png -p 0,928}\
 ${voffset 14}${goto 47}${color1}o/s ${color}${execi 5000 grep PRETTY_NAME /etc/os-release | cut -d '"' -f 2 | cut -d '(' -f 1 | tr 'A-Z' 'a-z'}
 ${voffset 3}${goto 47}${color1}uptime ${color}${uptime}
 ${voffset 10}${offset 5}${color1}kernel ${color}${kernel}
@@ -165,5 +165,5 @@ ${voffset 5}${offset 5}${color}chasis front intake${alignr 59}${template9 atk011
 ${voffset 3}${offset 5}${color}cpu fan${alignr 59}${template9 atk0110 fan 1 2400} rpm
 ${voffset 3}${offset 5}${color}chasis top exhaust${alignr 59}${template9 atk0110 fan 2 2400} rpm
 ${voffset 3}${offset 5}${color}chasis back exhaust${alignr 59}${template9 atk0110 fan 4 2400} rpm
-${image ~/conky/monochrome/images/compact/red-edge-bottom.png -n -p 0,1247}
+${image ~/conky/monochrome/images/compact/red-edge-bottom.png -p 0,1247}
 ]];

@@ -54,7 +54,7 @@ conky.config = {
 
 conky.text = [[
 ${if_up enp0s25}\
-${image ~/conky/monochrome/images/widgets/green-internet.png -n -p 0,0}\
+${image ~/conky/monochrome/images/widgets/green-internet.png -p 0,0}\
 ${voffset 3}${offset 5}${color1}local ip${goto 71}${color}${addr enp0s25}
 # use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
 ${voffset 3}${offset 5}${color1}bittorrent${goto 71}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
@@ -68,6 +68,6 @@ ${voffset 4}${alignr 5}${color}${totaldown enp0s25}
 # we need to remove the trailing spacing added the moment we voffset'ed the upload graph 
 ${voffset -20}
 ${else}\
-${image ~/conky/monochrome/images/widgets/orange-ethernet-offline.png -n -p 20,54}
+${image ~/conky/monochrome/images/widgets/orange-ethernet-offline.png -p 20,54}
 ${endif}\
 ]];
