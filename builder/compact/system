@@ -1,5 +1,6 @@
 # -------------- system
-${image ~/conky/monochrome/images/compact/red-system.png -p 0,0}\
+${if_updatenr 1}${image ~/conky/monochrome/images/compact/red-system-1.png -p 0,0}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/compact/red-system-2.png -p 0,0}${endif}\
 ${voffset 14}${goto 47}${color1}o/s ${color}${execi 5000 grep PRETTY_NAME /etc/os-release | cut -d '"' -f 2 | cut -d '(' -f 1 | tr 'A-Z' 'a-z'}
 ${voffset 3}${goto 47}${color1}uptime ${color}${uptime}
 ${voffset 10}${offset 5}${color1}kernel ${color}${kernel}
