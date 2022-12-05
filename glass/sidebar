@@ -181,6 +181,5 @@ ${image ~/conky/monochrome/images/glass/blue-usb-devices.png -p 0,1139}\
 ${voffset 6}${template7 usb\ cruzer /run/media/ernesto/sandisk}
 # :::: memory card
 ${template7 sandisd\ SD /run/media/ernesto/disk}
-${voffset -684}
 ${image ~/conky/monochrome/images/glass/blue-edge-bottom.png -p 0,1250}\
-]];
+${voffset -684}]]

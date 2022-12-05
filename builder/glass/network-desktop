@@ -1,12 +1,12 @@
 ################### network
 ${if_up enp0s25}\
-${image ~/conky/monochrome/images/glass/blue-network-ethernet.png -p 0,219}\
-${image ~/conky/monochrome/images/glass/blue-network-internet.png -p 0,276}\
+${image ~/conky/monochrome/images/glass/blue-network-ethernet.png -p 0,0}\
+${image ~/conky/monochrome/images/glass/blue-network-internet.png -p 0,57}\
 ${template3 enp0s25}
 ${template4 enp0s25 3000 60000}
 ${else}\
 # no network/internet
-${image ~/conky/monochrome/images/glass/blue-network-internet-disconnected-desktop.png -p 0,219}\
+${image ~/conky/monochrome/images/glass/blue-network-internet-disconnected-desktop.png -p 0,0}\
 ${voffset 12}${offset 5}${color}${font0}network
 ${voffset 143}${alignc}${color}${font4}no ethernet
 ${alignc}connection
