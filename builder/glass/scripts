@@ -5,10 +5,10 @@
 # it turns out that if too many sequential file changes happen to the conky file, conky will stop reloading the file
 # hence why we use the temp folder in order to replace the file only once
 
-# desktop sidebar
+# desktop sidebar usb-devices
 mkdir -p /tmp/monochrome;\
 cat config > /tmp/monochrome/sidebar;\
-buildSidebar.bash cpu-mem network-desktop disk disks-desktop disk-usb time usb-devices bottom-edge;\
+buildSidebar.bash cpu-mem network-desktop disk disks-desktop disk-usb time temperature-desktop bottom-edge;\
 echo '${voffset -684}]]' >> /tmp/monochrome/sidebar;\
 mv /tmp/monochrome/sidebar ~/conky/monochrome/glass/sidebar
 

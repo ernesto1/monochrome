@@ -65,7 +65,7 @@ conky.text = [[
 # disk io
 ${image ~/conky/monochrome/images/widgets/green-disk-single-partition.png -p 0,0}\
 ${template3 sdc 6000 250000}
-${voffset -13}${goto 97}${color1}temp ${color}${template5 3 temp 1 40}°C
+${voffset -13}${goto 97}${color1}temp ${color}${template5 3 temp 1 42}°C
 # partitions
 ${voffset -126}${goto 97}${color1}partitions
 ${template4 /media/betty betty}

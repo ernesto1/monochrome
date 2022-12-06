@@ -61,7 +61,7 @@ ${voffset 1}${goto 97}${color2}${if_match ${fs_used_perc \1} > 90}${color3}${end
 conky.text = [[
 ${if_mounted /run/media/ernesto/MAXTOR}\
 ${image ~/conky/monochrome/images/widgets/green-disk-single-partition.png -p 0,0}\
-${template3 sdf1 6000 60000}
+${template3 sdg1 6000 60000}
 ${voffset -13}${goto 97}${color1}temp ${color}n/a
 # partitions
 ${voffset -126}${goto 97}${color1}partitions
