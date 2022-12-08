@@ -10,7 +10,7 @@ conky.config = {
   gap_y = -12,
 
   -- window settings
-  minimum_width = 145,
+  minimum_width = 149,
   minimum_height = 760,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -67,8 +67,8 @@ conky.config = {
   
   -- ethernet block: ${template3 ethernetDevice}
   template3 = [[
-${voffset 23}${goto 63}${font}${execi 180 ethtool \1 2>/dev/null | grep -i speed | cut -d ' ' -f 2} 
-${voffset 4}${goto 63}${addr \1}${voffset 8}]],
+${voffset 23}${goto 66}${font}${execi 180 ethtool \1 2>/dev/null | grep -i speed | cut -d ' ' -f 2} 
+${voffset 4}${goto 66}${addr \1}${voffset 8}]],
 
   -- network bandwith: ${template4 device uploadSpeed downloadSpeed}
   template4 = [[
