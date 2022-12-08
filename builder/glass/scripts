@@ -9,7 +9,7 @@
 mkdir -p /tmp/monochrome;\
 cat config > /tmp/monochrome/sidebar;\
 buildSidebar.bash cpu-mem network-desktop disk disks-desktop disk-usb time temperature-desktop bottom-edge;\
-echo '${voffset -684}]]' >> /tmp/monochrome/sidebar;\
+echo '${voffset -720}]]' >> /tmp/monochrome/sidebar;\
 mv /tmp/monochrome/sidebar ~/conky/monochrome/glass/sidebar
 
 

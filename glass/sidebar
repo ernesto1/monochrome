@@ -184,7 +184,7 @@ ${if_updatenr 2}${image ~/conky/monochrome/images/glass/blue-temperature-desktop
 # :::: cpu
 ${voffset 6}${voffset 7}${offset 5}${color1}${font0}cpu
 ${voffset -9}${alignr}${color}${font2}${template8 atk0110 temp 1 75}°C 
-${alignr 7}${font4}cores ${template8 coretemp temp 5 75}°C
+${alignr 7}${color}${font4}cores ${template8 coretemp temp 5 75}°C
 # :::: video card
 ${voffset 6}${voffset 7}${offset 5}${color1}${font0}video card
 ${voffset -9}${alignr}${color}${font2}${template8 radeon temp 1 78}°C 
@@ -196,4 +196,4 @@ ${voffset 7}${offset 5}${color1}${font0}fans
 ${voffset -8}${alignr}${color}${font2}${template8 atk0110 fan 1 2400} 
 ${voffset -4}${alignr 7}${font4}rpm
 ${image ~/conky/monochrome/images/glass/blue-edge-bottom.png -p 0,1320}\
-${voffset -684}]]
+${voffset -720}]]
