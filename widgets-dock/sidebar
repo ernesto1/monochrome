@@ -32,9 +32,7 @@ conky.config = {
   draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
                               -- does not include bars, ie. wifi strength bar, cpu bar
 
-  imlib_cache_flush_interval = 250,
-  -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
-  
+  imlib_cache_flush_interval = 250,  
   if_up_strictness = 'address', -- network device must be up, having link and an assigned IP address
                                 -- to be considered "up" by ${if_up}
                                 -- values are: up, link or address
@@ -53,15 +51,15 @@ conky.config = {
   -- colors
   default_color = 'white',  -- regular text
   color1 = 'ebbeff',        -- text labels
-  color2 = 'a36dec',        -- bar color default
+  color2 = 'c800ea',        -- bar color default
   color3 = 'c33855',        -- bar color warning
-  color4 = '906c9c',        -- temperature text
+  color4 = '8a61ad',        -- temperature text
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   --  n.b. the line break escape character '\' is not supported in templates :(
   
   -- cpu/mem/download/disk write graph color
-  template1 = [[51295e a36dec]],
+  template1 = [[8a00a1 c800ea]],
   -- upload/disk read graph
   template2 = [[943145 e1778d]],
   
@@ -74,21 +72,21 @@ ${voffset 4}${goto 66}${addr \1}${voffset 8}]],
   template4 = [[
 ${voffset 12}${offset 5}${upspeedgraph \1 29,47 ${template2} \2}
 ${voffset -8}${offset 5}${downspeedgraph \1 29,47 ${template1} \3}
-${voffset -53}${goto 66}${color}${font}${upspeed \1} ↑
-${voffset 4}${goto 66}${color}${font}${downspeed \1} ↓${voffset 17}]],
+${voffset -53}${goto 67}${color}${font}${upspeed \1} ↑
+${voffset 4}${goto 67}${color}${font}${downspeed \1} ↓${voffset 17}]],
 
   -- hard disk io: ${template5 device readSpeed writeSpeed}
   template5 = [[
 ${voffset 12}${offset 5}${color}${diskiograph_read /dev/\1 21,47 ${template2} \2}
 ${voffset -8}${offset 5}${diskiograph_write /dev/\1 21,47 ${template1} \3}
-${voffset -45}${goto 66}${color}${font}${diskio_read /dev/\1}
-${voffset 4}${goto 66}${color}${font}${diskio_write /dev/\1}${voffset 9}]],
+${voffset -45}${goto 67}${color}${font}${diskio_read /dev/\1}
+${voffset 4}${goto 67}${color}${font}${diskio_write /dev/\1}${voffset 9}]],
 
   -- filesystem: ${template6 filesystemName fileSystemPath}
   template6 = [[
 ${voffset 52}${offset 6}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3, 45 \2}
-${voffset -46}${goto 66}${color}${font}\1
-${voffset 4}${goto 66}${color}${font1}${fs_used_perc \2}${font0}%${font}${voffset 1}]],
+${voffset -46}${goto 67}${color}${font}\1
+${voffset 4}${goto 67}${color}${font1}${fs_used_perc \2}${font0}%${font}${voffset 1}]],
 
   -- color coded hwmon entry: index/device type index threshold
   template7 = [[${if_match ${hwmon \1 \2 \3} > \4}${color3}${else}${color4}${endif}${hwmon \1 \2 \3}]], 
@@ -102,10 +100,11 @@ conky.text = [[
 ${if_match ${cpu cpu0} < 90}\
 ${image ~/conky/monochrome/images/widgets-dock/purple-cpu.png -p 0,0}\
 ${else}\
+${if_match ${cpu cpu0} == 100}${image ~/conky/monochrome/images/widgets-dock/text-box-100.png -p 117,54}${endif}\
 ${image ~/conky/monochrome/images/widgets-dock/purple-cpu-high.png -p 0,0}\
 ${endif}\
 ${voffset 44}${offset 12}${cpugraph cpu0 33,33 ${template1}}
-${voffset -31}${goto 66}${color}${font1}${cpu cpu0}${font0}%
+${voffset -31}${goto 67}${color}${font1}${cpu cpu0}${font0}%
 # :::::::::::::::::::: memory
 ${if_match ${memperc} < 85}\
 ${image ~/conky/monochrome/images/widgets-dock/purple-mem.png -p 0,98}\
@@ -113,17 +112,18 @@ ${else}\
 ${image ~/conky/monochrome/images/widgets-dock/purple-mem-high.png -p 0,98}\
 ${endif}\
 ${voffset 17}${offset 18}${memgraph 43,21 ${template1}}
-${voffset -33}${goto 66}${color}${font1}${memperc}${font0}%
-${voffset 4}${offset 6}${color2}${if_match ${swapperc} >= 70}${color3}${endif}${swapbar 3, 45}${voffset -2}${goto 66}${font}${color}${swapperc}%
+${voffset -33}${goto 67}${color}${font1}${memperc}${font0}%
+${voffset 4}${offset 6}${color2}${if_match ${swapperc} >= 70}${color3}${endif}${swapbar 3, 45}${voffset -2}${goto 67}${font}${color}${swapperc}%
 # :::::::::::::::::::: network
 # if both wifi and ethernet are connected, we give priority to the wifi
 # :::::: wifi
 ${if_up wlp4s0}\
+${if_match ${wireless_link_qual_perc wlp4s0} == 100}${image ~/conky/monochrome/images/widgets-dock/text-box-100.png -p 117,205}${endif}\
 ${image ~/conky/monochrome/images/widgets-dock/purple-wifi.png -p 0,181}\
 ${voffset 49}${offset 6}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 3,45 wlp4s0}
 #${wireless_essid wlp4s0}
-${voffset -46}${goto 66}${color}${font}
-${voffset 4}${goto 66}${color}${font1}${wireless_link_qual_perc wlp4s0}${font0}%${font}${voffset 1}
+${voffset -46}${goto 67}${color}${font}
+${voffset 4}${goto 67}${color}${font1}${wireless_link_qual_perc wlp4s0}${font0}%${font}${voffset 1}
 # :: upload/download speeds
 ${image ~/conky/monochrome/images/widgets-dock/purple-internet.png -p 0,245}\
 ${template4 wlp4s0 8200 55100}
@@ -143,7 +143,10 @@ ${endif}\
 ${endif}\
 # :::::::::::::::::::: disk sda
 # disk io
-${image ~/conky/monochrome/images/widgets-dock/purple-diskio.png -p 0,327}\
+${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/purple-diskio-1.png -p 0,327}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/purple-diskio-2.png -p 0,327}${endif}\
+${if_updatenr 3}${image ~/conky/monochrome/images/widgets-dock/purple-diskio-3.png -p 0,327}${endif}\
+${if_updatenr 4}${image ~/conky/monochrome/images/widgets-dock/purple-diskio-4.png -p 0,327}${endif}\
 ${template5 sda 140000 140000}
 ${image ~/conky/monochrome/images/widgets-dock/purple-disk-root.png -p 0,393}\
 ${template6 \  /}
@@ -158,15 +161,16 @@ ${else}\
 ${image ~/conky/monochrome/images/widgets-dock/purple-power-charging.png -p 0,521}\
 ${offset 6}${color2}${if_match ${battery_percent BAT0} < 80}${color3}${endif}${battery_bar 3, 45 BAT0}
 #${battery_time BAT0}
-${voffset -46}${goto 66}${color}${font}
-${voffset 4}${goto 66}${color}${font1}${battery_percent BAT0}${font0}%${font}${voffset 1}
+${voffset -46}${goto 67}${color}${font}
+${voffset 4}${goto 67}${color}${font1}${battery_percent BAT0}${font0}%${font}${voffset 1}
 ${endif}\
 ${else}\
+${if_match ${battery_percent BAT0} == 100}${image ~/conky/monochrome/images/widgets-dock/text-box-100.png -p 117,545}${endif}\
 ${image ~/conky/monochrome/images/widgets-dock/purple-power-battery.png -p 0,521}\
 ${offset 6}${color2}${if_match ${battery_percent BAT0} < 20}${color3}${endif}${battery_bar 3, 45 BAT0}
 #${battery_time BAT0}
-${voffset -46}${goto 66}${color}${font}
-${voffset 4}${goto 66}${color}${font1}${battery_percent BAT0}${font0}%${font}${voffset 1}
+${voffset -46}${goto 67}${color}${font}
+${voffset 4}${goto 67}${color}${font1}${battery_percent BAT0}${font0}%${font}${voffset 1}
 ${endif}\
 # :::::::::::::::::::: cpu temperature
 # laptop only reports cpu core temperatures, displaying the hottest of the two cores

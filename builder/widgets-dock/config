@@ -32,9 +32,7 @@ conky.config = {
   draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
                               -- does not include bars, ie. wifi strength bar, cpu bar
 
-  imlib_cache_flush_interval = 250,
-  -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
-  
+  imlib_cache_flush_interval = 250,  
   if_up_strictness = 'address', -- network device must be up, having link and an assigned IP address
                                 -- to be considered "up" by ${if_up}
                                 -- values are: up, link or address
@@ -53,15 +51,15 @@ conky.config = {
   -- colors
   default_color = 'white',  -- regular text
   color1 = 'ebbeff',        -- text labels
-  color2 = 'a36dec',        -- bar color default
+  color2 = 'c800ea',        -- bar color default
   color3 = 'c33855',        -- bar color warning
-  color4 = '906c9c',        -- temperature text
+  color4 = '8a61ad',        -- temperature text
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   --  n.b. the line break escape character '\' is not supported in templates :(
   
   -- cpu/mem/download/disk write graph color
-  template1 = [[51295e a36dec]],
+  template1 = [[8a00a1 c800ea]],
   -- upload/disk read graph
   template2 = [[943145 e1778d]],
   
@@ -74,21 +72,21 @@ ${voffset 4}${goto 66}${addr \1}${voffset 8}]],
   template4 = [[
 ${voffset 12}${offset 5}${upspeedgraph \1 29,47 ${template2} \2}
 ${voffset -8}${offset 5}${downspeedgraph \1 29,47 ${template1} \3}
-${voffset -53}${goto 66}${color}${font}${upspeed \1} ↑
-${voffset 4}${goto 66}${color}${font}${downspeed \1} ↓${voffset 17}]],
+${voffset -53}${goto 67}${color}${font}${upspeed \1} ↑
+${voffset 4}${goto 67}${color}${font}${downspeed \1} ↓${voffset 17}]],
 
   -- hard disk io: ${template5 device readSpeed writeSpeed}
   template5 = [[
 ${voffset 12}${offset 5}${color}${diskiograph_read /dev/\1 21,47 ${template2} \2}
 ${voffset -8}${offset 5}${diskiograph_write /dev/\1 21,47 ${template1} \3}
-${voffset -45}${goto 66}${color}${font}${diskio_read /dev/\1}
-${voffset 4}${goto 66}${color}${font}${diskio_write /dev/\1}${voffset 9}]],
+${voffset -45}${goto 67}${color}${font}${diskio_read /dev/\1}
+${voffset 4}${goto 67}${color}${font}${diskio_write /dev/\1}${voffset 9}]],
 
   -- filesystem: ${template6 filesystemName fileSystemPath}
   template6 = [[
 ${voffset 52}${offset 6}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3, 45 \2}
-${voffset -46}${goto 66}${color}${font}\1
-${voffset 4}${goto 66}${color}${font1}${fs_used_perc \2}${font0}%${font}${voffset 1}]],
+${voffset -46}${goto 67}${color}${font}\1
+${voffset 4}${goto 67}${color}${font1}${fs_used_perc \2}${font0}%${font}${voffset 1}]],
 
   -- color coded hwmon entry: index/device type index threshold
   template7 = [[${if_match ${hwmon \1 \2 \3} > \4}${color3}${else}${color4}${endif}${hwmon \1 \2 \3}]], 
