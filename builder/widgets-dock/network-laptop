@@ -20,8 +20,8 @@ ${template3 enp6s0}
 ${image ~/conky/monochrome/images/widgets-dock/purple-internet.png -p 0,64}\
 ${template4 enp6s0 3000 60000}
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/pink-wifi-disconnected.png -p 0,0}
-${image ~/conky/monochrome/images/widgets-dock/pink-internet-offline.png -p 0,64}\
+${image ~/conky/monochrome/images/widgets-dock/green-wifi-disconnected.png -p 0,0}
+${image ~/conky/monochrome/images/widgets-dock/green-internet-offline.png -p 0,64}\
 ${voffset 117}
 ${endif}\
 ${endif}\

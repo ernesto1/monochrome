@@ -10,7 +10,7 @@ conky.config = {
   gap_y = -12,
 
   -- window settings
-  minimum_width = 149,
+  minimum_width = 150,
   minimum_height = 632,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -52,7 +52,7 @@ conky.config = {
   default_color = 'white',  -- regular text
   color1 = 'ebbeff',        -- text labels
   color2 = 'c800ea',        -- bar color default
-  color3 = 'c33855',        -- bar color warning
+  color3 = 'd70d2f',        -- bar color warning
   color4 = '8a61ad',        -- temperature text
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
@@ -61,12 +61,12 @@ conky.config = {
   -- cpu/mem/download/disk write graph color
   template1 = [[8a00a1 c800ea]],
   -- upload/disk read graph
-  template2 = [[943145 e1778d]],
+  template2 = [[689693 a3c2bc]],
   
   -- ethernet block: ${template3 ethernetDevice}
   template3 = [[
-${voffset 23}${goto 66}${font}${execi 180 ethtool \1 2>/dev/null | grep -i speed | cut -d ' ' -f 2} 
-${voffset 4}${goto 66}${addr \1}${voffset 8}]],
+${voffset 23}${goto 67}${font}${execi 180 ethtool \1 2>/dev/null | grep -i speed | cut -d ' ' -f 2}
+${voffset 4}${goto 67}${addr \1}${voffset 8}]],
 
   -- network bandwith: ${template4 device uploadSpeed downloadSpeed}
   template4 = [[

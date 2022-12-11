@@ -49,23 +49,6 @@ other choices for the upload graph:
   d6926d ffd799   soft orange
 
 
-### purple/orange
-
-  -- colors
-  default_color = 'black',  -- regular text
-  color1 = 'white',         -- text labels
-  color2 = '4c0c40',        -- bar color default
-  color3 = 'cc0000',        -- bar color warning
-  
-  -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
-  --  n.b. the line break escape character '\' is not supported in templates :(
-  
-  -- cpu/mem/download/disk write graph color
-  template1 = [[4c0c40 660c52]],
-  -- upload/disk read graph
-  template2 = [[cd862c eac574]],
-
-
 ### honolulu w/ gray background
 
   -- colors
@@ -81,3 +64,20 @@ other choices for the upload graph:
   template1 = [[1d1927 61557d]],
   -- upload/disk read graph
   template2 = [[5c1f1e a9423d]],
+  
+
+### dark purple
+
+  default_color = 'white',  -- regular text
+  color1 = 'ebbeff',        -- text labels
+  color2 = 'a36dec',        -- bar color default
+  color3 = 'c33855',        -- bar color warning
+  color4 = '906c9c',        -- temperature text
+  
+  -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
+  --  n.b. the line break escape character '\' is not supported in templates :(
+  
+  -- cpu/mem/download/disk write graph color
+  template1 = [[51295e a36dec]],
+  -- upload/disk read graph
+  template2 = [[a94078 d56c8d]],

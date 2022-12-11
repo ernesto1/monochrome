@@ -12,6 +12,7 @@ images/screenshots/*.xcf
 images/screenshots/*.png
 images/glass/new shepard hud.png
 images/glass/glass-*
+images/widgets-dock/shadow.xcf
 
 # unofficial conkys
 */layout.desktop.cfg
