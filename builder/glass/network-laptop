@@ -1,12 +1,8 @@
 ################### network
-${image ~/conky/monochrome/images/glass/sidebar.png -p 0,222}\
-${image ~/conky/monochrome/images/glass/block-small.png -p 0,223}\
-${image ~/conky/monochrome/images/glass/block.png -p 0,276}\
-${image ~/conky/monochrome/images/glass/block.png -p 0,346}\
 # if on wifi
 ${if_up wlp4s0}\
-${image ~/conky/monochrome/images/glass/wifi.png -p 24,232}\
-${image ~/conky/monochrome/images/glass/internet.png -p 18,307}\
+${image ~/conky/monochrome/images/glass/blue-network-wifi.png -p 0,0}\
+${image ~/conky/monochrome/images/glass/blue-network-internet.png -p 0,57}\
 ${voffset 12}${offset 5}${color1}${font0}wifi
 ${voffset -9}${alignr}${font2}${wireless_link_qual_perc wlp4s0}${font3}% 
 ${voffset -2}${offset 16}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 3,93 wlp4s0}
@@ -15,13 +11,13 @@ ${template4 wlp4s0 3000 60000}
 ${else}\
 # is the ethernet up?
 ${if_up enp6s0}\
-${image ~/conky/monochrome/images/glass/ethernet.png -p 4,235}\
-${image ~/conky/monochrome/images/glass/internet.png -p 18,307}\
+${image ~/conky/monochrome/images/glass/blue-network-ethernet.png -p 0,0}\
+${image ~/conky/monochrome/images/glass/blue-network-internet.png -p 0,57}\
 ${template3 enp6s0}
 ${template4 enp6s0 3000 60000}
 ${else}\
 # no network/internet
-${image ~/conky/monochrome/images/glass/noNetwork-laptop.png -p 0,223}\
+${image ~/conky/monochrome/images/glass/ocre-network-internet-disconnected-wifi.png -p 0,0}\
 ${voffset 12}${offset 5}${color1}${font0}network
 ${voffset 143}${alignc}${color}${font4}no network
 ${alignc}connection
