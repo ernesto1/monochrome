@@ -10,7 +10,7 @@ conky.config = {
 
   -- window settings
   minimum_width = 113,
-  minimum_height = 1325,
+  minimum_height = 1128,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -145,42 +145,42 @@ ${alignc}connection
 ${voffset -10}
 ${endif}\
 ################### disk - sda
-${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,416}\
+${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,219}\
 # speeds | read: 140MiB  write: 151MiB
 ${template5 sda 280000 302000}
 ${template6 fedora /}
-${image ~/conky/monochrome/images/glass/blue-filesystem.png -p 0,570}\
+${image ~/conky/monochrome/images/glass/blue-filesystem.png -p 0,373}\
 ${template6 home /home}
 ################### disk - sdb
-${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,620}\
+${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,423}\
 # speeds | read: 151MiB  write: 100MiB
 ${template5 sdb 6000 200000}
 ${template6 veronica /media/veronica}
 ################### disk - sdc
-${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,774}\
+${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,577}\
 # speeds | read: 151MiB  write: 100MiB
 ${template5 sdc 6000 200000}
 ${template6 betty /media/betty}
 ################### external hard drive
 ${if_mounted /run/media/ernesto/MAXTOR}\
-${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,928}\
+${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,731}\
 # speeds | read: 24MiB  write: 24MiB (the usb2 max speed)
 ${template5 sdg1 6000 52000}
 ${template6 maxtor\ HD /run/media/ernesto/MAXTOR}
 ${else}\
-${image ~/conky/monochrome/images/glass/blue-disk-disconnected.png -p 0,928}\
+${image ~/conky/monochrome/images/glass/ocre-disk-disconnected.png -p 0,731}\
 ${voffset 12}${alignc}${color}${font0}maxtor HD
 ${voffset 103}${alignc}${color}${font4}device is not
 ${alignc}connected
 ${endif}\
 ################### time
-${image ~/conky/monochrome/images/glass/blue-block-small.png -p 0,1082}\
+${image ~/conky/monochrome/images/glass/blue-block-small.png -p 0,885}\
 ${voffset 10}${offset 5}${color1}${font Promenade de la Croisette:size=40}${time %I}${font Promenade de la Croisette:size=37}:${time %M}${font0}${voffset -30}${alignr 6}${color}${time %A}
 ${voffset 2}${alignr 6}${time %B}
 ${voffset 2}${alignr 6}${time %d}
 ################### temperatures
-${if_updatenr 1}${image ~/conky/monochrome/images/glass/blue-temperature-desktop-1.png -p 0,1139}${endif}\
-${if_updatenr 2}${image ~/conky/monochrome/images/glass/blue-temperature-desktop-2.png -p 0,1139}${endif}\
+${if_updatenr 1}${image ~/conky/monochrome/images/glass/blue-temperature-desktop-1.png -p 0,942}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/glass/blue-temperature-desktop-2.png -p 0,942}${endif}\
 # :::: cpu
 ${voffset 6}${voffset 7}${offset 5}${color1}${font0}cpu
 ${voffset -9}${alignr}${color}${font2}${template8 atk0110 temp 1 75}°C 
@@ -195,5 +195,5 @@ ${voffset -9}${alignr}${color}${font2}${template8 1 temp 1 42}°C
 ${voffset 7}${offset 5}${color1}${font0}fans
 ${voffset -8}${alignr}${color}${font2}${template8 atk0110 fan 1 2400} 
 ${voffset -4}${alignr 7}${font4}rpm
-${image ~/conky/monochrome/images/glass/blue-edge-bottom.png -p 0,1320}\
+${image ~/conky/monochrome/images/glass/blue-edge-bottom.png -p 0,1123}\
 ${voffset -720}]]

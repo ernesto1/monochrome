@@ -5,7 +5,7 @@ ${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,0}\
 ${template5 sdg1 6000 52000}
 ${template6 maxtor\ HD /run/media/ernesto/MAXTOR}
 ${else}\
-${image ~/conky/monochrome/images/glass/blue-disk-disconnected.png -p 0,0}\
+${image ~/conky/monochrome/images/glass/ocre-disk-disconnected.png -p 0,0}\
 ${voffset 12}${alignc}${color}${font0}maxtor HD
 ${voffset 103}${alignc}${color}${font4}device is not
 ${alignc}connected
