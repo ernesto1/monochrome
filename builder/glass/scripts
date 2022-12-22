@@ -13,7 +13,9 @@ echo '${voffset -720}]]' >> /tmp/monochrome/sidebar;\
 mv /tmp/monochrome/sidebar ~/conky/monochrome/glass/sidebar
 
 
-# laptop sidebar | under construction
-cd ~/conky/monochrome/builder/glass;\
-cat config cpu-mem network-laptop disk power > ~/conky/monochrome/glass/sidebar;\
-echo ']];' >> ~/conky/monochrome/glass/sidebar
+# laptop sidebar | under construction 
+mkdir -p /tmp/monochrome;\
+cat config > /tmp/monochrome/sidebar;\
+buildSidebar.bash cpu-mem network-laptop disk power bottom-edge;\
+echo '${voffset -720}]];' >> /tmp/monochrome/sidebar;\
+mv /tmp/monochrome/sidebar ~/conky/monochrome/glass/sidebar

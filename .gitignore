@@ -16,6 +16,7 @@ images/widgets-dock/shadow.xcf
 
 # unofficial conkys
 */layout.desktop.cfg
+glass/layout.laptop.cfg
 */widgets-dock-time
 */widgets-dock
 # the regex above will exclude a couple of legit folders
