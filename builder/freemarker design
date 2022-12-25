@@ -1,0 +1,49 @@
+### global settings
+
+[ ] add color to log
+[ ] create jar and execute from it`
+
+maxtor drive
+thresholds
+- cpu
+- mem
+- temp cpu
+- temp video
+- temp hd
+- fan speed
+
+
+### theme settings
+
+x image primary color
+x image secondary color     offline/disconnected items
+x color scheme text
+color scheme read graph
+color scheme write graph
+
+support multiple theme colors
+at run time we choose wich one we want
+
+
+### app design
+- java loads themes.yml file
+- provided color scheme is extracted from themes file, this becomes the "root" data model
+- java loads global yml configuration and appends to root data model
+- merge each ftl template with the data model
+- bash script dynamically creates sidebar file in /tmp folder
+- final conky scripts are moved to the target folder
+
+java printConky.jar <conky theme> <color>
+                        \
+                        this determines the source directory with the config files
+                                            target directory in the /monochrome folder
+
+
+### prepare ftl files
+
+$ sed -i 's/green-/[=image.secondaryColor]-/' !(config|scripts|*.yml|color-palette|packages|processes)
+$ prename 's/$/.ftl/' !(scripts|*.yml|color-palette|packages|processes)
+
+### freemarker advanced coding
+- provide a list of disk devices, freemarker code generates all the blocks
+- can the network setup be done in a single configuration?

@@ -1,9 +1,11 @@
 # notes
 # by default conky will reload its configuration if it detects a change on the file
 # 
-# the new conky configuration is created in a temporary folder and then the target file is overriden
-# it turns out that if too many sequential file changes happen to the conky file, conky stops reloading the file
-# hence why we use the temp folder in order to replace the file only once
+# The new conky configuration is created in a temporary folder and then the target file is overriden.
+# It turns out that if too many sequential file changes happen to the conky file, conky stops reloading the file.
+# Hence why we use the temp folder in order to replace the file only once
+#
+# the java freemarker template app will output the conky blocks in the /tmp/monochrome/target folder
 
 # ::::::: desktop sidebar
 mkdir -p /tmp/monochrome;\
@@ -14,11 +16,12 @@ mv /tmp/monochrome/sidebar ~/conky/monochrome/widgets-dock/sidebar
 
 
 # ::::::: laptop sidebar
-mkdir -p /tmp/monochrome;\
+cd /tmp/monochrome/target;\
 cat config > /tmp/monochrome/sidebar;\
 buildSidebar.bash cpu-mem network-laptop disk power temp-cpu-laptop time-block bottom-edge;\
 echo '${voffset -260}]];' >> /tmp/monochrome/sidebar;\
-mv /tmp/monochrome/sidebar ~/conky/monochrome/widgets-dock/sidebar
+mv /tmp/monochrome/sidebar ~/conky/monochrome/widgets-dock/sidebar;\
+mv system sidebar-time ~/conky/monochrome/widgets-dock
 
 
 

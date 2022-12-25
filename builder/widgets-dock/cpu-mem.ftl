@@ -1,17 +1,17 @@
 # :::::::::::::::::::: cpu
 ${if_match ${cpu cpu0} < 90}\
-${image ~/conky/monochrome/images/widgets-dock/purple-cpu.png -p 0,0}\
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-cpu.png -p 0,0}\
 ${else}\
 ${if_match ${cpu cpu0} == 100}${image ~/conky/monochrome/images/widgets-dock/text-box-100.png -p 117,54}${endif}\
-${image ~/conky/monochrome/images/widgets-dock/purple-cpu-high.png -p 0,0}\
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-cpu-high.png -p 0,0}\
 ${endif}\
 ${voffset 44}${offset 12}${cpugraph cpu0 33,33 ${template1}}
 ${voffset -31}${goto 67}${color}${font1}${cpu cpu0}${font0}%
 # :::::::::::::::::::: memory
 ${if_match ${memperc} < 85}\
-${image ~/conky/monochrome/images/widgets-dock/purple-mem.png -p 0,98}\
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-mem.png -p 0,98}\
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/purple-mem-high.png -p 0,98}\
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-mem-high.png -p 0,98}\
 ${endif}\
 ${voffset 17}${offset 18}${memgraph 43,21 ${template1}}
 ${voffset -33}${goto 67}${color}${font1}${memperc}${font0}%

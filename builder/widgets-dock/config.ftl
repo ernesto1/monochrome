@@ -49,19 +49,19 @@ conky.config = {
   font2 = 'Promenade de la Croisette:size=40',   -- device temperature reading
 
   -- colors
-  default_color = 'white',  -- regular text
-  color1 = 'ebbeff',        -- text labels
-  color2 = 'c800ea',        -- bar color default
-  color3 = 'd70d2f',        -- bar color warning
-  color4 = '8a61ad',        -- temperature text
+  default_color = '[=colors.text]',  -- regular text
+  color1 = '[=colors.labels]',         -- text labels
+  color2 = '[=colors.bar]',        -- bar color default
+  color3 = '[=colors.warning]',        -- bar color warning
+  color4 = '[=colors.widgetText]',        -- temperature text
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   --  n.b. the line break escape character '\' is not supported in templates :(
   
   -- cpu/mem/download/disk write graph color
-  template1 = [[8a00a1 c800ea]],
+  template1 = [[[=colors.writeGraph]]],
   -- upload/disk read graph
-  template2 = [[689693 a3c2bc]],
+  template2 = [[[=colors.readGraph]]],
   
   -- ethernet block: ${template3 ethernetDevice}
   template3 = [[
