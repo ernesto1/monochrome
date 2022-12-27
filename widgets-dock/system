@@ -39,7 +39,7 @@ conky.config = {
   draw_shades = false,      -- black shadow on text (not good if text is black)
   draw_outline = false,     -- black outline around text (not good if text is black)
   -- colors
-  default_color = 'ff8dfd',  -- regular text
+  default_color = 'c596c7',  -- regular text
   color1 = 'white',
   
   -- top cpu process: ${template1 processNumber}
@@ -49,7 +49,7 @@ conky.config = {
 };
 
 conky.text = [[
-${image ~/conky/monochrome/images/widgets-dock/purple-bar-processes.png -p 0,0}\
+${image ~/conky/monochrome/images/widgets-dock/dark-purple-bar-processes.png -p 0,0}\
 ${voffset 3}${color1}${offset 5}process${alignr 5}cpu   pid${voffset 1}
 ${template1 1}
 ${template1 2}
@@ -63,7 +63,7 @@ ${template2 3}
 ${template2 4}
 ${template2 5}
 ${if_up wlp4s0}\
-${image ~/conky/monochrome/images/widgets-dock/purple-bar-wifi.png -p 0,210}\
+${image ~/conky/monochrome/images/widgets-dock/dark-purple-bar-wifi.png -p 0,210}\
 ${voffset 17}${offset 5}${color1}network${goto 60}${color}${wireless_essid wlp4s0}
 ${voffset 3}${offset 5}${color1}local ip${goto 60}${color}${addr wlp4s0}
 ${voffset 3}${offset 5}${color1}bitrate${goto 60}${color}${wireless_bitrate wlp4s0}
