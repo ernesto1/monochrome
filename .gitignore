@@ -6,6 +6,8 @@ legacy/
 raws/
 **/blame
 system-differences.xcf
+builder/freemarker-configuration.jar
+
 
 # only .jpg images will be used for screenshots
 images/screenshots/*.xcf

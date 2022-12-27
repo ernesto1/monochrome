@@ -175,7 +175,7 @@ ${endif}\
 # :::::::::::::::::::: cpu temperature
 # laptop only reports cpu core temperatures, displaying the hottest of the two cores
 ${image ~/conky/monochrome/images/widgets-dock/purple-temp-cpu-laptop.png -p 0,585}\
-${voffset 8}${if_match ${hwmon coretemp temp 2} > ${hwmon coretemp temp 3}}${template8 coretemp temp 2 86}${else}${template8 coretemp temp 3 86}${endif}
+${voffset 8}${if_match ${hwmon coretemp temp 2} > ${hwmon coretemp temp 3}}${template8 coretemp temp 2 85}${else}${template8 coretemp temp 3 85}${endif}
 # :::::::::::::::::::: time 
 # bar placeholder, the actual time is a separate conky used to create the sidebar effect on the desktop
 ${image ~/conky/monochrome/images/widgets-dock/purple-time.png -p 0,649}\

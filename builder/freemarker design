@@ -1,8 +1,5 @@
 ### global settings
 
-[ ] add color to log
-[ ] create jar and execute from it`
-
 maxtor drive
 thresholds
 - cpu
@@ -15,9 +12,9 @@ thresholds
 
 ### theme settings
 
-x image primary color
-x image secondary color     offline/disconnected items
-x color scheme text
+image primary color
+image secondary color     offline/disconnected items
+color scheme text
 color scheme read graph
 color scheme write graph
 
@@ -26,9 +23,9 @@ at run time we choose wich one we want
 
 
 ### app design
-- java loads themes.yml file
-- provided color scheme is extracted from themes file, this becomes the "root" data model
-- java loads global yml configuration and appends to root data model
+- java loads global yml configuration
+- java loads colorPalette.yml file
+- provided color scheme is extracted from color pallete map and appended to root data model
 - merge each ftl template with the data model
 - bash script dynamically creates sidebar file in /tmp folder
 - final conky scripts are moved to the target folder
@@ -41,8 +38,8 @@ java printConky.jar <conky theme> <color>
 
 ### prepare ftl files
 
-$ sed -i 's/green-/[=image.secondaryColor]-/' !(config|scripts|*.yml|color-palette|packages|processes)
 $ prename 's/$/.ftl/' !(scripts|*.yml|color-palette|packages|processes)
+$ sed -i 's/green-/[=image.secondaryColor]-/' !(config|scripts|*.yml|color-palette|packages|processes)
 
 ### freemarker advanced coding
 - provide a list of disk devices, freemarker code generates all the blocks
