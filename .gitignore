@@ -1,27 +1,12 @@
 # git ingnore only works with untracked files!
 
 # local build files
-*.ods*
-legacy/
 raws/
-**/blame
-system-differences.xcf
 builder/freemarker-configuration.jar
-
 
 # only .jpg images will be used for screenshots
 images/screenshots/*.xcf
 images/screenshots/*.png
-images/glass/new shepard hud.png
-images/glass/glass-*
-images/widgets-dock/shadow.xcf
 
-# unofficial conkys
-*/layout.desktop.cfg
-glass/layout.laptop.cfg
-*/widgets-dock-time
-*/widgets-dock
-# the regex above will exclude a couple of legit folders
-!images/widgets-dock
-!builder/widgets-dock
-
+# layout overrides are not fully documented yet
+layout.*.cfg
