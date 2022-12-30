@@ -9,11 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public class ConkyTemplate {
@@ -87,12 +82,12 @@ public class ConkyTemplate {
         }
 
         // verify conky theme directory exists
-        Path path = Paths.get(CONKY_DIR, args[0]);
+        File conkyDir = new File(CONKY_DIR, args[0]);
 
-        if (Files.isDirectory(path)) {
+        if (conkyDir.isDirectory()) {
             logger.info("creating configuration files for the {} conky", args[0]);
         } else {
-            logger.error("conky directory {} does not exist", path);
+            logger.error("conky directory {} does not exist", conkyDir);
             System.exit(1);
         }
     }
