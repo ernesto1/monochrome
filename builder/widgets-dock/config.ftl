@@ -72,8 +72,8 @@ ${voffset 4}${goto 67}${addr \1}${voffset 8}]],
   template4 = [[
 ${voffset 12}${offset 5}${upspeedgraph \1 29,47 ${template2} \2}
 ${voffset -8}${offset 5}${downspeedgraph \1 29,47 ${template1} \3}
-${voffset -56}${goto 67}${color}${font}${upspeed \1} ↑
-${voffset 21}${goto 67}${color}${font}${downspeed \1} ↓${voffset 3}]],
+${voffset -56}${goto 67}${color}${font}${upspeed \1}
+${voffset 21}${goto 67}${color}${font}${downspeed \1}${voffset 3}]],
 
   -- hard disk io: ${template5 device readSpeed writeSpeed}
   template5 = [[
