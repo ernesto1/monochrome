@@ -33,8 +33,8 @@ conky.config = {
   draw_shades = false,      -- black shadow on text (not good if text is black)
   draw_outline = false,     -- black outline around text (not good if text is black)
   -- colors
-  default_color = '906c9c',  -- regular text
-  color1 = 'f2c7ff'
+  default_color = 'c15124',  -- regular text
+  color1 = '8a2700'
 };
 
 conky.text = [[

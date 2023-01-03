@@ -9,7 +9,9 @@ Keep tabs on your system's cpu, memory, disk, network, battery usage and device 
 ![glass dock](images/screenshots/glass.gif)
 
 ### Widgets dock
-![widgets dock](images/screenshots/widgets-dock.gif)
+Conky | Color themes
+--- | ---
+![widgets dock](images/screenshots/widgets-dock.gif) | ![color palette](images/screenshots/widgets-dock-themes.jpeg)
 
 ### Widgets
 ![widgets](images/screenshots/widgets.jpg)

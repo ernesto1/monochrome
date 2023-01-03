@@ -12,6 +12,20 @@ darkPurple:
     detailsText: c596c7     # system bar
     writeGraph: 51295e a36dec
     readGraph: 943145 e1778d
+orange:
+  image:
+    primaryColor: orange
+    secondaryColor: green
+  colors:
+    text: white
+    labels: white
+    bar: c15124
+    warning: d70d2f
+    widgetText: c15124
+    widgetTextSmall: 8a2700 # small thin text requires darker shade to be readable
+    detailsText: 703d0a     # system bar
+    writeGraph: eb652e f97928
+    readGraph: 123e01 68a315
 purple:
   image:
     primaryColor: purple

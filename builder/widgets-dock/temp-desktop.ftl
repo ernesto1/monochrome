@@ -11,6 +11,4 @@ ${template8 3 temp 1 [=threshold.tempDisk]}
 # :::::::::::::::::::: fans
 ${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-fan-1.png -p 0,256}${endif}\
 ${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-fan-2.png -p 0,256}${endif}\
-${if_updatenr 3}${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-fan-1.png -p 0,256}${endif}\
-${if_updatenr 4}${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-fan-2.png -p 0,256}${endif}\
 ${voffset 7}${offset 7}${font2}${template7 atk0110 fan 1 [=(threshold.fanSpeed)?c]}
