@@ -29,7 +29,7 @@ orange:
 purple:
   image:
     primaryColor: purple
-    secondaryColor: green
+    secondaryColor: teal
   colors:
     text: white
     labels: white
