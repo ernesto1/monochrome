@@ -78,6 +78,9 @@ if [[ $# < 1 ]]; then
   exit 1
 fi
 
+# define default variables
+noPackageLookup=false     # dnf package lookup is enabled by default, themes may disable this
+
 while (( "$#" )); do
   case $1 in
     --widgets)
@@ -87,6 +90,7 @@ while (( "$#" )); do
       ;;
     --widgets-dock)
       directory=${HOME}/conky/monochrome/widgets-dock
+      noPackageLookup=true
       shift
       ;;
     --glass)
@@ -95,6 +99,7 @@ while (( "$#" )); do
       ;;
     --compact)
       directory=${HOME}/conky/monochrome/compact
+      noPackageLookup=true
       shift
       ;;
     --monitor)
@@ -215,6 +220,7 @@ do
   IFS=$'\n'
 done
 
+$noPackageLookup && exit 0
 echo -e "\n::: starting dnf package lookup service"
 
 if [[ "${width}" ]]; then
