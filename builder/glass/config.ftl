@@ -49,18 +49,18 @@ conky.config = {
   font4 = 'Nimbus Mono PS Regular:size=8',    -- text
   
   -- colors
-  default_color = 'white',  -- regular text
-  color1 = 'dfa22f',         -- text labels
-  color2 = '4a71bc',        -- bar color default
-  color3 = 'd43207',        -- bar color warning
+  default_color = '[=colors.text]',  -- regular text
+  color1 = '[=colors.labels]',         -- text labels
+  color2 = '[=colors.bar]',        -- bar color default
+  color3 = '[=colors.warning]',        -- bar color warning
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   --  n.b. the line break escape character '\' is not supported in templates :(
 
   -- cpu/mem/download/disk write graph color
-  template1 = [[6b91e5 546fb2]],
+  template1 = [[[=colors.writeGraph]]],
   -- upload/disk read graph
-  template2 = [[dd9a2f bc701c]],
+  template2 = [[[=colors.readGraph]]],
   
   -- ethernet box: ${template3 ethernetDevice}
   -- common for both desktop and laptop

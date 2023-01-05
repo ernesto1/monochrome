@@ -1,0 +1,16 @@
+blue:
+  image:
+    primaryColor: blue
+    secondaryColor: ocre
+  colors:
+    text: white
+    labels: dfa22f
+    bar: 4a71bc
+    warning: d43207
+    writeGraph: 6b91e5 546fb2
+    readGraph: dd9a2f bc701c
+    # colors for detail conkys
+    systemText: e5e5e5
+    systemLabels: 839bc1
+    ownWindow: 2f3757
+    
