@@ -44,18 +44,18 @@ conky.config = {
   draw_outline = false,   -- black outline around text (not good if text is black)
   
   -- colors
-  default_color = 'a98162',
-  color1 = 'white',
-  color2 = '94131f',      -- bars
-  color3 = '800020',      -- bars critical
+  default_color = '[=colors.text]',  -- regular text
+  color1 = '[=colors.labels]',         -- text labels
+  color2 = '[=colors.bar]',        -- bar color default
+  color3 = '[=(colors.warning)?c]',        -- bar color warning
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   --  n.b. the line break escape character '\' is not supported in templates :(
-  
+
   -- cpu/mem/download/disk write graph color
-  template1 = [[5c111f c01e20]],
+  template1 = [[[=colors.writeGraph]]],
   -- upload/disk read graph
-  template2 = [[a98162 d3b699]],
+  template2 = [[[=colors.readGraph]]],
   
   -- ethernet speed: ${template3 ethernetDevice}
   template3 = [[${execi 180 ethtool \1 2>/dev/null | grep -i speed | cut -d ' ' -f 2}]],

@@ -6,6 +6,8 @@
 echo '::::::::::::: building conky sidebar'
 totalHeight=0
 
+rm -f /tmp/monochrome/sidebar     # remove prior conky version if it exists
+
 for file in "$@"
 do
   echo '>>>>' $file

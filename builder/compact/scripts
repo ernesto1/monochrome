@@ -6,16 +6,18 @@
 # hence why we use the temp folder in order to replace the file only once
 
 # ::::::: desktop sidebar
-mkdir -p /tmp/monochrome;\
-buildSidebar.bash config cpu-mem network-desktop disk disk-desktop disk-usb system bottom-edge;\
-echo ']];' >> /tmp/monochrome/sidebar;\
-mv /tmp/monochrome/sidebar ~/conky/monochrome/compact/sidebar
+java -jar ~/conky/monochrome/builder/freemarker-configuration.jar compact red && \
+pushd /tmp/monochrome/target && \
+buildSidebar.bash config cpu-mem network-desktop disk disk-desktop disk-usb system bottom-edge && \
+echo ']];' >> /tmp/monochrome/sidebar && \
+mv /tmp/monochrome/sidebar ~/conky/monochrome/compact
 
 # :::::::  laptop sidebar | under construction
-mkdir -p /tmp/monochrome;\
-buildSidebar.bash config system-cpu-mem network-laptop disk power bottom-edge;\
-echo ']];' >> /tmp/monochrome/sidebar;\
-mv /tmp/monochrome/sidebar ~/conky/monochrome/compact/sidebar
+java -jar ~/conky/monochrome/builder/freemarker-configuration.jar compact red && \
+pushd /tmp/monochrome/target && \
+buildSidebar.bash config system-cpu-mem network-laptop disk power bottom-edge && \
+echo ']];' >> /tmp/monochrome/sidebar && \
+mv /tmp/monochrome/sidebar ~/conky/monochrome/compact
 
 
 # design notes

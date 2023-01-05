@@ -9,8 +9,7 @@
 # available components: usb-devices
 java -jar ~/conky/monochrome/builder/freemarker-configuration.jar glass blue && \
 pushd /tmp/monochrome/target && \
-cat config > /tmp/monochrome/sidebar && \
-buildSidebar.bash cpu-mem network-desktop disk disks-desktop disk-usb time temperature-desktop bottom-edge && \
+buildSidebar.bash config cpu-mem network-desktop disk disks-desktop disk-usb time temperature-desktop bottom-edge && \
 echo '${voffset -720}]]' >> /tmp/monochrome/sidebar && \
 mv /tmp/monochrome/sidebar ~/conky/monochrome/glass/sidebar
 
@@ -18,7 +17,11 @@ mv /tmp/monochrome/sidebar ~/conky/monochrome/glass/sidebar
 # laptop sidebar
 java -jar ~/conky/monochrome/builder/freemarker-configuration.jar glass blue && \
 pushd /tmp/monochrome/target && \
-cat config > /tmp/monochrome/sidebar && \
-buildSidebar.bash cpu-mem network-laptop disk power bottom-edge && \
+buildSidebar.bash config cpu-mem network-laptop disk power bottom-edge && \
 echo '${voffset -720}]];' >> /tmp/monochrome/sidebar && \
 mv system processes /tmp/monochrome/sidebar ~/conky/monochrome/glass
+
+
+cat config > /tmp/monochrome/sidebar && \
+buildSidebar.bash cpu-mem network-laptop disk power bottom-edge && \
+
