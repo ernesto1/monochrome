@@ -62,11 +62,25 @@ ${template2 2}
 ${template2 3}
 ${template2 4}
 ${template2 5}
-${if_up wlp4s0}\
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-bar-wifi.png -p 0,210}\
-${voffset 17}${offset 5}${color1}network${goto 60}${color}${wireless_essid wlp4s0}
-${voffset 3}${offset 5}${color1}local ip${goto 60}${color}${addr wlp4s0}
-${voffset 3}${offset 5}${color1}bitrate${goto 60}${color}${wireless_bitrate wlp4s0}
-${voffset 3}${offset 5}${color1}channel${goto 60}${color}${wireless_channel wlp4s0}
+${if_gw}\
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-bar-network.png -p 0,210}\
+<#list networkDevices as device>
+<#if device.type == "wifi">
+${if_up [=device.name]}\
+${voffset 17}${offset 5}${color1}network${goto 60}${color}${wireless_essid [=device.name]}
+${voffset 3}${offset 5}${color1}local ip${goto 60}${color}${addr [=device.name]}
+${voffset 3}${offset 5}${color1}bitrate${goto 60}${color}${wireless_bitrate [=device.name]}
+${voffset 3}${offset 5}${color1}channel${goto 60}${color}${wireless_channel [=device.name]}
+${endif}\
+</#if>
+<#if device.type == "ethernet">
+${if_up [=device.name]}\
+${voffset 17}${offset 5}${color1}local ip${goto 73}${color}${addr [=device.name]}
+${voffset 3}${offset 5}${color1}speed${goto 73}${color}${execi 180 ethtool [=device.name] 2>/dev/null | grep -i speed | cut -d ' ' -f 2}
+${voffset 3}${offset 5}${color1}total up${goto 73}${color}${totalup [=device.name]}
+${voffset 3}${offset 5}${color1}total down${goto 73}${color}${totaldown [=device.name]}
+${endif}\
+</#if>
+</#list>
 ${endif}\
 ]];

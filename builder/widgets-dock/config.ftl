@@ -62,11 +62,6 @@ conky.config = {
   template1 = [[[=colors.writeGraph]]],
   -- upload/disk read graph
   template2 = [[[=colors.readGraph]]],
-  
-  -- ethernet block: ${template3 ethernetDevice}
-  template3 = [[
-${voffset 23}${goto 67}${font}${execi 180 ethtool \1 2>/dev/null | grep -i speed | cut -d ' ' -f 2}
-${voffset 4}${goto 67}${addr \1}${voffset 8}]],
 
   -- network bandwith: ${template4 device uploadSpeed downloadSpeed}
   template4 = [[

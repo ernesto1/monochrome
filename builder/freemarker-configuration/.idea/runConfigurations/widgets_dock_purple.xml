@@ -2,7 +2,7 @@
   <configuration default="false" name="widgets-dock purple" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="com.conky.ConkyTemplate" />
     <module name="freemarker-configuration" />
-    <option name="PROGRAM_PARAMETERS" value="widgets-dock purple" />
+    <option name="PROGRAM_PARAMETERS" value="widgets-dock purple desktop" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="com.conky.*" />

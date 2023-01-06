@@ -62,11 +62,6 @@ conky.config = {
   template1 = [[eb652e f97928]],
   -- upload/disk read graph
   template2 = [[123e01 68a315]],
-  
-  -- ethernet block: ${template3 ethernetDevice}
-  template3 = [[
-${voffset 23}${goto 67}${font}${execi 180 ethtool \1 2>/dev/null | grep -i speed | cut -d ' ' -f 2}
-${voffset 4}${goto 67}${addr \1}${voffset 8}]],
 
   -- network bandwith: ${template4 device uploadSpeed downloadSpeed}
   template4 = [[
@@ -131,7 +126,8 @@ ${else}\
 # :::::: ethernet
 ${if_up enp6s0}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-ethernet.png -p 0,181}\
-${template3 enp6s0}
+# ethernet details printed on the system conky
+${voffset 48}
 # :: upload/download speeds
 ${image ~/conky/monochrome/images/widgets-dock/orange-internet.png -p 0,245}\
 ${template4 enp6s0 3000 60000}

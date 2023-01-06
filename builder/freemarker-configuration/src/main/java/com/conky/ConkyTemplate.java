@@ -21,10 +21,10 @@ public class ConkyTemplate {
     private static final String OUTPUT_DIR = "/tmp/monochrome/target";
 
     /**
-     * usage: conkyTemplate <conky theme> <color>
+     * Parses the conky freemarker template file based on the given configuration
      * @param args
-     * @throws IOException
-     * @throws TemplateException
+     * @throws IOException if the input files are not available
+     * @throws TemplateException if a freemarker error occurs while processing the templates
      */
     public static void main(String[] args) throws IOException, TemplateException {
         validateArguments(args);
@@ -34,6 +34,9 @@ public class ConkyTemplate {
         InputStream globalSettingsStream = new FileInputStream(new File(buildDirectory, "globalSettings.yml"));
         Yaml yaml = new Yaml();
         Map<String, Object> root = yaml.load(globalSettingsStream);
+        // set up system specific attributes
+        Map<String, Object> networkDevices = (Map<String, Object>) root.get(args[2]);
+        root.putAll(networkDevices);
         // load conky theme data model
         File templateDirectory = new File(buildDirectory, args[0]);
         InputStream colorPaletteStream = new FileInputStream(new File(templateDirectory, "colorPalette.yml"));
@@ -76,8 +79,9 @@ public class ConkyTemplate {
     }
 
     private static void validateArguments(String[] args) {
-        if (args.length !=2) {
-            System.err.println("usage: conkyTemplate <conky theme> <color>");
+        if (args.length !=3) {
+            System.err.println("usage: conkyTemplate <conky theme> <color> <system>");
+            System.err.println("where system can be 'desktop' or 'laptop'");
             System.exit(1);
         }
 

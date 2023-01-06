@@ -8,19 +8,18 @@
 # the java freemarker template app will output the conky blocks in the /tmp/monochrome/target folder
 
 # ::::::: desktop sidebar
-java -jar ../freemarker-configuration.jar widgets-dock purple && \
+java -jar ../freemarker-configuration.jar widgets-dock purple desktop && \
 pushd /tmp/monochrome/target && \
 buildSidebar.bash config cpu-mem network-desktop disk disk-desktop disk-maxtor temp-cpu-desktop temp-desktop time-block bottom-edge && \
-echo '${voffset -340}]];' >> /tmp/monochrome/sidebar && \
+echo '${voffset -360}]];' >> /tmp/monochrome/sidebar && \
 mv system sidebar-time /tmp/monochrome/sidebar ~/conky/monochrome/widgets-dock
 
 # ::::::: laptop sidebar
-java -jar ~/conky/monochrome/builder/freemarker-configuration.jar widgets-dock purple && \
+java -jar ~/conky/monochrome/builder/freemarker-configuration.jar widgets-dock purple laptop && \
 pushd /tmp/monochrome/target && \
 buildSidebar.bash config cpu-mem network-laptop disk power temp-cpu-laptop time-block bottom-edge && \
 echo '${voffset -260}]];' >> /tmp/monochrome/sidebar && \
 mv system sidebar-time /tmp/monochrome/sidebar ~/conky/monochrome/widgets-dock
-
 
 
 # design notes

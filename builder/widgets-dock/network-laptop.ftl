@@ -15,7 +15,8 @@ ${else}\
 # :::::: ethernet
 ${if_up enp6s0}\
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-ethernet.png -p 0,0}\
-${template3 enp6s0}
+# ethernet details printed on the system conky
+${voffset 48}
 # :: upload/download speeds
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-internet.png -p 0,64}\
 ${template4 enp6s0 3000 60000}
