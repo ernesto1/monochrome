@@ -1,7 +1,7 @@
 blue:
   image:
     primaryColor: blue
-    secondaryColor: ocre
+    secondaryColor: ochre
   colors:
     text: white
     labels: dfa22f

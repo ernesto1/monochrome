@@ -10,7 +10,7 @@ conky.config = {
 
   -- window settings
   minimum_width = 113,
-  minimum_height = 1128,
+  minimum_height = 1325,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -138,62 +138,62 @@ ${template3 enp0s25}
 ${template4 enp0s25 3000 60000}
 ${else}\
 # no network/internet
-${image ~/conky/monochrome/images/glass/blue-network-internet-disconnected-desktop.png -p 0,219}\
+${image ~/conky/monochrome/images/glass/ochre-network-internet-disconnected-desktop.png -p 0,219}\
 ${voffset 12}${offset 5}${color}${font0}network
 ${voffset 143}${alignc}${color}${font4}no ethernet
 ${alignc}connection
 ${voffset -10}
 ${endif}\
 ################### disk - sda
-${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,219}\
+${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,416}\
 # speeds | read: 140MiB  write: 151MiB
 ${template5 sda 280000 302000}
 ${template6 fedora /}
-${image ~/conky/monochrome/images/glass/blue-filesystem.png -p 0,373}\
+${image ~/conky/monochrome/images/glass/blue-filesystem.png -p 0,570}\
 ${template6 home /home}
 ################### disk - sdb
-${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,423}\
+${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,620}\
 # speeds | read: 151MiB  write: 100MiB
 ${template5 sdb 6000 200000}
 ${template6 veronica /media/veronica}
 ################### disk - sdc
-${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,577}\
+${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,774}\
 # speeds | read: 151MiB  write: 100MiB
 ${template5 sdc 6000 200000}
 ${template6 betty /media/betty}
 ################### external hard drive
 ${if_mounted /run/media/ernesto/MAXTOR}\
-${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,731}\
+${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,928}\
 # speeds | read: 24MiB  write: 24MiB (the usb2 max speed)
 ${template5 sdg1 6000 52000}
 ${template6 maxtor\ HD /run/media/ernesto/MAXTOR}
 ${else}\
-${image ~/conky/monochrome/images/glass/ocre-disk-disconnected.png -p 0,731}\
+${image ~/conky/monochrome/images/glass/ochre-disk-disconnected.png -p 0,928}\
 ${voffset 12}${alignc}${color}${font0}maxtor HD
 ${voffset 103}${alignc}${color}${font4}device is not
 ${alignc}connected
 ${endif}\
 ################### time
-${image ~/conky/monochrome/images/glass/blue-block-small.png -p 0,885}\
+${image ~/conky/monochrome/images/glass/blue-block-small.png -p 0,1082}\
 ${voffset 10}${offset 5}${color1}${font Promenade de la Croisette:size=40}${time %I}${font Promenade de la Croisette:size=37}:${time %M}${font0}${voffset -30}${alignr 6}${color}${time %A}
 ${voffset 2}${alignr 6}${time %B}
 ${voffset 2}${alignr 6}${time %d}
 ################### temperatures
-${if_updatenr 1}${image ~/conky/monochrome/images/glass/blue-temperature-desktop-1.png -p 0,942}${endif}\
-${if_updatenr 2}${image ~/conky/monochrome/images/glass/blue-temperature-desktop-2.png -p 0,942}${endif}\
+${if_updatenr 1}${image ~/conky/monochrome/images/glass/blue-temperature-desktop-1.png -p 0,1139}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/glass/blue-temperature-desktop-2.png -p 0,1139}${endif}\
 # :::: cpu
 ${voffset 6}${voffset 7}${offset 5}${color1}${font0}cpu
-${voffset -9}${alignr}${color}${font2}${template8 atk0110 temp 1 75}°C 
-${alignr 7}${color}${font4}cores ${template8 coretemp temp 5 75}°C
+${voffset -9}${alignr}${color}${font2}${template8 atk0110 temp 1 78}°C 
+${alignr 7}${color}${font4}cores ${template8 coretemp temp 5 85}°C
 # :::: video card
 ${voffset 6}${voffset 7}${offset 5}${color1}${font0}video card
-${voffset -9}${alignr}${color}${font2}${template8 radeon temp 1 78}°C 
+${voffset -9}${alignr}${color}${font2}${template8 radeon temp 1 75}°C 
 # :::: hard disks
 ${voffset 7}${offset 5}${color1}${font0}hard disks
 ${voffset -9}${alignr}${color}${font2}${template8 1 temp 1 42}°C 
 # :::: fans
 ${voffset 7}${offset 5}${color1}${font0}fans
-${voffset -8}${alignr}${color}${font2}${template8 atk0110 fan 1 2400} 
+${voffset -8}${alignr}${color}${font2}${template8 atk0110 fan 1 2300} 
 ${voffset -4}${alignr 7}${font4}rpm
-${image ~/conky/monochrome/images/glass/blue-edge-bottom.png -p 0,1123}\
+${image ~/conky/monochrome/images/glass/blue-edge-bottom.png -p 0,1320}\
 ${voffset -720}]]

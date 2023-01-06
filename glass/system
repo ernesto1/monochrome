@@ -1,6 +1,5 @@
 conky.config = {
   update_interval = 2,  -- update interval in seconds
-  total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
   xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
@@ -46,8 +45,6 @@ conky.config = {
   -- colors
   default_color = 'e5e5e5',  -- regular text
   color1 = '839bc1',         -- text labels
-  color2 = '4a71bc',        -- bar color default
-  color3 = '800020',        -- bar color warning
   own_window_colour = '2f3757'
 };
 

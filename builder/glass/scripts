@@ -11,7 +11,7 @@ java -jar ~/conky/monochrome/builder/freemarker-configuration.jar glass blue && 
 pushd /tmp/monochrome/target && \
 buildSidebar.bash config cpu-mem network-desktop disk disks-desktop disk-usb time temperature-desktop bottom-edge && \
 echo '${voffset -720}]]' >> /tmp/monochrome/sidebar && \
-mv /tmp/monochrome/sidebar ~/conky/monochrome/glass/sidebar
+mv system processes /tmp/monochrome/sidebar ~/conky/monochrome/glass
 
 
 # laptop sidebar
@@ -20,8 +20,3 @@ pushd /tmp/monochrome/target && \
 buildSidebar.bash config cpu-mem network-laptop disk power bottom-edge && \
 echo '${voffset -720}]];' >> /tmp/monochrome/sidebar && \
 mv system processes /tmp/monochrome/sidebar ~/conky/monochrome/glass
-
-
-cat config > /tmp/monochrome/sidebar && \
-buildSidebar.bash cpu-mem network-laptop disk power bottom-edge && \
-

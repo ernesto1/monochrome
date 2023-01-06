@@ -45,8 +45,6 @@ conky.config = {
   -- colors
   default_color = 'e5e5e5',  -- regular text
   color1 = '839bc1',         -- text labels
-  color2 = '4a71bc',        -- bar color default
-  color3 = '800020',        -- bar color warning
   
   -- template
   template0 = [[
