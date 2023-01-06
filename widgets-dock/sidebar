@@ -51,8 +51,8 @@ conky.config = {
   -- colors
   default_color = 'white',  -- regular text
   color1 = 'white',         -- text labels
-  color2 = 'c15124',        -- bar color default
-  color3 = 'd70d2f',        -- bar color warning
+  color2 = 'c15124',        -- bar
+  color3 = 'd70d2f',        -- bar critical
   color4 = 'c15124',        -- temperature text
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::

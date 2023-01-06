@@ -51,8 +51,8 @@ conky.config = {
   -- colors
   default_color = '[=colors.text]',  -- regular text
   color1 = '[=colors.labels]',         -- text labels
-  color2 = '[=colors.bar]',        -- bar color default
-  color3 = '[=colors.warning]',        -- bar color warning
+  color2 = '[=colors.bar]',        -- bar
+  color3 = '[=colors.warning]',        -- bar critical
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   --  n.b. the line break escape character '\' is not supported in templates :(
