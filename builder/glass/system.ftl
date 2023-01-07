@@ -59,8 +59,7 @@ ${voffset 3}${goto 19}${color1}network${goto 75}${color}${wireless_essid wlp4s0}
 ${voffset 3}${color1}${goto 12}local ip${goto 75}${color}${addr wlp4s0}
 ${voffset 8}\
 ${endif}\
-# use of the netstat command to determine how many 'established' connections the transmission bittorrent client has currently open
-${voffset 3}${color1}bittorrent${goto 75}${color}${execi 3 netstat -tuapn | grep -iE 'established.+transmission' | wc -l} peer(s)
+${voffset 3}${color1}bittorrent${goto 75}${color}${tcp_portmon 51413 51413 count} peer(s)
 ${voffset 3}${color1}${goto 44}zoom${goto 75}${color}${if_running zoom}running${else}off${endif}
 # :::::::::::: package updates
 ${if_existing /tmp/dnf.packages}\
