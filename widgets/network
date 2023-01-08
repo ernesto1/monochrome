@@ -9,7 +9,7 @@ conky.config = {
   gap_y = 10,
 
   -- window settings
-  minimum_width = 170,
+  minimum_width = 209,
   minimum_height = 188,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -32,6 +32,7 @@ conky.config = {
   draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
                               -- does not include bars, ie. wifi strength bar, cpu bar
 
+  imlib_cache_flush_interval = 250,
   if_up_strictness = 'address', -- network device must be up, having link and an assigned IP address
                                 -- to be considered "up" by ${if_up}
                                 -- values are: up, link or address
@@ -55,15 +56,15 @@ conky.config = {
 conky.text = [[
 ${if_up enp0s25}\
 ${image ~/conky/monochrome/images/widgets/green-internet.png -p 0,0}\
-${voffset 3}${offset 5}${color1}local ip${goto 71}${color}${addr enp0s25}
-${voffset 3}${offset 5}${color1}bittorrent${goto 71}${color}${tcp_portmon 51413 51413 count} peer(s)
-${voffset 3}${offset 5}${color1}zoom${goto 71}${color}${if_running zoom}running${else}off${endif}
-${voffset 4}${offset 46}${upspeedgraph enp0s25 41,119 ${template2} 3000}
-${voffset -11}${offset 46}${downspeedgraph enp0s25 41,119 ${template1} 55000}
-${voffset 4}${offset 5}${color1}up${alignr 56}${color}${upspeed enp0s25} ${color1}total
-${voffset 4}${offset 5}${color1}down${alignr 56}${color}${downspeed enp0s25} ${color1}total
-${voffset -30}${alignr 5}${color}${totalup enp0s25}
-${voffset 4}${alignr 5}${color}${totaldown enp0s25}
+${voffset 3}${offset 11}${color1}local ip${goto 77}${color}${addr enp0s25}
+${voffset 3}${offset 11}${color1}bittorrent${goto 77}${color}${tcp_portmon 51413 51413 count} peer(s)
+${voffset 3}${offset 11}${color1}zoom${goto 77}${color}${if_running zoom}running${else}off${endif}
+${voffset 6}${offset 68}${upspeedgraph enp0s25 37,97 ${template2} 3000}
+${voffset -7}${offset 68}${downspeedgraph enp0s25 37,97 ${template1} 55000}
+${voffset 6}${offset 7}${color1}up${alignr 93}${color}${upspeed enp0s25} ${color1}total
+${voffset 4}${offset 7}${color1}down${alignr 93}${color}${downspeed enp0s25} ${color1}total
+${voffset -30}${alignr 43}${color}${totalup enp0s25}
+${voffset 4}${alignr 43}${color}${totaldown enp0s25}
 # we need to remove the trailing spacing added the moment we voffset'ed the upload graph 
 ${voffset -20}
 ${else}\
