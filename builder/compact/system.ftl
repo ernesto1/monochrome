@@ -1,8 +1,8 @@
 # -------------- system
 ${if_updatenr 1}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-system-1.png -p 0,0}${endif}\
 ${if_updatenr 2}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-system-2.png -p 0,0}${endif}\
-${voffset 14}${goto 47}${color1}o/s ${color}${execi 5000 grep PRETTY_NAME /etc/os-release | cut -d '"' -f 2 | cut -d '(' -f 1 | tr 'A-Z' 'a-z'}
-${voffset 3}${goto 47}${color1}uptime ${color}${uptime}
+${voffset 14}${goto 47}${color1}uptime ${color}${uptime}
+${voffset 3}${goto 47}${color1}compositor ${color}${execi 3600 echo $XDG_SESSION_TYPE}
 ${voffset 10}${offset 5}${color1}kernel ${color}${kernel}
 ${voffset 8}${offset 5}${color1}device${alignr 59}temperature
 ${voffset 5}${offset 5}${color}cpu${alignr 53}${template9 atk0110 temp 1 [=threshold.tempCpu]}°C
