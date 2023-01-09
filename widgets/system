@@ -5,7 +5,7 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',
-  gap_x = 232,         -- gap between border of the screen and the conky window, same as passing -x at command line
+  gap_x = 225,         -- gap between border of the screen and the conky window, same as passing -x at command line
   gap_y = 58,
 
   -- window settings
@@ -54,7 +54,7 @@ ${voffset 5}${color1}kernel${goto 70}${color}${kernel}
 ${voffset 3}${color1}uptime${goto 70}${color}${uptime}
 ${voffset 3}${color1}compositor${goto 70}${color}${execi 3600 echo $XDG_SESSION_TYPE}
 # :::::::::::: temperatures & cooling
-${voffset 10}${color1}Temperature & Cooling ${hr}
+${voffset 10}${color1}temperature & cooling ${hr}
 ${voffset 5}${color1}device${alignr}temperature
 ${voffset 3}${color}AMD Radeon HD7570${alignr}${template1 radeon temp 1 75}°C
 ${voffset 5}${color1}fan${alignr}revolutions
@@ -64,7 +64,7 @@ ${voffset 3}${color}case top exhaust fan${alignr}${template1 atk0110 fan 2 2500}
 ${voffset 3}${color}case back exhaust fan${alignr}${template1 atk0110 fan 4 2500} rpm
 # :::::::::::: package updates
 ${if_existing /tmp/dnf.packages}\
-${voffset 10}${color1}DNF Package Management ${hr}
+${voffset 10}${color1}dnf package management ${hr}
 ${voffset 5}${color}${lines /tmp/dnf.packages} package update(s) available
 ${voffset 5}${color1}package${alignr}version
 # the dnf package lookup script refreshes the package list every 10m
