@@ -30,6 +30,7 @@ conky.config = {
   -- graph settings
   draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
                               -- does not include bars, ie. wifi strength bar, cpu bar
+  imlib_cache_flush_interval = 250,
                                 
   -- font settings
   draw_shades = false,    -- black shadow on text (not good if text is black)
@@ -47,9 +48,9 @@ conky.config = {
   template2 = [[a86135 fda15e]],
   
   -- disk io: ${template3 device readSpeed writeSpeed}
-  template3 = [[${voffset -4}${offset 4}${diskiograph_read \1 42,78 ${template2} \2}
-${voffset -11}${offset 4}${diskiograph_write \1 42,78 ${template1} \3}
-${voffset 3}${offset 5}${color1}read${alignr 120}${color}${diskio_read \1}
+  template3 = [[${voffset -1}${offset 1}${diskiograph_read \1 37,67 ${template2} \2}
+${voffset -7}${offset 1}${diskiograph_write \1 37,67 ${template1} \3}
+${voffset 6}${offset 5}${color1}read${alignr 120}${color}${diskio_read \1}
 ${voffset 4}${offset 5}${color1}write${alignr 120}${color}${diskio_write \1}]],
 
   -- disk partition: ${template4 partition name}
