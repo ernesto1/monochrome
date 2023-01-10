@@ -44,7 +44,7 @@ conky.config = {
   
   -- :::::::::::::::: templates  
   -- usb memory device file system: ${template1 devicePath}
-  template1 = [[${voffset 37}${offset 2}${color2}${if_match ${fs_used_perc \1} > 90}${color3}${endif}${fs_bar 3, 45 \1}
+  template1 = [[${voffset 37}${offset 1}${color2}${if_match ${fs_used_perc \1} > 90}${color3}${endif}${fs_bar 3, 45 \1}
 ${offset 53}${voffset -47}${color1}fs type${goto 103}${color}${fs_type \1}
 ${offset 53}${voffset 3}${color1}size${goto 103}${color}${fs_size \1}
 ${offset 53}${voffset 3}${color1}free${goto 103}${color}${fs_free \1}${voffset 7}]],
