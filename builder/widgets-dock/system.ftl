@@ -67,7 +67,7 @@ ${template2 4}
 ${template2 5}
 # :::::::::::: network
 # assumption: only one network device will be connected to the internet at a time
-<#list networkDevices as device>
+<#list networkDevices[system] as device>
 <#if device.type == "wifi">
 # :::::: wifi
 ${if_up [=device.name]}\

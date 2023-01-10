@@ -34,9 +34,8 @@ public class ConkyTemplate {
         InputStream globalSettingsStream = new FileInputStream(new File(buildDirectory, "globalSettings.yml"));
         Yaml yaml = new Yaml();
         Map<String, Object> root = yaml.load(globalSettingsStream);
-        // set up system specific attributes
-        Map<String, Object> networkDevices = (Map<String, Object>) root.get(args[2]);
-        root.putAll(networkDevices);
+        // set up system variable
+        root.put("system", args[2]);
         // load conky theme data model
         File templateDirectory = new File(buildDirectory, args[0]);
         InputStream colorPaletteStream = new FileInputStream(new File(templateDirectory, "colorPalette.yml"));
@@ -78,6 +77,10 @@ public class ConkyTemplate {
         }
     }
 
+    /**
+     * Ensures required arguments were provided and that they are proper
+     * @param args arguments provided to the program
+     */
     private static void validateArguments(String[] args) {
         if (args.length !=3) {
             System.err.println("usage: conkyTemplate <conky theme> <color> <system>");
@@ -94,6 +97,8 @@ public class ConkyTemplate {
             logger.error("conky directory {} does not exist", conkyDir);
             System.exit(1);
         }
+
+        // TODO ensure proper system variable was provided
     }
 
     private static Configuration createFreemarkerConfiguration(File templateDirectory) throws IOException {

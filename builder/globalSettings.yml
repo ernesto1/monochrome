@@ -1,13 +1,12 @@
-desktop:
-  networkDevices:
+networkDevices:
+  desktop:
     - name: enp0s25
       type: ethernet  
-laptop:
-  networkDevices:
-    - name: wlp4s0
-      type: wifi
-    - name: enp6s0
-      type: ethernet
+  laptop:
+      - name: wlp4s0
+        type: wifi
+      - name: enp6s0
+        type: ethernet
 threshold:
   cpu: 90
   mem: 85
