@@ -53,6 +53,7 @@ conky.config = {
   color1 = '[=colors.labels]',        -- text labels
   color2 = '[=colors.bar]',        -- bar
   color3 = '[=colors.warning]',        -- bar critical
+  color4  ='[=colors.offlineText]',        -- text for disconnected device
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   -- disk partition: ${template1 partition name}
@@ -81,6 +82,7 @@ ${template1 [=partition.path] [=partition.name]}
 </#list>
 ${else}\
 ${image ~/conky/monochrome/images/widgets/[=image.secondaryColor]-disk-disconnected.png -p 0,0}\
+${voffset 113}${alignr 128}${color4}[=hardDisk.device]
 ${endif}\
 ]];
 </@outputFileDirective>

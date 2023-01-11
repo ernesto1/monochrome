@@ -40,7 +40,7 @@ conky.config = {
   color1 = '[=colors.labels]',        -- text labels
   color2 = '[=colors.bar]',        -- bar
   color3 = '[=colors.warning]',        -- bar critical
-  color4  ='[=colors.offlineText]',        -- regular text for disconnected device
+  color4  ='[=colors.offlineText]',        -- text for disconnected device
   
   -- :::::::::::::::: templates  
   -- usb memory device file system: ${template1 devicePath}
