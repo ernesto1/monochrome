@@ -38,10 +38,10 @@ conky.config = {
   draw_shades = false,    -- black shadow on text (not good if text is black)
   
   -- colors
-  default_color = 'a7aa71', -- regular text
-  color1 = 'bf8766',        -- text labels
-  color2 = '9fc14a',        -- bar
-  color3 = 'ad2724',        -- bar critical
+  default_color = '[=colors.text]', -- regular text
+  color1 = '[=colors.labels]',        -- text labels
+  color2 = '[=colors.bar]',        -- bar
+  color3 = '[=colors.warning]',        -- bar critical
 };
 
 conky.text = [[
@@ -50,8 +50,8 @@ ${image ~/conky/monochrome/images/widgets/green-internet.png -p 0,0}\
 ${voffset 3}${offset 11}${color1}local ip${goto 77}${color}${addr enp0s25}
 ${voffset 3}${offset 11}${color1}bittorrent${goto 77}${color}${tcp_portmon 51413 51413 count} peer(s)
 ${voffset 3}${offset 11}${color1}zoom${goto 77}${color}${if_running zoom}running${else}off${endif}
-${voffset 6}${offset 68}${upspeedgraph enp0s25 37,97 a86135 fda15e 3000}
-${voffset -7}${offset 68}${downspeedgraph enp0s25 37,97 4c6e3b 9fc14a 55000}
+${voffset 6}${offset 68}${upspeedgraph enp0s25 37,97 [=colors.readGraph] 3000}
+${voffset -7}${offset 68}${downspeedgraph enp0s25 37,97 [=colors.writeGraph] 55000}
 ${voffset 6}${offset 7}${color1}up${alignr 93}${color}${upspeed enp0s25} ${color1}total
 ${voffset 4}${offset 7}${color1}down${alignr 93}${color}${downspeed enp0s25} ${color1}total
 ${voffset -30}${alignr 43}${color}${totalup enp0s25}

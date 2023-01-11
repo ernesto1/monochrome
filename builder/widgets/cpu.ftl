@@ -5,12 +5,12 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 881,                -- same as passing -x at command line
-  gap_y = 48,
+  gap_x = 460,               -- same as passing -x at command line
+  gap_y = 10,
 
   -- window settings
-  minimum_width = 215,
-  minimum_height = 94,
+  minimum_width = 323,
+  minimum_height = 138,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -33,31 +33,47 @@ conky.config = {
                               -- does not include bars, ie. wifi strength bar, cpu bar
 
   top_name_verbose = true,    -- show full command in ${top ...}
-  top_name_width = 20,        -- how many characters to print
+  top_name_width = 21,        -- how many characters to print
 
   imlib_cache_flush_interval = 300,
   -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
 
-  -- font settings
+  -- font settingsr
   draw_shades = false,    -- black shadow on text (not good if text is black)
   
   -- colors
-  default_color = 'a7aa71', -- regular text
-  color1 = 'bf8766',        -- text labels
-  color2 = '9fc14a',        -- bar
-  color3 = 'ad2724',        -- bar critical
+  default_color = '[=colors.text]', -- regular text
+  color1 = '[=colors.labels]',        -- text labels
+  color2 = '[=colors.cpuBar]',        -- bar
+  color3 = '[=colors.warning]',        -- bar critical
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
-  -- memory process
-  template9 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${alignr 3}${top_mem mem_res \1} ${top_mem pid \1}]]
+  -- cpu bar: ${template1 cpuCore}
+  template1 = [[${voffset -3}${offset 16}${color2}${if_match ${cpu cpu\1} >= [=threshold.cpu]}${color3}${endif}${cpubar cpu\1 4, 66}]],
+
+  -- top cpu process: ${template2 process#}
+  template2 = [[${voffset 3}${goto 110}${color}${top name \1}${top cpu \1}% ${top pid \1}]],
+  
+  -- hwmon entry: index/device type index threshold
+  template3 = [[${if_match ${hwmon \1 \2 \3} > \4}${color3}${else}${color}${endif}${hwmon \1 \2 \3}]]
 };
 
 conky.text = [[
-# a bug in conky causes the memory graph to jitter if the ${top_mem} variables are used in the same file
-# hence why the memory processes had to be placed in their own conky : /
-${image ~/conky/monochrome/images/widgets/green-processes.png -p 0,0}\
-${voffset 3}${offset 5}${color1}process${alignr 2}mem   pid${voffset 1}
-${template9 1}
-${template9 2}
-${template9 3}
-${template9 4}]];
+${image ~/conky/monochrome/images/widgets/green-cpu.png -p 0,0}\
+${voffset 12}${template1 1}
+${template1 2}
+${template1 3}
+${template1 4}
+${template1 5}
+${template1 6}
+${template1 7}
+${template1 8}
+${voffset 8}${offset 9}${cpugraph cpu0 31,82 [=colors.writeGraph]}
+${voffset -135}${goto 109}${color1}process${alignr 5}cpu   pid${voffset 1}
+${template2 1}
+${template2 2}
+${template2 3}
+${template2 4}
+${voffset 16}${goto 109}${color1}cpu  ${color}${cpu cpu0}%${alignr 5}${template3 atk0110 temp 1 [=threshold.tempCPU]}°C${color1} cpu temp
+${voffset 4}${goto 109}${color1}load ${color}${loadavg}${alignr 5}${template3 coretemp temp 2 [=threshold.tempCPUCore]}°C${color1}core temp
+]];

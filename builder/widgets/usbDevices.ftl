@@ -36,11 +36,11 @@ conky.config = {
   draw_shades = false,    -- black shadow on text (not good if text is black)
   
   -- colors
-  default_color = 'a7aa71', -- regular text
-  color1 = 'bf8766',        -- text labels
-  color2 = '9fc14a',        -- bar
-  color3 = 'ad2724',        -- bar critical
-  color4  ='fda15e',        -- regular text for disconnected device
+  default_color = '[=colors.text]', -- regular text
+  color1 = '[=colors.labels]',        -- text labels
+  color2 = '[=colors.bar]',        -- bar
+  color3 = '[=colors.warning]',        -- bar critical
+  color4  ='[=colors.offlineText]',        -- regular text for disconnected device
   
   -- :::::::::::::::: templates  
   -- usb memory device file system: ${template1 devicePath}

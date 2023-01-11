@@ -37,11 +37,11 @@ conky.config = {
   draw_shades = false,    -- black shadow on text (not good if text is black)
   
   -- colors
-  own_window_colour = '2f2d1e',
-  default_color = 'a7aa71', -- regular text
-  color1 = 'bf8766',        -- text labels
-  color2 = '9fc14a',        -- bar
-  color3 = 'ad2724',        -- bar critical
+  own_window_colour = '[=colors.windowColor]',
+  default_color = '[=colors.text]', -- regular text
+  color1 = '[=colors.labels]',        -- text labels
+  color2 = '[=colors.bar]',        -- bar
+  color3 = '[=colors.warning]',        -- bar critical
   
   -- :::::::: templates
   -- hwmon entry: index/device type index threshold
