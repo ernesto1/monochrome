@@ -1,4 +1,5 @@
 system: laptop  # default value, overriden by freemarker java app
+
 networkDevices:
   desktop:
     - name: enp0s25
@@ -8,6 +9,39 @@ networkDevices:
         type: wifi
       - name: enp6s0
         type: ethernet
+        
+hardDisks:
+  desktop:
+    - device: sda
+      readSpeed: 200000
+      writeSpeed: 280000
+      hwmonIndex: 1     # optional | linux hardware monitor index, ex. hwmon3
+      partitions:
+        - name: fedora
+          path: /
+        - name: home
+          path: /home
+    - device: sdb
+      readSpeed: 6000
+      writeSpeed: 250000
+      hwmonIndex: 2
+      partitions:
+        - name: veronica
+          path: /media/veronica
+    - device: sdd
+      readSpeed: 6000
+      writeSpeed: 250000
+      hwmonIndex: 3
+      partitions:
+        - name: betty
+          path: /media/betty
+    - device: sde1
+      readSpeed: 6000
+      writeSpeed: 60000
+      name: maxtor      # optional | name to append to the output file name, ex. disk-maxtor
+      partitions:
+        - name: maxtor
+          path: /run/media/ernesto/MAXTOR
 threshold:
   cpu: 90
   mem: 85

@@ -38,37 +38,33 @@ conky.config = {
   -- colors
   default_color = 'a7aa71', -- regular text
   color1 = 'bf8766',        -- text labels
-  color2 = '9fc14a',        -- bar color default
-  color3 = 'ad2724',        -- bar color warning
+  color2 = '9fc14a',        -- bar
+  color3 = 'ad2724',        -- bar critical
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
-  -- cpu/mem/download/disk write graph color
-  template1 = [[4c6e3b 9fc14a]],
-  -- upload/disk read graph
-  template2 = [[a86135 fda15e]],
-  
-  -- disk io: ${template3 device readSpeed writeSpeed}
-  template3 = [[${voffset -1}${offset 1}${diskiograph_read \1 37,67 ${template2} \2}
-${voffset -7}${offset 1}${diskiograph_write \1 37,67 ${template1} \3}
-${voffset 6}${offset 5}${color1}read${alignr 120}${color}${diskio_read \1}
-${voffset 4}${offset 5}${color1}write${alignr 120}${color}${diskio_write \1}]],
-
-  -- disk partition: ${template4 partition name}
-  template4 = [[${voffset 4}${goto 97}${color}\2${alignr 4}${fs_type \1}
+  -- disk partition: ${template1 partition name}
+  template1 = [[${voffset 4}${goto 97}${color}\2${alignr 4}${fs_type \1}
 ${voffset 4}${goto 97}${color}${fs_used \1} /${alignr 4}${color}${fs_size \1}
 ${voffset 1}${goto 97}${color2}${if_match ${fs_used_perc \1} > 90}${color3}${endif}${fs_bar 3, 100 \1}]],
   
   -- hwmon entry: index/device type index threshold
-  template5 = [[${if_match ${hwmon \1 \2 \3} > \4}${color3}${else}${color}${endif}${hwmon \1 \2 \3}]]
+  template2 = [[${if_match ${hwmon \1 \2 \3} > \4}${color3}${else}${color}${endif}${hwmon \1 \2 \3}]]
 };
 
 conky.text = [[
+${if_existing /dev/sda}\
 # disk io
 ${image ~/conky/monochrome/images/widgets/green-disk.png -p 0,0}\
-${template3 sda 200000 280000}
-${voffset -13}${goto 97}${color1}temp ${color}${template5 1 temp 1 42}°C
+${voffset -1}${offset 1}${diskiograph_read sda 37,67 a86135 fda15e 200000}
+${voffset -7}${offset 1}${diskiograph_write sda 37,67 4c6e3b 9fc14a 280000}
+${voffset 6}${offset 5}${color1}read${alignr 120}${color}${diskio_read sda}
+${voffset 4}${offset 5}${color1}write${alignr 120}${color}${diskio_write sda}
+${voffset -13}${goto 97}${color1}temp ${color}${template2 1 temp 1 42}°C
 # partitions
-${voffset -126}${goto 97}${color1}partitions
-${template4 / fedora}
-${template4 /home home}
+${voffset -126}${goto 97}${color1}sda partitions
+${template1 / fedora}
+${template1 /home home}
+${else}\
+${image ~/conky/monochrome/images/widgets/orange-disk-disconnected.png -p 0,0}\
+${endif}\
 ]];

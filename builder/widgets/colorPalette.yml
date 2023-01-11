@@ -1,0 +1,11 @@
+green:
+  image:
+    primaryColor: green
+    secondaryColor: orange
+  colors:
+    text: a7aa71
+    labels: bf8766
+    bar: 9fc14a
+    warning: ad2724
+    writeGraph: 4c6e3b 9fc14a
+    readGraph: a86135 fda15e

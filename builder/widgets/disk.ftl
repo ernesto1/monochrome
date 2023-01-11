@@ -1,10 +1,23 @@
+<#-- user defined directive to print disk io block for a given device -->
+<#macro diskio device readSpeed writeSpeed>
+${voffset -1}${offset 1}${diskiograph_read [=device] 37,67 [=colors.readGraph] [=readSpeed?c]}
+${voffset -7}${offset 1}${diskiograph_write [=device] 37,67 [=colors.writeGraph] [=writeSpeed?c]}
+${voffset 6}${offset 5}${color1}read${alignr 120}${color}${diskio_read [=device]}
+${voffset 4}${offset 5}${color1}write${alignr 120}${color}${diskio_write [=device]}
+</#macro>
+<#assign width = 222 >        <#-- disk image width + gap between conkys -->
+<#assign x = 1309 - width >   <#-- x is the x coordinate of the conky -->
+<#list hardDisks[system] as hardDisk>
+<#assign diskName = hardDisk.name!hardDisk.device>
+<@outputFileDirective file="disk-" + diskName>
 conky.config = {
   update_interval = 2,  -- update interval in seconds
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 1975,               -- same as passing -x at command line
+  <#assign x += width >
+  gap_x = [=x?c],               -- same as passing -x at command line
   gap_y = 10,
 
   -- window settings
@@ -36,10 +49,10 @@ conky.config = {
   draw_shades = false,    -- black shadow on text (not good if text is black)
   
   -- colors
-  default_color = 'a7aa71', -- regular text
-  color1 = 'bf8766',        -- text labels
-  color2 = '9fc14a',        -- bar
-  color3 = 'ad2724',        -- bar critical
+  default_color = '[=colors.text]', -- regular text
+  color1 = '[=colors.labels]',        -- text labels
+  color2 = '[=colors.bar]',        -- bar
+  color3 = '[=colors.warning]',        -- bar critical
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   -- disk partition: ${template1 partition name}
@@ -52,18 +65,23 @@ ${voffset 1}${goto 97}${color2}${if_match ${fs_used_perc \1} > 90}${color3}${end
 };
 
 conky.text = [[
-${if_existing /dev/sde1}\
+${if_existing /dev/[=hardDisk.device]}\
 # disk io
-${image ~/conky/monochrome/images/widgets/green-disk-single-partition.png -p 0,0}\
-${voffset -1}${offset 1}${diskiograph_read sde1 37,67 a86135 fda15e 6000}
-${voffset -7}${offset 1}${diskiograph_write sde1 37,67 4c6e3b 9fc14a 60000}
-${voffset 6}${offset 5}${color1}read${alignr 120}${color}${diskio_read sde1}
-${voffset 4}${offset 5}${color1}write${alignr 120}${color}${diskio_write sde1}
-${voffset -13}${goto 97}${color1}temp ${color}n/a
+<#if hardDisk.partitions?size gt 1 >
+${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-disk.png -p 0,0}\
+<#else>
+${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-disk-single-partition.png -p 0,0}\
+</#if>
+<@diskio hardDisk.device hardDisk.readSpeed hardDisk.writeSpeed />
+${voffset -13}${goto 97}${color1}temp ${color}<#if hardDisk.hwmonIndex??>${template2 [=hardDisk.hwmonIndex] temp 1 [=threshold.tempDisk]}°C<#else>n/a</#if>
 # partitions
-${voffset -126}${goto 97}${color1}sde1 partitions
-${template1 /run/media/ernesto/MAXTOR maxtor}
+${voffset -126}${goto 97}${color1}[=hardDisk.device] partitions
+<#list hardDisk["partitions"] as partition>
+${template1 [=partition.path] [=partition.name]}
+</#list>
 ${else}\
-${image ~/conky/monochrome/images/widgets/orange-disk-disconnected.png -p 0,0}\
+${image ~/conky/monochrome/images/widgets/[=image.secondaryColor]-disk-disconnected.png -p 0,0}\
 ${endif}\
 ]];
+</@outputFileDirective>
+</#list>

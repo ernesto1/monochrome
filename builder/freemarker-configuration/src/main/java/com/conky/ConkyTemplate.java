@@ -52,6 +52,9 @@ public class ConkyTemplate {
             System.exit(1);
         }
 
+        // add user defined directives
+        root.put("outputFileDirective", new OutputFileDirective(OUTPUT_DIR));
+
         Configuration cfg = createFreemarkerConfiguration(templateDirectory);
         File outputDirectory = new File(OUTPUT_DIR);
 
@@ -126,7 +129,7 @@ public class ConkyTemplate {
         // During web page *development* TemplateExceptionHandler.HTML_DEBUG_HANDLER is better.
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 
-        // Don't log exceptions inside FreeMarker that it will thrown at you anyway:
+        // Don't log exceptions inside FreeMarker that it will throw at you anyway:
         cfg.setLogTemplateExceptions(false);
 
         // Wrap unchecked exceptions thrown during template processing into TemplateException-s:

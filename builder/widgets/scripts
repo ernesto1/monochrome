@@ -1,0 +1,11 @@
+TODO
+- can the empty disk output file not be created at all?
+  since we are creating multiple files from a single template, we still have the original template
+  to deal with...
+
+# ::::::: desktop
+rm -fr /tmp/monochrome && \
+java -jar ~/conky/monochrome/builder/freemarker-configuration.jar widgets green desktop && \
+pushd /tmp/monochrome/target && \
+mv !(disk) ~/conky/monochrome/widgets &&\
+popd
