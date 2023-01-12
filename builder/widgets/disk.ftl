@@ -77,7 +77,7 @@ ${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-disk-single-part
 ${voffset -13}${goto 97}${color1}temp ${color}<#if hardDisk.hwmonIndex??>${template2 [=hardDisk.hwmonIndex] temp 1 [=threshold.tempDisk]}°C<#else>n/a</#if>
 # partitions
 ${voffset -126}${goto 97}${color1}[=hardDisk.device] partitions
-<#list hardDisk["partitions"] as partition>
+<#list hardDisk.partitions as partition>
 ${template1 [=partition.path] [=partition.name]}
 </#list>
 ${else}\
