@@ -47,9 +47,9 @@ conky.config = {
 
 conky.text = [[
 ${if_match ${memperc} < [=threshold.mem]}\
-${image ~/conky/monochrome/images/widgets/green-memory.png -p 0,0}\
+${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-memory.png -p 0,0}\
 ${else}\
-${image ~/conky/monochrome/images/widgets/green-memory-high.png -p 0,0}\
+${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-memory-high.png -p 0,0}\
 ${endif}\
 ${voffset 0}${color}${offset 15}${memgraph 78, 42 [=colors.writeGraph]}
 ${voffset 6}${goto 84}${color1}mem  ${color}${memperc}%${goto 140}${mem} / ${memmax}

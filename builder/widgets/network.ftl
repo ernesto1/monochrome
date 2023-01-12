@@ -46,7 +46,7 @@ conky.config = {
 
 conky.text = [[
 ${if_up enp0s25}\
-${image ~/conky/monochrome/images/widgets/green-internet.png -p 0,0}\
+${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-internet.png -p 0,0}\
 ${voffset 3}${offset 11}${color1}local ip${goto 77}${color}${addr enp0s25}
 ${voffset 3}${offset 11}${color1}bittorrent${goto 77}${color}${tcp_portmon 51413 51413 count} peer(s)
 ${voffset 3}${offset 11}${color1}zoom${goto 77}${color}${if_running zoom}running${else}off${endif}
@@ -59,6 +59,6 @@ ${voffset 4}${alignr 43}${color}${totaldown enp0s25}
 # we need to remove the trailing spacing added the moment we voffset'ed the upload graph 
 ${voffset -20}
 ${else}\
-${image ~/conky/monochrome/images/widgets/orange-ethernet-offline.png -p 0,30}
+${image ~/conky/monochrome/images/widgets/[=image.secondaryColor]-ethernet-offline.png -p 0,30}
 ${endif}\
 ]];

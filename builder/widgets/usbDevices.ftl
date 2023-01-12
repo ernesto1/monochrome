@@ -57,18 +57,18 @@ ${alignr}not connected  ${voffset 17}]]
 conky.text = [[
 # sandisk usb memory stick
 ${if_mounted /run/media/ernesto/sandisk}\
-${image ~/conky/monochrome/images/widgets/green-usb-slot-memory.png -p 0,0}\
+${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-usb-slot-memory.png -p 0,0}\
 ${template1 /run/media/ernesto/sandisk}
 ${else}\
-${image ~/conky/monochrome/images/widgets/orange-usb-slot-disconnected.png -p 0,0}\
+${image ~/conky/monochrome/images/widgets/[=image.secondaryColor]-usb-slot-disconnected.png -p 0,0}\
 ${template2 sandisk\ usb\ drive}
 ${endif}\
 # sandisk sd card
 ${if_mounted /run/media/ernesto/disk}\
-${image ~/conky/monochrome/images/widgets/green-usb-slot-sdcard.png -p 0,55}\
+${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-usb-slot-sdcard.png -p 0,55}\
 ${template1 /run/media/ernesto/disk}
 ${else}\
-${image ~/conky/monochrome/images/widgets/orange-usb-slot-disconnected.png -p 0,55}\
+${image ~/conky/monochrome/images/widgets/[=image.secondaryColor]-usb-slot-disconnected.png -p 0,55}\
 ${template2 sandisk\ sd\ card}
 ${endif}\
 ]];

@@ -59,7 +59,7 @@ conky.config = {
 };
 
 conky.text = [[
-${image ~/conky/monochrome/images/widgets/green-cpu.png -p 0,0}\
+${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-cpu.png -p 0,0}\
 ${voffset 12}${template1 1}
 ${template1 2}
 ${template1 3}
