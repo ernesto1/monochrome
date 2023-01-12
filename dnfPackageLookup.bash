@@ -83,6 +83,6 @@ while [ true ]; do
         echo "$(date +'%D %r') - load average too high, trying again later" | tee -a ${logFile}
     fi
     
-    sleep 60m &   # run the sleep process in the background so we can kill it if we get a terminate signal
+    sleep 5m &   # run the sleep process in the background so we can kill it if we get a terminate signal
     wait          # wait for the sleep process to complete
 done
