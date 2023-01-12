@@ -5,10 +5,10 @@ networkDevices:
     - name: enp0s25
       type: ethernet  
   laptop:
-      - name: wlp4s0
-        type: wifi
-      - name: enp6s0
-        type: ethernet
+    - name: wlp4s0
+      type: wifi
+    - name: enp6s0
+      type: ethernet
         
 hardDisks:
   desktop:
@@ -19,8 +19,10 @@ hardDisks:
       partitions:
         - name: fedora
           path: /
+          icon: root
         - name: home
           path: /home
+          icon: home
     - device: sdb
       readSpeed: 6000
       writeSpeed: 250000
@@ -28,6 +30,7 @@ hardDisks:
       partitions:
         - name: veronica
           path: /media/veronica
+          icon: partition
     - device: sdd
       readSpeed: 6000
       writeSpeed: 250000
@@ -35,6 +38,7 @@ hardDisks:
       partitions:
         - name: betty
           path: /media/betty
+          icon: partition
     - device: sde1
       readSpeed: 6000
       writeSpeed: 60000
@@ -42,6 +46,7 @@ hardDisks:
       partitions:
         - name: maxtor
           path: /run/media/ernesto/MAXTOR
+          icon: usbdrive
 threshold:
   cpu: 90
   mem: 85

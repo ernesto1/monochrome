@@ -10,7 +10,7 @@
 # ::::::: desktop sidebar
 java -jar ~/conky/monochrome/builder/freemarker-configuration.jar widgets-dock purple desktop && \
 pushd /tmp/monochrome/target && \
-buildSidebar.bash config cpu-mem network-desktop disk disk-desktop disk-maxtor temperature packages time bottom-edge && \
+buildSidebar.bash config cpu-mem network-desktop disk temperature packages time bottom-edge && \
 echo '${voffset -360}]];' >> /tmp/monochrome/sidebar && \
 mv system sidebar-time /tmp/monochrome/sidebar ~/conky/monochrome/widgets-dock && \
 popd
