@@ -8,7 +8,7 @@ green:
     bar: 9fc14a
     cpuBar: 7c7a13  # cpu bars require a different hue that does not stand out too much
     warning: ad2724
-    offlineText: fda15e # text for conkys in an offline state, ex. disk not connected
+    offlineText: black # text for conkys in an offline state, ex. disk not connected
     writeGraph: 4c6e3b 9fc14a
-    readGraph: a86135 fda15e
+    readGraph: d66e2f f0954e
     windowColor: 2f2d1e # background color for plain conkys with no images

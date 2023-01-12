@@ -82,7 +82,7 @@ ${template1 [=partition.path] [=partition.name]}
 </#list>
 ${else}\
 ${image ~/conky/monochrome/images/widgets/[=image.secondaryColor]-disk-disconnected.png -p 0,0}\
-${voffset 113}${alignr 128}${color4}[=hardDisk.device]
+${voffset 113}${alignr 125}${color4}[=hardDisk.device]
 ${endif}\
 ]];
 </@outputFileDirective>

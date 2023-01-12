@@ -59,6 +59,6 @@ ${voffset 4}${alignr 43}${color}${totaldown enp0s25}
 # we need to remove the trailing spacing added the moment we voffset'ed the upload graph 
 ${voffset -20}
 ${else}\
-${image ~/conky/monochrome/images/widgets/orange-ethernet-offline.png -p 20,54}
+${image ~/conky/monochrome/images/widgets/orange-ethernet-offline.png -p 0,30}
 ${endif}\
 ]];
