@@ -178,4 +178,4 @@ ${voffset 8}${if_match ${hwmon coretemp temp 2} > ${hwmon coretemp temp 3}}${tem
 ${image ~/conky/monochrome/images/widgets-dock/orange-block-sidebar.png -p 0,649}\
 # :::::::::::::::::::: bar's bottom edge
 ${image ~/conky/monochrome/images/widgets-dock/orange-edge-bottom.png -p 0,698}\
-${voffset -260}]];
+${voffset -360}]];
