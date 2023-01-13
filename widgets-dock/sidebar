@@ -11,7 +11,7 @@ conky.config = {
 
   -- window settings
   minimum_width = 136,
-  minimum_height = 760,
+  minimum_height = 758,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -138,10 +138,12 @@ ${voffset 117}
 ${endif}\
 ${endif}\
 # :::::::::::::::::::: disk sda
+# main disk
 # disk io
 ${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/orange-diskio-1.png -p 0,327}${endif}\
 ${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/orange-diskio-2.png -p 0,327}${endif}\
-${template5 sda 140000 140000}
+${template5 sda 60000 60000}
+# partitions
 ${image ~/conky/monochrome/images/widgets-dock/orange-disk-root.png -p 0,393}\
 ${template6 \  /}
 ${image ~/conky/monochrome/images/widgets-dock/orange-disk-home.png -p 0,457}\
@@ -166,13 +168,14 @@ ${offset 6}${color2}${if_match ${battery_percent BAT0} < 20}${color3}${endif}${b
 ${voffset -46}${goto 67}${color}${font}
 ${voffset 4}${goto 67}${color}${font1}${battery_percent BAT0}${font0}%${font}${voffset 1}
 ${endif}\
-# :::::::::::::::::::: cpu temperature
-# laptop only reports cpu core temperatures, displaying the hottest of the two cores
+# :::::::::::::::::::: temperatures
+# :::::::: cpu
 ${image ~/conky/monochrome/images/widgets-dock/orange-temp-cpu-laptop.png -p 0,585}\
+# laptop only reports cpu core temperatures, displaying the hottest of the two cores
 ${voffset 8}${if_match ${hwmon coretemp temp 2} > ${hwmon coretemp temp 3}}${template8 coretemp temp 2 85}${else}${template8 coretemp temp 3 85}${endif}
 # :::::::::::::::::::: time 
-# bar placeholder, the actual time is a separate conky used to create the sidebar effect on the desktop
-${image ~/conky/monochrome/images/widgets-dock/orange-time.png -p 0,649}\
+# placeholder, the actual time logic is in the sidebar-time conky
+${image ~/conky/monochrome/images/widgets-dock/orange-block-sidebar.png -p 0,649}\
 # :::::::::::::::::::: bar's bottom edge
-${image ~/conky/monochrome/images/widgets-dock/orange-edge-bottom.png -p 0,700}\
+${image ~/conky/monochrome/images/widgets-dock/orange-edge-bottom.png -p 0,698}\
 ${voffset -260}]];

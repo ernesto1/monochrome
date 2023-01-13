@@ -47,6 +47,17 @@ hardDisks:
         - name: maxtor
           path: /run/media/ernesto/MAXTOR
           icon: usbdrive
+  laptop:
+      - device: sda
+        readSpeed: 60000
+        writeSpeed: 60000
+        partitions:
+          - name: fedora
+            path: /
+            icon: root
+          - name: home
+            path: /home
+            icon: home
 threshold:
   cpu: 90
   mem: 85
