@@ -15,7 +15,7 @@ hardDisks:
     - device: sda
       readSpeed: 200000
       writeSpeed: 280000
-      hwmonIndex: 1     # optional | linux hardware monitor index, ex. hwmon3
+      hwmonIndex: 0     # optional | linux hardware monitor index, ex. hwmon3
       partitions:
         - name: fedora
           path: /
@@ -26,7 +26,7 @@ hardDisks:
     - device: sdb
       readSpeed: 6000
       writeSpeed: 250000
-      hwmonIndex: 2
+      hwmonIndex: 1
       partitions:
         - name: veronica
           path: /media/veronica
@@ -34,7 +34,7 @@ hardDisks:
     - device: sdd
       readSpeed: 6000
       writeSpeed: 250000
-      hwmonIndex: 3
+      hwmonIndex: 2
       partitions:
         - name: betty
           path: /media/betty

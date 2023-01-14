@@ -12,12 +12,14 @@ ${voffset 8}${goto 67}${hwmon coretemp temp 4}°C${offset 9}${hwmon coretemp tem
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-temp-videocard.png -p 0,64}\
 ${template8 radeon temp 1 [=threshold.tempVideo]}
 # :::::::: hard disks
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-temp-disk.png -p 0,128}\
-${template8 1 temp 1 [=threshold.tempDisk]}
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-temp-disk.png -p 0,192}\
-${template8 2 temp 1 [=threshold.tempDisk]}
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-temp-disk.png -p 0,256}\
-${template8 3 temp 1 [=threshold.tempDisk]}
+<#assign y = 128>
+<#list hardDisks[system] as hardDisk>
+<#if hardDisk.hwmonIndex??>
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-temp-disk.png -p 0,[=y]}\
+${template8 [=hardDisk.hwmonIndex] temp 1 [=threshold.tempDisk]}
+<#assign y += 64>
+</#if>
+</#list>
 # :::::::: fans
 ${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-fan-1.png -p 0,320}${endif}\
 ${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-fan-2.png -p 0,320}${endif}\
