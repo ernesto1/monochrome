@@ -67,31 +67,33 @@ ${template2 4}
 ${template2 5}
 # :::::::::::: network
 # assumption: only one network device will be connected to the internet at a time
-# :::::: wifi
+# :::: wifi
 ${if_up wlp4s0}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-block-small.png -p 0,210}\
 ${voffset 17}${offset 5}${color1}network${goto 60}${color}${wireless_essid wlp4s0}
 ${voffset 3}${offset 5}${color1}local ip${goto 60}${color}${addr wlp4s0}
 ${voffset 3}${offset 5}${color1}bitrate${goto 60}${color}${wireless_bitrate wlp4s0}
 ${voffset 3}${offset 5}${color1}channel${goto 60}${color}${wireless_channel wlp4s0}
-${endif}\
-# :::::: ethernet
+${else}\
+# :::: ethernet
 ${if_up enp6s0}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-block-small.png -p 0,210}\
 ${voffset 17}${offset 5}${color1}local ip${goto 73}${color}${addr enp6s0}
 ${voffset 3}${offset 5}${color1}speed${goto 73}${color}${execi 180 ethtool enp6s0 2>/dev/null | grep -i speed | cut -d ' ' -f 2}
 ${voffset 3}${offset 5}${color1}total up${goto 73}${color}${totalup enp6s0}
 ${voffset 3}${offset 5}${color1}total down${goto 73}${color}${totaldown enp6s0}
-${endif}\
+${else}\
 # in case no internet connection is available we have to "fill the gap" so the next section prints properly
-${if_gw}${else}${voffset 75}${endif}\
+${voffset 78}\
+${endif}\
+${endif}\
 # :::::: bittorrent
 ${if_running transmission-gt}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-block-large.png -p 0,288}\
 ${voffset 17}${offset 5}${color1}bittorrent${goto 73}${color}${tcp_portmon 51413 51413 count} peer(s)
 ${voffset 6}${offset 5}${color1}ip address${alignr 5}remote port
 ${if_match ${tcp_portmon 51413 51413 count} > 0}\
-${voffset}${template3 0}
+${template3 0}
 ${template3 1}
 ${template3 2}
 ${template3 3}
@@ -102,7 +104,7 @@ ${template3 7}
 ${template3 8}
 ${template3 9}
 ${else}\
-${voffset 60}${alignc}${color}no peer connections
+${voffset 67}${alignc}${color}no peer connections
 ${voffset 3}${alignc}established
 ${endif}\
 ${endif}\

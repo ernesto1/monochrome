@@ -110,20 +110,18 @@ ${voffset 17}${offset 18}${memgraph 43,21 ${template1}}
 ${voffset -33}${goto 67}${color}${font1}${memperc}${font0}%
 ${voffset 4}${offset 6}${color2}${if_match ${swapperc} >= 70}${color3}${endif}${swapbar 3, 45}${voffset -2}${goto 67}${font}${color}${swapperc}%
 # :::::::::::::::::::: network
-# if both wifi and ethernet are connected, we give priority to the wifi
-# :::::: wifi
+# :::: wifi
 ${if_up wlp4s0}\
 ${if_match ${wireless_link_qual_perc wlp4s0} == 100}${image ~/conky/monochrome/images/widgets-dock/text-box-100.png -p 117,205}${endif}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-wifi.png -p 0,181}\
 ${voffset 49}${offset 6}${color2}${if_match ${wireless_link_qual_perc wlp4s0} < 30}${color3}${endif}${wireless_link_bar 3,45 wlp4s0}
 #${wireless_essid wlp4s0}
-${voffset -46}${goto 67}${color}${font}
-${voffset 4}${goto 67}${color}${font1}${wireless_link_qual_perc wlp4s0}${font0}%${font}${voffset 1}
+${voffset -29}${goto 67}${color}${font1}${wireless_link_qual_perc wlp4s0}${font0}%${font}${voffset 1}
 # :: upload/download speeds
 ${image ~/conky/monochrome/images/widgets-dock/orange-internet.png -p 0,245}\
 ${template4 wlp4s0 8200 55100}
 ${else}\
-# :::::: ethernet
+# :::: ethernet
 ${if_up enp6s0}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-ethernet.png -p 0,181}\
 # ethernet details printed on the system conky

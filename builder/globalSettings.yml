@@ -3,12 +3,18 @@ system: laptop  # default value, overriden by freemarker java app
 networkDevices:
   desktop:
     - name: enp0s25
-      type: ethernet  
+      type: ethernet
+      maxUp: 3000       # speed in KiB
+      maxDown: 60000
   laptop:
     - name: wlp4s0
       type: wifi
+      maxUp: 8200
+      maxDown: 55100
     - name: enp6s0
       type: ethernet
+      maxUp: 3000
+      maxDown: 60000
         
 hardDisks:
   desktop:

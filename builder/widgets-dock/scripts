@@ -10,17 +10,17 @@
 # ::::::: desktop sidebar
 java -jar ~/conky/monochrome/builder/freemarker-configuration.jar widgets-dock purple desktop && \
 pushd /tmp/monochrome/target && \
-buildSidebar.bash config cpu-mem network-desktop disk temperature packages time bottom-edge && \
-echo '${voffset -360}]];' >> /tmp/monochrome/sidebar && \
-mv system sidebar-time /tmp/monochrome/sidebar ~/conky/monochrome/widgets-dock && \
+buildSidebar.bash config cpu-mem network disk temperature packages time bottom-edge && \
+echo '${voffset -360}]];' >> ../sidebar && \
+mv system sidebar-time ../sidebar ~/conky/monochrome/widgets-dock && \
 popd
 
 # ::::::: laptop sidebar
 java -jar ~/conky/monochrome/builder/freemarker-configuration.jar widgets-dock orange laptop && \
 pushd /tmp/monochrome/target && \
-buildSidebar.bash config cpu-mem network-laptop disk power temperature time bottom-edge && \
-echo '${voffset -360}]];' >> /tmp/monochrome/sidebar && \
-mv system sidebar-time /tmp/monochrome/sidebar ~/conky/monochrome/widgets-dock && \
+buildSidebar.bash config cpu-mem network disk power temperature time bottom-edge && \
+echo '${voffset -360}]];' >> ../sidebar && \
+mv system sidebar-time ../sidebar ~/conky/monochrome/widgets-dock && \
 popd
 
 # design notes
