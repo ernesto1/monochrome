@@ -9,7 +9,7 @@ conky.config = {
   gap_y = 58,
 
   -- window settings
-  minimum_width = 208,
+  minimum_width = 210,
   own_window = true,
   own_window_type = 'desktop',              -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
