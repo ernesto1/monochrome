@@ -55,11 +55,7 @@ conky.text = [[
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-processes.png -p 0,0}\
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-processes.png -p 255,0}\
 ${voffset 8}${offset 10}${color1}process${goto 167}cpu   pid${offset 43}${color1}process${alignr}mem   pid 
-${template0 1}
-${template0 2}
-${template0 3}
-${template0 4}
-${template0 5}
-${template0 6}
-${template0 7}
+<#list 1..7 as x>
+${template0 [=x]}
+</#list>
 ]];

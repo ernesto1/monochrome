@@ -49,7 +49,7 @@ conky.config = {
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   -- memory process
-  template9 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${alignr 3}${top_mem mem_res \1} ${top_mem pid \1}]]
+  template0 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${alignr 3}${top_mem mem_res \1} ${top_mem pid \1}]]
 };
 
 conky.text = [[
@@ -57,7 +57,7 @@ conky.text = [[
 # hence why the memory processes had to be placed in their own conky : /
 ${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-processes.png -p 0,0}\
 ${voffset 3}${offset 5}${color1}process${alignr 2}mem   pid${voffset 1}
-${template9 1}
-${template9 2}
-${template9 3}
-${template9 4}]];
+<#list 1..4 as x>
+${template0 [=x]}
+</#list>
+]];
