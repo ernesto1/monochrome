@@ -1,6 +1,6 @@
-darkPurple:
+grape:
   image:
-    primaryColor: dark-purple
+    primaryColor: grape
     secondaryColor: pink
   colors:
     text: white
