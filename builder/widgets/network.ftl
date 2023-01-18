@@ -33,6 +33,9 @@ conky.config = {
                               -- does not include bars, ie. wifi strength bar, cpu bar
 
   imlib_cache_flush_interval = 250,
+  if_up_strictness = 'address', -- network device must be up, having link and an assigned IP address
+                                -- to be considered "up" by ${if_up}
+                                -- values are: up, link or address
 
   -- font settings
   draw_shades = false,    -- black shadow on text (not good if text is black)
