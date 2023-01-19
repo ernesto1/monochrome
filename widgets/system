@@ -58,6 +58,8 @@ ${voffset 10}${color1}temperature & cooling ${hr}
 ${voffset 5}${color1}device${alignr}temperature
 ${voffset 3}${color}AMD Radeon HD7570${alignr}${template1 radeon temp 1 75}°C
 ${voffset 5}${color1}fan${alignr}revolutions
+${if_updatenr 1}${image ~/conky/monochrome/images/widgets/green-fan-1.png -n -p 65,125}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/widgets/green-fan-2.png -n -p 65,125}${endif}\
 ${voffset 3}${color}chasis front intake${alignr}${template1 atk0110 fan 3 2400} rpm
 ${voffset 3}${color}cpu fan${alignr}${template1 atk0110 fan 1 2500} rpm
 ${voffset 3}${color}case top exhaust fan${alignr}${template1 atk0110 fan 2 2500} rpm
