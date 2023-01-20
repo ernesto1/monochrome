@@ -53,6 +53,7 @@ hardDisks:
         - name: maxtor
           path: /run/media/ernesto/MAXTOR
           icon: usbdrive
+
   laptop:
       - device: sda
         readSpeed: 60000
@@ -64,6 +65,7 @@ hardDisks:
           - name: home
             path: /home
             icon: home
+
 threshold:
   cpu: 90
   mem: 85

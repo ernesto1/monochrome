@@ -42,11 +42,11 @@ conky.config = {
   xftalpha = 0,
   draw_shades = false,    -- black shadow on text (not good if text is black)
   draw_outline = false,   -- black outline around text (not good if text is black)
+  font = 'Nimbus Mono PS Regular:size=8',     -- text
   font0 = 'font URW Gothic Demi:size=8',      -- title
-  font1 = 'font URW Gothic Demi:size=16',     -- big value
+  font1 = 'font URW Gothic Demi:size=19',     -- big value
   font2 = 'font URW Gothic Demi:size=12',     -- mid value
   font3 = 'font URW Gothic Demi:size=9',      -- small value
-  font4 = 'Nimbus Mono PS Regular:size=8',    -- text
   
   -- colors
   default_color = '[=colors.text]',  -- regular text
@@ -60,53 +60,46 @@ conky.config = {
   -- cpu/mem/download/disk write graph color
   template1 = [[[=colors.writeGraph]]],
   -- upload/disk read graph
-  template2 = [[[=colors.readGraph]]],
-  
-  -- ethernet box: ${template3 ethernetDevice}
-  -- common for both desktop and laptop
-  template3 = [[
-${voffset 12}${offset 5}${color1}${font0}ethernet
-${voffset 4}${alignr 6}${color}${font4}${execi 180 ethtool \1 2>/dev/null | grep -i speed | cut -d ' ' -f 2}
-${voffset 3}${alignr 6}${color}${font4}${addr \1}]],
+  template2 = [[[=colors.readGraph]]],  
 
-  -- network bandwith: ${template4 device uploadSpeed downloadSpeed}
+  -- network device bandwith: ${template4 deviceName maxUpSpeed maxDownSpeed}
   template4 = [[
 # upload
 ${voffset -4}${upspeedgraph \1 48,112 ${template2} \2}
-${voffset -50}${offset 5}${color1}${font0}upload
-${voffset 5}${alignr}${color}${font2}${upspeed \1} 
-${voffset 5}${alignr 6}${color}${font4}${totalup \1} total 
+${voffset -54}${offset 5}${color1}${font0}upload${font}
+${voffset 1}${alignr 6}${color}${font2}${upspeed \1}${font}
+${voffset 8}${alignr 6}${color}${font}${totalup \1} total
 # download
-${voffset 1}${downspeedgraph \1 48,112 ${template1} \3}
-${voffset -50}${offset 5}${color1}${font0}download
-${voffset 5}${alignr}${color}${font2}${downspeed \1} 
-${voffset 5}${alignr 6}${color}${font4}${totaldown \1} total ]],
+${voffset -1}${downspeedgraph \1 48,112 ${template1} \3}
+${voffset -54}${offset 5}${color1}${font0}download${font}
+${voffset 1}${alignr 6}${color}${font2}${downspeed \1}${font}
+${voffset 8}${alignr 6}${color}${font}${totaldown \1} total${font}${voffset -13}]],
   
   -- hard disk: ${template5 device readSpeed writeSpeed}
   template5 = [[
 # disk read
-${voffset 3}${diskiograph_read /dev/\1 48,112 ${template2} \2}
-${voffset -52}${offset 5}${color1}${font0}disk read${alignr 6}${color}\1
-${voffset 7}${alignr}${color}${font2}${diskio_read /dev/\1} 
+${voffset -4}${diskiograph_read /dev/\1 48,112 ${template2} \2}
+${voffset -56}${offset 5}${color1}${font0}disk read${alignr 6}${color}\1${font}
+${voffset 3}${alignr 6}${color}${font2}${diskio_read /dev/\1}${font}
 # disk write
-${voffset -3}${diskiograph_write /dev/\1 48,112 ${template1} \3}
-${voffset -60}${offset 5}${color1}${font0}disk write
-${voffset 7}${alignr}${color}${font2}${diskio_write /dev/\1} ]],
+${voffset -1}${diskiograph_write /dev/\1 48,112 ${template1} \3}
+${voffset -56}${offset 5}${color1}${font0}disk write${font}
+${voffset 3}${alignr 6}${color}${font2}${diskio_write /dev/\1}${font}${voffset 6}]],
 
   -- filesystem: ${template6 filesystemName fileSystemPath}
   template6 = [[
-${voffset 9}${offset 5}${color1}${font0}\1
-${voffset -14}${alignr 6}${color}${font2}${fs_used_perc \2}${font3}%
-${voffset -2}${offset 13}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3,94 \2}
-${voffset -4}${alignr 6}${color}${font4}${fs_used \2} / ${fs_size \2}]],
+${voffset 3}${offset 5}${color1}${font0}\1${font}
+${voffset -14}${alignr 6}${color}${font2}${fs_used_perc \2}${font3}%${font}
+${voffset -2}${offset 14}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3,94 \2}
+${voffset -4}${alignr 6}${color}${font}${fs_used \2} / ${fs_size \2}${voffset 3}]],
 
   -- filesystem usb device: ${template7 filesystemName fileSystemPath}
   template7 = [[
 ${voffset 7}${offset 5}${color1}${font0}\1
 ${if_mounted \2}${voffset -13}${alignr 6}${font2}${fs_used_perc \2}${font3}%
 ${voffset -2}${offset 13}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3,94 \2}
-${voffset -4}${alignr 6}${color}${font4}${fs_used \2} / ${fs_size \2}${voffset -8}
-${else}${voffset 4}${alignr 6}${color}${font4}device is not
+${voffset -4}${alignr 6}${color}${font}${fs_used \2} / ${fs_size \2}${voffset -8}
+${else}${voffset 4}${alignr 6}${color}${font}device is not
 ${alignr 6}${color}connected${voffset 4}${endif}]],
 
   -- hwmon entry: ${template9 index/device type index threshold}

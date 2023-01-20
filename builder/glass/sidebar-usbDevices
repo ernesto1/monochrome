@@ -44,7 +44,7 @@ conky.config = {
   font1 = 'font URW Gothic Demi:size=16',     -- big value
   font2 = 'font URW Gothic Demi:size=12',     -- mid value
   font3 = 'font URW Gothic Demi:size=9',      -- small value
-  font4 = 'Nimbus Mono PS Regular:size=8',    -- text
+  font = 'Nimbus Mono PS Regular:size=8',    -- text
   default_color = 'white',
   color1 = 'black',
   color2 = '1a336b',      -- dark blue
@@ -65,9 +65,9 @@ ${voffset 3}${offset 5}${color1}${font0}usb cruzer
 ${if_mounted /run/media/ernesto/sandisk}\
 ${voffset -14}${alignr}${font2}${fs_used_perc /run/media/ernesto/sandisk}${font3}% 
 ${voffset -2}${offset 16}${color2}${if_match ${fs_used_perc /run/media/ernesto/sandisk} > 90}${color3}${endif}${fs_bar 3,93 /run/media/ernesto/sandisk}
-${voffset -4}${alignr}${color}${font4}${fs_used /run/media/ernesto/sandisk} / ${fs_size /run/media/ernesto/sandisk} 
+${voffset -4}${alignr}${color}${font}${fs_used /run/media/ernesto/sandisk} / ${fs_size /run/media/ernesto/sandisk} 
 ${else}\
-${voffset 3}${alignr}${color}${font4}device is not 
+${voffset 3}${alignr}${color}${font}device is not 
 ${alignr}${color}connected ${voffset -1}
 ${endif}\
 # :::::::::::::::::::: memory card
@@ -75,9 +75,9 @@ ${voffset 14}${offset 5}${color1}${font0}sandisk SD
 ${if_mounted /run/media/ernesto/disk}\
 ${voffset -14}${alignr}${font2}${fs_used_perc /run/media/ernesto/disk}${font3}% 
 ${voffset -2}${offset 16}${color2}${if_match ${fs_used_perc /run/media/ernesto/disk} > 90}${color3}${endif}${fs_bar 3,93 /run/media/ernesto/disk}
-${voffset -4}${alignr}${color}${font4}${fs_used /run/media/ernesto/disk} / ${fs_size /run/media/ernesto/disk} 
+${voffset -4}${alignr}${color}${font}${fs_used /run/media/ernesto/disk} / ${fs_size /run/media/ernesto/disk} 
 ${else}\
-${voffset 3}${alignr}${color}${font4}device is not 
+${voffset 3}${alignr}${color}${font}device is not 
 ${alignr}${color}connected ${voffset -1}
 ${endif}\
 # :::::::::::::::::::: external hard drive
@@ -98,12 +98,12 @@ ${voffset 5}${alignr}${font2}${diskio_write /dev/sdf1}
 ${voffset 15}${offset 5}${color1}${font0}maxtor HD
 ${voffset -14}${alignr}${font2}${fs_used_perc /run/media/ernesto/MAXTOR}${font3}% 
 ${voffset -2}${offset 16}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 3,93 /run/media/ernesto/MAXTOR}
-${voffset -4}${alignr}${color}${font4}${fs_used /run/media/ernesto/MAXTOR} / ${fs_size /run/media/ernesto/MAXTOR} 
+${voffset -4}${alignr}${color}${font}${fs_used /run/media/ernesto/MAXTOR} / ${fs_size /run/media/ernesto/MAXTOR} 
 ${else}\
 ${image ~/conky/monochrome/images/glass/block-filesystem.png -p 0,111}\
 ${image ~/conky/monochrome/images/glass/bottom.png -p 0,164}\
 ${voffset 16}${offset 5}${color1}${font0}maxtor HD
-${voffset 3}${alignr}${color}${font4}device is not 
+${voffset 3}${alignr}${color}${font}device is not 
 ${alignr}connected ${voffset -1}\
 ${endif}\
 ]];

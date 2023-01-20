@@ -1,16 +1,15 @@
 # notes
 # by default conky will reload its configuration if it detects a change on the file
-# 
-# the new conky configuration is created in a temporary folder and then the target file is overriden
-# it turns out that if too many sequential file changes happen to the conky file, conky will stop reloading the file
-# hence why we use the temp folder in order to replace the file only once
+# if too many changes take place in a small time window, conky will stop reloading the file
+# hence why we generate the file in a temp folder and replace the target file only once
+
+TODO  disk-usb  usb-devices   power
 
 # desktop sidebar
-# available components: usb-devices
 java -jar ~/conky/monochrome/builder/freemarker-configuration.jar glass blue desktop && \
 pushd /tmp/monochrome/target && \
-buildSidebar.bash config cpu-mem network-desktop disk disks-desktop disk-usb time temperature-desktop bottom-edge && \
-echo '${voffset -720}]]' >> ../sidebar && \
+buildSidebar.bash config cpu-mem network disk temperature-desktop time bottom-edge && \
+echo '${voffset -900}]]' >> ../sidebar && \
 mv system processes ../sidebar ~/conky/monochrome/glass && \
 popd
 
@@ -18,7 +17,7 @@ popd
 # laptop sidebar
 java -jar ~/conky/monochrome/builder/freemarker-configuration.jar glass blue laptop && \
 pushd /tmp/monochrome/target && \
-buildSidebar.bash config cpu-mem network-laptop disk power bottom-edge && \
-echo '${voffset -720}]];' >> ../sidebar && \
+buildSidebar.bash config cpu-mem network disk power bottom-edge && \
+echo '${voffset -900}]];' >> ../sidebar && \
 mv system processes ../sidebar ~/conky/monochrome/glass && \
 popd

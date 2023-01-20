@@ -10,7 +10,7 @@ conky.config = {
 
   -- window settings
   minimum_width = 113,
-  minimum_height = 1325,
+  minimum_height = 1321,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -42,11 +42,11 @@ conky.config = {
   xftalpha = 0,
   draw_shades = false,    -- black shadow on text (not good if text is black)
   draw_outline = false,   -- black outline around text (not good if text is black)
+  font = 'Nimbus Mono PS Regular:size=8',     -- text
   font0 = 'font URW Gothic Demi:size=8',      -- title
-  font1 = 'font URW Gothic Demi:size=16',     -- big value
+  font1 = 'font URW Gothic Demi:size=19',     -- big value
   font2 = 'font URW Gothic Demi:size=12',     -- mid value
   font3 = 'font URW Gothic Demi:size=9',      -- small value
-  font4 = 'Nimbus Mono PS Regular:size=8',    -- text
   
   -- colors
   default_color = 'white',  -- regular text
@@ -60,53 +60,46 @@ conky.config = {
   -- cpu/mem/download/disk write graph color
   template1 = [[6b91e5 546fb2]],
   -- upload/disk read graph
-  template2 = [[dd9a2f bc701c]],
-  
-  -- ethernet box: ${template3 ethernetDevice}
-  -- common for both desktop and laptop
-  template3 = [[
-${voffset 12}${offset 5}${color1}${font0}ethernet
-${voffset 4}${alignr 6}${color}${font4}${execi 180 ethtool \1 2>/dev/null | grep -i speed | cut -d ' ' -f 2}
-${voffset 3}${alignr 6}${color}${font4}${addr \1}]],
+  template2 = [[dd9a2f bc701c]],  
 
-  -- network bandwith: ${template4 device uploadSpeed downloadSpeed}
+  -- network device bandwith: ${template4 deviceName maxUpSpeed maxDownSpeed}
   template4 = [[
 # upload
 ${voffset -4}${upspeedgraph \1 48,112 ${template2} \2}
-${voffset -50}${offset 5}${color1}${font0}upload
-${voffset 5}${alignr}${color}${font2}${upspeed \1} 
-${voffset 5}${alignr 6}${color}${font4}${totalup \1} total 
+${voffset -54}${offset 5}${color1}${font0}upload${font}
+${voffset 1}${alignr 6}${color}${font2}${upspeed \1}${font}
+${voffset 8}${alignr 6}${color}${font}${totalup \1} total
 # download
-${voffset 1}${downspeedgraph \1 48,112 ${template1} \3}
-${voffset -50}${offset 5}${color1}${font0}download
-${voffset 5}${alignr}${color}${font2}${downspeed \1} 
-${voffset 5}${alignr 6}${color}${font4}${totaldown \1} total ]],
+${voffset -1}${downspeedgraph \1 48,112 ${template1} \3}
+${voffset -54}${offset 5}${color1}${font0}download${font}
+${voffset 1}${alignr 6}${color}${font2}${downspeed \1}${font}
+${voffset 8}${alignr 6}${color}${font}${totaldown \1} total${font}${voffset -13}]],
   
   -- hard disk: ${template5 device readSpeed writeSpeed}
   template5 = [[
 # disk read
-${voffset 3}${diskiograph_read /dev/\1 48,112 ${template2} \2}
-${voffset -52}${offset 5}${color1}${font0}disk read${alignr 6}${color}\1
-${voffset 7}${alignr}${color}${font2}${diskio_read /dev/\1} 
+${voffset -4}${diskiograph_read /dev/\1 48,112 ${template2} \2}
+${voffset -56}${offset 5}${color1}${font0}disk read${alignr 6}${color}\1${font}
+${voffset 3}${alignr 6}${color}${font2}${diskio_read /dev/\1}${font}
 # disk write
-${voffset -3}${diskiograph_write /dev/\1 48,112 ${template1} \3}
-${voffset -60}${offset 5}${color1}${font0}disk write
-${voffset 7}${alignr}${color}${font2}${diskio_write /dev/\1} ]],
+${voffset -1}${diskiograph_write /dev/\1 48,112 ${template1} \3}
+${voffset -56}${offset 5}${color1}${font0}disk write${font}
+${voffset 3}${alignr 6}${color}${font2}${diskio_write /dev/\1}${font}${voffset 6}]],
 
   -- filesystem: ${template6 filesystemName fileSystemPath}
   template6 = [[
-${voffset 9}${offset 5}${color1}${font0}\1
-${voffset -14}${alignr 6}${color}${font2}${fs_used_perc \2}${font3}%
-${voffset -2}${offset 13}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3,94 \2}
-${voffset -4}${alignr 6}${color}${font4}${fs_used \2} / ${fs_size \2}]],
+${voffset 3}${offset 5}${color1}${font0}\1${font}
+${voffset -14}${alignr 6}${color}${font2}${fs_used_perc \2}${font3}%${font}
+${voffset -2}${offset 14}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3,94 \2}
+${voffset -4}${alignr 6}${color}${font}${fs_used \2} / ${fs_size \2}${voffset 3}]],
 
   -- filesystem usb device: ${template7 filesystemName fileSystemPath}
   template7 = [[
 ${voffset 7}${offset 5}${color1}${font0}\1
 ${if_mounted \2}${voffset -13}${alignr 6}${font2}${fs_used_perc \2}${font3}%
 ${voffset -2}${offset 13}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3,94 \2}
-${voffset -4}${alignr 6}${color}${font4}${fs_used \2} / ${fs_size \2}${voffset -8}
-${else}${voffset 4}${alignr 6}${color}${font4}device is not
+${voffset -4}${alignr 6}${color}${font}${fs_used \2} / ${fs_size \2}${voffset -8}
+${else}${voffset 4}${alignr 6}${color}${font}device is not
 ${alignr 6}${color}connected${voffset 4}${endif}]],
 
   -- hwmon entry: ${template9 index/device type index threshold}
@@ -114,86 +107,87 @@ ${alignr 6}${color}connected${voffset 4}${endif}]],
 };
 
 conky.text = [[
-################### cpu
+# ::::::::::::::::: cpu
 ${image ~/conky/monochrome/images/glass/blue-cpu-mem.png -p 0,0}\
-${voffset -6}${color}${cpugraph cpu0 48,112 ${template1}}
-${voffset -58}${offset 5}${color1}${font0}cpu
-${voffset 2}${alignr}${color}${font1}${cpu cpu0}${font2}% 
-${voffset 5}${alignr 6}${color}${font4}${loadavg}
-################### memory
-${voffset 4}${memgraph 48,112 ${template1}}
-${voffset -52}${offset 5}${color1}${font0}memory
-${voffset 2}${alignr}${color}${font1}${memperc}${font2}% 
-${voffset 5}${alignr 6}${color}${font4}${mem} / ${memmax}
-################### swap
-${voffset 12}${offset 5}${color1}${font0}swap
-${voffset -2}${alignr}${color}${font1}${swapperc}${font2}% 
-${voffset -5}${offset 13}${color2}${if_match ${swapperc} > 75}${color3}${endif}${swapbar 3,94}
-${voffset -9}${alignr 6}${color}${font4}${swap} / ${swapmax}
-################### network
+${voffset -3}${color}${cpugraph cpu0 48,112 ${template1}}
+${voffset -56}${offset 5}${color1}${font0}cpu${font}
+${voffset -7}${alignr 6}${color}${font1}${cpu cpu0}${font2}%${font}
+${voffset 12}${alignr 6}${color}${font}${loadavg}
+# ::::::::::::::::: memory
+${voffset -1}${memgraph 48,112 ${template1}}
+${voffset -56}${offset 5}${color1}${font0}memory${font}
+${voffset -7}${alignr 6}${color}${font1}${memperc}${font2}%${font}
+${voffset 9}${alignr 6}${color}${font}${mem} / ${memmax}
+# ::::::::::::::::: swap
+${voffset 5}${offset 5}${color1}${font0}swap${font}
+${voffset -6}${alignr 6}${color}${font1}${swapperc}${font2}%${font}
+${voffset -3}${offset 14}${color2}${if_match ${swapperc} > 75}${color3}${endif}${swapbar 3,94}
+${voffset -5}${alignr 6}${color}${font}${swap} / ${swapmax}
+# ::::::::::::::::: network
 ${if_up enp0s25}\
+# :::::: ethernet
 ${image ~/conky/monochrome/images/glass/blue-network-ethernet.png -p 0,219}\
 ${image ~/conky/monochrome/images/glass/blue-network-internet.png -p 0,276}\
-${template3 enp0s25}
+${voffset 7}${offset 5}${color1}${font0}ethernet${font}
+${voffset 1}${alignr 6}${color}${execi 180 ethtool enp0s25 2>/dev/null | grep -i speed | cut -d ' ' -f 2}
+${alignr 6}${color}${addr enp0s25}
 ${template4 enp0s25 3000 60000}
 ${else}\
-# no network/internet
-${image ~/conky/monochrome/images/glass/ochre-network-internet-disconnected-desktop.png -p 0,219}\
-${voffset 12}${offset 5}${color}${font0}network
-${voffset 143}${alignc}${color}${font4}no ethernet
+# :::::: no network/internet
+${image ~/conky/monochrome/images/glass/ochre-network-internet-disconnected-ethernet.png -p 0,219}\
+${voffset 7}${offset 5}${color}${font0}network
+${voffset 143}${alignc}${color}${font}no ethernet
 ${alignc}connection
 ${voffset -10}
-${endif}\
-################### disk - sda
-${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,416}\
-# speeds | read: 140MiB  write: 151MiB
-${template5 sda 280000 302000}
+${endif}
+# ::::::::::::::::: disk sda
+${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,419}\
+${template5 sda 200000 280000}
+# :::::: partitions
+${image ~/conky/monochrome/images/glass/blue-block-small.png -p 0,518}\
 ${template6 fedora /}
-${image ~/conky/monochrome/images/glass/blue-filesystem.png -p 0,570}\
+${image ~/conky/monochrome/images/glass/blue-block-small.png -p 0,574}\
 ${template6 home /home}
-################### disk - sdb
-${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,620}\
-# speeds | read: 151MiB  write: 100MiB
-${template5 sdb 6000 200000}
+# ::::::::::::::::: disk sdb
+${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,630}\
+${template5 sdb 6000 250000}
+# :::::: partitions
+${image ~/conky/monochrome/images/glass/blue-block-small.png -p 0,729}\
 ${template6 veronica /media/veronica}
-################### disk - sdd
-${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,774}\
-# speeds | read: 151MiB  write: 100MiB
-${template5 sdd 6000 200000}
+# ::::::::::::::::: disk sdd
+${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,785}\
+${template5 sdd 6000 250000}
+# :::::: partitions
+${image ~/conky/monochrome/images/glass/blue-block-small.png -p 0,884}\
 ${template6 betty /media/betty}
-################### external hard drive
-${if_mounted /run/media/ernesto/MAXTOR}\
-${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,928}\
-# speeds | read: 24MiB  write: 24MiB (the usb2 max speed)
-${template5 sdg1 6000 52000}
-${template6 maxtor\ HD /run/media/ernesto/MAXTOR}
-${else}\
-${image ~/conky/monochrome/images/glass/ochre-disk-disconnected.png -p 0,928}\
-${voffset 12}${alignc}${color}${font0}maxtor HD
-${voffset 103}${alignc}${color}${font4}device is not
-${alignc}connected
-${endif}\
-################### time
-${image ~/conky/monochrome/images/glass/blue-block-small.png -p 0,1082}\
-${voffset 10}${offset 5}${color1}${font Promenade de la Croisette:size=40}${time %I}${font Promenade de la Croisette:size=37}:${time %M}${font0}${voffset -30}${alignr 6}${color}${time %A}
-${voffset 2}${alignr 6}${time %B}
-${voffset 2}${alignr 6}${time %d}
-################### temperatures
-${if_updatenr 1}${image ~/conky/monochrome/images/glass/blue-temperature-desktop-1.png -p 0,1139}${endif}\
-${if_updatenr 2}${image ~/conky/monochrome/images/glass/blue-temperature-desktop-2.png -p 0,1139}${endif}\
+# ::::::::::::::::: disk maxtor
+${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,940}\
+${template5 sde1 6000 60000}
+# :::::: partitions
+${image ~/conky/monochrome/images/glass/blue-block-small.png -p 0,1039}\
+${template6 maxtor /run/media/ernesto/MAXTOR}
+# ::::::::::::::::: temperatures
+${if_updatenr 1}${image ~/conky/monochrome/images/glass/blue-temperature-desktop-1.png -p 0,1095}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/glass/blue-temperature-desktop-2.png -p 0,1095}${endif}\
 # :::: cpu
-${voffset 6}${voffset 7}${offset 5}${color1}${font0}cpu
-${voffset -9}${alignr}${color}${font2}${template8 atk0110 temp 1 78}°C 
-${alignr 7}${color}${font4}cores ${template8 coretemp temp 5 85}°C
+${voffset 4}${offset 5}${color1}${font0}cpu${font}
+${voffset -13}${alignr 6}${color}${font2}${template8 atk0110 temp 1 78}°C${font}
+${alignr 7}${color}${font}cores ${template8 coretemp temp 5 85}°C
 # :::: video card
-${voffset 6}${voffset 7}${offset 5}${color1}${font0}video card
-${voffset -9}${alignr}${color}${font2}${template8 radeon temp 1 75}°C 
+${voffset 6}${offset 5}${color1}${font0}video card${font}
+${voffset -13}${alignr 6}${color}${font2}${template8 radeon temp 1 75}°C${font}
 # :::: hard disks
-${voffset 7}${offset 5}${color1}${font0}hard disks
-${voffset -9}${alignr}${color}${font2}${template8 1 temp 1 42}°C 
+${voffset 6}${offset 5}${color1}${font0}hard disks${font}
+${voffset -13}${alignr 6}${color}${font2}${template8 1 temp 1 42}°C${font}
 # :::: fans
-${voffset 7}${offset 5}${color1}${font0}fans
-${voffset -8}${alignr}${color}${font2}${template8 atk0110 fan 1 2300} 
-${voffset -4}${alignr 7}${font4}rpm
-${image ~/conky/monochrome/images/glass/blue-edge-bottom.png -p 0,1320}\
-${voffset -720}]]
+${voffset 7}${offset 5}${color1}${font0}fans${font}
+${voffset -8}${alignr 6}${color}${font2}${template8 atk0110 fan 1 2300}${font}
+${voffset -4}${alignr 6}${font}rpm${font}${voffset 10}
+# ::::::::::::::::: time
+${image ~/conky/monochrome/images/glass/blue-divider.png -p 0,1259}\
+${image ~/conky/monochrome/images/glass/blue-block-small.png -p 0,1260}\
+${voffset 4}${offset 5}${color1}${font Promenade de la Croisette:size=40}${time %I}${font Promenade de la Croisette:size=37}:${time %M}${font}${voffset -30}${alignr 6}${color}${time %A}
+${voffset -1}${alignr 6}${time %B}
+${voffset -1}${alignr 6}${time %d}
+${image ~/conky/monochrome/images/glass/blue-edge-bottom.png -p 0,1316}\
+${voffset -900}]]

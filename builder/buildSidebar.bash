@@ -36,7 +36,7 @@ do
     echo y: $yCoordinate
     ((newYCoordinate=yCoordinate+totalHeight))
     echo new y: $newYCoordinate    
-    sed -i "s#${image} -p ${xCoordinate},${yCoordinate}#${image} -p ${xCoordinate},${newYCoordinate}#" /tmp/monochrome/sidebar
+    sed -i "s#${image} -p ${xCoordinate},${yCoordinate}}#${image} -p ${xCoordinate},${newYCoordinate}}#" /tmp/monochrome/sidebar
     echo
   done
   
