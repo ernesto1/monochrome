@@ -1,4 +1,4 @@
-system: laptop  # default value, overriden by freemarker java app
+system: desktop         # default value, overriden by freemarker java app
 
 networkDevices:
   desktop:

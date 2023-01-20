@@ -8,8 +8,9 @@ grape:
     bar: a36dec
     warning: c33855
     widgetText: 906c9c
-    widgetTextSmall: f2c7ff
-    detailsText: c596c7     # system bar
+    widgetTextSmall: f2c7ff # small thin text requires darker shade to be readable
+    highlight: e1778d       # flag important package updates
+    detailsText: c596c7     # system bar default text
     writeGraph: 51295e a36dec
     readGraph: 943145 e1778d
 orange:
@@ -22,8 +23,9 @@ orange:
     bar: c15124
     warning: d70d2f
     widgetText: c15124
-    widgetTextSmall: 8a2700 # small thin text requires darker shade to be readable
-    detailsText: 703d0a     # system bar
+    widgetTextSmall: 8a2700
+    highlight: 68a315
+    detailsText: 703d0a
     writeGraph: eb652e f97928
     readGraph: 123e01 68a315
 purple:
@@ -37,6 +39,7 @@ purple:
     warning: d70d2f
     widgetText: 8a61ad
     widgetTextSmall: f2c7ff
-    detailsText: ff8dfd     # system bar
+    highlight: a3c2bc
+    detailsText: ff8dfd
     writeGraph: 8a00a1 c800ea
     readGraph: 689693 a3c2bc

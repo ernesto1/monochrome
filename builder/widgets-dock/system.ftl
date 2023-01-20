@@ -5,9 +5,9 @@ conky.config = {
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'middle_left',  -- top|middle|bottom_left|right
-  gap_x = 150,               -- same as passing -x at command line
-  gap_y = 90,
+  alignment = 'top_left',  -- top|middle|bottom_left|right
+  gap_x = 150,
+  gap_y = 50,
 
   -- window settings
   minimum_width = 189,      -- conky will add an extra pixel to this  
@@ -42,6 +42,7 @@ conky.config = {
   -- colors
   default_color = '[=colors.detailsText]',  -- regular text
   color1 = '[=colors.labels]',
+  color2 = '[=colors.highlight]',           -- flag important packages
   
   -- top cpu process: ${template1 processNumber}
   template1 = [[${voffset 3}${color}${offset 5}${top name \1}${alignr 5}${top cpu \1}% ${top pid \1}]],
@@ -78,5 +79,21 @@ ${else}\
 ${voffset 67}${alignc}${color}no peer connections
 ${voffset 3}${alignc}established
 ${endif}\
+${endif}\
+# :::::::::::: package updates
+${if_existing /tmp/dnf.packages}\
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-block-large.png -p 0,498}\
+<#if system == "desktop" >
+# additional background blocks are dynamically added based on the number of package updates
+<#assign y = 498,
+         height = 198>
+<#list 1..4 as x>
+<#assign y += height>
+${if_match ${lines /tmp/dnf.packages} > [=15 * x]}${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-block-large-extension.png -p 0,[=y?c]}${endif}\
+</#list>
+</#if>
+${voffset 17}${offset 5}${color1}package${alignr 5}version
+<#if system == "desktop"><#assign lines = 100><#else><#assign lines = 10></#if>
+${voffset 3}${color}${execpi 20 head -n [=lines] /tmp/dnf.packages.preview | sed 's/^/${offset 5}/' | sed 's:\(kernel\):$\{color2\}\1$\{color\}:'}${voffset 8}
 ${endif}\
 ]];
