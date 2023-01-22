@@ -6,25 +6,26 @@ conky.config = {
   -- window alignment
   alignment = 'top_left',       -- top|middle|bottom_left|middle|right
   gap_x = 152,                  -- same as passing -x at command line
-  gap_y = 290,
+  gap_y = 285,
 
   -- window settings
-  minimum_width = 213,
+  minimum_width = 218,
   minimum_height = 110,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
   -- transparency configuration
-  own_window_transparent = false,
-  own_window_argb_visual = false,  -- turn on transparency
+  draw_blended = false,
+  own_window_transparent = true,
+  own_window_argb_visual = true,  -- turn on transparency
   own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
 
   -- window borders
   draw_borders = false,     -- draw borders around the conky window
-  border_width = 0,         -- width of border window in pixels
+  border_width = 1,         -- width of border window in pixels
   stippled_borders = 0,     -- border stippling (dashing) in pixels
-  border_inner_margin = 8,  -- margin between the border and text in pixels
+  border_inner_margin = 0,  -- margin between the border and text in pixels
   border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
 
   -- graph settings
@@ -45,32 +46,34 @@ conky.config = {
   -- colors
   default_color = '[=colors.systemText]',  -- regular text
   color1 = '[=colors.systemLabels]',         -- text labels
-  own_window_colour = '[=colors.ownWindow]'
+  color2 = '[=colors.highlight]'             -- flag important packages
 };
 
 conky.text = [[
-${color1}${goto 32}kernel${goto 75}${color}${kernel}
-${voffset 3}${goto 32}${color1}uptime${goto 75}${color}${uptime}
-${voffset 3}${color1}compositor${goto 75}${color}${execi 3600 echo $XDG_SESSION_TYPE}
-${voffset 16}\
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu.png -p 0,0}\
+${voffset 4}${color1}${goto 30}kernel${goto 74}${color}${kernel}
+${voffset 3}${goto 30}${color1}uptime${goto 74}${color}${uptime}
+${voffset 3}${offset 5}${color1}compositor${goto 74}${color}${execi 3600 echo $XDG_SESSION_TYPE}
+${voffset 13}\
 # if on wifi
-${if_up wlp4s0}\
-${voffset 3}${goto 19}${color1}network${goto 75}${color}${wireless_essid wlp4s0}
-${voffset 3}${color1}${goto 12}local ip${goto 75}${color}${addr wlp4s0}
-${voffset 8}\
-${endif}\
-${voffset 3}${color1}bittorrent${goto 75}${color}${tcp_portmon 51413 51413 count} peer(s)
-${voffset 3}${color1}${goto 44}zoom${goto 75}${color}${if_running zoom}running${else}off${endif}
+<#if system == "laptop">
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu.png -p 0,32}\
+${voffset 3}${goto 24}${color1}network${goto 74}${color}${wireless_essid wlp4s0}
+${voffset 3}${color1}${goto 18}local ip${goto 74}${color}${addr wlp4s0}
+</#if>
+${voffset 3}${offset 5}${color1}bittorrent${goto 74}${color}${tcp_portmon 51413 51413 count} peer(s)
+${voffset 3}${color1}${goto 42}zoom${goto 74}${color}${if_running zoom}running${else}off${endif}
 # :::::::::::: package updates
-${if_existing /tmp/dnf.packages}\
+${if_existing /tmp/dnf.packages.preview}\
+<#if system == "desktop"><#assign y = 97><#else><#assign y = 137></#if>
+${image ~/conky/monochrome/images/glass/blue-menu.png -p 0,[=y]}\
+${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 0,[=y + 38]}\
 ${voffset 15}${alignc}${color1}dnf package management
 ${voffset 3}${alignc}${color}${lines /tmp/dnf.packages} package update(s) available
-${if_existing /tmp/dnf.packages}\
-${voffset 5}${color1}package${alignr}version
+${voffset 5}${offset 5}${color1}package${alignr 4}version
 # the dnf package lookup script refreshes the package list every 10m
-${voffset 3}${color}${cat /tmp/dnf.packages.preview}\
+<#if system == "desktop"><#assign lines = 100><#else><#assign lines = 27></#if>
+${voffset 3}${color}${execpi 20 head -n [=lines] /tmp/dnf.packages.preview}
 ${endif}\
-${else}\
-${voffset 3}${goto 51}${color1}dnf${goto 75}${color}no updates available
-${endif}\
+${voffset -9}
 ]];

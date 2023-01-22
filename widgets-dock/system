@@ -41,7 +41,7 @@ conky.config = {
   -- colors
   default_color = '703d0a',  -- regular text
   color1 = 'white',
-  color2 = '68a315',           -- flag important packages
+  color2 = '68a315',         -- flag important packages
   
   -- top cpu process: ${template1 processNumber}
   template1 = [[${voffset 3}${color}${offset 5}${top name \1}${alignr 5}${top cpu \1}% ${top pid \1}]],
@@ -115,6 +115,6 @@ ${endif}\
 ${if_existing /tmp/dnf.packages}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-block-large.png -p 0,498}\
 ${voffset 17}${offset 5}${color1}package${alignr 5}version
-${voffset 3}${color}${execpi 20 head -n 13 /tmp/dnf.packages.preview | sed 's/^/${offset 5}/' | sed 's:\(kernel\):$\{color2\}\1$\{color\}:'}${voffset 7}
+${voffset 3}${color}${execpi 20 head -n 13 /tmp/dnf.packages.preview}${voffset 7}
 ${endif}\
 ]];

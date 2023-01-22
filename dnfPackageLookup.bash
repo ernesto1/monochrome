@@ -74,7 +74,12 @@ while [ true ]; do
             # extract the actual packages from the raw dnf data
             grep -E $regex ${packagesRawFile} > ${packagesFile}
             # package name and version is formatted into a tabular layout of 35 characters for conky to print
-            column --table --table-right 2 --table-truncate 1,2 --table-hide 3 --output-width ${width} ${packagesFile} > /tmp/dnf.packages.preview
+            # addition of conky variables for more formatting when printed by conky:
+            # - an ${offset} is added to each line in order for the package list to be printed with a left border
+            # - packages of interest are surround by a ${color} variable in order to highlight them
+            highlightRegex='kernel\|firefox'            
+            column --table --table-right 2 --table-truncate 1,2 --table-hide 3 --output-width ${width} ${packagesFile} \
+            | sed 's/^/${offset 5}/' | sed "s:\($highlightRegex\):$\{color2\}\1$\{color\}:" > /tmp/dnf.packages.preview
         else
             echo 'no updates available' | tee -a ${logFile}
             rm -f /tmp/dnf.packages*
