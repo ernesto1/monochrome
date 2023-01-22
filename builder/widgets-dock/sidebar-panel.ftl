@@ -45,6 +45,7 @@ conky.config = {
 conky.text = [[
 # this conky uses the 'panel' window type in order to create a sidebar panel effect on the monitor
 # when an application window is maximized, the widgets will still be visible
+# widgets that require centered text within the sidebar will be placed here
 ${alignc}${font0}${color}${if_existing /tmp/dnf.packages}${lines /tmp/dnf.packages}${else}0${endif}${voffset 7}
 <#if system == "desktop" >
 ${alignc}${font0}${color}${time %I}${font1}:${time %M}
