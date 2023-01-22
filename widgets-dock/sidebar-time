@@ -6,7 +6,7 @@ conky.config = {
   -- window alignment
   alignment = 'middle_left',  -- top|middle|bottom_left|right
   gap_x = 2,               -- same as passing -x at command line
-  gap_y = -324,
+  gap_y = -323,
 
   -- window settings
   minimum_width = 56,      -- conky will add an extra pixel to this
@@ -45,6 +45,5 @@ conky.config = {
 conky.text = [[
 # this conky uses the 'panel' window type in order to create a sidebar panel effect on the monitor
 # when an application window is maximized, the widgets will still be visible
-${alignc}${font0}${color}${time %I}${font1}:${time %M}
-${voffset -29}${alignc}${color1}${font2}${time %a}
+${alignc}${font0}${color}${if_existing /tmp/dnf.packages}${lines /tmp/dnf.packages}${else}0${endif}${voffset 7}
 ]];

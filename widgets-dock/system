@@ -4,9 +4,9 @@ conky.config = {
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'middle_left',  -- top|middle|bottom_left|right
-  gap_x = 150,               -- same as passing -x at command line
-  gap_y = 90,
+  alignment = 'top_left',  -- top|middle|bottom_left|right
+  gap_x = 150,
+  gap_y = 50,
 
   -- window settings
   minimum_width = 189,      -- conky will add an extra pixel to this  
@@ -41,6 +41,7 @@ conky.config = {
   -- colors
   default_color = '703d0a',  -- regular text
   color1 = 'white',
+  color2 = '68a315',           -- flag important packages
   
   -- top cpu process: ${template1 processNumber}
   template1 = [[${voffset 3}${color}${offset 5}${top name \1}${alignr 5}${top cpu \1}% ${top pid \1}]],
@@ -105,7 +106,15 @@ ${template3 8}
 ${template3 9}
 ${else}\
 ${voffset 67}${alignc}${color}no peer connections
-${voffset 3}${alignc}established
+${voffset 3}${alignc}established${voffset 64}
 ${endif}\
+${else}\
+${voffset 209}\
+${endif}\
+# :::::::::::: package updates
+${if_existing /tmp/dnf.packages}\
+${image ~/conky/monochrome/images/widgets-dock/orange-block-large.png -p 0,498}\
+${voffset 17}${offset 5}${color1}package${alignr 5}version
+${voffset 3}${color}${execpi 20 head -n 13 /tmp/dnf.packages.preview | sed 's/^/${offset 5}/' | sed 's:\(kernel\):$\{color2\}\1$\{color\}:'}${voffset 7}
 ${endif}\
 ]];

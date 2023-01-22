@@ -90,7 +90,6 @@ while (( "$#" )); do
       ;;
     --widgets-dock)
       directory=${HOME}/conky/monochrome/widgets-dock
-      noPackageLookup=true
       shift
       ;;
     --glass)

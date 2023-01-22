@@ -18,7 +18,7 @@ popd
 # ::::::: laptop sidebar
 java -jar ~/conky/monochrome/builder/freemarker-configuration.jar widgets-dock orange laptop && \
 pushd /tmp/monochrome/target && \
-buildSidebar.bash config cpu-mem network disk power temperature time bottom-edge && \
+buildSidebar.bash config cpu-mem network disk power temperature packages bottom-edge && \
 echo '${voffset -360}]];' >> ../sidebar && \
 mv system sidebar-time ../sidebar ~/conky/monochrome/widgets-dock && \
 popd

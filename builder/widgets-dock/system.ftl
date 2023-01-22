@@ -95,7 +95,7 @@ ${if_match ${lines /tmp/dnf.packages} > [=15 * x]}${image ~/conky/monochrome/ima
 </#list>
 </#if>
 ${voffset 17}${offset 5}${color1}package${alignr 5}version
-<#if system == "desktop"><#assign lines = 100><#else><#assign lines = 10></#if>
+<#if system == "desktop"><#assign lines = 100><#else><#assign lines = 13></#if>
 ${voffset 3}${color}${execpi 20 head -n [=lines] /tmp/dnf.packages.preview | sed 's/^/${offset 5}/' | sed 's:\(kernel\):$\{color2\}\1$\{color\}:'}${voffset 7}
 ${endif}\
 ]];
