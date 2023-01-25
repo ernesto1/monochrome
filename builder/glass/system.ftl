@@ -50,14 +50,14 @@ conky.config = {
 };
 
 conky.text = [[
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu.png -p 0,0}\
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-table.png -p 0,0}\
 ${voffset 4}${color1}${goto 30}kernel${goto 74}${color}${kernel}
 ${voffset 3}${goto 30}${color1}uptime${goto 74}${color}${uptime}
 ${voffset 3}${offset 5}${color1}compositor${goto 74}${color}${execi 3600 echo $XDG_SESSION_TYPE}
 ${voffset 13}\
 # if on wifi
 <#if system == "laptop">
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu.png -p 0,32}\
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-table.png -p 0,32}\
 ${voffset 3}${goto 24}${color1}network${goto 74}${color}${wireless_essid wlp4s0}
 ${voffset 3}${color1}${goto 18}local ip${goto 74}${color}${addr wlp4s0}
 </#if>
