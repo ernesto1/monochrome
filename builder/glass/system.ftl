@@ -57,22 +57,22 @@ ${voffset 3}${offset 5}${color1}compositor${goto 74}${color}${execi 3600 echo $X
 ${voffset 8}\
 # if on wifi
 <#if system == "laptop">
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-table.png -p 0,27}\
-${voffset 3}${goto 24}${color1}network${goto 74}${color}${wireless_essid wlp4s0}
-${voffset 3}${color1}${goto 18}local ip${goto 74}${color}${addr wlp4s0}
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-table.png -p 0,32}\
+${voffset 3}${goto 24}${color1}network${goto 74}${color}${wireless_essid [=networkDevices[system]?first.name]}
+${voffset 3}${color1}${goto 18}local ip${goto 74}${color}${addr [=networkDevices[system]?first.name]}
 </#if>
 ${voffset 3}${offset 5}${color1}bittorrent${goto 74}${color}${tcp_portmon 51413 51413 count} peer(s)
 ${voffset 3}${color1}${goto 42}zoom${goto 74}${color}${if_running zoom}running${else}off${endif}
 # :::::::::::: package updates
 ${if_existing /tmp/dnf.packages.preview}\
-<#if system == "desktop"><#assign y = 92><#else><#assign y = 132></#if>
+<#if system == "desktop"><#assign y = 100><#else><#assign y = 132></#if>
 ${image ~/conky/monochrome/images/glass/blue-menu.png -p 0,[=y]}\
 ${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 0,[=y + 38]}\
 ${voffset 15}${alignc}${color1}dnf package management
 ${voffset 3}${alignc}${color}${lines /tmp/dnf.packages} package update(s) available
 ${voffset 5}${offset 5}${color1}package${alignr 4}version
 # the dnf package lookup script refreshes the package list every 10m
-<#if system == "desktop"><#assign lines = 100><#else><#assign lines = 28></#if>
+<#if system == "desktop"><#assign lines = 100><#else><#assign lines = 29></#if>
 ${voffset 3}${color}${execpi 20 head -n [=lines] /tmp/dnf.packages.preview}
 ${endif}\
 ${voffset -9}

@@ -10,7 +10,7 @@ conky.config = {
   gap_y = 606,
 
   -- window settings
-  minimum_width = 486,
+  minimum_width = 465,
   minimum_height = 144,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -48,13 +48,14 @@ conky.config = {
   
   -- template
   template0 = [[
-${voffset 3}${offset 10}${color}${top name \1}${offset 3}${top cpu \1}% ${top pid \1}${offset 43}${top_mem name \1}${alignr}${top_mem mem_res \1} ${top_mem pid \1} ]]
+${voffset 3}${offset 5}${color}${top name \1}${offset 3}${top cpu \1}% ${top pid \1}${offset 21}${top_mem name \1}${alignr 5}${top_mem mem_res \1} ${top_mem pid \1}]]
 };
 
 conky.text = [[
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-processes.png -p 0,0}\
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-processes.png -p 255,0}\
-${voffset 8}${offset 10}${color1}process${goto 167}cpu   pid${offset 43}${color1}process${alignr}mem   pid 
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-processes.png -p 233,0}\
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-processes.png -p 250,0}\
+${voffset 2}${offset 5}${color1}process${goto 164}cpu   pid${offset 21}${color1}process${alignr 5}mem   pid${voffset 3}
 <#list 1..7 as x>
 ${template0 [=x]}
 </#list>
