@@ -6,7 +6,7 @@ conky.config = {
   -- window alignment
   alignment = 'top_left',       -- top|middle|bottom_left|middle|right
   gap_x = 152,                  -- same as passing -x at command line
-  gap_y = 285,
+  gap_y = 290,
 
   -- window settings
   minimum_width = 218,
@@ -54,10 +54,10 @@ ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-table.png -p 
 ${voffset 4}${color1}${goto 30}kernel${goto 74}${color}${kernel}
 ${voffset 3}${goto 30}${color1}uptime${goto 74}${color}${uptime}
 ${voffset 3}${offset 5}${color1}compositor${goto 74}${color}${execi 3600 echo $XDG_SESSION_TYPE}
-${voffset 13}\
+${voffset 8}\
 # if on wifi
 <#if system == "laptop">
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-table.png -p 0,32}\
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-table.png -p 0,27}\
 ${voffset 3}${goto 24}${color1}network${goto 74}${color}${wireless_essid wlp4s0}
 ${voffset 3}${color1}${goto 18}local ip${goto 74}${color}${addr wlp4s0}
 </#if>
@@ -65,14 +65,14 @@ ${voffset 3}${offset 5}${color1}bittorrent${goto 74}${color}${tcp_portmon 51413 
 ${voffset 3}${color1}${goto 42}zoom${goto 74}${color}${if_running zoom}running${else}off${endif}
 # :::::::::::: package updates
 ${if_existing /tmp/dnf.packages.preview}\
-<#if system == "desktop"><#assign y = 97><#else><#assign y = 137></#if>
+<#if system == "desktop"><#assign y = 92><#else><#assign y = 132></#if>
 ${image ~/conky/monochrome/images/glass/blue-menu.png -p 0,[=y]}\
 ${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 0,[=y + 38]}\
 ${voffset 15}${alignc}${color1}dnf package management
 ${voffset 3}${alignc}${color}${lines /tmp/dnf.packages} package update(s) available
 ${voffset 5}${offset 5}${color1}package${alignr 4}version
 # the dnf package lookup script refreshes the package list every 10m
-<#if system == "desktop"><#assign lines = 100><#else><#assign lines = 27></#if>
+<#if system == "desktop"><#assign lines = 100><#else><#assign lines = 28></#if>
 ${voffset 3}${color}${execpi 20 head -n [=lines] /tmp/dnf.packages.preview}
 ${endif}\
 ${voffset -9}
