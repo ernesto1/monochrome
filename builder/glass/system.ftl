@@ -72,7 +72,7 @@ ${voffset 15}${alignc}${color1}dnf package management
 ${voffset 3}${alignc}${color}${lines /tmp/dnf.packages} package update(s) available
 ${voffset 5}${offset 5}${color1}package${alignr 4}version
 # the dnf package lookup script refreshes the package list every 10m
-<#if system == "desktop"><#assign lines = 100><#else><#assign lines = 29></#if>
+<#if system == "desktop"><#assign lines = 100><#else><#assign lines = 28></#if>
 ${voffset 3}${color}${execpi 20 head -n [=lines] /tmp/dnf.packages.preview}
 ${endif}\
 ${voffset -9}
