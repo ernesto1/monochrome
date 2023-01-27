@@ -5,11 +5,11 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',
-  gap_x = 225,         -- gap between border of the screen and the conky window, same as passing -x at command line
-  gap_y = 58,
+  gap_x = 221,         -- gap between border of the screen and the conky window, same as passing -x at command line
+  gap_y = 54,
 
   -- window settings
-  minimum_width = 210,
+  minimum_width = 218,
   own_window = true,
   own_window_type = 'desktop',              -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -21,9 +21,9 @@ conky.config = {
 
   -- window borders
   draw_borders = false,     -- draw borders around the conky window
-  border_width = 0,         -- width of border window in pixels
+  border_width = 1,         -- width of border window in pixels
   stippled_borders = 0,     -- border stippling (dashing) in pixels
-  border_inner_margin = 5,  -- margin between the border and text in pixels
+  border_inner_margin = 0,  -- margin between the border and text in pixels
   border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
 
   -- graph settings
@@ -49,27 +49,27 @@ conky.config = {
 };
 
 conky.text = [[
-${color1}SYSTEM ${hr}
-${voffset 5}${color1}kernel${goto 70}${color}${kernel}
-${voffset 3}${color1}uptime${goto 70}${color}${uptime}
-${voffset 3}${color1}compositor${goto 70}${color}${execi 3600 echo $XDG_SESSION_TYPE}
+${color1}${voffset 3}${offset 5}SYSTEM ${hr}
+${voffset 5}${offset 5}${color1}kernel${goto 70}${color}${kernel}
+${voffset 3}${offset 5}${color1}uptime${goto 70}${color}${uptime}
+${voffset 3}${offset 5}${color1}compositor${goto 70}${color}${execi 3600 echo $XDG_SESSION_TYPE}
 # :::::::::::: temperatures & cooling
-${voffset 10}${color1}temperature & cooling ${hr}
-${voffset 5}${color1}device${alignr}temperature
-${voffset 3}${color}AMD Radeon HD7570${alignr}${template1 radeon temp 1 75}°C
-${voffset 5}${color1}fan${alignr}revolutions
+${voffset 10}${offset 5}${color1}temperature & cooling ${hr}
+${voffset 5}${offset 5}${color1}device${alignr 4}temperature
+${voffset 3}${offset 5}${color}AMD Radeon HD7570${alignr 4}${template1 radeon temp 1 75}°C
+${voffset 5}${offset 5}${color1}fan${alignr 4}revolutions
 ${if_updatenr 1}${image ~/conky/monochrome/images/widgets/green-fan-1.png -n -p 65,125}${endif}\
 ${if_updatenr 2}${image ~/conky/monochrome/images/widgets/green-fan-2.png -n -p 65,125}${endif}\
-${voffset 3}${color}chasis front intake${alignr}${template1 atk0110 fan 3 2400} rpm
-${voffset 3}${color}cpu fan${alignr}${template1 atk0110 fan 1 2500} rpm
-${voffset 3}${color}case top exhaust fan${alignr}${template1 atk0110 fan 2 2500} rpm
-${voffset 3}${color}case back exhaust fan${alignr}${template1 atk0110 fan 4 2500} rpm
+${voffset 3}${offset 5}${color}chasis front intake${alignr 4}${template1 atk0110 fan 3 2400} rpm
+${voffset 3}${offset 5}${color}cpu fan${alignr 4}${template1 atk0110 fan 1 2500} rpm
+${voffset 3}${offset 5}${color}case top exhaust fan${alignr 4}${template1 atk0110 fan 2 2500} rpm
+${voffset 3}${offset 5}${color}case back exhaust fan${alignr 4}${template1 atk0110 fan 4 2500} rpm
 # :::::::::::: package updates
 ${if_existing /tmp/dnf.packages}\
-${voffset 10}${color1}dnf package management ${hr}
-${voffset 5}${color}${lines /tmp/dnf.packages} package update(s) available
-${voffset 5}${color1}package${alignr}version
+${voffset 10}${offset 5}${color1}dnf package management ${hr}
+${voffset 5}${offset 5}${color}${lines /tmp/dnf.packages} package update(s) available
+${voffset 5}${offset 5}${color1}package${alignr 4}version
 # the dnf package lookup script refreshes the package list every 10m
-${voffset 3}${color}${head /tmp/dnf.packages.preview 30 60}${voffset -13}
+${voffset 3}${color}${execpi 20 head -n 30 /tmp/dnf.packages.preview}${voffset 4}
 ${endif}\
 ]];

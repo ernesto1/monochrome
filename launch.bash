@@ -85,7 +85,6 @@ while (( "$#" )); do
   case $1 in
     --widgets)
       directory=${HOME}/conky/monochrome/widgets
-      width=35
       shift
       ;;
     --widgets-dock)
