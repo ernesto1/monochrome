@@ -48,14 +48,14 @@ conky.config = {
   
   -- template
   template0 = [[
-${voffset 3}${offset 5}${color}${top name \1}${offset 3}${top cpu \1}% ${top pid \1}${offset 21}${top_mem name \1}${alignr 5}${top_mem mem_res \1} ${top_mem pid \1}]]
+${voffset 3}${offset 5}${color}${top name \1}${offset 3}${top cpu \1}% ${top pid \1}${offset 16}${top_mem name \1}${alignr 5}${top_mem mem_res \1} ${top_mem pid \1}]]
 };
 
 conky.text = [[
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-processes.png -p 0,0}\
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-processes.png -p 233,0}\
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-processes.png -p 250,0}\
-${voffset 2}${offset 5}${color1}process${goto 164}cpu   pid${offset 21}${color1}process${alignr 5}mem   pid${voffset 3}
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-processes.png -p 228,0}\
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-processes.png -p 245,0}\
+${voffset 2}${offset 5}${color1}process${goto 164}cpu   pid${offset 16}${color1}process${alignr 5}mem   pid${voffset 3}
 <#list 1..7 as x>
 ${template0 [=x]}
 </#list>
