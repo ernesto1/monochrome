@@ -6,7 +6,7 @@ conky.config = {
   -- window alignment
   alignment = 'top_left',  -- top|middle|bottom_left|right
   gap_x = 150,
-  gap_y = 50,
+  gap_y = 40,
 
   -- window settings
   minimum_width = 189,      -- conky will add an extra pixel to this  
@@ -113,8 +113,10 @@ ${voffset 209}\
 ${endif}\
 # :::::::::::: package updates
 ${if_existing /tmp/dnf.packages}\
+# multiple sequential background images are loaded, the images are gradually shown as the package list grows
 ${image ~/conky/monochrome/images/widgets-dock/orange-block-large.png -p 0,498}\
+${image ~/conky/monochrome/images/widgets-dock/orange-block-large-extension.png -p 0,516}\
 ${voffset 17}${offset 5}${color1}package${alignr 5}version
-${voffset 3}${color}${execpi 20 head -n 13 /tmp/dnf.packages.preview}${voffset 7}
+${voffset 3}${color}${execpi 20 head -n 15 /tmp/dnf.packages.preview}${voffset 7}
 ${endif}\
 ]];

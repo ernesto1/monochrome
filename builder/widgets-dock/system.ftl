@@ -7,7 +7,7 @@ conky.config = {
   -- window alignment
   alignment = 'top_left',  -- top|middle|bottom_left|right
   gap_x = 150,
-  gap_y = 50,
+  gap_y = 40,
 
   -- window settings
   minimum_width = 189,      -- conky will add an extra pixel to this  
@@ -84,18 +84,20 @@ ${voffset 209}\
 ${endif}\
 # :::::::::::: package updates
 ${if_existing /tmp/dnf.packages}\
+# multiple sequential background images are loaded, the images are gradually shown as the package list grows
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-block-large.png -p 0,498}\
 <#if system == "desktop" >
-# additional background blocks are dynamically added based on the number of package updates
 <#assign y = 498,
          height = 198>
 <#list 1..4 as x>
 <#assign y += height>
-${if_match ${lines /tmp/dnf.packages} > [=15 * x]}${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-block-large-extension.png -p 0,[=y?c]}${endif}\
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-block-large-extension.png -p 0,[=y?c]}\
 </#list>
+<#else>
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-block-large-extension.png -p 0,516}\
 </#if>
 ${voffset 17}${offset 5}${color1}package${alignr 5}version
-<#if system == "desktop"><#assign lines = 100><#else><#assign lines = 13></#if>
+<#if system == "desktop"><#assign lines = 100><#else><#assign lines = 15></#if>
 ${voffset 3}${color}${execpi 20 head -n [=lines] /tmp/dnf.packages.preview}${voffset 7}
 ${endif}\
 ]];
