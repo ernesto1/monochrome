@@ -126,19 +126,19 @@ ${voffset -5}${alignr 6}${color}${font}${swap} / ${swapmax}
 # ::::::::::::::::: network
 ${if_up enp0s25}\
 # :::::: ethernet
-${image ~/conky/monochrome/images/glass/blue-network-ethernet.png -p 0,219}\
+${image ~/conky/monochrome/images/glass/blue-network-ethernet.png -p 0,222}\
 ${image ~/conky/monochrome/images/glass/blue-network-internet.png -p 0,276}\
 ${voffset 7}${offset 5}${color1}${font0}ethernet${font}
 ${voffset 1}${alignr 6}${color}${execi 180 ethtool enp0s25 2>/dev/null | grep -i speed | cut -d ' ' -f 2}
-${alignr 6}${color}${addr enp0s25}
+${alignr 6}${color}${addr enp0s25}${voffset 3}
 ${template4 enp0s25 3000 60000}
 ${else}\
 # :::::: no network/internet
-${image ~/conky/monochrome/images/glass/ochre-network-internet-disconnected-ethernet.png -p 0,219}\
-${voffset 7}${offset 5}${color}${font0}network
-${voffset 143}${alignc}${color}${font}no ethernet
+${image ~/conky/monochrome/images/glass/ochre-network-disconnected-ethernet.png -p 0,222}\
+${voffset 7}${offset 5}${color}${font0}network${font}
+${voffset 142}${alignc}${color}no ethernet
 ${alignc}connection
-${voffset -10}
+${voffset -29}
 ${endif}
 # ::::::::::::::::: disk sda
 ${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,419}\

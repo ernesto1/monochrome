@@ -5,8 +5,8 @@ conky.config = {
 
   -- window alignment
   alignment = 'top_left',       -- top|middle|bottom_left|middle|right
-  gap_x = 152,                  -- same as passing -x at command line
-  gap_y = 290,
+  gap_x = 125,                  -- same as passing -x at command line
+  gap_y = 306,
 
   -- window settings
   minimum_width = 218,
@@ -66,13 +66,17 @@ ${voffset 3}${color1}${goto 42}zoom${goto 74}${color}${if_running zoom}running${
 # :::::::::::: package updates
 ${if_existing /tmp/dnf.packages.preview}\
 <#if system == "desktop"><#assign y = 100><#else><#assign y = 132></#if>
-${image ~/conky/monochrome/images/glass/blue-menu.png -p 0,[=y]}\
-${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 0,[=y + 38]}\
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu.png -p 0,[=y]}\
+<#assign height = 38, y += height>
+<#list 1..2 as x>
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-transparent.png -p 0,[=y]}\
+<#assign height = 800, y += height>
+</#list>
 ${voffset 15}${alignc}${color1}dnf package management
 ${voffset 3}${alignc}${color}${lines /tmp/dnf.packages} package update(s) available
 ${voffset 5}${offset 5}${color1}package${alignr 4}version
 # the dnf package lookup script refreshes the package list every 10m
-<#if system == "desktop"><#assign lines = 100><#else><#assign lines = 28></#if>
+<#if system == "desktop"><#assign lines = 80><#else><#assign lines = 28></#if>
 ${voffset 3}${color}${execpi 20 head -n [=lines] /tmp/dnf.packages.preview}
 ${endif}\
 ${voffset -9}
