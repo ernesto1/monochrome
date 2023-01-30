@@ -42,7 +42,7 @@ conky.config = {
   -- colors
   default_color = '[=colors.detailsText]',  -- regular text
   color1 = '[=colors.labels]',
-  color2 = '[=colors.highlight]',         -- flag important packages
+  color2 = '[=colors.highlight]',         -- highlight important packages
   
   -- top cpu process: ${template1 processNumber}
   template1 = [[${voffset 3}${color}${offset 5}${top name \1}${alignr 5}${top cpu \1}% ${top pid \1}]],

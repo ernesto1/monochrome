@@ -10,7 +10,7 @@ java -jar ~/conky/monochrome/builder/freemarker-configuration.jar glass blue des
 pushd /tmp/monochrome/target && \
 buildSidebar.bash config cpu-mem network disk temperature-desktop time bottom-edge && \
 echo '${voffset -900}]]' >> ../sidebar && \
-mv system processes ../sidebar ~/conky/monochrome/glass && \
+mv system ../sidebar ~/conky/monochrome/glass && \
 popd
 
 
@@ -19,5 +19,5 @@ java -jar ~/conky/monochrome/builder/freemarker-configuration.jar glass blue lap
 pushd /tmp/monochrome/target && \
 buildSidebar.bash config cpu-mem network disk power bottom-edge && \
 echo '${voffset -900}]];' >> ../sidebar && \
-mv system processes ../sidebar ~/conky/monochrome/glass && \
+mv system ../sidebar ~/conky/monochrome/glass && \
 popd
