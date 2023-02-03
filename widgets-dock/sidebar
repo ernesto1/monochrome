@@ -11,7 +11,7 @@ conky.config = {
 
   -- window settings
   minimum_width = 136,
-  minimum_height = 1469,
+  minimum_height = 1461,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -72,10 +72,10 @@ ${voffset 21}${goto 67}${color}${font}${downspeed \1}${voffset 3}]],
 
   -- hard disk io: ${template5 device readSpeed writeSpeed}
   template5 = [[
-${voffset 12}${offset 5}${color}${diskiograph_read /dev/\1 21,47 ${template2} \2}
+${voffset 11}${offset 5}${color}${diskiograph_read /dev/\1 21,47 ${template2} \2}
 ${voffset -8}${offset 5}${diskiograph_write /dev/\1 21,47 ${template1} \3}
 ${voffset -48}${goto 67}${color}${font}${diskio_read /dev/\1}
-${voffset 13}${goto 67}${color}${font}${diskio_write /dev/\1}${voffset 3}]],
+${voffset 13}${goto 67}${color}${font}${diskio_write /dev/\1}${voffset 2}]],
 
   -- filesystem: ${template6 filesystemName fileSystemPath}
   template6 = [[
@@ -130,82 +130,82 @@ ${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/purple-diskio-1.p
 ${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/purple-diskio-2.png -p 0,327}${endif}\
 ${template5 sda 200000 280000}
 # partitions
-${image ~/conky/monochrome/images/widgets-dock/purple-disk-root.png -p 0,393}\
+${image ~/conky/monochrome/images/widgets-dock/purple-disk-root.png -p 0,391}\
 ${template6 \  /}
-${image ~/conky/monochrome/images/widgets-dock/purple-disk-home.png -p 0,457}\
+${image ~/conky/monochrome/images/widgets-dock/purple-disk-home.png -p 0,455}\
 ${template6 \  /home}
 # :::::::::::::::::::: disk sdb
 ${if_existing /dev/sdb}\
 # disk io
-${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/purple-diskio-1.png -p 0,521}${endif}\
-${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/purple-diskio-2.png -p 0,521}${endif}\
+${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/purple-diskio-1.png -p 0,519}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/purple-diskio-2.png -p 0,519}${endif}\
 ${template5 sdb 6000 250000}
 # partitions
-${image ~/conky/monochrome/images/widgets-dock/purple-disk-partition.png -p 0,587}\
+${image ~/conky/monochrome/images/widgets-dock/purple-disk-partition.png -p 0,583}\
 ${template6 veronica /media/veronica}
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/teal-disk-disconnected.png -p 0,521}\
-${voffset 60}${goto 67}sdb not
+${image ~/conky/monochrome/images/widgets-dock/teal-disk-disconnected.png -p 0,519}\
+${voffset 59}${goto 67}sdb not
 ${voffset 3}${goto 67}available
-${voffset 28}
+${voffset 27}
 ${endif}\
 # :::::::::::::::::::: disk sdd
 ${if_existing /dev/sdd}\
 # disk io
-${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/purple-diskio-1.png -p 0,651}${endif}\
-${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/purple-diskio-2.png -p 0,651}${endif}\
+${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/purple-diskio-1.png -p 0,647}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/purple-diskio-2.png -p 0,647}${endif}\
 ${template5 sdd 6000 250000}
 # partitions
-${image ~/conky/monochrome/images/widgets-dock/purple-disk-partition.png -p 0,717}\
+${image ~/conky/monochrome/images/widgets-dock/purple-disk-partition.png -p 0,711}\
 ${template6 betty /media/betty}
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/teal-disk-disconnected.png -p 0,651}\
-${voffset 60}${goto 67}sdd not
+${image ~/conky/monochrome/images/widgets-dock/teal-disk-disconnected.png -p 0,647}\
+${voffset 59}${goto 67}sdd not
 ${voffset 3}${goto 67}available
-${voffset 28}
+${voffset 27}
 ${endif}\
 # :::::::::::::::::::: disk maxtor
 ${if_existing /dev/sde1}\
 # disk io
-${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/purple-diskio-1.png -p 0,781}${endif}\
-${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/purple-diskio-2.png -p 0,781}${endif}\
+${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/purple-diskio-1.png -p 0,775}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/purple-diskio-2.png -p 0,775}${endif}\
 ${template5 sde1 6000 60000}
 # partitions
-${image ~/conky/monochrome/images/widgets-dock/purple-disk-usbdrive.png -p 0,847}\
+${image ~/conky/monochrome/images/widgets-dock/purple-disk-usbdrive.png -p 0,839}\
 ${template6 maxtor /run/media/ernesto/MAXTOR}
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/teal-disk-disconnected.png -p 0,781}\
-${voffset 60}${goto 67}sde1 not
+${image ~/conky/monochrome/images/widgets-dock/teal-disk-disconnected.png -p 0,775}\
+${voffset 59}${goto 67}sde1 not
 ${voffset 3}${goto 67}available
-${voffset 28}
+${voffset 27}
 ${endif}\
 # :::::::::::::::::::: temperatures
 # :::::::: cpu
-${image ~/conky/monochrome/images/widgets-dock/purple-temp-cpu-desktop.png -p 0,911}\
+${image ~/conky/monochrome/images/widgets-dock/purple-temp-cpu-desktop.png -p 0,903}\
 # cpu temp on sidebar while cpu core temperatures are printed on the side
 ${voffset 8}${template8 atk0110 temp 1 78}${voffset -35}${goto 67}${hwmon coretemp temp 2}°C${offset 9}${hwmon coretemp temp 3}°C
 ${voffset 8}${goto 67}${hwmon coretemp temp 4}°C${offset 9}${hwmon coretemp temp 5}°C${color4}${voffset 14}
 # :::::::: ati video card
-${image ~/conky/monochrome/images/widgets-dock/purple-temp-videocard.png -p 0,975}\
+${image ~/conky/monochrome/images/widgets-dock/purple-temp-videocard.png -p 0,967}\
 ${template8 radeon temp 1 75}
 # :::::::: hard disks
-${image ~/conky/monochrome/images/widgets-dock/purple-temp-disk.png -p 0,1039}\
+${image ~/conky/monochrome/images/widgets-dock/purple-temp-disk.png -p 0,1031}\
 ${template8 0 temp 1 42}
-${image ~/conky/monochrome/images/widgets-dock/purple-temp-disk.png -p 0,1103}\
+${image ~/conky/monochrome/images/widgets-dock/purple-temp-disk.png -p 0,1095}\
 ${template8 1 temp 1 42}
-${image ~/conky/monochrome/images/widgets-dock/purple-temp-disk.png -p 0,1167}\
+${image ~/conky/monochrome/images/widgets-dock/purple-temp-disk.png -p 0,1159}\
 ${template8 2 temp 1 42}
 # :::::::: fans
-${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/purple-fan-1.png -p 0,1231}${endif}\
-${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/purple-fan-2.png -p 0,1231}${endif}\
+${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/purple-fan-1.png -p 0,1223}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/purple-fan-2.png -p 0,1223}${endif}\
 ${voffset 7}${offset 7}${font2}${template7 atk0110 fan 1 2300}
 # :::::::::::::::::::: package updates 
 # placeholder, the logic is in the sidebar-time conky
-${image ~/conky/monochrome/images/widgets-dock/purple-packages.png -p 0,1295}\
+${image ~/conky/monochrome/images/widgets-dock/purple-packages.png -p 0,1287}\
 # :::::::::::::::::::: time 
 # placeholder, the actual time logic is in the sidebar-time conky
-${image ~/conky/monochrome/images/widgets-dock/purple-block-sidebar.png -p 0,1359}\
-${image ~/conky/monochrome/images/widgets-dock/purple-block-sidebar.png -p 0,1375}\
+${image ~/conky/monochrome/images/widgets-dock/purple-block-sidebar.png -p 0,1351}\
+${image ~/conky/monochrome/images/widgets-dock/purple-block-sidebar.png -p 0,1367}\
 # :::::::::::::::::::: bar's bottom edge
-${image ~/conky/monochrome/images/widgets-dock/purple-edge-bottom.png -p 0,1429}\
+${image ~/conky/monochrome/images/widgets-dock/purple-edge-bottom.png -p 0,1421}\
 ${voffset -360}]];

@@ -1,6 +1,5 @@
 <#assign y = 0>
-<#assign diskioHeight = 66>
-<#assign partitionHeight = 64>
+<#assign height = 64>
 <#list hardDisks[system] as hardDisk>
 # :::::::::::::::::::: disk [=hardDisk.name!hardDisk.device]
 <#-- special handling for the main disk 'sda'
@@ -13,18 +12,18 @@ ${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/[=image.primaryCo
 ${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-diskio-2.png -p 0,[=y]}${endif}\
 ${template5 [=hardDisk.device] [=hardDisk.readSpeed?c] [=hardDisk.writeSpeed?c]}
 # partitions
-<#assign y += diskioHeight>
+<#assign y += height>
 <#list hardDisk.partitions as partition>
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-disk-[=partition.icon].png -p 0,[=y]}\
 ${template6 <#if hardDisk.device == "sda">\ <#else>[=partition.name]</#if> [=partition.path]}
-<#assign y += partitionHeight>
+<#assign y += height>
 </#list>
 <#if hardDisk.device != "sda">
 ${else}\
 ${image ~/conky/monochrome/images/widgets-dock/[=image.secondaryColor]-disk-disconnected.png -p 0,[=diskBlockStart]}\
-${voffset 60}${goto 67}[=hardDisk.device] not
+${voffset 59}${goto 67}[=hardDisk.device] not
 ${voffset 3}${goto 67}available
-${voffset 28}
+${voffset 27}
 ${endif}\
 </#if>
 </#list>

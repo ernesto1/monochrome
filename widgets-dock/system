@@ -112,6 +112,6 @@ ${image ~/conky/monochrome/images/widgets-dock/purple-block-large-extension.png 
 ${image ~/conky/monochrome/images/widgets-dock/purple-block-large-extension.png -p 0,1290}\
 ${image ~/conky/monochrome/images/widgets-dock/purple-block-large-extension.png -p 0,1488}\
 ${voffset 17}${offset 5}${color1}package${alignr 5}version
-${voffset 3}${color}${execpi 20 head -n 87 /tmp/dnf.packages.preview}${voffset 7}
+${voffset 3}${color}${execpi 20 head -n 87 /tmp/dnf.packages.preview}${voffset 4}
 ${endif}\
 ]];

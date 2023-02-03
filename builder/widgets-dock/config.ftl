@@ -72,10 +72,10 @@ ${voffset 21}${goto 67}${color}${font}${downspeed \1}${voffset 3}]],
 
   -- hard disk io: ${template5 device readSpeed writeSpeed}
   template5 = [[
-${voffset 12}${offset 5}${color}${diskiograph_read /dev/\1 21,47 ${template2} \2}
+${voffset 11}${offset 5}${color}${diskiograph_read /dev/\1 21,47 ${template2} \2}
 ${voffset -8}${offset 5}${diskiograph_write /dev/\1 21,47 ${template1} \3}
 ${voffset -48}${goto 67}${color}${font}${diskio_read /dev/\1}
-${voffset 13}${goto 67}${color}${font}${diskio_write /dev/\1}${voffset 3}]],
+${voffset 13}${goto 67}${color}${font}${diskio_write /dev/\1}${voffset 2}]],
 
   -- filesystem: ${template6 filesystemName fileSystemPath}
   template6 = [[
