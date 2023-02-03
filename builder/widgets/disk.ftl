@@ -70,9 +70,9 @@ ${voffset -1}${offset 18}${diskiograph_read [=hardDisk.device] 37,67 [=colors.re
 ${voffset -7}${offset 18}${diskiograph_write [=hardDisk.device] 37,67 [=colors.writeGraph] [=hardDisk.writeSpeed?c]}
 ${voffset 6}${offset 5}${color1}read${alignr 120}${color}${diskio_read [=hardDisk.device]}
 ${voffset 4}${offset 5}${color1}write${alignr 120}${color}${diskio_write [=hardDisk.device]}
-${voffset -13}${goto 97}${color1}temp ${color}<#if hardDisk.hwmonIndex??>${template2 [=hardDisk.hwmonIndex] temp 1 [=threshold.tempDisk]}°C<#else>n/a</#if>
+${voffset -13}${goto 97}${color1}temp${offset 7}${color}<#if hardDisk.hwmonIndex??>${template2 [=hardDisk.hwmonIndex] temp 1 [=threshold.tempDisk]}°C<#else>n/a</#if>
 # partitions
-${voffset -126}${goto 97}${color1}[=hardDisk.device] partitions
+${voffset -125}${goto 97}${color1}[=hardDisk.device] partitions
 <#list hardDisk.partitions as partition>
 ${template1 [=partition.path] [=partition.name]}
 </#list>

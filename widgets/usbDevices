@@ -31,7 +31,7 @@ conky.config = {
   -- graph settings
   draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
                               -- does not include bars, ie. wifi strength bar, cpu bar
-  mlib_cache_flush_interval = 250,
+  imlib_cache_flush_interval = 250,
 
   -- font settings
   draw_shades = false,    -- black shadow on text (not good if text is black)

@@ -35,7 +35,7 @@ conky.config = {
   top_name_verbose = true,    -- show full command in ${top ...}
   top_name_width = 21,        -- how many characters to print
 
-  imlib_cache_flush_interval = 300,
+  imlib_cache_flush_interval = 250,
   -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
 
   -- font settingsr
@@ -61,11 +61,11 @@ conky.config = {
 conky.text = [[
 ${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-cpu.png -p 0,0}\
 ${voffset 12}<#list 1..8 as x>${template0 [=x]}<#sep>[='\n']</#sep></#list>
-${voffset 8}${offset 9}${cpugraph cpu0 31,82 [=colors.writeGraph]}
-${voffset -135}${goto 109}${color1}process${alignr 5}cpu   pid${voffset 1}
+${voffset 7}${offset 9}${cpugraph cpu0 31,82 [=colors.writeGraph]}
+${voffset -135}${goto 109}${color1}process${alignr 5}cpu   pid${voffset 4}
 <#list 1..4 as x>
 ${template1 [=x]}
 </#list>
-${voffset 16}${goto 109}${color1}cpu  ${color}${cpu cpu0}%${alignr 5}${template2 atk0110 temp 1 [=threshold.tempCPU]}°C${color1} cpu temp
-${voffset 4}${goto 109}${color1}load ${color}${loadavg}${alignr 5}${template2 coretemp temp 2 [=threshold.tempCPUCore]}°C${color1}core temp
+${voffset 14}${goto 109}${color1}cpu${goto 139}${color}${cpu cpu0}%${alignr 5}${template2 atk0110 temp 1 [=threshold.tempCPU]}°C ${color1}cpu temp
+${voffset 4}${goto 109}${color1}load${goto 139}${color}${loadavg}${alignr 5}${template2 coretemp temp 2 [=threshold.tempCPUCore]}°C${color1}core temp
 ]];

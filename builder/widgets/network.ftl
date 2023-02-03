@@ -50,16 +50,16 @@ conky.config = {
 conky.text = [[
 <#assign device = networkDevices[system]?first>
 ${if_up [=device.name]}\
-${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-internet.png -p 0,0}\
-${voffset 3}${offset 11}${color1}local ip${goto 77}${color}${addr [=device.name]}
-${voffset 3}${offset 11}${color1}bittorrent${goto 77}${color}${tcp_portmon 51413 51413 count} peer(s)
-${voffset 3}${offset 11}${color1}zoom${goto 77}${color}${if_running zoom}running${else}off${endif}
+${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-network.png -p 0,0}\
+${voffset 3}${offset 11}${color1}local ip${goto 81}${color}${addr [=device.name]}
+${voffset 3}${offset 11}${color1}bittorrent${goto 81}${color}${tcp_portmon 51413 51413 count} peer(s)
+${voffset 3}${offset 11}${color1}zoom${goto 81}${color}${if_running zoom}running${else}off${endif}
 ${voffset 6}${offset 68}${upspeedgraph [=device.name] 37,97 [=colors.readGraph] [=device.maxUp?c]}
 ${voffset -7}${offset 68}${downspeedgraph [=device.name] 37,97 [=colors.writeGraph] [=device.maxDown?c]}
-${voffset 6}${offset 7}${color1}up${alignr 93}${color}${upspeed [=device.name]} ${color1}total
-${voffset 4}${offset 7}${color1}down${alignr 93}${color}${downspeed [=device.name]} ${color1}total
-${voffset -30}${alignr 43}${color}${totalup [=device.name]}
-${voffset 4}${alignr 43}${color}${totaldown [=device.name]}
+${voffset 6}${offset 7}${color1}up${alignr 128}${color}${upspeed [=device.name]}
+${voffset 4}${offset 7}${color1}down${alignr 128}${color}${downspeed [=device.name]}
+${voffset -30}${goto 90}${color1}total${alignr 43}${color}${totalup [=device.name]}
+${voffset 4}${goto 90}${color1}total${alignr 43}${color}${totaldown [=device.name]}
 # we need to remove the trailing spacing added the moment we voffset'ed the upload graph 
 ${voffset -20}
 ${else}\

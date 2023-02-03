@@ -19,7 +19,7 @@ conky.config = {
   own_window_transparent = false,
   own_window_argb_visual = false,  -- turn on transparency
   own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
-  own_window_colour = '2f2d1e',
+  own_window_colour = '[=colors.windowColor]',
 
   -- window borders
   draw_borders = false,     -- draw borders around the conky window

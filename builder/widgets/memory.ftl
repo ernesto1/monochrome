@@ -6,7 +6,7 @@ conky.config = {
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
   gap_x = 803,                -- same as passing -x at command line
-  gap_y = 10,
+  gap_y = 11,
 
   -- window settings
   minimum_width = 296,
@@ -32,7 +32,7 @@ conky.config = {
   draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
                               -- does not include bars, ie. wifi strength bar, cpu bar
 
-  imlib_cache_flush_interval = 300,
+  imlib_cache_flush_interval = 250,
   -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
 
   -- font settings
@@ -52,6 +52,6 @@ ${else}\
 ${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-memory-high.png -p 0,0}\
 ${endif}\
 ${voffset 0}${color}${offset 15}${memgraph 78, 42 [=colors.writeGraph]}
-${voffset 6}${goto 84}${color1}mem  ${color}${memperc}%${goto 140}${mem} / ${memmax}
-${voffset 4}${goto 84}${color1}swap ${color}${swapperc}%${goto 140}${color2}${if_match ${swapperc} >= 70}${color3}${endif}${swapbar 3, 100}
+${voffset 7}${goto 84}${color1}mem${goto 117}${color}${memperc}%${goto 149}${mem} / ${memmax}
+${voffset 4}${goto 84}${color1}swap${goto 117}${color}${swapperc}%${goto 149}${color2}${if_match ${swapperc} >= 70}${color3}${endif}${swapbar 3, 100}
 ]];

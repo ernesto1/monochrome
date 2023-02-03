@@ -6,16 +6,17 @@ conky.config = {
   -- window alignment
   alignment = 'bottom_left',
   gap_x = 221,         -- gap between border of the screen and the conky window, same as passing -x at command line
-  gap_y = 54,
+  gap_y = 56,
 
   -- window settings
-  minimum_width = 218,
+  minimum_width = 219,
   own_window = true,
   own_window_type = 'desktop',              -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
   -- transparency configuration
-  own_window_transparent = false,
+  draw_blended = false,
+  own_window_transparent = true,
   own_window_argb_visual = true,  -- turn on transparency
   own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
 
@@ -30,14 +31,13 @@ conky.config = {
   draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
                               -- does not include bars, ie. wifi strength bar, cpu bar
 
-  imlib_cache_flush_interval = 300,
+  imlib_cache_flush_interval = 250,
   -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
 
   -- font settings
   draw_shades = false,    -- black shadow on text (not good if text is black)
   
   -- colors
-  own_window_colour = '2f2d1e',
   default_color = 'a7aa71', -- regular text
   color1 = 'bf8766',        -- text labels
   color2 = '9fc14a',        -- bar
@@ -49,27 +49,24 @@ conky.config = {
 };
 
 conky.text = [[
-${color1}${voffset 3}${offset 5}SYSTEM ${hr}
-${voffset 5}${offset 5}${color1}kernel${goto 70}${color}${kernel}
-${voffset 3}${offset 5}${color1}uptime${goto 70}${color}${uptime}
-${voffset 3}${offset 5}${color1}compositor${goto 70}${color}${execi 3600 echo $XDG_SESSION_TYPE}
+${image ~/conky/monochrome/images/widgets/green-system.png -p 0,0}\
+${voffset 3}${offset 5}${color1}kernel${goto 76}${color}${kernel}
+${voffset 3}${offset 5}${color1}uptime${goto 76}${color}${uptime}
+${voffset 3}${offset 5}${color1}compositor${goto 76}${color}${execi 3600 echo $XDG_SESSION_TYPE}
 # :::::::::::: temperatures & cooling
-${voffset 10}${offset 5}${color1}temperature & cooling ${hr}
-${voffset 5}${offset 5}${color1}device${alignr 4}temperature
-${voffset 3}${offset 5}${color}AMD Radeon HD7570${alignr 4}${template1 radeon temp 1 75}°C
-${voffset 5}${offset 5}${color1}fan${alignr 4}revolutions
-${if_updatenr 1}${image ~/conky/monochrome/images/widgets/green-fan-1.png -n -p 65,125}${endif}\
-${if_updatenr 2}${image ~/conky/monochrome/images/widgets/green-fan-2.png -n -p 65,125}${endif}\
-${voffset 3}${offset 5}${color}chasis front intake${alignr 4}${template1 atk0110 fan 3 2400} rpm
+${voffset 11}${offset 5}${color1}device${alignr 4}temperature
+${voffset 8}${offset 5}${color}AMD Radeon HD7570${alignr 4}${template1 radeon temp 1 75}°C
+${voffset 10}${offset 5}${color1}fan${alignr 4}revolutions
+${voffset 8}${offset 5}${color}chasis front intake${alignr 4}${template1 atk0110 fan 3 2400} rpm
 ${voffset 3}${offset 5}${color}cpu fan${alignr 4}${template1 atk0110 fan 1 2500} rpm
 ${voffset 3}${offset 5}${color}case top exhaust fan${alignr 4}${template1 atk0110 fan 2 2500} rpm
-${voffset 3}${offset 5}${color}case back exhaust fan${alignr 4}${template1 atk0110 fan 4 2500} rpm
+${voffset 3}${offset 5}${color}case back exhaust fan${alignr 4}${template1 atk0110 fan 4 2500} rpm${voffset 4}
 # :::::::::::: package updates
 ${if_existing /tmp/dnf.packages}\
-${voffset 10}${offset 5}${color1}dnf package management ${hr}
-${voffset 5}${offset 5}${color}${lines /tmp/dnf.packages} package update(s) available
+${voffset 7}${alignc}${color1}dnf package management
+${voffset 5}${alignc}${color}${lines /tmp/dnf.packages} package update(s) available
 ${voffset 5}${offset 5}${color1}package${alignr 4}version
 # the dnf package lookup script refreshes the package list every 10m
-${voffset 3}${color}${execpi 20 head -n 30 /tmp/dnf.packages.preview}${voffset 4}
+${voffset 3}${color}${execpi 20 head -n 60 /tmp/dnf.packages.preview}${voffset 4}
 ${endif}\
 ]];
