@@ -89,6 +89,7 @@ while (( "$#" )); do
       ;;
     --widgets-dock)
       directory=${HOME}/conky/monochrome/widgets-dock
+      width=30
       shift
       ;;
     --glass)
