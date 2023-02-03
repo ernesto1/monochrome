@@ -6,7 +6,7 @@ conky.config = {
   -- window alignment
   alignment = 'middle_left',  -- top|middle|bottom_left|right
   gap_x = 2,               -- same as passing -x at command line
-  gap_y = -328,
+  gap_y = -637,
 
   -- window settings
   minimum_width = 56,      -- conky will add an extra pixel to this
@@ -38,8 +38,8 @@ conky.config = {
   font2 = ' Noto Sans CJK JP Thin:size=11',
   
   -- colors
-  default_color = 'c15124',  -- regular text
-  color1 = '8a2700'
+  default_color = '8a61ad',  -- regular text
+  color1 = 'f2c7ff'
 };
 
 conky.text = [[
@@ -47,4 +47,6 @@ conky.text = [[
 # when an application window is maximized, the widgets will still be visible
 # widgets that require centered text within the sidebar will be placed here
 ${alignc}${font0}${color}${if_existing /tmp/dnf.packages}${lines /tmp/dnf.packages}${else}0${endif}${voffset 7}
+${alignc}${font0}${color}${time %I}${font1}:${time %M}
+${voffset -29}${alignc}${color1}${font2}${time %a}
 ]];
