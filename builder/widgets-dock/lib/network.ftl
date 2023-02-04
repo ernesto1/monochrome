@@ -71,17 +71,15 @@ ${endif}\
 </#macro>
 
 <#macro wifiDetails device>
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-block-small.png -p 0,210}\
-${voffset 17}${offset 5}${color1}network${goto 60}${color}${wireless_essid [=device.name]}
-${voffset 3}${offset 5}${color1}local ip${goto 60}${color}${addr [=device.name]}
-${voffset 3}${offset 5}${color1}bitrate${goto 60}${color}${wireless_bitrate [=device.name]}
-${voffset 3}${offset 5}${color1}channel${goto 60}${color}${wireless_channel [=device.name]}
+${voffset 17}${offset 5}${color1}network${goto 75}${color}${wireless_essid [=device.name]}
+${voffset 3}${offset 5}${color1}local ip${goto 75}${color}${addr [=device.name]}
+${voffset 3}${offset 5}${color1}bitrate${goto 75}${color}${wireless_bitrate [=device.name]}
+${voffset 3}${offset 5}${color1}channel${goto 75}${color}${wireless_channel [=device.name]}
 </#macro>
 
 <#macro ethernetDetails device>
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-block-small.png -p 0,210}\
-${voffset 17}${offset 5}${color1}local ip${goto 73}${color}${addr [=device.name]}
-${voffset 3}${offset 5}${color1}speed${goto 73}${color}${execi 180 ethtool [=device.name] 2>/dev/null | grep -i speed | cut -d ' ' -f 2}
-${voffset 3}${offset 5}${color1}total up${goto 73}${color}${totalup [=device.name]}
-${voffset 3}${offset 5}${color1}total down${goto 73}${color}${totaldown [=device.name]}
+${voffset 17}${offset 5}${color1}local ip${goto 75}${color}${addr [=device.name]}
+${voffset 3}${offset 5}${color1}speed${goto 75}${color}${execi 180 ethtool [=device.name] 2>/dev/null | grep -i speed | cut -d ' ' -f 2}
+${voffset 3}${offset 5}${color1}total up${goto 75}${color}${totalup [=device.name]}
+${voffset 3}${offset 5}${color1}total down${goto 75}${color}${totaldown [=device.name]}
 </#macro>

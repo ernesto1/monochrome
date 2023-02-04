@@ -38,7 +38,7 @@ conky.config = {
   font2 = ' Noto Sans CJK JP Thin:size=11',
   
   -- colors
-  default_color = '8a61ad',  -- regular text
+  default_color = '906c9c',  -- regular text
   color1 = 'f2c7ff'
 };
 

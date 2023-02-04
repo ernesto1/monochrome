@@ -54,7 +54,7 @@ conky.config = {
 
 conky.text = [[
 # :::::::::::: top cpu/mem processes
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-block-large.png -p 0,0}\
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-large.png -p 0,0}\
 ${voffset 3}${color1}${offset 5}process${alignr 5}cpu   pid${voffset 1}
 <#list 1..5 as x>
 ${template1 [=x]}
@@ -65,10 +65,11 @@ ${template2 [=x]}
 </#list>
 # :::::::::::: network
 # assumption: only one network device will be connected to the internet at a time
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-small.png -p 0,210}\
 <@net.networkDetails networkDevices[system]/>
 # :::::: bittorrent
 ${if_running transmission-gt}\
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-block-large.png -p 0,288}\
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-large.png -p 0,288}\
 ${voffset 17}${offset 5}${color1}bittorrent${goto 73}${color}${tcp_portmon 51413 51413 count} peer(s)
 ${voffset 6}${offset 5}${color1}ip address${alignr 5}remote port
 ${if_match ${tcp_portmon 51413 51413 count} > 0}\
@@ -85,16 +86,16 @@ ${endif}\
 # :::::::::::: package updates
 ${if_existing /tmp/dnf.packages}\
 # multiple sequential background images are loaded, the images are gradually shown as the package list grows
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-block-large.png -p 0,498}\
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-large.png -p 0,498}\
 <#if system == "desktop" ><#assign y = 498, height = 198, i = 5>
 <#else><#assign y = 516, height = 0, i = 1>
 </#if>
 <#list 1..i as x>
 <#assign y += height>
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-block-large-extension.png -p 0,[=y?c]}\
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-large-extension.png -p 0,[=y?c]}\
 </#list>
 ${voffset 17}${offset 5}${color1}package${alignr 5}version
 <#if system == "desktop"><#assign lines = 87><#else><#assign lines = 15></#if>
-${voffset 3}${color}${execpi 20 head -n [=lines] /tmp/dnf.packages.preview}${voffset 7}
+${voffset 3}${color}${execpi 20 head -n [=lines] /tmp/dnf.packages.preview}${voffset 4}
 ${endif}\
 ]];
