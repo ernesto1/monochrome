@@ -61,7 +61,7 @@ conky.config = {
   -- cpu/mem/download/disk write graph color
   template1 = [[51295e a36dec]],
   -- upload/disk read graph
-  template2 = [[943145 e1778d]],
+  template2 = [[6c1c1b d7511c]],
 
   -- network bandwith: ${template4 device uploadSpeed downloadSpeed}
   template4 = [[
