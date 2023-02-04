@@ -39,7 +39,7 @@ conky.config = {
   
   -- colors
   default_color = 'a7aa71', -- regular text
-  color1 = 'bf8766',        -- text labels
+  color1 = 'd2b8f2',        -- text labels
   color2 = '9fc14a',        -- bar
   color3 = 'ad2724',        -- bar critical
   
