@@ -1,5 +1,4 @@
 grape:
-  border: false             # sidebar image has a 1px border line - optional, default is true
   image:
     primaryColor: grape
     secondaryColor: pink
@@ -12,8 +11,10 @@ grape:
     widgetTextSmall: f2c7ff # small thin text requires darker shade to be readable
     detailsText: c596c7     # system bar default text
     highlight: d7511c       # flag important package updates
-    writeGraph: 51295e a36dec
     readGraph: 6c1c1b d7511c
+    writeGraph: 51295e a36dec
+  border: false             # add 1px border to panel sidebar width - optional, default is true
+                            # set to 'false' for sidebars that don't have an accent border
 orange:
   image:
     primaryColor: orange
@@ -27,8 +28,8 @@ orange:
     widgetTextSmall: 8a2700
     detailsText: 703d0a
     highlight: 37a80b
-    writeGraph: eb652e f97928
     readGraph: 123e01 68a315
+    writeGraph: c12504 ff3c13
 purple:
   image:
     primaryColor: purple
@@ -42,5 +43,5 @@ purple:
     widgetTextSmall: f2c7ff
     detailsText: ff8dfd
     highlight: a3c2bc
-    writeGraph: 8a00a1 c800ea
     readGraph: 689693 a3c2bc
+    writeGraph: 8a00a1 c800ea

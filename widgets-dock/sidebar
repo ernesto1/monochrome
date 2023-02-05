@@ -51,17 +51,17 @@ conky.config = {
   -- colors
   default_color = 'white',  -- regular text
   color1 = 'white',         -- text labels
-  color2 = 'a36dec',        -- bar
-  color3 = 'c33855',        -- bar critical
-  color4 = '906c9c',        -- temperature text
+  color2 = 'c15124',        -- bar
+  color3 = 'd70d2f',        -- bar critical
+  color4 = 'c15124',        -- temperature text
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   --  n.b. the line break escape character '\' is not supported in templates :(
   
   -- cpu/mem/download/disk write graph color
-  template1 = [[51295e a36dec]],
+  template1 = [[c12504 ff3c13]],
   -- upload/disk read graph
-  template2 = [[6c1c1b d7511c]],
+  template2 = [[123e01 68a315]],
 
   -- network bandwith: ${template4 device uploadSpeed downloadSpeed}
   template4 = [[
@@ -93,18 +93,18 @@ ${voffset 4}${goto 67}${color}${font1}${fs_used_perc \2}${font0}%${font}${voffse
 conky.text = [[
 # :::::::::::::::::::: cpu
 ${if_match ${cpu cpu0} < 90}\
-${image ~/conky/monochrome/images/widgets-dock/grape-cpu.png -p 0,0}\
+${image ~/conky/monochrome/images/widgets-dock/orange-cpu.png -p 0,0}\
 ${else}\
 ${if_match ${cpu cpu0} == 100}${image ~/conky/monochrome/images/widgets-dock/text-box-100.png -p 117,54}${endif}\
-${image ~/conky/monochrome/images/widgets-dock/grape-cpu-high.png -p 0,0}\
+${image ~/conky/monochrome/images/widgets-dock/orange-cpu-high.png -p 0,0}\
 ${endif}\
 ${voffset 44}${offset 12}${cpugraph cpu0 33,33 ${template1}}
 ${voffset -31}${goto 67}${color}${font1}${cpu cpu0}${font0}%
 # :::::::::::::::::::: memory
 ${if_match ${memperc} < 85}\
-${image ~/conky/monochrome/images/widgets-dock/grape-mem.png -p 0,98}\
+${image ~/conky/monochrome/images/widgets-dock/orange-mem.png -p 0,98}\
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/grape-mem-high.png -p 0,98}\
+${image ~/conky/monochrome/images/widgets-dock/orange-mem-high.png -p 0,98}\
 ${endif}\
 ${voffset 17}${offset 18}${memgraph 43,21 ${template1}}
 ${voffset -33}${goto 67}${color}${font1}${memperc}${font0}%
@@ -112,39 +112,39 @@ ${voffset 4}${offset 6}${color2}${if_match ${swapperc} >= 70}${color3}${endif}${
 # :::::::::::::::::::: network
 # :::: ethernet
 ${if_up enp0s25}\
-${image ~/conky/monochrome/images/widgets-dock/grape-ethernet.png -p 0,181}\
+${image ~/conky/monochrome/images/widgets-dock/orange-ethernet.png -p 0,181}\
 # ethernet details printed on the system conky
 ${voffset 48}
 # :: upload/download speeds
-${image ~/conky/monochrome/images/widgets-dock/grape-internet.png -p 0,245}\
+${image ~/conky/monochrome/images/widgets-dock/orange-internet.png -p 0,245}\
 ${template4 enp0s25 3000 60000}
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/pink-ethernet-disconnected.png -p 0,181}
-${image ~/conky/monochrome/images/widgets-dock/pink-internet-offline.png -p 0,245}\
+${image ~/conky/monochrome/images/widgets-dock/green-ethernet-disconnected.png -p 0,181}
+${image ~/conky/monochrome/images/widgets-dock/green-internet-offline.png -p 0,245}\
 ${voffset 117}
 ${endif}\
 # :::::::::::::::::::: disk sda
 # main disk
 # disk io
-${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/grape-diskio-1.png -p 0,327}${endif}\
-${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/grape-diskio-2.png -p 0,327}${endif}\
+${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/orange-diskio-1.png -p 0,327}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/orange-diskio-2.png -p 0,327}${endif}\
 ${template5 sda 200000 280000}
 # partitions
-${image ~/conky/monochrome/images/widgets-dock/grape-disk-root.png -p 0,391}\
+${image ~/conky/monochrome/images/widgets-dock/orange-disk-root.png -p 0,391}\
 ${template6 \  /}
-${image ~/conky/monochrome/images/widgets-dock/grape-disk-home.png -p 0,455}\
+${image ~/conky/monochrome/images/widgets-dock/orange-disk-home.png -p 0,455}\
 ${template6 \  /home}
 # :::::::::::::::::::: disk sdb
 ${if_existing /dev/sdb}\
 # disk io
-${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/grape-diskio-1.png -p 0,519}${endif}\
-${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/grape-diskio-2.png -p 0,519}${endif}\
+${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/orange-diskio-1.png -p 0,519}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/orange-diskio-2.png -p 0,519}${endif}\
 ${template5 sdb 6000 250000}
 # partitions
-${image ~/conky/monochrome/images/widgets-dock/grape-disk-partition.png -p 0,583}\
+${image ~/conky/monochrome/images/widgets-dock/orange-disk-partition.png -p 0,583}\
 ${template6 veronica /media/veronica}
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/pink-disk-disconnected.png -p 0,519}\
+${image ~/conky/monochrome/images/widgets-dock/green-disk-disconnected.png -p 0,519}\
 ${voffset 59}${goto 67}sdb not
 ${voffset 3}${goto 67}available
 ${voffset 27}
@@ -152,14 +152,14 @@ ${endif}\
 # :::::::::::::::::::: disk sdd
 ${if_existing /dev/sdd}\
 # disk io
-${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/grape-diskio-1.png -p 0,647}${endif}\
-${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/grape-diskio-2.png -p 0,647}${endif}\
+${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/orange-diskio-1.png -p 0,647}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/orange-diskio-2.png -p 0,647}${endif}\
 ${template5 sdd 6000 250000}
 # partitions
-${image ~/conky/monochrome/images/widgets-dock/grape-disk-partition.png -p 0,711}\
+${image ~/conky/monochrome/images/widgets-dock/orange-disk-partition.png -p 0,711}\
 ${template6 betty /media/betty}
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/pink-disk-disconnected.png -p 0,647}\
+${image ~/conky/monochrome/images/widgets-dock/green-disk-disconnected.png -p 0,647}\
 ${voffset 59}${goto 67}sdd not
 ${voffset 3}${goto 67}available
 ${voffset 27}
@@ -167,45 +167,45 @@ ${endif}\
 # :::::::::::::::::::: disk maxtor
 ${if_existing /dev/sde1}\
 # disk io
-${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/grape-diskio-1.png -p 0,775}${endif}\
-${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/grape-diskio-2.png -p 0,775}${endif}\
+${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/orange-diskio-1.png -p 0,775}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/orange-diskio-2.png -p 0,775}${endif}\
 ${template5 sde1 6000 60000}
 # partitions
-${image ~/conky/monochrome/images/widgets-dock/grape-disk-usbdrive.png -p 0,839}\
+${image ~/conky/monochrome/images/widgets-dock/orange-disk-usbdrive.png -p 0,839}\
 ${template6 maxtor /run/media/ernesto/MAXTOR}
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/pink-disk-disconnected.png -p 0,775}\
+${image ~/conky/monochrome/images/widgets-dock/green-disk-disconnected.png -p 0,775}\
 ${voffset 59}${goto 67}sde1 not
 ${voffset 3}${goto 67}available
 ${voffset 27}
 ${endif}\
 # :::::::::::::::::::: temperatures
 # :::::::: cpu
-${image ~/conky/monochrome/images/widgets-dock/grape-temp-cpu-desktop.png -p 0,903}\
+${image ~/conky/monochrome/images/widgets-dock/orange-temp-cpu-desktop.png -p 0,903}\
 # cpu temp on sidebar while cpu core temperatures are printed on the side
 ${voffset 8}${template8 atk0110 temp 1 78}${voffset -35}${goto 67}${hwmon coretemp temp 2}°C${offset 9}${hwmon coretemp temp 3}°C
 ${voffset 8}${goto 67}${hwmon coretemp temp 4}°C${offset 9}${hwmon coretemp temp 5}°C${color4}${voffset 14}
 # :::::::: ati video card
-${image ~/conky/monochrome/images/widgets-dock/grape-temp-videocard.png -p 0,967}\
+${image ~/conky/monochrome/images/widgets-dock/orange-temp-videocard.png -p 0,967}\
 ${template8 radeon temp 1 75}
 # :::::::: hard disks
-${image ~/conky/monochrome/images/widgets-dock/grape-temp-disk.png -p 0,1031}\
+${image ~/conky/monochrome/images/widgets-dock/orange-temp-disk.png -p 0,1031}\
 ${template8 0 temp 1 42}
-${image ~/conky/monochrome/images/widgets-dock/grape-temp-disk.png -p 0,1095}\
+${image ~/conky/monochrome/images/widgets-dock/orange-temp-disk.png -p 0,1095}\
 ${template8 1 temp 1 42}
-${image ~/conky/monochrome/images/widgets-dock/grape-temp-disk.png -p 0,1159}\
+${image ~/conky/monochrome/images/widgets-dock/orange-temp-disk.png -p 0,1159}\
 ${template8 2 temp 1 42}
 # :::::::: fans
-${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/grape-fan-1.png -p 0,1223}${endif}\
-${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/grape-fan-2.png -p 0,1223}${endif}\
+${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/orange-fan-1.png -p 0,1223}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/orange-fan-2.png -p 0,1223}${endif}\
 ${voffset 7}${offset 7}${font2}${template7 atk0110 fan 1 2300}
 # :::::::::::::::::::: package updates 
 # placeholder, the logic is in the sidebar-time conky
-${image ~/conky/monochrome/images/widgets-dock/grape-packages.png -p 0,1287}\
+${image ~/conky/monochrome/images/widgets-dock/orange-packages.png -p 0,1287}\
 # :::::::::::::::::::: time 
 # placeholder, the actual time logic is in the sidebar-time conky
-${image ~/conky/monochrome/images/widgets-dock/grape-block-sidebar.png -p 0,1351}\
-${image ~/conky/monochrome/images/widgets-dock/grape-block-sidebar.png -p 0,1367}\
+${image ~/conky/monochrome/images/widgets-dock/orange-block-sidebar.png -p 0,1351}\
+${image ~/conky/monochrome/images/widgets-dock/orange-block-sidebar.png -p 0,1367}\
 # :::::::::::::::::::: bar's bottom edge
-${image ~/conky/monochrome/images/widgets-dock/grape-edge-bottom.png -p 0,1421}\
+${image ~/conky/monochrome/images/widgets-dock/orange-edge-bottom.png -p 0,1421}\
 ${voffset -360}]];

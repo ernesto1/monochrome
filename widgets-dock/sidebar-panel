@@ -9,7 +9,7 @@ conky.config = {
   gap_y = -633,
 
   -- window settings
-  minimum_width = 56,      -- conky will add an extra pixel to this
+    minimum_width = 56,      -- conky will add an extra pixel to this
   minimum_height = 10,
   own_window = true,
   own_window_type = 'panel',    -- values: desktop (background), panel (bar)
@@ -38,8 +38,8 @@ conky.config = {
   font2 = ' Noto Sans CJK JP Thin:size=11',
   
   -- colors
-  default_color = '906c9c',  -- regular text
-  color1 = 'f2c7ff'
+  default_color = 'c15124',  -- regular text
+  color1 = '8a2700'
 };
 
 conky.text = [[
