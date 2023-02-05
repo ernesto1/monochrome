@@ -1,4 +1,5 @@
 grape:
+  border: false             # sidebar image has a 1px border line - optional, default is true
   image:
     primaryColor: grape
     secondaryColor: pink
@@ -25,7 +26,7 @@ orange:
     widgetText: c15124
     widgetTextSmall: 8a2700
     detailsText: 703d0a
-    highlight: 68a315
+    highlight: 37a80b
     writeGraph: eb652e f97928
     readGraph: 123e01 68a315
 purple:
