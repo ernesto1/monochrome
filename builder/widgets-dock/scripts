@@ -27,3 +27,13 @@ popd
 - images should have a top/bottom border of 9px
 - vertical offsets have to be done using the default font $(font)
   offsets accross different fonts are not compatible
+
+alignment for system conky
+
+top cpu window
+
+  header  19
+  body    94
+  bottom  7     1px below the text's main body
+  
+  each row of text adds 16 pixels (lines with a 3px voffset)

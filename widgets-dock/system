@@ -41,7 +41,7 @@ conky.config = {
   -- colors
   default_color = '703d0a',  -- regular text
   color1 = 'white',
-  color2 = '37a80b',         -- highlight important packages
+  color2 = 'white',         -- highlight important packages
   
   -- top cpu process: ${template1 processNumber}
   template1 = [[${voffset 3}${color}${offset 5}${top name \1}${alignr 5}${top cpu \1}% ${top pid \1}]],
@@ -55,7 +55,7 @@ conky.text = [[
 # :::::::::::: top cpu processes
 ${image ~/conky/monochrome/images/widgets-dock/orange-menu-top.png -p 0,0}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-menu.png -p 0,19}\
-${image ~/conky/monochrome/images/widgets-dock/orange-menu-bottom.png -p 0,112}\
+${image ~/conky/monochrome/images/widgets-dock/orange-menu-bottom.png -p 0,128}\
 ${voffset 2}${color1}${offset 5}process${alignr 5}cpu   pid${voffset 3}
 ${template1 1}
 ${template1 2}
@@ -63,9 +63,10 @@ ${template1 3}
 ${template1 4}
 ${template1 5}
 ${template1 6}
+${template1 7}
 # :::::::::::: top mem processes
-${image ~/conky/monochrome/images/widgets-dock/orange-menu-top.png -p 0,124}\
-${image ~/conky/monochrome/images/widgets-dock/orange-menu-bottom.png -p 0,236}\
+${image ~/conky/monochrome/images/widgets-dock/orange-menu-top.png -p 0,140}\
+${image ~/conky/monochrome/images/widgets-dock/orange-menu-bottom.png -p 0,268}\
 ${voffset 12}${color1}${offset 5}process${alignr 5}memory   pid${voffset 3}
 ${template2 1}
 ${template2 2}
@@ -73,9 +74,10 @@ ${template2 3}
 ${template2 4}
 ${template2 5}
 ${template2 6}
+${template2 7}
 # :::::::::::: network
 # assumption: only one network device will be connected to the internet at a time
-${image ~/conky/monochrome/images/widgets-dock/orange-menu-horizontal.png -p 0,248}\
+${image ~/conky/monochrome/images/widgets-dock/orange-menu-horizontal.png -p 0,280}\
 # :::: ethernet
 ${if_up enp0s25}\
 ${voffset 15}${offset 5}${color1}local ip${goto 75}${color}${addr enp0s25}
@@ -84,13 +86,13 @@ ${voffset 3}${offset 5}${color1}total up${goto 75}${color}${totalup enp0s25}
 ${voffset 3}${offset 5}${color1}total down${goto 75}${color}${totaldown enp0s25}
 ${else}\
 # in case no internet connection is available we have to "fill the gap" so the next section prints properly
-${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,248}\
+${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,280}\
 ${voffset 76}\
 ${endif}\
 # :::::::::::: bittorrent peers
 ${if_running transmission-gt}\
-${image ~/conky/monochrome/images/widgets-dock/orange-menu-top.png -p 0,326}\
-${image ~/conky/monochrome/images/widgets-dock/orange-menu-bottom.png -p 0,519}\
+${image ~/conky/monochrome/images/widgets-dock/orange-menu-top.png -p 0,358}\
+${image ~/conky/monochrome/images/widgets-dock/orange-menu-bottom.png -p 0,551}\
 ${voffset 15}${offset 5}${color1}bittorrent${goto 75}${color}${tcp_portmon 51413 51413 count} peer(s)
 ${voffset 6}${offset 5}${color1}ip address${alignr 5}remote port
 ${if_match ${tcp_portmon 51413 51413 count} > 0}\
@@ -109,14 +111,14 @@ ${voffset 67}${alignc}${color}no peer connections
 ${voffset 3}${alignc}established${voffset 64}
 ${endif}\
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,326}\
-${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,404}\
-${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,453}\
+${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,358}\
+${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,436}\
+${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,485}\
 ${voffset 207}\
 ${endif}\
 # :::::::::::: package updates
 ${if_existing /tmp/dnf.packages}\
-${image ~/conky/monochrome/images/widgets-dock/orange-menu-top.png -p 0,531}\
+${image ~/conky/monochrome/images/widgets-dock/orange-menu-top.png -p 0,563}\
 ${voffset 12}${offset 5}${color1}package${alignr 5}version${voffset 3}
 ${voffset 3}${color}${execpi 20 head -n 87 /tmp/dnf.packages.preview}${voffset 4}
 ${endif}\
