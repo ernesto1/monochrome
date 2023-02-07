@@ -5,11 +5,11 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 221,
+  gap_x = 222,
   gap_y = 5,
 
   -- window settings
-  minimum_width = 217,
+  minimum_width = 216,
 --  minimum_height = 55,
   own_window = true,
   own_window_type = 'desktop',  -- values: desktop (background), panel (bar)
@@ -44,6 +44,6 @@ conky.text = [[
 #  %A day 
 #  %B month (full)
 #  %d day of the month (1-31)
-${voffset -2}${offset 13}${color}${font Promenade de la Croisette:size=40}${time %I}${font Promenade de la Croisette:size=37}:${time %M}${voffset -20}${goto 62}${color}${font URW Gothic:size=12}${time %A}
+${offset 13}${color}${font Promenade de la Croisette:size=40}${time %I}${font Promenade de la Croisette:size=37}:${time %M}${voffset -20}${goto 62}${color}${font URW Gothic:size=12}${time %A}
 ${voffset 3}${goto 62}${time %B %d %Y}${voffset -5}
 ]];

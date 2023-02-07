@@ -53,20 +53,21 @@ ${image ~/conky/monochrome/images/widgets/green-system.png -p 0,0}\
 ${voffset 3}${offset 5}${color1}kernel${goto 76}${color}${kernel}
 ${voffset 3}${offset 5}${color1}uptime${goto 76}${color}${uptime}
 ${voffset 3}${offset 5}${color1}compositor${goto 76}${color}${execi 3600 echo $XDG_SESSION_TYPE}
-# :::::::::::: temperatures & cooling
+# :::::::::::: temperatures
 ${voffset 11}${offset 5}${color1}device${alignr 4}temperature
 ${voffset 8}${offset 5}${color}AMD Radeon HD7570${alignr 4}${template1 radeon temp 1 75}°C
-${voffset 10}${offset 5}${color1}fan${alignr 4}revolutions
+# :::::::::::: fans
+${voffset 11}${offset 5}${color1}fan${alignr 4}revolutions
 ${voffset 8}${offset 5}${color}chasis front intake${alignr 4}${template1 atk0110 fan 3 2400} rpm
 ${voffset 3}${offset 5}${color}cpu fan${alignr 4}${template1 atk0110 fan 1 2500} rpm
 ${voffset 3}${offset 5}${color}case top exhaust fan${alignr 4}${template1 atk0110 fan 2 2500} rpm
 ${voffset 3}${offset 5}${color}case back exhaust fan${alignr 4}${template1 atk0110 fan 4 2500} rpm${voffset 4}
 # :::::::::::: package updates
-${if_existing /tmp/dnf.packages}\
+${if_existing /tmp/dnf.packages.preview}\
 ${voffset 7}${alignc}${color1}dnf package management
-${voffset 5}${alignc}${color}${lines /tmp/dnf.packages} package update(s) available
+${voffset 5}${alignc}${color}${lines /tmp/dnf.packages.preview} package update(s) available
 ${voffset 5}${offset 5}${color1}package${alignr 4}version
 # the dnf package lookup script refreshes the package list every 10m
-${voffset 3}${color}${execpi 20 head -n 60 /tmp/dnf.packages.preview}${voffset 4}
+${voffset 3}${color}${execpi 20 head -n 80 /tmp/dnf.packages.preview}${voffset 4}
 ${endif}\
 ]];
