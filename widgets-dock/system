@@ -117,9 +117,10 @@ ${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,485}\
 ${voffset 207}\
 ${endif}\
 # :::::::::::: package updates
-${if_existing /tmp/dnf.packages}\
+${if_existing /tmp/dnf.packages.preview}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-menu-top.png -p 0,563}\
+${image ~/conky/monochrome/images/widgets-dock/orange-menu-bottom.png -p 0,1505}\
 ${voffset 12}${offset 5}${color1}package${alignr 5}version${voffset 3}
-${voffset 3}${color}${execpi 20 head -n 87 /tmp/dnf.packages.preview}${voffset 4}
+${voffset 3}${color}${execpi 20 head -n 71 /tmp/dnf.packages.preview}${voffset 4}
 ${endif}\
 ]];

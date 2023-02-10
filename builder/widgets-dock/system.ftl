@@ -101,11 +101,12 @@ ${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=peersHeight
 ${voffset 207}\
 ${endif}\
 # :::::::::::: package updates
-${if_existing /tmp/dnf.packages}\
+${if_existing /tmp/dnf.packages.preview}\
 <#assign y += bottom>
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-top.png -p 0,[=y]}\
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-bottom.png -p 0,[=(y + 5 + 937)?c]}\
 ${voffset 12}${offset 5}${color1}package${alignr 5}version${voffset 3}
-<#if system == "desktop"><#assign lines = 87><#else><#assign lines = 15></#if>
+<#if system == "desktop"><#assign lines = 71><#else><#assign lines = 15></#if>
 ${voffset 3}${color}${execpi 20 head -n [=lines] /tmp/dnf.packages.preview}${voffset 4}
 ${endif}\
 ]];

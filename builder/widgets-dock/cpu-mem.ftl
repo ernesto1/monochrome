@@ -2,7 +2,7 @@
 ${if_match ${cpu cpu0} < [=threshold.cpu]}\
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-cpu.png -p 0,0}\
 ${else}\
-${if_match ${cpu cpu0} == 100}${image ~/conky/monochrome/images/widgets-dock/text-box-100.png -p 117,54}${endif}\
+${if_match ${cpu cpu0} == 100}${image ~/conky/monochrome/images/widgets-dock/text-box-100.png -p 114,54}${endif}\
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-cpu-high.png -p 0,0}\
 ${endif}\
 ${voffset 44}${offset 12}${cpugraph cpu0 33,33 ${template1}}
