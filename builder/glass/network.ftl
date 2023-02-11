@@ -28,7 +28,7 @@ ${image ~/conky/monochrome/images/glass/[=image.secondaryColor]-network-disconne
 ${voffset 7}${offset 5}${color}${font0}network${font}
 ${voffset 142}${alignc}${color}no [=type]
 ${alignc}connection
-<#if system == "desktop">${voffset -29}<#else>${voffset -45}</#if>
+<#if system == "desktop">${voffset -26}<#else>${voffset -45}</#if>
 </#if>
 </#list>
 <#list 1..networkDevices[system]?size as x>

@@ -138,7 +138,7 @@ ${image ~/conky/monochrome/images/glass/ochre-network-disconnected-ethernet.png 
 ${voffset 7}${offset 5}${color}${font0}network${font}
 ${voffset 142}${alignc}${color}no ethernet
 ${alignc}connection
-${voffset -29}
+${voffset -26}
 ${endif}
 # ::::::::::::::::: disk sda
 ${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,419}\
@@ -162,7 +162,7 @@ ${image ~/conky/monochrome/images/glass/blue-block-small.png -p 0,884}\
 ${template6 betty /media/betty}
 # ::::::::::::::::: disk maxtor
 ${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,940}\
-${template5 sde1 6000 60000}
+${template5 sdg1 6000 60000}
 # :::::: partitions
 ${image ~/conky/monochrome/images/glass/blue-block-small.png -p 0,1039}\
 ${template6 maxtor /run/media/ernesto/MAXTOR}

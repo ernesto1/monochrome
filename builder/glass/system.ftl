@@ -7,7 +7,7 @@ conky.config = {
   -- window alignment
   alignment = 'top_left',     -- top|middle|bottom_left|middle|right
   gap_x = 125,                    -- same as passing -x at command line
-  gap_y = 50,
+  gap_y = 82,
 
   -- window settings
   minimum_width = 223,
@@ -90,8 +90,8 @@ ${voffset 3}${color1}${goto 42}zoom${goto 74}${color}${if_running zoom}running${
 ${voffset 3}${offset 5}${color1}bittorrent${goto 74}${color}${tcp_portmon 51413 51413 count} peer(s)
 # :::: bittorrent connections
 ${if_running transmission-gt}\
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-table.png -p 0,382}\
-${voffset 10}${offset 5}${color1}ip address${alignr 5}remote port${voffset 3}
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-table.png -p 0,383}\
+${voffset 11}${offset 5}${color1}ip address${alignr 5}remote port${voffset 3}
 ${if_match ${tcp_portmon 51413 51413 count} > 0}\
 <#list 0..6 as x>
 ${template2 [=x]}
@@ -105,7 +105,7 @@ ${voffset 138}\
 ${endif}\
 # ::::::::::::::::: package updates
 ${if_existing /tmp/dnf.packages.preview}\
-<#assign y = 523>
+<#assign y = 524>
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu.png -p 0,[=y?c]}\
 <#assign height = 38, y += height>
 <#list 1..2 as x>
@@ -113,10 +113,10 @@ ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-transparent.p
 <#assign height = 800, y += height>
 </#list>
 ${voffset 14}${alignc}${color1}dnf package management
-${voffset 3}${alignc}${color}${lines /tmp/dnf.packages} package update(s) available
+${voffset 3}${alignc}${color}${lines /tmp/dnf.packages.preview} package update(s) available
 ${voffset 5}${offset 5}${color1}package${alignr 9}version
 # the dnf package lookup script refreshes the package list every 10m
-<#if system == "desktop"><#assign lines = 80><#else><#assign lines = 28></#if>
+<#if system == "desktop"><#assign lines = 66><#else><#assign lines = 28></#if>
 ${voffset 4}${color}${execpi 20 head -n [=lines] /tmp/dnf.packages.preview}
 ${endif}\
 ${voffset -9}
