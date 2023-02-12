@@ -88,24 +88,24 @@ ${voffset 15}${offset 5}${color1}bittorrent${goto 75}${color}${tcp_portmon 51413
 ${voffset 6}${offset 5}${color1}ip address${alignr 5}remote port
 ${if_match ${tcp_portmon 51413 51413 count} > 0}\
 <#list 0..9 as x>
-${template3 [=x]}
+${template3 [=x]}<#if x?is_last>${voffset 4}</#if>
 </#list>
 ${else}\
 ${voffset 67}${alignc}${color}no peer connections
-${voffset 3}${alignc}established${voffset 64}
+${voffset 3}${alignc}established${voffset 68}
 ${endif}\
 ${else}\
 ${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=peersHeight]}\
 ${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=peersHeight + 78]}\<#-- height of blank image -->
 ${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=peersHeight + 78 + 49]}\
-${voffset 207}\
+${voffset 211}\
 ${endif}\
 # :::::::::::: package updates
 ${if_existing /tmp/dnf.packages.preview}\
 <#assign y += bottom>
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-top.png -p 0,[=y]}\
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-bottom.png -p 0,[=(y + 5 + 937)?c]}\
-${voffset 12}${offset 5}${color1}package${alignr 5}version${voffset 3}
+${voffset 8}${offset 5}${color1}package${alignr 5}version${voffset 3}
 <#if system == "desktop"><#assign lines = 71><#else><#assign lines = 15></#if>
 ${voffset 3}${color}${execpi 20 head -n [=lines] /tmp/dnf.packages.preview}${voffset 4}
 ${endif}\

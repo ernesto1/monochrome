@@ -105,22 +105,22 @@ ${template3 5}
 ${template3 6}
 ${template3 7}
 ${template3 8}
-${template3 9}
+${template3 9}${voffset 4}
 ${else}\
 ${voffset 67}${alignc}${color}no peer connections
-${voffset 3}${alignc}established${voffset 64}
+${voffset 3}${alignc}established${voffset 68}
 ${endif}\
 ${else}\
 ${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,358}\
 ${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,436}\
 ${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,485}\
-${voffset 207}\
+${voffset 211}\
 ${endif}\
 # :::::::::::: package updates
 ${if_existing /tmp/dnf.packages.preview}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-menu-top.png -p 0,563}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-menu-bottom.png -p 0,1505}\
-${voffset 12}${offset 5}${color1}package${alignr 5}version${voffset 3}
+${voffset 8}${offset 5}${color1}package${alignr 5}version${voffset 3}
 ${voffset 3}${color}${execpi 20 head -n 71 /tmp/dnf.packages.preview}${voffset 4}
 ${endif}\
 ]];

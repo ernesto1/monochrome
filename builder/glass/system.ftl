@@ -119,5 +119,5 @@ ${voffset 5}${offset 5}${color1}package${alignr 9}version
 <#if system == "desktop"><#assign lines = 66><#else><#assign lines = 28></#if>
 ${voffset 4}${color}${execpi 20 head -n [=lines] /tmp/dnf.packages.preview}
 ${endif}\
-${voffset -9}
+${voffset -8}
 ]];
