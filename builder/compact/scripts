@@ -8,17 +8,14 @@
 # ::::::: desktop sidebar
 java -jar ~/conky/monochrome/builder/freemarker-configuration.jar compact red desktop && \
 pushd /tmp/monochrome/target && \
-buildSidebar.bash config cpu-mem network-desktop disk disk-desktop disk-usb system bottom-edge && \
+buildSidebar.bash config cpu memory network-desktop disk disk-desktop disk-usb system bottom-edge && \
 echo ']];' >> /tmp/monochrome/sidebar && \
-mv /tmp/monochrome/sidebar ~/conky/monochrome/compact
+mv ../sidebar memoryProcesses ~/conky/monochrome/compact && \
+popd
 
-# :::::::  laptop sidebar | under construction
-java -jar ~/conky/monochrome/builder/freemarker-configuration.jar compact red laptop && \
-pushd /tmp/monochrome/target && \
-buildSidebar.bash config system-cpu-mem network-laptop disk power bottom-edge && \
-echo ']];' >> /tmp/monochrome/sidebar && \
-mv /tmp/monochrome/sidebar ~/conky/monochrome/compact
-
+# :::::::  laptop sidebar
+# TODO code laptop configuration
+config system-cpu-mem network-laptop disk power bottom-edge
 
 # design notes
 - images should have a top/bottom border of 7px

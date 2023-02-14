@@ -11,9 +11,9 @@ ${voffset 3}${offset 5}${color}cpu core 2${alignr 53}${template9 coretemp temp 3
 ${voffset 3}${offset 5}${color}cpu core 3${alignr 53}${template9 coretemp temp 4 [=threshold.tempCPUCore]}°C
 ${voffset 3}${offset 5}${color}cpu core 4${alignr 53}${template9 coretemp temp 5 [=threshold.tempCPUCore]}°C
 ${voffset 3}${offset 5}${color}AMD Radeon HD7570${alignr 53}${template9 radeon temp 1 [=threshold.tempVideo]}°C
-${voffset 3}${offset 5}${color}samsung SSD HD${alignr 53}${template9 1 temp 1 [=threshold.tempDisk]}°C
+${voffset 3}${offset 5}${color}samsung SSD HD${alignr 53}${template9 0 temp 1 [=threshold.tempDisk]}°C
+${voffset 3}${offset 5}${color}seagate HD${alignr 53}${template9 1 temp 1 [=threshold.tempDisk]}°C
 ${voffset 3}${offset 5}${color}seagate HD${alignr 53}${template9 2 temp 1 [=threshold.tempDisk]}°C
-${voffset 3}${offset 5}${color}seagate HD${alignr 53}${template9 3 temp 1 [=threshold.tempDisk]}°C
 ${voffset 8}${offset 5}${color1}fan${alignr 59}revolutions
 ${voffset 5}${offset 5}${color}chasis front intake${alignr 59}${template9 atk0110 fan 3 [=(threshold.fanSpeed)?c]} rpm
 ${voffset 3}${offset 5}${color}cpu fan${alignr 59}${template9 atk0110 fan 1 [=(threshold.fanSpeed)?c]} rpm

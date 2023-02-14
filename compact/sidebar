@@ -49,7 +49,7 @@ conky.config = {
   color2 = '94131f',        -- bar
   color3 = '800020',        -- bar critical
   
-  -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
+  -- ::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   --  n.b. the line break escape character '\' is not supported in templates :(
 
   -- cpu/mem/download/disk write graph color
@@ -80,7 +80,7 @@ ${voffset 2}${alignr 59}${color}${fs_used \2} / ${fs_size \2}]],
   
   -- top mem process: ${template8 processNumber}
   template8 = [[${voffset 3}${color}${offset 5}${top_mem name \1}${alignr 59}${top_mem mem_res \1} ${top_mem pid \1}]],
-  
+
   -- hwmon entry: ${template9 index/device type index threshold}
   template9 = [[${if_match ${hwmon \1 \2 \3} > \4}${color3}${else}${color}${endif}${hwmon \1 \2 \3}]]
 };
@@ -88,9 +88,9 @@ ${voffset 2}${alignr 59}${color}${fs_used \2} / ${fs_size \2}]],
 conky.text = [[
 # -------------- cpu
 ${if_match ${cpu cpu0} < 85}\
-${image ~/conky/monochrome/images/compact/red-cpu-mem.png -p 0,0}
+${image ~/conky/monochrome/images/compact/red-cpu.png -p 0,0}
 ${else}\
-${image ~/conky/monochrome/images/compact/red-cpu-mem-high.png -p 0,0}
+${image ~/conky/monochrome/images/compact/red-cpu-high.png -p 0,0}
 ${endif}\
 ${voffset -11}${offset 43}${cpugraph cpu0 35,139 ${template1}}
 ${voffset -2}${offset 5}${color1}load ${color}${loadavg}${alignr 59}${color}${cpu cpu0}%
@@ -100,10 +100,14 @@ ${template7 2}
 ${template7 3}
 ${template7 4}
 # -------------- memory
+${if_match ${memperc} < 85}\
+${image ~/conky/monochrome/images/compact/red-mem.png -p 0,154}\
+${else}\
+${image ~/conky/monochrome/images/compact/red-mem-high.png -p 0,154}\
+${endif}\
 # memory graph and usage are displayed on a separate conky due to a bug with these memory variables computing bad data if other variables like ${top ...} and one of the network upload/download exists in the same conky
-${voffset 67}\
-${voffset 3}${offset 5}${color1}swap${goto 38}${voffset 1}${color2}${swapbar 3,97}${alignr 59}${voffset -1}${color}${swapperc}%
-${voffset 8}${color1}${offset 5}process${alignr 59}mem   pid${voffset 1}
+${voffset 70}${offset 5}${color1}swap${goto 38}${voffset 1}${color2}${swapbar 3,97}${alignr 59}${voffset -1}${color}${swapperc}%
+${voffset 8}${offset 5}${color1}process${alignr 59}mem   pid${voffset 1}
 ${template8 1}
 ${template8 2}
 ${template8 3}
@@ -158,9 +162,9 @@ ${voffset 3}${offset 5}${color}cpu core 2${alignr 53}${template9 coretemp temp 3
 ${voffset 3}${offset 5}${color}cpu core 3${alignr 53}${template9 coretemp temp 4 85}°C
 ${voffset 3}${offset 5}${color}cpu core 4${alignr 53}${template9 coretemp temp 5 85}°C
 ${voffset 3}${offset 5}${color}AMD Radeon HD7570${alignr 53}${template9 radeon temp 1 75}°C
-${voffset 3}${offset 5}${color}samsung SSD HD${alignr 53}${template9 1 temp 1 42}°C
+${voffset 3}${offset 5}${color}samsung SSD HD${alignr 53}${template9 0 temp 1 42}°C
+${voffset 3}${offset 5}${color}seagate HD${alignr 53}${template9 1 temp 1 42}°C
 ${voffset 3}${offset 5}${color}seagate HD${alignr 53}${template9 2 temp 1 42}°C
-${voffset 3}${offset 5}${color}seagate HD${alignr 53}${template9 3 temp 1 42}°C
 ${voffset 8}${offset 5}${color1}fan${alignr 59}revolutions
 ${voffset 5}${offset 5}${color}chasis front intake${alignr 59}${template9 atk0110 fan 3 2300} rpm
 ${voffset 3}${offset 5}${color}cpu fan${alignr 59}${template9 atk0110 fan 1 2300} rpm

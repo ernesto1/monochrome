@@ -43,22 +43,19 @@ conky.config = {
   -- font settings
   draw_shades = false,    -- black shadow on text (not good if text is black)
   draw_outline = false,   -- black outline around text (not good if text is black)
-  default_color = 'a98162',
-  color1 = 'white',
-  color2 = '94131f',      -- bars
-  color3 = '800020',      -- bars critical
-  
+  -- colors
+  default_color = 'a98162',  -- regular text
+  color1 = 'white',         -- text labels
+  color2 = '94131f',        -- bar
+  color3 = '800020',        -- bar critical
+
+  -- ::::::::::::: templates
   -- cpu/mem/download/disk write graph color
   template1 = [[5c111f c01e20]],
 };
 
--- memory graph and usage are displayed on a separate conky due to a bug with these memory variables computing bad data if other variables like ${top ...} and one of the network upload/download ones exists in the same conky
-
 conky.text = [[
-${if_match ${memperc} < 85}\
-${image ~/conky/monochrome/images/compact/red-mem.png -p 0,0}\
-${else}\
-${image ~/conky/monochrome/images/compact/red-mem-high.png -p 0,0}\
-${endif}\
+#  memory graph and usage are displayed on a separate conky due to a bug with these memory variables computing bad data if other variables like ${top ...} and one of the network upload/download ones exists in the same conky
 ${offset 43}${memgraph 35,139 ${template1}}
-${voffset -2}${offset 5}${color1}used  ${color}${mem} / ${memmax}${alignr 59}${color}${memperc}%]];
+${voffset -2}${offset 5}${color1}used  ${color}${mem} / ${memmax}${alignr 59}${color}${memperc}%
+]]

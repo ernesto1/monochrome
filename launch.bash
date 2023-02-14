@@ -66,7 +66,15 @@ function detectDuplicateEntries() {
 # wrapper function to launch a conky config
 # it allows you to call the function with output redirection if required (see the --silent flag)
 function launchConky() {
-  conky -c "$@" &
+  # patch | due to a bug where conky memory variables display invalid data if the top mem
+  #         variables are also in use, we delay launching these 'segregated' memory conkys by a bit
+  #         in order for them to load on top of the background image provided by the main conky
+  if [[ -n $(echo $1 | grep -E 'memory.+') ]]; then
+    echo '  delaying conky by 1 second'
+    local delayCmd=('--pause' 1)
+  fi
+  
+  conky -c "$@" "${delayCmd[@]}" &
 }
 
 # ---------- script begins
