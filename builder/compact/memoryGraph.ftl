@@ -7,7 +7,7 @@ conky.config = {
   -- window alignment
   alignment = 'middle_left',       -- top|middle|bottom_left|middle|right
   gap_x = 0,                    -- same as passing -x at command line
-  gap_y = 469,
+  gap_y = 437,
 
   -- window settings
   minimum_width = 241,
@@ -44,14 +44,14 @@ conky.config = {
   draw_shades = false,    -- black shadow on text (not good if text is black)
   draw_outline = false,   -- black outline around text (not good if text is black)
   -- colors
-  default_color = 'a98162',  -- regular text
-  color1 = 'white',         -- text labels
-  color2 = '94131f',        -- bar
-  color3 = '800020',        -- bar critical
+  default_color = '[=colors.text]',  -- regular text
+  color1 = '[=colors.labels]',         -- text labels
+  color2 = '[=colors.bar]',        -- bar
+  color3 = '[=(colors.warning)?c]',        -- bar critical
 
   -- ::::::::::::: templates
   -- cpu/mem/download/disk write graph color
-  template1 = [[5c111f c01e20]],
+  template1 = [[[=colors.writeGraph]]],
 };
 
 conky.text = [[

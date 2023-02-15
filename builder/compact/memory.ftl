@@ -7,6 +7,6 @@ ${endif}\
 # memory graph and usage are displayed on a separate conky due to a bug with these memory variables computing bad data if other variables like ${top ...} and one of the network upload/download exists in the same conky
 ${voffset 70}${offset 5}${color1}swap${goto 38}${voffset 1}${color2}${swapbar 3,97}${alignr 59}${voffset -1}${color}${swapperc}%
 ${voffset 8}${offset 5}${color1}process${alignr 59}mem   pid${voffset 1}
-<#list 1..4 as x>
+<#list 1..7 as x>
 ${template8 [=x]}
 </#list>

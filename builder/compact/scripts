@@ -10,7 +10,7 @@ java -jar ~/conky/monochrome/builder/freemarker-configuration.jar compact red de
 pushd /tmp/monochrome/target && \
 buildSidebar.bash config cpu memory network-desktop disk disk-desktop disk-usb system bottom-edge && \
 echo ']];' >> /tmp/monochrome/sidebar && \
-mv ../sidebar memoryProcesses ~/conky/monochrome/compact && \
+mv ../sidebar memoryGraph ~/conky/monochrome/compact && \
 popd
 
 # :::::::  laptop sidebar
