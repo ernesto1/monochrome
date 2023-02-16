@@ -121,6 +121,6 @@ ${if_existing /tmp/dnf.packages.preview}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-menu-top.png -p 0,563}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-menu-bottom.png -p 0,1505}\
 ${voffset 8}${offset 5}${color1}package${alignr 5}version${voffset 3}
-${voffset 3}${color}${execpi 20 head -n 71 /tmp/dnf.packages.preview}${voffset 4}
+${voffset 3}${color}${execpi 30 head -n 71 /tmp/dnf.packages.preview}${voffset 4}
 ${endif}\
 ]];

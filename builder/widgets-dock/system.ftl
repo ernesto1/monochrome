@@ -107,6 +107,6 @@ ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-top.pn
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-bottom.png -p 0,[=(y + 5 + 937)?c]}\
 ${voffset 8}${offset 5}${color1}package${alignr 5}version${voffset 3}
 <#if system == "desktop"><#assign lines = 71><#else><#assign lines = 15></#if>
-${voffset 3}${color}${execpi 20 head -n [=lines] /tmp/dnf.packages.preview}${voffset 4}
+${voffset 3}${color}${execpi 30 head -n [=lines] /tmp/dnf.packages.preview}${voffset 4}
 ${endif}\
 ]];

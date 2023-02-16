@@ -68,6 +68,6 @@ ${voffset 7}${alignc}${color1}dnf package management
 ${voffset 5}${alignc}${color}${lines /tmp/dnf.packages.preview} package update(s) available
 ${voffset 5}${offset 5}${color1}package${alignr 4}version
 # the dnf package lookup script refreshes the package list every 10m
-${voffset 3}${color}${execpi 20 head -n 80 /tmp/dnf.packages.preview}${voffset 4}
+${voffset 3}${color}${execpi 30 head -n 80 /tmp/dnf.packages.preview}${voffset 4}
 ${endif}\
 ]];
