@@ -9,5 +9,5 @@ ${else}\
 ${image ~/conky/monochrome/images/compact/[=image.secondaryColor]-network-no-internet.png -p 0,0}\
 ${voffset 12}${offset 5}${color1}no internet
 ${voffset 3}${offset 5}connection
-${voffset 109}
+${voffset 108}
 ${endif}\
