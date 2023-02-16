@@ -121,7 +121,7 @@ ${template8 7}
 # -------------- network
 ${if_up enp0s25}\
 ${image ~/conky/monochrome/images/compact/red-network-desktop.png -p 0,417}\
-${voffset 15}${goto 47}${color1}local ip${goto 102}${color}${addr enp0s25}
+${voffset 14}${goto 47}${color1}local ip${goto 102}${color}${addr enp0s25}
 ${voffset 3}${goto 47}${color1}speed${goto 102}${color}${template3 enp0s25}
 # :: upload/download speeds
 ${template4 enp0s25 3000 60000}
@@ -131,34 +131,58 @@ ${voffset 12}${offset 5}${color1}no internet
 ${voffset 3}${offset 5}connection
 ${voffset 109}
 ${endif}\
-# -------------- disk
+# -------------- disk(s)
+# ---------- sda
 ${image ~/conky/monochrome/images/compact/red-disk.png -p 0,581}\
-${template5 sda 60000 60000}
-${voffset 6}${template6 fedora /}
+${template5 sda 200000 280000}
+${voffset 6}\
+${image ~/conky/monochrome/images/compact/red-filesystem.png -p 0,653}\
+${template6 fedora /}
 ${image ~/conky/monochrome/images/compact/red-filesystem.png -p 0,684}\
 ${template6 home /home}
-# -------------- desktop internal disks
+# ---------- sdb
+${if_existing /dev/sdb}\
 ${image ~/conky/monochrome/images/compact/red-disk.png -p 0,715}\
-${template5 sdb 6500 200000}
-${voffset 6}${template6 veronica /media/veronica}
+${template5 sdb 6000 250000}
+${voffset 6}\
+${image ~/conky/monochrome/images/compact/red-filesystem.png -p 0,787}\
+${template6 veronica /media/veronica}
+${else}\
+${image ~/conky/monochrome/images/compact/ochre-disk-disconnected.png -p 0,715}\
+${voffset 13}${offset 5}${color1}sdb device
+${voffset 3}${offset 5}${color1}${font4}is not connected
+${voffset 48}
+${endif}\
+# ---------- sdd
+${if_existing /dev/sdd}\
 ${image ~/conky/monochrome/images/compact/red-disk.png -p 0,818}\
-${template5 sdd 6500 200000}
-${voffset 6}${template6 betty /media/betty}
-# -------------- usb external disk
-${if_mounted /run/media/ernesto/MAXTOR}\
+${template5 sdd 6000 250000}
+${voffset 6}\
+${image ~/conky/monochrome/images/compact/red-filesystem.png -p 0,890}\
+${template6 betty /media/betty}
+${else}\
+${image ~/conky/monochrome/images/compact/ochre-disk-disconnected.png -p 0,818}\
+${voffset 13}${offset 5}${color1}sdd device
+${voffset 3}${offset 5}${color1}${font4}is not connected
+${voffset 48}
+${endif}\
+# ---------- sde1
+${if_existing /dev/sde1}\
 ${image ~/conky/monochrome/images/compact/red-disk.png -p 0,921}\
-${template5 sde1 6000 52000}
-${voffset 6}${template6 maxtor /run/media/ernesto/MAXTOR}
+${template5 sde1 6000 60000}
+${voffset 6}\
+${image ~/conky/monochrome/images/compact/red-filesystem.png -p 0,993}\
+${template6 maxtor /run/media/ernesto/MAXTOR}
 ${else}\
 ${image ~/conky/monochrome/images/compact/ochre-disk-disconnected.png -p 0,921}\
-${voffset 13}${offset 5}${color1}usb maxtor HD
+${voffset 13}${offset 5}${color1}sde1 device
 ${voffset 3}${offset 5}${color1}${font4}is not connected
 ${voffset 48}
 ${endif}\
 # -------------- system
 ${if_updatenr 1}${image ~/conky/monochrome/images/compact/red-system-1.png -p 0,1024}${endif}\
 ${if_updatenr 2}${image ~/conky/monochrome/images/compact/red-system-2.png -p 0,1024}${endif}\
-${voffset 14}${goto 47}${color1}uptime ${color}${uptime}
+${voffset 15}${goto 47}${color1}uptime ${color}${uptime}
 ${voffset 3}${goto 47}${color1}compositor ${color}${execi 3600 echo $XDG_SESSION_TYPE}
 ${voffset 10}${offset 5}${color1}kernel ${color}${kernel}
 ${voffset 8}${offset 5}${color1}device${alignr 59}temperature

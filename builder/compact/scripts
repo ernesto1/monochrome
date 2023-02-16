@@ -1,5 +1,5 @@
 # notes
-# by default conky will reload its configuration if detects a change on the file
+# by default conky will reload its configuration if it detects a change on the file
 # 
 # the new conky configuration is created in a temporary folder and then the target file is overriden
 # it turns out that if too many sequential file changes happen to the conky file, conky stops reloading the file
@@ -8,14 +8,15 @@
 # ::::::: desktop sidebar
 java -jar ~/conky/monochrome/builder/freemarker-configuration.jar compact red desktop && \
 pushd /tmp/monochrome/target && \
-buildSidebar.bash config cpu memory network-desktop disk disk-desktop disk-usb system bottom-edge && \
+buildSidebar.bash config cpu memory network-desktop disk system bottom-edge && \
 echo ']];' >> /tmp/monochrome/sidebar && \
 mv ../sidebar memoryGraph ~/conky/monochrome/compact && \
 popd
 
+
 # :::::::  laptop sidebar
-# TODO code laptop configuration
-config system-cpu-mem network-laptop disk power bottom-edge
+# TODO code laptop configuration: system cpu memory network disk power bottom-edge
+
 
 # design notes
 - images should have a top/bottom border of 7px

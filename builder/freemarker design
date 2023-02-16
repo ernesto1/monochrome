@@ -43,4 +43,3 @@ $ sed -i 's/blue-/[=image.primaryColor]-/' !(config|scripts|*.yml|color-palette|
 
 ### freemarker advanced coding
 - provide a list of disk devices, freemarker code generates all the blocks
-- can the network setup be done in a single configuration?
