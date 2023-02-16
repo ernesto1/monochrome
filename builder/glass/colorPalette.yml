@@ -12,6 +12,6 @@ blue:
     # colors for detail conkys
     systemText: e5e5e5
     systemLabels: 839bc1
-    highlight: bc701c       # flag important package updates
+    highlight: dfa22f       # flag important package updates
     ownWindow: 2f3757
     

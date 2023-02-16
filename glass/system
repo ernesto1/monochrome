@@ -45,7 +45,7 @@ conky.config = {
   -- colors
   default_color = 'e5e5e5',  -- regular text
   color1 = '839bc1',         -- text labels
-  color2 = 'bc701c',         -- highlight important packages
+  color2 = 'dfa22f',         -- highlight important packages
   
   -- templates
   -- top cpu process
