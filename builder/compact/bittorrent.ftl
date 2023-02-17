@@ -71,21 +71,16 @@ ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-bottom.png 
 ${voffset 7}${offset 5}${color1}ip address${alignr 5}remote port${voffset 3}
 ${if_match ${tcp_portmon 51413 51413 count} > 0}\
 <#list 0..11 as x>
-${template3 [=x]}<#if x?is_last>${voffset 4}</#if>
+${template3 [=x]}<#if x?is_last>${voffset 11}</#if>
 </#list>
 ${else}\
 ${voffset 84}${alignc}${color}no peer connections
-${voffset 3}${alignc}established${voffset 83}
+${voffset 3}${alignc}established${voffset 90}
 ${endif}\
-${else}\
-${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=windowYcoordinate]}\
-${voffset 235}\
-${endif}\
-# :::::::::::: package updates
-<#assign body = 800>
-${if_existing /tmp/dnf.packages.preview}\
+# :::::::::::: files shared at the moment
+<#assign body = 417>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-horizontal.png -p 0,[=y?c]}\
-${voffset 9}${offset 5}${color1}dnf${goto 75}${color}${lines /tmp/dnf.packages.preview} package updates
+${voffset 2}${offset 5}${color1}seeding${goto 75}${color}${exec lsof -c transmission -n | grep -E '[0-9]+[a-z|A-Z] +REG' | grep -cv deleted} files
 <#assign y += top>
 ${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=y?c]}\
 <#assign y += 1>
@@ -94,8 +89,7 @@ ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-top-flat.pn
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu.png -p 0,[=y?c]}\
 <#assign y += body>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-bottom.png -p 0,[=y?c]}\
-${voffset 7}${offset 5}${color1}package${alignr 5}version${voffset 3}
-<#if system == "desktop"><#assign lines = 57><#else><#assign lines = 15></#if>
-${voffset 3}${color}${execpi 30 head -n [=lines] /tmp/dnf.packages.preview}${voffset 4}
+${voffset 7}${offset 5}${color1}file name${voffset 3}
+${voffset 3}${color}${execpi 4 lsof -c transmission -n | grep -E '[0-9]+[a-z|A-Z] +REG' | grep -v deleted | sed 's|.\+/||' | sed 's/^/${offset 5}/' | sort}${voffset 4}
 ${endif}\
 ]];

@@ -5,13 +5,13 @@ conky.config = {
 
   -- window alignment
   alignment = 'top_left',  -- top|middle|bottom_left|right
-  gap_x = 205,
+  gap_x = 404,
   gap_y = 557,
 
   -- window settings
   minimum_width = 189,      -- conky will add an extra pixel to this  
   maximum_width = 189,
-  minimum_height = 200,
+  --minimum_height = 200,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -39,55 +39,35 @@ conky.config = {
   draw_shades = false,      -- black shadow on text (not good if text is black)
   draw_outline = false,     -- black outline around text (not good if text is black)
   -- colors
-  default_color = 'cf9c7b',  -- regular text
-  color1 = 'white',
-  color2 = 'bf241f',         -- highlight important packages
+  default_color = '[=colors.menuText]',  -- regular text
+  color1 = '[=colors.labels]',
+  color2 = '[=colors.highlight]',         -- highlight important packages
   
   -- torrent peer ip/port: ${template3 #}
   template3 = [[${voffset 3}${offset 5}${color}${tcp_portmon 51413 51413 rip \1}${alignr 5}${tcp_portmon 51413 51413 rport \1}]]
 };
 
 conky.text = [[
-# :::::::::::: bittorrent peers
-${if_running transmission-gt}\
-${image ~/conky/monochrome/images/compact/red-menu-horizontal.png -p 0,0}\
-${voffset 2}${offset 5}${color1}bittorrent${goto 75}${color}${tcp_portmon 51413 51413 count} peer(s)
-${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,19}\
-${image ~/conky/monochrome/images/compact/red-menu-top-flat.png -p 0,20}\
-${image ~/conky/monochrome/images/compact/red-menu.png -p 0,39}\
-${image ~/conky/monochrome/images/compact/red-menu-bittorrent.png -p 32,63}\
-${image ~/conky/monochrome/images/compact/red-menu-bottom.png -p 0,229}\
-${voffset 7}${offset 5}${color1}ip address${alignr 5}remote port${voffset 3}
-${if_match ${tcp_portmon 51413 51413 count} > 0}\
-${template3 0}
-${template3 1}
-${template3 2}
-${template3 3}
-${template3 4}
-${template3 5}
-${template3 6}
-${template3 7}
-${template3 8}
-${template3 9}
-${template3 10}
-${template3 11}${voffset 4}
-${else}\
-${voffset 84}${alignc}${color}no peer connections
-${voffset 3}${alignc}established${voffset 83}
-${endif}\
-${else}\
-${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,0}\
-${voffset 235}\
-${endif}\
 # :::::::::::: package updates
 ${if_existing /tmp/dnf.packages.preview}\
-${image ~/conky/monochrome/images/compact/red-menu-horizontal.png -p 0,241}\
-${voffset 9}${offset 5}${color1}dnf${goto 75}${color}${lines /tmp/dnf.packages.preview} package updates
-${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,260}\
-${image ~/conky/monochrome/images/compact/red-menu-top-flat.png -p 0,261}\
-${image ~/conky/monochrome/images/compact/red-menu.png -p 0,280}\
-${image ~/conky/monochrome/images/compact/red-menu-bottom.png -p 0,1080}\
+<#assign y = 0, 
+         top = 19,    <#-- menu header -->
+         body = 800,  <#-- size of the current window without the top and bottom edges -->
+         bottom = 7,  <#-- window bottom edge -->
+         space = 5,   <#-- empty space between windows -->
+         windowYcoordinate = y> <#-- starting y coordinate of the current window -->
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-horizontal.png -p 0,[=y?c]}\
+${voffset 2}${offset 5}${color1}dnf${goto 75}${color}${lines /tmp/dnf.packages.preview} package updates
+<#assign y += top>
+${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=y?c]}\
+<#assign y += 1>
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-top-flat.png -p 0,[=y?c]}\
+<#assign y += top>
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu.png -p 0,[=y?c]}\
+<#assign y += body>
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-bottom.png -p 0,[=y?c]}\
 ${voffset 7}${offset 5}${color1}package${alignr 5}version${voffset 3}
-${voffset 3}${color}${execpi 30 head -n 57 /tmp/dnf.packages.preview}${voffset 4}
+<#if system == "desktop"><#assign lines = 57><#else><#assign lines = 15></#if>
+${voffset 3}${color}${execpi 30 head -n [=lines] /tmp/dnf.packages.preview}${voffset 4}
 ${endif}\
 ]];
