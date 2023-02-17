@@ -54,58 +54,70 @@ conky.config = {
 
 conky.text = [[
 # :::::::::::: top cpu processes
-<#assign y = 0, top = 19, body = 109, bottom = 12> <#-- body of top cpu window -->
+<#assign y = 0, 
+         top = 19,    <#-- menu header -->
+         body = 109,  <#-- holds the size of the current window without the top and bottom edges -->
+         bottom = 7,  <#-- window bottom edge -->
+         space = 5>   <#-- empty space between windows -->
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-top.png -p 0,0}\
 <#assign y += top>
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu.png -p 0,[=y]}\
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu.png -p 0,[=y?c]}\
 <#assign y += body>
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-bottom.png -p 0,[=y]}\
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-bottom.png -p 0,[=y?c]}\
+<#assign y += bottom + space>
 ${voffset 2}${color1}${offset 5}process${alignr 5}cpu   pid${voffset 3}
 <#list 1..7 as x>
 ${template1 [=x]}
 </#list>
 # :::::::::::: top mem processes
-<#assign y += bottom>
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-top.png -p 0,[=y]}\
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-top.png -p 0,[=y?c]}\
 <#assign y += top + body>
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-bottom.png -p 0,[=y]}\
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-bottom.png -p 0,[=y?c]}\
+<#assign y += bottom + space>
 ${voffset 12}${color1}${offset 5}process${alignr 5}memory   pid${voffset 3}
 <#list 1..7 as x>
 ${template2 [=x]}
 </#list>
 # :::::::::::: network
 # assumption: only one network device will be connected to the internet at a time
-<#assign y += bottom>
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-horizontal.png -p 0,[=y]}\
-<@net.networkDetails networkDevices[system] y/>
+<#assign windowYcoordinate = y>
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-horizontal.png -p 0,[=y?c]}\
+<#assign body = 71, y += body><#-- vertical menu image includes the bottom edge, hence no bottom image used -->
+${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=y?c]}\
+<#assign y += space>
+<@net.networkDetails networkDevices[system] windowYcoordinate/>
 # :::::::::::: bittorrent peers
 ${if_running transmission-gt}\
-<#assign y += 78, peersHeight = y> <#-- vertical menu image size -->
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-top.png -p 0,[=y]}\
-<#assign y += top + 174> <#-- size of peer list body -->
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-bottom.png -p 0,[=y]}\
-${voffset 15}${offset 5}${color1}bittorrent${goto 75}${color}${tcp_portmon 51413 51413 count} peer(s)
+<#assign windowYcoordinate = y, body = 174>
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-top.png -p 0,[=y?c]}\
+<#assign y += top>
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu.png -p 0,[=y?c]}\
+<#assign y += body>
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-bottom.png -p 0,[=y?c]}\
+<#assign y += bottom + space>
+${voffset 2}${offset 5}${color1}bittorrent${goto 75}${color}${tcp_portmon 51413 51413 count} peer(s)
 ${voffset 6}${offset 5}${color1}ip address${alignr 5}remote port
 ${if_match ${tcp_portmon 51413 51413 count} > 0}\
 <#list 0..9 as x>
-${template3 [=x]}<#if x?is_last>${voffset 4}</#if>
+${template3 [=x]}<#if x?is_last>${voffset 10}</#if>
 </#list>
 ${else}\
 ${voffset 67}${alignc}${color}no peer connections
-${voffset 3}${alignc}established${voffset 68}
+${voffset 3}${alignc}established${voffset 75}
 ${endif}\
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=peersHeight]}\
-${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=peersHeight + 78]}\<#-- height of blank image -->
-${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=peersHeight + 78 + 49]}\
-${voffset 211}\
+${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=windowYcoordinate]}\
+${voffset 215}\
 ${endif}\
 # :::::::::::: package updates
 ${if_existing /tmp/dnf.packages.preview}\
-<#assign y += bottom>
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-top.png -p 0,[=y]}\
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-bottom.png -p 0,[=(y + 5 + 937)?c]}\
-${voffset 8}${offset 5}${color1}package${alignr 5}version${voffset 3}
+<#assign body = 5 + 937>
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-top.png -p 0,[=y?c]}\
+<#assign y += top>
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu.png -p 0,[=y?c]}\
+<#assign y += body>
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-bottom.png -p 0,[=y?c]}\
+${voffset 2}${offset 5}${color1}package${alignr 5}version${voffset 3}
 <#if system == "desktop"><#assign lines = 71><#else><#assign lines = 15></#if>
 ${voffset 3}${color}${execpi 30 head -n [=lines] /tmp/dnf.packages.preview}${voffset 4}
 ${endif}\

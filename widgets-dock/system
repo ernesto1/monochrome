@@ -78,6 +78,7 @@ ${template2 7}
 # :::::::::::: network
 # assumption: only one network device will be connected to the internet at a time
 ${image ~/conky/monochrome/images/widgets-dock/orange-menu-horizontal.png -p 0,280}\
+${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,351}\
 # :::: ethernet
 ${if_up enp0s25}\
 ${voffset 15}${offset 5}${color1}local ip${goto 75}${color}${addr enp0s25}
@@ -87,13 +88,14 @@ ${voffset 3}${offset 5}${color1}total down${goto 75}${color}${totaldown enp0s25}
 ${else}\
 # in case no internet connection is available we have to "fill the gap" so the next section prints properly
 ${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,280}\
-${voffset 76}\
-${endif}\
+${voffset 75}\
+${endif}${voffset 11}\
 # :::::::::::: bittorrent peers
 ${if_running transmission-gt}\
-${image ~/conky/monochrome/images/widgets-dock/orange-menu-top.png -p 0,358}\
-${image ~/conky/monochrome/images/widgets-dock/orange-menu-bottom.png -p 0,551}\
-${voffset 15}${offset 5}${color1}bittorrent${goto 75}${color}${tcp_portmon 51413 51413 count} peer(s)
+${image ~/conky/monochrome/images/widgets-dock/orange-menu-top.png -p 0,356}\
+${image ~/conky/monochrome/images/widgets-dock/orange-menu.png -p 0,375}\
+${image ~/conky/monochrome/images/widgets-dock/orange-menu-bottom.png -p 0,549}\
+${voffset 2}${offset 5}${color1}bittorrent${goto 75}${color}${tcp_portmon 51413 51413 count} peer(s)
 ${voffset 6}${offset 5}${color1}ip address${alignr 5}remote port
 ${if_match ${tcp_portmon 51413 51413 count} > 0}\
 ${template3 0}
@@ -105,22 +107,21 @@ ${template3 5}
 ${template3 6}
 ${template3 7}
 ${template3 8}
-${template3 9}${voffset 4}
+${template3 9}${voffset 10}
 ${else}\
 ${voffset 67}${alignc}${color}no peer connections
-${voffset 3}${alignc}established${voffset 68}
+${voffset 3}${alignc}established${voffset 75}
 ${endif}\
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,358}\
-${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,436}\
-${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,485}\
-${voffset 211}\
+${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,356}\
+${voffset 215}\
 ${endif}\
 # :::::::::::: package updates
 ${if_existing /tmp/dnf.packages.preview}\
-${image ~/conky/monochrome/images/widgets-dock/orange-menu-top.png -p 0,563}\
-${image ~/conky/monochrome/images/widgets-dock/orange-menu-bottom.png -p 0,1505}\
-${voffset 8}${offset 5}${color1}package${alignr 5}version${voffset 3}
+${image ~/conky/monochrome/images/widgets-dock/orange-menu-top.png -p 0,561}\
+${image ~/conky/monochrome/images/widgets-dock/orange-menu.png -p 0,580}\
+${image ~/conky/monochrome/images/widgets-dock/orange-menu-bottom.png -p 0,1522}\
+${voffset 2}${offset 5}${color1}package${alignr 5}version${voffset 3}
 ${voffset 3}${color}${execpi 30 head -n 71 /tmp/dnf.packages.preview}${voffset 4}
 ${endif}\
 ]];
