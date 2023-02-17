@@ -9,3 +9,5 @@ red:
     warning: 800020
     writeGraph: 5c111f c01e20
     readGraph: a98162 d3b699
+    menuText: cf9c7b  # d19f77
+    highlight: bf241f

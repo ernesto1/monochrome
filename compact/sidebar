@@ -7,11 +7,11 @@ conky.config = {
   -- window alignment
   alignment = 'middle_left',       -- top|middle|bottom_left|middle|right
   gap_x = 0,                    -- same as passing -x at command line
-  gap_y = -32,
+  gap_y = -23,
 
   -- window settings
   minimum_width = 241,
-  minimum_height = 1402,
+  minimum_height = 1386,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -64,8 +64,7 @@ conky.config = {
   template4 = [[${voffset 7}${offset 43}${color}${upspeedgraph \1 35,68 ${template2} \2}${offset 3}${downspeedgraph \1 35,68 ${template1} \3}
 ${voffset -2}${offset 5}${color1}up    ${color}${upspeed \1}${alignr 59}${color}${downspeed \1}  ${color1}down
 ${voffset 3}${offset 5}${color1}total ${color}${totalup \1}${alignr 59}${color}${totaldown \1} ${color1}total
-${voffset 8}${offset 5}${color1}bittorrent ${color}${tcp_portmon 51413 51413 count} peer(s)
-${voffset 3}${offset 5}${color1}zoom  ${color}${if_running zoom}running${else}off${endif}]],
+${voffset 8}${offset 5}${color1}zoom  ${color}${if_running zoom}running${else}off${endif}]],
 
   -- hard disk: ${template5 device readSpeed writeSpeed}
   template5 = [[${voffset 7}${offset 43}${color}${diskiograph_read /dev/\1 35,68 ${template2} \2}${offset 3}${diskiograph_write /dev/\1 35,68 ${template1} \3}
@@ -129,59 +128,59 @@ ${else}\
 ${image ~/conky/monochrome/images/compact/ochre-network-no-internet.png -p 0,417}\
 ${voffset 12}${offset 5}${color1}no internet
 ${voffset 3}${offset 5}connection
-${voffset 108}
+${voffset 92}
 ${endif}\
 # -------------- disk(s)
 # ---------- sda
-${image ~/conky/monochrome/images/compact/red-disk.png -p 0,581}\
+${image ~/conky/monochrome/images/compact/red-disk.png -p 0,565}\
 ${template5 sda 200000 280000}
 ${voffset 6}\
-${image ~/conky/monochrome/images/compact/red-filesystem.png -p 0,653}\
+${image ~/conky/monochrome/images/compact/red-filesystem.png -p 0,637}\
 ${template6 fedora /}
-${image ~/conky/monochrome/images/compact/red-filesystem.png -p 0,684}\
+${image ~/conky/monochrome/images/compact/red-filesystem.png -p 0,668}\
 ${template6 home /home}
 # ---------- sdb
 ${if_existing /dev/sdb}\
-${image ~/conky/monochrome/images/compact/red-disk.png -p 0,715}\
+${image ~/conky/monochrome/images/compact/red-disk.png -p 0,699}\
 ${template5 sdb 6000 250000}
 ${voffset 6}\
-${image ~/conky/monochrome/images/compact/red-filesystem.png -p 0,787}\
+${image ~/conky/monochrome/images/compact/red-filesystem.png -p 0,771}\
 ${template6 veronica /media/veronica}
 ${else}\
-${image ~/conky/monochrome/images/compact/ochre-disk-disconnected.png -p 0,715}\
+${image ~/conky/monochrome/images/compact/ochre-disk-disconnected.png -p 0,699}\
 ${voffset 13}${offset 5}${color1}sdb device
 ${voffset 3}${offset 5}${color1}${font4}is not connected
 ${voffset 48}
 ${endif}\
 # ---------- sdd
 ${if_existing /dev/sdd}\
-${image ~/conky/monochrome/images/compact/red-disk.png -p 0,818}\
+${image ~/conky/monochrome/images/compact/red-disk.png -p 0,802}\
 ${template5 sdd 6000 250000}
 ${voffset 6}\
-${image ~/conky/monochrome/images/compact/red-filesystem.png -p 0,890}\
+${image ~/conky/monochrome/images/compact/red-filesystem.png -p 0,874}\
 ${template6 betty /media/betty}
 ${else}\
-${image ~/conky/monochrome/images/compact/ochre-disk-disconnected.png -p 0,818}\
+${image ~/conky/monochrome/images/compact/ochre-disk-disconnected.png -p 0,802}\
 ${voffset 13}${offset 5}${color1}sdd device
 ${voffset 3}${offset 5}${color1}${font4}is not connected
 ${voffset 48}
 ${endif}\
 # ---------- sde1
 ${if_existing /dev/sde1}\
-${image ~/conky/monochrome/images/compact/red-disk.png -p 0,921}\
+${image ~/conky/monochrome/images/compact/red-disk.png -p 0,905}\
 ${template5 sde1 6000 60000}
 ${voffset 6}\
-${image ~/conky/monochrome/images/compact/red-filesystem.png -p 0,993}\
+${image ~/conky/monochrome/images/compact/red-filesystem.png -p 0,977}\
 ${template6 maxtor /run/media/ernesto/MAXTOR}
 ${else}\
-${image ~/conky/monochrome/images/compact/ochre-disk-disconnected.png -p 0,921}\
+${image ~/conky/monochrome/images/compact/ochre-disk-disconnected.png -p 0,905}\
 ${voffset 13}${offset 5}${color1}sde1 device
 ${voffset 3}${offset 5}${color1}${font4}is not connected
 ${voffset 48}
 ${endif}\
 # -------------- system
-${if_updatenr 1}${image ~/conky/monochrome/images/compact/red-system-1.png -p 0,1024}${endif}\
-${if_updatenr 2}${image ~/conky/monochrome/images/compact/red-system-2.png -p 0,1024}${endif}\
+${if_updatenr 1}${image ~/conky/monochrome/images/compact/red-system-1.png -p 0,1008}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/compact/red-system-2.png -p 0,1008}${endif}\
 ${voffset 15}${goto 47}${color1}uptime ${color}${uptime}
 ${voffset 3}${goto 47}${color1}compositor ${color}${execi 3600 echo $XDG_SESSION_TYPE}
 ${voffset 10}${offset 5}${color1}kernel ${color}${kernel}
@@ -200,5 +199,5 @@ ${voffset 5}${offset 5}${color}chasis front intake${alignr 59}${template9 atk011
 ${voffset 3}${offset 5}${color}cpu fan${alignr 59}${template9 atk0110 fan 1 2300} rpm
 ${voffset 3}${offset 5}${color}chasis top exhaust${alignr 59}${template9 atk0110 fan 2 2300} rpm
 ${voffset 3}${offset 5}${color}chasis back exhaust${alignr 59}${template9 atk0110 fan 4 2300} rpm
-${image ~/conky/monochrome/images/compact/red-edge-bottom.png -p 0,1343}
+${image ~/conky/monochrome/images/compact/red-edge-bottom.png -p 0,1327}
 ]];

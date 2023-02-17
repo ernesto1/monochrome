@@ -7,7 +7,7 @@ conky.config = {
   -- window alignment
   alignment = 'middle_left',       -- top|middle|bottom_left|middle|right
   gap_x = 0,                    -- same as passing -x at command line
-  gap_y = -32,
+  gap_y = -23,
 
   -- window settings
   minimum_width = 241,
@@ -64,8 +64,7 @@ conky.config = {
   template4 = [[${voffset 7}${offset 43}${color}${upspeedgraph \1 35,68 ${template2} \2}${offset 3}${downspeedgraph \1 35,68 ${template1} \3}
 ${voffset -2}${offset 5}${color1}up    ${color}${upspeed \1}${alignr 59}${color}${downspeed \1}  ${color1}down
 ${voffset 3}${offset 5}${color1}total ${color}${totalup \1}${alignr 59}${color}${totaldown \1} ${color1}total
-${voffset 8}${offset 5}${color1}bittorrent ${color}${tcp_portmon 51413 51413 count} peer(s)
-${voffset 3}${offset 5}${color1}zoom  ${color}${if_running zoom}running${else}off${endif}]],
+${voffset 8}${offset 5}${color1}zoom  ${color}${if_running zoom}running${else}off${endif}]],
 
   -- hard disk: ${template5 device readSpeed writeSpeed}
   template5 = [[${voffset 7}${offset 43}${color}${diskiograph_read /dev/\1 35,68 ${template2} \2}${offset 3}${diskiograph_write /dev/\1 35,68 ${template1} \3}
