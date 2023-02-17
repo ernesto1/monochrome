@@ -61,14 +61,14 @@ ${if_up [=device.name]}\
 </#if>
 <#if devices?size gt 1>
 ${else}\
-<@networkDetails devices[1..<devices?size]/>
+<@networkDetails devices[1..<devices?size] height/>
 <#else>
 ${else}\
 # in case no internet connection is available we have to "fill the gap" so the next section prints properly
 ${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=height]}\
-${voffset 75}\
+${voffset 66}\
 </#if>
-${endif}${voffset 11}\
+${endif}${voffset 10}\
 </#macro>
 
 <#macro wifiDetails device>

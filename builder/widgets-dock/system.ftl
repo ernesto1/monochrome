@@ -86,6 +86,7 @@ ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-horizo
 ${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=y?c]}\
 <#assign y += space>
 <@net.networkDetails networkDevices[system] windowYcoordinate/>
+<#if system == "desktop">
 # :::::::::::: bittorrent peers
 ${if_running transmission-gt}\
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-horizontal.png -p 0,[=y?c]}\
@@ -112,16 +113,17 @@ ${else}\
 ${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=windowYcoordinate]}\
 ${voffset 215}\
 ${endif}\
+</#if>
 # :::::::::::: package updates
 ${if_existing /tmp/dnf.packages.preview}\
-<#assign body = 5 + 937>
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-top.png -p 0,[=y?c]}\
 <#assign y += top>
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu.png -p 0,[=y?c]}\
+<#if system == "desktop"><#assign body = 942><#else><#assign body = 339></#if>
 <#assign y += body>
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-bottom.png -p 0,[=y?c]}\
 ${voffset 2}${offset 5}${color1}package${alignr 5}version${voffset 3}
-<#if system == "desktop"><#assign lines = 69><#else><#assign lines = 15></#if>
-${voffset 3}${color}${execpi 30 head -n [=lines] /tmp/dnf.packages.preview}${voffset 4}
+<#if system == "desktop"><#assign lines = 69><#else><#assign lines = 26></#if>
+${voffset 3}${color}${execpi 30 head -n [=lines] /tmp/dnf.packages.preview}${voffset 5}
 ${endif}\
 ]];
