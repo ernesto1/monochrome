@@ -88,8 +88,9 @@ ${voffset 3}${offset 5}${color1}total down${goto 75}${color}${totaldown enp0s25}
 ${else}\
 # in case no internet connection is available we have to "fill the gap" so the next section prints properly
 ${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,280}\
-${voffset 75}\
-${endif}${voffset 11}\
+${voffset 76}\
+${endif}\
+${voffset 10}\
 # :::::::::::: bittorrent peers
 ${if_running transmission-gt}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-menu-horizontal.png -p 0,356}\
@@ -98,7 +99,7 @@ ${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,375}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-menu-top-flat.png -p 0,376}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-menu.png -p 0,395}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-menu-bottom.png -p 0,552}\
-${voffset 6}${offset 5}${color1}ip address${alignr 5}remote port${voffset 3}
+${voffset 7}${offset 5}${color1}ip address${alignr 5}remote port${voffset 3}
 ${if_match ${tcp_portmon 51413 51413 count} > 0}\
 ${template3 0}
 ${template3 1}
@@ -112,11 +113,11 @@ ${template3 8}
 ${template3 9}${voffset 10}
 ${else}\
 ${voffset 67}${alignc}${color}no peer connections
-${voffset 3}${alignc}established${voffset 75}
+${voffset 3}${alignc}established${voffset 74}
 ${endif}\
 ${else}\
 ${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,376}\
-${voffset 215}\
+${voffset 208}\
 ${endif}\
 # :::::::::::: package updates
 ${if_existing /tmp/dnf.packages.preview}\
@@ -124,6 +125,6 @@ ${image ~/conky/monochrome/images/widgets-dock/orange-menu-top.png -p 0,564}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-menu.png -p 0,583}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-menu-bottom.png -p 0,1525}\
 ${voffset 2}${offset 5}${color1}package${alignr 5}version${voffset 3}
-${voffset 3}${color}${execpi 30 head -n 69 /tmp/dnf.packages.preview}${voffset 4}
+${voffset 3}${color}${execpi 30 head -n 69 /tmp/dnf.packages.preview}${voffset 5}
 ${endif}\
 ]];

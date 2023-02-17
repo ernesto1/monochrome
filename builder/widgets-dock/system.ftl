@@ -86,6 +86,7 @@ ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-horizo
 ${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=y?c]}\
 <#assign y += space>
 <@net.networkDetails networkDevices[system] windowYcoordinate/>
+${voffset 10}\
 <#if system == "desktop">
 # :::::::::::: bittorrent peers
 ${if_running transmission-gt}\
@@ -100,18 +101,18 @@ ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu.png -p
 <#assign body = 157, y += body>
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-bottom.png -p 0,[=y?c]}\
 <#assign y += bottom + space>
-${voffset 6}${offset 5}${color1}ip address${alignr 5}remote port${voffset 3}
+${voffset 7}${offset 5}${color1}ip address${alignr 5}remote port${voffset 3}
 ${if_match ${tcp_portmon 51413 51413 count} > 0}\
 <#list 0..9 as x>
 ${template3 [=x]}<#if x?is_last>${voffset 10}</#if>
 </#list>
 ${else}\
 ${voffset 67}${alignc}${color}no peer connections
-${voffset 3}${alignc}established${voffset 75}
+${voffset 3}${alignc}established${voffset 74}
 ${endif}\
 ${else}\
 ${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=windowYcoordinate]}\
-${voffset 215}\
+${voffset 208}\
 ${endif}\
 </#if>
 # :::::::::::: package updates

@@ -66,9 +66,9 @@ ${else}\
 ${else}\
 # in case no internet connection is available we have to "fill the gap" so the next section prints properly
 ${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=height]}\
-${voffset 66}\
+${voffset 76}\
 </#if>
-${endif}${voffset 10}\
+${endif}\
 </#macro>
 
 <#macro wifiDetails device>
