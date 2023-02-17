@@ -92,11 +92,13 @@ ${voffset 75}\
 ${endif}${voffset 11}\
 # :::::::::::: bittorrent peers
 ${if_running transmission-gt}\
-${image ~/conky/monochrome/images/widgets-dock/orange-menu-top.png -p 0,356}\
-${image ~/conky/monochrome/images/widgets-dock/orange-menu.png -p 0,375}\
-${image ~/conky/monochrome/images/widgets-dock/orange-menu-bottom.png -p 0,549}\
+${image ~/conky/monochrome/images/widgets-dock/orange-menu-horizontal.png -p 0,356}\
 ${voffset 2}${offset 5}${color1}bittorrent${goto 75}${color}${tcp_portmon 51413 51413 count} peer(s)
-${voffset 6}${offset 5}${color1}ip address${alignr 5}remote port
+${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,375}\
+${image ~/conky/monochrome/images/widgets-dock/orange-menu-top-flat.png -p 0,376}\
+${image ~/conky/monochrome/images/widgets-dock/orange-menu.png -p 0,395}\
+${image ~/conky/monochrome/images/widgets-dock/orange-menu-bottom.png -p 0,552}\
+${voffset 6}${offset 5}${color1}ip address${alignr 5}remote port${voffset 3}
 ${if_match ${tcp_portmon 51413 51413 count} > 0}\
 ${template3 0}
 ${template3 1}
@@ -113,15 +115,15 @@ ${voffset 67}${alignc}${color}no peer connections
 ${voffset 3}${alignc}established${voffset 75}
 ${endif}\
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,356}\
+${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,376}\
 ${voffset 215}\
 ${endif}\
 # :::::::::::: package updates
 ${if_existing /tmp/dnf.packages.preview}\
-${image ~/conky/monochrome/images/widgets-dock/orange-menu-top.png -p 0,561}\
-${image ~/conky/monochrome/images/widgets-dock/orange-menu.png -p 0,580}\
-${image ~/conky/monochrome/images/widgets-dock/orange-menu-bottom.png -p 0,1522}\
+${image ~/conky/monochrome/images/widgets-dock/orange-menu-top.png -p 0,564}\
+${image ~/conky/monochrome/images/widgets-dock/orange-menu.png -p 0,583}\
+${image ~/conky/monochrome/images/widgets-dock/orange-menu-bottom.png -p 0,1525}\
 ${voffset 2}${offset 5}${color1}package${alignr 5}version${voffset 3}
-${voffset 3}${color}${execpi 30 head -n 71 /tmp/dnf.packages.preview}${voffset 4}
+${voffset 3}${color}${execpi 30 head -n 69 /tmp/dnf.packages.preview}${voffset 4}
 ${endif}\
 ]];

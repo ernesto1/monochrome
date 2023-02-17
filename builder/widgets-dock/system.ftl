@@ -56,10 +56,10 @@ conky.text = [[
 # :::::::::::: top cpu processes
 <#assign y = 0, 
          top = 19,    <#-- menu header -->
-         body = 109,  <#-- holds the size of the current window without the top and bottom edges -->
+         body = 109,  <#-- size of the current window without the top and bottom edges -->
          bottom = 7,  <#-- window bottom edge -->
          space = 5>   <#-- empty space between windows -->
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-top.png -p 0,0}\
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-top.png -p 0,[=y?c]}\
 <#assign y += top>
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu.png -p 0,[=y?c]}\
 <#assign y += body>
@@ -88,15 +88,18 @@ ${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=y?c]}\
 <@net.networkDetails networkDevices[system] windowYcoordinate/>
 # :::::::::::: bittorrent peers
 ${if_running transmission-gt}\
-<#assign windowYcoordinate = y, body = 174>
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-top.png -p 0,[=y?c]}\
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-horizontal.png -p 0,[=y?c]}\
+${voffset 2}${offset 5}${color1}bittorrent${goto 75}${color}${tcp_portmon 51413 51413 count} peer(s)
+<#assign y += top>
+${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=y?c]}\
+<#assign y += 1, windowYcoordinate = y>
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-top-flat.png -p 0,[=y?c]}\
 <#assign y += top>
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu.png -p 0,[=y?c]}\
-<#assign y += body>
+<#assign body = 157, y += body>
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-bottom.png -p 0,[=y?c]}\
 <#assign y += bottom + space>
-${voffset 2}${offset 5}${color1}bittorrent${goto 75}${color}${tcp_portmon 51413 51413 count} peer(s)
-${voffset 6}${offset 5}${color1}ip address${alignr 5}remote port
+${voffset 6}${offset 5}${color1}ip address${alignr 5}remote port${voffset 3}
 ${if_match ${tcp_portmon 51413 51413 count} > 0}\
 <#list 0..9 as x>
 ${template3 [=x]}<#if x?is_last>${voffset 10}</#if>
@@ -118,7 +121,7 @@ ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu.png -p
 <#assign y += body>
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-bottom.png -p 0,[=y?c]}\
 ${voffset 2}${offset 5}${color1}package${alignr 5}version${voffset 3}
-<#if system == "desktop"><#assign lines = 71><#else><#assign lines = 15></#if>
+<#if system == "desktop"><#assign lines = 69><#else><#assign lines = 15></#if>
 ${voffset 3}${color}${execpi 30 head -n [=lines] /tmp/dnf.packages.preview}${voffset 4}
 ${endif}\
 ]];
