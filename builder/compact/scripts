@@ -6,7 +6,7 @@
 # hence why we use the temp folder in order to replace the file only once
 
 # ::::::: desktop sidebar
-java -jar ~/conky/monochrome/builder/freemarker-configuration.jar compact red desktop && \
+java -jar ~/conky/monochrome/builder/freemarker-configuration.jar compact burgundy desktop && \
 pushd /tmp/monochrome/target && \
 buildSidebar.bash config cpu memory network-desktop disk system bottom-edge && \
 echo ']];' >> /tmp/monochrome/sidebar && \

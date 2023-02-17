@@ -1,6 +1,6 @@
-red:
+burgundy:
   image:
-    primaryColor: red
+    primaryColor: burgundy
     secondaryColor: ochre
   colors:
     text: a98162
