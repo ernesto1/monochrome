@@ -98,6 +98,7 @@ ${voffset 2}${offset 5}${color1}bittorrent${goto 75}${color}${tcp_portmon 51413 
 ${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,375}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-menu-top-flat.png -p 0,376}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-menu.png -p 0,395}\
+${image ~/conky/monochrome/images/widgets-dock/orange-menu-bittorrent.png -p 38,410}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-menu-bottom.png -p 0,552}\
 ${voffset 7}${offset 5}${color1}ip address${alignr 5}remote port${voffset 3}
 ${if_match ${tcp_portmon 51413 51413 count} > 0}\

@@ -64,7 +64,7 @@ ${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=y?c]}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-top-flat.png -p 0,[=y?c]}\
 <#assign y += top>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu.png -p 0,[=y?c]}\
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-bittorrent.png -p 32,[=(y+24)?c]}\
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-bittorrent.png -p 38,[=(y+32)?c]}\
 <#assign y += body>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-bottom.png -p 0,[=y?c]}\
 <#assign y += bottom + space>
