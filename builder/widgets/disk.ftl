@@ -1,5 +1,6 @@
-<#assign width = 222 >        <#-- disk image width + gap between conkys -->
-<#assign x = 1309 - width >   <#-- x is the x coordinate of the conky -->
+<#assign width = 202,         <#-- disk image width + gap between conkys -->
+         space = 14,          <#-- horizontal space in between disk conkys -->
+         x = 1293 - width >   <#-- x is the x coordinate of the first disk conky -->
 <#list hardDisks[system] as hardDisk>
 <#assign diskName = hardDisk.name!hardDisk.device>
 <@outputFileDirective file="disk-" + diskName>
@@ -9,7 +10,7 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  <#assign x += width >
+  <#assign x += width + space>
   gap_x = [=x?c],               -- same as passing -x at command line
   gap_y = 3,
 
