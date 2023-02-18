@@ -11,7 +11,6 @@ conky.config = {
   -- window settings
   minimum_width = 189,      -- conky will add an extra pixel to this  
   maximum_width = 189,
-  minimum_height = 200,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -30,10 +29,7 @@ conky.config = {
   
   -- images
   imlib_cache_flush_interval = 250,
-  
-  if_up_strictness = 'address', -- network device must be up, having link and an assigned IP address
-                                -- to be considered "up" by ${if_up}
-                                -- values are: up, link or address  
+
   -- font settings
   use_xft = false,
   draw_shades = false,      -- black shadow on text (not good if text is black)
@@ -43,8 +39,8 @@ conky.config = {
   color1 = '[=colors.labels]',
   color2 = '[=colors.highlight]',         -- highlight important packages
   
-  -- torrent peer ip/port: ${template3 #}
-  template3 = [[${voffset 3}${offset 5}${color}${tcp_portmon 51413 51413 rip \1}${alignr 5}${tcp_portmon 51413 51413 rport \1}]]
+  -- torrent peer ip/port: ${template1 #}
+  template1 = [[${voffset 3}${offset 5}${color}${tcp_portmon 51413 51413 rip \1}${alignr 5}${tcp_portmon 51413 51413 rport \1}]]
 };
 
 conky.text = [[
@@ -71,14 +67,14 @@ ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-bottom.png 
 ${voffset 7}${offset 5}${color1}ip address${alignr 5}remote port${voffset 3}
 ${if_match ${tcp_portmon 51413 51413 count} > 0}\
 <#list 0..11 as x>
-${template3 [=x]}<#if x?is_last>${voffset 11}</#if>
+${template1 [=x]}<#if x?is_last>${voffset 11}</#if>
 </#list>
 ${else}\
 ${voffset 84}${alignc}${color}no peer connections
 ${voffset 3}${alignc}established${voffset 90}
 ${endif}\
 # :::::::::::: files shared at the moment
-<#assign body = 417>
+<#assign body = 494>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-horizontal.png -p 0,[=y?c]}\
 ${voffset 2}${offset 5}${color1}seeding${goto 75}${color}${exec lsof -c transmission -n | grep -E '[0-9]+[a-z|A-Z] +REG' | grep -cv deleted} files
 <#assign y += top>
@@ -89,7 +85,7 @@ ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-top-flat.pn
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu.png -p 0,[=y?c]}\
 <#assign y += body>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-bottom.png -p 0,[=y?c]}\
-${voffset 7}${offset 5}${color1}file name${voffset 3}
-${voffset 3}${color}${execpi 4 lsof -c transmission -n | grep -E '[0-9]+[a-z|A-Z] +REG' | grep -v deleted | sed 's|.\+/||' | sed 's/^/${offset 5}/' | sort}${voffset 4}
+${voffset 7}${offset 5}${color1}file name${voffset 4}
+${color}${execpi 4 lsof -c transmission -n | grep -E '[0-9]+[a-z|A-Z] +REG' | grep -v deleted | sed 's|.\+/||' | sed 's/^/${voffset 2}${offset 5}/' | sort}${voffset 4}
 ${endif}\
 ]];
