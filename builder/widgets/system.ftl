@@ -5,11 +5,11 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',
-  gap_x = 221,         -- gap between border of the screen and the conky window, same as passing -x at command line
+  gap_x = 231,         -- gap between border of the screen and the conky window, same as passing -x at command line
   gap_y = 56,
 
   -- window settings
-  minimum_width = 219,
+  minimum_width = 209,
   own_window = true,
   own_window_type = 'desktop',              -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -62,12 +62,4 @@ ${voffset 8}${offset 5}${color}chasis front intake${alignr 4}${template1 atk0110
 ${voffset 3}${offset 5}${color}cpu fan${alignr 4}${template1 atk0110 fan 1 2500} rpm
 ${voffset 3}${offset 5}${color}case top exhaust fan${alignr 4}${template1 atk0110 fan 2 2500} rpm
 ${voffset 3}${offset 5}${color}case back exhaust fan${alignr 4}${template1 atk0110 fan 4 2500} rpm${voffset 4}
-# :::::::::::: package updates
-${if_existing /tmp/dnf.packages.preview}\
-${voffset 7}${alignc}${color1}dnf package management
-${voffset 5}${alignc}${color}${lines /tmp/dnf.packages.preview} package update(s) available
-${voffset 5}${offset 5}${color1}package${alignr 4}version
-# the dnf package lookup script refreshes the package list every 10m
-${voffset 1}${color}${execpi 30 head -n 84 /tmp/dnf.packages.preview}${voffset 4}
-${endif}\
 ]];
