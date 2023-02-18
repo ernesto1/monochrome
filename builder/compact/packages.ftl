@@ -11,7 +11,6 @@ conky.config = {
   -- window settings
   minimum_width = 189,      -- conky will add an extra pixel to this  
   maximum_width = 189,
-  --minimum_height = 200,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -30,10 +29,7 @@ conky.config = {
   
   -- images
   imlib_cache_flush_interval = 250,
-  
-  if_up_strictness = 'address', -- network device must be up, having link and an assigned IP address
-                                -- to be considered "up" by ${if_up}
-                                -- values are: up, link or address  
+
   -- font settings
   use_xft = false,
   draw_shades = false,      -- black shadow on text (not good if text is black)
@@ -42,9 +38,6 @@ conky.config = {
   default_color = '[=colors.menuText]',  -- regular text
   color1 = '[=colors.labels]',
   color2 = '[=colors.highlight]',         -- highlight important packages
-  
-  -- torrent peer ip/port: ${template3 #}
-  template3 = [[${voffset 3}${offset 5}${color}${tcp_portmon 51413 51413 rip \1}${alignr 5}${tcp_portmon 51413 51413 rport \1}]]
 };
 
 conky.text = [[
@@ -52,7 +45,7 @@ conky.text = [[
 ${if_existing /tmp/dnf.packages.preview}\
 <#assign y = 0, 
          top = 19,    <#-- menu header -->
-         body = 800,  <#-- size of the current window without the top and bottom edges -->
+         body = 990,  <#-- size of the current window without the top and bottom edges -->
          bottom = 7,  <#-- window bottom edge -->
          space = 5,   <#-- empty space between windows -->
          windowYcoordinate = y> <#-- starting y coordinate of the current window -->
@@ -63,11 +56,11 @@ ${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=y?c]}\
 <#assign y += 1>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-top-flat.png -p 0,[=y?c]}\
 <#assign y += top>
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu.png -p 0,[=y?c]}\
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-dnf.png -p 0,[=y?c]}\
 <#assign y += body>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-bottom.png -p 0,[=y?c]}\
-${voffset 7}${offset 5}${color1}package${alignr 5}version${voffset 3}
-<#if system == "desktop"><#assign lines = 57><#else><#assign lines = 15></#if>
-${voffset 3}${color}${execpi 30 head -n [=lines] /tmp/dnf.packages.preview}${voffset 4}
+${voffset 7}${offset 5}${color1}package${alignr 5}version${voffset 4}
+<#if system == "desktop"><#assign lines = 66><#else><#assign lines = 15></#if>
+${color}${execpi 30 head -n [=lines] /tmp/dnf.packages.preview}${voffset 4}
 ${endif}\
 ]];

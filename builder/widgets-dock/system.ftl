@@ -120,12 +120,12 @@ ${endif}\
 ${if_existing /tmp/dnf.packages.preview}\
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-top.png -p 0,[=y?c]}\
 <#assign y += top>
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu.png -p 0,[=y?c]}\
-<#if system == "desktop"><#assign body = 942><#else><#assign body = 339></#if>
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-dnf.png -p 0,[=y?c]}\
+<#if system == "desktop"><#assign body = 928><#else><#assign body = 339></#if>
 <#assign y += body>
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-bottom.png -p 0,[=y?c]}\
-${voffset 2}${offset 5}${color1}package${alignr 5}version${voffset 3}
-<#if system == "desktop"><#assign lines = 69><#else><#assign lines = 26></#if>
-${voffset 3}${color}${execpi 30 head -n [=lines] /tmp/dnf.packages.preview}${voffset 5}
+${voffset 2}${offset 5}${color1}package${alignr 5}version${voffset 4}
+<#if system == "desktop"><#assign lines = 62><#else><#assign lines = 26></#if>
+${color}${execpi 30 head -n [=lines] /tmp/dnf.packages.preview}${voffset 5}
 ${endif}\
 ]];
