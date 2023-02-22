@@ -14,7 +14,6 @@ do
   echo -e starting height: $totalHeight '\n'
   cat $file >> /tmp/monochrome/sidebar
   
-  
   IFS_BAK=${IFS}
   IFS=$'\n'
   images=($(grep '${image ~' $file))
@@ -27,13 +26,13 @@ do
     image=${imageCommand#*image }   # remove '${image '
     image=${image% -p *}            # remove ' -p 0,489}\'
     imagePath=$(echo "echo $image" | bash)
-    echo image: $imagePath    
+    #echo image: $imagePath    
     coordinates=$(echo ${imageCommand} | grep -Eo '[[:digit:]]+,-*[[:digit:]]+')
     echo coordinates: $coordinates
     xCoordinate=${coordinates%,*}
-    echo x: $xCoordinate
+    #echo x: $xCoordinate
     yCoordinate=${coordinates#*,}
-    echo y: $yCoordinate
+    #echo y: $yCoordinate
     ((newYCoordinate=yCoordinate+totalHeight))
     echo new y: $newYCoordinate    
     sed -i "s#${image} -p ${xCoordinate},${yCoordinate}}#${image} -p ${xCoordinate},${newYCoordinate}}#" /tmp/monochrome/sidebar
