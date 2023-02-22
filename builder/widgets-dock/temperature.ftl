@@ -23,5 +23,7 @@ ${template8 [=hardDisk.hwmonIndex] temp 1 [=threshold.tempDisk]}
 # :::::::: fans
 ${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-fan-1.png -p 0,320}${endif}\
 ${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-fan-2.png -p 0,320}${endif}\
-${voffset 7}${offset 7}${font2}${template7 atk0110 fan 1 [=(threshold.fanSpeed)?c]}
+${voffset 7}${offset 7}${font2}${template7 atk0110 fan 1 [=(threshold.fanSpeed)?c]}${font}${color}${voffset -38}${goto 67}${hwmon atk0110 fan 3} rpm
+${voffset 9}${goto 67}${hwmon atk0110 fan 2} rpm
+${voffset 9}${goto 67}${hwmon atk0110 fan 4} rpm
 </#if>
