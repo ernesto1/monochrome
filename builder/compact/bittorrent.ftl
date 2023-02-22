@@ -73,10 +73,10 @@ ${else}\
 ${voffset 84}${alignc}${color}no peer connections
 ${voffset 3}${alignc}established${voffset 90}
 ${endif}\
-# :::::::::::: files shared at the moment
-<#assign body = 494>
+# :::::::::::: files shared at the moment, see comment below for 'lsof' parsing logic
+<#assign body = 478>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-horizontal.png -p 0,[=y?c]}\
-${voffset 2}${offset 5}${color1}seeding${goto 75}${color}${exec lsof -c transmission -n | grep -E '[0-9]+[a-z|A-Z] +REG' | grep -cv deleted} files
+${voffset 2}${offset 5}${color1}seeding${goto 75}${color}${exec lsof -c transmission -n | grep -v deleted | grep -cE '[0-9]+[a-z|A-Z] +REG +[0-9]+,[0-9]+ +[0-9]{6,}'} files
 <#assign y += top>
 ${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=y?c]}\
 <#assign y += 1>
@@ -86,6 +86,12 @@ ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu.png -p 0,[=
 <#assign y += body>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-bottom.png -p 0,[=y?c]}\
 ${voffset 7}${offset 5}${color1}file name${voffset 4}
-${color}${execpi 4 lsof -c transmission -n | grep -E '[0-9]+[a-z|A-Z] +REG' | grep -v deleted | sed 's|.\+/||' | sed 's/^/${voffset 2}${offset 5}/' | sort}${voffset 4}
+# sample lsof lines being grep'ed for determining files being seeded by transmission
+# FD     TYPE DEVICE     SIZE/OFF      NODE NAME
+# 102r   REG  8,16     3297924792 163446839 /media/movie.mp4            < use read file descriptor pattern
+# 74r    REG  0,19              0  19821859 /proc/513729/mountinfo      < non real files have a size of 0 bytes
+# 100u   REG  0,1        67108864    718707 /memfd:pulseaudio (deleted) < items with 'deleted' are excluded
+# files less than 1000 bytes are ignored, ex. txt, nfo, info files
+${color}${execpi 4 lsof -c transmission -n | grep -v deleted | grep -E '[0-9]+[a-z|A-Z] +REG +[0-9]+,[0-9]+ +[0-9]{6,}' | sed 's|.\+/||' | sed 's/^/${voffset 3}${offset 5}/' | sort}${voffset 4}
 ${endif}\
 ]];
