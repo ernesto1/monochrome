@@ -1,5 +1,7 @@
 <#import "/lib/network.ftl" as net>
 conky.config = {
+  lua_load = '~/conky/monochrome/library.lua',
+  
   update_interval = 2,    -- update interval in seconds
   xinerama_head = 1,      -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
@@ -121,9 +123,7 @@ ${if_existing /tmp/dnf.packages.preview}\
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-top.png -p 0,[=y?c]}\
 <#assign y += top>
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-dnf.png -p 0,[=y?c]}\
-<#if system == "desktop"><#assign body = 928><#else><#assign body = 339></#if>
-<#assign y += body>
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-bottom.png -p 0,[=y?c]}\
+${lua_parse bottom_edge widgets-dock [=image.primaryColor]-menu-bottom.png 0 [=y?c] 2 ${lines /tmp/dnf.packages.preview}}\
 ${voffset 2}${offset 5}${color1}package${alignr 5}version${voffset 4}
 <#if system == "desktop"><#assign lines = 62><#else><#assign lines = 26></#if>
 ${color}${execpi 30 head -n [=lines] /tmp/dnf.packages.preview}${voffset 5}

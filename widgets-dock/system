@@ -1,4 +1,6 @@
 conky.config = {
+  lua_load = '~/conky/monochrome/library.lua',
+  
   update_interval = 2,    -- update interval in seconds
   xinerama_head = 1,      -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
@@ -124,7 +126,7 @@ ${endif}\
 ${if_existing /tmp/dnf.packages.preview}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-menu-top.png -p 0,564}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-menu-dnf.png -p 0,583}\
-${image ~/conky/monochrome/images/widgets-dock/orange-menu-bottom.png -p 0,1511}\
+${lua_parse bottom_edge_parse widgets-dock orange-menu-bottom.png 0 583 2 ${lines /tmp/dnf.packages.preview}}\
 ${voffset 2}${offset 5}${color1}package${alignr 5}version${voffset 4}
 ${color}${execpi 30 head -n 62 /tmp/dnf.packages.preview}${voffset 5}
 ${endif}\

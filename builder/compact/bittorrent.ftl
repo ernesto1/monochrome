@@ -1,4 +1,6 @@
 conky.config = {
+  lua_load = '~/conky/monochrome/library.lua',
+  
   update_interval = 2,    -- update interval in seconds
   xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
@@ -76,15 +78,14 @@ ${endif}\
 # :::::::::::: files shared at the moment, see comment below for 'lsof' parsing logic
 <#assign body = 478>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-horizontal.png -p 0,[=y?c]}\
-${voffset 2}${offset 5}${color1}seeding${goto 75}${color}${exec lsof -c transmission -n | grep -v deleted | grep -cE '[0-9]+[a-z|A-Z] +REG +[0-9]+,[0-9]+ +[0-9]{6,}'} files
+${voffset 2}${offset 5}${color1}seeding${goto 75}${color}${lua compute_and_save files ${exec lsof -c transmission -n | grep -v deleted | grep -cE '[0-9]+[a-z|A-Z] +REG +[0-9]+,[0-9]+ +[0-9]{6,}'}} files
 <#assign y += top>
 ${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=y?c]}\
 <#assign y += 1>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-top-flat.png -p 0,[=y?c]}\
 <#assign y += top>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu.png -p 0,[=y?c]}\
-<#assign y += body>
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-bottom.png -p 0,[=y?c]}\
+${lua_parse bottom_edge_load_value compact [=image.primaryColor]-menu-bottom.png 0 [=y?c] 3 files}\
 ${voffset 7}${offset 5}${color1}file name${voffset 4}
 # sample lsof lines being grep'ed for determining files being seeded by transmission
 # FD     TYPE DEVICE     SIZE/OFF      NODE NAME

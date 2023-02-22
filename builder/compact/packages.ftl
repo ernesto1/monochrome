@@ -1,5 +1,7 @@
 conky.config = {
-  update_interval = 2,    -- update interval in seconds
+  lua_load = '~/conky/monochrome/library.lua',
+  
+  update_interval = 30,    -- update interval in seconds
   xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
@@ -50,17 +52,16 @@ ${if_existing /tmp/dnf.packages.preview}\
          space = 5,   <#-- empty space between windows -->
          windowYcoordinate = y> <#-- starting y coordinate of the current window -->
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-horizontal.png -p 0,[=y?c]}\
-${voffset 2}${offset 5}${color1}dnf${goto 75}${color}${lines /tmp/dnf.packages.preview} package updates
+${voffset 2}${offset 5}${color1}dnf${goto 75}${color}${lua compute_and_save packages ${lines /tmp/dnf.packages.preview}} package updates
 <#assign y += top>
 ${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=y?c]}\
 <#assign y += 1>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-top-flat.png -p 0,[=y?c]}\
 <#assign y += top>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-dnf.png -p 0,[=y?c]}\
-<#assign y += body>
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-bottom.png -p 0,[=y?c]}\
+${lua_parse bottom_edge_load_value compact [=image.primaryColor]-menu-bottom.png 0 [=y?c] 2 packages}\
 ${voffset 7}${offset 5}${color1}package${alignr 5}version${voffset 4}
 <#if system == "desktop"><#assign lines = 66><#else><#assign lines = 15></#if>
-${color}${execpi 30 head -n [=lines] /tmp/dnf.packages.preview}${voffset 4}
+${color}${execp head -n [=lines] /tmp/dnf.packages.preview}${voffset 4}
 ${endif}\
 ]];
