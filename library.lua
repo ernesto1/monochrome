@@ -24,12 +24,14 @@ end
 -- given the number of lines it will calculate the total height for the block
 -- up to the bottom edge
 function conky_bottom_edge(theme, filename, x, y, offset, lines)
+--  print("y: " .. y .. " offset: " .. offset .. " lines: " .. lines)
   local lineMultiplier = 15
   
   if tonumber(offset) > 2 then
     lineMultiplier = lineMultiplier + tonumber(offset) - 2
   end
 
+--  print ("line multiplier: " .. lineMultiplier)
   -- decrease by one line since the image's y coordinate is hard coded for the single line scenario
   lines = (tonumber(lines) > 0) and (tonumber(lines) - 1) or 0
   y = tonumber(y) + 14 + (lines * lineMultiplier)

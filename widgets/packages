@@ -1,4 +1,6 @@
 conky.config = {
+  lua_load = '~/conky/monochrome/library.lua',
+  
   update_interval = 30,  -- update interval in seconds
   xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
@@ -42,10 +44,6 @@ conky.config = {
   color1 = 'd2b8f2',        -- text labels
   color2 = '9fc14a',        -- bar
   color3 = 'ad2724',        -- bar critical
-  
-  -- :::::::: templates
-  -- hwmon entry: index/device type index threshold
-  template1 = [[${if_match ${hwmon \1 \2 \3} > \4}${color3}${else}${color}${endif}${hwmon \1 \2 \3}]]
 };
 
 conky.text = [[
@@ -53,9 +51,10 @@ conky.text = [[
 ${if_existing /tmp/dnf.packages.preview}\
 ${image ~/conky/monochrome/images/widgets/green-packages.png -p 0,0}\
 ${voffset 3}${alignc}${color1}dnf package management
-${voffset 5}${alignc}${color}${lines /tmp/dnf.packages.preview} package update(s) available
-${voffset 5}${offset 5}${color1}package${alignr 4}version
+${voffset 5}${alignc}${color}${lua compute_and_save packages ${lines /tmp/dnf.packages.preview}} package update(s) available
+${voffset 5}${offset 5}${color1}package${alignr 4}version${voffset 2}
 # the dnf package lookup script refreshes the package list every 10m
-${voffset 1}${color}${execp head -n 100 /tmp/dnf.packages.preview}${voffset 4}
+${color}${execp head -n 100 /tmp/dnf.packages.preview}
+${lua_parse bottom_edge_load_value widgets green-packages-bottom.png 0 54 2 packages}
 ${endif}\
 ]];
