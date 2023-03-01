@@ -60,8 +60,8 @@ conky.text = [[
 # ::::::::::::::::: system
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-table-horizontal.png -p 0,0}\
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-table-horizontal.png -p 0,16}\
-${voffset 4}${color1}${goto 30}kernel${goto 74}${color}${kernel}
-${voffset 3}${goto 30}${color1}uptime${goto 74}${color}${uptime}
+${voffset 4}${color1}${goto 29}kernel${goto 74}${color}${kernel}
+${voffset 3}${goto 29}${color1}uptime${goto 74}${color}${uptime}
 ${voffset 3}${offset 5}${color1}compositor${goto 74}${color}${execi 3600 echo $XDG_SESSION_TYPE}
 ${voffset 8}\
 # ::::::::::::::::: top cpu
@@ -86,7 +86,7 @@ ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-table-horizon
 ${voffset 3}${goto 24}${color1}network${goto 74}${color}${wireless_essid [=networkDevices[system]?first.name]}
 ${voffset 3}${color1}${goto 18}local ip${goto 74}${color}${addr [=networkDevices[system]?first.name]}
 </#if>
-${voffset 3}${color1}${goto 42}zoom${goto 74}${color}${if_running zoom}running${else}off${endif}
+${voffset 3}${color1}${goto 41}zoom${goto 74}${color}${if_running zoom}running${else}off${endif}
 ${voffset 3}${offset 5}${color1}bittorrent${goto 74}${color}${tcp_portmon 51413 51413 count} peer(s)
 # :::: bittorrent connections
 ${if_running transmission-gt}\
