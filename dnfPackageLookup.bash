@@ -7,7 +7,7 @@ function usage {
 }
 
 function onExitSignal {
-  echo "$(basename $0) | received shutdown signal, cleaning up temporary files and exiting script" | tee -a ${logFile}
+  echo 'received shutdown signal, cleaning up temporary files and exiting script' | tee -a ${logFile}
   rm -f /tmp/dnf.*    # delete temp files
   kill $(jobs -p)     # kill any child processes, ie. the sleep command
   exit 0
