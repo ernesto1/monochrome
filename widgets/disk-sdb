@@ -4,7 +4,7 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 1523,               -- same as passing -x at command line
+  gap_x = 1515,               -- same as passing -x at command line
   gap_y = 3,
 
   -- window settings

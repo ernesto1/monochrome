@@ -1,6 +1,6 @@
 <#assign width = 202,         <#-- disk image width + gap between conkys -->
          space = 14,          <#-- horizontal space in between disk conkys -->
-         x = 1293 - width >   <#-- x is the x coordinate of the first disk conky -->
+         x = 1285 - width >   <#-- x is the x coordinate of the first disk conky -->
 <#list hardDisks[system] as hardDisk>
 <#assign diskName = hardDisk.name!hardDisk.device>
 <@outputFileDirective file="disk-" + diskName>
