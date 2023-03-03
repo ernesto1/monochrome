@@ -23,7 +23,7 @@ public class ConkyTemplate {
     /**
      * Parses the conky freemarker template file based on the given configuration
      * @param args
-     * @throws IOException if the input files are not available
+     * @throws IOException if an input file is not available
      * @throws TemplateException if a freemarker error occurs while processing the templates
      */
     public static void main(String[] args) throws IOException, TemplateException {
@@ -35,7 +35,7 @@ public class ConkyTemplate {
         Yaml yaml = new Yaml();
         Map<String, Object> root = yaml.load(globalSettingsStream);
         // set up system variable
-        root.put("system", args[2]);
+        root.put("system", args[2].toLowerCase());
         // load conky theme data model
         File templateDirectory = new File(buildDirectory, args[0]);
         InputStream colorPaletteStream = new FileInputStream(new File(templateDirectory, "colorPalette.yml"));
@@ -44,7 +44,7 @@ public class ConkyTemplate {
         String color = args[1];
 
         if (themes.containsKey(color)) {
-            logger.info("using {} color scheme", color);
+            logger.info("applying the '{}' color scheme", color);
             root.putAll((Map<String, Object>) themes.get(color));
             logger.debug("global + theme data model: {}", root);
         } else {
@@ -86,8 +86,8 @@ public class ConkyTemplate {
      */
     private static void validateArguments(String[] args) {
         if (args.length !=3) {
-            System.err.println("usage: conkyTemplate <conky theme> <color> <system>");
-            System.err.println("where system can be 'desktop' or 'laptop'");
+            logger.error("usage: conkyTemplate <conky theme> <color> <device>");
+            logger.error("where device can be 'desktop' or 'laptop'");
             System.exit(1);
         }
 
@@ -95,13 +95,20 @@ public class ConkyTemplate {
         File conkyDir = new File(CONKY_DIR, args[0]);
 
         if (conkyDir.isDirectory()) {
-            logger.info("creating configuration files for the {} conky", args[0]);
+            logger.info("creating configuration files for the '{}' conky", args[0]);
         } else {
-            logger.error("conky directory {} does not exist", conkyDir);
+            logger.error("conky directory '{}' does not exist", conkyDir);
             System.exit(1);
         }
 
-        // TODO ensure proper system variable was provided
+        // system must be valid
+
+        try {
+            Device.valueOf(args[2].toUpperCase());
+        } catch(IllegalArgumentException e) {
+            logger.error("'{}' is not a supported device, accepted values are: {}", args[2], Device.values());
+            System.exit(1);
+        }
     }
 
     private static Configuration createFreemarkerConfiguration(File templateDirectory) throws IOException {
