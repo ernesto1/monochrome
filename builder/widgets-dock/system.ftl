@@ -123,7 +123,7 @@ ${if_existing /tmp/dnf.packages.preview}\
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-top.png -p 0,[=y?c]}\
 <#assign y += top>
 <#if system == "desktop"><#assign maxLines = 62><#else><#assign maxLines = 23></#if>
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-dnf.png -p 0,[=y?c]}\
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu.png -p 0,[=y?c]}\
 ${lua_parse bottom_edge_parse widgets-dock [=image.primaryColor]-menu-bottom.png 0 [=y?c] 2 ${lines /tmp/dnf.packages.preview} [=maxLines]}\
 ${voffset 2}${offset 5}${color1}package${alignr 5}version${voffset 4}
 ${color}${execpi 30 head -n [=maxLines] /tmp/dnf.packages.preview}${voffset 5}
