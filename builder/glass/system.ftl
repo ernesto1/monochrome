@@ -10,7 +10,7 @@ conky.config = {
   gap_y = 82,
 
   -- window settings
-  minimum_width = 223,
+  minimum_width = 219,
   minimum_height = 520,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -49,11 +49,11 @@ conky.config = {
   
   -- templates
   -- top cpu process
-  template0 = [[${voffset 3}${offset 5}${color}${top name \1}${offset 3}${top cpu \1}% ${top pid \1}]],
+  template0 = [[${voffset 3}${offset 5}${color}${top name \1}${top cpu \1}% ${top pid \1}]],
   -- top mem process
   template1 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${alignr 5}${top_mem mem_res \1} ${top_mem pid \1}]],
   -- torrent peer ip/port: ${template3 #}
-  template2 = [[${voffset 3}${offset 5}${color}${tcp_portmon 51413 51413 rip \1}${alignr 5}${tcp_portmon 51413 51413 rport \1}]]
+  template2 = [[${voffset 3}${offset 5}${color}${tcp_portmon 51413 51413 rip \1}${alignr 68}${tcp_portmon 51413 51413 rport \1}]]
 };
 
 conky.text = [[
@@ -66,7 +66,7 @@ ${voffset 3}${offset 5}${color1}compositor${goto 74}${color}${execi 3600 echo $X
 ${voffset 8}\
 # ::::::::::::::::: top cpu
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-table.png -p 0,60}\
-${voffset 6}${offset 5}${color1}process${goto 164}cpu   pid${voffset 3}
+${voffset 6}${offset 5}${color1}process${goto 161}cpu   pid${voffset 3}
 <#list 1..7 as x>
 ${template0 [=x]}
 </#list>
@@ -91,14 +91,15 @@ ${voffset 3}${offset 5}${color1}bittorrent${goto 74}${color}${tcp_portmon 51413 
 # :::: bittorrent connections
 ${if_running transmission-gt}\
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-table.png -p 0,383}\
-${voffset 11}${offset 5}${color1}ip address${alignr 5}remote port${voffset 3}
+${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 160,342}\
+${voffset 11}${offset 5}${color1}ip address${alignr 68}remote port${voffset 3}
 ${if_match ${tcp_portmon 51413 51413 count} > 0}\
 <#list 0..6 as x>
 ${template2 [=x]}
 </#list>
 ${else}\
-${voffset 42}${alignc}${color}no peer connections
-${voffset 3}${alignc}established${voffset 41}
+${voffset 42}${offset 23}${color}no peer connections
+${voffset 3}${offset 47}established${voffset 41}
 ${endif}\
 ${else}\
 ${voffset 138}\
@@ -114,7 +115,7 @@ ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-transparent.p
 </#list>
 ${voffset 14}${alignc}${color1}dnf package management
 ${voffset 3}${alignc}${color}${lines /tmp/dnf.packages.preview} package update(s) available
-${voffset 5}${offset 5}${color1}package${alignr 9}version
+${voffset 5}${offset 5}${color1}package${alignr 5}version
 # the dnf package lookup script refreshes the package list every 10m
 <#if system == "desktop"><#assign lines = 57><#else><#assign lines = 28></#if>
 ${voffset 2}${color}${execpi 30 head -n [=lines] /tmp/dnf.packages.preview}
