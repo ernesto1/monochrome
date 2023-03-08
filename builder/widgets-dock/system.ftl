@@ -85,7 +85,7 @@ ${template2 [=x]}
 <#assign windowYcoordinate = y>
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-horizontal.png -p 0,[=y?c]}\
 <#assign body = 71, y += body><#-- vertical menu image includes the bottom edge, hence no bottom image used -->
-${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=y?c]}\
+${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
 <#assign y += space>
 <@net.networkDetails networkDevices[system] windowYcoordinate/>
 ${voffset 10}\
@@ -95,7 +95,7 @@ ${if_running transmission-gt}\
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-horizontal.png -p 0,[=y?c]}\
 ${voffset 2}${offset 5}${color1}bittorrent${goto 75}${color}${tcp_portmon 51413 51413 count} peer(s)
 <#assign y += top>
-${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=y?c]}\
+${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
 <#assign y += 1, windowYcoordinate = y>
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-top-flat.png -p 0,[=y?c]}\
 <#assign y += top>
@@ -114,7 +114,7 @@ ${voffset 67}${alignc}${color}no peer connections
 ${voffset 3}${alignc}established${voffset 74}
 ${endif}\
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=windowYcoordinate]}\
+${image ~/conky/monochrome/images/menu-blank.png -p 0,[=windowYcoordinate]}\
 ${voffset 208}\
 ${endif}\
 </#if>

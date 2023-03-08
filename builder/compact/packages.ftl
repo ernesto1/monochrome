@@ -54,7 +54,7 @@ ${if_existing /tmp/dnf.packages.preview}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-horizontal.png -p 0,[=y?c]}\
 ${voffset 2}${offset 5}${color1}dnf${goto 75}${color}${lua compute_and_save packages ${lines /tmp/dnf.packages.preview}} package updates
 <#assign y += top>
-${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=y?c]}\
+${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
 <#assign y += 1>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-top-flat.png -p 0,[=y?c]}\
 <#assign y += top>

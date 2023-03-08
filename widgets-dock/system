@@ -80,7 +80,7 @@ ${template2 7}
 # :::::::::::: network
 # assumption: only one network device will be connected to the internet at a time
 ${image ~/conky/monochrome/images/widgets-dock/orange-menu-horizontal.png -p 0,280}\
-${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,351}\
+${image ~/conky/monochrome/images/menu-blank.png -p 0,351}\
 # :::: ethernet
 ${if_up enp0s25}\
 ${voffset 15}${offset 5}${color1}local ip${goto 75}${color}${addr enp0s25}
@@ -97,7 +97,7 @@ ${voffset 10}\
 ${if_running transmission-gt}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-menu-horizontal.png -p 0,356}\
 ${voffset 2}${offset 5}${color1}bittorrent${goto 75}${color}${tcp_portmon 51413 51413 count} peer(s)
-${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,375}\
+${image ~/conky/monochrome/images/menu-blank.png -p 0,375}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-menu-top-flat.png -p 0,376}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-menu.png -p 0,395}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-menu-bittorrent.png -p 38,410}\
@@ -119,7 +119,7 @@ ${voffset 67}${alignc}${color}no peer connections
 ${voffset 3}${alignc}established${voffset 74}
 ${endif}\
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,376}\
+${image ~/conky/monochrome/images/menu-blank.png -p 0,376}\
 ${voffset 208}\
 ${endif}\
 # :::::::::::: package updates
