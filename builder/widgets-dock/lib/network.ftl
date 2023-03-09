@@ -65,7 +65,7 @@ ${else}\
 <#else>
 ${else}\
 # in case no internet connection is available we have to "fill the gap" so the next section prints properly
-${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p 0,[=height]}\
+${image ~/conky/monochrome/images/menu-blank.png -p 0,[=height]}\
 ${voffset 76}\
 </#if>
 ${endif}\
