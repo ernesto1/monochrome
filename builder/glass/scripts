@@ -14,10 +14,14 @@ mv system ../sidebar ~/conky/monochrome/glass && \
 popd
 
 
-# laptop sidebar
+# TODO update laptop sidebar
 java -jar ~/conky/monochrome/builder/freemarker-configuration.jar glass blue laptop && \
 pushd /tmp/monochrome/target && \
 buildSidebar.bash config cpu-mem network disk power bottom-edge && \
 echo '${voffset -900}]];' >> ../sidebar && \
 mv system ../sidebar ~/conky/monochrome/glass && \
 popd
+
+
+# design notes
+- each row of text adds 16 pixels (lines with a 3px voffset)

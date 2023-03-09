@@ -11,6 +11,7 @@ conky.config = {
 
   -- window settings
   minimum_width = 219,
+  maximum_width = 219,
   minimum_height = 520,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -32,7 +33,7 @@ conky.config = {
   draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
                               -- does not include bars, ie. wifi strength bar, cpu bar
 
-  imlib_cache_flush_interval = 300,
+  imlib_cache_flush_interval = 2,
   -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
   
   top_name_verbose = true,    -- show full command in ${top ...}
@@ -57,67 +58,93 @@ conky.config = {
 };
 
 conky.text = [[
+<#assign y = 0,
+         top = 19,   <#-- table header height -->
+         body = 55,  <#-- height of the current window without the top header -->
+         space = 5>  <#-- empty space between windows -->
 # ::::::::::::::::: system
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-table-horizontal.png -p 0,0}\
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-table-horizontal.png -p 0,16}\
-${voffset 4}${color1}${goto 29}kernel${goto 74}${color}${kernel}
-${voffset 3}${goto 29}${color1}uptime${goto 74}${color}${uptime}
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 0,[=y?c]}\
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-transparent.png -p 69,[=y?c]}\
+<#assign y += body>
+${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
+<#assign y += space>
+${voffset 4}${offset 29}${color1}kernel${goto 74}${color}${kernel}
+${voffset 3}${offset 29}${color1}uptime${goto 74}${color}${uptime}
 ${voffset 3}${offset 5}${color1}compositor${goto 74}${color}${execi 3600 echo $XDG_SESSION_TYPE}
 ${voffset 8}\
 # ::::::::::::::::: top cpu
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-table.png -p 0,60}\
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 0,[=y?c]}\
+<#assign y+= top>
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-transparent.png -p 0,[=y?c]}\
+<#assign body = 133, y+= body>
+${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
+<#assign y += space>
 ${voffset 6}${offset 5}${color1}process${goto 161}cpu   pid${voffset 3}
-<#list 1..7 as x>
+<#list 1..8 as x>
 ${template0 [=x]}
 </#list>
 # ::::::::::::::::: top memory
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-table.png -p 0,201}\
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 0,[=y?c]}\
+<#assign y+= top>
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-transparent.png -p 0,[=y?c]}\
+<#assign body = 133, y+= body>
+${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
+<#assign y += space>
 ${voffset 13}${offset 5}${color1}process${alignr 5}mem   pid${voffset 3}
-<#list 1..7 as x>
+<#list 1..8 as x>
 ${template1 [=x]}
 </#list>
 ${voffset -2}
 # ::::::::::::::::: network
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-table-horizontal.png -p 0,342}\
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 0,[=y?c]}\
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-transparent.png -p 69,[=y?c]}\
+${image ~/conky/monochrome/images/menu-blank.png -p 160,[=y?c]}\
 <#if system == "laptop">
 # if on wifi
 <#-- TODO update layout for laptop, you will have to use a variable for the package update image height -->
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-table-horizontal.png -p 0,372}\
-${voffset 3}${goto 24}${color1}network${goto 74}${color}${wireless_essid [=networkDevices[system]?first.name]}
-${voffset 3}${color1}${goto 18}local ip${goto 74}${color}${addr [=networkDevices[system]?first.name]}
+${voffset 3}${offset 24}${color1}network${goto 74}${color}${wireless_essid [=networkDevices[system]?first.name]}
+${voffset 3}${offset 18}${color1}local ip${goto 74}${color}${addr [=networkDevices[system]?first.name]}
 </#if>
-${voffset 3}${color1}${goto 41}zoom${goto 74}${color}${if_running zoom}running${else}off${endif}
+<#assign body = 55, y+= body>
+${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
+<#assign y+= 2><#-- a 2px mini gap between these two tables -->
+${voffset 3}${offset 41}${color1}zoom${goto 74}${color}${if_running zoom}running${else}off${endif}
 ${voffset 3}${offset 5}${color1}bittorrent${goto 74}${color}${tcp_portmon 51413 51413 count} peer(s)
+${voffset 3}${offset 22}${color1}seeding${goto 74}${color}${exec lsof -c transmission -n | grep -v deleted | grep -cE '[0-9]+[a-z|A-Z] +REG +[0-9]+,[0-9]+ +[0-9]{6,}'} file(s)
 # :::: bittorrent connections
 ${if_running transmission-gt}\
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-table.png -p 0,383}\
-${image ~/conky/monochrome/images/menu-blank.png -p 160,342}\
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 0,[=y?c]}\
+<#assign y+= top>
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-transparent.png -p 0,[=y?c]}\
+${image ~/conky/monochrome/images/menu-blank.png -p 160,[=(y - top)?c]}\
+<#assign body = 165, y+= body>
+${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
+<#assign y += space>
 ${voffset 11}${offset 5}${color1}ip address${alignr 68}remote port${voffset 3}
 ${if_match ${tcp_portmon 51413 51413 count} > 0}\
-<#list 0..6 as x>
+<#list 0..9 as x>
 ${template2 [=x]}
 </#list>
 ${else}\
-${voffset 42}${offset 23}${color}no peer connections
-${voffset 3}${offset 47}established${voffset 41}
+${voffset 66}${offset 23}${color}no peer connections
+${voffset 3}${offset 47}established${voffset 65}
 ${endif}\
 ${else}\
-${voffset 138}\
+${voffset 187}\
 ${endif}\
 # ::::::::::::::::: package updates
 ${if_existing /tmp/dnf.packages.preview}\
-<#assign y = 524>
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu.png -p 0,[=y?c]}\
-<#assign height = 38, y += height>
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 0,[=y?c]}\
+<#assign body = 38, y += body>
 <#list 1..2 as x>
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-transparent.png -p 0,[=y?c]}\
-<#assign height = 800, y += height>
+<#assign body = 800, y += body>
 </#list>
 ${voffset 14}${alignc}${color1}dnf package management
 ${voffset 3}${alignc}${color}${lines /tmp/dnf.packages.preview} package update(s) available
 ${voffset 5}${offset 5}${color1}package${alignr 5}version
 # the dnf package lookup script refreshes the package list every 10m
-<#if system == "desktop"><#assign lines = 57><#else><#assign lines = 28></#if>
+<#if system == "desktop"><#assign lines = 51><#else><#assign lines = 28></#if>
 ${voffset 2}${color}${execpi 30 head -n [=lines] /tmp/dnf.packages.preview}
 ${endif}\
 ${voffset -8}
