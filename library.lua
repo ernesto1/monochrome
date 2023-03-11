@@ -1,19 +1,27 @@
---[[ table to hold conky variable computations within a cycle, ie. compute/parse the value once
-and reuse many times ]]
+--[[ table to hold parsed conky variables ]]
 computations = {}
 
+--[[ parses the given conky expression and stores it for future use in a table
+
+arguments:
+      key           key to store the expression as
+      expression    conky variable to parse
+]]
 function conky_compute_and_save(key, expression)
   computations[key] = conky_parse(expression)
   return computations[key]
 end
 
+--[[ wrapper method for the 'bottom_edge' function
+allows the client to provide a 'key' which can be used to retrieve the total number of lines in the body
+of the menu from a previously computed conky variable ]]
 function conky_bottom_edge_load_value(theme, filename, x, y, voffset, key)
   if not computations[key] then
-    print("the key: '" .. key .. "' does not exist, image '" .. filename .. "' to be drawn in the incorrect location")
+    print("the key: '" .. key .. "' does not exist, image '" .. filename .. "' will not be drawn")
+    return ''
   end
   
-  -- if the key does not exist default to '1'
-  local lines = tonumber(computations[key]) or 1; 
+  local lines = tonumber(computations[key]); 
   return conky_bottom_edge(theme, filename, x, y, voffset, lines)
 end
 
@@ -45,21 +53,19 @@ arguments:
     lines     number of lines the body will contain
 ]]
 function conky_bottom_edge(theme, filename, x, y, voffset, lines)
---  print("y: " .. y .. " voffset: " .. voffset .. " lines: " .. lines)
   local lineMultiplier = 15
   
   if tonumber(voffset) > 2 then
     lineMultiplier = lineMultiplier + tonumber(voffset) - 2
   end
 
---  print ("line multiplier: " .. lineMultiplier)
   -- decrease by one line since the image's y coordinate is hard coded for the single line scenario
   lines = (lines > 0) and (lines - 1) or 0
   y = tonumber(y) + 14 + (lines * lineMultiplier)
   local path = "~/conky/monochrome/images/" .. theme .. "/" .. filename
   local s = "${image " .. path .. " -p " .. x .. "," .. y .. "}"
   -- add a blank image right below the bottom edge image, assume bottom edges will never be greater than 15px
-  s = s .. "${image ~/conky/monochrome/images/widgets-dock/menu-blank.png -p " .. x .. "," .. y + 15 .. "}"
---  print(s)
+  s = s .. "${image ~/conky/monochrome/images/menu-blank.png -p " .. x .. "," .. y + 15 .. "}"
+  
   return s
 end
