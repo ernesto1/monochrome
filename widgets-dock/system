@@ -123,11 +123,11 @@ ${image ~/conky/monochrome/images/menu-blank.png -p 0,376}\
 ${voffset 208}\
 ${endif}\
 # :::::::::::: package updates
-${if_existing /tmp/dnf.packages.preview}\
+${if_existing /tmp/dnf.packages.formatted}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-menu-top.png -p 0,564}\
 ${image ~/conky/monochrome/images/widgets-dock/orange-menu.png -p 0,583}\
-${lua_parse bottom_edge_parse widgets-dock orange-menu-bottom.png 0 583 2 ${lines /tmp/dnf.packages.preview} 62}\
+${lua_parse bottom_edge_parse widgets-dock orange-menu-bottom.png 0 583 2 ${lines /tmp/dnf.packages.formatted} 62}\
 ${voffset 2}${offset 5}${color1}package${alignr 5}version${voffset 4}
-${color}${execpi 30 head -n 62 /tmp/dnf.packages.preview}${voffset 5}
+${color}${execpi 30 head -n 62 /tmp/dnf.packages.formatted}${voffset 5}
 ${endif}\
 ]];

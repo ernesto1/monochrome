@@ -48,15 +48,15 @@ conky.config = {
 
 conky.text = [[
 # :::::::::::: package updates
-${if_existing /tmp/dnf.packages.preview}\
+${if_existing /tmp/dnf.packages.formatted}\
 <#assign y = 0, 
          top = 39>    <#-- menu header -->
 ${image ~/conky/monochrome/images/widgets/green-packages.png -p 0,[=y?c]}\
 ${voffset 3}${alignc}${color1}dnf package management
-${voffset 5}${alignc}${color}${lua compute_and_save packages ${lines /tmp/dnf.packages.preview}} package update(s) available
+${voffset 5}${alignc}${color}${lua compute_and_save packages ${lines /tmp/dnf.packages.formatted}} package update(s) available
 ${voffset 5}${offset 5}${color1}package${alignr 4}version${voffset 2}
 # the dnf package lookup script refreshes the package list every 10m
-${color}${execp head -n 100 /tmp/dnf.packages.preview}
+${color}${execp head -n 100 /tmp/dnf.packages.formatted}
 <#assign y += top + 15><#-- account for the 'invisible' package/version header -->
 ${lua_parse bottom_edge_load_value widgets [=image.primaryColor]-packages-bottom.png 0 [=y?c] 2 packages}
 ${endif}\
