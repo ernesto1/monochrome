@@ -98,6 +98,6 @@ ${voffset 7}${offset 5}${color1}file name${voffset 4}
 #        computes the bottom edge image also places a blank image below it, hence why the voffset after printing
 #        the files is so large.  If the bug manifests itself, we will still get a proper a menu window
 #        that is just not completely full
-${color}${execpi 4 lsof -c transmission -n | grep -v deleted | grep -E '[0-9]+[a-z|A-Z] +REG +[0-9]+,[0-9]+ +[0-9]{6,}' | sed 's|.\+/||' | sed 's/^/${voffset 3}${offset 5}/' | sort}${voffset 36}
+${color}${execpi 4 lsof -c transmission -n | grep -v deleted | grep -E '[0-9]+[a-z|A-Z] +REG +[0-9]+,[0-9]+ +[0-9]{6,}' | sed 's|.\+/||' | sed 's/^/${voffset 3}${offset 5}/' | sort}${voffset 60}
 ${endif}\
 ]];
