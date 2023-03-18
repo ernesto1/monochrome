@@ -14,14 +14,23 @@ end
 
 --[[ wrapper method for the 'bottom_edge' function
 allows the client to provide a 'key' which can be used to retrieve the total number of lines in the body
-of the menu from a previously computed conky variable ]]
-function conky_bottom_edge_load_value(theme, filename, x, y, voffset, key)
+of the menu from a previously computed conky variable 
+
+arguments:
+    key         string used to store the previously computed number of lines computation
+                see the conky_compute_and_save() function
+    maxLines    optional | maximun number of lines, will override the expression line count if it computes
+                to a bigger number
+]]
+function conky_bottom_edge_load_value(theme, filename, x, y, voffset, key, maxLines)
   if not computations[key] then
     print("the key: '" .. key .. "' does not exist, image '" .. filename .. "' will not be drawn")
     return ''
   end
   
-  local lines = tonumber(computations[key]); 
+  local lines = tonumber(computations[key])
+  maxLines = tonumber(maxLines) or 1000
+  lines = (lines > maxLines) and maxLines or lines
   return conky_bottom_edge(theme, filename, x, y, voffset, lines)
 end
 
