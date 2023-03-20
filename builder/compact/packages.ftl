@@ -59,9 +59,9 @@ ${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-top-flat.png -p 0,[=y?c]}\
 <#assign y += top>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-dnf.png -p 0,[=y?c]}\
-${lua_parse bottom_edge_load_value compact [=image.primaryColor]-menu-bottom.png 0 [=y?c] 2 packages}\
+<#if system == "desktop"><#assign maxLines = 66><#else><#assign maxLines = 15></#if>
+${lua_parse bottom_edge_load_value compact [=image.primaryColor]-menu-bottom.png 0 [=y?c] 2 packages [=maxLines]}\
 ${voffset 7}${offset 5}${color1}package${alignr 5}version${voffset 4}
-<#if system == "desktop"><#assign lines = 66><#else><#assign lines = 15></#if>
-${color}${execp head -n [=lines] /tmp/dnf.packages.formatted}${voffset 4}
+${color}${execp head -n [=maxLines] /tmp/dnf.packages.formatted}${voffset 4}
 ${endif}\
 ]];

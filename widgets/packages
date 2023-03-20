@@ -8,10 +8,11 @@ conky.config = {
   -- window alignment
   alignment = 'middle_left',
   gap_x = 24,
-  gap_y = 0,
+  gap_y = -19,
 
   -- window settings
   minimum_width = 200,
+  maximum_width = 200,
   own_window = true,
   own_window_type = 'desktop',              -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -54,7 +55,7 @@ ${voffset 3}${alignc}${color1}dnf package management
 ${voffset 5}${alignc}${color}${lua compute_and_save packages ${lines /tmp/dnf.packages.formatted}} package update(s) available
 ${voffset 5}${offset 5}${color1}package${alignr 4}version${voffset 2}
 # the dnf package lookup script refreshes the package list every 10m
-${color}${execp head -n 97 /tmp/dnf.packages.formatted}
-${lua_parse bottom_edge_load_value widgets green-packages-bottom.png 0 54 2 packages 97}
+${color}${execp head -n 100 /tmp/dnf.packages.formatted}
+${lua_parse bottom_edge_load_value widgets green-packages-bottom.png 0 54 2 packages 100}
 ${endif}\
 ]];
