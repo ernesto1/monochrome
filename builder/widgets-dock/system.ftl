@@ -124,6 +124,8 @@ ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-top.pn
 <#assign y += top>
 <#if system == "desktop"><#assign maxLines = 62><#else><#assign maxLines = 23></#if>
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu.png -p 0,[=y?c]}\
+# optional dnf branding, can be removed or won't matter if the image does not exist
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-dnf.png -p 136,[=(y+2)?c]}\
 ${lua_parse bottom_edge_parse widgets-dock [=image.primaryColor]-menu-bottom.png 0 [=y?c] 2 ${lines /tmp/dnf.packages.formatted} [=maxLines]}\
 ${voffset 2}${offset 5}${color1}package${alignr 5}version${voffset 4}
 ${color}${execpi 30 head -n [=maxLines] /tmp/dnf.packages.formatted}${voffset 5}
