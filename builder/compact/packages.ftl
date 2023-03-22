@@ -6,9 +6,9 @@ conky.config = {
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'top_left',  -- top|middle|bottom_left|right
-  gap_x = 404,
-  gap_y = 557,
+  alignment = 'middle_right',  -- top|middle|bottom_left|right
+  gap_x = 5,
+  gap_y = -15,
 
   -- window settings
   minimum_width = 189,      -- conky will add an extra pixel to this  
@@ -59,9 +59,10 @@ ${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-top-flat.png -p 0,[=y?c]}\
 <#assign y += top>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu.png -p 0,[=y?c]}\
-# optinal dnf branding, can be removed or won't matter if the image does not exist
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu.png -p 0,[=(y+1000)?c]}\
+# optional dnf branding, can be removed or won't matter if the image does not exist
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-dnf.png -p 136,[=(y+2)?c]}\
-<#if system == "desktop"><#assign maxLines = 66><#else><#assign maxLines = 15></#if>
+<#if system == "desktop"><#assign maxLines = 101><#else><#assign maxLines = 15></#if>
 ${lua_parse bottom_edge_load_value compact [=image.primaryColor]-menu-bottom.png 0 [=y?c] 2 packages [=maxLines]}\
 ${voffset 7}${offset 5}${color1}package${alignr 5}version${voffset 4}
 ${color}${execp head -n [=maxLines] /tmp/dnf.packages.formatted}${voffset 4}
