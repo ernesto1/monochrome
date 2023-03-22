@@ -1,4 +1,4 @@
-package com.conky;
+package com.conky.configuration;
 
 import freemarker.core.Environment;
 import freemarker.template.*;

@@ -1,4 +1,4 @@
-package com.conky;
+package com.conky.configuration;
 
 /**
  * List of available systems a conky setup can be built for.<br>
