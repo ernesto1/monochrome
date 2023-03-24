@@ -107,6 +107,7 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
             genre = entries.get(0);
         }
 
+        // TODO add support for images on the web (spotify)
         value = (Variant<String>) metadata.get("mpris:artUrl");
         if (value != null) {
             coverArtPath = value.getValue();
