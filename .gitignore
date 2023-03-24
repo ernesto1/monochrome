@@ -10,3 +10,6 @@ images/screenshots/*.png
 
 # layout overrides are not fully documented yet
 layout.*.cfg
+
+# unofficial conkys
+*/mediaPlayer
