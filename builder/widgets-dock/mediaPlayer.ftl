@@ -50,7 +50,7 @@ conky.text = [[
 # :::: cover art
 <#assign y = 0, 
          top = 19,    <#-- menu header -->
-         body = 179,  <#-- size of the current window without the top and bottom edges -->
+         body = 182,  <#-- size of the current window without the top and bottom edges -->
          bottom = 7,  <#-- window bottom edge -->
          space = 3>   <#-- empty space between windows -->
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-top.png -p 0,[=y?c]}\
@@ -60,7 +60,7 @@ ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu.png -p
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-bottom.png -p 0,[=y?c]}\
 ${voffset 2}${alignc}${color1}${cat /tmp/mediaplayer.playbackStatus}
 ${if_existing /tmp/mediaplayer.albumArtPath}\
-${lua_parse album_art_image ${cat /tmp/mediaplayer.albumArtPath} 181x181 4,[=(top+1)?c]}\
+${lua_parse album_art_image ${cat /tmp/mediaplayer.albumArtPath} 181x181 4,[=(top+4)?c]}\
 ${else}\
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-rhythmbox.png -p 0,[=top?c]}\
 ${endif}\
@@ -68,7 +68,7 @@ ${endif}\
 <#assign y += bottom + space>
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-horizontal.png -p 0,[=y?c]}\
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-horizontal-data.png -p 45,[=y?c]}\
-${voffset 197}${offset 5}${color1}title${goto 50}${color}${cat /tmp/mediaplayer.title}
+${voffset 200}${offset 5}${color1}title${goto 50}${color}${cat /tmp/mediaplayer.title}
 ${voffset 3}${offset 5}${color1}album${goto 50}${color}${cat /tmp/mediaplayer.album}
 ${voffset 3}${offset 5}${color1}artist${goto 50}${color}${cat /tmp/mediaplayer.artist}
 ${voffset 3}${offset 5}${color1}genre${goto 50}${color}${cat /tmp/mediaplayer.genre}
