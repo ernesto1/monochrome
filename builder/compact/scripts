@@ -10,7 +10,7 @@ java -jar ~/conky/monochrome/builder/freemarker-configuration.jar compact burgun
 pushd /tmp/monochrome/target && \
 buildSidebar.bash config cpu memory network-desktop disk system bottom-edge && \
 echo ']];' >> /tmp/monochrome/sidebar && \
-mv ../sidebar memoryGraph bittorrent packages ~/conky/monochrome/compact && \
+mv ../sidebar memoryGraph bittorrent packages mediaPlayer ~/conky/monochrome/compact && \
 popd
 
 

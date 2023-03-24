@@ -39,7 +39,7 @@ conky.config = {
   -- colors
   default_color = '[=colors.menuText]',  -- regular text
   color1 = '[=colors.labels]',
-  color2 = '[=colors.highlight]',         -- highlight important packages
+  color2 = '[=colors.highlight]'          -- highlight important packages
 };
 
 conky.text = [[
