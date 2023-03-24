@@ -42,7 +42,7 @@ conky.config = {
   draw_shades = false,      -- black shadow on text (not good if text is black)
   draw_outline = false,     -- black outline around text (not good if text is black)
   -- colors
-  default_color = '[=colors.detailsText]',  -- regular text
+  default_color = '[=colors.menuText]',  -- regular text
   color1 = '[=colors.labels]',
   color2 = '[=colors.highlight]',         -- highlight important packages
   

@@ -34,8 +34,8 @@ public class ConkyTemplate {
         InputStream globalSettingsStream = new FileInputStream(new File(buildDirectory, "globalSettings.yml"));
         Yaml yaml = new Yaml();
         Map<String, Object> root = yaml.load(globalSettingsStream);
-        // set up system variable
-        root.put("system", args[2].toLowerCase());
+        root.put("conky", args[0]);                 // conky theme being configured
+        root.put("system", args[2].toLowerCase());  // desktop or laptop
         // load conky theme data model
         File templateDirectory = new File(buildDirectory, args[0]);
         InputStream colorPaletteStream = new FileInputStream(new File(templateDirectory, "colorPalette.yml"));
