@@ -1,3 +1,5 @@
+-- :::::: functions for drawing menus with dynamic sizes ::::::
+
 --[[ table to hold parsed conky variables ]]
 computations = {}
 
