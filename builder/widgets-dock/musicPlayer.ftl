@@ -1,5 +1,5 @@
 conky.config = {
-  lua_load = '~/conky/monochrome/mediaPlayer.lua',
+  lua_load = '~/conky/monochrome/musicPlayer.lua',
   
   update_interval = 2,    -- update interval in seconds
   <#if conky == "widgets-dock"><#assign monitor = 1><#else><#assign monitor = 0></#if>
@@ -59,9 +59,9 @@ ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-top.png -p
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu.png -p 0,[=y?c]}\
 <#assign y += body>
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-bottom.png -p 0,[=y?c]}\
-${voffset 2}${alignc}${color1}${lua_parse read_file ${cat /tmp/mediaplayer.playbackStatus}}
-${if_existing /tmp/mediaplayer.albumArtPath}\
-${lua_parse album_art_image ${cat /tmp/mediaplayer.albumArtPath} 181x181 4,[=(top+4)?c]}\
+${voffset 2}${alignc}${color1}${lua_parse read_file ${cat /tmp/musicplayer.playbackStatus}}
+${if_existing /tmp/musicplayer.albumArtPath}\
+${lua_parse album_art_image ${cat /tmp/musicplayer.albumArtPath} 181x181 4,[=(top+4)?c]}\
 ${else}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-rhythmbox.png -p 0,[=top?c]}\
 ${endif}\
@@ -71,8 +71,8 @@ ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-horizontal
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-horizontal-data.png -p 45,[=y?c]}\
 <#assign y += body>
 ${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
-${voffset 200}${offset 5}${color1}title${goto 50}${color}${lua_parse read_file ${cat /tmp/mediaplayer.title}}
-${voffset 3}${offset 5}${color1}album${goto 50}${color}${lua_parse read_file ${cat /tmp/mediaplayer.album}}
-${voffset 3}${offset 5}${color1}artist${goto 50}${color}${lua_parse read_file ${cat /tmp/mediaplayer.artist}}
-${voffset 3}${offset 5}${color1}genre${goto 50}${color}${lua_parse read_file ${cat /tmp/mediaplayer.genre}}
+${voffset 200}${offset 5}${color1}title${goto 50}${color}${lua_parse read_file ${cat /tmp/musicplayer.title}}
+${voffset 3}${offset 5}${color1}album${goto 50}${color}${lua_parse read_file ${cat /tmp/musicplayer.album}}
+${voffset 3}${offset 5}${color1}artist${goto 50}${color}${lua_parse read_file ${cat /tmp/musicplayer.artist}}
+${voffset 3}${offset 5}${color1}genre${goto 50}${color}${lua_parse read_file ${cat /tmp/musicplayer.genre}}
 ]];

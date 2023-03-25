@@ -24,7 +24,7 @@ import java.util.Map;
  */
 public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
     private static Logger logger = LoggerFactory.getLogger(TrackUpdatesHandler.class);
-    public static final String FILE_PREFIX = "mediaplayer";
+    public static final String FILE_PREFIX = "musicplayer";
     private static final String ALBUM_ART_PATH = "albumArtPath";
 
     private final String outputDirectory;

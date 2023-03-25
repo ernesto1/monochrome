@@ -14,20 +14,21 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Support application for the media player conky.<br>
- * Once launched, the application will run continuously listening for any media player signals in the dbus.<br>
+ * Support application for the music player conky.<br>
+ * Once launched, the application will run continuously listening for any music player signals in the dbus.<br>
  * <br>
  * It uses the Media Player Remote Interfacing Specification (MPRIS) in order to detect song playback changes
  * by the user and retrieve said song metadata for conky to display.<br>
  * <br>
- * Song information is stored in separate files in the output directory.
+ * Song information is stored in separate files in the {@link #OUTPUT_DIR output directory}.  Output files are
+ * {@link TrackUpdatesHandler#FILE_PREFIX prefixed}.
  * @see <a href="https://github.com/hypfvieh/dbus-java">Java DBus library</a>
  * @see <a href="https://specifications.freedesktop.org/mpris-spec/latest/">Media Player Remote Interfacing Specification</a>
  */
 public class NowPlaying {
     private static Logger logger = LoggerFactory.getLogger(NowPlaying.class);
     /**
-     * Directory to write the track info files for conky to read
+     * Directory to write the song track info files for conky to read
      */
     public static String OUTPUT_DIR = "/tmp";
 
