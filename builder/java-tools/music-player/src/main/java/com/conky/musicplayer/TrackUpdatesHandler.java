@@ -12,12 +12,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.channels.Channels;
-import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -28,6 +24,11 @@ import java.util.Map;
  */
 public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
     private static Logger logger = LoggerFactory.getLogger(TrackUpdatesHandler.class);
+    public static final String FILE_PREFIX = "mediaplayer";
+    private static final String ALBUM_ART_PATH = "albumArtPath";
+
+    private final String outputDirectory;
+
     private String title;
     private String artist;
     private String album;
@@ -37,12 +38,13 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
      * File path of the cover art image
      */
     private String coverArtPath;
-    /**
-     * Integer to keep track of the 
-     */
-    private int albumArtCount;
 
-    public TrackUpdatesHandler() {
+    /**
+     * Creates a new instance of this property change handler
+     * @param directory directory to write output files to
+     */
+    public TrackUpdatesHandler(String directory) {
+        outputDirectory = directory;
         resetState();
         writeTrackInfo();
         playbackStatus = "Stopped";
@@ -133,19 +135,31 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
         writeTrackInfo();
     }
 
+    /**
+     * Attempts to download the album art from the web.  If an error occurs, no album art will be displayed
+     * for this song.
+     * @param url URL of the image to download
+     * @return the location on disk of the downlaoded image
+     */
     private String downloadAlbumArt(String url) {
-        String albumArtPath = "/tmp/mediaplayer.albumArt";
+        String id = url.substring(url.lastIndexOf('/') + 1);    // get the resource name
+        Path albumArtPath = Paths.get(outputDirectory, FILE_PREFIX + ".albumArt." + id);
 
-        try {
-            ReadableByteChannel readableByteChannel = Channels.newChannel(new URL(url).openStream());
-            FileOutputStream fileOutputStream = new FileOutputStream(albumArtPath);
-            fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
-        } catch (IOException e) {
-            logger.error("unable to download the album art from the web");
-            albumArtPath = null;
+        if (Files.notExists(albumArtPath, LinkOption.NOFOLLOW_LINKS)) {
+            try {
+                ReadableByteChannel readableByteChannel = Channels.newChannel(new URL(url).openStream());
+                FileOutputStream fileOutputStream = new FileOutputStream(albumArtPath.toFile());
+                fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
+                fileOutputStream.close();
+            } catch (IOException e) {
+                logger.error("unable to download the album art from the web");
+                albumArtPath = null;
+            }
+        } else {
+            logger.info("web album art is already part of the catalog, no need to download it again");
         }
 
-        return albumArtPath;
+        return albumArtPath != null ? albumArtPath.toString() : null;
     }
 
     private void writeTrackInfo() {
@@ -155,9 +169,9 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
         writeFile("genre", genre);
 
         if (coverArtPath != null) {
-            writeFile("albumArtPath", coverArtPath);
+            writeFile(ALBUM_ART_PATH, coverArtPath);
         } else {
-            Path coverArt = Paths.get("/tmp", "mediaplayer.albumArtPath");
+            Path coverArt = Paths.get(outputDirectory, FILE_PREFIX + "." + ALBUM_ART_PATH);
             try {
                 Files.deleteIfExists(coverArt);
             } catch (IOException e) {
@@ -168,7 +182,7 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
 
     private void writeFile(String filename, String data) {
         try {
-            Path artistPath = Paths.get("/tmp", "mediaplayer." + filename);
+            Path artistPath = Paths.get(outputDirectory, FILE_PREFIX + "." + filename);
             BufferedWriter writer = Files.newBufferedWriter(artistPath,
                                                             StandardOpenOption.CREATE,
                                                             StandardOpenOption.WRITE,

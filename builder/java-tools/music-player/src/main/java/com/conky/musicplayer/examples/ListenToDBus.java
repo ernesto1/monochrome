@@ -21,17 +21,7 @@ public class ListenToDBus {
 
     public static void main(String[] args) {
         try (DBusConnection dbus = DBusConnectionBuilder.forSessionBus().build()) {
-            // create a shutdown hook for closing the dbus connection
-            Thread closeDbusConnectionHook = new Thread(() -> {
-                try {
-                    logger.info("closing dbus connection");
-                    dbus.close();
-                } catch (IOException e) {
-                    logger.error("unable to close the dbus connection", e);
-                }
-            });
-
-            Runtime.getRuntime().addShutdownHook(closeDbusConnectionHook);
+            registerShutdownHooks(dbus);
             dbus.addSigHandler(Properties.PropertiesChanged.class, new PropertiesChangedHandler());
 
             while(true) {
@@ -42,13 +32,30 @@ public class ListenToDBus {
         }
     }
 
+    private static void registerShutdownHooks(DBusConnection dbus) {
+        // create a shutdown hook for closing the dbus connection
+        Thread closeDbusConnectionHook = new Thread(() -> {
+            try {
+                logger.info("closing dbus connection");
+                dbus.close();
+            } catch (IOException e) {
+                logger.error("unable to close the dbus connection", e);
+            }
+        });
+
+        Runtime.getRuntime().addShutdownHook(closeDbusConnectionHook);
+    }
+
     private static class PropertiesChangedHandler extends AbstractPropertiesChangedHandler {
         @Override
         public void handle(Properties.PropertiesChanged signal) {
             String dbusObject = signal.getPath();
 
             if (dbusObject.equals("/org/mpris/MediaPlayer2")) {
-                logger.info("signal: {} | {} | {}", signal.getSource(), signal.getPropertiesChanged());
+                logger.info("signal: {} | {} | {}",
+                            signal.getSource(),
+                            signal.getPropertiesChanged(),
+                            signal.getPropertiesRemoved());
             }
         }
     }
