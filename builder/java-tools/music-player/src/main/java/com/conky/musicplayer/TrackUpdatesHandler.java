@@ -8,7 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
+import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -32,6 +37,10 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
      * File path of the cover art image
      */
     private String coverArtPath;
+    /**
+     * Integer to keep track of the 
+     */
+    private int albumArtCount;
 
     public TrackUpdatesHandler() {
         resetState();
@@ -66,7 +75,8 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
                 writeFile("playbackStatus", playbackStatus);
             }
 
-            // TODO if a different player is introduced, it will not send a "current state" track message, you need to pull this yourself
+            // TODO if a different player sends a 'playing' msg, it will not send a "current state" track message, you need to pull this yourself
+            // TODO if the player closes the track info should be deleted, otherwise the track info may remain in a playing state
         }
     }
 
@@ -107,15 +117,35 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
             genre = entries.get(0);
         }
 
-        // TODO add support for images on the web (spotify)
         value = (Variant<String>) metadata.get("mpris:artUrl");
         if (value != null) {
             coverArtPath = value.getValue();
-            coverArtPath = coverArtPath.replaceFirst("file://", "");   // remove file uri notation
+
+            // is the album art on the web or in the local file system?
+            if (coverArtPath.startsWith("http")) {
+                coverArtPath = downloadAlbumArt(coverArtPath);
+            } else {
+                coverArtPath = coverArtPath.replaceFirst("file://", "");   // remove file uri notation
+            }
         }
 
         logger.info("track change: {} | {} | {} | {} | {}", artist, title, album, genre, coverArtPath);
         writeTrackInfo();
+    }
+
+    private String downloadAlbumArt(String url) {
+        String albumArtPath = "/tmp/mediaplayer.albumArt";
+
+        try {
+            ReadableByteChannel readableByteChannel = Channels.newChannel(new URL(url).openStream());
+            FileOutputStream fileOutputStream = new FileOutputStream(albumArtPath);
+            fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
+        } catch (IOException e) {
+            logger.error("unable to download the album art from the web");
+            albumArtPath = null;
+        }
+
+        return albumArtPath;
     }
 
     private void writeTrackInfo() {
