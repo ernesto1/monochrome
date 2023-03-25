@@ -59,7 +59,7 @@ ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-top.png -p
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu.png -p 0,[=y?c]}\
 <#assign y += body>
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-bottom.png -p 0,[=y?c]}\
-${voffset 2}${alignc}${color1}${lua_parse read_file ${cat /tmp/musicplayer.playbackStatus}}
+${voffset 2}${alignc}${color1}${lua_parse read_file ${cat /tmp/musicplayer.name}} : ${lua_parse read_file ${cat /tmp/musicplayer.playbackStatus}}
 ${if_existing /tmp/musicplayer.albumArtPath}\
 ${lua_parse album_art_image ${cat /tmp/musicplayer.albumArtPath} 181x181 4,[=(top+4)?c]}\
 ${else}\

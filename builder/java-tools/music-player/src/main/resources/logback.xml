@@ -6,6 +6,10 @@
         </encoder>
     </appender>
 
+    <Logger name="com.conky.musicplayer" level="debug" additivity="false">
+        <appender-ref ref="console" />
+    </Logger>
+
     <root level="info">
         <appender-ref ref="console" />
     </root>

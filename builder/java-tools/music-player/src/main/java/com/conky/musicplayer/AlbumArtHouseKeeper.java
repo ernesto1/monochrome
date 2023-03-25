@@ -38,25 +38,25 @@ public class AlbumArtHouseKeeper implements Runnable {
         Instant now = Instant.now();
 
         try {
-            List<Path> files = Files.list(Paths.get(directory))
-                                    .filter(p -> p.getFileName().toString().startsWith(TrackUpdatesHandler.FILE_PREFIX + "."))
-                                    .collect(Collectors.toList());
-            files.stream()
-                    .forEach(f -> {
-                        try {
-                            BasicFileAttributes attributes = Files.readAttributes(f, BasicFileAttributes.class);
-                            Instant lastAccessTime = attributes.lastAccessTime().toInstant();
-                            long minutes = Duration.between(lastAccessTime, now).toMinutes();
+            Files.list(Paths.get(directory))
+                 .filter(p -> p.getFileName().toString().startsWith(TrackUpdatesHandler.FILE_PREFIX + "."))
+                 .collect(Collectors.toList())
+                 .stream()
+                 .forEach(image -> {
+                    try {
+                        BasicFileAttributes attributes = Files.readAttributes(image, BasicFileAttributes.class);
+                        Instant lastAccessTime = attributes.lastAccessTime().toInstant();
+                        long minutes = Duration.between(lastAccessTime, now).toMinutes();
 
-                            if (minutes > threshold) {
-                                logger.info("deleting file: {}", f.getFileName());
-                                logger.debug("last access time was: {}", lastAccessTime);
-                                Files.deleteIfExists(f);
-                            }
-                        } catch (IOException e) {
-                            logger.error("unable to delete image file", e);
+                        if (minutes > threshold) {
+                            logger.debug("deleting file: {}", image.getFileName());
+                            logger.debug("last access time was: {}, ie. {} minutes ago", lastAccessTime, minutes);
+                            Files.deleteIfExists(image);
                         }
-                    });
+                    } catch (IOException e) {
+                        logger.error("unable to delete image file", e);
+                    }
+                 });
         } catch (IOException e) {
             logger.error("unable to iterate through the output folder for old image files", e);
         }

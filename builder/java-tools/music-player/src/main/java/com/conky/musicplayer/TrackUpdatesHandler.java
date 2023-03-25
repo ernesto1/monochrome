@@ -1,6 +1,8 @@
 package com.conky.musicplayer;
 
 import org.freedesktop.dbus.DBusMap;
+import org.freedesktop.dbus.connections.impl.DBusConnection;
+import org.freedesktop.dbus.exceptions.DBusException;
 import org.freedesktop.dbus.handlers.AbstractPropertiesChangedHandler;
 import org.freedesktop.dbus.interfaces.Properties;
 import org.freedesktop.dbus.types.Variant;
@@ -15,6 +17,7 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.file.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,7 +31,13 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
     private static final String ALBUM_ART_PATH = "albumArtPath";
 
     private final String outputDirectory;
-
+    private DBusConnection dbus;
+    /**
+     * List of recognized music players.  Only signals from these players will be processed
+     */
+    private List<String> allowedPlayers;
+    // TODO player list should be coming from a config file
+    private String playerName;
     private String title;
     private String artist;
     private String album;
@@ -41,14 +50,24 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
 
     /**
      * Creates a new instance of this property change handler
+     *
+     * @param dbus  DBus connection
      * @param directory directory to write output files to
      */
-    public TrackUpdatesHandler(String directory) {
+    public TrackUpdatesHandler(DBusConnection dbus, String directory) {
+        this.dbus = dbus;
         outputDirectory = directory;
+        allowedPlayers = new ArrayList<>();
+        allowedPlayers.add("rhythmbox");
+        allowedPlayers.add("spotify");
+        init();
+    }
+
+    private void init() {
+        playerName = "nameless player";
+        playbackStatus = "chilling";
         resetState();
         writeTrackInfo();
-        playbackStatus = "Stopped";
-        writeFile("playbackStatus", playbackStatus);
     }
 
     private void resetState() {
@@ -63,23 +82,44 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
     public void handle(Properties.PropertiesChanged signal) {
         String dbusObject = signal.getPath();
 
+        // is this signal from a music player?
         if (dbusObject.equals("/org/mpris/MediaPlayer2")) {
             logger.debug("signal: {} {}", signal.getSource(), signal.getPropertiesChanged());
-            Map<String, Variant<?>> properties = signal.getPropertiesChanged();
-            Variant<DBusMap> metadataProperty = (Variant<DBusMap>) properties.get("Metadata");
-            updateTrackInfo(metadataProperty);
+            playerName = getPlayerName(signal.getSource());
 
-            // playback status may arrive on its own if the player was paused/stopped
-            Variant<String> value = (Variant<String>) properties.get("PlaybackStatus");
-            if (value != null) {
-                playbackStatus = value.getValue();
-                logger.info("playback status: {}", playbackStatus);
-                writeFile("playbackStatus", playbackStatus);
+            if (!allowedPlayers.contains(playerName.toLowerCase())) {
+                logger.debug("media player '{}' is not supported, ignoring signal", playerName);
+                return;
             }
-
-            // TODO if a different player sends a 'playing' msg, it will not send a "current state" track message, you need to pull this yourself
-            // TODO if the player closes the track info should be deleted, otherwise the track info may remain in a playing state
         }
+
+        // TODO if the player closes the track info should be deleted, otherwise the track info may remain in a playing state
+
+        Map<String, Variant<?>> properties = signal.getPropertiesChanged();
+        Variant<DBusMap> metadataProperty = (Variant<DBusMap>) properties.get("Metadata");
+        updateTrackInfo(metadataProperty);
+
+        // playback status may arrive on its own if the player was paused/stopped
+        Variant<String> value = (Variant<String>) properties.get("PlaybackStatus");
+        if (value != null) {
+            playbackStatus = value.getValue();
+            logger.info("playback status: {}", playbackStatus);
+        }
+
+        writeTrackInfo();
+    }
+
+    private String getPlayerName(String uniqueId) {
+        String identity = "unrecognized";
+
+        try {
+            Properties properties = dbus.getRemoteObject(uniqueId, "/org/mpris/MediaPlayer2", Properties.class);
+            identity = properties.Get("org.mpris.MediaPlayer2", "Identity");
+        } catch (DBusException e) {
+            logger.error("unable to determine the media player's name", e);
+        }
+
+        return identity;
     }
 
     /**
@@ -132,7 +172,6 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
         }
 
         logger.info("track change: {} | {} | {} | {} | {}", artist, title, album, genre, coverArtPath);
-        writeTrackInfo();
     }
 
     /**
@@ -163,6 +202,8 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
     }
 
     private void writeTrackInfo() {
+        writeFile("name", playerName);
+        writeFile("playbackStatus", playbackStatus);
         writeFile("artist", artist);
         writeFile("title", title);
         writeFile("album", album);

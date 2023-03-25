@@ -37,7 +37,7 @@ public class NowPlaying {
             ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
             executorService.scheduleAtFixedRate(new AlbumArtHouseKeeper(OUTPUT_DIR, 20), 10, 10, TimeUnit.MINUTES);
             registerShutdownHooks(dbus, executorService);
-            dbus.addSigHandler(Properties.PropertiesChanged.class, new TrackUpdatesHandler(OUTPUT_DIR));
+            dbus.addSigHandler(Properties.PropertiesChanged.class, new TrackUpdatesHandler(dbus, OUTPUT_DIR));
             logger.info("listening to the dbus for media player activity");
 
             while(true) {
@@ -83,17 +83,18 @@ public class NowPlaying {
 
         // shut down hook for deleting the conky media player output files
         Thread deleteOutputFiles = new Thread(() -> {
+            logger.info("deleting all output files");
             try {
-                Files.list(Paths.get("/tmp"))
-                        .filter(p -> p.getFileName().toString().startsWith("mediaplayer."))
-                        .forEach(file -> {
-                            try {
-                                logger.info("deleting the output file: {}", file);
-                                Files.deleteIfExists(file);
-                            } catch (IOException e) {
-                                logger.error("unable to delete file", e);
-                            }
-                        });
+                Files.list(Paths.get(OUTPUT_DIR))
+                     .filter(p -> p.getFileName().toString().startsWith(TrackUpdatesHandler.FILE_PREFIX + "."))
+                     .forEach(file -> {
+                        try {
+                            logger.debug("deleting the output file: {}", file);
+                            Files.deleteIfExists(file);
+                        } catch (IOException e) {
+                            logger.error("unable to delete file", e);
+                        }
+                     });
             } catch (IOException e) {
                 logger.error("unable to list the output directory contents", e);
             }
