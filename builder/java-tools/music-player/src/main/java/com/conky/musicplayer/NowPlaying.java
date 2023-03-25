@@ -34,10 +34,15 @@ public class NowPlaying {
 
     public static void main(String[] args) {
         try (DBusConnection dbus = DBusConnectionBuilder.forSessionBus().build()) {
+            // register shut down hooks
             ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
             executorService.scheduleAtFixedRate(new AlbumArtHouseKeeper(OUTPUT_DIR, 20), 10, 10, TimeUnit.MINUTES);
             registerShutdownHooks(dbus, executorService);
-            dbus.addSigHandler(Properties.PropertiesChanged.class, new TrackUpdatesHandler(dbus, OUTPUT_DIR));
+
+            // listen for signals
+            TrackUpdatesHandler trackUpdatesHandler = new TrackUpdatesHandler(dbus, OUTPUT_DIR);
+            trackUpdatesHandler.init();
+            dbus.addSigHandler(Properties.PropertiesChanged.class, trackUpdatesHandler);
             logger.info("listening to the dbus for media player activity");
 
             while(true) {

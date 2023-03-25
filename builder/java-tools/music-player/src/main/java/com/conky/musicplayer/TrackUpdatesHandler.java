@@ -31,22 +31,13 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
     private static final String ALBUM_ART_PATH = "albumArtPath";
 
     private final String outputDirectory;
-    private DBusConnection dbus;
+    private final DBusConnection dbus;
+    // TODO player list should be coming from a config file
     /**
      * List of recognized music players.  Only signals from these players will be processed
      */
     private List<String> allowedPlayers;
-    // TODO player list should be coming from a config file
-    private String playerName;
-    private String title;
-    private String artist;
-    private String album;
-    private String genre;
-    private String playbackStatus;
-    /**
-     * File path of the cover art image
-     */
-    private String coverArtPath;
+    private MusicPlayer activePlayer;
 
     /**
      * Creates a new instance of this property change handler
@@ -60,53 +51,50 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
         allowedPlayers = new ArrayList<>();
         allowedPlayers.add("rhythmbox");
         allowedPlayers.add("spotify");
-        init();
+        activePlayer = MusicPlayer.DUMMY_PLAYER;
     }
 
-    private void init() {
-        playerName = "nameless player";
-        playbackStatus = "chilling";
-        resetState();
-        writeTrackInfo();
+    public void init() {
+        writePlayerState(activePlayer);
     }
 
-    private void resetState() {
-        title = "unknown title";
-        artist = "unknown artist";
-        album = "unknown album";
-        genre = "unknown genre";
-        coverArtPath = null;
-    }
+    // TODO if the player closes the track info should be deleted, otherwise the track info may remain in a playing state
 
     @Override
     public void handle(Properties.PropertiesChanged signal) {
-        String dbusObject = signal.getPath();
-
-        // is this signal from a music player?
-        if (dbusObject.equals("/org/mpris/MediaPlayer2")) {
-            logger.debug("signal: {} {}", signal.getSource(), signal.getPropertiesChanged());
-            playerName = getPlayerName(signal.getSource());
-
-            if (!allowedPlayers.contains(playerName.toLowerCase())) {
-                logger.debug("media player '{}' is not supported, ignoring signal", playerName);
-                return;
-            }
+        // ignore signals for interfaces we are not interested in
+        if (!signal.getPath().equals("/org/mpris/MediaPlayer2")) {
+            return;
         }
 
-        // TODO if the player closes the track info should be deleted, otherwise the track info may remain in a playing state
+        // is this signal from a recognizer music player?
+        logger.debug("signal: {} {}", signal.getSource(), signal.getPropertiesChanged());
+        String playerName = getPlayerName(signal.getSource());
 
+        if (!allowedPlayers.contains(playerName.toLowerCase())) {
+            logger.debug("media player '{}' is not supported, ignoring signal", playerName);
+            return;
+        }
+
+        // process the signal and update the player state
+        MusicPlayer player = new MusicPlayer();
+        player.setPlayerName(playerName);
         Map<String, Variant<?>> properties = signal.getPropertiesChanged();
-        Variant<DBusMap> metadataProperty = (Variant<DBusMap>) properties.get("Metadata");
-        updateTrackInfo(metadataProperty);
 
-        // playback status may arrive on its own if the player was paused/stopped
         Variant<String> value = (Variant<String>) properties.get("PlaybackStatus");
         if (value != null) {
-            playbackStatus = value.getValue();
-            logger.info("playback status: {}", playbackStatus);
+            player.setPlaybackStatus(value.getValue());
         }
 
-        writeTrackInfo();
+        Variant<DBusMap> metadataProperty = (Variant<DBusMap>) properties.get("Metadata");
+        TrackInfo trackInfo = getTrackInfo(metadataProperty);
+        player.setTrackInfo(trackInfo);
+
+        // is this update for the current
+
+        logger.info("{}", player);
+        writePlayerState(player);
+        activePlayer = player;
     }
 
     private String getPlayerName(String uniqueId) {
@@ -123,55 +111,57 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
     }
 
     /**
-     * Extracts song track information from the metadata property of the <tt>MediaPlayer2.Player</tt> interface.<br>
+     * Extracts song track information <i>if it exists</i> from the metadata property of the <tt>MediaPlayer2.Player</tt> interface.<br>
      * Song details are defined using `xesam` ontology.
-     * @param metadataProperty metadata property as a map of key/value pairs
+     *
+     * @param metadataProperty the signal's metadata property as a map of key/value pairs
      * @see <a href="https://specifications.freedesktop.org/mpris-spec/latest/Track_List_Interface.html#Mapping:Metadata_Map">Metadata map documentation</a>
      * @see <a href="https://www.freedesktop.org/wiki/Specifications/mpris-spec/metadata/">MPRIS v2 metadata guidelines</a>
      */
-    private void updateTrackInfo(Variant<DBusMap> metadataProperty) {
+    private TrackInfo getTrackInfo(Variant<DBusMap> metadataProperty) {
         if (metadataProperty == null) {
-            return;
+            return null;
         }
 
-        // assumption: if the metadata property is populated, there is a song change
-        resetState();
+        TrackInfo trackInfo = new TrackInfo();
         DBusMap metadata = metadataProperty.getValue();
+
         Variant<String> value = (Variant<String>) metadata.get("xesam:title");
         if (value != null) {
-            title = value.getValue();
+            trackInfo.setTitle(value.getValue());
         }
 
         value = (Variant<String>) metadata.get("xesam:album");
         if (value != null) {
-            album = value.getValue();
+            trackInfo.setAlbum(value.getValue());
         }
 
         Variant<ArrayList<String>> values = (Variant<ArrayList<String>>) metadata.get("xesam:artist");
         if (values != null) {
             ArrayList<String> entries = values.getValue();
-            artist = entries.get(0);
+            trackInfo.setArtist(entries.get(0));
         }
 
         values = (Variant<ArrayList<String>>) metadata.get("xesam:genre");
         if (values != null) {
             ArrayList<String> entries = values.getValue();
-            genre = entries.get(0);
+            trackInfo.setGenre(entries.get(0));
         }
 
         value = (Variant<String>) metadata.get("mpris:artUrl");
         if (value != null) {
-            coverArtPath = value.getValue();
+            String coverArtPath = value.getValue();
 
             // is the album art on the web or in the local file system?
             if (coverArtPath.startsWith("http")) {
-                coverArtPath = downloadAlbumArt(coverArtPath);
+                trackInfo.setAlbumArtPath(downloadAlbumArt(coverArtPath));
             } else {
-                coverArtPath = coverArtPath.replaceFirst("file://", "");   // remove file uri notation
+                // imate is in the local file system (ex. file://folder/image.jpg), remove the uri notation
+                trackInfo.setAlbumArtPath(coverArtPath.replaceFirst("file://", ""));
             }
         }
 
-        logger.info("track change: {} | {} | {} | {} | {}", artist, title, album, genre, coverArtPath);
+        return trackInfo;
     }
 
     /**
@@ -201,16 +191,19 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
         return albumArtPath != null ? albumArtPath.toString() : null;
     }
 
-    private void writeTrackInfo() {
-        writeFile("name", playerName);
+    private void writePlayerState(MusicPlayer player) {
+        writeFile("name", player.getPlayerName());
+        // convert playback status enum to 'Title Case'
+        String playbackStatus = player.getPlaybackStatus().toString().toLowerCase();
+        playbackStatus = playbackStatus.substring(0,1).toUpperCase() + playbackStatus.substring(1);
         writeFile("playbackStatus", playbackStatus);
-        writeFile("artist", artist);
-        writeFile("title", title);
-        writeFile("album", album);
-        writeFile("genre", genre);
+        writeFile("artist", player.getArtist());
+        writeFile("title", player.getTitle());
+        writeFile("album", player.getAlbum());
+        writeFile("genre", player.getGenre());
 
-        if (coverArtPath != null) {
-            writeFile(ALBUM_ART_PATH, coverArtPath);
+        if (player.getAlbumArtPath() != null) {
+            writeFile(ALBUM_ART_PATH, player.getAlbumArtPath());
         } else {
             Path coverArt = Paths.get(outputDirectory, FILE_PREFIX + "." + ALBUM_ART_PATH);
             try {
