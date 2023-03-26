@@ -54,7 +54,7 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
         allowedPlayers.add("rhythmbox");
         allowedPlayers.add("spotify");
         availablePlayers = new HashMap<>();
-        writePlayerState(new MusicPlayer("nameless player", ":123"));
+        writePlayerState(new MusicPlayer("Nameless Player", ":123"));
     }
 
     // TODO if the player closes the track info should be deleted, otherwise the track info may remain in a playing state
