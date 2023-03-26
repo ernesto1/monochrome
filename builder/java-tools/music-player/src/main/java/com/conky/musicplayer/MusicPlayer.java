@@ -1,16 +1,19 @@
 package com.conky.musicplayer;
 
-import java.util.Enumeration;
 import java.util.Objects;
 
 public class MusicPlayer {
-    public static MusicPlayer DUMMY_PLAYER = new MusicPlayer();
+    /**
+     * DBus unique name for this music player
+     */
+    private String uniqueName;
     private String playerName;
     private PlaybackStatus playbackStatus;
     private TrackInfo trackInfo;
 
-    public MusicPlayer() {
-        playerName = "nameless player";
+    public MusicPlayer(String name, String uniqueName) {
+        playerName = name;
+        this.uniqueName = uniqueName;
         playbackStatus = PlaybackStatus.STOPPED;
         trackInfo = new TrackInfo();
     }
@@ -20,10 +23,12 @@ public class MusicPlayer {
     }
 
     public void setPlaybackStatus(String playbackStatus) {
-        try {
-            this.playbackStatus = PlaybackStatus.valueOf(playbackStatus.toUpperCase());
-        } catch(IllegalArgumentException e) {
-            this.playbackStatus = PlaybackStatus.UNKNOWN;
+        if (playbackStatus != null) {
+            try {
+                this.playbackStatus = PlaybackStatus.valueOf(playbackStatus.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                this.playbackStatus = PlaybackStatus.UNKNOWN;
+            }
         }
     }
 

@@ -75,9 +75,7 @@ public class NowPlaying {
 
             try {
                 boolean isThreadShutdown = executorService.awaitTermination(600, TimeUnit.MILLISECONDS);
-                if (isThreadShutdown) {
-                    logger.debug("thread shut down");
-                } else {
+                if (!isThreadShutdown) {
                     logger.warn("welp! the threads are still not done!");
                 }
             } catch (InterruptedException e) {

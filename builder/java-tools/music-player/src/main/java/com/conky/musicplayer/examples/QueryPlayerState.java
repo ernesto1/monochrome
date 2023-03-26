@@ -1,5 +1,6 @@
 package com.conky.musicplayer.examples;
 
+import com.conky.musicplayer.MPRIS;
 import org.freedesktop.dbus.connections.impl.DBusConnection;
 import org.freedesktop.dbus.connections.impl.DBusConnectionBuilder;
 import org.freedesktop.dbus.interfaces.Properties;
@@ -23,13 +24,16 @@ public class QueryPlayerState {
     public static void main(String[] args) {
         try (DBusConnection dbus = DBusConnectionBuilder.forSessionBus().build()) {
             // get current player state, you could use the unique bus name as well (ex. 1.1468)
-            Properties properties = dbus.getRemoteObject("org.mpris.MediaPlayer2.rhythmbox", "/org/mpris/MediaPlayer2", Properties.class);
-            String identity = properties.Get("org.mpris.MediaPlayer2", "Identity");
+            Properties object = dbus.getRemoteObject("org.mpris.MediaPlayer2.rhythmbox",
+                                                         MPRIS.Objects.MEDIAPLAYER2,
+                                                         Properties.class);
+            String identity = object.Get(MPRIS.Interfaces.MEDIAPLAYER2, MPRIS.Properties.IDENTITY);
             logger.info("identity: {}", identity);
-            String playbackStatus = properties.Get("org.mpris.MediaPlayer2.Player", "PlaybackStatus");
+            String playbackStatus = object.Get(MPRIS.Interfaces.MEDIAPLAYER2_PLAYER, MPRIS.Properties.PLAYBACK_STATUS);
             logger.info("playback status: {}", playbackStatus);
-            Map<String, Variant> metadata = properties.Get("org.mpris.MediaPlayer2.Player", "Metadata");
+            Map<String, Variant> metadata = object.Get(MPRIS.Interfaces.MEDIAPLAYER2_PLAYER, MPRIS.Properties.METADATA);
             logger.info("metadata: {}", metadata);
+            logger.info("{}", metadata.get("xesam:artist"));
         } catch (Exception e) {
             logger.error("unable to interact with the dbus", e);
         }
