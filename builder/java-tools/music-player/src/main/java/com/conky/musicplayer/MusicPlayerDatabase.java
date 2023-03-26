@@ -5,37 +5,52 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
+/**
+ * Catalog of running music players in the system.  As new music players are "detected" through the dbus,
+ * they will be added here.<br>
+ * <br>
+ * The database is responsible for determining at any point in time <i>what music player should be
+ * considered {@link #activePlayer in focus}</i>, ie. what music player details should conky be displaying.<br>
+ * <br>
+ * Music players don't follow a standard when it comes to dbus integration.  Therefore, those that have been tested
+ * for and supported by this app are registered here as {@link #supportedPlayers supported players}.
+ */
 public class MusicPlayerDatabase {
     private static Logger logger = LoggerFactory.getLogger(MusicPlayerDatabase.class);
     /**
      * List of recognized music players.  Only signals from these players will be processed.<br>
-     * These are music players that comply with the "protocol" expected from this app, ex.
+     * These are music players that comply with the "protocol" expected from this app, ie.
      * <ul>
      *     <li>Provides proper song metadata</li>
      *     <li>Provides album art</li>
      *     <li>The way it sends status update messages is supported by this app</li>
      * </ul>
      */
-    private List<String> recognizedPlayers;
+    private List<String> supportedPlayers;
     /**
      * The player that is currently in focus, ie. being displayed by conky
      */
     private MusicPlayer activePlayer;
     /**
-     * Map of available music players
+     * Map of available music players: <tt>player name -> music player</tt>
      */
     private Map<String, MusicPlayer> musicPlayers;
 
     public MusicPlayerDatabase() {
         // TODO player list should be coming from a config file
-        recognizedPlayers = new ArrayList<>();
-        recognizedPlayers.add("rhythmbox");
-        recognizedPlayers.add("spotify");
+        supportedPlayers = new ArrayList<>();
+        supportedPlayers.add("rhythmbox");
+        supportedPlayers.add("spotify");
         musicPlayers = new HashMap<>();
     }
 
+    /**
+     * Determine if the given player is a "supported" music player
+     * @param playerName the player's name
+     * @return <tt>true</tt> if the player is supported
+     */
     public boolean isMusicPlayer(String playerName) {
-        return recognizedPlayers.contains(playerName.toLowerCase());
+        return supportedPlayers.contains(playerName.toLowerCase());
     }
 
     public boolean contains(String playerName) {
@@ -76,14 +91,17 @@ public class MusicPlayerDatabase {
         }
     }
 
-    private void removePlayer(String dBusUniqueName) {
+    public void removePlayer(String dBusUniqueName) {
         Optional<MusicPlayer> player = musicPlayers.values()
                                                    .stream()
                                                    .filter(p -> p.getDBusUniqueName().equals(dBusUniqueName))
                                                    .findFirst();
-        player.ifPresent(p -> musicPlayers.remove(p));
+        player.ifPresent(p -> {
+            MusicPlayer mp = musicPlayers.remove(p.getPlayerName());
+            logger.debug("removing player '{}' from the database", mp.getPlayerName());
+        });
 
-        if (activePlayer.getDBusUniqueName().equals(dBusUniqueName)) {
+        if (activePlayer.getDBusUniqueName().compareTo(dBusUniqueName) == 0) {
             activePlayer = null;
         }
 

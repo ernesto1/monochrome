@@ -25,7 +25,7 @@ import static com.conky.musicplayer.MusicPlayerWriter.FILE_PREFIX;
 
 /**
  * Handler for analyzing media player property change signals.<br>
- * Updates related to the currently playing track will be reflected in the conky media player files.
+ * Updates related to the currently playing track will be reflected in the conky music player files.
  * @see <a href="https://specifications.freedesktop.org/mpris-spec/latest/Player_Interface.html">MPRIS Player Inteface</a>
  */
 public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
@@ -73,7 +73,7 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
             return;
         }
 
-        // retrieve details from the signal
+        // retrieve available details from the signal
         Map<String, Variant<?>> properties = signal.getPropertiesChanged();
 
         String playbackStatus = null;
@@ -90,30 +90,30 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
 
         MusicPlayer player;
 
-        // is this a brand new music player? if so, get any missing details
-        if (!playerDatabase.contains(playerName)) {
-            // some signals may not contain the full player state metadata (ex. playback status may come on its own)
+        // is this known player or a new one?
+        if (playerDatabase.contains(playerName)) {
+            player = playerDatabase.getPlayer(playerName);
+        } else {
+            // brand new player
+            // some signals may not contain the complete player state metadata (ex. playback status may come on its own)
             // so we have to individually query the missing bits
             logger.debug("registering new player: {}", playerName);
 
             if (playbackStatus == null) {
                 playbackStatus = getApplicationProperty(signal.getSource(),
-                                                        MPRIS.Objects.MEDIAPLAYER2,
-                                                        MPRIS.Interfaces.MEDIAPLAYER2_PLAYER,
-                                                        MPRIS.Properties.PLAYBACK_STATUS);
+                        MPRIS.Objects.MEDIAPLAYER2,
+                        MPRIS.Interfaces.MEDIAPLAYER2_PLAYER,
+                        MPRIS.Properties.PLAYBACK_STATUS);
             }
 
             if (trackInfo == null) {
                 trackInfo = getTrackInfo(getApplicationMetadata(signal.getSource(),
-                                                                MPRIS.Objects.MEDIAPLAYER2,
-                                                                MPRIS.Interfaces.MEDIAPLAYER2_PLAYER,
-                                                                MPRIS.Properties.METADATA));
+                        MPRIS.Objects.MEDIAPLAYER2,
+                        MPRIS.Interfaces.MEDIAPLAYER2_PLAYER,
+                        MPRIS.Properties.METADATA));
             }
 
             player = new MusicPlayer(playerName, signal.getSource());
-
-        } else {
-            player = playerDatabase.getPlayer(playerName);
         }
 
         player.setPlaybackStatus(playbackStatus);

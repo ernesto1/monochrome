@@ -38,7 +38,7 @@ public class MusicPlayerWriter {
             try {
                 Files.deleteIfExists(coverArt);
             } catch (IOException e) {
-                logger.error("unable to delete cover art file", e);
+                logger.error("unable to delete the cover art file", e);
             }
         }
     }

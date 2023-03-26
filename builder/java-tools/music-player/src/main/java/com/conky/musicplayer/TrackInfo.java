@@ -1,5 +1,8 @@
 package com.conky.musicplayer;
 
+/**
+ * Data object representing a song on an album
+ */
 public class TrackInfo {
     private String title;
     private String artist;

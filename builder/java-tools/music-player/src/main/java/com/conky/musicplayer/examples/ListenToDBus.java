@@ -1,6 +1,5 @@
 package com.conky.musicplayer.examples;
 
-import com.conky.musicplayer.TrackUpdatesHandler;
 import org.freedesktop.dbus.connections.impl.DBusConnection;
 import org.freedesktop.dbus.connections.impl.DBusConnectionBuilder;
 import org.freedesktop.dbus.handlers.AbstractPropertiesChangedHandler;
@@ -24,7 +23,7 @@ public class ListenToDBus {
     public static void main(String[] args) {
         try (DBusConnection dbus = DBusConnectionBuilder.forSessionBus().build()) {
             registerShutdownHooks(dbus);
-            //dbus.addSigHandler(Properties.PropertiesChanged.class, new PropertiesChangedHandler());
+            dbus.addSigHandler(Properties.PropertiesChanged.class, new PropertiesChangedHandler());
             dbus.addSigHandler(DBus.NameOwnerChanged.class, new NameOnwerChangedHandler());
 
             while(true) {
@@ -72,6 +71,11 @@ public class ListenToDBus {
 
         @Override
         public void handle(DBus.NameOwnerChanged signal) {
+            // weed out signals for bus names we are not interested in
+            if (!signal.name.startsWith("org.mpris.MediaPlayer2")) {
+                return;
+            }
+
             logger.info("signal: {} | {} | {} | {} | {}",
                     signal.getSource(),
                     signal.getPath(),
