@@ -5,12 +5,10 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -39,7 +37,7 @@ public class AlbumArtHouseKeeper implements Runnable {
 
         try {
             Files.list(Paths.get(directory))
-                 .filter(p -> p.getFileName().toString().startsWith(TrackUpdatesHandler.FILE_PREFIX + "."))
+                 .filter(p -> p.getFileName().toString().startsWith(MusicPlayerWriter.FILE_PREFIX + "."))
                  .collect(Collectors.toList())
                  .stream()
                  .forEach(image -> {

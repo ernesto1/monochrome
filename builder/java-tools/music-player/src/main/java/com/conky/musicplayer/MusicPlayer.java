@@ -3,31 +3,28 @@ package com.conky.musicplayer;
 import java.util.Objects;
 
 public class MusicPlayer {
+    public static final MusicPlayer DUMMY_PLAYER = new MusicPlayer("Nameless Player", ":1.23");
     /**
      * DBus unique name for this music player
      */
-    private String uniqueName;
+    private String dBusUniqueName;
     private String playerName;
     private PlaybackStatus playbackStatus;
     private TrackInfo trackInfo;
 
-    public MusicPlayer(String name, String uniqueName) {
+    public MusicPlayer(String name, String dDusUniqueName) {
         playerName = name;
-        this.uniqueName = uniqueName;
+        this.dBusUniqueName = dDusUniqueName;
         playbackStatus = PlaybackStatus.STOPPED;
         trackInfo = new TrackInfo();
     }
 
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
-
-    public void setPlaybackStatus(String playbackStatus) {
-        if (playbackStatus != null) {
+    public void setPlaybackStatus(String status) {
+        if (status != null) {
             try {
-                this.playbackStatus = PlaybackStatus.valueOf(playbackStatus.toUpperCase());
+                playbackStatus = PlaybackStatus.valueOf(status.toUpperCase());
             } catch (IllegalArgumentException e) {
-                this.playbackStatus = PlaybackStatus.UNKNOWN;
+                playbackStatus = PlaybackStatus.UNKNOWN;
             }
         }
     }
@@ -64,6 +61,10 @@ public class MusicPlayer {
 
     public String getAlbumArtPath() {
         return trackInfo.getAlbumArtPath();
+    }
+
+    public String getDBusUniqueName() {
+        return dBusUniqueName;
     }
 
     @Override

@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
  * by the user and retrieve said song metadata for conky to display.<br>
  * <br>
  * Song information is stored in separate files in the {@link #OUTPUT_DIR output directory}.  Output files are
- * {@link TrackUpdatesHandler#FILE_PREFIX prefixed}.
+ * {@link MusicPlayerWriter#FILE_PREFIX prefixed}.
  * @see <a href="https://github.com/hypfvieh/dbus-java">Java DBus library</a>
  * @see <a href="https://specifications.freedesktop.org/mpris-spec/latest/">Media Player Remote Interfacing Specification</a>
  */
@@ -39,9 +39,13 @@ public class NowPlaying {
             executorService.scheduleAtFixedRate(new AlbumArtHouseKeeper(OUTPUT_DIR, 20), 10, 10, TimeUnit.MINUTES);
             registerShutdownHooks(dbus, executorService);
 
+            // initialize helper classes
+            MusicPlayerDatabase playerDatabase = new MusicPlayerDatabase();
+            MusicPlayerWriter writer = new MusicPlayerWriter(OUTPUT_DIR);
+            writer.writePlayerState(MusicPlayer.DUMMY_PLAYER);    // starting player state for conky to display
+
             // listen for signals
-            TrackUpdatesHandler trackUpdatesHandler = new TrackUpdatesHandler(dbus, OUTPUT_DIR);
-            trackUpdatesHandler.init();
+            TrackUpdatesHandler trackUpdatesHandler = new TrackUpdatesHandler(OUTPUT_DIR, dbus, playerDatabase, writer);
             dbus.addSigHandler(Properties.PropertiesChanged.class, trackUpdatesHandler);
             logger.info("listening to the dbus for media player activity");
 
@@ -89,7 +93,7 @@ public class NowPlaying {
             logger.info("deleting all output files");
             try {
                 Files.list(Paths.get(OUTPUT_DIR))
-                     .filter(p -> p.getFileName().toString().startsWith(TrackUpdatesHandler.FILE_PREFIX + "."))
+                     .filter(p -> p.getFileName().toString().startsWith(MusicPlayerWriter.FILE_PREFIX + "."))
                      .forEach(file -> {
                         try {
                             logger.debug("deleting the output file: {}", file);

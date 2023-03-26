@@ -9,14 +9,19 @@ import org.freedesktop.dbus.types.Variant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
-import java.nio.file.*;
-import java.util.*;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Map;
+
+import static com.conky.musicplayer.MusicPlayerWriter.FILE_PREFIX;
 
 /**
  * Handler for analyzing media player property change signals.<br>
@@ -25,39 +30,29 @@ import java.util.*;
  */
 public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
     private static Logger logger = LoggerFactory.getLogger(TrackUpdatesHandler.class);
-    public static final String FILE_PREFIX = "musicplayer";
-    private static final String ALBUM_ART_PATH = "albumArtPath";
 
     private final String outputDirectory;
     private final DBusConnection dbus;
-    // TODO player list should be coming from a config file
-    /**
-     * List of recognized music players.  Only signals from these players will be processed
-     */
-    private List<String> allowedPlayers;
-    private MusicPlayer activePlayer;
-    private Map<String, MusicPlayer> availablePlayers;
+    private MusicPlayerDatabase playerDatabase;
+    private MusicPlayerWriter writer;
+
 
     /**
      * Creates a new instance of this property change handler
      *
-     * @param dbus  DBus connection
      * @param directory directory to write output files to
+     * @param dBusConnection DBus connection
+     * @param database  music player database to store running player details
      */
-    public TrackUpdatesHandler(DBusConnection dbus, String directory) {
-        this.dbus = dbus;
+    public TrackUpdatesHandler(String directory,
+                               DBusConnection dBusConnection,
+                               MusicPlayerDatabase database,
+                               MusicPlayerWriter writer) {
         outputDirectory = directory;
+        dbus = dBusConnection;
+        playerDatabase = database;
+        this.writer = writer;
     }
-
-    public void init() {
-        allowedPlayers = new ArrayList<>();
-        allowedPlayers.add("rhythmbox");
-        allowedPlayers.add("spotify");
-        availablePlayers = new HashMap<>();
-        writePlayerState(new MusicPlayer("Nameless Player", ":123"));
-    }
-
-    // TODO if the player closes the track info should be deleted, otherwise the track info may remain in a playing state
 
     @Override
     public void handle(Properties.PropertiesChanged signal) {
@@ -73,7 +68,7 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
                                                    MPRIS.Interfaces.MEDIAPLAYER2,
                                                    MPRIS.Properties.IDENTITY);
 
-        if (!allowedPlayers.contains(playerName.toLowerCase())) {
+        if (!playerDatabase.isMusicPlayer(playerName)) {
             logger.debug("media player '{}' is not supported, ignoring signal", playerName);
             return;
         }
@@ -95,14 +90,12 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
 
         MusicPlayer player;
 
-        // do we know about this player already?
-        if (availablePlayers.containsKey(playerName)) {
-            player = availablePlayers.get(playerName);
-            player.setPlaybackStatus(playbackStatus);
-            player.setTrackInfo(trackInfo);
-        } else {
-            // this is a brand new player
-            // get missing details (if any)
+        // is this a brand new music player? if so, get any missing details
+        if (!playerDatabase.contains(playerName)) {
+            // some signals may not contain the full player state metadata (ex. playback status may come on its own)
+            // so we have to individually query the missing bits
+            logger.debug("registering new player: {}", playerName);
+
             if (playbackStatus == null) {
                 playbackStatus = getApplicationProperty(signal.getSource(),
                                                         MPRIS.Objects.MEDIAPLAYER2,
@@ -118,34 +111,17 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
             }
 
             player = new MusicPlayer(playerName, signal.getSource());
-            player.setPlaybackStatus(playbackStatus);
-            player.setTrackInfo(trackInfo);
-            availablePlayers.put(playerName, player);
+
+        } else {
+            player = playerDatabase.getPlayer(playerName);
         }
 
-        determineActivePlayer(player);
-        logger.info("{}", player);
-        writePlayerState(activePlayer);
+        player.setPlaybackStatus(playbackStatus);
+        player.setTrackInfo(trackInfo);
+        playerDatabase.save(player);
+        writer.writePlayerState(playerDatabase.getActivePlayer());
     }
 
-    private void determineActivePlayer(MusicPlayer newPlayer) {
-        // if there is no currently active player, make this the active player
-        if (activePlayer == null) {
-            activePlayer = newPlayer;
-            return;
-        }
-
-        // if the active player is not playing any music, replace it with one that is
-        if (activePlayer.getPlaybackStatus() != MusicPlayer.PlaybackStatus.PLAYING) {
-            Optional<MusicPlayer> player = availablePlayers.values()
-                                                           .stream()
-                                                           .filter(p -> p.getPlaybackStatus() == MusicPlayer.PlaybackStatus.PLAYING)
-                                                           .findFirst();
-            if (player.isPresent()) {
-                activePlayer = player.get();
-            }
-        }
-    }
 
     /**
      * Queries an application through the dbus for a specific property
@@ -154,7 +130,7 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
      * @param object dbus object path
      * @param dbusInterface interface within the dbus object
      * @param property name of the property to query
-     * @return
+     * @return the property as a <tt>String</tt>
      */
     private String getApplicationProperty(String uniqueName, String object, String dbusInterface, String property) {
         String value = "unknown";
@@ -291,42 +267,5 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
         }
 
         return albumArtPath != null ? albumArtPath.toString() : null;
-    }
-
-    private void writePlayerState(MusicPlayer player) {
-        writeFile("name", player.getPlayerName());
-        // convert playback status enum to 'Title Case'
-        String playbackStatus = player.getPlaybackStatus().toString().toLowerCase();
-        playbackStatus = playbackStatus.substring(0,1).toUpperCase() + playbackStatus.substring(1);
-        writeFile("playbackStatus", playbackStatus);
-        writeFile("artist", player.getArtist());
-        writeFile("title", player.getTitle());
-        writeFile("album", player.getAlbum());
-        writeFile("genre", player.getGenre());
-
-        if (player.getAlbumArtPath() != null) {
-            writeFile(ALBUM_ART_PATH, player.getAlbumArtPath());
-        } else {
-            Path coverArt = Paths.get(outputDirectory, FILE_PREFIX + "." + ALBUM_ART_PATH);
-            try {
-                Files.deleteIfExists(coverArt);
-            } catch (IOException e) {
-                logger.error("unable to delete cover art file", e);
-            }
-        }
-    }
-
-    private void writeFile(String filename, String data) {
-        try {
-            Path artistPath = Paths.get(outputDirectory, FILE_PREFIX + "." + filename);
-            BufferedWriter writer = Files.newBufferedWriter(artistPath,
-                                                            StandardOpenOption.CREATE,
-                                                            StandardOpenOption.WRITE,
-                                                            StandardOpenOption.TRUNCATE_EXISTING);
-            writer.write(data);
-            writer.close();
-        } catch (IOException e) {
-            logger.error("unable to write '{}' file", filename, e);
-        }
     }
 }

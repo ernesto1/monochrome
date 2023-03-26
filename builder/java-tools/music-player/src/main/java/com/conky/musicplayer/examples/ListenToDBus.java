@@ -4,6 +4,8 @@ import com.conky.musicplayer.TrackUpdatesHandler;
 import org.freedesktop.dbus.connections.impl.DBusConnection;
 import org.freedesktop.dbus.connections.impl.DBusConnectionBuilder;
 import org.freedesktop.dbus.handlers.AbstractPropertiesChangedHandler;
+import org.freedesktop.dbus.handlers.AbstractSignalHandlerBase;
+import org.freedesktop.dbus.interfaces.DBus;
 import org.freedesktop.dbus.interfaces.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +24,8 @@ public class ListenToDBus {
     public static void main(String[] args) {
         try (DBusConnection dbus = DBusConnectionBuilder.forSessionBus().build()) {
             registerShutdownHooks(dbus);
-            dbus.addSigHandler(Properties.PropertiesChanged.class, new PropertiesChangedHandler());
+            //dbus.addSigHandler(Properties.PropertiesChanged.class, new PropertiesChangedHandler());
+            dbus.addSigHandler(DBus.NameOwnerChanged.class, new NameOnwerChangedHandler());
 
             while(true) {
                 TimeUnit.MINUTES.sleep(10);
@@ -49,14 +52,32 @@ public class ListenToDBus {
     private static class PropertiesChangedHandler extends AbstractPropertiesChangedHandler {
         @Override
         public void handle(Properties.PropertiesChanged signal) {
-            String dbusObject = signal.getPath();
-
-            if (dbusObject.equals("/org/mpris/MediaPlayer2")) {
-                logger.info("signal: {} | {} | {}",
-                            signal.getSource(),
-                            signal.getPropertiesChanged(),
-                            signal.getPropertiesRemoved());
+            // ignore signals from objects we don't care about
+            if (!signal.getPath().equals("/org/mpris/MediaPlayer2")) {
+                return;
             }
+
+            logger.info("signal: {} | {} | {}",
+                    signal.getSource(),
+                    signal.getPropertiesChanged(),
+                    signal.getPropertiesRemoved());
+        }
+    }
+
+    private static class NameOnwerChangedHandler extends AbstractSignalHandlerBase<DBus.NameOwnerChanged> {
+        @Override
+        public Class<DBus.NameOwnerChanged> getImplementationClass() {
+            return DBus.NameOwnerChanged.class;
+        }
+
+        @Override
+        public void handle(DBus.NameOwnerChanged signal) {
+            logger.info("signal: {} | {} | {} | {} | {}",
+                    signal.getSource(),
+                    signal.getPath(),
+                    signal.name,
+                    signal.oldOwner,
+                    signal.newOwner);
         }
     }
 }
