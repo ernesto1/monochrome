@@ -23,23 +23,42 @@ public class TrackInfo {
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        if (isNotEmpty(title)) {
+            this.title = title;
+        }
     }
 
     public void setArtist(String artist) {
-        this.artist = artist;
+        if (isNotEmpty(artist)) {
+            this.artist = artist;
+        }
     }
 
     public void setAlbum(String album) {
-        this.album = album;
+        if (isNotEmpty(album)) {
+            this.album = album;
+        }
     }
 
     public void setGenre(String genre) {
-        this.genre = genre;
+        if (isNotEmpty(genre)) {
+            this.genre = genre;
+        }
     }
 
     public void setAlbumArtPath(String albumArtPath) {
-        this.albumArtPath = albumArtPath;
+        if (isNotEmpty(albumArtPath)) {
+            this.albumArtPath = albumArtPath;
+        }
+    }
+
+    /**
+     * Dertermines if the string actually has a value, ie. not empty or null
+     * @param s string to analyze
+     * @return <tt>true</tt> if the string has a value
+     */
+    private boolean isNotEmpty(String s) {
+        return s != null && !s.isEmpty();
     }
 
     public String getTitle() {

@@ -51,9 +51,12 @@ public class AvailabilityHandler extends AbstractSignalHandlerBase<DBus.NameOwne
 
         if (!signal.oldOwner.isEmpty() && signal.newOwner.isEmpty()) {
             String playerName = signal.name.substring(signal.name.lastIndexOf('.') + 1);
-            logger.debug("'{}' music player has shutdown", playerName);
-            playerDatabase.removePlayer(signal.oldOwner);
-            writer.writePlayerState(playerDatabase.getActivePlayer());
+
+            if (playerDatabase.isMusicPlayer(playerName)) {
+                logger.info("the '{}' music player is no longer running", playerName);
+                playerDatabase.removePlayer(signal.oldOwner);
+                writer.writePlayerState(playerDatabase.getActivePlayer());
+            }
         }
     }
 }

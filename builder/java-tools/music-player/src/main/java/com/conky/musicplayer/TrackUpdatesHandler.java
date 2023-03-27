@@ -25,7 +25,7 @@ import static com.conky.musicplayer.MusicPlayerWriter.FILE_PREFIX;
 
 /**
  * Handler for analyzing media player property change signals.<br>
- * Updates related to the currently playing track will be reflected in the conky music player files.
+ * Updates related to the currently playing track will be reflected in the conky music5 player files.
  * @see <a href="https://specifications.freedesktop.org/mpris-spec/latest/Player_Interface.html">MPRIS Player Inteface</a>
  */
 public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
@@ -90,7 +90,7 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
 
         MusicPlayer player;
 
-        // is this known player or a new one?
+        // is this a known player or a new one?
         if (playerDatabase.contains(playerName)) {
             player = playerDatabase.getPlayer(playerName);
         } else {
@@ -101,16 +101,16 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
 
             if (playbackStatus == null) {
                 playbackStatus = getApplicationProperty(signal.getSource(),
-                        MPRIS.Objects.MEDIAPLAYER2,
-                        MPRIS.Interfaces.MEDIAPLAYER2_PLAYER,
-                        MPRIS.Properties.PLAYBACK_STATUS);
+                                                        MPRIS.Objects.MEDIAPLAYER2,
+                                                        MPRIS.Interfaces.MEDIAPLAYER2_PLAYER,
+                                                        MPRIS.Properties.PLAYBACK_STATUS);
             }
 
             if (trackInfo == null) {
                 trackInfo = getTrackInfo(getApplicationMetadata(signal.getSource(),
-                        MPRIS.Objects.MEDIAPLAYER2,
-                        MPRIS.Interfaces.MEDIAPLAYER2_PLAYER,
-                        MPRIS.Properties.METADATA));
+                                                                MPRIS.Objects.MEDIAPLAYER2,
+                                                                MPRIS.Interfaces.MEDIAPLAYER2_PLAYER,
+                                                                MPRIS.Properties.METADATA));
             }
 
             player = new MusicPlayer(playerName, signal.getSource());
@@ -119,6 +119,7 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
         player.setPlaybackStatus(playbackStatus);
         player.setTrackInfo(trackInfo);
         playerDatabase.save(player);
+        // TODO keep copy of latest written state, check if state has changed prior to the write
         writer.writePlayerState(playerDatabase.getActivePlayer());
     }
 
@@ -139,8 +140,9 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
             Properties properties = dbus.getRemoteObject(uniqueName, object, Properties.class);
             value = properties.Get(dbusInterface, property);
         } catch (Exception e) {
-            // when closing a youtube firefox tab, for some signals the dbus object won't exist anymore
-            logger.warn("unable to determine the media player's name, will be ignored");
+            // for some signals, the owning dbus object won't exist any more by the time we try to get its name
+            // ex. closing a youtube tab, firefox send a final signal prior to unregistering the corresponding dbus name
+            logger.warn("unable to determine the media player's name, the signal will be ignored");
         }
 
         return value;
@@ -162,21 +164,18 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
 
     /**
      * Extracts song track information <i>if it exists</i> from the metadata property of the <tt>MediaPlayer2.Player</tt> interface.<br>
-     * Song details are defined using `xesam` ontology.
+     * Song details are defined using <tt>xesam</tt> ontology.
      *
      * @param metadata the signal's metadata property as a map of key/value pairs
      * @see <a href="https://specifications.freedesktop.org/mpris-spec/latest/Track_List_Interface.html#Mapping:Metadata_Map">Metadata map documentation</a>
      * @see <a href="https://www.freedesktop.org/wiki/Specifications/mpris-spec/metadata/">MPRIS v2 metadata guidelines</a>
      */
     private TrackInfo getTrackInfo(DBusMap metadata) {
-//        if (metadataProperty == null) {
-//            return null;
-//        }
-
         /*
-         n.b. the type of the values in the metadata map will differ based on how the metadata was extracted :(
-         - metadata from the properties changes signal will wrap all values under the Variant<?> type
-         - metadata from the 'org.mpris.MediaPlayer2.Player' interface will use the regular java types
+         n.b. the type of the values in the metadata map will differ based on what dbus interface was queried
+              for the metadata property
+                 - metadata from the properties changed signal will wrap all values under the Variant<?> type
+                 - metadata from the 'org.mpris.MediaPlayer2.Player' interface will use the regular java types
          */
         TrackInfo trackInfo = new TrackInfo();
 
@@ -234,7 +233,7 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
             if (coverArtPath.startsWith("http")) {
                 trackInfo.setAlbumArtPath(downloadAlbumArt(coverArtPath));
             } else {
-                // imate is in the local file system (ex. file://folder/image.jpg), remove the uri notation
+                // image is in the local file system (ex. file://folder/image.jpg), remove the uri notation
                 trackInfo.setAlbumArtPath(coverArtPath.replaceFirst("file://", ""));
             }
         }
@@ -246,7 +245,7 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
      * Attempts to download the album art from the web.  If an error occurs, no album art will be displayed
      * for this song.
      * @param url URL of the image to download
-     * @return the location on disk of the downlaoded image
+     * @return the location/path on disk of the downloaded image
      */
     private String downloadAlbumArt(String url) {
         String id = url.substring(url.lastIndexOf('/') + 1);    // get the resource name
@@ -259,11 +258,11 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
                 fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
                 fileOutputStream.close();
             } catch (IOException e) {
-                logger.error("unable to download the album art from the web");
+                logger.error("unable to download the album art from the web, using default image");
                 albumArtPath = null;
             }
         } else {
-            logger.info("web album art is already part of the catalog, no need to download it again");
+            logger.info("album art already available on disk, no need to download it from the web again");
         }
 
         return albumArtPath != null ? albumArtPath.toString() : null;

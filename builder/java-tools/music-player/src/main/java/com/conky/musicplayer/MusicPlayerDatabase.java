@@ -98,10 +98,11 @@ public class MusicPlayerDatabase {
                                                    .findFirst();
         player.ifPresent(p -> {
             MusicPlayer mp = musicPlayers.remove(p.getPlayerName());
-            logger.debug("removing player '{}' from the database", mp.getPlayerName());
+            logger.debug("removed the '{}' music player from the database", mp.getPlayerName());
         });
 
-        if (activePlayer.getDBusUniqueName().compareTo(dBusUniqueName) == 0) {
+        // check if the active player (if available) is the player being removed
+        if (activePlayer != null && activePlayer.getDBusUniqueName().compareTo(dBusUniqueName) == 0) {
             activePlayer = null;
         }
 
