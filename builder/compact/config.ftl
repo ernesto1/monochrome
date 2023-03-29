@@ -1,4 +1,6 @@
 conky.config = {
+  lua_load = '~/conky/monochrome/common.lua',
+
   update_interval = 2,  -- update interval in seconds
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
   xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
@@ -78,10 +80,7 @@ ${voffset 2}${alignr 59}${color}${fs_used \2} / ${fs_size \2}]],
   template7 = [[${voffset 3}${color}${offset 5}${top name \1}${alignr 59}${top cpu \1}% ${top pid \1}]],
   
   -- top mem process: ${template8 processNumber}
-  template8 = [[${voffset 3}${color}${offset 5}${top_mem name \1}${alignr 59}${top_mem mem_res \1} ${top_mem pid \1}]],
-
-  -- hwmon entry: ${template9 index/device type index threshold}
-  template9 = [[${if_match ${hwmon \1 \2 \3} > \4}${color3}${else}${color}${endif}${hwmon \1 \2 \3}]]
+  template8 = [[${voffset 3}${color}${offset 5}${top_mem name \1}${alignr 59}${top_mem mem_res \1} ${top_mem pid \1}]]
 };
 
 conky.text = [[

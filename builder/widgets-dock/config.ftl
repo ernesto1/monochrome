@@ -1,4 +1,6 @@
 conky.config = {
+  lua_load = '~/conky/monochrome/common.lua',
+
   update_interval = 2,  -- update interval in seconds
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
   xinerama_head = 1,    -- for multi monitor setups, select monitor to run on: 0,1,2
@@ -82,12 +84,9 @@ ${voffset 13}${goto 67}${color}${font}${diskio_write /dev/\1}${voffset 2}]],
 ${voffset 52}${offset 6}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3, 45 \2}
 ${voffset -46}${goto 67}${color}${font}\1
 ${voffset 4}${goto 67}${color}${font1}${fs_used_perc \2}${font0}%${font}${voffset 1}]],
-
-  -- color coded hwmon entry: index/device type index threshold
-  template7 = [[${if_match ${hwmon \1 \2 \3} > \4}${color3}${else}${color4}${endif}${hwmon \1 \2 \3}]], 
     
-  -- temperature: ${template8 index/device type index threshold}
-  template8 = [[${voffset 7}${offset 12}${font2}${template7 \1 \2 \3 \4}${voffset -28}${font0}°${offset 4}${voffset -4}${font2}C${font}${color}${voffset 9}]]
+  -- device temperature: ${template8 (value|conky expression}}
+  template7 = [[${voffset 7}${offset 12}${font2}${color4}\1${voffset -28}${font0}°${offset 4}${voffset -4}${font2}C${font}${color}${voffset 9}]]
 };
 
 conky.text = [[
