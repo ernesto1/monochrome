@@ -84,9 +84,7 @@ ${voffset 13}${goto 67}${color}${font}${diskio_write /dev/\1}${voffset 2}]],
 ${voffset 52}${offset 6}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3, 45 \2}
 ${voffset -46}${goto 67}${color}${font}\1
 ${voffset 4}${goto 67}${color}${font1}${fs_used_perc \2}${font0}%${font}${voffset 1}]],
-    
-  -- device temperature: ${template8 (value|conky expression}}
-  template7 = [[${voffset 7}${offset 12}${font2}${color4}\1${voffset -28}${font0}°${offset 4}${voffset -4}${font2}C${font}${color}${voffset 9}]]
+
 };
 
 conky.text = [[
@@ -181,25 +179,22 @@ ${endif}\
 # :::::::::::::::::::: temperatures
 # :::::::: cpu
 ${image ~/conky/monochrome/images/widgets-dock/orange-temp-cpu-desktop.png -p 0,903}\
-# cpu temp on sidebar while cpu core temperatures are printed on the side
-${voffset 8}${template7 ${lua_parse\ print_resource_usage\ ${hwmon\ atk0110\ temp\ 1}\ 78\ ${color3}}}${voffset -35}${goto 67}${hwmon coretemp temp 2}°C${offset 9}${hwmon coretemp temp 3}°C
-${voffset 8}${goto 67}${hwmon coretemp temp 4}°C${offset 9}${hwmon coretemp temp 5}°C${color4}${voffset 14}
+# due to a conky/lua bug the temperature items had to be moved to the sidebarPanel conky :(
+# the complementary temperature/fan speeds displayed to the right of the sidebar will remain on this conky 
+${voffset 24}${goto 67}${font}${color}${hwmon coretemp temp 2}°C${offset 9}${hwmon coretemp temp 3}°C
+${voffset 8}${goto 67}${color}${hwmon coretemp temp 4}°C${offset 9}${hwmon coretemp temp 5}°C
 # :::::::: ati video card
 ${image ~/conky/monochrome/images/widgets-dock/orange-temp-videocard.png -p 0,967}\
-${template7 ${lua_parse\ print_resource_usage\ ${hwmon\ radeon\ temp\ 1}\ 75\ ${color3}}}
 # :::::::: hard disks
 ${image ~/conky/monochrome/images/widgets-dock/orange-temp-disk.png -p 0,1031}\
-${template7 ${lua_parse\ print_resource_usage\ ${hwmon\ 0\ temp\ 1}\ 42\ ${color3}}}
 ${image ~/conky/monochrome/images/widgets-dock/orange-temp-disk.png -p 0,1095}\
-${template7 ${lua_parse\ print_resource_usage\ ${hwmon\ 1\ temp\ 1}\ 42\ ${color3}}}
 ${image ~/conky/monochrome/images/widgets-dock/orange-temp-disk.png -p 0,1159}\
-${template7 ${lua_parse\ print_resource_usage\ ${hwmon\ 2\ temp\ 1}\ 42\ ${color3}}}
 # :::::::: fans
 ${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/orange-fan-1.png -p 0,1223}${endif}\
 ${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/orange-fan-2.png -p 0,1223}${endif}\
-${voffset 7}${offset 7}${font2}${color4}${lua_parse print_resource_usage ${hwmon atk0110 fan 1} 2300 ${color3}}${font}${color}${voffset -38}${goto 67}${hwmon atk0110 fan 3} rpm
-${voffset 9}${goto 67}${hwmon atk0110 fan 2} rpm
-${voffset 9}${goto 67}${hwmon atk0110 fan 4} rpm
+${voffset 274}${goto 67}${color}${hwmon atk0110 fan 3} rpm
+${voffset 9}${goto 67}${color}${hwmon atk0110 fan 2} rpm
+${voffset 9}${goto 67}${color}${hwmon atk0110 fan 4} rpm
 # :::::::::::::::::::: package updates 
 # placeholder, the logic is in the sidebar-time conky
 ${image ~/conky/monochrome/images/widgets-dock/orange-packages.png -p 0,1287}\

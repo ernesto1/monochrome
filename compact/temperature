@@ -1,0 +1,71 @@
+conky.config = {
+  lua_load = '~/conky/monochrome/common.lua',
+
+  update_interval = 2,  -- update interval in seconds
+  total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
+  xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
+  double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
+
+  -- window alignment
+  alignment = 'middle_left',       -- top|middle|bottom_left|middle|right
+  gap_x = 0,                    -- same as passing -x at command line
+  gap_y = -528,
+
+  -- window settings
+  minimum_width = 241,
+  minimum_height = 200,
+  own_window = true,
+  own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
+  own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+
+  -- transparency configuration
+  draw_blended = false,
+  own_window_transparent = true,
+  own_window_argb_visual = true,  -- turn on transparency
+  own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
+
+  -- window borders
+  draw_borders = false,     -- draw borders around the conky window
+  border_width = 0,         -- width of border window in pixels
+  border_inner_margin = 0,  -- margin between the border and text in pixels
+  border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
+
+  -- graph settings
+  draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
+                              -- does not include bars, ie. wifi strength bar, cpu bar
+
+  imlib_cache_flush_interval = 300,
+  -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
+  
+  if_up_strictness = 'address', -- network device must be up, having link and an assigned IP address
+                                -- to be considered "up" by ${if_up}
+                                -- values are: up, link or address
+
+  -- font settings
+  draw_shades = false,    -- black shadow on text (not good if text is black)
+  draw_outline = false,   -- black outline around text (not good if text is black)
+  
+  -- colors
+  default_color = 'a98162',  -- regular text
+  color1 = 'white',         -- text labels
+  color2 = '94131f',        -- bar
+  color3 = '800020'         -- bar critical
+};
+
+conky.text = [[
+${voffset 8}${offset 5}${color1}device${alignr 59}temperature
+${voffset 5}${offset 5}${color}cpu${alignr 53}${lua_parse print_resource_usage ${hwmon atk0110 temp 1} 78 ${color3}}°C
+${voffset 4}${offset 5}${color}cpu core 1${alignr 53}${lua_parse print_resource_usage ${hwmon coretemp temp 2} 85 ${color3}}°C
+${voffset 3}${offset 5}${color}cpu core 2${alignr 53}${lua_parse print_resource_usage ${hwmon coretemp temp 3} 85 ${color3}}°C
+${voffset 3}${offset 5}${color}cpu core 3${alignr 53}${lua_parse print_resource_usage ${hwmon coretemp temp 4} 85 ${color3}}°C
+${voffset 3}${offset 5}${color}cpu core 4${alignr 53}${lua_parse print_resource_usage ${hwmon coretemp temp 5} 85 ${color3}}°C
+${voffset 3}${offset 5}${color}AMD Radeon HD7570${alignr 53}${lua_parse print_resource_usage ${hwmon radeon temp 1} 75 ${color3}}°C
+${voffset 3}${offset 5}${color}samsung SSD HD${alignr 53}${lua_parse print_resource_usage ${hwmon 0 temp 1} 42 ${color3}}°C
+${voffset 3}${offset 5}${color}seagate HD${alignr 53}${lua_parse print_resource_usage ${hwmon 1 temp 1} 42 ${color3}}°C
+${voffset 3}${offset 5}${color}seagate HD${alignr 53}${lua_parse print_resource_usage ${hwmon 2 temp 1} 42 ${color3}}°C
+${voffset 8}${offset 5}${color1}fan${alignr 59}revolutions
+${voffset 5}${offset 5}${color}chasis front intake${alignr 59}${lua_parse print_resource_usage ${hwmon atk0110 fan 3} 2300 ${color3}} rpm
+${voffset 3}${offset 5}${color}cpu fan${alignr 59}${lua_parse print_resource_usage ${hwmon atk0110 fan 1} 2300 ${color3}} rpm
+${voffset 3}${offset 5}${color}chasis top exhaust${alignr 59}${lua_parse print_resource_usage ${hwmon atk0110 fan 2} 2300 ${color3}} rpm
+${voffset 3}${offset 5}${color}chasis back exhaust${alignr 59}${lua_parse print_resource_usage ${hwmon atk0110 fan 4} 2300 ${color3}} rpm
+]]

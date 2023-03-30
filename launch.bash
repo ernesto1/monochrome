@@ -66,10 +66,9 @@ function detectDuplicateEntries() {
 # wrapper function to launch a conky config
 # it allows you to call the function with output redirection if required (see the --silent flag)
 function launchConky() {
-  # patch | due to a bug where conky memory variables display invalid data if the top mem
-  #         variables are also in use, we delay launching these 'segregated' memory conkys by a bit
-  #         in order for them to load on top of the background image provided by the main conky
-  if [[ -n $(echo $1 | grep -E 'memory.+') ]]; then
+  # patch | some conky's are overlayed on top of others, in order for this to render correctly
+  #         these conkys have to be executed last.  We launch these conkys with a delay.
+  if [[ -n $(echo $1 | grep -E 'memory.+|temperature') ]]; then
     echo '  delaying conky by 1 second'
     local delayCmd=('--pause' 1)
   fi
@@ -211,7 +210,7 @@ do
     echo "  applying the position override: ${layoutOverride[@]}"
   fi
 
-  # 3. monitor override
+  # 3. monitor/screen override
   if [[ $monitor ]]; then
     sed -i "s/xinerama_head *= *[[:digit:]]/xinerama_head = ${monitor}/" ${conkyConfigPath}
   fi
