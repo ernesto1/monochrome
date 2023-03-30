@@ -1,5 +1,6 @@
 conky.config = {
-  lua_load = '~/conky/monochrome/musicPlayer.lua',
+  lua_load = '~/conky/monochrome/musicPlayer.lua ~/conky/monochrome/menu.lua',
+  lua_draw_hook_pre = 'reset_state',
   
   update_interval = 2,    -- update interval in seconds
   <#if conky == "widgets-dock"><#assign monitor = 1><#else><#assign monitor = 0></#if>
@@ -14,7 +15,7 @@ conky.config = {
   -- window settings
   minimum_width = 189,      -- conky will add an extra pixel to this  
   maximum_width = 189,
-  minimum_height = 281,
+  minimum_height = 175,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -43,36 +44,39 @@ conky.config = {
   draw_outline = false,     -- black outline around text (not good if text is black)
   -- colors
   default_color = '[=colors.menuText]',  -- regular text
-  color1 = '[=colors.labels]',
-  color2 = '[=colors.highlight]'          -- highlight important packages  
+  color1 = '[=colors.labels]'
+  
+  -- n.b. this conky requires the music player java app to be running in the background
 };
 
 conky.text = [[
 # :::: cover art
 <#assign y = 0, 
          top = 19,    <#-- menu header -->
-         body = 182,  <#-- size of the current window without the top and bottom edges -->
+         body = 178,  <#-- size of the current window without the top and bottom edges -->
          bottom = 7,  <#-- window bottom edge -->
          space = 3>   <#-- empty space between windows -->
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-top.png -p 0,[=y?c]}\
 <#assign y += top>
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu.png -p 0,[=y?c]}\
-<#assign y += body>
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-bottom.png -p 0,[=y?c]}\
 ${voffset 2}${alignc}${color1}${lua_parse read_file ${cat /tmp/musicplayer.name}} : ${lua_parse read_file ${cat /tmp/musicplayer.playbackStatus}}
 ${if_existing /tmp/musicplayer.albumArtPath}\
-${lua_parse album_art_image ${cat /tmp/musicplayer.albumArtPath} 181x181 4,[=(top+4)?c]}\
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-bottom.png -p 0,[=(y+body)?c]}\
+${lua_parse album_art_image ${cat /tmp/musicplayer.albumArtPath} 181x181 4,[=(top)?c]}\
+${lua image_offset [=(y + body + bottom + space)?c]}${voffset 196}\
 ${else}\
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-rhythmbox.png -p 0,[=top?c]}\
+<#-- for the tightest fit, we are removing the top 2px of the bottom edge by overlaying the default image on top -->
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-bottom.png -p 0,[=(y+76)?c]}\
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-rhythmbox.png -p 0,[=(top+5)?c]}\
+${lua image_offset [=(y + 76 + bottom + space)?c]}${voffset 94}\
 ${endif}\
 # :::: track details
-<#assign y += bottom + space, body = 71>
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-horizontal.png -p 0,[=y?c]}\
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-horizontal-data.png -p 45,[=y?c]}\
-<#assign y += body>
-${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
-${voffset 200}${offset 5}${color1}title${goto 50}${color}${lua_parse read_file ${cat /tmp/musicplayer.title}}
+<#assign body = 71>
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-horizontal.png 0}\
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-horizontal-data.png 45}\
+${lua image_offset [=body]}${lua_parse draw_image ~/conky/monochrome/images/menu-blank.png 0}\
+${offset 5}${color1}title${goto 50}${color}${lua_parse read_file ${cat /tmp/musicplayer.title}}
 ${voffset 3}${offset 5}${color1}album${goto 50}${color}${lua_parse read_file ${cat /tmp/musicplayer.album}}
 ${voffset 3}${offset 5}${color1}artist${goto 50}${color}${lua_parse read_file ${cat /tmp/musicplayer.artist}}
-${voffset 3}${offset 5}${color1}genre${goto 50}${color}${lua_parse read_file ${cat /tmp/musicplayer.genre}}
+${voffset 3}${offset 5}${color1}genre${goto 50}${color}${lua_parse read_file ${cat /tmp/musicplayer.genre}}${voffset 5}
 ]];

@@ -12,6 +12,7 @@ returns:
 function conky_album_art_image(expression, dimensions, position)
   local path = conky_parse(expression)
   local s = "${image " .. path .. " -s " .. dimensions .. " -p " .. position .."}"
+  
   return s
 end
 

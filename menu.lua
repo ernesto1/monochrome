@@ -74,9 +74,49 @@ function conky_bottom_edge(theme, filename, x, y, voffset, lines)
   lines = (lines > 0) and (lines - 1) or 0
   y = tonumber(y) + 14 + (lines * lineMultiplier)
   local path = "~/conky/monochrome/images/" .. theme .. "/" .. filename
-  local s = "${image " .. path .. " -p " .. x .. "," .. y .. "}"
+  local s = build_image_variable(path, x, y)
   -- add a blank image right below the bottom edge image, assume bottom edges will never be greater than 15px
   s = s .. "${image ~/conky/monochrome/images/menu-blank.png -p " .. x .. "," .. y + 15 .. "}"
   
   return s
+end
+
+--[[ creates a conky image variable string, ex. ${image /directory/image.jpg -p 0,0}
+
+arguments:
+    path  path to image file
+    x     image x coordinate
+    y     image y coordinate
+]]
+function build_image_variable(path, x, y)
+  return "${image " .. path .. " -p " .. x .. "," .. y .. "}"
+end
+
+function conky_reset_state()
+  computations["yOffset"] = 0
+end
+
+--[[ adds an offset to the 'y' coordinate
+the client can then call the 'conky_draw_image()' method in order to draw an image at the current y coordinate
+
+on each conky session the y offset starts at 0, this number is increased depending on the number of times
+this method is called
+]]
+function conky_image_offset(offset)
+  local yOffset = computations["yOffset"]
+  yOffset = yOffset + tonumber(offset)
+  computations["yOffset"] = yOffset
+  return ''
+end
+
+--[[ creates a conky image variable string at the current y coordinate position, ex. ${image /directory/image.jpg -p 0,55}
+see the 'conky_image_offset()' method
+
+arguments:
+    path  path to image file
+    x     image x coordinate
+]]
+function conky_draw_image(path, x)
+  local y = computations["yOffset"]  
+  return build_image_variable(path, x, y)
 end
