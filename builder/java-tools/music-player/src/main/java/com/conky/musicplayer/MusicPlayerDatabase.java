@@ -12,17 +12,16 @@ import java.util.*;
  * The database is responsible for determining at any point in time <i>what music player should be
  * considered {@link #activePlayer in focus}</i>, ie. what music player details should conky be displaying.<br>
  * <br>
- * Music players don't follow a standard when it comes to dbus integration.  Therefore, those that have been tested
- * for and supported by this app are registered here as {@link #supportedPlayers supported players}.
+ * Music players don't follow a standard when it comes to dbus integration.  Therefore, those players that
+ * are supported by this app are registered here as {@link #supportedPlayers supported players}.
  */
 public class MusicPlayerDatabase {
     private static Logger logger = LoggerFactory.getLogger(MusicPlayerDatabase.class);
     /**
-     * List of recognized music players.  Only signals from these players will be processed.<br>
+     * List of compatible music players.  Only signals from these players will be processed.<br>
      * These are music players that comply with the "protocol" expected from this app, ie.
      * <ul>
-     *     <li>Provides proper song metadata</li>
-     *     <li>Provides album art</li>
+     *     <li>Player provides complete song metadata</li>
      *     <li>The way it sends status update messages is supported by this app</li>
      * </ul>
      */
@@ -71,7 +70,14 @@ public class MusicPlayerDatabase {
         determineActivePlayer();
     }
 
-    private void determineActivePlayer() {
+    /**
+     * Assesses what is the current music player that should be "in focus" by conky.<br>
+     * Priority is given to a player that is playing music at the moment.
+     * @return <tt>true</tt> if the active player's state has changed, <tt>false</tt> otherwise
+     */
+    private boolean determineActivePlayer() {
+        boolean hasStateChanged = false;
+
         // if there is no currently active player, pick any player available
         if (activePlayer == null) {
             Optional<MusicPlayer> player = musicPlayers.values()
@@ -79,6 +85,7 @@ public class MusicPlayerDatabase {
                                                        .findFirst();
             // if there are no players available, fall back to the 'initial' dummy state
             player.ifPresentOrElse(p -> activePlayer = p, () -> activePlayer = MusicPlayer.DUMMY_PLAYER);
+            hasStateChanged = true;
         }
 
         // if the currently selected player is not actually playing music, try to find one that is
@@ -89,6 +96,8 @@ public class MusicPlayerDatabase {
                                                        .findFirst();
             player.ifPresent(p -> activePlayer = p);
         }
+
+        return hasStateChanged;
     }
 
     public void removePlayer(String dBusUniqueName) {

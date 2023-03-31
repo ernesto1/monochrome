@@ -92,7 +92,7 @@ public class NowPlaying {
             }
         });
         Runtime.getRuntime().addShutdownHook(closeDbusConnectionHook);
-
+        // TODO do not delete album art of players in the database
         // shut down hook for deleting the conky music player output files
         Thread deleteOutputFiles = new Thread(() -> {
             logger.info("deleting all output files");

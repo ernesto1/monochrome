@@ -25,7 +25,7 @@ public class MusicPlayer {
         playerName = name;
         this.dBusUniqueName = dDusUniqueName;
         playbackStatus = PlaybackStatus.STOPPED;
-        trackInfo = new TrackInfo();
+        trackInfo = new TrackInfo("000");
     }
 
     public void setPlaybackStatus(String status) {

@@ -119,7 +119,6 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
         player.setPlaybackStatus(playbackStatus);
         player.setTrackInfo(trackInfo);
         playerDatabase.save(player);
-        // TODO keep copy of latest written state, check if state has changed prior to the write
         writer.writePlayerState(playerDatabase.getActivePlayer());
     }
 
@@ -177,9 +176,19 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
                  - metadata from the properties changed signal will wrap all values under the Variant<?> type
                  - metadata from the 'org.mpris.MediaPlayer2.Player' interface will use the regular java types
          */
-        TrackInfo trackInfo = new TrackInfo();
 
-        Object value = metadata.get("xesam:title");
+        TrackInfo trackInfo = null;
+
+        Object value = metadata.get("mpris:trackid");
+        if (value != null) {
+            if (value instanceof Variant) {
+                trackInfo = new TrackInfo(((Variant<String>) value).getValue());
+            } else {
+                trackInfo = new TrackInfo((String) value);
+            }
+        }
+
+        value = metadata.get("xesam:title");
         if (value != null) {
             if (value instanceof Variant) {
                 trackInfo.setTitle(((Variant<String>) value).getValue());
@@ -242,8 +251,8 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
     }
 
     /**
-     * Attempts to download the album art from the web.  If an error occurs, no album art will be displayed
-     * for this song.
+     * Attempts to download the album art from the web.  If an error occurs, no album art will be associated
+     * with this song.
      * @param url URL of the image to download
      * @return the location/path on disk of the downloaded image
      */
@@ -258,11 +267,11 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
                 fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
                 fileOutputStream.close();
             } catch (IOException e) {
-                logger.error("unable to download the album art from the web, using default image");
+                logger.error("unable to download album art from the web");
                 albumArtPath = null;
             }
         } else {
-            logger.info("album art already available on disk, no need to download it from the web again");
+            logger.info("album art already available on disk, no need to download it again from the web");
         }
 
         return albumArtPath != null ? albumArtPath.toString() : null;

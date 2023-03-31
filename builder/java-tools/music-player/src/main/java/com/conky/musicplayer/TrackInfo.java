@@ -4,6 +4,10 @@ package com.conky.musicplayer;
  * Data object representing a song on an album
  */
 public class TrackInfo {
+    /**
+     * Unique id for this track as specified by the MPRIS specification
+     */
+    private String id;
     private String title;
     private String artist;
     private String album;
@@ -14,7 +18,12 @@ public class TrackInfo {
      */
     private String albumArtPath;
 
-    public TrackInfo() {
+    public TrackInfo(String id) {
+        if (id == null) {
+            throw new IllegalArgumentException("track id cannot be null");
+        }
+
+        this.id = id;
         title = "unknown title";
         artist = "unknown artist";
         album = "unknown album";
@@ -79,6 +88,10 @@ public class TrackInfo {
 
     public String getAlbumArtPath() {
         return albumArtPath;
+    }
+
+    public String getId() {
+        return id;
     }
 
     @Override

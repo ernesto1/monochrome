@@ -24,7 +24,7 @@ public class ListenToDBus {
         try (DBusConnection dbus = DBusConnectionBuilder.forSessionBus().build()) {
             registerShutdownHooks(dbus);
             dbus.addSigHandler(Properties.PropertiesChanged.class, new PropertiesChangedHandler());
-            dbus.addSigHandler(DBus.NameOwnerChanged.class, new NameOnwerChangedHandler());
+            dbus.addSigHandler(DBus.NameOwnerChanged.class, new NameOwnerChangedHandler());
 
             while(true) {
                 TimeUnit.MINUTES.sleep(10);
@@ -63,7 +63,7 @@ public class ListenToDBus {
         }
     }
 
-    private static class NameOnwerChangedHandler extends AbstractSignalHandlerBase<DBus.NameOwnerChanged> {
+    private static class NameOwnerChangedHandler extends AbstractSignalHandlerBase<DBus.NameOwnerChanged> {
         @Override
         public Class<DBus.NameOwnerChanged> getImplementationClass() {
             return DBus.NameOwnerChanged.class;
