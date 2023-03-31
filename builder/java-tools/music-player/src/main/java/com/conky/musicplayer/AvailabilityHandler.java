@@ -23,11 +23,9 @@ import org.slf4j.LoggerFactory;
 public class AvailabilityHandler extends AbstractSignalHandlerBase<DBus.NameOwnerChanged> {
     private static Logger logger  = LoggerFactory.getLogger(AvailabilityHandler.class);
     private MusicPlayerDatabase playerDatabase;
-    private MusicPlayerWriter writer;
 
-    public AvailabilityHandler(MusicPlayerDatabase playerDatabase, MusicPlayerWriter writer) {
+    public AvailabilityHandler(MusicPlayerDatabase playerDatabase) {
         this.playerDatabase = playerDatabase;
-        this.writer = writer;
     }
 
     @Override
@@ -55,7 +53,6 @@ public class AvailabilityHandler extends AbstractSignalHandlerBase<DBus.NameOwne
             if (playerDatabase.isMusicPlayer(playerName)) {
                 logger.info("the '{}' music player is no longer running", playerName);
                 playerDatabase.removePlayer(signal.oldOwner);
-                writer.writePlayerState(playerDatabase.getActivePlayer());
             }
         }
     }

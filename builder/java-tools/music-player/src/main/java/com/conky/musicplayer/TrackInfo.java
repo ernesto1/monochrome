@@ -90,7 +90,7 @@ public class TrackInfo {
         return albumArtPath;
     }
 
-    public String getId() {
+    public String getTrackId() {
         return id;
     }
 

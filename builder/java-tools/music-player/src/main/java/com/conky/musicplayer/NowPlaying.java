@@ -42,15 +42,15 @@ public class NowPlaying {
             registerShutdownHooks(dbus, executorService);
 
             // initialize utility classes
-            MusicPlayerDatabase playerDatabase = new MusicPlayerDatabase();
             MusicPlayerWriter writer = new MusicPlayerWriter(OUTPUT_DIR);
-            writer.writePlayerState(MusicPlayer.DUMMY_PLAYER);    // starting player state for conky to display
+            MusicPlayerDatabase playerDatabase = new MusicPlayerDatabase(writer);
+            playerDatabase.init();
 
             // listen for dbus signals of interest
             // signal handlers run under a single thread, ie. signals are processed in the order they are received
-            AvailabilityHandler availabilityHandler = new AvailabilityHandler(playerDatabase, writer);
+            AvailabilityHandler availabilityHandler = new AvailabilityHandler(playerDatabase);
             dbus.addSigHandler(DBus.NameOwnerChanged.class, availabilityHandler);
-            TrackUpdatesHandler trackUpdatesHandler = new TrackUpdatesHandler(OUTPUT_DIR, dbus, playerDatabase, writer);
+            TrackUpdatesHandler trackUpdatesHandler = new TrackUpdatesHandler(OUTPUT_DIR, dbus, playerDatabase);
             dbus.addSigHandler(Properties.PropertiesChanged.class, trackUpdatesHandler);
             logger.info("listening to the dbus for media player activity");
 

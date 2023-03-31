@@ -34,8 +34,6 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
     private final String outputDirectory;
     private final DBusConnection dbus;
     private MusicPlayerDatabase playerDatabase;
-    private MusicPlayerWriter writer;
-
 
     /**
      * Creates a new instance of this property change handler
@@ -46,12 +44,10 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
      */
     public TrackUpdatesHandler(String directory,
                                DBusConnection dBusConnection,
-                               MusicPlayerDatabase database,
-                               MusicPlayerWriter writer) {
+                               MusicPlayerDatabase database) {
         outputDirectory = directory;
         dbus = dBusConnection;
         playerDatabase = database;
-        this.writer = writer;
     }
 
     @Override
@@ -119,7 +115,6 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
         player.setPlaybackStatus(playbackStatus);
         player.setTrackInfo(trackInfo);
         playerDatabase.save(player);
-        writer.writePlayerState(playerDatabase.getActivePlayer());
     }
 
 

@@ -3,6 +3,7 @@ package com.conky.musicplayer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.text.html.Option;
 import java.util.*;
 
 /**
@@ -27,20 +28,29 @@ public class MusicPlayerDatabase {
      */
     private List<String> supportedPlayers;
     /**
-     * The player that is currently in focus, ie. being displayed by conky
+     * The player that is currently in focus, ie. being displayed by conky.<br>
+     * <br>
+     * This object is snapshot of the state of the underlying player when it became "active".  This will allow us
+     * to detect changes in the player's state as interactions with this database take place.
      */
     private MusicPlayer activePlayer;
     /**
      * Map of available music players: <tt>player name -> music player</tt>
      */
     private Map<String, MusicPlayer> musicPlayers;
+    private MusicPlayerWriter writer;
 
-    public MusicPlayerDatabase() {
+    public MusicPlayerDatabase(MusicPlayerWriter writer) {
         // TODO player list should be coming from a config file
+        this.writer = writer;
         supportedPlayers = new ArrayList<>();
         supportedPlayers.add("rhythmbox");
         supportedPlayers.add("spotify");
         musicPlayers = new HashMap<>();
+    }
+
+    public void init() {
+        determineActivePlayer();
     }
 
     /**
@@ -56,10 +66,6 @@ public class MusicPlayerDatabase {
         return musicPlayers.containsKey(playerName);
     }
 
-    public MusicPlayer getActivePlayer() {
-        return activePlayer;
-    }
-
     public MusicPlayer getPlayer(String playerName) {
         return musicPlayers.get(playerName);
     }
@@ -73,31 +79,58 @@ public class MusicPlayerDatabase {
     /**
      * Assesses what is the current music player that should be "in focus" by conky.<br>
      * Priority is given to a player that is playing music at the moment.
-     * @return <tt>true</tt> if the active player's state has changed, <tt>false</tt> otherwise
      */
-    private boolean determineActivePlayer() {
-        boolean hasStateChanged = false;
-
-        // if there is no currently active player, pick any player available
-        if (activePlayer == null) {
-            Optional<MusicPlayer> player = musicPlayers.values()
-                                                       .stream()
-                                                       .findFirst();
-            // if there are no players available, fall back to the 'initial' dummy state
-            player.ifPresentOrElse(p -> activePlayer = p, () -> activePlayer = MusicPlayer.DUMMY_PLAYER);
-            hasStateChanged = true;
+    private void determineActivePlayer() {
+        // if there is no real player selected as active, pick any player available
+        if (activePlayer == null || activePlayer.equals(MusicPlayer.DUMMY_PLAYER)) {
+            Optional<MusicPlayer> mp = getBestAvailablePlayer();
+            activePlayer = mp.isPresent() ? new MusicPlayer(mp.get()) : MusicPlayer.DUMMY_PLAYER;
+            logger.info("'{}' is the new active player, writing to disk", activePlayer.getPlayerName());
+            writer.writePlayerState(activePlayer);
+            return;
         }
 
-        // if the currently selected player is not actually playing music, try to find one that is
-        if (activePlayer.getPlaybackStatus() != MusicPlayer.PlaybackStatus.PLAYING) {
-            Optional<MusicPlayer> player = musicPlayers.values()
-                                                       .stream()
-                                                       .filter(p -> p.getPlaybackStatus() == MusicPlayer.PlaybackStatus.PLAYING)
-                                                       .findFirst();
-            player.ifPresent(p -> activePlayer = p);
+        // if an active player is available, then...
+        // get the current state of the active player
+        MusicPlayer newPlayerState = musicPlayers.get(activePlayer.getPlayerName());
+
+        // if the active player is no longer playing music
+        if (newPlayerState.getPlaybackStatus() != MusicPlayer.PlaybackStatus.PLAYING) {
+            // do we have another player that IS PLAYING music that we can replace it with?
+            Optional<MusicPlayer> mp = getActivePlayer();
+
+            if (mp.isPresent()) {
+                newPlayerState = mp.get();
+            }
         }
 
-        return hasStateChanged;
+        if (!activePlayer.isSameState(newPlayerState)) {
+            activePlayer = new MusicPlayer(newPlayerState);
+            logger.info("new state for the active player '{}', writing to disk", activePlayer.getPlayerName());
+            writer.writePlayerState(activePlayer);
+        }
+    }
+
+    private Optional<MusicPlayer> getActivePlayer() {
+        Optional<MusicPlayer> player = musicPlayers.values()
+                                                   .stream()
+                                                   .filter(p -> p.getPlaybackStatus() == MusicPlayer.PlaybackStatus.PLAYING)
+                                                   .findFirst();
+        return player;
+    }
+
+    private Optional<MusicPlayer> getBestAvailablePlayer() {
+        Optional<MusicPlayer> player = getActivePlayer();
+
+        if (player.isPresent()) {
+            return player;
+        }
+
+        // if no music player are playing music, just pull any from the list
+        player = musicPlayers.values()
+                             .stream()
+                             .findFirst();
+        return player;
     }
 
     public void removePlayer(String dBusUniqueName) {

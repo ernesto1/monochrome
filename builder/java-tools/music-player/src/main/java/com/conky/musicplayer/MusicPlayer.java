@@ -28,6 +28,18 @@ public class MusicPlayer {
         trackInfo = new TrackInfo("000");
     }
 
+    public MusicPlayer(MusicPlayer player) {
+        dBusUniqueName = player.getDBusUniqueName();
+        playerName = player.getPlayerName();
+        playbackStatus = player.getPlaybackStatus();
+        trackInfo = new TrackInfo(player.getTrackId());
+        trackInfo.setArtist(player.getArtist());
+        trackInfo.setTitle(player.getTitle());
+        trackInfo.setAlbum(player.getAlbum());
+        trackInfo.setGenre(player.getGenre());
+        trackInfo.setAlbumArtPath(player.getAlbumArtPath());
+    }
+
     public void setPlaybackStatus(String status) {
         if (status != null) {
             try {
@@ -76,6 +88,10 @@ public class MusicPlayer {
         return dBusUniqueName;
     }
 
+    private String getTrackId() {
+        return trackInfo.getTrackId();
+    }
+
     @Override
     public String toString() {
         return String.format("%s | %s | %s", playerName, playbackStatus, trackInfo);
@@ -92,6 +108,26 @@ public class MusicPlayer {
     @Override
     public int hashCode() {
         return Objects.hash(playerName);
+    }
+
+    /**
+     * Determines if the given player has the same state as this player.
+     * A music player's state is considered the same if the following attributes are the same:
+     * <ul>
+     *     <li>dbus unique name</li>
+     *     <li>playback status</li>
+     *     <li>track id</li>
+     * </ul>
+     * @param otherPlayer
+     * @return
+     */
+    public boolean isSameState(MusicPlayer otherPlayer) {
+        if (otherPlayer == null) return false;
+        if (dBusUniqueName.compareTo(otherPlayer.getDBusUniqueName()) != 0) return false;
+        if (playbackStatus != otherPlayer.getPlaybackStatus()) return false;
+        if (trackInfo.getTrackId() != otherPlayer.getTrackId()) return false;
+
+        return true;
     }
 
     public enum PlaybackStatus {
