@@ -13,3 +13,6 @@ layout.*.cfg
 
 # unofficial conkys
 */musicPlayer
+
+# java applications
+java/
