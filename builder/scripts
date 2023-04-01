@@ -1,0 +1,5 @@
+# build java apps
+cd ~/conky/monochrome/builder/java-tools && \
+mvn clean package && \
+rm -r ~/conky/monochrome/java/*  && \
+cp -r music-player/target/{lib,music-player-*.jar,*.yaml,*.xml} ~/conky/monochrome/java

@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * @see <a href="https://dbus.freedesktop.org/doc/dbus-specification.html#bus-messages-name-owner-changed">Name owner changed signal</a>
  */
 public class AvailabilityHandler extends AbstractSignalHandlerBase<DBus.NameOwnerChanged> {
-    private static Logger logger  = LoggerFactory.getLogger(AvailabilityHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(AvailabilityHandler.class);
     private MusicPlayerDatabase playerDatabase;
 
     public AvailabilityHandler(MusicPlayerDatabase playerDatabase) {

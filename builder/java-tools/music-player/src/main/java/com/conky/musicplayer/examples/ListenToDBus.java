@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  * The program runs indefinitely, use a kill signal to terminate it.
  */
 public class ListenToDBus {
-    private static Logger logger  = LoggerFactory.getLogger(ListenToDBus.class);
+    private static final Logger logger = LoggerFactory.getLogger(ListenToDBus.class);
 
     public static void main(String[] args) {
         try (DBusConnection dbus = DBusConnectionBuilder.forSessionBus().build()) {

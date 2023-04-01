@@ -40,20 +40,28 @@ public class MusicPlayer {
         trackInfo.setAlbumArtPath(player.getAlbumArtPath());
     }
 
-    public void setPlaybackStatus(String status) {
+    public boolean setPlaybackStatus(String status) {
         if (status != null) {
             try {
                 playbackStatus = PlaybackStatus.valueOf(status.toUpperCase());
             } catch (IllegalArgumentException e) {
                 playbackStatus = PlaybackStatus.UNKNOWN;
             }
+
+            return true;
         }
+
+        return false;
     }
 
-    public void setTrackInfo(TrackInfo trackInfo) {
+    public boolean setTrackInfo(TrackInfo trackInfo) {
         if (trackInfo != null) {
             this.trackInfo = trackInfo;
+
+            return true;
         }
+
+        return false;
     }
 
     public String getPlayerName() {

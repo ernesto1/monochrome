@@ -76,6 +76,8 @@ function launchConky() {
   conky -c "$@" "${delayCmd[@]}" &
 }
 
+
+
 # ---------- script begins
 set -e      # exit the script on an error
 
@@ -86,7 +88,8 @@ if [[ $# < 1 ]]; then
 fi
 
 # define default variables
-noPackageLookup=false     # dnf package lookup is enabled by default, themes may disable this
+enablePackageLookup=true          # dnf package lookup is enabled
+enableMusicPlayerListener=false   # java music player dbus listener is disabled
 
 while (( "$#" )); do
   case $1 in
@@ -98,6 +101,7 @@ while (( "$#" )); do
     --widgets-dock)
       directory=${HOME}/conky/monochrome/widgets-dock
       width=30
+      enableMusicPlayerListener=true
       shift
       ;;
     --glass)
@@ -106,7 +110,7 @@ while (( "$#" )); do
       ;;
     --compact)
       directory=${HOME}/conky/monochrome/compact
-      noPackageLookup=true
+      enablePackageLookup=false
       shift
       ;;
     --monitor)
@@ -168,6 +172,7 @@ echo -e 'PID   conky'
 ps -fC conky | awk '{if (NR!=1) print $2,$10}'
 killall conky
 killall dnfPackageLookup.bash
+pkill -f 'monochrome/java/music-player-.+.jar'
 sleep 1s      # waiting a bit in order to capture the STDOUT of the 'dnfPackageLookup.bash' script
               # it tends to print right below the 'launching conky' banner below
 
@@ -227,11 +232,19 @@ do
   IFS=$'\n'
 done
 
-$noPackageLookup && exit 0
-echo -e "\n::: starting dnf package lookup service"
+echo -e "\n::: start support services"
 
-if [[ "${width}" ]]; then
-  dnfParameters=(--width ${width})
+# using shell builtins
+if "$enablePackageLookup"; then
+  echo -e "\n- dnf package lookup service"
+
+  if [[ "${width}" ]]; then
+    dnfParameters=(--width ${width})
+  fi
+
+  ~/conky/monochrome/dnfPackageLookup.bash ${dnfParameters[@]} &
 fi
 
-~/conky/monochrome/dnfPackageLookup.bash ${dnfParameters[@]} &
+if "$enableMusicPlayerListener"; then
+  java -jar ~/conky/monochrome/java/music-player-*.jar &
+fi

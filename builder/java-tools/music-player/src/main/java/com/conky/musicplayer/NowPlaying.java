@@ -6,10 +6,15 @@ import org.freedesktop.dbus.interfaces.DBus;
 import org.freedesktop.dbus.interfaces.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.yaml.snakeyaml.Yaml;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -27,24 +32,52 @@ import java.util.concurrent.TimeUnit;
  * @see <a href="https://specifications.freedesktop.org/mpris-spec/latest/">Media Player Remote Interfacing Specification</a>
  */
 public class NowPlaying {
-    private static Logger logger = LoggerFactory.getLogger(NowPlaying.class);
-    // TODO output directory should be configurable
+    private static final Logger logger = LoggerFactory.getLogger(NowPlaying.class);
     /**
      * Directory to write the song track info files for conky to read
      */
-    public static String OUTPUT_DIR = "/tmp";
+    private static String OUTPUT_DIR = "/tmp";
+    private static int ALBUM_CUTOFF = 30;
+    private static List<String> SUPPORTED_PLAYERS;
+
+    static {
+        SUPPORTED_PLAYERS = new ArrayList<>();
+        SUPPORTED_PLAYERS.add("rhythmbox");
+        SUPPORTED_PLAYERS.add("spotify");
+    }
 
     public static void main(String[] args) {
+        // load the configuration file
+        Map<String, Object> config = null;
+
+        try {
+            // fun fact: if reading the config file below fails, the i/o exception will skip the catch clause
+            //           and terminate the program, not sure why this happens
+            InputStream configFile = NowPlaying.class.getResourceAsStream("/config.yaml");
+            Yaml yaml = new Yaml();
+            config = yaml.load(configFile);
+            configFile.close();
+        } catch (IOException e) {
+            logger.error("unable to close the config file", e);
+        }
+
+        logger.info("configuration: {}", config);
+        OUTPUT_DIR = (String) config.getOrDefault("outputDir", OUTPUT_DIR);
+        ALBUM_CUTOFF = (Integer) config.getOrDefault("albumCutoff", ALBUM_CUTOFF);
+        SUPPORTED_PLAYERS = (List<String>) config.getOrDefault("supportedPlayers", SUPPORTED_PLAYERS);
+
         try (DBusConnection dbus = DBusConnectionBuilder.forSessionBus().build()) {
             // register shut down hooks
             ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-            executorService.scheduleAtFixedRate(new AlbumArtHouseKeeper(OUTPUT_DIR, 20), 10, 10, TimeUnit.MINUTES);
+            executorService.scheduleAtFixedRate(new AlbumArtHouseKeeper(OUTPUT_DIR, ALBUM_CUTOFF), 31, 30, TimeUnit.MINUTES);
             registerShutdownHooks(dbus, executorService);
 
             // initialize utility classes
             MusicPlayerWriter writer = new MusicPlayerWriter(OUTPUT_DIR);
-            MusicPlayerDatabase playerDatabase = new MusicPlayerDatabase(writer);
+            MusicPlayerDatabase playerDatabase = new MusicPlayerDatabase(writer, SUPPORTED_PLAYERS);
             playerDatabase.init();
+
+            // TODO upon boot can we identify what are the current available music players?
 
             // listen for dbus signals of interest
             // signal handlers run under a single thread, ie. signals are processed in the order they are received

@@ -3,21 +3,28 @@ package com.conky.musicplayer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.text.html.Option;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 /**
- * Catalog of running music players in the system.  As new music players are "detected" through the dbus,
- * they will be added here.<br>
+ * <h2>Overview</h2>
+ * Catalog of running {@link MusicPlayer music players} in the system.  As new music players are "detected" through the dbus,
+ * the dbus signal handlers will add them here.<br>
  * <br>
- * The database is responsible for determining at any point in time <i>what music player should be
+ * For each update performed on this music player catalog, the database will determine <i>what music player should be
  * considered {@link #activePlayer in focus}</i>, ie. what music player details should conky be displaying.<br>
  * <br>
+ * <h2>Supported players</h2>
  * Music players don't follow a standard when it comes to dbus integration.  Therefore, those players that
- * are supported by this app are registered here as {@link #supportedPlayers supported players}.
+ * are supported by this app are registered here as {@link #supportedPlayers supported players}.<br>
+ * <br>
+ * Signal handlers can {@link #isMusicPlayer(String) query the database} in order to filter out messages from media players that
+ * are not supported by this application.
  */
 public class MusicPlayerDatabase {
-    private static Logger logger = LoggerFactory.getLogger(MusicPlayerDatabase.class);
+    private static final Logger logger = LoggerFactory.getLogger(MusicPlayerDatabase.class);
     /**
      * List of compatible music players.  Only signals from these players will be processed.<br>
      * These are music players that comply with the "protocol" expected from this app, ie.
@@ -40,12 +47,9 @@ public class MusicPlayerDatabase {
     private Map<String, MusicPlayer> musicPlayers;
     private MusicPlayerWriter writer;
 
-    public MusicPlayerDatabase(MusicPlayerWriter writer) {
-        // TODO player list should be coming from a config file
+    public MusicPlayerDatabase(MusicPlayerWriter writer, List<String> supportedPlayers) {
         this.writer = writer;
-        supportedPlayers = new ArrayList<>();
-        supportedPlayers.add("rhythmbox");
-        supportedPlayers.add("spotify");
+        this.supportedPlayers = supportedPlayers;
         musicPlayers = new HashMap<>();
     }
 
@@ -54,7 +58,8 @@ public class MusicPlayerDatabase {
     }
 
     /**
-     * Determine if the given player is a "supported" music player
+     * Determine if the given player is a "supported" music player by this database.<br>
+     * This would allow a client to filter out other media players on the dbus like a firefox youtube window for example.
      * @param playerName the player's name
      * @return <tt>true</tt> if the player is supported
      */
@@ -72,7 +77,6 @@ public class MusicPlayerDatabase {
 
     public void save(MusicPlayer player) {
         musicPlayers.put(player.getPlayerName(), player);
-        logger.info("{}", player);
         determineActivePlayer();
     }
 

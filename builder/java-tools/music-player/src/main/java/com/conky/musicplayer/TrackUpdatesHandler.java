@@ -24,12 +24,12 @@ import java.util.Map;
 import static com.conky.musicplayer.MusicPlayerWriter.FILE_PREFIX;
 
 /**
- * Handler for analyzing media player property change signals.<br>
- * Updates related to the currently playing track will be reflected in the conky music5 player files.
+ * Handler for analyzing media player property change signals, ie. <tt>org.freedesktop.DBus.Properties.PropertiesChanged</tt>.<br>
+ * Updates related to a music player's state (ex. song change, pausing, playing music) will be saved on the {@link MusicPlayerDatabase database}.
  * @see <a href="https://specifications.freedesktop.org/mpris-spec/latest/Player_Interface.html">MPRIS Player Inteface</a>
  */
 public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
-    private static Logger logger = LoggerFactory.getLogger(TrackUpdatesHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(TrackUpdatesHandler.class);
 
     private final String outputDirectory;
     private final DBusConnection dbus;
@@ -112,8 +112,13 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
             player = new MusicPlayer(playerName, signal.getSource());
         }
 
-        player.setPlaybackStatus(playbackStatus);
-        player.setTrackInfo(trackInfo);
+        boolean isPlayerStatusChanged = player.setPlaybackStatus(playbackStatus);
+        isPlayerStatusChanged = player.setTrackInfo(trackInfo) || isPlayerStatusChanged;
+
+        if (isPlayerStatusChanged) {
+            logger.info("{}", player);
+        }
+
         playerDatabase.save(player);
     }
 

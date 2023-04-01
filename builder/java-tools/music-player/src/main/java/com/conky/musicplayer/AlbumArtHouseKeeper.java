@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * by the media player conky in a given amount of time.
  */
 public class AlbumArtHouseKeeper implements Runnable {
-    private static Logger logger = LoggerFactory.getLogger(AlbumArtHouseKeeper.class);
+    private static final Logger logger = LoggerFactory.getLogger(AlbumArtHouseKeeper.class);
     private String directory;
     private int threshold;
 

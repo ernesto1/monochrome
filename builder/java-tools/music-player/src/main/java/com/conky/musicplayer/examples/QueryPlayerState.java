@@ -19,7 +19,7 @@ import java.util.Map;
  * </ul>
  */
 public class QueryPlayerState {
-    private static Logger logger  = LoggerFactory.getLogger(QueryPlayerState.class);
+    private static final Logger logger = LoggerFactory.getLogger(QueryPlayerState.class);
 
     public static void main(String[] args) {
         try (DBusConnection dbus = DBusConnectionBuilder.forSessionBus().build()) {
