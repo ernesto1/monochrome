@@ -133,7 +133,7 @@ ${else}\
 ${voffset 187}\
 ${endif}\
 # ::::::::::::::::: package updates
-${if_existing /tmp/dnf.packages.formatted}\
+${if_existing /tmp/conky/dnf.packages.formatted}\
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 0,[=y?c]}\
 <#assign body = 38, y += body>
 <#list 1..2 as x>
@@ -141,11 +141,11 @@ ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-transparent.p
 <#assign body = 800, y += body>
 </#list>
 ${voffset 14}${alignc}${color1}dnf package management
-${voffset 3}${alignc}${color}${lines /tmp/dnf.packages.formatted} package update(s) available
+${voffset 3}${alignc}${color}${lines /tmp/conky/dnf.packages.formatted} package update(s) available
 ${voffset 5}${offset 5}${color1}package${alignr 5}version
 # the dnf package lookup script refreshes the package list every 10m
 <#if system == "desktop"><#assign lines = 51><#else><#assign lines = 28></#if>
-${voffset 2}${color}${execpi 30 head -n [=lines] /tmp/dnf.packages.formatted}
+${voffset 2}${color}${execpi 30 head -n [=lines] /tmp/conky/dnf.packages.formatted}
 ${endif}\
 ${voffset -8}
 ]];

@@ -44,7 +44,7 @@ conky.config = {
 
 conky.text = [[
 # :::::::::::: package updates
-${if_existing /tmp/dnf.packages.formatted}\
+${if_existing /tmp/conky/dnf.packages.formatted}\
 <#assign y = 0, 
          top = 19,    <#-- menu header -->
          body = 990,  <#-- size of the current window without the top and bottom edges -->
@@ -52,7 +52,7 @@ ${if_existing /tmp/dnf.packages.formatted}\
          space = 5,   <#-- empty space between windows -->
          windowYcoordinate = y> <#-- starting y coordinate of the current window -->
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-horizontal.png -p 0,[=y?c]}\
-${voffset 2}${offset 5}${color1}dnf${goto 75}${color}${lua compute_and_save packages ${lines /tmp/dnf.packages.formatted}} package updates
+${voffset 2}${offset 5}${color1}dnf${goto 75}${color}${lua compute_and_save packages ${lines /tmp/conky/dnf.packages.formatted}} package updates
 <#assign y += top>
 ${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
 <#assign y += 1>
@@ -65,6 +65,6 @@ ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-dnf.png -p 
 <#if system == "desktop"><#assign maxLines = 82><#else><#assign maxLines = 15></#if>
 ${lua_parse bottom_edge_load_value compact [=image.primaryColor]-menu-bottom.png 0 [=y?c] 2 packages [=maxLines]}\
 ${voffset 7}${offset 5}${color1}package${alignr 5}version${voffset 4}
-${color}${execp head -n [=maxLines] /tmp/dnf.packages.formatted}${voffset 4}
+${color}${execp head -n [=maxLines] /tmp/conky/dnf.packages.formatted}${voffset 4}
 ${endif}\
 ]];

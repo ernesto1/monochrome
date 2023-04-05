@@ -68,7 +68,7 @@ ${template7 ${lua_parse\ print_resource_usage\ ${hwmon\ [=hardDisk.hwmonIndex]\ 
 </#list>
 ${voffset 7}${offset 7}${font0}${color}${lua_parse print_resource_usage ${hwmon atk0110 fan 1} [=(threshold.fanSpeed)?c] ${color3}}${font}${color}${voffset 16}
 </#if>
-${alignc}${font0}${color}${if_existing /tmp/dnf.packages}${lines /tmp/dnf.packages}${else}0${endif}${voffset 7}
+${alignc}${font0}${color}${if_existing /tmp/conky/dnf.packages.formatted}${lines /tmp/conky/dnf.packages.formatted}${else}0${endif}${voffset 7}
 <#if system == "desktop" >
 ${alignc}${font0}${color}${time %I}${font1}:${time %M}
 ${voffset -29}${alignc}${color1}${font2}${time %a}${voffset 6}

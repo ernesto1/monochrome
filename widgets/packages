@@ -1,5 +1,5 @@
 conky.config = {
-  lua_load = '~/conky/monochrome/library.lua',
+  lua_load = '~/conky/monochrome/menu.lua',
   
   update_interval = 30,  -- update interval in seconds
   xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
@@ -49,13 +49,13 @@ conky.config = {
 
 conky.text = [[
 # :::::::::::: package updates
-${if_existing /tmp/dnf.packages.formatted}\
+${if_existing /tmp/conky/dnf.packages.formatted}\
 ${image ~/conky/monochrome/images/widgets/green-packages.png -p 0,0}\
 ${voffset 3}${alignc}${color1}dnf package management
-${voffset 5}${alignc}${color}${lua compute_and_save packages ${lines /tmp/dnf.packages.formatted}} package update(s) available
+${voffset 5}${alignc}${color}${lua compute_and_save packages ${lines /tmp/conky/dnf.packages.formatted}} package update(s) available
 ${voffset 5}${offset 5}${color1}package${alignr 4}version${voffset 2}
 # the dnf package lookup script refreshes the package list every 10m
-${color}${execp head -n 100 /tmp/dnf.packages.formatted}
+${color}${execp head -n 100 /tmp/conky/dnf.packages.formatted}
 ${lua_parse bottom_edge_load_value widgets green-packages-bottom.png 0 54 2 packages 100}
 ${endif}\
 ]];

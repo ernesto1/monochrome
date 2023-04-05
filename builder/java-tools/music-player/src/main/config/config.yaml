@@ -1,5 +1,5 @@
 supportedPlayers:
   - rhythmbox
   - spotify
-outputDir: /tmp
+outputDir: /tmp/conky
 albumCutoff: 30   # downloaded album art not loaded/used in these number of minutes will be deleted

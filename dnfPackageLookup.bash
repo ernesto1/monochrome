@@ -1,14 +1,18 @@
 #!/bin/bash
 # script to periodically check for new dnf package updates when the system is "deemed iddle"
 # ie. less than half of the cores are in use in the 5 min load average
+#
+# the list of new package updates are written to the output file: dnf.packages.formatted
+# conky variables are introduced in order for the data to be properly formatted for conky to display
 
 function usage {
   echo $(basename $0) [--width n] >&2
+  echo 'where width is the number of characters per row, default is 35'
 }
 
 function onExitSignal {
-  echo 'received shutdown signal, cleaning up temporary files and exiting script' | tee -a ${logFile}
-  rm -f /tmp/dnf.*    # delete temp files
+  echo 'received shutdown signal, deleting output file and killing child processes' | tee -a ${logFile}
+  rm -f ${outputDir}/dnf.packages.formatted    # file read by conky
   kill $(jobs -p)     # kill any child processes, ie. the sleep command
   exit 0
 }
@@ -36,7 +40,9 @@ while (( "$#" )); do
 done
 
 scriptName=$(basename $0 .bash)
-logFile=/tmp/${scriptName}.log
+outputDir=/tmp/conky
+mkdir -p ${outputDir} 
+logFile=${outputDir}/dnf.log
 echo "$(date +'%D %r') - starting dnf repo package lookup" | tee ${logFile}
 echo "$(date +'%D %r') - output list of new packages will be of ${width} caracters" | tee ${logFile}
 totalCores=$(grep -c processor /proc/cpuinfo)
@@ -54,7 +60,7 @@ while [ true ]; do
     
     # perform dnf lookup if the system is iddle
     if [[ $loadAvg < $halfCores ]]; then
-        packagesRawFile=/tmp/dnf.updates.source    # raw output from the dnf command
+        packagesRawFile=${outputDir}/dnf.updates.source    # raw output from the dnf command
         # sample dnf output to parse:
         #
         # PM Fusion for Fedora 32 - Free - Updates        5.8 kB/s | 2.9 kB     02:00
@@ -70,7 +76,7 @@ while [ true ]; do
         
         if [[ $packages > 0 ]]; then
             echo "$packages new update(s)" | tee -a ${logFile}
-            packagesFile=/tmp/dnf.packages    # file to list the new packages
+            packagesFile=${outputDir}/dnf.packages    # file to list the new packages
             # extract the actual packages from the raw dnf data
             grep -E $regex ${packagesRawFile} > ${packagesFile}
             # formatting done to the new package list for conky to display it nicely
@@ -80,10 +86,10 @@ while [ true ]; do
             # - packages of interest are surrounded by a ${color} variable in order to have them highlighted
             highlightRegex='kernel\|firefox\|transmission'            
             column --table --table-right 2 --table-truncate 1,2 --table-hide 3 --output-width ${width} ${packagesFile} \
-            | sed 's/^/${voffset 2}${offset 5}/' | sed "s:\($highlightRegex\):$\{color2\}\1$\{color\}:" > /tmp/dnf.packages.formatted
+            | sed 's/^/${voffset 2}${offset 5}/' | sed "s:\($highlightRegex\):$\{color2\}\1$\{color\}:" > ${outputDir}/dnf.packages.formatted
         else
             echo 'no updates available' | tee -a ${logFile}
-            rm -f /tmp/dnf.packages*
+            rm -f ${outputDir}/dnf.packages*
         fi
     else
         echo "$(date +'%D %r') - load average too high, trying again later" | tee -a ${logFile}

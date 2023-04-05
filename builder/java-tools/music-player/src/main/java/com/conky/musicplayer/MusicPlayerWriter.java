@@ -45,8 +45,14 @@ public class MusicPlayerWriter {
 
     private void writeFile(String filename, String data) {
         try {
-            Path artistPath = Paths.get(outputDirectory, FILE_PREFIX + "." + filename);
-            BufferedWriter writer = Files.newBufferedWriter(artistPath,
+            Path outputDirPath = Paths.get(outputDirectory);
+
+            if (!Files.isDirectory(outputDirPath)) {
+                Files.createDirectories(outputDirPath);
+            }
+
+            Path filePath = Paths.get(outputDirectory, FILE_PREFIX + "." + filename);
+            BufferedWriter writer = Files.newBufferedWriter(filePath,
                     StandardOpenOption.CREATE,
                     StandardOpenOption.WRITE,
                     StandardOpenOption.TRUNCATE_EXISTING);
