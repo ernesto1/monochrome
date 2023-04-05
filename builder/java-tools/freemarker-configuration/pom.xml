@@ -22,7 +22,6 @@
     <dependency>
       <groupId>org.yaml</groupId>
       <artifactId>snakeyaml</artifactId>
-      <version>1.33</version>
     </dependency>
   </dependencies>
 
@@ -38,6 +37,9 @@
               <classpathPrefix>lib/</classpathPrefix>
               <mainClass>com.conky.configuration.ConkyTemplate</mainClass>
             </manifest>
+            <manifestEntries>
+              <Class-Path>.</Class-Path>
+            </manifestEntries>
           </archive>
         </configuration>
       </plugin>
