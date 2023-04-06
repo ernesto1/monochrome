@@ -34,10 +34,7 @@ conky.config = {
   
   -- images
   imlib_cache_flush_interval = 250,
-  
-  if_up_strictness = 'address', -- network device must be up, having link and an assigned IP address
-                                -- to be considered "up" by ${if_up}
-                                -- values are: up, link or address  
+
   -- font settings
   use_xft = false,
   draw_shades = false,      -- black shadow on text (not good if text is black)
@@ -46,7 +43,7 @@ conky.config = {
   default_color = '[=colors.menuText]',  -- regular text
   color1 = '[=colors.labels]'
   
-  -- n.b. this conky requires the music player java app to be running in the background
+  -- n.b. this conky requires the music-player java app to be running in the background
 };
 
 conky.text = [[
