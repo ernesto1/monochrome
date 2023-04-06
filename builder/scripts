@@ -3,4 +3,4 @@ cd ~/conky/monochrome/builder/java-tools && \
 mvn clean package && \
 mkdir -p ~/conky/monochrome/java && \
 rm -rf ~/conky/monochrome/java/*  && \
-cp -r music-player/target/{lib,music-player-*.jar,*.yaml,*.xml} ~/conky/monochrome/java
+cp -rn */target/{lib,*.jar,*.yaml,*.xml} ~/conky/monochrome/java
