@@ -55,6 +55,7 @@ ${voffset 48}
 # :::: [=device.type]
 ${if_up [=device.name]}\
 <#if device.type == "wifi">
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-horizontal-data.png -p 57,[=height]}\
 <@wifiDetails device/>
 <#else>
 <@ethernetDetails device/>
@@ -72,10 +73,10 @@ ${endif}\
 </#macro>
 
 <#macro wifiDetails device>
-${voffset 15}${offset 5}${color1}network${goto 75}${color}${wireless_essid [=device.name]}
-${voffset 3}${offset 5}${color1}local ip${goto 75}${color}${addr [=device.name]}
-${voffset 3}${offset 5}${color1}bitrate${goto 75}${color}${wireless_bitrate [=device.name]}
-${voffset 3}${offset 5}${color1}channel${goto 75}${color}${wireless_channel [=device.name]}
+${voffset 15}${offset 5}${color1}network${goto 63}${color}${wireless_essid [=device.name]}
+${voffset 3}${offset 5}${color1}local ip${goto 63}${color}${addr [=device.name]}
+${voffset 3}${offset 5}${color1}bitrate${goto 63}${color}${wireless_bitrate [=device.name]}
+${voffset 3}${offset 5}${color1}channel${goto 63}${color}${wireless_channel [=device.name]}
 </#macro>
 
 <#macro ethernetDetails device>
