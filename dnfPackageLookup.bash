@@ -84,9 +84,9 @@ while [ true ]; do
             # - a ${voffset} is added for the text to not appear "squished"
             # - an ${offset} is added to each line in order for the package list to be printed with a left border
             # - packages of interest are surrounded by a ${color} variable in order to have them highlighted
-            highlightRegex='kernel\|firefox\|transmission'            
-            column --table --table-right 2 --table-truncate 1,2 --table-hide 3 --output-width ${width} ${packagesFile} \
-            | sed 's/^/${voffset 2}${offset 5}/' | sed "s:\($highlightRegex\):$\{color2\}\1$\{color\}:" > ${outputDir}/dnf.packages.formatted
+            highlightRegex='kernel\|firefox\|transmission'
+            cat ${packagesFile} | awk '{ printf "%-23.23s %6.6s\n", $1, $2 }' | sed 's/^/${voffset 2}${offset 5}/' \
+            | sed "s:\($highlightRegex\):$\{color2\}\1$\{color\}:" > ${outputDir}/dnf.packages.formatted
         else
             echo 'no updates available' | tee -a ${logFile}
             rm -f ${outputDir}/dnf.packages*

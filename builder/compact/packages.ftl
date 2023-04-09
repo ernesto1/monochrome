@@ -61,7 +61,7 @@ ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-top-flat.pn
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu.png -p 0,[=y?c]}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu.png -p 0,[=(y+1000)?c]}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-dnf.png -p 136,[=(y+2)?c]}\
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-dnf.png -p 120,[=(y+2)?c]}\
 <#if system == "desktop"><#assign maxLines = 82><#else><#assign maxLines = 15></#if>
 ${lua_parse bottom_edge_load_value compact [=image.primaryColor]-menu-bottom.png 0 [=y?c] 2 packages [=maxLines]}\
 ${voffset 7}${offset 5}${color1}package${alignr 5}version${voffset 4}
