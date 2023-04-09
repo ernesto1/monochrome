@@ -11,7 +11,7 @@ function usage {
 }
 
 function onExitSignal {
-  echo 'received shutdown signal, deleting output file and killing child processes' | tee -a ${logFile}
+  echo 'received shutdown signal, deleting output file and killing child processes'
   rm -f ${outputDir}/dnf.packages.formatted    # file read by conky
   kill $(jobs -p)     # kill any child processes, ie. the sleep command
   exit 0
@@ -46,13 +46,12 @@ fi
 
 width=$(( width - 6 - 1 ))      # column width for package name
 outputDir=/tmp/conky
-mkdir -p ${outputDir} 
-logFile=${outputDir}/dnf.log
-echo "$(date +'%D %r') - starting dnf repo package lookup" | tee ${logFile}
-echo "$(date +'%D %r') - output list of new packages will be of ${width} caracters" | tee ${logFile}
+mkdir -p ${outputDir}
+echo "$(date +'%D %r') - starting dnf repo package lookup"
+echo "$(date +'%D %r') - output list of new packages will be of ${width} caracters"
 totalCores=$(grep -c processor /proc/cpuinfo)
 halfCores=$(( totalCores / 2 ))
-echo "$(date +'%D %r') - system is deemed iddle if the 5 min cpu load average is less than ${halfCores}" | tee ${logFile}
+echo "$(date +'%D %r') - system is deemed iddle if the 5 min cpu load average is less than ${halfCores}"
 
 while [ true ]; do
     # the output format of `uptime` changes if the machine runs for longer than a day
@@ -61,7 +60,7 @@ while [ true ]; do
     #  more than a day: 22:54:03 up 2 days,  2:12,  1 user,  load average: 0.53, 1.16, 1.40
     loadAvg=$(uptime)
     loadAvg=$(echo ${loadAvg#*load average: } | cut -d, -f2)
-    echo "$(date +'%D %r') - 5 min load avg = $loadAvg" | tee -a ${logFile}
+    echo "$(date +'%D %r') - 5 min load avg = $loadAvg"
     
     # perform dnf lookup if the system is iddle
     if [[ $loadAvg < $halfCores ]]; then
@@ -77,10 +76,10 @@ while [ true ]; do
         dnf list updates > ${packagesRawFile}
         regex='^(([[:alnum:]]|\.|_|-)+[[:blank:]]+){2}([[:alnum:]]|\.|_|-|[[:blank:]])+$'
         packages=$(grep -cE $regex ${packagesRawFile})
-        echo -n "$(date +'%D %r') - " | tee -a ${logFile} 
+        echo -n "$(date +'%D %r') - " 
         
         if [[ $packages > 0 ]]; then
-            echo "$packages new update(s)" | tee -a ${logFile}
+            echo "$packages new update(s)"
             packagesFile=${outputDir}/dnf.packages    # file to list the new packages
             # extract the actual packages from the raw dnf data
             grep -E $regex ${packagesRawFile} > ${packagesFile}
@@ -94,11 +93,11 @@ while [ true ]; do
             | sed 's/^/${voffset 2}${offset 5}/' \
             | sed "s:\($highlightRegex\):$\{color2\}\1$\{color\}:" > ${outputDir}/dnf.packages.formatted
         else
-            echo 'no updates available' | tee -a ${logFile}
+            echo 'no updates available'
             rm -f ${outputDir}/dnf.packages*
         fi
     else
-        echo "$(date +'%D %r') - load average too high, trying again later" | tee -a ${logFile}
+        echo "$(date +'%D %r') - load average too high, trying again later"
     fi
     
     sleep 5m &   # run the sleep process in the background so we can kill it if we get a terminate signal

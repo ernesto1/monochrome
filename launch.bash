@@ -58,7 +58,7 @@ function detectDuplicateEntries() {
   duplicates=$(grep -vE '#|^$|ignore' $1 | cut -d: -f1 | sort | uniq -d)
   
   if [[ $duplicates ]]; then
-    echo 'error | invalid override file,  duplicate entry found' >&2
+    echo 'invalid override file, duplicate entry found' >&2
     exit 2
   fi
 }
@@ -122,7 +122,8 @@ while (( "$#" )); do
       fileTag=$2
       
       if [[ -z $fileTag ]]; then
-        echo -e 'error | missing argument: override file tag must be provided with the --layout-override flag\n\n' >&2
+        echo 'override file tag must be provided with the --layout-override flag' >&2
+        echo -e '\n'
         usage
         exit 2
       fi
@@ -160,8 +161,8 @@ if [[ ! -z $fileTag ]]; then
     detectDuplicateEntries "${layoutFile}"
     # TODO file integrity: ensure number of override elements is 2 or 3
   else
-    echo -e '\nerror | override file '${layoutFile}' not found' >&2
-    echo      '        please provide the proper override file name tag' >&2
+    echo -e "\nlayout override file '${layoutFile}' not found" >&2
+    echo    'please provide the proper override file name tag' >&2
     exit 2
   fi
 fi
