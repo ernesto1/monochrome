@@ -126,6 +126,14 @@ while (( "$#" )); do
         echo -e '\n'
         usage
         exit 2
+      else
+        layoutFile="$(echo ${directory}/layout.${fileTag}.cfg)"   # need to use echo in order for the variable
+                                                                  # to hold the actual pathname expansion
+        if [[ ! -f ${layoutFile} ]]; then
+          echo "layout override file '${layoutFile}' not found" >&2          
+          echo 'please provide the proper override file name tag' >&2
+          exit 2
+        fi
       fi
       
       shift 2
@@ -153,21 +161,12 @@ if [[ ${monitor} ]]; then
   echo  "monitor:              ${monitor}"
 fi
 
-if [[ ! -z $fileTag ]]; then
-  layoutFile="$(echo ${directory}/layout.${fileTag}.cfg)"   # need to use echo in order for the variable
-                                                            # to hold the actual pathname expansion
-  if [[ -f ${layoutFile} ]]; then
-    echo "layout override file: ${layoutFile}"
-    detectDuplicateEntries "${layoutFile}"
-    # TODO file integrity: ensure number of override elements is 2 or 3
-  else
-    echo -e "\nlayout override file '${layoutFile}' not found" >&2
-    echo    'please provide the proper override file name tag' >&2
-    exit 2
-  fi
+if [[ ! -z ${layoutFile} ]]; then
+  echo "layout override file: ${layoutFile}"
+  detectDuplicateEntries "${layoutFile}"
+  # TODO file integrity: ensure number of override elements is 2 or 3
 fi
 
-set +e      # ignore errors
 echo -e '\n::: killing the currently running processes of this conky suite'
 echo -e 'PID      process'
 pgrep -f 'conky/monochrome' -l -a
