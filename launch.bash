@@ -79,8 +79,6 @@ function launchConky() {
 
 
 # ---------- script begins
-set -e      # exit the script on an error
-
 # ensure at least one parameter was provided
 if [[ $# < 1 ]]; then
   usage
@@ -171,8 +169,8 @@ echo -e '\n::: killing the currently running processes of this conky suite'
 echo -e 'PID      process'
 pgrep -f 'conky/monochrome' -l -a
 pkill -f 'conky/monochrome'
-sleep 1s      # wait a bit in order to capture the STDOUT of the 'dnfPackageLookup.bash' script
-              # it tends to print right below the 'launching conky' banner below
+sleep 1s  # wait a bit in order to capture the STDOUT of the 'dnfPackageLookup.bash' script
+          # it tends to print right below the 'launching conky' banner below
 echo -e "\n::: launching conky configs"
 IFS=$'\n'
 
