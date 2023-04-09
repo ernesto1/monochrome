@@ -20,6 +20,19 @@ public class MusicPlayerWriter {
         this.outputDirectory = outputDirectory;
     }
 
+    /**
+     * Creates the output directory if it does not exist
+     * @throws IOException
+     */
+    public void init() throws IOException {
+        Path outputDirPath = Paths.get(outputDirectory);
+
+        if (!Files.isDirectory(outputDirPath)) {
+            logger.info("creating the output directory: {}", outputDirPath);
+            Files.createDirectories(outputDirPath);
+        }
+    }
+
     public void writePlayerState(MusicPlayer player) {
         writeFile("name", player.getPlayerName());
         // convert playback status enum to 'Title Case'
@@ -38,19 +51,13 @@ public class MusicPlayerWriter {
             try {
                 Files.deleteIfExists(coverArt);
             } catch (IOException e) {
-                logger.error("unable to delete the cover art file", e);
+                logger.error("unable to delete the album art file", e);
             }
         }
     }
 
     private void writeFile(String filename, String data) {
         try {
-            Path outputDirPath = Paths.get(outputDirectory);
-
-            if (!Files.isDirectory(outputDirPath)) {
-                Files.createDirectories(outputDirPath);
-            }
-
             Path filePath = Paths.get(outputDirectory, FILE_PREFIX + "." + filename);
             BufferedWriter writer = Files.newBufferedWriter(filePath,
                     StandardOpenOption.CREATE,
@@ -59,7 +66,7 @@ public class MusicPlayerWriter {
             writer.write(data);
             writer.close();
         } catch (IOException e) {
-            logger.error("unable to write '{}' file", filename, e);
+            logger.error("unable to write to the '{}' file", filename, e);
         }
     }
 }

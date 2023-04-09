@@ -74,6 +74,7 @@ public class NowPlaying {
 
             // initialize utility classes
             MusicPlayerWriter writer = new MusicPlayerWriter(OUTPUT_DIR);
+            writer.init();
             MusicPlayerDatabase playerDatabase = new MusicPlayerDatabase(writer, SUPPORTED_PLAYERS);
             playerDatabase.init();
 

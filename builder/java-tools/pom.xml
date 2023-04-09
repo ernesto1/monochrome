@@ -4,7 +4,7 @@
   
   <groupId>com.conky.monochrome</groupId>
   <artifactId>java-tools</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <packaging>pom</packaging>
   
   <name>java build tools for conky</name>
@@ -64,6 +64,33 @@
           <version>3.8.0</version>
         </plugin>
         <plugin>
+          <!-- download source and documentation for dependencies, see https://www.baeldung.com/maven-download-sources-javadoc -->
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <executions>
+            <execution>
+              <goals>
+                <goal>sources</goal>
+                <goal>resolve</goal>
+              </goals>
+              <configuration>
+                <classifier>javadoc</classifier>
+              </configuration>
+            </execution>
+            <!-- on build, jar dependencies will be copied to the target/lib folder -->
+            <execution>
+              <id>copy-dependencies</id>
+              <phase>process-resources</phase>
+              <goals>
+                <goal>copy-dependencies</goal>
+              </goals>
+              <configuration>
+                <outputDirectory>${project.build.directory}/lib</outputDirectory>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.22.1</version>
         </plugin>
@@ -90,34 +117,5 @@
         </plugin>
       </plugins>
     </pluginManagement>
-    <plugins>
-      <plugin>
-        <!-- download source and documentation for dependencies, see https://www.baeldung.com/maven-download-sources-javadoc -->
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>sources</goal>
-              <goal>resolve</goal>
-            </goals>
-            <configuration>
-              <classifier>javadoc</classifier>
-            </configuration>
-          </execution>
-          <!-- on build, jar dependencies will be copied to the target/lib folder -->
-          <execution>
-            <id>copy-dependencies</id>
-            <phase>prepare-package</phase>
-            <goals>
-              <goal>copy-dependencies</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.build.directory}/lib</outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
   </build>
 </project>
