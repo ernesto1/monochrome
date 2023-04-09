@@ -8,7 +8,7 @@
 # or filter out conkys you do not wish to load
 #
 # - the alignment override file must follow the naming convention: layout.<tag>.cfg, ex. layout.laptop.cfg
-# - the tag is provided by the user at runtime with the --layout-override flag
+# - the tag is provided by the user at runtime with the --layout-override someTag
 # - the override file must exist in the conky target folder
 
 function usage() {
@@ -26,14 +26,14 @@ function usage() {
 	    On multi monitor setups, use this flag to specify on which monitor you would like conky
 	    to draw itself.
 	    
-	                 +--------+
-	    +-----------+|        |
-	    |           ||        |   How your monitors get assigned their number depends
-	    |     0     ||   1    |   on the compositor you are running: x11 or wayland
-	    |           ||        |   ie. monitor 0 may not be the same on both compositors
-	    +-----------+|        |
-	         |  |    +--------+
-	        /    \      /  \\
+	                   +--------+
+	    +-----------+  |        |
+	    |           |  |        |   How your monitors get assigned their number depends
+	    |     0     |  |    1   |   on the compositor you are running: x11 or wayland
+	    |           |  |        |   ie. monitor 0 may not be the same on both compositors
+	    +-----------+  |        |
+	         |  |      +--------+
+	        /    \        /  \\
 
 	  --layout-override tag
 	    allows you to use a layout override file in order to modify the position of the conkys on the fly.
@@ -154,7 +154,7 @@ fi
 
 if [[ ! -z $fileTag ]]; then
   layoutFile="$(echo ${directory}/layout.${fileTag}.cfg)"   # need to use echo in order for the variable
-                                                                  # to hold the actual pathname expansion
+                                                            # to hold the actual pathname expansion
   if [[ -f ${layoutFile} ]]; then
     echo "layout override file: ${layoutFile}"
     detectDuplicateEntries "${layoutFile}"
@@ -167,15 +167,12 @@ if [[ ! -z $fileTag ]]; then
 fi
 
 set +e      # ignore errors
-echo -e '\n::: killing the currently running conky processes listed below:'
-echo -e 'PID   conky'
-ps -fC conky | awk '{if (NR!=1) print $2,$10}'
-killall conky
-killall dnfPackageLookup.bash
-pkill -f 'monochrome/java/music-player-.+.jar'
-sleep 1s      # waiting a bit in order to capture the STDOUT of the 'dnfPackageLookup.bash' script
+echo -e '\n::: killing the currently running processes of this conky suite'
+echo -e 'PID      process'
+pgrep -f 'conky/monochrome' -l -a
+pkill -f 'conky/monochrome'
+sleep 1s      # wait a bit in order to capture the STDOUT of the 'dnfPackageLookup.bash' script
               # it tends to print right below the 'launching conky' banner below
-
 echo -e "\n::: launching conky configs"
 IFS=$'\n'
 
