@@ -47,11 +47,11 @@ fi
 width=$(( width - 6 - 1 ))      # column width for package name
 outputDir=/tmp/conky
 mkdir -p ${outputDir}
-echo "$(date +'%D %r') - starting dnf repo package lookup"
-echo "$(date +'%D %r') - output list of new packages will be of ${width} caracters"
+echo "$(date +'%T') - starting dnf repo package lookup"
+echo "$(date +'%T') - output list of new packages will be of ${width} caracters"
 totalCores=$(grep -c processor /proc/cpuinfo)
 halfCores=$(( totalCores / 2 ))
-echo "$(date +'%D %r') - system is deemed iddle if the 5 min cpu load average is less than ${halfCores}"
+echo "$(date +'%T') - system is deemed iddle if the 5 min cpu load average is less than ${halfCores}"
 
 while [ true ]; do
     # the output format of `uptime` changes if the machine runs for longer than a day
@@ -60,7 +60,7 @@ while [ true ]; do
     #  more than a day: 22:54:03 up 2 days,  2:12,  1 user,  load average: 0.53, 1.16, 1.40
     loadAvg=$(uptime)
     loadAvg=$(echo ${loadAvg#*load average: } | cut -d, -f2)
-    echo "$(date +'%D %r') - 5 min load avg = $loadAvg"
+    echo "$(date +'%T') - 5 min load avg = $loadAvg"
     
     # perform dnf lookup if the system is iddle
     if [[ $loadAvg < $halfCores ]]; then
@@ -76,10 +76,10 @@ while [ true ]; do
         dnf list updates > ${packagesRawFile}
         regex='^(([[:alnum:]]|\.|_|-)+[[:blank:]]+){2}([[:alnum:]]|\.|_|-|[[:blank:]])+$'
         packages=$(grep -cE $regex ${packagesRawFile})
-        echo -n "$(date +'%D %r') - " 
+        echo -n "$(date +'%T') - " 
         
         if [[ $packages > 0 ]]; then
-            echo "$packages new update(s)"
+            echo "$packages new package update(s)"
             packagesFile=${outputDir}/dnf.packages    # file to list the new packages
             # extract the actual packages from the raw dnf data
             grep -E $regex ${packagesRawFile} > ${packagesFile}
@@ -97,7 +97,7 @@ while [ true ]; do
             rm -f ${outputDir}/dnf.packages*
         fi
     else
-        echo "$(date +'%D %r') - load average too high, trying again later"
+        echo "$(date +'%T') - load average too high, trying again later"
     fi
     
     sleep 5m &   # run the sleep process in the background so we can kill it if we get a terminate signal
