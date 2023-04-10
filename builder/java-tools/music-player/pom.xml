@@ -53,10 +53,10 @@
       <plugin>
         <artifactId>maven-resources-plugin</artifactId>
         <executions>
+          <!-- copy external configuration files to the target folder, these files are not packaged inside the jar -->
           <execution>
             <id>copy-resources</id>
-            <!-- here the phase you need -->
-            <phase>package</phase>
+            <phase>process-resources</phase>
             <goals>
               <goal>copy-resources</goal>
             </goals>
