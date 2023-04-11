@@ -8,9 +8,9 @@ conky.config = {
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'bottom_right',  -- top|middle|bottom_left|right
-  gap_x = 5,
-  gap_y = 5,
+  alignment = 'bottom_left',  -- top|middle|bottom_left|right
+  gap_x = 150,
+  gap_y = 119,
 
   -- window settings
   minimum_width = 189,      -- conky will add an extra pixel to this  

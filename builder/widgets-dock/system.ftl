@@ -9,7 +9,7 @@ conky.config = {
   -- window alignment
   alignment = 'top_left',  -- top|middle|bottom_left|right
   gap_x = 150,
-  gap_y = 203,
+  gap_y = 120,
 
   -- window settings
   minimum_width = 189,      -- conky will add an extra pixel to this  
@@ -122,7 +122,7 @@ ${endif}\
 ${if_existing /tmp/conky/dnf.packages.formatted}\
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-top.png -p 0,[=y?c]}\
 <#assign y += top>
-<#if system == "desktop"><#assign maxLines = 62><#else><#assign maxLines = 23></#if>
+<#if system == "desktop"><#assign maxLines = 54><#else><#assign maxLines = 23></#if>
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu.png -p 0,[=y?c]}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-dnf.png -p 120,[=(y+2)?c]}\
