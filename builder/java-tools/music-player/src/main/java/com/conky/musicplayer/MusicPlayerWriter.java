@@ -13,6 +13,7 @@ import java.nio.file.StandardOpenOption;
 public class MusicPlayerWriter {
     private static final Logger logger = LoggerFactory.getLogger(MusicPlayerWriter.class);
     public static final String FILE_PREFIX = "musicplayer";
+    public static final String ALBUM_ART = FILE_PREFIX + ".albumArt";
     private static final String ALBUM_ART_PATH = "albumArtPath";
     private final String outputDirectory;
 
@@ -47,6 +48,7 @@ public class MusicPlayerWriter {
         if (player.getAlbumArtPath() != null) {
             writeFile(ALBUM_ART_PATH, player.getAlbumArtPath());
         } else {
+            // if no album art is available, delete the corresponding album art file
             Path coverArt = Paths.get(outputDirectory, FILE_PREFIX + "." + ALBUM_ART_PATH);
             try {
                 Files.deleteIfExists(coverArt);

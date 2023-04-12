@@ -40,6 +40,11 @@ public class MusicPlayer {
         trackInfo.setAlbumArtPath(player.getAlbumArtPath());
     }
 
+    /**
+     * Update the playback status of the music player
+     * @param status new status
+     * @return <tt>true</tt> if the property was updated, <tt>false</tt> otherwise (ex. providing a null)
+     */
     public boolean setPlaybackStatus(String status) {
         if (status != null) {
             try {
@@ -54,10 +59,14 @@ public class MusicPlayer {
         return false;
     }
 
+    /**
+     * Update the music player's track info, ie. the song currently being played
+     * @param trackInfo new track details
+     * @return <tt>true</tt> if the property was updated, <tt>false</tt> otherwise (ex. providing a null)
+     */
     public boolean setTrackInfo(TrackInfo trackInfo) {
         if (trackInfo != null) {
             this.trackInfo = trackInfo;
-
             return true;
         }
 

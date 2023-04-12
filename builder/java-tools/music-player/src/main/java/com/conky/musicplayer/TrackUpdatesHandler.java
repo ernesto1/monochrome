@@ -21,7 +21,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Map;
 
-import static com.conky.musicplayer.MusicPlayerWriter.FILE_PREFIX;
+import static com.conky.musicplayer.MusicPlayerWriter.ALBUM_ART;
 
 /**
  * Handler for analyzing media player property change signals, ie. <tt>org.freedesktop.DBus.Properties.PropertiesChanged</tt>.<br>
@@ -258,7 +258,7 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
      */
     private String downloadAlbumArt(String url) {
         String id = url.substring(url.lastIndexOf('/') + 1);    // get the resource name
-        Path albumArtPath = Paths.get(outputDirectory, FILE_PREFIX + ".albumArt." + id);
+        Path albumArtPath = Paths.get(outputDirectory, ALBUM_ART + "." + id);
 
         if (Files.notExists(albumArtPath, LinkOption.NOFOLLOW_LINKS)) {
             try {

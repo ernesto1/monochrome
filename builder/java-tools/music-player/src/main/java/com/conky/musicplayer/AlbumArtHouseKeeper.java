@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -19,25 +20,31 @@ public class AlbumArtHouseKeeper implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(AlbumArtHouseKeeper.class);
     private String directory;
     private int threshold;
+    private MusicPlayerDatabase db;
 
     /**
      * Creates a new instance of this album housekeeper thread
-     * @param directory directory where album art is stored
-     * @param threshold cutoff in minutes to determine old files
+     *
+     * @param directory      directory where album art is stored
+     * @param threshold      cutoff in minutes to determine old files
+     * @param playerDatabase database of available music players
      */
-    public AlbumArtHouseKeeper(String directory, int threshold) {
+    public AlbumArtHouseKeeper(String directory, int threshold, MusicPlayerDatabase playerDatabase) {
         this.directory = directory;
         this.threshold = threshold;
+        this.db = playerDatabase;
     }
 
     @Override
     public void run() {
         logger.debug("deleting old album art");
+        // get current music player images in use, we don't want to delete this
+        Set<String> imagesInUse = db.getAlbumArtPaths();
         Instant now = Instant.now();
 
         try {
             Files.list(Paths.get(directory))
-                 .filter(p -> p.getFileName().toString().startsWith(MusicPlayerWriter.FILE_PREFIX + "."))
+                 .filter(p -> p.getFileName().toString().startsWith(MusicPlayerWriter.ALBUM_ART))
                  .collect(Collectors.toList())
                  .stream()
                  .forEach(image -> {
@@ -46,7 +53,7 @@ public class AlbumArtHouseKeeper implements Runnable {
                         Instant lastAccessTime = attributes.lastAccessTime().toInstant();
                         long minutes = Duration.between(lastAccessTime, now).toMinutes();
 
-                        if (minutes > threshold) {
+                        if (minutes > threshold && !imagesInUse.contains(image.toString())) {
                             logger.debug("deleting file: {}", image.getFileName());
                             logger.debug("last access time was: {}, ie. {} minutes ago", lastAccessTime, minutes);
                             Files.deleteIfExists(image);

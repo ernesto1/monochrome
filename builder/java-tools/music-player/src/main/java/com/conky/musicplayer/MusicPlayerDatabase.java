@@ -3,10 +3,8 @@ package com.conky.musicplayer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * <h2>Overview</h2>
@@ -153,5 +151,17 @@ public class MusicPlayerDatabase {
         }
 
         determineActivePlayer();
+    }
+
+    /**
+     * Returns a set of the current album art images in use by the players available in this database
+     * @return a <tt>Set</tt> containing the file path to the current album art in use
+     */
+    public Set<String> getAlbumArtPaths() {
+        Set<String> images = musicPlayers.values()
+                                         .stream()
+                                         .map(player -> player.getAlbumArtPath())
+                                         .collect(Collectors.toSet());
+        return images;
     }
 }

@@ -67,16 +67,16 @@ public class NowPlaying {
         SUPPORTED_PLAYERS = (List<String>) config.getOrDefault("supportedPlayers", SUPPORTED_PLAYERS);
 
         try (DBusConnection dbus = DBusConnectionBuilder.forSessionBus().build()) {
-            // register shut down hooks
-            ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-            executorService.scheduleAtFixedRate(new AlbumArtHouseKeeper(OUTPUT_DIR, ALBUM_CUTOFF), 31, 30, TimeUnit.MINUTES);
-            registerShutdownHooks(dbus, executorService);
-
             // initialize utility classes
             MusicPlayerWriter writer = new MusicPlayerWriter(OUTPUT_DIR);
             writer.init();
             MusicPlayerDatabase playerDatabase = new MusicPlayerDatabase(writer, SUPPORTED_PLAYERS);
             playerDatabase.init();
+
+            // maintenance operations
+            ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+            executorService.scheduleAtFixedRate(new AlbumArtHouseKeeper(OUTPUT_DIR, ALBUM_CUTOFF, playerDatabase), 65, 30, TimeUnit.MINUTES);
+            registerShutdownHooks(dbus, executorService);
 
             // TODO upon boot can we identify what are the current available music players?
 
@@ -126,7 +126,7 @@ public class NowPlaying {
             }
         });
         Runtime.getRuntime().addShutdownHook(closeDbusConnectionHook);
-        // TODO do not delete album art of players in the database
+
         // shut down hook for deleting the conky music player output files
         Thread deleteOutputFiles = new Thread(() -> {
             logger.info("deleting all output files");
