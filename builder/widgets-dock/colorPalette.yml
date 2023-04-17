@@ -15,9 +15,9 @@ grape:
     writeGraph: 51295e a36dec
   border: false             # add 1px border to panel sidebar width - optional, default is true
                             # set to 'false' for sidebars that don't have an accent border
-orange:
+yellow:
   image:
-    primaryColor: orange
+    primaryColor: yellow
     secondaryColor: green
   colors:
     text: white

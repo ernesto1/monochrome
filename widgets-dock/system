@@ -55,9 +55,9 @@ conky.config = {
 
 conky.text = [[
 # :::::::::::: top cpu processes
-${image ~/conky/monochrome/images/widgets-dock/orange-menu-top.png -p 0,0}\
-${image ~/conky/monochrome/images/widgets-dock/orange-menu.png -p 0,19}\
-${image ~/conky/monochrome/images/widgets-dock/orange-menu-bottom.png -p 0,128}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-top.png -p 0,0}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu.png -p 0,19}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-bottom.png -p 0,128}\
 ${voffset 2}${color1}${offset 5}process${alignr 5}cpu   pid${voffset 3}
 ${template1 1}
 ${template1 2}
@@ -67,8 +67,8 @@ ${template1 5}
 ${template1 6}
 ${template1 7}
 # :::::::::::: top mem processes
-${image ~/conky/monochrome/images/widgets-dock/orange-menu-top.png -p 0,140}\
-${image ~/conky/monochrome/images/widgets-dock/orange-menu-bottom.png -p 0,268}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-top.png -p 0,140}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-bottom.png -p 0,268}\
 ${voffset 12}${color1}${offset 5}process${alignr 5}memory   pid${voffset 3}
 ${template2 1}
 ${template2 2}
@@ -79,7 +79,7 @@ ${template2 6}
 ${template2 7}
 # :::::::::::: network
 # assumption: only one network device will be connected to the internet at a time
-${image ~/conky/monochrome/images/widgets-dock/orange-menu-horizontal.png -p 0,280}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-horizontal.png -p 0,280}\
 ${image ~/conky/monochrome/images/menu-blank.png -p 0,351}\
 # :::: ethernet
 ${if_up enp0s25}\
@@ -95,13 +95,13 @@ ${endif}\
 ${voffset 10}\
 # :::::::::::: bittorrent peers
 ${if_running transmission-gt}\
-${image ~/conky/monochrome/images/widgets-dock/orange-menu-horizontal.png -p 0,356}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-horizontal.png -p 0,356}\
 ${voffset 2}${offset 5}${color1}bittorrent${goto 75}${color}${tcp_portmon 51413 51413 count} peer(s)
 ${image ~/conky/monochrome/images/menu-blank.png -p 0,375}\
-${image ~/conky/monochrome/images/widgets-dock/orange-menu-top-flat.png -p 0,376}\
-${image ~/conky/monochrome/images/widgets-dock/orange-menu.png -p 0,395}\
-${image ~/conky/monochrome/images/widgets-dock/orange-menu-bittorrent.png -p 38,410}\
-${image ~/conky/monochrome/images/widgets-dock/orange-menu-bottom.png -p 0,552}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-top-flat.png -p 0,376}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu.png -p 0,395}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-bittorrent.png -p 38,410}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-bottom.png -p 0,552}\
 ${voffset 7}${offset 5}${color1}ip address${alignr 5}remote port${voffset 3}
 ${if_match ${tcp_portmon 51413 51413 count} > 0}\
 ${template3 0}
@@ -124,11 +124,11 @@ ${voffset 208}\
 ${endif}\
 # :::::::::::: package updates
 ${if_existing /tmp/conky/dnf.packages.formatted}\
-${image ~/conky/monochrome/images/widgets-dock/orange-menu-top.png -p 0,564}\
-${image ~/conky/monochrome/images/widgets-dock/orange-menu.png -p 0,583}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-top.png -p 0,564}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu.png -p 0,583}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
-${image ~/conky/monochrome/images/widgets-dock/orange-menu-dnf.png -p 120,585}\
-${lua_parse bottom_edge_parse widgets-dock orange-menu-bottom.png 0 583 2 ${lines /tmp/conky/dnf.packages.formatted} 54}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dnf.png -p 120,585}\
+${lua_parse bottom_edge_parse widgets-dock yellow-menu-bottom.png 0 583 2 ${lines /tmp/conky/dnf.packages.formatted} 54}\
 ${voffset 2}${offset 5}${color1}package${alignr 5}version${voffset 4}
 ${color}${execpi 30 head -n 54 /tmp/conky/dnf.packages.formatted}${voffset 5}
 ${endif}\
