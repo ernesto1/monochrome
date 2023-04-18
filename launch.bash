@@ -166,8 +166,7 @@ if [[ ! -z ${layoutFile} ]]; then
 fi
 
 echo -e '\n::: killing the currently running processes of this conky suite'
-echo -e 'PID      process'
-pgrep -f 'conky/monochrome' -l -a
+pgrep -f 'conky/monochrome' -l -a | sed 's/ /:/' | column -s ':' -t -N PID,process
 pkill -f 'conky/monochrome'
 sleep 1s  # wait a bit in order to capture the STDOUT of the 'dnfPackageLookup.bash' script
           # it tends to print right below the 'launching conky' banner below
