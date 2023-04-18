@@ -54,7 +54,7 @@ conky.config = {
   -- top mem process
   template1 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${alignr 5}${top_mem mem_res \1} ${top_mem pid \1}]],
   -- torrent peer ip/port: ${template3 #}
-  template2 = [[${voffset 3}${offset 5}${color}${tcp_portmon 51413 51413 rip \1}${alignr 68}${tcp_portmon 51413 51413 rport \1}]]
+  template2 = [[${voffset 3}${offset 5}${color}${tcp_portmon 51413 51413 rip \1}${alignr 64}${tcp_portmon 51413 51413 rport \1}]]
 };
 
 conky.text = [[
@@ -120,7 +120,7 @@ ${image ~/conky/monochrome/images/menu-blank.png -p 160,[=(y - top)?c]}\
 <#assign body = 165, y+= body>
 ${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
 <#assign y += space>
-${voffset 11}${offset 5}${color1}ip address${alignr 68}remote port${voffset 3}
+${voffset 11}${offset 5}${color1}ip address${alignr 64}remote port${voffset 3}
 ${if_match ${tcp_portmon 51413 51413 count} > 0}\
 <#list 0..9 as x>
 ${template2 [=x]}
