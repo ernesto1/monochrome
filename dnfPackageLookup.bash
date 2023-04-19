@@ -29,7 +29,7 @@ width=35
 while (( "$#" )); do
   case $1 in
     --width)
-      width=$2
+      width=$2    # total width of the package update table, measured in number of characters
       shift 2
       ;;
     *)
@@ -44,11 +44,11 @@ if [[ $width -lt 20 ]]; then
   exit 1
 fi
 
-width=$(( width - 6 - 1 ))      # column width for package name
+echo "$(date +'%T') - starting dnf repo package lookup"
+echo "$(date +'%T') - output list of new packages will be of ${width} characters"
+packageWidth=$(( width - 6 - 1 ))  # width for the package name column
 outputDir=/tmp/conky
 mkdir -p ${outputDir}
-echo "$(date +'%T') - starting dnf repo package lookup"
-echo "$(date +'%T') - output list of new packages will be of ${width} caracters"
 totalCores=$(grep -c processor /proc/cpuinfo)
 halfCores=$(( totalCores / 2 ))
 echo "$(date +'%T') - system is deemed iddle if the 5 min cpu load average is less than ${halfCores}"
@@ -89,7 +89,7 @@ while [ true ]; do
             # - an ${offset} is added to each line in order for the package list to be printed with a left border
             # - packages of interest are surrounded by a ${color} variable in order to have them highlighted
             highlightRegex='kernel\|firefox\|transmission'
-            cat ${packagesFile} | awk "{ printf \"%-${width}.${width}s %6.6s\n\", \$1, \$2 }" \
+            cat ${packagesFile} | awk "{ printf \"%-${packageWidth}.${packageWidth}s %6.6s\n\", \$1, \$2 }" \
             | sed 's/^/${voffset 2}${offset 5}/' \
             | sed "s:\($highlightRegex\):$\{color2\}\1$\{color\}:" > ${outputDir}/dnf.packages.formatted
         else
