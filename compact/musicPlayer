@@ -1,0 +1,71 @@
+conky.config = {
+  lua_load = '~/conky/monochrome/musicPlayer.lua ~/conky/monochrome/menu.lua',
+  lua_draw_hook_pre = 'reset_state',
+  
+  update_interval = 2,    -- update interval in seconds
+    xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
+  double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
+
+  -- window alignment
+  alignment = 'bottom_right',  -- top|middle|bottom_left|right
+  gap_x = 5,
+  gap_y = 5,
+
+  -- window settings
+  minimum_width = 189,      -- conky will add an extra pixel to this  
+  maximum_width = 189,
+  minimum_height = 145,
+  own_window = true,
+  own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
+  own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+
+  -- window borders
+  draw_borders = false,     -- draw borders around the conky window
+  border_width = 1,         -- width of border window in pixels
+  border_inner_margin = 0,  -- margin between the border and text in pixels
+  border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
+  
+  -- transparency configuration
+  draw_blended = false,
+  own_window_transparent = true,
+  own_window_argb_visual = true,  -- turn on transparency
+  own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
+  
+  -- images
+  imlib_cache_flush_interval = 250,
+
+  -- font settings
+  use_xft = false,
+  draw_shades = false,      -- black shadow on text (not good if text is black)
+  draw_outline = false,     -- black outline around text (not good if text is black)
+  -- colors
+  default_color = 'cf9c7b',  -- regular text
+  color1 = 'white'
+  
+  -- n.b. this conky requires the music-player java app to be running in the background
+};
+
+conky.text = [[
+# :::: cover art
+${if_existing /tmp/conky/musicplayer.albumArtPath}\
+${image ~/conky/monochrome/images/compact/burgundy-menu-top.png -p 0,0}\
+${image ~/conky/monochrome/images/compact/burgundy-menu.png -p 0,19}\
+${voffset 2}${alignc}${color1}${lua_parse read_file ${cat /tmp/conky/musicplayer.name}} : ${lua_parse read_file ${cat /tmp/conky/musicplayer.playbackStatus}}
+${image ~/conky/monochrome/images/compact/burgundy-menu-bottom.png -p 0,197}\
+${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4,19}\
+${lua image_offset 207}${voffset 196}\
+${else}\
+${image ~/conky/monochrome/images/compact/burgundy-menu-rhythmbox.png -p 0,0}\
+${voffset 36}${offset 63}${color1}${lua_parse read_file ${cat /tmp/conky/musicplayer.name}}
+${voffset 4}${offset 63}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.playbackStatus}}
+${lua image_offset 74}${voffset 12}\
+${endif}\
+# :::: track details
+${lua_parse draw_image ~/conky/monochrome/images/compact/burgundy-menu-horizontal.png 0}\
+${lua_parse draw_image ~/conky/monochrome/images/compact/burgundy-menu-horizontal-data.png 45}\
+${lua image_offset 71}${lua_parse draw_image ~/conky/monochrome/images/menu-blank.png 0}\
+${offset 5}${color1}title${goto 50}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.title}}
+${voffset 3}${offset 5}${color1}album${goto 50}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.album}}
+${voffset 3}${offset 5}${color1}artist${goto 50}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.artist}}
+${voffset 3}${offset 5}${color1}genre${goto 50}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.genre}}${voffset 5}
+]];

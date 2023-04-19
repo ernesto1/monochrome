@@ -94,7 +94,8 @@ while (( "$#" )); do
       ;;
     --compact)
       directory=${HOME}/conky/monochrome/compact
-      enablePackageLookup=false
+      width=30
+      enableMusicPlayerListener=true
       shift
       ;;
     --monitor)
@@ -233,5 +234,6 @@ if "$enablePackageLookup"; then
 fi
 
 if "$enableMusicPlayerListener"; then
+  echo -e "\n- now playing music service"
   java -jar ~/conky/monochrome/java/music-player-*.jar &
 fi
