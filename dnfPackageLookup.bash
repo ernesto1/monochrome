@@ -11,10 +11,20 @@ function usage {
 }
 
 function onExitSignal {
-  echo 'received shutdown signal, deleting output file and killing child processes'
+  log 'received shutdown signal, deleting output file and killing child processes'
   rm -f ${outputDir}/dnf.packages.formatted    # file read by conky
   kill $(jobs -p)     # kill any child processes, ie. the sleep command
   exit 0
+}
+
+# prints the message using logback compatible formatting
+# arguments:
+#    message  string to print
+function log {
+  local NOCOLOR='\033[0m'
+  local BLUE='\033[0;34m'
+  local ORANGE='\033[0;33m'
+  printf "$(date +'%T')     ${BLUE}INFO  ${ORANGE}$(basename $0)${NOCOLOR} - $1\n"
 }
 
 trap onExitSignal SIGINT SIGTERM
@@ -44,14 +54,14 @@ if [[ $width -lt 20 ]]; then
   exit 1
 fi
 
-echo "$(date +'%T') - starting dnf repo package lookup"
-echo "$(date +'%T') - output list of new packages will be of ${width} characters"
+log 'starting dnf repo package lookup'
+log "output list of new packages will be of ${width} characters"
 packageWidth=$(( width - 6 - 1 ))  # width for the package name column
 outputDir=/tmp/conky
 mkdir -p ${outputDir}
 totalCores=$(grep -c processor /proc/cpuinfo)
 halfCores=$(( totalCores / 2 ))
-echo "$(date +'%T') - system is deemed iddle if the 5 min cpu load average is less than ${halfCores}"
+log "system is deemed iddle if the 5 min cpu load average is less than ${halfCores}"
 
 while [ true ]; do
     # the output format of `uptime` changes if the machine runs for longer than a day
@@ -60,7 +70,7 @@ while [ true ]; do
     #  more than a day: 22:54:03 up 2 days,  2:12,  1 user,  load average: 0.53, 1.16, 1.40
     loadAvg=$(uptime)
     loadAvg=$(echo ${loadAvg#*load average: } | cut -d, -f2)
-    echo "$(date +'%T') - 5 min load avg = $loadAvg"
+    log "5 min load avg = $loadAvg"
     
     # perform dnf lookup if the system is iddle
     if [[ $loadAvg < $halfCores ]]; then
@@ -76,10 +86,9 @@ while [ true ]; do
         dnf list updates > ${packagesRawFile}
         regex='^(([[:alnum:]]|\.|_|:|-)+[[:blank:]]+){2}([[:alnum:]]|\.|_|-|[[:blank:]])+$'
         packages=$(grep -cE $regex ${packagesRawFile})
-        echo -n "$(date +'%T') - " 
         
         if [[ $packages > 0 ]]; then
-            echo "$packages new package update(s)"
+            log "$packages new package update(s)"
             packagesFile=${outputDir}/dnf.packages    # file to list the new packages
             # extract the actual packages from the raw dnf data
             grep -E $regex ${packagesRawFile} > ${packagesFile}
@@ -93,11 +102,11 @@ while [ true ]; do
             | sed 's/^/${voffset 2}${offset 5}/' \
             | sed "s:\($highlightRegex\):$\{color2\}\1$\{color\}:" > ${outputDir}/dnf.packages.formatted
         else
-            echo 'no updates available'
+            log 'no updates available'
             rm -f ${outputDir}/dnf.packages*
         fi
     else
-        echo "$(date +'%T') - load average too high, trying again later"
+        log 'load average too high, trying again later'
     fi
     
     sleep 5m &   # run the sleep process in the background so we can kill it if we get a terminate signal
