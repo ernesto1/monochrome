@@ -138,7 +138,7 @@ while (( "$#" )); do
   esac
 done
 
-echo -e "::: launching conky with the following settings"
+echo -e "::: launching conky with the following settings\n"
 echo    "conky folder:         ${directory}"
 
 if [[ ${monitor} ]]; then
@@ -152,12 +152,13 @@ if [[ ! -z ${layoutFile} ]]; then
   # TODO file integrity: ensure number of override elements is 2 or 3
 fi
 
-echo -e '\n::: killing the currently running processes of this conky suite'
+echo -e '\n::: killing the currently running processes of this conky suite\n'
 pgrep -f 'conky/monochrome' -l -a | sed 's/ /:/' | column -s ':' -t -N PID,process
+echo  # add line break in order to print job exit messages on a separate line
 pkill -f 'conky/monochrome'
 sleep 1s  # wait a bit in order to capture the STDOUT of the 'dnfPackageLookup.bash' script
           # it tends to print right below the 'launching conky' banner below
-echo -e "\n::: launching conky configs"
+echo -e "\n::: launching conky configs\n"
 IFS=$'\n'
 
 # all available conky configs in the target directory will be launched
@@ -220,11 +221,11 @@ do
   IFS=$'\n'
 done
 
-echo -e "\n::: start support services"
+echo -e "\n::: start support services\n"
 
 # using shell builtins
 if "$enablePackageLookup"; then
-  echo -e "\n- dnf package lookup service"
+  echo "- dnf package updates service"
 
   if [[ "${width}" ]]; then
     dnfParameters=(--width ${width})
@@ -234,6 +235,6 @@ if "$enablePackageLookup"; then
 fi
 
 if "$enableMusicPlayerListener"; then
-  echo -e "\n- now playing music service"
+  echo "- now playing music service"
   java -jar ~/conky/monochrome/java/music-player-*.jar &
 fi
