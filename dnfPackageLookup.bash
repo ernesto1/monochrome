@@ -69,7 +69,7 @@ while [ true ]; do
     #  within a day:    12:20:31 up 37 min,  1 user,  load average: 0.86, 0.73, 0.66
     #  more than a day: 22:54:03 up 2 days,  2:12,  1 user,  load average: 0.53, 1.16, 1.40
     loadAvg=$(uptime)
-    loadAvg=$(echo ${loadAvg#*load average: } | cut -d, -f2)
+    loadAvg=$(echo ${loadAvg#*load average: } | cut -d, -f2 | tr -d ' ')
     log "5 min load avg = $loadAvg"
     
     # perform dnf lookup if the system is iddle
