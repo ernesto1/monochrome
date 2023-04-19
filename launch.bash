@@ -63,20 +63,6 @@ function detectDuplicateEntries() {
   fi
 }
 
-# wrapper function to launch a conky config
-# it allows you to call the function with output redirection if required (see the --silent flag)
-function launchConky() {
-  # patch | some conky's are overlayed on top of others, in order for this to render correctly
-  #         these conkys have to be executed last.  We launch these conkys with a delay.
-  if [[ -n $(echo $1 | grep -E 'memory.+|temperature') ]]; then
-    echo '  delaying conky by 1 second'
-    local delayCmd=('--pause' 1)
-  fi
-  
-  conky -c "$@" "${delayCmd[@]}" &
-}
-
-
 
 # ---------- script begins
 # ensure at least one parameter was provided
@@ -177,9 +163,9 @@ IFS=$'\n'
 # config file names are expected to not have an extension, ie. cpu vs cpu.cfg
 for conkyConfigPath in $(find "${directory}" -maxdepth 1 -not -name '*.*' -not -type d)
 do
-  conkyConfig=${conkyConfigPath##*/}    # remove the file path /home/ernesto/monochrome/.. from the file name
+  conkyConfig=${conkyConfigPath##*/}    # remove the file path ~/conky/monochrome/.. from the file name
   echo "- ${conkyConfig}"
-  # 1. filter conky override, ie. exclude a configuration from being loaded
+  # 1. conky exclusion override, ie. exclude a configuration from being loaded
   #    override is of the format: ignore:<conkyFilename>
   #                           ex. ignore:externalDevices
   [[ -f ${layoutFile} ]] && ignore=$(grep -v \# "${layoutFile}" | grep ignore:"${conkyConfig}"$)
@@ -207,6 +193,8 @@ do
     fi
     
     echo "  applying the position override: ${layoutOverride[@]}"
+    arguments=(${layoutOverride[@]})
+    unset layoutOverride      # clear the array for the next iteration
   fi
 
   # 3. monitor/screen override
@@ -214,15 +202,20 @@ do
     sed -i "s/xinerama_head *= *[[:digit:]]/xinerama_head = ${monitor}/" ${conkyConfigPath}
   fi
 
-  # 4. launch conky
+  # 4. silence conky output
   if [[ $silent ]]; then
-    launchConky "${conkyConfigPath}" ${layoutOverride[@]} 2> /dev/null
-  else
-    launchConky "${conkyConfigPath}" ${layoutOverride[@]}
-  fi  
+    arguments+=(--quiet)
+  fi
   
-  unset layoutOverride    # clear the variable for the next iteration, we don't want to run an override
-                          # for the wrong conky
+  # patch | some conky's are overlayed on top of others, in order for this to render correctly
+  #         these conkys have to be executed last.  We launch these conkys with a delay.
+  if [[ -n $(echo $conkyConfig | grep -E 'memory.+|temperature') ]]; then
+    echo '  delaying conky by 1 second'
+    arguments+=('--pause' 1)
+  fi
+  
+  conky -c ${conkyConfigPath} "${arguments[@]}" &  
+  unset arguments
   IFS=$'\n'
 done
 
