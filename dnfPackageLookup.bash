@@ -71,10 +71,10 @@ while [ true ]; do
         # RPM Fusion for Fedora 32 - Nonfree - Updates    0.0  B/s |   0  B     02:00
         # Last metadata expiration check: 0:15:45 ago on Mon 16 Aug 2021 10:29:07 AM EDT.
         # Available Upgrades
-        # code.x86_64                      1.59.0-1628120127.el8              code        
-        # skypeforlinux.x86_64             8.75.0.140-1                       skype-stable        
+        # code.x86_64                      1.59.0-1628120127.el8        code        
+        # containers-common.noarch         4:1-82.fc37                  updates
         dnf list updates > ${packagesRawFile}
-        regex='^(([[:alnum:]]|\.|_|-)+[[:blank:]]+){2}([[:alnum:]]|\.|_|-|[[:blank:]])+$'
+        regex='^(([[:alnum:]]|\.|_|:|-)+[[:blank:]]+){2}([[:alnum:]]|\.|_|-|[[:blank:]])+$'
         packages=$(grep -cE $regex ${packagesRawFile})
         echo -n "$(date +'%T') - " 
         
