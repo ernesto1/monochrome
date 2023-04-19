@@ -24,7 +24,7 @@ function log {
   local NOCOLOR='\033[0m'
   local BLUE='\033[0;34m'
   local ORANGE='\033[0;33m'
-  printf "$(date +'%T')     ${BLUE}INFO  ${ORANGE}$(basename $0)${NOCOLOR} - $1\n"
+  printf "$(date +'%T.%3N') ${BLUE}INFO  ${ORANGE}$(basename $0)${NOCOLOR} - $1\n"
 }
 
 trap onExitSignal SIGINT SIGTERM
