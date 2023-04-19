@@ -14,16 +14,17 @@ Keep tabs on your system's cpu, memory, disk, network, battery usage and device 
 ### Widgets
 ![widgets](images/screenshots/widgets.jpg)
 
-# Scripts
-These shell scripts were written to support this conky setup:
+# Supporting applications
+These command line jobs were written to support this conky setup:
 
-- A launcher script for executing multiple conky configs
-- A script to monitor for new package updates
+- A bash script for launching multiple conky configs and supporting applications
+- A bash script to monitor for new dnf package updates
+- A java program that listens to the dbus for music player activity
 
-For more details on these scripts [see this wiki](https://github.com/ernesto1/monochrome/wiki/Scripts).
+For more details on these applications [see this wiki](https://github.com/ernesto1/monochrome/wiki/Scripts).
 
 # How to install
-### Dependencies
+## Dependencies
 You only require to have `conky` installed on your system.  
 On **Fedora** install it by running:
 
@@ -45,34 +46,44 @@ Most fonts used should come by default in your distro:
 - URW Gothic
 - URW Gothic Demi
 
-### Download the code for these conky scripts
+## Download the code for these conky scripts
 Create the `~/conky` directory and clone this repository
 
-       $ mkdir ~/conky
-       $ cd ~/conky
-       $ git clone https://github.com/ernesto1/monochrome.git
+```shell
+$ mkdir ~/conky
+$ cd ~/conky
+$ git clone https://github.com/ernesto1/monochrome.git
+```
 
 Alternatively if you only want the conky configurations and their images, you can download the latest `monochrome.zip` file from the [releases page](https://github.com/ernesto1/monochrome/releases).  This way you don't get any of the build assets.
 
 ### Configuration
-The [wiki](https://github.com/ernesto1/monochrome/wiki) outlines items that may require configuration in order to customize this conky to your system, ex. device names such as network cards and hard drives
+If you are new to conky the [wiki](https://github.com/ernesto1/monochrome/wiki) outlines items that may require configuration in order to customize this conky to your system, ex. device names such as network cards and hard drives
 
+### Building the Music Player App
+The music player conky requires the supporting java app in order to function.  
+You require `maven` and the `java jdk` in order to build it from source.
+
+```shell
+# ::: fedora users
+# the java jdk comes installed by default on fedora
+# to install maven run
+dnf install maven
+
+# ::: building the music app from source
+cd ~/conky/monochrome/builder/java-tools
+mvn clean package
+mkdir -p ~/conky/monochrome/java
+rm -rf ~/conky/monochrome/java/*
+cp -r */target/{lib,*.jar,*.yaml,*.xml} ~/conky/monochrome/java
+```
 
 # How to run
-Run the launch script with the theme you want:
+Run the launch script with the theme you want.
 
-    - Glass dock
-
-      $ ~/conky/monochrome/launch.bash --glass
-
-    - Compact dock
-
-      $ ~/conky/monochrome/launch.bash --compact
-
-    - Widgets dock
-
-      $ ~/conky/monochrome/launch.bash --widgets-dock
-
-    - Widgets
-
-      $ ~/conky/monochrome/launch.bash --widgets
+Theme| Command
+---|---
+Glass|`~/conky/monochrome/launch.bash --glass`
+Compact|`~/conky/monochrome/launch.bash --compact`
+Widgets dock | `~/conky/monochrome/launch.bash --widgets-dock`
+Widgets | `~/conky/monochrome/launch.bash --widgets`
