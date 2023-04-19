@@ -15,16 +15,18 @@ jobs:
         uses: actions/checkout@v2
       - name: Build java applications
         run: |
+          echo ':::::::: build the java applications'
           cd builder/java-tools
           mvn clean package
           mkdir -p ${GITHUB_WORKSPACE}/java
-          cp -rn */target/{lib,*.jar,*.yaml,*.xml} ${GITHUB_WORKSPACE}/java
+          echo ":::::::: deploy apps to the project's java folder"
+          cp -vrn */target/{lib,*.jar,*.yaml,*.xml} ${GITHUB_WORKSPACE}/java
       - name: Create archive
         run: |
           shopt -s extglob
-          echo ':::: adding the files:'
+          echo ':::::::: adding the files'
           ls !(builder|images) images/*/*.{png,jpg}
-          echo -e '\n:::: creating the zip file:'
+          echo -e '\n:::::::: creating the zip file'
           mkdir monochrome
           cp -r --parents !(builder|images|monochrome) images/*/*.{png,jpg,gif} monochrome
           mkdir build

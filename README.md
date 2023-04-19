@@ -77,6 +77,7 @@ mkdir -p ~/conky/monochrome/java
 rm -rf ~/conky/monochrome/java/*
 cp -r */target/{lib,*.jar,*.yaml,*.xml} ~/conky/monochrome/java
 ```
+If you don't want to build this manually, you can download the latest `monochrome.zip` file from the [releases page](https://github.com/ernesto1/monochrome/releases).
 
 # How to run
 Run the launch script with the theme you want.
