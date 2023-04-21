@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * <b>DBus signal handler</b><br>
  * Detects when a music player is closed by the user by analyzing the <tt>dbus name owner changed</tt> signal.<br>
  * <br>
  * The signal contains three arguments:

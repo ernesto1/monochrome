@@ -53,6 +53,7 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
     @Override
     public void handle(Properties.PropertiesChanged signal) {
         // ignore signals for interfaces we are not interested in
+        // TODO can we use signal match rules instead?
         if (!signal.getPath().equals("/org/mpris/MediaPlayer2")) {
             return;
         }
@@ -126,7 +127,7 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
     /**
      * Queries an application through the dbus for a specific property
      *
-     * @param uniqueName unique name of the application under the dbus, ex. :1.146
+     * @param uniqueName unique connection name of the application under the dbus, ex. :1.146
      * @param object dbus object path
      * @param dbusInterface interface within the dbus object
      * @param property name of the property to query

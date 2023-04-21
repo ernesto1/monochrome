@@ -24,10 +24,10 @@ import java.util.concurrent.TimeUnit;
  * Once launched, the application will run continuously listening for any music player signals in the dbus.<br>
  * <br>
  * It uses the Media Player Remote Interfacing Specification (MPRIS) in order to detect song playback changes
- * triggered by the user and retrieve said song metadata for conky to display.<br>
+ * and retrieve said song metadata for conky to display.<br>
  * <br>
- * Song information is stored in separate files in the {@link #OUTPUT_DIR output directory}.  Output files are
- * {@link MusicPlayerWriter#FILE_PREFIX prefixed} for easy identification.
+ * Song information is stored in separate {@link MusicPlayerWriter#FILE_PREFIX prefixed} files
+ * in the {@link #OUTPUT_DIR output directory}.
  * @see <a href="https://github.com/hypfvieh/dbus-java">Java DBus library</a>
  * @see <a href="https://specifications.freedesktop.org/mpris-spec/latest/">Media Player Remote Interfacing Specification</a>
  */
@@ -47,7 +47,40 @@ public class NowPlaying {
     }
 
     public static void main(String[] args) {
-        // load the configuration file
+        loadConfigurationFile();
+
+        try (DBusConnection conn = DBusConnectionBuilder.forSessionBus().build()) {
+            // initialize utility classes
+            MusicPlayerWriter writer = new MusicPlayerWriter(OUTPUT_DIR);
+            writer.init();
+            MusicPlayerDatabase playerDatabase = new MusicPlayerDatabase(writer, SUPPORTED_PLAYERS);
+            playerDatabase.init();
+
+            // maintenance operations
+            ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+            executorService.scheduleAtFixedRate(new AlbumArtHouseKeeper(OUTPUT_DIR, ALBUM_CUTOFF, playerDatabase), 65, 30, TimeUnit.MINUTES);
+            registerShutdownHooks(conn, executorService);
+
+            // TODO upon boot can we identify what are the current available music players?
+
+            // listen for dbus signals of interest
+            // signal handlers run under a single thread, ie. signals are processed in the order they are received
+            AvailabilityHandler availabilityHandler = new AvailabilityHandler(playerDatabase);
+            conn.addSigHandler(DBus.NameOwnerChanged.class, availabilityHandler);
+            TrackUpdatesHandler trackUpdatesHandler = new TrackUpdatesHandler(OUTPUT_DIR, conn, playerDatabase);
+            conn.addSigHandler(Properties.PropertiesChanged.class, trackUpdatesHandler);
+            logger.info("listening to the dbus for media player activity");
+
+            while(true) {
+                // this will keep the program alive forever, we just wait for dbus signals to come in
+                TimeUnit.HOURS.sleep(1);
+            }
+        } catch (Exception e) {
+            logger.error("unable to interact with the dbus", e);
+        }
+    }
+
+    private static void loadConfigurationFile() {
         Map<String, Object> config = null;
 
         try {
@@ -65,50 +98,20 @@ public class NowPlaying {
         OUTPUT_DIR = (String) config.getOrDefault("outputDir", OUTPUT_DIR);
         ALBUM_CUTOFF = (Integer) config.getOrDefault("albumCutoff", ALBUM_CUTOFF);
         SUPPORTED_PLAYERS = (List<String>) config.getOrDefault("supportedPlayers", SUPPORTED_PLAYERS);
-
-        try (DBusConnection dbus = DBusConnectionBuilder.forSessionBus().build()) {
-            // initialize utility classes
-            MusicPlayerWriter writer = new MusicPlayerWriter(OUTPUT_DIR);
-            writer.init();
-            MusicPlayerDatabase playerDatabase = new MusicPlayerDatabase(writer, SUPPORTED_PLAYERS);
-            playerDatabase.init();
-
-            // maintenance operations
-            ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-            executorService.scheduleAtFixedRate(new AlbumArtHouseKeeper(OUTPUT_DIR, ALBUM_CUTOFF, playerDatabase), 65, 30, TimeUnit.MINUTES);
-            registerShutdownHooks(dbus, executorService);
-
-            // TODO upon boot can we identify what are the current available music players?
-
-            // listen for dbus signals of interest
-            // signal handlers run under a single thread, ie. signals are processed in the order they are received
-            AvailabilityHandler availabilityHandler = new AvailabilityHandler(playerDatabase);
-            dbus.addSigHandler(DBus.NameOwnerChanged.class, availabilityHandler);
-            TrackUpdatesHandler trackUpdatesHandler = new TrackUpdatesHandler(OUTPUT_DIR, dbus, playerDatabase);
-            dbus.addSigHandler(Properties.PropertiesChanged.class, trackUpdatesHandler);
-            logger.info("listening to the dbus for media player activity");
-
-            while(true) {
-                // this will keep the program alive forever, we just wait for dbus signals to come in
-                TimeUnit.HOURS.sleep(1);
-            }
-        } catch (Exception e) {
-            logger.error("unable to interact with the dbus", e);
-        }
     }
 
     /**
      * House cleaning items for when the program is killed.  Closes all the resources used or produced by this app.
      *
-     * @param dbus            dbus connection
+     * @param conn            dbus connection
      * @param executorService executor service used for deleting old album art images
      */
-    private static void registerShutdownHooks(DBusConnection dbus, ScheduledExecutorService executorService) {
+    private static void registerShutdownHooks(DBusConnection conn, ScheduledExecutorService executorService) {
         // create a shutdown hook for closing the dbus connection
         Thread closeDbusConnectionHook = new Thread(() -> {
             try {
                 logger.info("closing dbus connection");
-                dbus.close();
+                conn.close();
             } catch (Exception e) {
                 logger.error("unable to close resources", e);
             }
