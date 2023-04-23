@@ -14,7 +14,7 @@ import java.util.Objects;
 public class MusicPlayer {
     public static final MusicPlayer DUMMY_PLAYER = new MusicPlayer("Nameless Player", ":1.23");
     /**
-     * DBus unique name for this music player
+     * Unique connection name of the music player application under the dbus, ex. :1.23
      */
     private String dBusUniqueName;
     private String playerName;
@@ -128,15 +128,15 @@ public class MusicPlayer {
     }
 
     /**
-     * Determines if the given player has the same state as this player.
-     * A music player's state is considered the same if the following attributes are the same:
+     * Determines if the given player has the same state as this player.<br>
+     * A music player's state is considered the same if the following attributes are the equal:
      * <ul>
      *     <li>dbus unique name</li>
      *     <li>playback status</li>
      *     <li>track id</li>
      * </ul>
-     * @param otherPlayer
-     * @return
+     * @param otherPlayer the other player to compare this player to
+     * @return <tt>true</tt> if the state is the same, <tt>false</tt> otherwise
      */
     public boolean isSameState(MusicPlayer otherPlayer) {
         if (otherPlayer == null) return false;

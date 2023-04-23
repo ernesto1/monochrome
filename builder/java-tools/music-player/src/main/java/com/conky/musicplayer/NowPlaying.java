@@ -50,10 +50,10 @@ public class NowPlaying {
         loadConfigurationFile();
 
         try (DBusConnection conn = DBusConnectionBuilder.forSessionBus().build()) {
-            // initialize utility classes
+            // initialize data objects
             MusicPlayerWriter writer = new MusicPlayerWriter(OUTPUT_DIR);
             writer.init();
-            MusicPlayerDatabase playerDatabase = new MusicPlayerDatabase(writer, SUPPORTED_PLAYERS);
+            MusicPlayerDatabase playerDatabase = new MusicPlayerDatabase(SUPPORTED_PLAYERS, writer);
             playerDatabase.init();
 
             // maintenance operations
@@ -61,13 +61,16 @@ public class NowPlaying {
             executorService.scheduleAtFixedRate(new AlbumArtHouseKeeper(OUTPUT_DIR, ALBUM_CUTOFF, playerDatabase), 65, 30, TimeUnit.MINUTES);
             registerShutdownHooks(conn, executorService);
 
-            // TODO upon boot can we identify what are the current available music players?
-
+            // register any music players already running
+            ApplicationInquirer inquirer = new ApplicationInquirer(conn);
+            MetadataRetriever metadataRetriever = new MetadataRetriever(inquirer, OUTPUT_DIR);
+            MusicPlayerScout playerScout = new MusicPlayerScout(conn, metadataRetriever, playerDatabase);
+            playerScout.registerAvailablePlayers();
             // listen for dbus signals of interest
             // signal handlers run under a single thread, ie. signals are processed in the order they are received
             AvailabilityHandler availabilityHandler = new AvailabilityHandler(playerDatabase);
             conn.addSigHandler(DBus.NameOwnerChanged.class, availabilityHandler);
-            TrackUpdatesHandler trackUpdatesHandler = new TrackUpdatesHandler(OUTPUT_DIR, conn, playerDatabase);
+            TrackUpdatesHandler trackUpdatesHandler = new TrackUpdatesHandler(metadataRetriever, playerDatabase);
             conn.addSigHandler(Properties.PropertiesChanged.class, trackUpdatesHandler);
             logger.info("listening to the dbus for media player activity");
 

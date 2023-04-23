@@ -45,9 +45,9 @@ public class MusicPlayerDatabase {
     private Map<String, MusicPlayer> musicPlayers;
     private MusicPlayerWriter writer;
 
-    public MusicPlayerDatabase(MusicPlayerWriter writer, List<String> supportedPlayers) {
-        this.writer = writer;
+    public MusicPlayerDatabase(List<String> supportedPlayers, MusicPlayerWriter writer) {
         this.supportedPlayers = supportedPlayers;
+        this.writer = writer;
         musicPlayers = new HashMap<>();
     }
 
@@ -56,7 +56,7 @@ public class MusicPlayerDatabase {
     }
 
     /**
-     * Determine if the given player is a "supported" music player by this database.<br>
+     * Determines if the given player is a "supported" music player by this database.<br>
      * This would allow a client to filter out other media players on the dbus like a firefox youtube window for example.
      * @param playerName the player's name
      * @return <tt>true</tt> if the player is supported
@@ -73,6 +73,10 @@ public class MusicPlayerDatabase {
         return musicPlayers.get(playerName);
     }
 
+    /**
+     * Stores the music player in the database.  This action may update the current <i>in focus</i> player.
+     * @param player music player to store in the db
+     */
     public void save(MusicPlayer player) {
         musicPlayers.put(player.getPlayerName(), player);
         determineActivePlayer();

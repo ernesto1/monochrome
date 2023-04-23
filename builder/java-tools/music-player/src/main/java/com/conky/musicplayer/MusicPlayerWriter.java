@@ -56,6 +56,8 @@ public class MusicPlayerWriter {
                 logger.error("unable to delete the album art file", e);
             }
         }
+
+        logger.debug("writing track info to files completed");
     }
 
     private void writeFile(String filename, String data) {
