@@ -48,7 +48,7 @@ public class ConkyTemplate {
             root.putAll((Map<String, Object>) themes.get(color));
             logger.debug("global + theme data model: {}", root);
         } else {
-            logger.error("color scheme '{}' is not configured for this conky, available colors are {}", color, themes.keySet());
+            logger.error("color scheme '{}' is not configured for this conky, available colors are: {}", color, themes.keySet());
             System.exit(1);
         }
 
