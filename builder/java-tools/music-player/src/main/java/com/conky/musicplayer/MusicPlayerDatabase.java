@@ -158,7 +158,7 @@ public class MusicPlayerDatabase {
     }
 
     /**
-     * Returns a set of the current album art images in use by the players available in this database
+     * Returns a set of the paths to the album art images in use by the players available in this database
      * @return a <tt>Set</tt> containing the file path to the current album art in use
      */
     public Set<String> getAlbumArtPaths() {
@@ -167,5 +167,13 @@ public class MusicPlayerDatabase {
                                          .map(player -> player.getAlbumArtPath())
                                          .collect(Collectors.toSet());
         return images;
+    }
+
+    /**
+     * Returns the path to the image of the player currently in focus
+     * @return file path to an image as a <tt>String</tt>
+     */
+    public String getCurrentAlbumArtPath() {
+        return activePlayer.getAlbumArtPath();
     }
 }

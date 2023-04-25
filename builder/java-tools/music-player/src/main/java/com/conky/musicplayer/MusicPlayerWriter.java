@@ -57,7 +57,7 @@ public class MusicPlayerWriter {
             }
         }
 
-        logger.debug("writing track info to files completed");
+        logger.info("wrote track info to disk");
     }
 
     private void writeFile(String filename, String data) {

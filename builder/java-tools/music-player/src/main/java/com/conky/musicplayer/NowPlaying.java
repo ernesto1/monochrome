@@ -15,6 +15,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -56,14 +57,10 @@ public class NowPlaying {
             MusicPlayerDatabase playerDatabase = new MusicPlayerDatabase(SUPPORTED_PLAYERS, writer);
             playerDatabase.init();
 
-            // maintenance operations
-            ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-            executorService.scheduleAtFixedRate(new AlbumArtHouseKeeper(OUTPUT_DIR, ALBUM_CUTOFF, playerDatabase), 65, 30, TimeUnit.MINUTES);
-            registerShutdownHooks(conn, executorService);
-
             // register any music players already running
             ApplicationInquirer inquirer = new ApplicationInquirer(conn);
-            MetadataRetriever metadataRetriever = new MetadataRetriever(inquirer, OUTPUT_DIR);
+            ExecutorService albumArtExecutor = Executors.newSingleThreadExecutor();
+            MetadataRetriever metadataRetriever = new MetadataRetriever(inquirer, OUTPUT_DIR, albumArtExecutor);
             MusicPlayerScout playerScout = new MusicPlayerScout(conn, metadataRetriever, playerDatabase);
             playerScout.registerAvailablePlayers();
             // listen for dbus signals of interest
@@ -73,6 +70,11 @@ public class NowPlaying {
             TrackUpdatesHandler trackUpdatesHandler = new TrackUpdatesHandler(metadataRetriever, playerDatabase);
             conn.addSigHandler(Properties.PropertiesChanged.class, trackUpdatesHandler);
             logger.info("listening to the dbus for media player activity");
+
+            // maintenance operations
+            ScheduledExecutorService albumArtHouseKeeperExecutor = Executors.newSingleThreadScheduledExecutor();
+            albumArtHouseKeeperExecutor.scheduleAtFixedRate(new AlbumArtHouseKeeper(OUTPUT_DIR, ALBUM_CUTOFF, playerDatabase), 65, 30, TimeUnit.MINUTES);
+            registerShutdownHooks(conn, albumArtExecutor, albumArtHouseKeeperExecutor);
 
             while(true) {
                 // this will keep the program alive forever, we just wait for dbus signals to come in
@@ -106,10 +108,10 @@ public class NowPlaying {
     /**
      * House cleaning items for when the program is killed.  Closes all the resources used or produced by this app.
      *
-     * @param conn            dbus connection
-     * @param executorService executor service used for deleting old album art images
+     * @param conn      dbus connection
+     * @param executors list of executor services to gracefully shutdown
      */
-    private static void registerShutdownHooks(DBusConnection conn, ScheduledExecutorService executorService) {
+    private static void registerShutdownHooks(DBusConnection conn, ExecutorService... executors) {
         // create a shutdown hook for closing the dbus connection
         Thread closeDbusConnectionHook = new Thread(() -> {
             try {
@@ -119,16 +121,19 @@ public class NowPlaying {
                 logger.error("unable to close resources", e);
             }
 
-            logger.info("shutting down album housekeeper thread");
-            executorService.shutdown();
+            logger.info("shutting down executor services");
 
-            try {
-                boolean isThreadShutdown = executorService.awaitTermination(600, TimeUnit.MILLISECONDS);
-                if (!isThreadShutdown) {
-                    logger.warn("welp! the threads are still not done!");
+            for (ExecutorService executor : executors) {
+                executor.shutdown();
+
+                try {
+                    boolean isExecutorShutdown = executor.awaitTermination(600, TimeUnit.MILLISECONDS);
+                    if (!isExecutorShutdown) {
+                        logger.warn("welp! executor service still has not shutdown after 600ms");
+                    }
+                } catch (InterruptedException e) {
+                    logger.error("was not able to wait for the thread pool to close", e);
                 }
-            } catch (InterruptedException e) {
-                logger.error("was not able to wait for the thread pool to close", e);
             }
         });
         Runtime.getRuntime().addShutdownHook(closeDbusConnectionHook);

@@ -5,17 +5,11 @@ import org.freedesktop.dbus.types.Variant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.URL;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
-import java.nio.file.Files;
-import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.concurrent.ExecutorService;
 
 import static com.conky.musicplayer.MusicPlayerWriter.ALBUM_ART;
 
@@ -28,10 +22,14 @@ public class MetadataRetriever {
     private static final Logger logger = LoggerFactory.getLogger(MetadataRetriever.class);
     private ApplicationInquirer inquirer;
     private final String outputDirectory;
+    private ExecutorService executor;
 
-    public MetadataRetriever(ApplicationInquirer inquirer, String outputDirectory) {
+    public MetadataRetriever(ApplicationInquirer inquirer,
+                             String outputDirectory,
+                             ExecutorService executor) {
         this.inquirer = inquirer;
         this.outputDirectory = outputDirectory;
+        this.executor = executor;
     }
 
     public Optional<String> getPlayerName(String uniqueName) {
@@ -135,11 +133,13 @@ public class MetadataRetriever {
                 coverArtPath = (String) value;
             }
 
-            // TODO album art should be done on a separate thread, if the internet connection is VERY slow it delays the availability of the other track info.  If you forward multiple songs, you slowly see the queue in conky
             // is the album art on the web or in the local file system?
             if (coverArtPath.startsWith("http")) {
                 // ex. https://i.scdn.co/image/ab67616d0000b273bbf0146981704a073405b6c2
-                trackInfo.setAlbumArtPath(downloadAlbumArt(coverArtPath));
+                String id = coverArtPath.substring(coverArtPath.lastIndexOf('/') + 1);    // get the resource name
+                Path albumArtPath = Paths.get(outputDirectory, ALBUM_ART + "." + id);
+                trackInfo.setAlbumArtPath(albumArtPath.toString());
+                executor.execute(new ImageDownloader(coverArtPath, outputDirectory, albumArtPath));
             } else {
                 // image is in the local file system (ex. file://folder/image.jpg), remove the uri notation
                 trackInfo.setAlbumArtPath(coverArtPath.replaceFirst("file://", ""));
@@ -147,33 +147,5 @@ public class MetadataRetriever {
         }
 
         return trackInfo;
-    }
-
-    /**
-     * Attempts to download the album art from the web.  If an error occurs, no album art will be associated
-     * with this song.
-     * @param url URL of the image to download, ex. <tt>https://i.scdn.co/image/ab67616d0000b</tt>
-     * @return the location/path on disk of the downloaded image
-     */
-    private String downloadAlbumArt(String url) {
-        String id = url.substring(url.lastIndexOf('/') + 1);    // get the resource name
-        Path albumArtPath = Paths.get(outputDirectory, ALBUM_ART + "." + id);
-        String path = albumArtPath.toString();
-
-        if (Files.notExists(albumArtPath, LinkOption.NOFOLLOW_LINKS)) {
-            try {
-                ReadableByteChannel readableByteChannel = Channels.newChannel(new URL(url).openStream());
-                FileOutputStream fileOutputStream = new FileOutputStream(albumArtPath.toFile());
-                fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
-                fileOutputStream.close();
-            } catch (IOException e) {
-                logger.error("unable to download album art from the web");
-                path = null;
-            }
-        } else {
-            logger.info("album art already available on disk, no need to download it again from the web");
-        }
-
-        return path;
     }
 }
