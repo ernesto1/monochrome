@@ -9,12 +9,15 @@ import org.slf4j.LoggerFactory;
 import java.util.Arrays;
 import java.util.Optional;
 
+/**
+ * Detects currently running music players and adds them to the database
+ */
 public class MusicPlayerScout {
     private static final Logger logger = LoggerFactory.getLogger(MusicPlayerScout.class);
     private MusicPlayerDatabase playerDatabase;
     private MetadataRetriever metadataRetriever;
     /**
-     * Connection to the dbs
+     * Connection to the dbus
      */
     private DBusConnection conn;
 
@@ -24,6 +27,11 @@ public class MusicPlayerScout {
         this.playerDatabase = playerDatabase;
     }
 
+    /**
+     * Scans the list of available application <i>well known names</i> in the dbus for entries
+     * belonging to the <tt>org.mpris.MediaPlayer2</tt> family.  Any {@link MusicPlayerDatabase#isMusicPlayer(String) supported}
+     * media players are registered in the database.
+     */
     public void registerAvailablePlayers() {
         logger.info("detecting if any music players are already running");
 
@@ -37,10 +45,10 @@ public class MusicPlayerScout {
                       Optional<String> playerName = metadataRetriever.getPlayerName(name);
 
                       if(playerName.isPresent()) {
-                          String pName = playerName.get();
+                          String wellKnownName = playerName.get();
                           String uniqueName = dbus.GetNameOwner(name);
-                          logger.info("{} ({}) music player is running", pName, uniqueName);
-                          MusicPlayer musicPlayer = new MusicPlayer(pName, uniqueName);
+                          logger.info("{} ({}) music player is running", wellKnownName, uniqueName);
+                          MusicPlayer musicPlayer = new MusicPlayer(wellKnownName, uniqueName);
                           musicPlayer = metadataRetriever.getPlayerState(musicPlayer);
                           playerDatabase.save(musicPlayer);
                       } else {

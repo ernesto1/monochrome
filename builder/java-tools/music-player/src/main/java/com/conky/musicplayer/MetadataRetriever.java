@@ -138,6 +138,7 @@ public class MetadataRetriever {
             // TODO album art should be done on a separate thread, if the internet connection is VERY slow it delays the availability of the other track info.  If you forward multiple songs, you slowly see the queue in conky
             // is the album art on the web or in the local file system?
             if (coverArtPath.startsWith("http")) {
+                // ex. https://i.scdn.co/image/ab67616d0000b273bbf0146981704a073405b6c2
                 trackInfo.setAlbumArtPath(downloadAlbumArt(coverArtPath));
             } else {
                 // image is in the local file system (ex. file://folder/image.jpg), remove the uri notation
@@ -151,7 +152,7 @@ public class MetadataRetriever {
     /**
      * Attempts to download the album art from the web.  If an error occurs, no album art will be associated
      * with this song.
-     * @param url URL of the image to download
+     * @param url URL of the image to download, ex. <tt>https://i.scdn.co/image/ab67616d0000b</tt>
      * @return the location/path on disk of the downloaded image
      */
     private String downloadAlbumArt(String url) {

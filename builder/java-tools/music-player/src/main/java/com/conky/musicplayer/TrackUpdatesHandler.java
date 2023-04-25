@@ -49,7 +49,7 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
             playerName = name.get();
         } else {
             // for some signals, the owning dbus object won't exist any more by the time we try to get its name
-            // ex. when closing a youtube tab, firefox sends a last signal prior to unregistering the corresponding dbus name
+            // ex. when closing a youtube tab, firefox sends a last signal prior to unregistering the object from the dbus
             logger.warn("unable to determine the media player's name, the signal will be ignored");
             return;
         }
@@ -92,7 +92,6 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
             logger.debug("registering new player: {}", playerName);
             musicPlayer = new MusicPlayer(playerName, signal.getSource());
             musicPlayer = metadataRetriever.getPlayerState(musicPlayer);
-            playerDatabase.save(musicPlayer);
         }
 
         playerDatabase.save(musicPlayer);

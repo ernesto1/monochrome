@@ -64,9 +64,9 @@ public class MusicPlayerWriter {
         try {
             Path filePath = Paths.get(outputDirectory, FILE_PREFIX + "." + filename);
             BufferedWriter writer = Files.newBufferedWriter(filePath,
-                    StandardOpenOption.CREATE,
-                    StandardOpenOption.WRITE,
-                    StandardOpenOption.TRUNCATE_EXISTING);
+                                                            StandardOpenOption.CREATE,
+                                                            StandardOpenOption.WRITE,
+                                                            StandardOpenOption.TRUNCATE_EXISTING);
             writer.write(data);
             writer.close();
         } catch (IOException e) {
