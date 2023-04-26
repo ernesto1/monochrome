@@ -20,9 +20,9 @@ import static com.conky.musicplayer.MusicPlayerWriter.ALBUM_ART;
  */
 public class MetadataRetriever {
     private static final Logger logger = LoggerFactory.getLogger(MetadataRetriever.class);
-    private ApplicationInquirer inquirer;
+    private final ApplicationInquirer inquirer;
     private final String outputDirectory;
-    private ExecutorService executor;
+    private final ExecutorService executor;
 
     public MetadataRetriever(ApplicationInquirer inquirer,
                              String outputDirectory,
@@ -46,8 +46,8 @@ public class MetadataRetriever {
                                                                     MPRIS.Objects.MEDIAPLAYER2,
                                                                     MPRIS.Interfaces.MEDIAPLAYER2_PLAYER,
                                                                     MPRIS.Properties.PLAYBACK_STATUS);
-        playback.ifPresent(p -> player.setPlaybackStatus(p));
-        Optional<DBusMap> metadata = inquirer.getApplicationMetadata(player.getDBusUniqueName(),
+        playback.ifPresent(player::setPlaybackStatus);
+        Optional<DBusMap> metadata = inquirer.getApplicationProperty(player.getDBusUniqueName(),
                                                                      MPRIS.Objects.MEDIAPLAYER2,
                                                                      MPRIS.Interfaces.MEDIAPLAYER2_PLAYER,
                                                                      MPRIS.Properties.METADATA);
@@ -139,6 +139,7 @@ public class MetadataRetriever {
                 String id = coverArtPath.substring(coverArtPath.lastIndexOf('/') + 1);    // get the resource name
                 Path albumArtPath = Paths.get(outputDirectory, ALBUM_ART + "." + id);
                 trackInfo.setAlbumArtPath(albumArtPath.toString());
+                // TODO to save bandwidth, album art should only be downloaded for the in focus player, use an executor with queue size of 1 and DiscardOldestPolicy
                 executor.execute(new ImageDownloader(coverArtPath, outputDirectory, albumArtPath));
             } else {
                 // image is in the local file system (ex. file://folder/image.jpg), remove the uri notation

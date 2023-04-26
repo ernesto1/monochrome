@@ -1,6 +1,5 @@
 package com.conky.musicplayer;
 
-import org.freedesktop.dbus.DBusMap;
 import org.freedesktop.dbus.connections.impl.DBusConnection;
 import org.freedesktop.dbus.exceptions.DBusException;
 import org.freedesktop.dbus.interfaces.Properties;
@@ -27,8 +26,8 @@ public class ApplicationInquirer {
      * @param property name of the property to query
      * @return the property as a <tt>String</tt>
      */
-    public Optional<String> getApplicationProperty(String uniqueName, String object, String dbusInterface, String property) {
-        String value = null;
+    public <T> Optional<T> getApplicationProperty(String uniqueName, String object, String dbusInterface, String property) {
+        T value = null;
 
         try {
             Properties properties = dbus.getRemoteObject(uniqueName, object, Properties.class);
@@ -39,19 +38,5 @@ public class ApplicationInquirer {
         }
 
         return Optional.of(value);
-    }
-
-    // TODO use generics and combine these two methods into one
-    public Optional<DBusMap> getApplicationMetadata(String uniqueName, String object, String dbusInterface, String property) {
-        DBusMap  metadata = null;
-
-        try {
-            Properties properties = dbus.getRemoteObject(uniqueName, object, Properties.class);
-            metadata = properties.Get(dbusInterface, property);
-        } catch (DBusException e) {
-            logger.error("unable to retrieve {}'s metadata", uniqueName, e);
-        }
-
-        return Optional.of(metadata);
     }
 }
