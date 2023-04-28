@@ -5,13 +5,8 @@ import org.freedesktop.dbus.types.Variant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.concurrent.ExecutorService;
-
-import static com.conky.musicplayer.MusicPlayerWriter.ALBUM_ART;
 
 /**
  * Utility class for retrieving music player specific metadata through the dbus
@@ -21,15 +16,9 @@ import static com.conky.musicplayer.MusicPlayerWriter.ALBUM_ART;
 public class MetadataRetriever {
     private static final Logger logger = LoggerFactory.getLogger(MetadataRetriever.class);
     private final ApplicationInquirer inquirer;
-    private final String outputDirectory;
-    private final ExecutorService executor;
 
-    public MetadataRetriever(ApplicationInquirer inquirer,
-                             String outputDirectory,
-                             ExecutorService executor) {
+    public MetadataRetriever(ApplicationInquirer inquirer) {
         this.inquirer = inquirer;
-        this.outputDirectory = outputDirectory;
-        this.executor = executor;
     }
 
     public Optional<String> getPlayerName(String uniqueName) {
@@ -41,6 +30,16 @@ public class MetadataRetriever {
         return playerName;
     }
 
+    /**
+     * Queries the music player through the dbus to get its current playback details, ex.
+     * <ul>
+     *     <li>Is it playing music or paused?</li>
+     *     <li>What song is selected?</li>
+     * </ul>
+     *
+     * @param player music player to query
+     * @return the player's state as a <tt>Music Player</tt> object
+     */
     public MusicPlayer getPlayerState(MusicPlayer player) {
         Optional<String> playback = inquirer.getApplicationProperty(player.getDBusUniqueName(),
                                                                     MPRIS.Objects.MEDIAPLAYER2,
@@ -65,88 +64,69 @@ public class MetadataRetriever {
      * @see <a href="https://www.freedesktop.org/wiki/Specifications/mpris-spec/metadata/">MPRIS v2 metadata guidelines</a>
      */
     public TrackInfo getTrackInfo(DBusMap metadata) {
-        /*
-         n.b. the type of the values in the metadata map will differ based on what dbus interface was queried
-              for the metadata property
-                 - metadata from the properties changed signal will wrap all values under the Variant<?> type
-                 - metadata from the 'org.mpris.MediaPlayer2.Player' interface will use the regular java types
-         */
-
         TrackInfo trackInfo = null;
+        Optional<String> property = extractProperty(metadata.get("mpris:trackid"));
 
-        Object value = metadata.get("mpris:trackid");
-        if (value != null) {
-            if (value instanceof Variant) {
-                trackInfo = new TrackInfo(((Variant<String>) value).getValue());
-            } else {
-                trackInfo = new TrackInfo((String) value);
-            }
+        if (property.isPresent()) {
+            trackInfo = new TrackInfo(property.get());
+        } else {
+            // if the track id is missing, there are no track details to update
+            return null;
         }
 
-        value = metadata.get("xesam:title");
-        if (value != null) {
-            if (value instanceof Variant) {
-                trackInfo.setTitle(((Variant<String>) value).getValue());
-            } else {
-                trackInfo.setTitle((String) value);
-            }
-        }
-
-        value = metadata.get("xesam:album");
-        if (value != null) {
-            if (value instanceof Variant) {
-                trackInfo.setAlbum(((Variant<String>) value).getValue());
-            } else {
-                trackInfo.setAlbum((String) value);
-            }
-        }
-
-        value = metadata.get("xesam:artist");
-        if (value != null) {
-            if (value instanceof Variant) {
-                ArrayList<String> entries = ((Variant<ArrayList<String>>) value).getValue();
-                trackInfo.setArtist(entries.get(0));
-            } else {
-                trackInfo.setArtist(((ArrayList<String>) value).get(0));
-            }
-
-        }
-
-        value = metadata.get("xesam:genre");
-        if (value != null) {
-            if (value instanceof Variant) {
-                ArrayList<String> entries = ((Variant<ArrayList<String>>) value).getValue();
-                trackInfo.setGenre(entries.get(0));
-            } else {
-                trackInfo.setGenre(((ArrayList<String>) value).get(0));
-            }
-
-        }
-
-        value = metadata.get("mpris:artUrl");
-        if (value != null) {
-            String coverArtPath;
-
-            if (value instanceof Variant) {
-                coverArtPath = ((Variant<String>) value).getValue();
-            } else {
-                coverArtPath = (String) value;
-            }
-
-            // is the album art on the web or in the local file system?
-            if (coverArtPath.startsWith("http")) {
-                // ex. https://i.scdn.co/image/ab67616d0000b273bbf0146981704a073405b6c2
-                String id = coverArtPath.substring(coverArtPath.lastIndexOf('/') + 1);    // get the resource name
-                Path albumArtPath = Paths.get(outputDirectory, ALBUM_ART + "." + id);
-                trackInfo.setAlbumArtPath(albumArtPath.toString());
-                // TODO to save bandwidth, album art should only be downloaded for the in focus player, use an executor with queue size of 1 and DiscardOldestPolicy
-                executor.execute(new ImageDownloader(coverArtPath, outputDirectory, albumArtPath));
-            } else {
-                // image is in the local file system (ex. file://folder/image.jpg), remove the uri notation
-                trackInfo.setAlbumArtPath(coverArtPath.replaceFirst("file://", ""));
-            }
-        }
+        property = extractProperty(metadata.get("xesam:title"));
+        property.ifPresent(trackInfo::setTitle);
+        property = extractProperty(metadata.get("xesam:album"));
+        property.ifPresent(trackInfo::setAlbum);
+        property = extractArray(metadata.get("xesam:artist"));
+        property.ifPresent(trackInfo::setArtist);
+        property = extractArray(metadata.get("xesam:genre"));
+        property.ifPresent(trackInfo::setGenre);
+        property = extractProperty(metadata.get("mpris:artUrl"));
+        property.ifPresent(trackInfo::setAlbumArtPath);
 
         return trackInfo;
+    }
+
+    /**
+     * Extracts the java primitive type from the object wrapper used by the dbus API.<br>
+     * The method abstracts the nuances of how the dbus library API returns data to us.
+     * @param property raw property from the metadata map
+     * @return the property in its java primitive equivalent
+     * @param <T>
+     */
+    private <T> Optional<T> extractProperty(Object property) {
+        /*
+         n.b. the type of the values in the metadata map will differ based on what dbus interface is providing this data
+              - metadata map from the 'properties changed signal' will wrap all values under the Variant<T> type
+              - metadata map from the 'org.mpris.MediaPlayer2.Player' interface will use the regular java types
+         */
+        if (property != null) {
+            if (property instanceof Variant) {
+                return Optional.of(((Variant<T>) property).getValue());
+            } else {
+                return Optional.of((T) property);
+            }
+        }
+
+        return Optional.empty();
+    }
+
+    /**
+     * Extracts the first value within the array from the array object wrapper used by the dbus API.<br>
+     * This method abstracts the nuances of how the dbus library API returns data to us.
+     *
+     * @param anArray array property from the metadata map
+     * @return the first string in the array
+     */
+    private Optional<String> extractArray(Object anArray) {
+        Optional<ArrayList<String>> array = extractProperty(anArray);
+
+        if (array.isPresent()) {
+            // in case of multiple entries, we only pull the first one
+            return Optional.of(array.get().get(0));
+        }
+
+        return Optional.empty();
     }
 }

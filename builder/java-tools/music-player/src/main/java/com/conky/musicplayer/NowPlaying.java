@@ -15,10 +15,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * Support application for the conky music player.<br>
@@ -52,15 +49,26 @@ public class NowPlaying {
 
         try (DBusConnection conn = DBusConnectionBuilder.forSessionBus().build()) {
             // initialize data objects
-            MusicPlayerWriter writer = new MusicPlayerWriter(OUTPUT_DIR);
+            /*
+             the thread pool for downloading album art has a queue size of only one item
+             if a barrage of download tasks are submitted, only the last one will be performed
+
+             this is to decrease the wait time experienced by the user to see album art in the conky
+             while fast forwarding through multiple songs under a slow connection
+             */
+            ThreadPoolExecutor albumArtExecutor = new ThreadPoolExecutor(1,
+                                                                         1,
+                                                                         0L,
+                                                                         TimeUnit.MILLISECONDS,
+                                                                         new ArrayBlockingQueue<>(1),
+                                                                         new ThreadPoolExecutor.DiscardOldestPolicy());
+            MusicPlayerWriter writer = new MusicPlayerWriter(OUTPUT_DIR, albumArtExecutor);
             writer.init();
             MusicPlayerDatabase playerDatabase = new MusicPlayerDatabase(SUPPORTED_PLAYERS, writer);
             playerDatabase.init();
-
             // register any music players already running
             ApplicationInquirer inquirer = new ApplicationInquirer(conn);
-            ExecutorService albumArtExecutor = Executors.newSingleThreadExecutor();
-            MetadataRetriever metadataRetriever = new MetadataRetriever(inquirer, OUTPUT_DIR, albumArtExecutor);
+            MetadataRetriever metadataRetriever = new MetadataRetriever(inquirer);
             MusicPlayerScout playerScout = new MusicPlayerScout(conn, metadataRetriever, playerDatabase);
             playerScout.registerAvailablePlayers();
             // listen for dbus signals of interest
@@ -70,7 +78,6 @@ public class NowPlaying {
             TrackUpdatesHandler trackUpdatesHandler = new TrackUpdatesHandler(metadataRetriever, playerDatabase);
             conn.addSigHandler(Properties.PropertiesChanged.class, trackUpdatesHandler);
             logger.info("listening to the dbus for media player activity");
-
             // maintenance operations
             ScheduledExecutorService albumArtHouseKeeperExecutor = Executors.newSingleThreadScheduledExecutor();
             albumArtHouseKeeperExecutor.scheduleAtFixedRate(new AlbumArtHouseKeeper(OUTPUT_DIR, ALBUM_CUTOFF, playerDatabase), 65, 30, TimeUnit.MINUTES);

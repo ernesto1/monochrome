@@ -8,6 +8,10 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
+/**
+ * Serves as datasource for clients to interact with the dbus.<br>
+ * Provides data query operations for clients to talk to other applications.
+ */
 public class ApplicationInquirer {
     private static final Logger logger = LoggerFactory.getLogger(ApplicationInquirer.class);
 
@@ -34,9 +38,8 @@ public class ApplicationInquirer {
             value = properties.Get(dbusInterface, property);
         } catch (DBusException e) {
             logger.warn("unable to retrieve the property '{}' from the object '{}'", property, uniqueName);
-            Optional<String> playerName;
         }
 
-        return Optional.of(value);
+        return Optional.ofNullable(value);
     }
 }

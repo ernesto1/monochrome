@@ -23,10 +23,12 @@ public class ImageDownloader implements Runnable {
 
     /**
      * Create a new instance of this image download task
-     * @param url           URL of the image to download, ex. <tt>https://i.scdn.co/image/ab67616d0000b</tt>
-     * @param albumArtPath  target file path of the image to be downloaded
+     *
+     * @param outDir       output directory
+     * @param url          URL of the image to download, ex. <tt>https://i.scdn.co/image/ab67616d0000b</tt>
+     * @param albumArtPath target file path on disk of the image to be downloaded
      */
-    public ImageDownloader(String url, String outDir, Path albumArtPath) {
+    public ImageDownloader(String outDir, String url, Path albumArtPath) {
         this.url = url;
         outputDirectory = outDir;
         this.albumArtPath = albumArtPath;

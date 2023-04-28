@@ -66,21 +66,19 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
             musicPlayer = playerDatabase.getPlayer(playerName);
             // retrieve available details from the signal
             Map<String, Variant<?>> properties = signal.getPropertiesChanged();
+            boolean isPlayerStatusChanged = false;
 
-            String playbackStatus = null;
             Variant<String> status = (Variant<String>) properties.get("PlaybackStatus");
             if (status != null) {
-                playbackStatus = status.getValue();
+                musicPlayer.setPlaybackStatus(status.getValue());
+                isPlayerStatusChanged = true;
             }
 
-            TrackInfo trackInfo = null;
             Variant<DBusMap> metadata = (Variant<DBusMap>) properties.get("Metadata");
             if (metadata != null) {
-                trackInfo = metadataRetriever.getTrackInfo(metadata.getValue());
+                musicPlayer.setTrackInfo(metadataRetriever.getTrackInfo(metadata.getValue()));
+                isPlayerStatusChanged = true;
             }
-
-            boolean isPlayerStatusChanged = musicPlayer.setPlaybackStatus(playbackStatus);
-            isPlayerStatusChanged = musicPlayer.setTrackInfo(trackInfo) || isPlayerStatusChanged;
 
             if (isPlayerStatusChanged) {
                 logger.info("{}", musicPlayer);

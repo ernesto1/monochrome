@@ -43,34 +43,25 @@ public class MusicPlayer {
     /**
      * Update the playback status of the music player
      * @param status new status
-     * @return <tt>true</tt> if the property was updated, <tt>false</tt> otherwise (ex. providing a null)
      */
-    public boolean setPlaybackStatus(String status) {
+    public void setPlaybackStatus(String status) {
         if (status != null) {
             try {
                 playbackStatus = PlaybackStatus.valueOf(status.toUpperCase());
             } catch (IllegalArgumentException e) {
                 playbackStatus = PlaybackStatus.UNKNOWN;
             }
-
-            return true;
         }
-
-        return false;
     }
 
     /**
-     * Update the music player's track info, ie. the song currently being played
+     * Update the music player's track details, ie. the song currently being played
      * @param trackInfo new track details
-     * @return <tt>true</tt> if the property was updated, <tt>false</tt> otherwise (ex. providing a null)
      */
-    public boolean setTrackInfo(TrackInfo trackInfo) {
+    public void setTrackInfo(TrackInfo trackInfo) {
         if (trackInfo != null) {
             this.trackInfo = trackInfo;
-            return true;
         }
-
-        return false;
     }
 
     public String getPlayerName() {

@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.concurrent.ExecutorService;
 
 public class MusicPlayerWriter {
     private static final Logger logger = LoggerFactory.getLogger(MusicPlayerWriter.class);
@@ -16,9 +17,11 @@ public class MusicPlayerWriter {
     public static final String ALBUM_ART = FILE_PREFIX + ".albumArt";
     private static final String ALBUM_ART_PATH = "albumArtPath";
     private final String outputDirectory;
+    private final ExecutorService executor;
 
-    public MusicPlayerWriter(String outputDirectory) {
+    public MusicPlayerWriter(String outputDirectory, ExecutorService executor) {
         this.outputDirectory = outputDirectory;
+        this.executor = executor;
     }
 
     /**
@@ -45,10 +48,24 @@ public class MusicPlayerWriter {
         writeFile("album", player.getAlbum());
         writeFile("genre", player.getGenre());
 
-        if (player.getAlbumArtPath() != null) {
-            writeFile(ALBUM_ART_PATH, player.getAlbumArtPath());
+        String coverArtPath = player.getAlbumArtPath();
+
+        if (coverArtPath != null) {
+            Path albumArtPath = null;
+            // is the album art on the web or in the local file system?
+            if (coverArtPath.startsWith("http")) {
+                // ex. https://i.scdn.co/image/ab67616d0000b273bbf0146981704a073405b6c2
+                String id = coverArtPath.substring(coverArtPath.lastIndexOf('/') + 1);    // get the resource name
+                albumArtPath = Paths.get(outputDirectory, ALBUM_ART + "." + id);
+                executor.execute(new ImageDownloader(outputDirectory, coverArtPath, albumArtPath));
+            } else {
+                // image is in the local file system (ex. file://folder/image.jpg), remove the uri notation
+                albumArtPath = Paths.get(coverArtPath.replaceFirst("file://", ""));
+            }
+
+            writeFile(ALBUM_ART_PATH, albumArtPath.toString());
         } else {
-            // if no album art is available, delete the corresponding album art file
+            // if no album art is available, delete the conky album art path file
             Path coverArt = Paths.get(outputDirectory, FILE_PREFIX + "." + ALBUM_ART_PATH);
             try {
                 Files.deleteIfExists(coverArt);

@@ -132,7 +132,7 @@ public class MusicPlayerDatabase {
             return player;
         }
 
-        // if no music player are playing music, just pull any from the list
+        // if no music player is playing music, just pull any from the list
         player = musicPlayers.values()
                              .stream()
                              .findFirst();
