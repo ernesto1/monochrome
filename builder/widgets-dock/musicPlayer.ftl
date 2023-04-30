@@ -15,7 +15,7 @@ conky.config = {
   -- window settings
   minimum_width = 189,      -- conky will add an extra pixel to this  
   maximum_width = 189,
-  minimum_height = 145,
+  minimum_height = 71,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -47,10 +47,19 @@ conky.config = {
 };
 
 conky.text = [[
-# :::: cover art
+# the UI of this conky changes as per one of these states: no music player is running
+#                                                          song with album art
+#                                                          song with no album art
+# :::: no player available
+${if_existing /tmp/conky/musicplayer.name Nameless}\
+<#assign y = 0>
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-rhythmbox.png -p 0,[=y]}\
+${voffset 36}${offset 63}${color1}${lua_parse read_file ${cat /tmp/conky/musicplayer.name}}
+${voffset 4}${offset 63}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.playbackStatus}}
+${else}\
+# :::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
-<#assign y = 0, 
-         top = 19,    <#-- menu header -->
+<#assign top = 19,    <#-- menu header -->
          body = 178,  <#-- size of the current window without the top and bottom edges -->
          bottom = 7,  <#-- window bottom edge -->
          space = 3>   <#-- empty space between windows -->
@@ -75,4 +84,5 @@ ${offset 5}${color1}title${goto 50}${color}${lua_parse read_file ${cat /tmp/conk
 ${voffset 3}${offset 5}${color1}album${goto 50}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.album}}
 ${voffset 3}${offset 5}${color1}artist${goto 50}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.artist}}
 ${voffset 3}${offset 5}${color1}genre${goto 50}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.genre}}${voffset 5}
+${endif}\
 ]];
