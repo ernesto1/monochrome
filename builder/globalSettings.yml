@@ -9,7 +9,7 @@ networkDevices:
   laptop:
     - name: wlp4s0
       type: wifi
-      maxUp: 8200
+      maxUp: 14000
       maxDown: 55100
     - name: enp6s0
       type: ethernet
