@@ -39,9 +39,10 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
         if (!signal.getPath().equals("/org/mpris/MediaPlayer2")) {
             return;
         }
-
-        // is this signal from a supported music player?
+        
         logger.debug("signal: {} {}", signal.getSource(), signal.getPropertiesChanged());
+        // is this signal from a supported music player?
+        // TODO only perform app name lookup if the unique id does not exist in the player database
         String playerName;
         Optional<String> name = metadataRetriever.getPlayerName(signal.getSource());
 
@@ -82,6 +83,7 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
 
             if (isPlayerStatusChanged) {
                 logger.info("{}", musicPlayer);
+                playerDatabase.save(musicPlayer);
             }
         } else {
             // brand new player
@@ -90,8 +92,7 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
             logger.debug("registering new player: {}", playerName);
             musicPlayer = new MusicPlayer(playerName, signal.getSource());
             musicPlayer = metadataRetriever.getPlayerState(musicPlayer);
+            playerDatabase.save(musicPlayer);
         }
-
-        playerDatabase.save(musicPlayer);
     }
 }
