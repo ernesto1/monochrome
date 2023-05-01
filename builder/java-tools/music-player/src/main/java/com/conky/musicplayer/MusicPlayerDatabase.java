@@ -40,7 +40,7 @@ public class MusicPlayerDatabase {
      */
     private MusicPlayer activePlayer;
     /**
-     * Map of available music players: <tt>player name -> music player</tt>
+     * Map of available music players: <tt>unique dbus name (ex. :1.23)-> music player</tt>
      */
     private Map<String, MusicPlayer> musicPlayers;
     private MusicPlayerWriter writer;
@@ -48,7 +48,7 @@ public class MusicPlayerDatabase {
     public MusicPlayerDatabase(List<String> supportedPlayers, MusicPlayerWriter writer) {
         this.supportedPlayers = supportedPlayers;
         this.writer = writer;
-        musicPlayers = new HashMap<>();
+        musicPlayers = new HashMap<>(5);
     }
 
     public void init() {
@@ -65,12 +65,22 @@ public class MusicPlayerDatabase {
         return supportedPlayers.contains(playerName.toLowerCase());
     }
 
-    public boolean contains(String playerName) {
-        return musicPlayers.containsKey(playerName);
+    /**
+     * Determine if the given application is registered as a music player in this database
+     * @param uniqueName application's unique dbus name (ex. :1.23)
+     * @return <tt>true</tt> if the application is registered, <tt>false</tt> otherwise
+     */
+    public boolean contains(String uniqueName) {
+        return musicPlayers.containsKey(uniqueName);
     }
 
-    public MusicPlayer getPlayer(String playerName) {
-        return musicPlayers.get(playerName);
+    /**
+     * Retrieve the music player from the database
+     * @param uniqueName application's unique dbus name (ex. :1.23)
+     * @return the matching music player
+     */
+    public MusicPlayer getPlayer(String uniqueName) {
+        return musicPlayers.get(uniqueName);
     }
 
     /**
@@ -78,7 +88,7 @@ public class MusicPlayerDatabase {
      * @param player music player to store in the db
      */
     public void save(MusicPlayer player) {
-        musicPlayers.put(player.getPlayerName(), player);
+        musicPlayers.put(player.getDBusUniqueName(), player);
         determineActivePlayer();
     }
 
@@ -98,7 +108,7 @@ public class MusicPlayerDatabase {
 
         // if an active player is available, then...
         // get the current state of the active player
-        MusicPlayer newPlayerState = musicPlayers.get(activePlayer.getPlayerName());
+        MusicPlayer newPlayerState = musicPlayers.get(activePlayer.getDBusUniqueName());
 
         // if the active player is no longer playing music
         if (newPlayerState.getPlaybackStatus() != MusicPlayer.PlaybackStatus.PLAYING) {
@@ -139,15 +149,16 @@ public class MusicPlayerDatabase {
         return player;
     }
 
+    /**
+     * Removes the music player from the database
+     * @param dBusUniqueName application's unique dbus name (ex. :1.23)
+     */
     public void removePlayer(String dBusUniqueName) {
-        Optional<MusicPlayer> player = musicPlayers.values()
-                                                   .stream()
-                                                   .filter(p -> p.getDBusUniqueName().equals(dBusUniqueName))
-                                                   .findFirst();
-        player.ifPresent(p -> {
-            MusicPlayer mp = musicPlayers.remove(p.getPlayerName());
-            logger.debug("removed the '{}' music player from the database", mp.getPlayerName());
-        });
+        MusicPlayer removedPlayer = musicPlayers.remove(dBusUniqueName);
+
+        if (removedPlayer != null) {
+            logger.debug("removed the '{}' music player from the database", removedPlayer.getPlayerName());
+        };
 
         // check if the active player (if available) is the player being removed
         if (activePlayer != null && activePlayer.getDBusUniqueName().compareTo(dBusUniqueName) == 0) {

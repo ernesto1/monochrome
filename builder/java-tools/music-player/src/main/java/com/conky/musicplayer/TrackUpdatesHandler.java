@@ -41,30 +41,11 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
         }
         
         logger.debug("signal: {} {}", signal.getSource(), signal.getPropertiesChanged());
-        // is this signal from a supported music player?
-        // TODO only perform app name lookup if the unique id does not exist in the player database
-        String playerName;
-        Optional<String> name = metadataRetriever.getPlayerName(signal.getSource());
+        String uniqueName = signal.getSource();
 
-        if (name.isPresent()) {
-            playerName = name.get();
-        } else {
-            // for some signals, the owning dbus object won't exist any more by the time we try to get its name
-            // ex. when closing a youtube tab, firefox sends a last signal prior to unregistering the object from the dbus
-            logger.warn("unable to determine the media player's name, the signal will be ignored");
-            return;
-        }
-
-        if (!playerDatabase.isMusicPlayer(playerName)) {
-            logger.debug("media player '{}' is not supported, ignoring signal", playerName);
-            return;
-        }
-
-        MusicPlayer musicPlayer;
-
-        // is this a known player or a new one?
-        if (playerDatabase.contains(playerName)) {
-            musicPlayer = playerDatabase.getPlayer(playerName);
+        // is this signal for a known player or a new one?
+        if (playerDatabase.contains(uniqueName)) {
+            MusicPlayer musicPlayer = playerDatabase.getPlayer(uniqueName);
             // retrieve available details from the signal
             Map<String, Variant<?>> properties = signal.getPropertiesChanged();
             boolean isPlayerStatusChanged = false;
@@ -86,11 +67,30 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
                 playerDatabase.save(musicPlayer);
             }
         } else {
+            // TODO detecting a brand new player should be the responsibility of the AvailabilityHandler, track updates should only deal with players we care about
             // brand new player
+            String playerName;
+            Optional<String> name = metadataRetriever.getPlayerName(signal.getSource());
+
+            if (name.isPresent()) {
+                playerName = name.get();
+            } else {
+                // for some signals, the owning dbus object won't exist any more by the time we try to get its name
+                // ex. when closing a youtube tab, firefox sends a last signal prior to unregistering the object from the dbus
+                logger.warn("unable to determine the media player's name, the signal will be ignored");
+                return;
+            }
+
+            // is this signal from a music player supported by this application?
+            if (!playerDatabase.isMusicPlayer(playerName)) {
+                logger.debug("media player '{}' is not supported, ignoring signal", playerName);
+                return;
+            }
+
             // some signals may not contain the complete player state metadata (ex. playback status may come on its own)
             // so we pull all the player details from the dbus
             logger.debug("registering new player: {}", playerName);
-            musicPlayer = new MusicPlayer(playerName, signal.getSource());
+            MusicPlayer musicPlayer = new MusicPlayer(playerName, signal.getSource());
             musicPlayer = metadataRetriever.getPlayerState(musicPlayer);
             playerDatabase.save(musicPlayer);
         }
