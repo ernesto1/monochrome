@@ -7,29 +7,27 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 /**
  * Detects currently running music players and adds them to the database
  */
 public class MusicPlayerScout {
     private static final Logger logger = LoggerFactory.getLogger(MusicPlayerScout.class);
-    private MusicPlayerDatabase playerDatabase;
-    private MetadataRetriever metadataRetriever;
+
+    private final Registrar registrar;
     /**
      * Connection to the dbus
      */
     private DBusConnection conn;
 
-    public MusicPlayerScout(DBusConnection conn, MetadataRetriever retriever, MusicPlayerDatabase playerDatabase) {
+    public MusicPlayerScout(DBusConnection conn, Registrar registrar) {
         this.conn = conn;
-        this.metadataRetriever = retriever;
-        this.playerDatabase = playerDatabase;
+        this.registrar = registrar;
     }
 
     /**
      * Scans the list of available application <i>well known names</i> in the dbus for entries
-     * belonging to the <tt>org.mpris.MediaPlayer2</tt> family.  Any {@link MusicPlayerDatabase#isMusicPlayer(String) supported}
+     * belonging to the <tt>org.mpris.MediaPlayer2</tt> family.  Any {@link MusicPlayerDatabase#isSupported(String) supported}
      * media players are registered in the database.
      */
     public void registerAvailablePlayers() {
@@ -40,21 +38,9 @@ public class MusicPlayerScout {
             String[] names = dbus.ListNames();
             Arrays.stream(names)
                   .filter(name -> name.startsWith("org.mpris.MediaPlayer2"))
-                  .filter(name -> playerDatabase.isMusicPlayer(name.substring(name.lastIndexOf('.') + 1).toLowerCase()))
                   .forEach(name -> {
-                      Optional<String> playerName = metadataRetriever.getPlayerName(name);
-
-                      if(playerName.isPresent()) {
-                          String wellKnownName = playerName.get();
-                          String uniqueName = dbus.GetNameOwner(name);
-                          logger.info("{} ({}) music player is running", wellKnownName, uniqueName);
-                          MusicPlayer musicPlayer = new MusicPlayer(wellKnownName, uniqueName);
-                          musicPlayer = metadataRetriever.getPlayerState(musicPlayer);
-                          playerDatabase.save(musicPlayer);
-                          // TODO register for properties changed signal for this application
-                      } else {
-                          logger.warn("unable to get {}'s name, ignoring this music player", name);
-                      }
+                      String uniqueName = dbus.GetNameOwner(name);
+                      registrar.register(uniqueName);
                   });
         } catch (DBusException e) {
             logger.error("unable to register currently running music players", e);

@@ -48,7 +48,7 @@ public class ListenToDBus {
         Runtime.getRuntime().addShutdownHook(closeDbusConnectionHook);
     }
 
-    private static class PropertiesChangedHandler extends AbstractPropertiesChangedHandler {
+    public static class PropertiesChangedHandler extends AbstractPropertiesChangedHandler {
         @Override
         public void handle(Properties.PropertiesChanged signal) {
             // ignore signals from objects we don't care about

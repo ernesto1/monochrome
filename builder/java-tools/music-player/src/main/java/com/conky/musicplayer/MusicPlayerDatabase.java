@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  * Music players don't follow a standard when it comes to dbus integration.  Therefore, those players that
  * are supported by this app are registered here as {@link #supportedPlayers supported players}.<br>
  * <br>
- * Signal handlers can {@link #isMusicPlayer(String) query the database} in order to filter out messages from media players that
+ * Signal handlers can {@link #isSupported(String) query the database} in order to filter out messages from media players that
  * are not supported by this application.
  */
 public class MusicPlayerDatabase {
@@ -56,12 +56,12 @@ public class MusicPlayerDatabase {
     }
 
     /**
-     * Determines if the given player is a "supported" music player by this database.<br>
+     * Determines if the given player is a compatible/tested music player.<br>
      * This would allow a client to filter out other media players on the dbus like a firefox youtube window for example.
      * @param playerName the player's name
      * @return <tt>true</tt> if the player is supported
      */
-    public boolean isMusicPlayer(String playerName) {
+    public boolean isSupported(String playerName) {
         return supportedPlayers.contains(playerName.toLowerCase());
     }
 
@@ -158,7 +158,7 @@ public class MusicPlayerDatabase {
 
         if (removedPlayer != null) {
             logger.debug("removed the '{}' music player from the database", removedPlayer.getPlayerName());
-        };
+        }
 
         // check if the active player (if available) is the player being removed
         if (activePlayer != null && activePlayer.getDBusUniqueName().compareTo(dBusUniqueName) == 0) {

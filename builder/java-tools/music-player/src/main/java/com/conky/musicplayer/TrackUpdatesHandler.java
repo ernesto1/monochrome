@@ -37,7 +37,7 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
         logger.debug("signal: {} {}", signal.getSource(), signal.getPropertiesChanged());
         String uniqueName = signal.getSource();
 
-        // is this signal for a known player?
+        // is this signal for a registered player?
         if (playerDatabase.contains(uniqueName)) {
             MusicPlayer musicPlayer = playerDatabase.getPlayer(uniqueName);
             // retrieve available details from the signal
@@ -60,6 +60,9 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
                 logger.info("{}", musicPlayer);
                 playerDatabase.save(musicPlayer);
             }
+        } else {
+            logger.warn("got a signal for an unregistered player: {} {}", signal.getSource(), signal.getPropertiesChanged());
+            logger.warn("this should not have happened, check the 'Registrar' class");
         }
     }
 }
