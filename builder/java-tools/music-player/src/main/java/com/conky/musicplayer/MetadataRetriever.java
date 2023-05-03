@@ -123,8 +123,13 @@ public class MetadataRetriever {
         Optional<ArrayList<String>> array = extractProperty(anArray);
 
         if (array.isPresent()) {
-            // in case of multiple entries, we only pull the first one
-            return Optional.of(array.get().get(0));
+            ArrayList<String> elements = array.get();
+
+            // spotify may return an empty list :(
+            if (!elements.isEmpty()) {
+                // in case of multiple entries, we only pull the first one
+                return Optional.of(elements.get(0));
+            }
         }
 
         return Optional.empty();

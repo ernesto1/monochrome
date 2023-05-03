@@ -51,6 +51,7 @@ public class MusicPlayerScout {
                           MusicPlayer musicPlayer = new MusicPlayer(wellKnownName, uniqueName);
                           musicPlayer = metadataRetriever.getPlayerState(musicPlayer);
                           playerDatabase.save(musicPlayer);
+                          // TODO register for properties changed signal for this application
                       } else {
                           logger.warn("unable to get {}'s name, ignoring this music player", name);
                       }

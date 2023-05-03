@@ -5,6 +5,8 @@ import org.freedesktop.dbus.interfaces.DBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Optional;
+
 /**
  * <b>DBus signal handler</b><br>
  * Detects when a music player is closed by the user by analyzing the <tt>dbus name owner changed</tt> signal.<br>
@@ -24,8 +26,10 @@ import org.slf4j.LoggerFactory;
 public class AvailabilityHandler extends AbstractSignalHandlerBase<DBus.NameOwnerChanged> {
     private static final Logger logger = LoggerFactory.getLogger(AvailabilityHandler.class);
     private MusicPlayerDatabase playerDatabase;
+    private MetadataRetriever metadataRetriever;
 
-    public AvailabilityHandler(MusicPlayerDatabase playerDatabase) {
+    public AvailabilityHandler(MetadataRetriever metadataRetriever, MusicPlayerDatabase playerDatabase) {
+        this.metadataRetriever = metadataRetriever;
         this.playerDatabase = playerDatabase;
     }
 
@@ -48,7 +52,36 @@ public class AvailabilityHandler extends AbstractSignalHandlerBase<DBus.NameOwne
                      signal.oldOwner,
                      signal.newOwner);
 
-        if (!signal.oldOwner.isEmpty() && signal.newOwner.isEmpty()) {
+        // application has started
+        if (!signal.newOwner.isEmpty() && signal.oldOwner.isEmpty()) {
+            logger.info("new music player has been launched");
+            String playerName;
+            Optional<String> name = metadataRetriever.getPlayerName(signal.newOwner);
+
+            if (name.isPresent()) {
+                playerName = name.get();
+            } else {
+                // for some signals, the owning dbus object won't exist any more by the time we try to get its name
+                // ex. when closing a youtube tab, firefox sends a last signal prior to unregistering the object from the dbus
+                logger.warn("unable to determine the music player's name, the signal will be ignored");
+                return;
+            }
+
+            // is this signal from a music player supported by this application?
+            if (!playerDatabase.isMusicPlayer(playerName)) {
+                logger.debug("music player '{}' is not supported, ignoring signal", playerName);
+                return;
+            }
+
+            // some signals may not contain the complete player state metadata (ex. playback status may come on its own)
+            // so we pull all the player details from the dbus
+            logger.debug("registering new player: {}", playerName);
+            MusicPlayer musicPlayer = new MusicPlayer(playerName, signal.newOwner);
+            musicPlayer = metadataRetriever.getPlayerState(musicPlayer);
+            playerDatabase.save(musicPlayer);
+            // TODO register for properties changed signal for this application
+        } else if (!signal.oldOwner.isEmpty() && signal.newOwner.isEmpty()) {
+            // application has shutdown
             String playerName = signal.name.substring(signal.name.lastIndexOf('.') + 1);
 
             if (playerDatabase.isMusicPlayer(playerName)) {

@@ -73,7 +73,7 @@ public class NowPlaying {
             playerScout.registerAvailablePlayers();
             // listen for dbus signals of interest
             // signal handlers run under a single thread, ie. signals are processed in the order they are received
-            AvailabilityHandler availabilityHandler = new AvailabilityHandler(playerDatabase);
+            AvailabilityHandler availabilityHandler = new AvailabilityHandler(metadataRetriever, playerDatabase);
             conn.addSigHandler(DBus.NameOwnerChanged.class, availabilityHandler);
             TrackUpdatesHandler trackUpdatesHandler = new TrackUpdatesHandler(metadataRetriever, playerDatabase);
             conn.addSigHandler(Properties.PropertiesChanged.class, trackUpdatesHandler);
