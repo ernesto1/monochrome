@@ -27,7 +27,7 @@ public class MusicPlayerScout {
 
     /**
      * Scans the list of available application <i>well known names</i> in the dbus for entries
-     * belonging to the <tt>org.mpris.MediaPlayer2</tt> family.  Any {@link MusicPlayerDatabase#isSupported(String) supported}
+     * belonging to the <tt>org.mpris.MediaPlayer2</tt> family.  Any {@link Registrar#isSupported(String) supported}
      * media players are registered in the database.
      */
     public void registerAvailablePlayers() {

@@ -7,12 +7,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 /**
- * Allows clients to register and unregister music players for this application to track via the dbus.<br>
- * For each registered player, the application will subscribe to messages from it through the dbus.
+ * <h2>Overview</h2>
+ * Allows clients to register and unregister music players for this application to track.<br>
+ * For each registered player, the application will subscribe to messages from it through the dbus.<br>
+ * <br>
+ * <h2>Supported players</h2>
+ * Music players implement the MPRIS specification differently.  Therefore, only those players that
+ * have been tested for will be allowed by this application.  The registrar performs this
+ * {@link #supportedPlayers gate keeping role}.
+ *
+ * @see <a href="https://specifications.freedesktop.org/mpris-spec/latest/">Media Player Remote Interfacing Specification (MPRIS)</a>
  */
 public class Registrar {
     private static final Logger logger = LoggerFactory.getLogger(Registrar.class);
@@ -24,22 +33,35 @@ public class Registrar {
     private final MetadataRetriever metadataRetriever;
     private final MusicPlayerDatabase playerDatabase;
     /**
+     * List of compatible music players.  Only signals from these players will be processed.<br>
+     * These are music players that comply with the "protocol" expected from this app, ie.
+     * <ul>
+     *     <li>Player provides complete song metadata</li>
+     *     <li>The way it sends status update messages is supported</li>
+     * </ul>
+     */
+    private List<String> supportedPlayers;
+    /**
      * Map of <tt>bus unique name</tt> to <tt>signal handler closeable</tt>.  Allows the registrar to unregister
      * signal handlers from the dbus.
      */
     private final Map<String, AutoCloseable> handlerMap;
 
-    public Registrar(DBusConnection conn, MetadataRetriever metadataRetriever, MusicPlayerDatabase playerDatabase) {
+    public Registrar(DBusConnection conn,
+                     MetadataRetriever metadataRetriever,
+                     MusicPlayerDatabase playerDatabase,
+                     List<String> supportedPlayers) {
         this.conn = conn;
         this.metadataRetriever = metadataRetriever;
         this.playerDatabase = playerDatabase;
+        this.supportedPlayers = supportedPlayers;
         handlerMap = new HashMap<>();
     }
 
     /**
      * Registers the music player for tracking.<br>
-     * In order for the player to be registered, it must be {@link MusicPlayerDatabase#isSupported(String) supported}
-     * by this application.
+     * In order for the player to be registered, it must be {@link #isSupported(String) supported} by this application.
+     *
      * @param busName dbus unique name, ex. :1.345
      */
     public void register(String busName) {
@@ -49,16 +71,16 @@ public class Registrar {
         if (name.isPresent()) {
             playerName = name.get();
         } else {
-            logger.warn("unable to determine the music player's name, the player will not be registered");
+            logger.warn("unable to determine the media player's name, the player will be ignored");
             return;
         }
 
-        if (!playerDatabase.isSupported(playerName)) {
-            logger.info("music player '{}' is not supported", playerName);
+        if (!isSupported(playerName)) {
+            logger.info("'{}' is not a supported music player, it will not be registered", playerName);
             return;
         }
 
-        logger.info("registering new player: '{}'", playerName);
+        logger.info("registering a new music player: '{}'", playerName);
         MusicPlayer musicPlayer = new MusicPlayer(playerName, busName);
         musicPlayer = metadataRetriever.getPlayerState(musicPlayer);
         playerDatabase.save(musicPlayer);
@@ -69,8 +91,18 @@ public class Registrar {
                                                                  new TrackUpdatesHandler(metadataRetriever, playerDatabase));
             handlerMap.put(busName, unregisterHandler);
         } catch (DBusException e) {
-            logger.error("unable to register the signal handler for the '{}' music player", playerName);
+            logger.error("unable to subscribe to dbus signals from the '{}' music player", playerName);
         }
+    }
+
+    /**
+     * Determines if the given player is a compatible/tested music player.<br>
+     * This would allow a client to filter out other media players on the dbus like a firefox youtube window for example.
+     * @param playerName the player's name
+     * @return <tt>true</tt> if the player is supported
+     */
+    public boolean isSupported(String playerName) {
+        return supportedPlayers.contains(playerName.toLowerCase());
     }
 
     /**

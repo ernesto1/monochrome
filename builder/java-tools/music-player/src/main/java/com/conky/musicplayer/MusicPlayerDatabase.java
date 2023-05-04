@@ -7,31 +7,15 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * <h2>Overview</h2>
  * Catalog of running {@link MusicPlayer music players} in the system.  As new music players are "detected" through the dbus,
  * the dbus signal handlers will add them here.<br>
  * <br>
  * For each update performed on this music player catalog, the database will determine <i>what music player should be
- * considered {@link #activePlayer in focus}</i>, ie. what music player details should conky be displaying.<br>
- * <br>
- * <h2>Supported players</h2>
- * Music players don't follow a standard when it comes to dbus integration.  Therefore, those players that
- * are supported by this app are registered here as {@link #supportedPlayers supported players}.<br>
- * <br>
- * Signal handlers can {@link #isSupported(String) query the database} in order to filter out messages from media players that
- * are not supported by this application.
+ * considered {@link #activePlayer in focus}</i>, ie. what music player details should conky be displaying.
  */
 public class MusicPlayerDatabase {
     private static final Logger logger = LoggerFactory.getLogger(MusicPlayerDatabase.class);
-    /**
-     * List of compatible music players.  Only signals from these players will be processed.<br>
-     * These are music players that comply with the "protocol" expected from this app, ie.
-     * <ul>
-     *     <li>Player provides complete song metadata</li>
-     *     <li>The way it sends status update messages is supported by this app</li>
-     * </ul>
-     */
-    private List<String> supportedPlayers;
+
     /**
      * The player that is currently in focus, ie. being displayed by conky.<br>
      * <br>
@@ -45,24 +29,13 @@ public class MusicPlayerDatabase {
     private Map<String, MusicPlayer> musicPlayers;
     private MusicPlayerWriter writer;
 
-    public MusicPlayerDatabase(List<String> supportedPlayers, MusicPlayerWriter writer) {
-        this.supportedPlayers = supportedPlayers;
+    public MusicPlayerDatabase(MusicPlayerWriter writer) {
         this.writer = writer;
         musicPlayers = new HashMap<>(5);
     }
 
     public void init() {
         determineActivePlayer();
-    }
-
-    /**
-     * Determines if the given player is a compatible/tested music player.<br>
-     * This would allow a client to filter out other media players on the dbus like a firefox youtube window for example.
-     * @param playerName the player's name
-     * @return <tt>true</tt> if the player is supported
-     */
-    public boolean isSupported(String playerName) {
-        return supportedPlayers.contains(playerName.toLowerCase());
     }
 
     /**
@@ -178,13 +151,5 @@ public class MusicPlayerDatabase {
                                          .map(player -> player.getAlbumArtPath())
                                          .collect(Collectors.toSet());
         return images;
-    }
-
-    /**
-     * Returns the path to the image of the player currently in focus
-     * @return file path to an image as a <tt>String</tt>
-     */
-    public String getCurrentAlbumArtPath() {
-        return activePlayer.getAlbumArtPath();
     }
 }

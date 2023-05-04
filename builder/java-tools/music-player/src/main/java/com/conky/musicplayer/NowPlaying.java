@@ -27,7 +27,7 @@ import java.util.concurrent.*;
  * Song information is stored in separate {@link MusicPlayerWriter#FILE_PREFIX prefixed} files
  * in the {@link #OUTPUT_DIR output directory}.
  * @see <a href="https://github.com/hypfvieh/dbus-java">Java DBus library</a>
- * @see <a href="https://specifications.freedesktop.org/mpris-spec/latest/">Media Player Remote Interfacing Specification</a>
+ * @see <a href="https://specifications.freedesktop.org/mpris-spec/latest/">Media Player Remote Interfacing Specification (MPRIS)</a>
  */
 public class NowPlaying {
     private static final Logger logger = LoggerFactory.getLogger(NowPlaying.class);
@@ -64,12 +64,12 @@ public class NowPlaying {
                                                                          new ThreadPoolExecutor.DiscardOldestPolicy());
             MusicPlayerWriter writer = new MusicPlayerWriter(OUTPUT_DIR, albumArtExecutor);
             writer.init();
-            MusicPlayerDatabase playerDatabase = new MusicPlayerDatabase(SUPPORTED_PLAYERS, writer);
+            MusicPlayerDatabase playerDatabase = new MusicPlayerDatabase(writer);
             playerDatabase.init();
             // register any music players already running
             ApplicationInquirer inquirer = new ApplicationInquirer(conn);
             MetadataRetriever metadataRetriever = new MetadataRetriever(inquirer);
-            Registrar registrar = new Registrar(conn, metadataRetriever, playerDatabase);
+            Registrar registrar = new Registrar(conn, metadataRetriever, playerDatabase, SUPPORTED_PLAYERS);
             MusicPlayerScout playerScout = new MusicPlayerScout(conn, registrar);
             playerScout.registerAvailablePlayers();
             // listen for dbus signals of interest
