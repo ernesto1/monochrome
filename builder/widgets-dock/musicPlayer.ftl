@@ -54,8 +54,8 @@ conky.text = [[
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
 <#assign y = 0>
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-rhythmbox.png -p 0,[=y]}\
-${voffset 36}${offset 63}${color1}${lua_parse read_file ${cat /tmp/conky/musicplayer.name}}
-${voffset 4}${offset 63}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.playbackStatus}}
+${voffset 36}${offset 63}${color1}now playing
+${voffset 4}${offset 63}${color}no player running
 ${else}\
 # :::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
