@@ -1,0 +1,18 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="ListenToSingleApp" type="Application" factoryName="Application" nameIsGenerated="true">
+    <classpathModifications>
+      <entry path="$PROJECT_DIR$/music-player/src/main/config" />
+    </classpathModifications>
+    <option name="MAIN_CLASS_NAME" value="com.conky.musicplayer.examples.ListenToSingleApp" />
+    <module name="music-player" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.conky.musicplayer.examples.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

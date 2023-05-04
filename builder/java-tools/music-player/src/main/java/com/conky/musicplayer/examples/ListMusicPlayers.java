@@ -18,6 +18,7 @@ public class ListMusicPlayers {
     public static void main(String[] args) {
         try (DBusConnection conn = DBusConnectionBuilder.forSessionBus().build()) {
             DBus dbus = conn.getRemoteObject("org.freedesktop.DBus", "/org/freedesktop/DBus", DBus.class);
+            logger.info("Available media players:");
             String[] names = dbus.ListNames();
             Arrays.stream(names)
                   .filter(name -> name.startsWith("org.mpris.MediaPlayer2"))
