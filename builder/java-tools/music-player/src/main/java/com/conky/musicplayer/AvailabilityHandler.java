@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * <b>DBus signal handler</b><br>
- * Detects when a music player is closed by the user by analyzing the <tt>dbus name owner changed</tt> signal.<br>
+ * Detects when a music player is launched or closed by the user by listening
+ * to the <tt>dbus name owner changed</tt> signal.<br>
  * <br>
  * The signal contains three arguments:
  * <pre>
@@ -17,7 +18,8 @@ import org.slf4j.LoggerFactory;
  * org.mpris.MediaPlayer2.rhythmbox     :3.456                  app was closed
  * </pre>
  *
- * Closed music players are removed from the {@link MusicPlayerDatabase database of available players}.
+ * New music players are registered into the system for status updates tracking.<br>
+ * While closed players are deregistered from the system.
  *
  * @see <a href="https://dbus.freedesktop.org/doc/dbus-specification.html#bus-messages-name-owner-changed">Name owner changed signal</a>
  */
@@ -40,7 +42,7 @@ public class AvailabilityHandler extends AbstractSignalHandlerBase<DBus.NameOwne
 
     @Override
     public void handle(DBus.NameOwnerChanged signal) {
-        // weed out signals for bus names we are not interested in
+        // weed out signals for well known names we are not interested in
         if (!signal.name.startsWith("org.mpris.MediaPlayer2")) {
             return;
         }

@@ -54,7 +54,7 @@ public class Registrar {
         }
 
         if (!playerDatabase.isSupported(playerName)) {
-            logger.debug("music player '{}' is not supported", playerName);
+            logger.info("music player '{}' is not supported", playerName);
             return;
         }
 
