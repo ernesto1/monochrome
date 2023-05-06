@@ -1,6 +1,7 @@
 -- :::::: lua functions for the media player conky ::::::
 
---[[ generates an image conky variable from a conky expression
+--[[ generates an image conky variable from a conky expression, ex. the image path is in a file
+that must be read; you can use this method to extract said path by using the conky ${cat} variable
 
 arguments:
   expression    conky variable to parse, must yield an image file path

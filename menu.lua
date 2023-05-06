@@ -93,30 +93,50 @@ function build_image_variable(path, x, y)
 end
 
 function conky_reset_state()
+  computations["xOffset"] = 0
   computations["yOffset"] = 0
 end
 
---[[ adds an offset to the 'y' coordinate
-the client can then call the 'conky_draw_image()' method in order to draw an image at the current y coordinate
+--[[ adds an offset to the x & y coordinates
+the client can then call the following methods which will take these offsets into account:
 
-on each conky session the y offset starts at 0, this number is increased depending on the number of times
-this method is called
+  - conky_draw_image(..)
+  - conky_add_x_offset(..)
+
+on each conky session the offsets are reset to 0 (see the conky_reset_state() method)
+this methoed is cumulative, ie. the numbers are increased each times the method is called
 ]]
-function conky_image_offset(offset)
-  local yOffset = computations["yOffset"]
-  yOffset = yOffset + tonumber(offset)
-  computations["yOffset"] = yOffset
+function conky_add_offsets(xOffset, yOffset)
+  local x = computations["xOffset"] or 0
+  x = x + tonumber(xOffset)
+  computations["xOffset"] = x
+
+  local y = computations["yOffset"] or 0
+  y = y + tonumber(yOffset)
+  computations["yOffset"] = y
   return ''
 end
 
---[[ creates a conky image variable string at the current y coordinate position, ex. ${image /directory/image.jpg -p 0,55}
-see the 'conky_image_offset()' method
+--[[ update the conky variable with the current 'x' offset
+call this method with ${goto} or ${offset} conky variables]]
+function conky_add_x_offset(variable, x)
+  local xOffset = computations["xOffset"] or 0
+  return "${" .. variable .. " " .. tonumber(x) + xOffset .. "}"
+end
+
+--[[ creates a conky image variable string at the x,y coordinate position after any available offsets are applied, ex. calling conky_draw_image(/directory/image.jpg, 0, 50) 
+             with the current offsets being x = 10, y = 50
+             would yield this image variable: ${image /directory/image.jpg -p 10,100}
 
 arguments:
     path  path to image file
     x     image x coordinate
+    y     image y coordinate
+
+@see the 'conky_add_offsets()' method
 ]]
-function conky_draw_image(path, x)
-  local y = computations["yOffset"]  
-  return build_image_variable(path, x, y)
+function conky_draw_image(path, x, y)
+  local xOffset = computations["xOffset"] or 0
+  local yOffset = computations["yOffset"] or 0
+  return build_image_variable(path, tonumber(x) + xOffset, tonumber(y) + yOffset)
 end

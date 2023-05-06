@@ -15,9 +15,9 @@ conky.config = {
   gap_y = [=y],
 
   -- window settings
-  minimum_width = 189,      -- conky will add an extra pixel to this  
+  minimum_width = 189,      -- conky will add an extra pixel to this width 
   maximum_width = 189,
-  minimum_height = 71,
+  minimum_height = 71,      -- conky will add an extra pixel to this height
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -46,6 +46,7 @@ conky.config = {
   color1 = '[=colors.labels]'
   
   -- n.b. this conky requires the music-player java app to be running in the background
+  --      it generates input files under /tmp/conky/musicplayer.* which this conky will read
 };
 
 conky.text = [[
@@ -70,18 +71,18 @@ ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu.png -p 0,[
 ${voffset 2}${alignc}${color1}${lua_parse read_file ${cat /tmp/conky/musicplayer.name}} : ${lua_parse read_file ${cat /tmp/conky/musicplayer.playbackStatus}}
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-bottom.png -p 0,[=(y+ top + body)?c]}\
 ${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4,[=(top)?c]}\
-${lua image_offset [=(y + top + body + bottom + space)?c]}${voffset 196}\
+${lua add_offsets 0 [=(y + top + body + bottom + space)?c]}${voffset 196}\
 ${else}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-rhythmbox.png -p 0,[=y]}\
 ${voffset 36}${offset 63}${color1}${lua_parse read_file ${cat /tmp/conky/musicplayer.name}}
 ${voffset 4}${offset 63}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.playbackStatus}}
-${lua image_offset [=(y + 71 + space)?c]}${voffset 12}\
+${lua add_offsets 0 [=(y + 71 + space)?c]}${voffset 12}\
 ${endif}\
 # :::: track details
 <#assign body = 71>
-${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-horizontal.png 0}\
-${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-horizontal-data.png 45}\
-${lua image_offset [=body]}${lua_parse draw_image ~/conky/monochrome/images/menu-blank.png 0}\
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-horizontal.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-horizontal-data.png 45 0}\
+${lua add_offsets 0 [=body]}${lua_parse draw_image ~/conky/monochrome/images/menu-blank.png 0 0}\
 ${offset 5}${color1}title${goto 50}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.title}}
 ${voffset 3}${offset 5}${color1}album${goto 50}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.album}}
 ${voffset 3}${offset 5}${color1}artist${goto 50}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.artist}}

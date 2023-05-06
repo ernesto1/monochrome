@@ -39,8 +39,8 @@ conky.config = {
   draw_outline = false,   -- black outline around text (not good if text is black)
   
   -- colors
-  default_color = '[=colors.systemText]',  -- regular text
-  color1 = '[=colors.systemLabels]',         -- text labels
+  default_color = 'e5e5e5',  -- regular text
+  color1 = '839bc1',         -- text labels
   
   -- n.b. this conky requires the music-player java app to be running in the background
   --      it generates input files under /tmp/conky/musicplayer.* which this conky will read
@@ -52,17 +52,16 @@ conky.text = [[
 #                                                          song with no album art
 # :::: no player available
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
-<#assign y = 0>
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-music-player.png -p 0,0}\
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-solid.png -p 71,28}\
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-transparent.png -p 71,31}\
+${image ~/conky/monochrome/images/glass/blue-music-player.png -p 0,0}\
+${image ~/conky/monochrome/images/glass/blue-menu-solid.png -p 71,28}\
+${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 71,31}\
 ${image ~/conky/monochrome/images/menu-blank.png -p 182,28}\
 ${voffset 34}${goto 77}${color1}now playing
 ${voffset 4}${goto 77}${color}no player running
 ${else}\
 # :::::::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-music-player-album.png -p 0,0}\
+${image ~/conky/monochrome/images/glass/blue-music-player-album.png -p 0,0}\
 ${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 146x146 7,7}\
 # having album art will push the track details text & images towards the bottom right
 ${lua add_offsets 94 86}\
@@ -73,11 +72,11 @@ ${else}${lua_parse read_file ${cat /tmp/conky/musicplayer.playbackStatus}}${endi
 ${goto 310}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.name}}${voffset 6}
 # :::::::: no album art
 ${else}\
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-music-player.png -p 0,0}\
+${image ~/conky/monochrome/images/glass/blue-music-player.png -p 0,0}\
 ${endif}\
 # ::::::::: track details
-${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-solid.png 71 0}\
-${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-transparent.png 116 0}\
+${lua_parse draw_image ~/conky/monochrome/images/glass/blue-menu-solid.png 71 0}\
+${lua_parse draw_image ~/conky/monochrome/images/glass/blue-menu-transparent.png 116 0}\
 # add blank out images to ensure the menu image comes out correctly
 # right side
 ${lua_parse draw_image ~/conky/monochrome/images/menu-blank.png 290 0}\
