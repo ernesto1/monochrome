@@ -52,6 +52,14 @@ function usage() {
 	END
 }
 
+# prints the line with color
+# see https://opensource.com/article/19/9/linux-terminal-colors for more colors
+function printHeader {
+  local NOCOLOR='\033[0m'
+  local GREEN='\033[32m'
+  printf "${GREEN}$1${NOCOLOR}\n"
+}
+
 # exits the script on error if the override file has any duplicate entries for a particular conky configuration
 function detectDuplicateEntries() {
   # remove comment lines '#', empty lines and 'ignore' entries from the file, then look for dupes
@@ -73,19 +81,19 @@ fi
 
 # define default variables
 enablePackageLookup=true          # dnf package lookup is enabled
-enableMusicPlayerListener=false   # java music player dbus listener is disabled
+enableMusicPlayerListener=true    # java music player dbus listener is disabled
 
 while (( "$#" )); do
   case $1 in
     --widgets)
       directory=${HOME}/conky/monochrome/widgets
       width=32
+      enableMusicPlayerListener=false
       shift
       ;;
     --widgets-dock)
       directory=${HOME}/conky/monochrome/widgets-dock
       width=30
-      enableMusicPlayerListener=true
       shift
       ;;
     --glass)
@@ -95,7 +103,6 @@ while (( "$#" )); do
     --compact)
       directory=${HOME}/conky/monochrome/compact
       width=30
-      enableMusicPlayerListener=true
       shift
       ;;
     --monitor)
@@ -138,7 +145,7 @@ while (( "$#" )); do
   esac
 done
 
-echo -e "::: launching conky with the following settings\n"
+printHeader "::: launching conky with the following settings\n"
 echo    "conky folder:         ${directory}"
 
 if [[ ${monitor} ]]; then
@@ -152,13 +159,13 @@ if [[ ! -z ${layoutFile} ]]; then
   # TODO file integrity: ensure number of override elements is 2 or 3
 fi
 
-echo -e '\n::: killing the currently running processes of this conky suite\n'
+printHeader '\n::: killing the currently running processes of this conky suite\n'
 pgrep -f 'conky/monochrome' -l -a | sed 's/ /:/' | column -s ':' -t -N PID,process
-echo  # add line break in order to print job exit messages on a separate line
+echo -e "\nclosing remarks"
 pkill -f 'conky/monochrome'
 sleep 1s  # wait a bit in order to capture the STDOUT of the 'dnfPackageLookup.bash' script
           # it tends to print right below the 'launching conky' banner below
-echo -e "\n::: launching conky configs\n"
+printHeader "\n::: launching conky configs\n"
 IFS=$'\n'
 
 # all available conky configs in the target directory will be launched
@@ -221,7 +228,7 @@ do
   IFS=$'\n'
 done
 
-echo -e "\n::: start support services\n"
+printHeader "\n::: start support services\n"
 
 # using shell builtins
 if "$enablePackageLookup"; then
