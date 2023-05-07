@@ -82,9 +82,9 @@ ${lua_parse draw_image ~/conky/monochrome/images/glass/blue-menu-transparent.png
 ${lua_parse draw_image ~/conky/monochrome/images/menu-blank.png 290 0}\
 # bottom
 ${lua_parse draw_image ~/conky/monochrome/images/menu-blank.png 71 69}${lua_parse draw_image ~/conky/monochrome/images/menu-blank.png 96 69}\
-${voffset 3}${lua_parse add_x_offset goto 77}${color1}title${lua_parse add_x_offset goto 122}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.title}}
-${voffset 3}${lua_parse add_x_offset goto 77}${color1}album${lua_parse add_x_offset goto 122}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.album}}
-${voffset 3}${lua_parse add_x_offset goto 77}${color1}artist${lua_parse add_x_offset goto 122}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.artist}}
-${voffset 3}${lua_parse add_x_offset goto 77}${color1}genre${lua_parse add_x_offset goto 122}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.genre}}${voffset 10}\
+${voffset 3}${lua_parse add_x_offset goto 77}${color1}title${lua_parse add_x_offset goto 122}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.title} 27}
+${voffset 3}${lua_parse add_x_offset goto 77}${color1}album${lua_parse add_x_offset goto 122}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.album} 27}
+${voffset 3}${lua_parse add_x_offset goto 77}${color1}artist${lua_parse add_x_offset goto 122}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.artist} 27}
+${voffset 3}${lua_parse add_x_offset goto 77}${color1}genre${lua_parse add_x_offset goto 122}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.genre} 27}${voffset 10}\
 ${endif}\
 ]];
