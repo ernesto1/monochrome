@@ -88,6 +88,7 @@ while (( "$#" )); do
     --widgets)
       directory=${HOME}/conky/monochrome/widgets
       width=32
+      versionWidth=7
       enableMusicPlayerListener=false
       shift
       ;;
@@ -98,6 +99,7 @@ while (( "$#" )); do
       ;;
     --glass)
       directory=${HOME}/conky/monochrome/glass
+      versionWidth=7
       shift
       ;;
     --compact)
@@ -236,6 +238,10 @@ if "$enablePackageLookup"; then
 
   if [[ "${width}" ]]; then
     dnfParameters=(--width ${width})
+  fi
+  
+  if [[ "${versionWidth}" ]]; then
+    dnfParameters+=(--version-width ${versionWidth})
   fi
 
   ~/conky/monochrome/dnfPackageLookup.bash ${dnfParameters[@]} &

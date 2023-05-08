@@ -6,8 +6,9 @@
 # conky variables are introduced in order for the data to be properly formatted for conky to display
 
 function usage {
-  echo $(basename $0) [--width n]
+  echo $(basename $0) [--width n] [--version-width n]
   echo 'where width is the maximun number of characters per row, default is 35'
+  echo '      version width is the number of characters to print for the package version, default is 6'
 }
 
 function onExitSignal {
@@ -29,17 +30,17 @@ function log {
 
 trap onExitSignal SIGINT SIGTERM
 
-if [[ $# -gt 0 && $# -ne 2 ]]; then
-  usage
-  exit 1
-fi
-
-width=35
+width=35          # total width of the package update table, measured in number of characters
+versionWidth=6    # number of characters to devote to the version
 
 while (( "$#" )); do
   case $1 in
     --width)
-      width=$2    # total width of the package update table, measured in number of characters
+      width=$2
+      shift 2
+      ;;
+    --version-width)
+      versionWidth=$2
       shift 2
       ;;
     *)
@@ -54,9 +55,14 @@ if [[ $width -lt 20 ]]; then
   exit 1
 fi
 
+if [[ $width -lt $versionWidth ]]; then
+  echo 'the total character width per line (--width) has to be greater than the version width (--version-width)' >&2
+  exit 1
+fi
+
 log 'starting dnf repo package lookup'
 log "output list of new packages will be of ${width} characters"
-packageWidth=$(( width - 6 - 1 ))  # width for the package name column
+packageWidth=$(( width - versionWidth - 1 ))  # width for the package name column
 outputDir=/tmp/conky
 mkdir -p ${outputDir}
 totalCores=$(grep -c processor /proc/cpuinfo)
@@ -98,7 +104,7 @@ while [ true ]; do
             # - an ${offset} is added to each line in order for the package list to be printed with a left border
             # - packages of interest are surrounded by a ${color} variable in order to have them highlighted
             highlightRegex='kernel\|firefox\|transmission'
-            cat ${packagesFile} | awk "{ printf \"%-${packageWidth}.${packageWidth}s %6.6s\n\", \$1, \$2 }" \
+            cat ${packagesFile} | awk "{ printf \"%-${packageWidth}.${packageWidth}s %${versionWidth}.${versionWidth}s\n\", \$1, \$2 }" \
             | sed 's/^/${voffset 2}${offset 5}/' \
             | sed "s:\($highlightRegex\):$\{color2\}\1$\{color\}:" > ${outputDir}/dnf.packages.formatted
         else
