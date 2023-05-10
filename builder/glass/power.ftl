@@ -10,7 +10,7 @@ ${voffset 3}${alignr 6}${color}plugged in${font}
 ${else}\
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-power-battery.png -p 0,0}\
 ${voffset 4}${offset 5}${color1}${font0}charging${font}
-${voffset -17}${alignr 6}${color}${font1}${battery_percent BAT0}${font3}%${font}
+${voffset -19}${alignr 6}${color}${font1}${battery_percent BAT0}${font3}%${font}
 ${voffset -2}${offset 16}${color2}${if_match ${battery_percent BAT0} < 70}${color3}${endif}${battery_bar 3,93 BAT0}
 ${voffset -4}${alignr 6}${color}${font}eta ${battery_time BAT0}${font}
 ${endif}\
@@ -18,7 +18,7 @@ ${endif}\
 ${else}\
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-power-battery.png -p 0,0}\
 ${voffset 4}${offset 5}${color1}${font0}battery${font}
-${voffset -17}${alignr 6}${color}${font1}${battery_percent BAT0}${font3}%${font}
+${voffset -19}${alignr 6}${color}${font1}${battery_percent BAT0}${font3}%${font}
 ${voffset -2}${offset 16}${color2}${if_match ${battery_percent BAT0} < 30}${color3}${endif}${battery_bar 3,93 BAT0}
 ${voffset -4}${alignr 6}${color}${font}${battery_time BAT0} left${font}
 ${endif}\
