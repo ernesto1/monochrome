@@ -144,7 +144,7 @@ ${voffset 14}${alignc}${color1}dnf package management
 ${voffset 3}${alignc}${color}${lines /tmp/conky/dnf.packages.formatted} package update(s) available
 ${voffset 5}${offset 5}${color1}package${alignr 5}version
 # the dnf package lookup script refreshes the package list every 10m
-<#if system == "desktop"><#assign lines = 51><#else><#assign lines = 28></#if>
+<#if system == "desktop"><#assign lines = 43><#else><#assign lines = 28></#if>
 ${voffset 2}${color}${execpi 30 head -n [=lines] /tmp/conky/dnf.packages.formatted}
 ${endif}\
 ${voffset -8}

@@ -135,7 +135,7 @@ ${voffset 14}${alignc}${color1}dnf package management
 ${voffset 3}${alignc}${color}${lines /tmp/conky/dnf.packages.formatted} package update(s) available
 ${voffset 5}${offset 5}${color1}package${alignr 5}version
 # the dnf package lookup script refreshes the package list every 10m
-${voffset 2}${color}${execpi 30 head -n 51 /tmp/conky/dnf.packages.formatted}
+${voffset 2}${color}${execpi 30 head -n 43 /tmp/conky/dnf.packages.formatted}
 ${endif}\
 ${voffset -8}
 ]];
