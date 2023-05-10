@@ -230,7 +230,7 @@ do
   IFS=$'\n'
 done
 
-printHeader "\n::: start support services\n"
+printHeader "\n::: starting support services\n"
 
 # using shell builtins
 if "$enablePackageLookup"; then
