@@ -10,7 +10,7 @@ java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar glass blue desk
 pushd /tmp/monochrome/target && \
 buildSidebar.bash config cpu-mem network disk temperature-desktop time bottom-edge && \
 echo '${voffset -900}]]' >> ../sidebar && \
-mv system ../sidebar ~/conky/monochrome/glass && \
+mv ../sidebar system musicPlayer  ~/conky/monochrome/glass && \
 popd
 
 
@@ -19,7 +19,7 @@ java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar glass blue lapt
 pushd /tmp/monochrome/target && \
 buildSidebar.bash config cpu-mem network disk power bottom-edge && \
 echo '${voffset -900}]];' >> ../sidebar && \
-mv system ../sidebar ~/conky/monochrome/glass && \
+mv ../sidebar system musicPlayer ~/conky/monochrome/glass && \
 popd
 
 
