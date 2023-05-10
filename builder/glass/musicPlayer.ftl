@@ -56,9 +56,13 @@ ${if_existing /tmp/conky/musicplayer.name Nameless}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-music-player.png -p 0,0}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-solid.png -p 71,28}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-transparent.png -p 71,31}\
+# add blank out images to ensure the menu image comes out correctly
+# bottom
+${image ~/conky/monochrome/images/menu-blank.png -p 71, 69}\
+# right side
 ${image ~/conky/monochrome/images/menu-blank.png -p 182,28}\
 ${voffset 34}${goto 77}${color1}now playing
-${voffset 4}${goto 77}${color}no player running
+${voffset 4}${goto 77}${color}no player running\
 ${else}\
 # :::::::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
@@ -86,6 +90,8 @@ ${lua_parse draw_image ~/conky/monochrome/images/menu-blank.png 71 69}${lua_pars
 ${voffset 3}${lua_parse add_x_offset goto 77}${color1}title${lua_parse add_x_offset goto 122}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.title} 27}
 ${voffset 3}${lua_parse add_x_offset goto 77}${color1}album${lua_parse add_x_offset goto 122}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.album} 27}
 ${voffset 3}${lua_parse add_x_offset goto 77}${color1}artist${lua_parse add_x_offset goto 122}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.artist} 27}
-${voffset 3}${lua_parse add_x_offset goto 77}${color1}genre${lua_parse add_x_offset goto 122}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.genre} 27}${voffset 10}\
+${voffset 3}${lua_parse add_x_offset goto 77}${color1}genre${lua_parse add_x_offset goto 122}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.genre} 27}\
 ${endif}\
+# the final vertical offset required depends on what UI is active
+${voffset 5}${if_existing /tmp/conky/musicplayer.albumArtPath}${voffset 5}${endif}\
 ]];
