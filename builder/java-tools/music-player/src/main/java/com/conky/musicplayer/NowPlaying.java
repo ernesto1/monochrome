@@ -66,15 +66,13 @@ public class NowPlaying {
             writer.init();
             MusicPlayerDatabase playerDatabase = new MusicPlayerDatabase(writer);
             playerDatabase.init();
-            // register any music players already running
             ApplicationInquirer inquirer = new ApplicationInquirer(conn);
             MetadataRetriever metadataRetriever = new MetadataRetriever(inquirer);
             Registrar registrar = new Registrar(conn, metadataRetriever, playerDatabase, SUPPORTED_PLAYERS);
-            MusicPlayerScout playerScout = new MusicPlayerScout(conn, registrar);
-            playerScout.registerAvailablePlayers();
             // listen for dbus signals of interest
             // signal handlers run under a single thread, ie. signals are processed in the order they are received
-            AvailabilityHandler availabilityHandler = new AvailabilityHandler(registrar, playerDatabase);
+            AvailabilityHandler availabilityHandler = new AvailabilityHandler(conn, registrar, playerDatabase);
+            availabilityHandler.registerAvailablePlayers();     // register any music players already running
             conn.addSigHandler(DBus.NameOwnerChanged.class, availabilityHandler);
             logger.info("listening to the dbus for media player activity");
             // maintenance operations
