@@ -9,7 +9,7 @@ conky.config = {
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
   gap_x = 125,
-  gap_y = 30,
+  gap_y = 10,
 
   -- window settings
   minimum_width = 382,      -- conky will add an extra pixel to this width

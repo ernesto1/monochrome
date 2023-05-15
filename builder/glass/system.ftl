@@ -7,7 +7,7 @@ conky.config = {
   -- window alignment
   alignment = 'top_left',     -- top|middle|bottom_left|middle|right
   gap_x = 125,                    -- same as passing -x at command line
-  gap_y = 82,
+  gap_y = 42,
 
   -- window settings
   minimum_width = 219,
@@ -144,7 +144,7 @@ ${voffset 14}${alignc}${color1}dnf package management
 ${voffset 3}${alignc}${color}${lines /tmp/conky/dnf.packages.formatted} package update(s) available
 ${voffset 5}${offset 5}${color1}package${alignr 5}version
 # the dnf package lookup script refreshes the package list every 10m
-<#if system == "desktop"><#assign lines = 43><#else><#assign lines = 28></#if>
+<#if system == "desktop"><#assign lines = 47><#else><#assign lines = 28></#if>
 ${voffset 2}${color}${execpi 30 head -n [=lines] /tmp/conky/dnf.packages.formatted}
 ${endif}\
 ${voffset -8}

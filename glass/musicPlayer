@@ -9,7 +9,7 @@ conky.config = {
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
   gap_x = 125,
-  gap_y = 30,
+  gap_y = 10,
 
   -- window settings
   minimum_width = 382,      -- conky will add an extra pixel to this width
@@ -91,6 +91,6 @@ ${voffset 3}${lua_parse add_x_offset goto 77}${color1}album${lua_parse add_x_off
 ${voffset 3}${lua_parse add_x_offset goto 77}${color1}artist${lua_parse add_x_offset goto 122}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.artist} 27}
 ${voffset 3}${lua_parse add_x_offset goto 77}${color1}genre${lua_parse add_x_offset goto 122}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.genre} 27}\
 ${endif}\
-# the vertical offset required depends on what UI is active
+# the final vertical offset required depends on what UI is active
 ${voffset 5}${if_existing /tmp/conky/musicplayer.albumArtPath}${voffset 5}${endif}\
 ]];
