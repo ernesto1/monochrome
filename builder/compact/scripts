@@ -8,7 +8,7 @@
 # ::::::: desktop sidebar
 java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar compact burgundy desktop && \
 pushd /tmp/monochrome/target && \
-buildSidebar.bash config cpu memory network-desktop disk system bottom-edge && \
+buildSidebar.bash config cpu memory network disk system bottom-edge && \
 echo ']];' >> /tmp/monochrome/sidebar && \
 mv ../sidebar  bittorrent packages musicPlayer ~/conky/monochrome/compact && \
 sleep 1 && \

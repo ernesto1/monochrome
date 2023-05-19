@@ -123,7 +123,7 @@ ${voffset 3}${goto 47}${color1}speed${goto 102}${color}${template3 enp0s25}
 ${template4 enp0s25 3000 60000}
 ${else}\
 ${image ~/conky/monochrome/images/compact/ochre-network-no-internet.png -p 0,417}\
-${voffset 12}${offset 5}${color1}no internet
+${voffset 12}${offset 5}${color1}no network
 ${voffset 3}${offset 5}connection
 ${voffset 92}
 ${endif}\
