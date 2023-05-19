@@ -1,7 +1,7 @@
 conky.config = {
   lua_load = '~/conky/monochrome/menu.lua',
   
-  update_interval = 2,    -- update interval in seconds
+  update_interval = 3,    -- update interval in seconds
   xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
@@ -29,8 +29,8 @@ conky.config = {
   own_window_argb_visual = true,  -- turn on transparency
   own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
   
-  -- images
   imlib_cache_flush_interval = 250,
+  text_buffer_size=3000,
 
   -- font settings
   use_xft = false,
@@ -75,10 +75,17 @@ ${else}\
 ${voffset 84}${alignc}${color}no peer connections
 ${voffset 3}${alignc}established${voffset 90}
 ${endif}\
-# :::::::::::: files shared at the moment, see comment below for 'lsof' parsing logic
-<#assign body = 478>
+# :::::::::::: files being seeded at the moment
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-horizontal.png -p 0,[=y?c]}\
-${voffset 2}${offset 5}${color1}seeding${goto 75}${color}${lua compute_and_save files ${exec lsof -c transmission -n | grep -v deleted | grep -cE '[0-9]+[a-z|A-Z] +REG +[0-9]+,[0-9]+ +[0-9]{6,}'}} files
+# sample 'lsof' lines being grep'ed for determining files being seeded by transmission
+# FD     TYPE DEVICE     SIZE/OFF      NODE NAME
+# 102r   REG  8,16     3297924792 163446839 /media/movie.mp4            < use read file descriptor pattern
+# 74r    REG  0,19              0  19821859 /proc/513729/mountinfo      < non real files have a size of 0 bytes
+# 100u   REG  0,1        67108864    718707 /memfd:pulseaudio (deleted) < items with 'deleted' are excluded
+# files less than 1000 bytes are ignored, ex. txt, nfo, info files
+<#assign file = "/tmp/conky/bittorrent">
+${lua compute ${exec lsof -c transmission -n | grep -v deleted | grep -E '[0-9]+[a-z|A-Z] +REG +[0-9]+,[0-9]+ +[0-9]{6,}' | sed 's|.\+/||' | sed 's/^/${voffset 3}${offset 5}/' | sed 's/#/\\#/g' | sort > [=file]}}\
+${voffset 2}${offset 5}${color1}seeding${goto 75}${color}${lua compute_and_save files ${lines [=file]}} files
 <#assign y += top>
 ${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
 <#assign y += 1>
@@ -87,12 +94,6 @@ ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-top-flat.pn
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu.png -p 0,[=y?c]}\
 ${lua_parse bottom_edge_load_value compact [=image.primaryColor]-menu-bottom.png 0 [=y?c] 3 files}\
 ${voffset 7}${offset 5}${color1}file name${voffset 4}
-# sample lsof lines being grep'ed for determining files being seeded by transmission
-# FD     TYPE DEVICE     SIZE/OFF      NODE NAME
-# 102r   REG  8,16     3297924792 163446839 /media/movie.mp4            < use read file descriptor pattern
-# 74r    REG  0,19              0  19821859 /proc/513729/mountinfo      < non real files have a size of 0 bytes
-# 100u   REG  0,1        67108864    718707 /memfd:pulseaudio (deleted) < items with 'deleted' are excluded
-# files less than 1000 bytes are ignored, ex. txt, nfo, info files
-${color}${execpi 4 lsof -c transmission -n | grep -v deleted | grep -E '[0-9]+[a-z|A-Z] +REG +[0-9]+,[0-9]+ +[0-9]{6,}' | sed 's|.\+/||' | sed 's/^/${voffset 3}${offset 5}/' | sed 's/#/\\#/g' | sort}${voffset 5}
+${color}${catp [=file]}${voffset 5}
 ${endif}\
 ]];

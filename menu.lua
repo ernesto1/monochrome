@@ -3,7 +3,20 @@
 --[[ table to hold parsed conky variables ]]
 computations = {}
 
---[[ parses the given conky expression and stores it for future use in a table
+--[[ call this method to execute a linux command whose output you don't care about, ex. create a file
+in the local file system
+
+the method returns an empty string
+
+arguments:
+      expression    conky variable to parse
+]]
+function conky_compute(expression)
+  conky_parse(expression)
+  return ''
+end
+
+--[[ parses the given conky expression and stores its value in the 'computations' table for future use
 
 arguments:
       key           key to store the expression as
@@ -16,7 +29,7 @@ end
 
 --[[ wrapper method for the 'bottom_edge' function
 allows the client to provide a 'key' which can be used to retrieve the total number of lines in the body
-of the menu from a previously computed conky variable 
+of the menu from a previously computed conky variable, see the method conky_compute_and_save()
 
 arguments:
     key         string used to store the previously computed number of lines computation
