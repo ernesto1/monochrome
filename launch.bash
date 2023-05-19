@@ -55,8 +55,6 @@ function usage() {
 # prints the line with color
 # see https://opensource.com/article/19/9/linux-terminal-colors for more colors
 function printHeader {
-  local NOCOLOR='\033[0m'
-  local GREEN='\033[32m'
   printf "${GREEN}$1${NOCOLOR}\n"
 }
 
@@ -73,6 +71,10 @@ function detectDuplicateEntries() {
 
 
 # ---------- script begins
+NOCOLOR='\033[0m'
+GREEN='\033[32m'
+ORANGE='\033[0;33m'
+
 # ensure at least one parameter was provided
 if [[ $# < 1 ]]; then
   usage
@@ -182,7 +184,7 @@ do
   [[ -f ${layoutFile} ]] && ignore=$(grep -v \# "${layoutFile}" | grep ignore:"${conkyConfig}"$)
   
   if [[ ${ignore} ]]; then
-    echo '  ignoring this conky due to it being in the exclusion list of the layout file'
+    echo -e "  ${ORANGE}ignoring${NOCOLOR} this conky since it is in the exclusion list of the layout file"
     continue
   fi
   
