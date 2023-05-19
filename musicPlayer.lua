@@ -18,18 +18,18 @@ function conky_album_art_image(expression, dimensions, position)
   return s
 end
 
---[[ wrapper function to complement the ${cat someFile} conky variable
-prints the contents of the file but if the file does not exist it will print a default error message
+--[[ evaluates a conky variable (ex. ${cat someFile}) and prints its value
+if the character limit is breached, the string is truncated
 
 arguments:
   expression    conky 'cat' variable to parse
   charLimit     [optional] maximun number of characters to print, use to truncate text if too long
 ]]
-function conky_read_file(expression, charLimit)
-  charLimit = tonumber(charLimit) or 1000
+function conky_truncate_string(expression, charLimit)  
   local text = conky_parse(expression)
   -- if the expression evaluates to nothing use a default error message
-  text = (text ~= '') and text or "missing input file"
+  text = (text ~= '') and text or "empty conky expression"
+  charLimit = tonumber(charLimit) or 1000
   
   return string.sub(text,1,charLimit)
 end

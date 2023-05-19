@@ -73,8 +73,8 @@ ${lua add_offsets 94 86}\
 # ::: player header
 ${voffset 67}${goto 171}${color1}\
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}now playing on\
-${else}${lua_parse read_file ${cat /tmp/conky/musicplayer.playbackStatus}}${endif}\
-${goto 310}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.name}}${voffset 6}
+${else}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}${endif}\
+${goto 310}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}${voffset 6}
 # :::::::: no album art
 ${else}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-music-player.png -p 0,0}\
@@ -87,10 +87,10 @@ ${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-
 ${lua_parse draw_image ~/conky/monochrome/images/menu-blank.png 290 0}\
 # bottom
 ${lua_parse draw_image ~/conky/monochrome/images/menu-blank.png 71 69}${lua_parse draw_image ~/conky/monochrome/images/menu-blank.png 96 69}\
-${voffset 3}${lua_parse add_x_offset goto 77}${color1}title${lua_parse add_x_offset goto 122}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.title} 27}
-${voffset 3}${lua_parse add_x_offset goto 77}${color1}album${lua_parse add_x_offset goto 122}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.album} 27}
-${voffset 3}${lua_parse add_x_offset goto 77}${color1}artist${lua_parse add_x_offset goto 122}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.artist} 27}
-${voffset 3}${lua_parse add_x_offset goto 77}${color1}genre${lua_parse add_x_offset goto 122}${color}${lua_parse read_file ${cat /tmp/conky/musicplayer.genre} 27}\
+${voffset 3}${lua_parse add_x_offset goto 77}${color1}title${lua_parse add_x_offset goto 122}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.title} 27}
+${voffset 3}${lua_parse add_x_offset goto 77}${color1}album${lua_parse add_x_offset goto 122}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.album} 27}
+${voffset 3}${lua_parse add_x_offset goto 77}${color1}artist${lua_parse add_x_offset goto 122}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.artist} 27}
+${voffset 3}${lua_parse add_x_offset goto 77}${color1}genre${lua_parse add_x_offset goto 122}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.genre} 27}\
 ${endif}\
 # the final vertical offset required depends on what UI is active
 ${voffset 5}${if_existing /tmp/conky/musicplayer.albumArtPath}${voffset 5}${endif}\

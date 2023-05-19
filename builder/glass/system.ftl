@@ -1,4 +1,6 @@
 conky.config = {
+  lua_load = '~/conky/monochrome/musicPlayer.lua',
+
   update_interval = 2,  -- update interval in seconds
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
   xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
@@ -60,58 +62,65 @@ conky.config = {
 conky.text = [[
 <#assign y = 0,
          top = 19,   <#-- table header height -->
-         body = 55,  <#-- height of the current window without the top header -->
          space = 5>  <#-- empty space between windows -->
+<#if system == "desktop">
 # ::::::::::::::::: system
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 0,[=y?c]}\
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-transparent.png -p 69,[=y?c]}\
-<#assign y += body>
+<#assign body = 55, y += body><#-- size of the menu's data section -->
 ${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
 <#assign y += space>
 ${voffset 4}${offset 29}${color1}kernel${goto 74}${color}${kernel}
 ${voffset 3}${offset 29}${color1}uptime${goto 74}${color}${uptime}
 ${voffset 3}${offset 5}${color1}compositor${goto 74}${color}${execi 3600 echo $XDG_SESSION_TYPE}
-${voffset 8}\
+${voffset 11}\
+</#if>
 # ::::::::::::::::: top cpu
+<#if system == "desktop"><#assign processes = 8><#else><#assign processes = 6></#if>
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 0,[=y?c]}\
 <#assign y+= top>
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-transparent.png -p 0,[=y?c]}\
-<#assign body = 133, y+= body>
+<#assign body = 5 + 16 * processes, y+= body>
 ${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
 <#assign y += space>
-${voffset 6}${offset 5}${color1}process${goto 161}cpu   pid${voffset 3}
-<#list 1..8 as x>
+${voffset 3}${offset 5}${color1}process${goto 161}cpu   pid${voffset 3}
+<#list 1..processes as x>
 ${template0 [=x]}
 </#list>
 # ::::::::::::::::: top memory
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 0,[=y?c]}\
 <#assign y+= top>
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-transparent.png -p 0,[=y?c]}\
-<#assign body = 133, y+= body>
+<#assign body = 5 + 16 * processes, y+= body>
 ${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
 <#assign y += space>
 ${voffset 13}${offset 5}${color1}process${alignr 5}mem   pid${voffset 3}
-<#list 1..8 as x>
+<#list 1..processes as x>
 ${template1 [=x]}
 </#list>
-${voffset -2}
-# ::::::::::::::::: network
+<#if system == "laptop">
+# ::::::::::::::::: wifi network
+<#-- TODO only show network details when wifi is online -->
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 0,[=y?c]}\
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-transparent.png -p 60,[=y?c]}\
+${image ~/conky/monochrome/images/menu-blank.png -p 160,[=y?c]}\
+<#assign body = 38, y+= body>
+${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
+${voffset 13}${offset 5}${color1}network${goto 65}${color}${lua_parse truncate_string ${wireless_essid [=networkDevices[system]?first.name]} 15}
+${voffset 3}${offset 5}${color1}local ip${goto 65}${color}${addr [=networkDevices[system]?first.name]}
+</#if>
+<#if system == "desktop">
+# ::::::::::::::::: internet applications
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 0,[=y?c]}\
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-transparent.png -p 69,[=y?c]}\
 ${image ~/conky/monochrome/images/menu-blank.png -p 160,[=y?c]}\
-<#if system == "laptop">
-# if on wifi
-<#-- TODO update layout for laptop, you will have to use a variable for the package update image height -->
-${voffset 3}${offset 24}${color1}network${goto 74}${color}${wireless_essid [=networkDevices[system]?first.name]}
-${voffset 3}${offset 18}${color1}local ip${goto 74}${color}${addr [=networkDevices[system]?first.name]}
-</#if>
-<#assign body = 55, y+= body>
+<#assign body = 54, y+= body>
 ${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
 <#assign y+= 2><#-- a 2px mini gap between these two tables -->
-${voffset 3}${offset 41}${color1}zoom${goto 74}${color}${if_running zoom}running${else}off${endif}
+${voffset 13}${offset 41}${color1}zoom${goto 74}${color}${if_running zoom}running${else}off${endif}
 ${voffset 3}${offset 5}${color1}bittorrent${goto 74}${color}${tcp_portmon 51413 51413 count} peer(s)
 ${voffset 3}${offset 22}${color1}seeding${goto 74}${color}${exec lsof -c transmission -n | grep -v deleted | grep -cE '[0-9]+[a-z|A-Z] +REG +[0-9]+,[0-9]+ +[0-9]{6,}'} file(s)
-# :::: bittorrent connections
+# :::::::: bittorrent connections
 ${if_running transmission-gt}\
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 0,[=y?c]}\
 <#assign y+= top>
@@ -148,4 +157,5 @@ ${voffset 5}${offset 5}${color1}package${alignr 5}version
 ${voffset 2}${color}${execpi 30 head -n [=lines] /tmp/conky/dnf.packages.formatted}
 ${endif}\
 ${voffset -8}
+</#if>
 ]];
