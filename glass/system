@@ -1,4 +1,6 @@
 conky.config = {
+  lua_load = '~/conky/monochrome/musicPlayer.lua',
+
   update_interval = 2,  -- update interval in seconds
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
   xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
@@ -65,12 +67,12 @@ ${image ~/conky/monochrome/images/menu-blank.png -p 0,55}\
 ${voffset 4}${offset 29}${color1}kernel${goto 74}${color}${kernel}
 ${voffset 3}${offset 29}${color1}uptime${goto 74}${color}${uptime}
 ${voffset 3}${offset 5}${color1}compositor${goto 74}${color}${execi 3600 echo $XDG_SESSION_TYPE}
-${voffset 8}\
+${voffset 11}\
 # ::::::::::::::::: top cpu
 ${image ~/conky/monochrome/images/glass/blue-menu-solid.png -p 0,60}\
 ${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 0,79}\
 ${image ~/conky/monochrome/images/menu-blank.png -p 0,212}\
-${voffset 6}${offset 5}${color1}process${goto 161}cpu   pid${voffset 3}
+${voffset 3}${offset 5}${color1}process${goto 161}cpu   pid${voffset 3}
 ${template0 1}
 ${template0 2}
 ${template0 3}
@@ -92,21 +94,20 @@ ${template1 5}
 ${template1 6}
 ${template1 7}
 ${template1 8}
-${voffset -2}
-# ::::::::::::::::: network
+# ::::::::::::::::: internet applications
 ${image ~/conky/monochrome/images/glass/blue-menu-solid.png -p 0,374}\
 ${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 69,374}\
 ${image ~/conky/monochrome/images/menu-blank.png -p 160,374}\
-${image ~/conky/monochrome/images/menu-blank.png -p 0,429}\
-${voffset 3}${offset 41}${color1}zoom${goto 74}${color}${if_running zoom}running${else}off${endif}
+${image ~/conky/monochrome/images/menu-blank.png -p 0,428}\
+${voffset 13}${offset 41}${color1}zoom${goto 74}${color}${if_running zoom}running${else}off${endif}
 ${voffset 3}${offset 5}${color1}bittorrent${goto 74}${color}${tcp_portmon 51413 51413 count} peer(s)
 ${voffset 3}${offset 22}${color1}seeding${goto 74}${color}${exec lsof -c transmission -n | grep -v deleted | grep -cE '[0-9]+[a-z|A-Z] +REG +[0-9]+,[0-9]+ +[0-9]{6,}'} file(s)
-# :::: bittorrent connections
+# :::::::: bittorrent connections
 ${if_running transmission-gt}\
-${image ~/conky/monochrome/images/glass/blue-menu-solid.png -p 0,431}\
-${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 0,450}\
-${image ~/conky/monochrome/images/menu-blank.png -p 160,431}\
-${image ~/conky/monochrome/images/menu-blank.png -p 0,615}\
+${image ~/conky/monochrome/images/glass/blue-menu-solid.png -p 0,430}\
+${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 0,449}\
+${image ~/conky/monochrome/images/menu-blank.png -p 160,430}\
+${image ~/conky/monochrome/images/menu-blank.png -p 0,614}\
 ${voffset 11}${offset 5}${color1}ip address${alignr 64}remote port${voffset 3}
 ${if_match ${tcp_portmon 51413 51413 count} > 0}\
 ${template2 0}
@@ -128,9 +129,9 @@ ${voffset 187}\
 ${endif}\
 # ::::::::::::::::: package updates
 ${if_existing /tmp/conky/dnf.packages.formatted}\
-${image ~/conky/monochrome/images/glass/blue-menu-solid.png -p 0,620}\
-${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 0,658}\
-${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 0,1458}\
+${image ~/conky/monochrome/images/glass/blue-menu-solid.png -p 0,619}\
+${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 0,657}\
+${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 0,1457}\
 ${voffset 14}${alignc}${color1}dnf package management
 ${voffset 3}${alignc}${color}${lines /tmp/conky/dnf.packages.formatted} package update(s) available
 ${voffset 5}${offset 5}${color1}package${alignr 5}version
