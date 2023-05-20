@@ -94,7 +94,7 @@ ${template1 5}
 ${template1 6}
 ${template1 7}
 ${template1 8}
-# ::::::::::::::::: internet applications
+# ::::::::::::::::: bittorrent & zoom
 ${image ~/conky/monochrome/images/glass/blue-menu-solid.png -p 0,374}\
 ${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 69,374}\
 ${image ~/conky/monochrome/images/menu-blank.png -p 160,374}\
@@ -102,7 +102,7 @@ ${image ~/conky/monochrome/images/menu-blank.png -p 0,428}\
 ${voffset 13}${offset 41}${color1}zoom${goto 74}${color}${if_running zoom}running${else}off${endif}
 ${voffset 3}${offset 5}${color1}bittorrent${goto 74}${color}${tcp_portmon 51413 51413 count} peer(s)
 ${voffset 3}${offset 22}${color1}seeding${goto 74}${color}${exec lsof -c transmission -n | grep -v deleted | grep -cE '[0-9]+[a-z|A-Z] +REG +[0-9]+,[0-9]+ +[0-9]{6,}'} file(s)
-# :::::::: bittorrent connections
+# :::::::: bittorrent connection peers
 ${if_running transmission-gt}\
 ${image ~/conky/monochrome/images/glass/blue-menu-solid.png -p 0,430}\
 ${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 0,449}\

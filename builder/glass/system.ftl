@@ -1,3 +1,4 @@
+<#-- TODO use a function for creating menu tables for both horizontal or vertical versions -->
 conky.config = {
   lua_load = '~/conky/monochrome/musicPlayer.lua',
 
@@ -110,7 +111,7 @@ ${voffset 13}${offset 5}${color1}network${goto 65}${color}${lua_parse truncate_s
 ${voffset 3}${offset 5}${color1}local ip${goto 65}${color}${addr [=networkDevices[system]?first.name]}
 </#if>
 <#if system == "desktop">
-# ::::::::::::::::: internet applications
+# ::::::::::::::::: bittorrent & zoom
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 0,[=y?c]}\
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-transparent.png -p 69,[=y?c]}\
 ${image ~/conky/monochrome/images/menu-blank.png -p 160,[=y?c]}\
@@ -120,7 +121,7 @@ ${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
 ${voffset 13}${offset 41}${color1}zoom${goto 74}${color}${if_running zoom}running${else}off${endif}
 ${voffset 3}${offset 5}${color1}bittorrent${goto 74}${color}${tcp_portmon 51413 51413 count} peer(s)
 ${voffset 3}${offset 22}${color1}seeding${goto 74}${color}${exec lsof -c transmission -n | grep -v deleted | grep -cE '[0-9]+[a-z|A-Z] +REG +[0-9]+,[0-9]+ +[0-9]{6,}'} file(s)
-# :::::::: bittorrent connections
+# :::::::: bittorrent connection peers
 ${if_running transmission-gt}\
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 0,[=y?c]}\
 <#assign y+= top>
@@ -141,8 +142,10 @@ ${endif}\
 ${else}\
 ${voffset 187}\
 ${endif}\
+</#if>
 # ::::::::::::::::: package updates
 ${if_existing /tmp/conky/dnf.packages.formatted}\
+<#if system == "desktop">
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 0,[=y?c]}\
 <#assign body = 38, y += body>
 <#list 1..2 as x>
@@ -153,9 +156,17 @@ ${voffset 14}${alignc}${color1}dnf package management
 ${voffset 3}${alignc}${color}${lines /tmp/conky/dnf.packages.formatted} package update(s) available
 ${voffset 5}${offset 5}${color1}package${alignr 5}version
 # the dnf package lookup script refreshes the package list every 10m
-<#if system == "desktop"><#assign lines = 47><#else><#assign lines = 28></#if>
+<#assign lines = 47>
 ${voffset 2}${color}${execpi 30 head -n [=lines] /tmp/conky/dnf.packages.formatted}
+<#else>
+<#assign y+= 2><#-- a 2px mini gap between this and the prior menu -->
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 0,[=y?c]}\
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-transparent.png -p 60,[=y?c]}\
+${image ~/conky/monochrome/images/menu-blank.png -p 160,[=y?c]}\
+<#assign body = 19, y+= body>
+${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
+${voffset 11}${offset 5}${color1}dnf${goto 65}${color}${lines /tmp/conky/dnf.packages.formatted} update(s)
+</#if>
 ${endif}\
 ${voffset -8}
-</#if>
 ]];
