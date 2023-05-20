@@ -5,22 +5,22 @@
 # It turns out that if too many sequential file changes happen to the conky file, conky stops reloading the file.
 # Hence why we use the temp folder in order to replace the file only once
 #
-# the java freemarker template app will output the conky blocks in the /tmp/monochrome/target folder
+# the java freemarker template app will output the conky blocks in the /tmp/monochrome folder
 
 # ::::::: desktop sidebar
 java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar widgets-dock yellow desktop && \
-pushd /tmp/monochrome/target && \
+pushd /tmp/monochrome && \
 buildSidebar.bash config cpu-mem network disk temperature packages time bottom-edge && \
-echo '${voffset -360}]];' >> ../sidebar && \
-mv system sidebarPanel musicPlayer ../sidebar ~/conky/monochrome/widgets-dock && \
+echo '${voffset -360}]];' >> sidebar && \
+mv system sidebarPanel musicPlayer sidebar ~/conky/monochrome/widgets-dock && \
 popd
 
 # ::::::: laptop sidebar
 java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar widgets-dock yellow laptop && \
-pushd /tmp/monochrome/target && \
+pushd /tmp/monochrome && \
 buildSidebar.bash config cpu-mem network disk power temperature packages bottom-edge && \
-echo '${voffset -360}]];' >> ../sidebar && \
-mv system sidebarPanel musicPlayer ../sidebar ~/conky/monochrome/widgets-dock && \
+echo '${voffset -360}]];' >> sidebar && \
+mv system sidebarPanel musicPlayer sidebar ~/conky/monochrome/widgets-dock && \
 popd
 
 # design notes

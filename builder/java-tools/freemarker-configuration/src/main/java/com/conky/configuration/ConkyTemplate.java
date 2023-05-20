@@ -18,7 +18,7 @@ public class ConkyTemplate {
      * Root directory with the configuration files for all themes
      */
     private static final String CONKY_BUILD_DIR = CONKY_DIR + "/builder";
-    private static final String OUTPUT_DIR = "/tmp/monochrome/target";
+    private static final String OUTPUT_DIR = "/tmp/monochrome";
 
     /**
      * Parses the conky freemarker template file based on the given configuration

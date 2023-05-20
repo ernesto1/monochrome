@@ -1,17 +1,23 @@
 #! /bin/bash
 
 # asumptions:
-# - images are placed sequentially, ie. last image in the conky will determine the total height of the block
+# images are placed sequentially, ie. the last image in the conky will determine the total height of the block
+# TODO calulate the max height from all the images in the block instead
 
+NOCOLOR='\033[0m'
+ORANGE='\033[0;33m'
+GREEN='\033[32m'
+OUT_FILE='/tmp/monochrome/sidebar'
 totalHeight=0
 
-rm -f /tmp/monochrome/sidebar     # remove prior conky version if it exists
+echo -e "${ORANGE}:::::::::: building conky sidebar${NOCOLOR}"
+rm -f ${OUT_FILE}     # remove prior conky version if it exists
 
 for file in "$@"
 do
-  echo ':::::::::::::' $file
-  echo -e starting height: $totalHeight px'\n'
-  cat $file >> /tmp/monochrome/sidebar
+  echo -e "${GREEN}>>> $file${NOCOLOR}"
+  echo -e "starting height: $totalHeight px\n"
+  cat $file >> ${OUT_FILE}
   
   IFS_BAK=${IFS}
   IFS=$'\n'
@@ -34,7 +40,7 @@ do
     #echo y: $yCoordinate
     ((newYCoordinate=yCoordinate+totalHeight))
     echo "new coordinates: ${xCoordinate},${newYCoordinate}"
-    sed -i "s#${image} -p ${xCoordinate},${yCoordinate}}#${image} -p ${xCoordinate},${newYCoordinate}}#" /tmp/monochrome/sidebar
+    sed -i "s#${image} -p ${xCoordinate},${yCoordinate}}#${image} -p ${xCoordinate},${newYCoordinate}}#" ${OUT_FILE}
     echo
   done
   
@@ -45,9 +51,11 @@ do
   echo "height:         $height px"
   ((totalHeight=newYCoordinate+height))
   echo -e "current height: $totalHeight px\n"
+  rm $file
 done
 
+echo -e "${ORANGE}:::::::::: sidebar adjustments${NOCOLOR}"
 # update the sidebar height
-sed -i "s/minimum_height *=.\+,/minimum_height = ${totalHeight},/" /tmp/monochrome/sidebar
+sed -i "s/minimum_height *=.\+,/minimum_height = ${totalHeight},/" ${OUT_FILE}
 echo -e "conky height updated to"
-grep minimum_height /tmp/monochrome/sidebar
+grep minimum_height ${OUT_FILE}

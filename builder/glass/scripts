@@ -7,19 +7,19 @@ TODO  disk-usb  usb-devices   power
 
 # desktop sidebar
 java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar glass blue desktop && \
-pushd /tmp/monochrome/target && \
+pushd /tmp/monochrome && \
 buildSidebar.bash config cpu-mem network disk temperature-desktop time bottom-edge && \
-echo '${voffset -900}]]' >> ../sidebar && \
-mv ../sidebar system musicPlayer  ~/conky/monochrome/glass && \
+echo '${voffset -900}]]' >> sidebar && \
+mv sidebar system musicPlayer ~/conky/monochrome/glass && \
 popd
 
 
 # TODO update laptop sidebar
 java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar glass blue laptop && \
-pushd /tmp/monochrome/target && \
+pushd /tmp/monochrome && \
 buildSidebar.bash config cpu-mem network disk power bottom-edge && \
-echo '${voffset -900}]];' >> ../sidebar && \
-mv ../sidebar system musicPlayer ~/conky/monochrome/glass && \
+echo '${voffset -900}]];' >> sidebar && \
+mv sidebar system musicPlayer ~/conky/monochrome/glass && \
 popd
 
 
