@@ -35,11 +35,11 @@ conky.config = {
   draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
                               -- does not include bars, ie. wifi strength bar, cpu bar
 
-  imlib_cache_flush_interval = 2,
+  imlib_cache_flush_interval = 250,
   -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
   
   top_name_verbose = true,    -- show full command in ${top ...}
-  top_name_width = 21,        -- how many characters to print
+  top_name_width = 20,        -- how many characters to print
 
   -- font settings
   draw_shades = false,    -- black shadow on text (not good if text is black)
@@ -52,7 +52,7 @@ conky.config = {
   
   -- templates
   -- top cpu process
-  template0 = [[${voffset 3}${offset 5}${color}${top name \1}${top cpu \1}% ${top pid \1}]],
+  template0 = [[${voffset 3}${offset 5}${color}${top name \1} ${top cpu \1}% ${top pid \1}]],
   -- top mem process
   template1 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${alignr 5}${top_mem mem_res \1} ${top_mem pid \1}]],
   -- torrent peer ip/port: ${template3 #}

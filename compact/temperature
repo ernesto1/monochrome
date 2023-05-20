@@ -34,7 +34,7 @@ conky.config = {
   draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
                               -- does not include bars, ie. wifi strength bar, cpu bar
 
-  imlib_cache_flush_interval = 300,
+  imlib_cache_flush_interval = 250,
   -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
   
   if_up_strictness = 'address', -- network device must be up, having link and an assigned IP address
