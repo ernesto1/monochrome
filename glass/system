@@ -14,7 +14,7 @@ conky.config = {
   -- window settings
   minimum_width = 219,
   maximum_width = 219,
-  minimum_height = 520,
+  minimum_height = 245,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -132,11 +132,10 @@ ${if_existing /tmp/conky/dnf.packages.formatted}\
 ${image ~/conky/monochrome/images/glass/blue-menu-solid.png -p 0,619}\
 ${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 0,657}\
 ${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 0,1457}\
-${voffset 14}${alignc}${color1}dnf package management
+${voffset 13}${alignc}${color1}dnf package management
 ${voffset 3}${alignc}${color}${lines /tmp/conky/dnf.packages.formatted} package update(s) available
-${voffset 5}${offset 5}${color1}package${alignr 5}version
+${voffset 8}${offset 5}${color1}package${alignr 5}version
 # the dnf package lookup script refreshes the package list every 10m
-${voffset 2}${color}${execpi 30 head -n 47 /tmp/conky/dnf.packages.formatted}
+${voffset 2}${color}${execpi 30 head -n 47 /tmp/conky/dnf.packages.formatted}${voffset 5}
 ${endif}\
-${voffset -8}
 ]];

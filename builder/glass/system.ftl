@@ -15,7 +15,7 @@ conky.config = {
   -- window settings
   minimum_width = 219,
   maximum_width = 219,
-  minimum_height = 520,
+  minimum_height = 245,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -152,21 +152,20 @@ ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-transparent.png -p 0,[=y?c]}\
 <#assign body = 800, y += body>
 </#list>
-${voffset 14}${alignc}${color1}dnf package management
+${voffset 13}${alignc}${color1}dnf package management
 ${voffset 3}${alignc}${color}${lines /tmp/conky/dnf.packages.formatted} package update(s) available
-${voffset 5}${offset 5}${color1}package${alignr 5}version
+${voffset 8}${offset 5}${color1}package${alignr 5}version
 # the dnf package lookup script refreshes the package list every 10m
 <#assign lines = 47>
-${voffset 2}${color}${execpi 30 head -n [=lines] /tmp/conky/dnf.packages.formatted}
+${voffset 2}${color}${execpi 30 head -n [=lines] /tmp/conky/dnf.packages.formatted}${voffset 5}
 <#else>
 <#assign y+= 2><#-- a 2px mini gap between this and the prior menu -->
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 0,[=y?c]}\
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-transparent.png -p 60,[=y?c]}\
 ${image ~/conky/monochrome/images/menu-blank.png -p 160,[=y?c]}\
-<#assign body = 19, y+= body>
+<#assign body = 20, y+= body>
 ${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
-${voffset 11}${offset 5}${color1}dnf${goto 65}${color}${lines /tmp/conky/dnf.packages.formatted} update(s)
+${voffset 11}${offset 5}${color1}dnf${goto 65}${color}${lines /tmp/conky/dnf.packages.formatted} update(s)${voffset 4}
 </#if>
 ${endif}\
-${voffset -8}
 ]];
