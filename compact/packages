@@ -8,7 +8,7 @@ conky.config = {
   -- window alignment
   alignment = 'middle_right',  -- top|middle|bottom_left|right
   gap_x = 5,
-  gap_y = 128,
+  gap_y = 125,
 
   -- window settings
   minimum_width = 189,      -- conky will add an extra pixel to this  
@@ -53,7 +53,7 @@ ${image ~/conky/monochrome/images/compact/burgundy-menu-top-flat.png -p 0,20}\
 ${image ~/conky/monochrome/images/compact/burgundy-menu.png -p 0,39}\
 ${image ~/conky/monochrome/images/compact/burgundy-menu.png -p 0,1039}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
-${image ~/conky/monochrome/images/compact/burgundy-menu-dnf.png -p 120,41}\
+${image ~/conky/monochrome/images/compact/burgundy-menu-dnf.png -p 114,41}\
 ${lua_parse bottom_edge_load_value compact burgundy-menu-bottom.png 0 39 2 packages 82}\
 ${voffset 7}${offset 5}${color1}package${alignr 5}version${voffset 4}
 ${color}${execp head -n 82 /tmp/conky/dnf.packages.formatted}${voffset 4}

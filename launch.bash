@@ -84,13 +84,13 @@ fi
 # define default variables
 enablePackageLookup=true          # dnf package lookup is enabled
 enableMusicPlayerListener=true    # java music player dbus listener is disabled
+versionWidth=7                    # number of characters to print for package version updates
 
 while (( "$#" )); do
   case $1 in
     --widgets)
       directory=${HOME}/conky/monochrome/widgets
-      width=32
-      versionWidth=7
+      width=32      
       enableMusicPlayerListener=false
       shift
       ;;
@@ -101,7 +101,6 @@ while (( "$#" )); do
       ;;
     --glass)
       directory=${HOME}/conky/monochrome/glass
-      versionWidth=7
       shift
       ;;
     --compact)
