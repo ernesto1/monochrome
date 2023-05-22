@@ -41,9 +41,6 @@
               <classpathPrefix>lib/</classpathPrefix>
               <mainClass>com.conky.configuration.ConkyTemplate</mainClass>
             </manifest>
-            <manifestEntries>
-              <Class-Path>.</Class-Path>
-            </manifestEntries>
           </archive>
         </configuration>
       </plugin>
