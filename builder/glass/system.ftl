@@ -1,6 +1,6 @@
 <#-- TODO use a function for creating menu tables for both horizontal or vertical versions -->
 conky.config = {
-  lua_load = '~/conky/monochrome/musicPlayer.lua',
+  lua_load = '~/conky/monochrome/common.lua',
 
   update_interval = 2,  -- update interval in seconds
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
