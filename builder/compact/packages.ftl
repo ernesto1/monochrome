@@ -52,7 +52,8 @@ ${if_existing /tmp/conky/dnf.packages.formatted}\
          space = 5,   <#-- empty space between windows -->
          windowYcoordinate = y> <#-- starting y coordinate of the current window -->
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-horizontal.png -p 0,[=y?c]}\
-${voffset 2}${offset 5}${color1}dnf${goto 75}${color}${lua compute_and_save packages ${lines /tmp/conky/dnf.packages.formatted}} package updates
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-horizontal-data.png -p 51,[=y?c]}\
+${voffset 2}${offset 5}${color1}dnf${goto 57}${color}${lua compute_and_save packages ${lines /tmp/conky/dnf.packages.formatted}} package updates
 <#assign y += top>
 ${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
 <#assign y += 1>

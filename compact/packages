@@ -46,7 +46,8 @@ conky.text = [[
 # :::::::::::: package updates
 ${if_existing /tmp/conky/dnf.packages.formatted}\
 ${image ~/conky/monochrome/images/compact/burgundy-menu-horizontal.png -p 0,0}\
-${voffset 2}${offset 5}${color1}dnf${goto 75}${color}${lua compute_and_save packages ${lines /tmp/conky/dnf.packages.formatted}} package updates
+${image ~/conky/monochrome/images/compact/burgundy-menu-horizontal-data.png -p 51,0}\
+${voffset 2}${offset 5}${color1}dnf${goto 57}${color}${lua compute_and_save packages ${lines /tmp/conky/dnf.packages.formatted}} package updates
 ${image ~/conky/monochrome/images/menu-blank.png -p 0,19}\
 ${image ~/conky/monochrome/images/compact/burgundy-menu-top-flat.png -p 0,20}\
 ${image ~/conky/monochrome/images/compact/burgundy-menu.png -p 0,39}\
