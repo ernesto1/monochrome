@@ -162,7 +162,7 @@ ${image ~/conky/monochrome/images/glass/blue-block-small.png -p 0,884}\
 ${template6 betty /media/betty}
 # ::::::::::::::::: disk maxtor
 ${image ~/conky/monochrome/images/glass/blue-disk.png -p 0,940}\
-${template5 sde 6000 60000}
+${template5 sdg 6000 60000}
 # :::::: partitions
 ${image ~/conky/monochrome/images/glass/blue-block-small.png -p 0,1039}\
 ${template6 maxtor /run/media/ernesto/MAXTOR}
