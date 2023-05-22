@@ -74,10 +74,11 @@ function conky_bottom_edge(theme, filename, x, y, voffset, lines)
 
   lines = (lines > 0) and lines or 0
   y = tonumber(y) + (lines * lineMultiplier) - 1
-  local path = "~/conky/monochrome/images/" .. theme .. "/" .. filename
+  local imageDir = "~/conky/monochrome/images/"
+  local path = imageDir .. theme .. "/" .. filename
   local s = build_image_variable(path, x, y)
   -- add a blank image right below the bottom edge image, assume bottom edges will never be greater than 15px
-  s = s .. "${image ~/conky/monochrome/images/menu-blank.png -p " .. x .. "," .. y + 15 .. "}"
+  s = s .. build_image_variable(imageDir .. "menu-blank.png", x, y + 15)
 
   return s
 end
