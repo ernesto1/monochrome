@@ -30,7 +30,7 @@ conky.config = {
   own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
   
   imlib_cache_flush_interval = 250,
-  text_buffer_size=3000,
+  text_buffer_size=3500,
 
   -- font settings
   use_xft = false,
