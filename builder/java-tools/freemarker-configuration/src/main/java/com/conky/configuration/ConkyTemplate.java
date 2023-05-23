@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class ConkyTemplate {
     private static final Logger logger = LoggerFactory.getLogger(ConkyTemplate.class);
-    private static final String CONKY_DIR = "/home/ernesto/conky/monochrome";
+    private static final String CONKY_DIR = System.getProperty("user.home") + "/conky/monochrome";
     /**
      * Root directory with the configuration files for all themes
      */
