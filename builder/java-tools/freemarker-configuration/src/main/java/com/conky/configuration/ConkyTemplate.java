@@ -13,16 +13,16 @@ import java.util.Map;
 
 public class ConkyTemplate {
     private static final Logger logger = LoggerFactory.getLogger(ConkyTemplate.class);
-    private static final String CONKY_DIR = System.getProperty("user.home") + "/conky/monochrome";
+    private static final File MONOCHROME_ROOT_DIR = new File(System.getProperty("user.home"), "conky/monochrome");
     /**
      * Root directory with the configuration files for all themes
      */
-    private static final String TEMPLATE_ROOT_DIR = CONKY_DIR + "/builder/freemarker";
+    private static final File TEMPLATE_ROOT_DIR = new File(MONOCHROME_ROOT_DIR, "builder/freemarker");
     private static final String OUTPUT_DIR = "/tmp/monochrome";
 
     /**
      * Parses the conky freemarker template file based on the given configuration
-     * @param args
+     * @param args <tt>conkyTheme</tt> <tt>color</tt> <tt>device</tt>
      * @throws IOException if an input file is not available
      * @throws TemplateException if a freemarker error occurs while processing the templates
      */
@@ -32,15 +32,14 @@ public class ConkyTemplate {
 
         // 2. freemarker data model creation
         // load global data model
-        File templateRootDir = new File(TEMPLATE_ROOT_DIR);
-        InputStream globalSettingsStream = new FileInputStream(new File(templateRootDir, "globalSettings.yml"));
+        InputStream globalSettingsStream = new FileInputStream(new File(TEMPLATE_ROOT_DIR, "globalSettings.yml"));
         Yaml yaml = new Yaml();
         Map<String, Object> root = yaml.load(globalSettingsStream);
         root.put("conky", args[0]);                 // conky theme being configured
         root.put("system", args[2].toLowerCase());  // desktop or laptop
         // load conky theme data model
         String conky = args[0];
-        File conkyTemplateDir = new File(templateRootDir, conky);
+        File conkyTemplateDir = new File(TEMPLATE_ROOT_DIR, conky);
         InputStream colorPaletteStream = new FileInputStream(new File(conkyTemplateDir, "colorPalette.yml"));
         Map<String, Object> themes = yaml.load(colorPaletteStream);
         // select desired color
@@ -71,7 +70,7 @@ public class ConkyTemplate {
         }
 
         // set up freemarker engine configuration
-        Configuration cfg = createFreemarkerConfiguration(templateRootDir);
+        Configuration cfg = createFreemarkerConfiguration(TEMPLATE_ROOT_DIR);
         logger.info("processing template files:");
 
         // merge freemarker templates and the data model to create the output files
@@ -93,7 +92,7 @@ public class ConkyTemplate {
      * </ul>
      * If a validation fails the method will <b>exit</b> the program with an error status code.
      *
-     * @param args arguments provided to the program
+     * @param args command line arguments provided to the program
      */
     private static void validateArguments(String[] args) {
         if (args.length !=3) {
@@ -103,12 +102,13 @@ public class ConkyTemplate {
         }
 
         // verify conky theme directory exists
-        File conkyDir = new File(CONKY_DIR, args[0]);
+        String conkyTheme = args[0];
+        File conkyDir = new File(MONOCHROME_ROOT_DIR, conkyTheme);
 
         if (conkyDir.isDirectory()) {
-            logger.info("creating configuration files for the '{}' conky", args[0]);
+            logger.info("creating configuration files for the '{}' conky", conkyTheme);
         } else {
-            logger.error("conky directory '{}' does not exist", conkyDir);
+            logger.error("'{}' conky does not exist under the monochrome conky suite", conkyTheme);
             System.exit(1);
         }
 
