@@ -17,7 +17,7 @@ public class ConkyTemplate {
     /**
      * Root directory with the configuration files for all themes
      */
-    private static final String CONKY_BUILD_DIR = CONKY_DIR + "/builder";
+    private static final String TEMPLATE_ROOT_DIR = CONKY_DIR + "/builder/freemarker";
     private static final String OUTPUT_DIR = "/tmp/monochrome";
 
     /**
@@ -27,18 +27,21 @@ public class ConkyTemplate {
      * @throws TemplateException if a freemarker error occurs while processing the templates
      */
     public static void main(String[] args) throws IOException, TemplateException {
+        // 1. validate user input
         validateArguments(args);
 
+        // 2. freemarker data model creation
         // load global data model
-        File buildDirectory = new File(CONKY_BUILD_DIR);
-        InputStream globalSettingsStream = new FileInputStream(new File(buildDirectory, "globalSettings.yml"));
+        File templateRootDir = new File(TEMPLATE_ROOT_DIR);
+        InputStream globalSettingsStream = new FileInputStream(new File(templateRootDir, "globalSettings.yml"));
         Yaml yaml = new Yaml();
         Map<String, Object> root = yaml.load(globalSettingsStream);
         root.put("conky", args[0]);                 // conky theme being configured
         root.put("system", args[2].toLowerCase());  // desktop or laptop
         // load conky theme data model
-        File templateDirectory = new File(buildDirectory, args[0]);
-        InputStream colorPaletteStream = new FileInputStream(new File(templateDirectory, "colorPalette.yml"));
+        String conky = args[0];
+        File conkyTemplateDir = new File(templateRootDir, conky);
+        InputStream colorPaletteStream = new FileInputStream(new File(conkyTemplateDir, "colorPalette.yml"));
         Map<String, Object> themes = yaml.load(colorPaletteStream);
         // select desired color
         String color = args[1];
@@ -54,8 +57,7 @@ public class ConkyTemplate {
 
         // add user defined directives
         root.put("outputFileDirective", new OutputFileDirective(OUTPUT_DIR));
-
-        Configuration cfg = createFreemarkerConfiguration(templateDirectory);
+        // create the output directory
         File outputDirectory = new File(OUTPUT_DIR);
 
         if (!outputDirectory.exists()) {
@@ -68,11 +70,14 @@ public class ConkyTemplate {
             }
         }
 
+        // set up freemarker engine configuration
+        Configuration cfg = createFreemarkerConfiguration(templateRootDir);
         logger.info("processing template files:");
-        // merging templates and the data model
-        for (File templateFile : templateDirectory.listFiles((d, f) -> f.endsWith(".ftl"))) {
+
+        // merge freemarker templates and the data model to create the output files
+        for (File templateFile : conkyTemplateDir.listFiles((d, f) -> f.endsWith(".ftl"))) {
             logger.info("> {}", templateFile.getName());
-            Template template = cfg.getTemplate(templateFile.getName());
+            Template template = cfg.getTemplate(conky + "/" + templateFile.getName());
             int dotPosition = templateFile.getName().lastIndexOf('.');
             Writer out = new FileWriter(new File(outputDirectory, templateFile.getName().substring(0, dotPosition)));
             template.process(root, out);
@@ -81,7 +86,13 @@ public class ConkyTemplate {
     }
 
     /**
-     * Ensures required arguments were provided and that they are proper
+     * Ensures the required arguments were provided and that they are proper, ie.
+     * <ul>
+     *     <li>the conky theme must exist, ie. a template directory under its name exists</li>
+     *     <li>system is either <tt>desktop</tt> or <tt>laptop</tt></li>
+     * </ul>
+     * If a validation fails the method will <b>exit</b> the program with an error status code.
+     *
      * @param args arguments provided to the program
      */
     private static void validateArguments(String[] args) {
@@ -101,8 +112,7 @@ public class ConkyTemplate {
             System.exit(1);
         }
 
-        // system must be valid
-
+        // 'system' argument must be a valid value
         try {
             Device.valueOf(args[2].toUpperCase());
         } catch(IllegalArgumentException e) {

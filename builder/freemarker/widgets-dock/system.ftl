@@ -1,4 +1,4 @@
-<#import "/lib/network.ftl" as net>
+<#import "lib/network.ftl" as net>
 conky.config = {
   lua_load = '~/conky/monochrome/menu.lua',
   

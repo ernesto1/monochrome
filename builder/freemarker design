@@ -40,6 +40,3 @@ java printConky.jar <conky theme> <color>
 
 $ prename 's/$/.ftl/' !(scripts|*.yml|color-palette|packages|processe|design*|sidebar*)
 $ sed -i 's/blue-/[=image.primaryColor]-/' !(config|scripts|*.yml|color-palette|packages|processes)
-
-### freemarker advanced coding
-- provide a list of disk devices, freemarker code generates all the blocks
