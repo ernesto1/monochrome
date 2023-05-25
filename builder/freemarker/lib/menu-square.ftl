@@ -12,12 +12,12 @@
        width (px)
  -->
 <#macro table theme x y width header body>
-# ------- composite table image ------- #
+# ------- composite table image -------
 ${image ~/conky/monochrome/images/[=theme]/[=image.primaryColor]-menu-solid.png -p [=x?c],[=y?c]}\
 ${image ~/conky/monochrome/images/[=theme]/[=image.primaryColor]-menu-transparent.png -p [=x?c],[=(y+header)?c]}\
 ${image ~/conky/monochrome/images/menu-blank.png -p [=(x+width)?c],[=y?c]}\
 ${image ~/conky/monochrome/images/menu-blank.png -p [=x?c],[=(y + header + body)?c]}\
-# --------- end of table image -------- #
+# --------- end of table image --------
 </#macro>
 
 
@@ -36,10 +36,10 @@ ${image ~/conky/monochrome/images/menu-blank.png -p [=x?c],[=(y + header + body)
      width (px)
  -->
 <#macro verticaltable theme x y header body height>
-# --- composite vertical table image --- #
+# --- composite vertical table image ---
 ${image ~/conky/monochrome/images/[=theme]/[=image.primaryColor]-menu-solid.png -p [=x?c],[=y?c]}\
 ${image ~/conky/monochrome/images/[=theme]/[=image.primaryColor]-menu-transparent.png -p [=(x+header)?c],[=y?c]}\
 ${image ~/conky/monochrome/images/menu-blank.png -p [=(x+header+body)?c],[=y?c]}\
 ${image ~/conky/monochrome/images/menu-blank.png -p [=x?c],[=(y+height)?c]}\
-# --------- end of table image --------- #
+# --------- end of table image ---------
 </#macro>

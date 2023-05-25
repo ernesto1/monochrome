@@ -9,7 +9,7 @@ conky.config = {
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
   gap_x = 125,
-  gap_y = 9,
+  gap_y = 11,
 
   -- window settings
   minimum_width = 382,      -- conky will add an extra pixel to this width
@@ -53,13 +53,12 @@ conky.text = [[
 # :::: no player available
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
 ${image ~/conky/monochrome/images/glass/blue-music-player.png -p 0,0}\
+# ------- composite table image -------
 ${image ~/conky/monochrome/images/glass/blue-menu-solid.png -p 71,28}\
 ${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 71,31}\
-# add blank out images to ensure the menu image comes out correctly
-# bottom
-${image ~/conky/monochrome/images/menu-blank.png -p 71, 69}\
-# right side
 ${image ~/conky/monochrome/images/menu-blank.png -p 182,28}\
+${image ~/conky/monochrome/images/menu-blank.png -p 71,69}\
+# --------- end of table image --------
 ${voffset 34}${goto 77}${color1}now playing
 ${voffset 4}${goto 77}${color}no player running\
 ${else}\

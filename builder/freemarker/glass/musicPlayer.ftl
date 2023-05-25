@@ -1,3 +1,4 @@
+<#import "/lib/menu-square.ftl" as menu>
 conky.config = {
   lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
   lua_draw_hook_pre = 'reset_state',
@@ -9,7 +10,7 @@ conky.config = {
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
   gap_x = 125,
-  gap_y = 9,
+  gap_y = 11,
 
   -- window settings
   minimum_width = 382,      -- conky will add an extra pixel to this width
@@ -52,15 +53,8 @@ conky.text = [[
 #                                                          song with no album art
 # :::: no player available
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
-<#assign y = 0>
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-music-player.png -p 0,0}\
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-solid.png -p 71,28}\
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-transparent.png -p 71,31}\
-# add blank out images to ensure the menu image comes out correctly
-# bottom
-${image ~/conky/monochrome/images/menu-blank.png -p 71, 69}\
-# right side
-${image ~/conky/monochrome/images/menu-blank.png -p 182,28}\
+<@menu.table theme=conky x=71 y=28 width=111 header=3 body=38/>
 ${voffset 34}${goto 77}${color1}now playing
 ${voffset 4}${goto 77}${color}no player running\
 ${else}\

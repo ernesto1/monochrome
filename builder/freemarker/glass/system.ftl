@@ -79,18 +79,16 @@ conky.text = [[
          top = 19,   <#-- table header height -->
          space = 5>  <#-- empty space between windows -->
 <#if system == "desktop">
-# ::::::::::::::::: system
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 0,[=y?c]}\
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-transparent.png -p 69,[=y?c]}\
-<#assign body = 55, y += body><#-- size of the menu's data section -->
-${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
-<#assign y += space>
-${voffset 4}${offset 29}${color1}kernel${goto 74}${color}${kernel}
+# ::::::::::::::::: system :::::::::::::::::
+<#assign body = 53>
+<@menu.verticaltable theme=conky x=0 y=y header=69 body=150 height=body/>
+<#assign y += body + space>
+${voffset 3}${offset 29}${color1}kernel${goto 74}${color}${kernel}
 ${voffset 3}${offset 29}${color1}uptime${goto 74}${color}${uptime}
 ${voffset 3}${offset 5}${color1}compositor${goto 74}${color}${execi 3600 echo $XDG_SESSION_TYPE}
-${voffset 11}\
+${voffset 10}\
 </#if>
-# ::::::::::::::::: top cpu
+# ::::::::::::::::: top cpu :::::::::::::::::
 <#if system == "desktop"><#assign processes = 8><#else><#assign processes = 6></#if>
 <#assign body = 5 + 16 * processes>
 <@menu.table theme=conky x=0 y=y width=windowWidth header=top body=body/>
@@ -99,7 +97,7 @@ ${voffset 2}${offset 5}${color1}process${alignr 5}cpu<#if system == "desktop">  
 <#list 1..processes as i>
 ${template0 [=i]}
 </#list>
-# ::::::::::::::::: top memory
+# ::::::::::::::::: top memory :::::::::::::::::
 <#assign body = 5 + 16 * processes>
 <@menu.table theme=conky x=0 y=y width=windowWidth header=top body=body/>
 <#assign y += top + body + space>
@@ -108,7 +106,7 @@ ${voffset 12}${offset 5}${color1}process${alignr 5}mem<#if system == "desktop"> 
 ${template1 [=i]}
 </#list>
 <#if system == "laptop">
-# ::::::::::::::::: wifi network
+# ::::::::::::::::: wifi network :::::::::::::::::
 <#-- TODO only show network details when wifi is online -->
 <#assign body = 38>
 <@menu.verticaltable theme=conky x=0 y=y header=57 body=103 height=body/>
@@ -117,39 +115,33 @@ ${voffset 13}${offset 5}${color1}network${goto 62}${color}${lua_parse truncate_s
 ${voffset 3}${offset 5}${color1}local ip${goto 62}${color}${addr [=networkDevices[system]?first.name]}
 </#if>
 <#if system == "desktop">
-# ::::::::::::::::: bittorrent & zoom
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 0,[=y?c]}\
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-transparent.png -p 69,[=y?c]}\
-${image ~/conky/monochrome/images/menu-blank.png -p 160,[=y?c]}\
-<#assign body = 54, y+= body>
-${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
-<#assign y+= 2><#-- a 2px mini gap between these two tables -->
+# ::::::::::::::::: bittorrent & zoom :::::::::::::::::
+<#assign body = 53>
+<@menu.verticaltable theme=conky x=0 y=y header=69 body=91 height=body/>
+<#assign y += body + 2><#-- a 2px mini gap between this table and the next -->
 ${voffset 13}${offset 41}${color1}zoom${goto 74}${color}${if_running zoom}running${else}off${endif}
 ${voffset 3}${offset 5}${color1}bittorrent${goto 74}${color}${tcp_portmon 51413 51413 count} peer(s)
 ${voffset 3}${offset 22}${color1}seeding${goto 74}${color}${exec lsof -c transmission -n | grep -v deleted | grep -cE '[0-9]+[a-z|A-Z] +REG +[0-9]+,[0-9]+ +[0-9]{6,}'} file(s)
-# :::::::: bittorrent connection peers
+# :::::::: bittorrent connection peers :::::::::::::::::
 ${if_running transmission-gt}\
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 0,[=y?c]}\
-<#assign y+= top>
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-transparent.png -p 0,[=y?c]}\
-${image ~/conky/monochrome/images/menu-blank.png -p 160,[=(y - top)?c]}\
-<#assign body = 165, y+= body>
-${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
-<#assign y += space>
-${voffset 11}${offset 5}${color1}ip address${alignr 64}remote port${voffset 3}
+<#assign body = 166>
+<@menu.table theme=conky x=0 y=y width=160 header=top body=body/>
+<#assign y += top + body + space>
+${voffset 9}${offset 5}${color1}ip address${alignr 64}remote port${voffset 5}
 ${if_match ${tcp_portmon 51413 51413 count} > 0}\
 <#list 0..9 as x>
 ${template2 [=x]}
 </#list>
+${voffset 5}\
 ${else}\
 ${voffset 66}${offset 23}${color}no peer connections
-${voffset 3}${offset 47}established${voffset 65}
+${voffset 3}${offset 47}established${voffset 70}
 ${endif}\
 ${else}\
-${voffset 187}\
+${voffset 192}\
 ${endif}\
 </#if>
-# ::::::::::::::::: package updates
+# ::::::::::::::::: package updates :::::::::::::::::
 ${if_existing /tmp/conky/dnf.packages.formatted}\
 <#if system == "desktop">
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 0,[=y?c]}\
@@ -158,7 +150,7 @@ ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-transparent.png -p 0,[=y?c]}\
 <#assign body = 800, y += body>
 </#list>
-${voffset 13}${alignc}${color1}dnf package management
+${voffset 8}${alignc}${color1}dnf package management
 ${voffset 3}${alignc}${color}${lines /tmp/conky/dnf.packages.formatted} package update(s) available
 ${voffset 8}${offset 5}${color1}package${alignr 5}version
 # the dnf package lookup script refreshes the package list every 10m

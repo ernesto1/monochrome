@@ -36,8 +36,6 @@ conky.config = {
                               -- does not include bars, ie. wifi strength bar, cpu bar
 
   imlib_cache_flush_interval = 250,
-  -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
-  
   top_name_verbose = true,    -- show full command in ${top ...}
   top_name_width = 20,        -- how many characters to print
 
@@ -52,7 +50,7 @@ conky.config = {
   
   -- templates
   -- top cpu process
-  template0 = [[${voffset 3}${offset 5}${color}${top name \1} ${top cpu \1}% ${top pid \1}]],
+  template0 = [[${voffset 3}${offset 5}${color}${top name \1}${alignr 5}${top cpu \1}% ${top pid \1}]],
   -- top mem process
   template1 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${alignr 5}${top_mem mem_res \1} ${top_mem pid \1}]],
   -- torrent peer ip/port: ${template3 #}
@@ -60,19 +58,25 @@ conky.config = {
 };
 
 conky.text = [[
-# ::::::::::::::::: system
+# ::::::::::::::::: system :::::::::::::::::
+# --- composite vertical table image ---
 ${image ~/conky/monochrome/images/glass/blue-menu-solid.png -p 0,0}\
 ${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 69,0}\
-${image ~/conky/monochrome/images/menu-blank.png -p 0,55}\
-${voffset 4}${offset 29}${color1}kernel${goto 74}${color}${kernel}
+${image ~/conky/monochrome/images/menu-blank.png -p 219,0}\
+${image ~/conky/monochrome/images/menu-blank.png -p 0,53}\
+# --------- end of table image ---------
+${voffset 3}${offset 29}${color1}kernel${goto 74}${color}${kernel}
 ${voffset 3}${offset 29}${color1}uptime${goto 74}${color}${uptime}
 ${voffset 3}${offset 5}${color1}compositor${goto 74}${color}${execi 3600 echo $XDG_SESSION_TYPE}
-${voffset 11}\
-# ::::::::::::::::: top cpu
-${image ~/conky/monochrome/images/glass/blue-menu-solid.png -p 0,60}\
-${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 0,79}\
-${image ~/conky/monochrome/images/menu-blank.png -p 0,212}\
-${voffset 3}${offset 5}${color1}process${goto 161}cpu   pid${voffset 3}
+${voffset 10}\
+# ::::::::::::::::: top cpu :::::::::::::::::
+# ------- composite table image -------
+${image ~/conky/monochrome/images/glass/blue-menu-solid.png -p 0,58}\
+${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 0,77}\
+${image ~/conky/monochrome/images/menu-blank.png -p 219,58}\
+${image ~/conky/monochrome/images/menu-blank.png -p 0,210}\
+# --------- end of table image --------
+${voffset 2}${offset 5}${color1}process${alignr 5}cpu   pid${voffset 4}
 ${template0 1}
 ${template0 2}
 ${template0 3}
@@ -81,11 +85,14 @@ ${template0 5}
 ${template0 6}
 ${template0 7}
 ${template0 8}
-# ::::::::::::::::: top memory
-${image ~/conky/monochrome/images/glass/blue-menu-solid.png -p 0,217}\
-${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 0,236}\
-${image ~/conky/monochrome/images/menu-blank.png -p 0,369}\
-${voffset 13}${offset 5}${color1}process${alignr 5}mem   pid${voffset 3}
+# ::::::::::::::::: top memory :::::::::::::::::
+# ------- composite table image -------
+${image ~/conky/monochrome/images/glass/blue-menu-solid.png -p 0,215}\
+${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 0,234}\
+${image ~/conky/monochrome/images/menu-blank.png -p 219,215}\
+${image ~/conky/monochrome/images/menu-blank.png -p 0,367}\
+# --------- end of table image --------
+${voffset 12}${offset 5}${color1}process${alignr 5}mem   pid${voffset 4}
 ${template1 1}
 ${template1 2}
 ${template1 3}
@@ -94,21 +101,25 @@ ${template1 5}
 ${template1 6}
 ${template1 7}
 ${template1 8}
-# ::::::::::::::::: bittorrent & zoom
-${image ~/conky/monochrome/images/glass/blue-menu-solid.png -p 0,374}\
-${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 69,374}\
-${image ~/conky/monochrome/images/menu-blank.png -p 160,374}\
-${image ~/conky/monochrome/images/menu-blank.png -p 0,428}\
+# ::::::::::::::::: bittorrent & zoom :::::::::::::::::
+# --- composite vertical table image ---
+${image ~/conky/monochrome/images/glass/blue-menu-solid.png -p 0,372}\
+${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 69,372}\
+${image ~/conky/monochrome/images/menu-blank.png -p 160,372}\
+${image ~/conky/monochrome/images/menu-blank.png -p 0,425}\
+# --------- end of table image ---------
 ${voffset 13}${offset 41}${color1}zoom${goto 74}${color}${if_running zoom}running${else}off${endif}
 ${voffset 3}${offset 5}${color1}bittorrent${goto 74}${color}${tcp_portmon 51413 51413 count} peer(s)
 ${voffset 3}${offset 22}${color1}seeding${goto 74}${color}${exec lsof -c transmission -n | grep -v deleted | grep -cE '[0-9]+[a-z|A-Z] +REG +[0-9]+,[0-9]+ +[0-9]{6,}'} file(s)
-# :::::::: bittorrent connection peers
+# :::::::: bittorrent connection peers :::::::::::::::::
 ${if_running transmission-gt}\
-${image ~/conky/monochrome/images/glass/blue-menu-solid.png -p 0,430}\
-${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 0,449}\
-${image ~/conky/monochrome/images/menu-blank.png -p 160,430}\
-${image ~/conky/monochrome/images/menu-blank.png -p 0,614}\
-${voffset 11}${offset 5}${color1}ip address${alignr 64}remote port${voffset 3}
+# ------- composite table image -------
+${image ~/conky/monochrome/images/glass/blue-menu-solid.png -p 0,427}\
+${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 0,446}\
+${image ~/conky/monochrome/images/menu-blank.png -p 160,427}\
+${image ~/conky/monochrome/images/menu-blank.png -p 0,612}\
+# --------- end of table image --------
+${voffset 9}${offset 5}${color1}ip address${alignr 64}remote port${voffset 5}
 ${if_match ${tcp_portmon 51413 51413 count} > 0}\
 ${template2 0}
 ${template2 1}
@@ -120,19 +131,20 @@ ${template2 6}
 ${template2 7}
 ${template2 8}
 ${template2 9}
+${voffset 5}\
 ${else}\
 ${voffset 66}${offset 23}${color}no peer connections
-${voffset 3}${offset 47}established${voffset 65}
+${voffset 3}${offset 47}established${voffset 70}
 ${endif}\
 ${else}\
-${voffset 187}\
+${voffset 192}\
 ${endif}\
-# ::::::::::::::::: package updates
+# ::::::::::::::::: package updates :::::::::::::::::
 ${if_existing /tmp/conky/dnf.packages.formatted}\
-${image ~/conky/monochrome/images/glass/blue-menu-solid.png -p 0,619}\
-${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 0,657}\
-${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 0,1457}\
-${voffset 13}${alignc}${color1}dnf package management
+${image ~/conky/monochrome/images/glass/blue-menu-solid.png -p 0,617}\
+${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 0,655}\
+${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 0,1455}\
+${voffset 8}${alignc}${color1}dnf package management
 ${voffset 3}${alignc}${color}${lines /tmp/conky/dnf.packages.formatted} package update(s) available
 ${voffset 8}${offset 5}${color1}package${alignr 5}version
 # the dnf package lookup script refreshes the package list every 10m
