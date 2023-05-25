@@ -1,4 +1,17 @@
-<#-- TODO use a function for creating menu tables for both horizontal or vertical versions -->
+<#import "/lib/menu-square.ftl" as menu>
+<#-- the system conky is substantially different between the 'desktop' and 'laptop' editions
+     the laptop version was designed to occupy a smaller footprint (width x height) than its desktop counterpart
+
+      desktop             laptop
+      ----------          -------
+      o/s
+      top cpu             top cpu
+      top mem             top mem
+                          wifi
+      bittorrent
+      packages            packages (just the package update count)
+
+     hence the pletora of conditional statements in this config -->
 conky.config = {
   lua_load = '~/conky/monochrome/common.lua',
 
@@ -13,8 +26,9 @@ conky.config = {
   gap_y = 42,
 
   -- window settings
-  minimum_width = 219,
-  maximum_width = 219,
+  <#if system == "desktop"><#assign windowWidth = 219><#else><#assign windowWidth = 159></#if>
+  minimum_width = [=windowWidth],
+  maximum_width = [=windowWidth],
   minimum_height = 245,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -37,10 +51,10 @@ conky.config = {
                               -- does not include bars, ie. wifi strength bar, cpu bar
 
   imlib_cache_flush_interval = 250,
-  -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
-  
+  <#if system == "desktop">
   top_name_verbose = true,    -- show full command in ${top ...}
   top_name_width = 20,        -- how many characters to print
+  </#if>
 
   -- font settings
   draw_shades = false,    -- black shadow on text (not good if text is black)
@@ -53,9 +67,9 @@ conky.config = {
   
   -- templates
   -- top cpu process
-  template0 = [[${voffset 3}${offset 5}${color}${top name \1} ${top cpu \1}% ${top pid \1}]],
+  template0 = [[${voffset 3}${offset 5}${color}${top name \1}${alignr 5}${top cpu \1}%<#if system == "desktop"> ${top pid \1}</#if>]],
   -- top mem process
-  template1 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${alignr 5}${top_mem mem_res \1} ${top_mem pid \1}]],
+  template1 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${alignr 5}${top_mem mem_res \1}<#if system == "desktop"> ${top_mem pid \1}</#if>]],
   -- torrent peer ip/port: ${template3 #}
   template2 = [[${voffset 3}${offset 5}${color}${tcp_portmon 51413 51413 rip \1}${alignr 64}${tcp_portmon 51413 51413 rport \1}]]
 };
@@ -78,37 +92,29 @@ ${voffset 11}\
 </#if>
 # ::::::::::::::::: top cpu
 <#if system == "desktop"><#assign processes = 8><#else><#assign processes = 6></#if>
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 0,[=y?c]}\
-<#assign y+= top>
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-transparent.png -p 0,[=y?c]}\
-<#assign body = 5 + 16 * processes, y+= body>
-${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
-<#assign y += space>
-${voffset 3}${offset 5}${color1}process${goto 161}cpu   pid${voffset 3}
-<#list 1..processes as x>
-${template0 [=x]}
+<#assign body = 5 + 16 * processes>
+<@menu.table theme=conky x=0 y=y width=windowWidth header=top body=body/>
+<#assign y += top + body + space>
+${voffset 2}${offset 5}${color1}process${alignr 5}cpu<#if system == "desktop">   pid</#if>${voffset 4}
+<#list 1..processes as i>
+${template0 [=i]}
 </#list>
 # ::::::::::::::::: top memory
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 0,[=y?c]}\
-<#assign y+= top>
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-transparent.png -p 0,[=y?c]}\
-<#assign body = 5 + 16 * processes, y+= body>
-${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
-<#assign y += space>
-${voffset 13}${offset 5}${color1}process${alignr 5}mem   pid${voffset 3}
-<#list 1..processes as x>
-${template1 [=x]}
+<#assign body = 5 + 16 * processes>
+<@menu.table theme=conky x=0 y=y width=windowWidth header=top body=body/>
+<#assign y += top + body + space>
+${voffset 12}${offset 5}${color1}process${alignr 5}mem<#if system == "desktop">   pid</#if>${voffset 4}
+<#list 1..processes as i>
+${template1 [=i]}
 </#list>
 <#if system == "laptop">
 # ::::::::::::::::: wifi network
 <#-- TODO only show network details when wifi is online -->
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 0,[=y?c]}\
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-transparent.png -p 60,[=y?c]}\
-${image ~/conky/monochrome/images/menu-blank.png -p 160,[=y?c]}\
-<#assign body = 38, y+= body>
-${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
-${voffset 13}${offset 5}${color1}network${goto 65}${color}${lua_parse truncate_string ${wireless_essid [=networkDevices[system]?first.name]} 15}
-${voffset 3}${offset 5}${color1}local ip${goto 65}${color}${addr [=networkDevices[system]?first.name]}
+<#assign body = 38>
+<@menu.verticaltable theme=conky x=0 y=y header=57 body=103 height=body/>
+<#assign y += body + 2>
+${voffset 13}${offset 5}${color1}network${goto 62}${color}${lua_parse truncate_string ${wireless_essid [=networkDevices[system]?first.name]} 15}
+${voffset 3}${offset 5}${color1}local ip${goto 62}${color}${addr [=networkDevices[system]?first.name]}
 </#if>
 <#if system == "desktop">
 # ::::::::::::::::: bittorrent & zoom
@@ -159,13 +165,9 @@ ${voffset 8}${offset 5}${color1}package${alignr 5}version
 <#assign lines = 47>
 ${voffset 2}${color}${execpi 30 head -n [=lines] /tmp/conky/dnf.packages.formatted}${voffset 5}
 <#else>
-<#assign y+= 2><#-- a 2px mini gap between this and the prior menu -->
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 0,[=y?c]}\
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-transparent.png -p 60,[=y?c]}\
-${image ~/conky/monochrome/images/menu-blank.png -p 160,[=y?c]}\
-<#assign body = 20, y+= body>
-${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
-${voffset 11}${offset 5}${color1}dnf${goto 65}${color}${lines /tmp/conky/dnf.packages.formatted} update(s)${voffset 4}
+<#assign body = 20>
+<@menu.verticaltable theme=conky x=0 y=y header=57 body=103 height=body/>
+${voffset 11}${offset 5}${color1}dnf${goto 62}${color}${lines /tmp/conky/dnf.packages.formatted} update(s)${voffset 4}
 </#if>
 ${endif}\
 ]];
