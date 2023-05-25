@@ -15,7 +15,7 @@ conky.config = {
   -- window settings
   minimum_width = 382,      -- conky will add an extra pixel to this width
   maximum_width = 382,
-  minimum_height = 68,      -- conky will add an extra pixel to this height
+  minimum_height = 46,      -- conky will add an extra pixel to this height
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -53,10 +53,10 @@ conky.text = [[
 #                                                          song with no album art
 # :::: no player available
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-music-player.png -p 0,0}\
-<@menu.table theme=conky x=71 y=28 width=111 header=3 body=38/>
-${voffset 34}${goto 77}${color1}now playing
-${voffset 4}${goto 77}${color}no player running\
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-music-player.png -s 46x46 -p 0,0}\
+<@menu.table theme=conky x=49 y=0 width=110 header=3 body=43/>
+${voffset 10}${goto 55}${color1}now playing
+${voffset 4}${goto 55}${color}no player running\
 ${else}\
 # :::::::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
