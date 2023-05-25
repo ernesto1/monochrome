@@ -52,7 +52,7 @@ conky.text = [[
 #                                                          song with no album art
 # :::: no player available
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
-${image ~/conky/monochrome/images/glass/blue-music-player.png -s 46x46 -p 0,0}\
+${image ~/conky/monochrome/images/glass/blue-sound-wave-small.png -p 0,0}\
 # ------- composite table image -------
 ${image ~/conky/monochrome/images/glass/blue-menu-solid.png -p 49,0}\
 ${image ~/conky/monochrome/images/glass/blue-menu-transparent.png -p 49,3}\
@@ -75,7 +75,7 @@ ${else}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
 ${goto 310}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}${voffset 6}
 # :::::::: no album art
 ${else}\
-${image ~/conky/monochrome/images/glass/blue-music-player.png -p 0,0}\
+${image ~/conky/monochrome/images/glass/blue-sound-wave.png -p 0,0}\
 ${endif}\
 # ::::::::: track details
 ${lua_parse draw_image ~/conky/monochrome/images/glass/blue-menu-solid.png 71 0}\
