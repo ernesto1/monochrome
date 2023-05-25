@@ -108,10 +108,10 @@ ${template1 [=i]}
 <#if system == "laptop">
 # ::::::::::::::::: wifi network :::::::::::::::::
 <#-- TODO only show network details when wifi is online -->
-<#assign body = 38>
+<#assign body = 39>
 <@menu.verticaltable theme=conky x=0 y=y header=57 body=103 height=body/>
 <#assign y += body + 2>
-${voffset [=8 + space]}${offset 5}${color1}network${goto 62}${color}${lua_parse truncate_string ${wireless_essid [=networkDevices[system]?first.name]} 15}
+${voffset [=10 + space]}${offset 5}${color1}network${goto 62}${color}${lua_parse truncate_string ${wireless_essid [=networkDevices[system]?first.name]} 15}
 ${voffset 3}${offset 5}${color1}local ip${goto 62}${color}${addr [=networkDevices[system]?first.name]}
 </#if>
 <#if system == "desktop">
@@ -157,9 +157,9 @@ ${voffset 8}${offset 5}${color1}package${alignr 5}version
 <#assign lines = 47>
 ${voffset 2}${color}${execpi 30 head -n [=lines] /tmp/conky/dnf.packages.formatted}${voffset 5}
 <#else>
-<#assign body = 20>
+<#assign body = 22>
 <@menu.verticaltable theme=conky x=0 y=y header=57 body=103 height=body/>
-${voffset [=6 + space]}${offset 5}${color1}dnf${goto 62}${color}${lines /tmp/conky/dnf.packages.formatted} update(s)${voffset 4}
+${voffset [=9 + space]}${offset 5}${color1}dnf${goto 62}${color}${lines /tmp/conky/dnf.packages.formatted} update(s)${voffset 4}
 </#if>
 ${endif}\
 ]];
