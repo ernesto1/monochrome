@@ -1,13 +1,14 @@
 # build and deploy the java apps
 ORANGE='\033[0;33m'; NOCOLOR='\033[0m'; \
 printf "${ORANGE}:::::: building java applications${NOCOLOR}\n"; \
-cd ~/conky/monochrome/builder/java-tools && \
+pushd ~/conky/monochrome/builder/java-tools && \
 mvn clean package && \
 printf "\n${ORANGE}:::::: deploying java apps${NOCOLOR}\n"; \
 mkdir -p ~/conky/monochrome/java && \
 rm -rf ~/conky/monochrome/java/* && \
 cp -rn */target/{lib,*.jar,*.yaml,*.xml} ~/conky/monochrome/java && \
-ls -R ~/conky/monochrome/java; \
+ls -R ~/conky/monochrome/java && \
+popd; \
 printf "\n${ORANGE}:::::: launching latest version of the music player app${NOCOLOR}\n"; \
 pgrep -f 'conky/monochrome/java/music' -l -a | sed 's/ /:/' | column -s ':' -t -N PID,'processes to be killed'; \
 echo; \

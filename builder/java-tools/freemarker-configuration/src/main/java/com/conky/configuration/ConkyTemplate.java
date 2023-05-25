@@ -32,7 +32,7 @@ public class ConkyTemplate {
 
         // 2. freemarker data model creation
         // load global data model
-        InputStream globalSettingsStream = new FileInputStream(new File(TEMPLATE_ROOT_DIR, "globalSettings.yml"));
+        InputStream globalSettingsStream = new FileInputStream(new File(TEMPLATE_ROOT_DIR, "hardware.yml"));
         Yaml yaml = new Yaml();
         Map<String, Object> root = yaml.load(globalSettingsStream);
         root.put("conky", args[0]);                 // conky theme being configured
