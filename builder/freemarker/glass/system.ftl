@@ -76,8 +76,8 @@ conky.config = {
 
 conky.text = [[
 <#assign y = 0,
-         top = 19,   <#-- table header height -->
-         space = 5>  <#-- empty space between windows -->
+         header = 19>   <#-- table header height -->
+<#if system == "desktop"><#assign space = 5><#else><#assign space = 3></#if><#-- empty space between windows -->
 <#if system == "desktop">
 # ::::::::::::::::: system :::::::::::::::::
 <#assign body = 53>
@@ -86,22 +86,22 @@ conky.text = [[
 ${voffset 3}${offset 29}${color1}kernel${goto 74}${color}${kernel}
 ${voffset 3}${offset 29}${color1}uptime${goto 74}${color}${uptime}
 ${voffset 3}${offset 5}${color1}compositor${goto 74}${color}${execi 3600 echo $XDG_SESSION_TYPE}
-${voffset 10}\
+${voffset [=5 + space]}\
 </#if>
 # ::::::::::::::::: top cpu :::::::::::::::::
 <#if system == "desktop"><#assign processes = 8><#else><#assign processes = 6></#if>
 <#assign body = 5 + 16 * processes>
-<@menu.table theme=conky x=0 y=y width=windowWidth header=top body=body/>
-<#assign y += top + body + space>
+<@menu.table theme=conky x=0 y=y width=windowWidth header=header body=body/>
+<#assign y += header + body + space>
 ${voffset 2}${offset 5}${color1}process${alignr 5}cpu<#if system == "desktop">   pid</#if>${voffset 4}
 <#list 1..processes as i>
 ${template0 [=i]}
 </#list>
 # ::::::::::::::::: top memory :::::::::::::::::
 <#assign body = 5 + 16 * processes>
-<@menu.table theme=conky x=0 y=y width=windowWidth header=top body=body/>
-<#assign y += top + body + space>
-${voffset 12}${offset 5}${color1}process${alignr 5}mem<#if system == "desktop">   pid</#if>${voffset 4}
+<@menu.table theme=conky x=0 y=y width=windowWidth header=header body=body/>
+<#assign y += header + body + space>
+${voffset [=7 + space]}${offset 5}${color1}process${alignr 5}mem<#if system == "desktop">   pid</#if>${voffset 4}
 <#list 1..processes as i>
 ${template1 [=i]}
 </#list>
@@ -111,7 +111,7 @@ ${template1 [=i]}
 <#assign body = 38>
 <@menu.verticaltable theme=conky x=0 y=y header=57 body=103 height=body/>
 <#assign y += body + 2>
-${voffset 13}${offset 5}${color1}network${goto 62}${color}${lua_parse truncate_string ${wireless_essid [=networkDevices[system]?first.name]} 15}
+${voffset [=8 + space]}${offset 5}${color1}network${goto 62}${color}${lua_parse truncate_string ${wireless_essid [=networkDevices[system]?first.name]} 15}
 ${voffset 3}${offset 5}${color1}local ip${goto 62}${color}${addr [=networkDevices[system]?first.name]}
 </#if>
 <#if system == "desktop">
@@ -119,14 +119,14 @@ ${voffset 3}${offset 5}${color1}local ip${goto 62}${color}${addr [=networkDevice
 <#assign body = 53>
 <@menu.verticaltable theme=conky x=0 y=y header=69 body=91 height=body/>
 <#assign y += body + 2><#-- a 2px mini gap between this table and the next -->
-${voffset 13}${offset 41}${color1}zoom${goto 74}${color}${if_running zoom}running${else}off${endif}
+${voffset [=8 + space]}${offset 41}${color1}zoom${goto 74}${color}${if_running zoom}running${else}off${endif}
 ${voffset 3}${offset 5}${color1}bittorrent${goto 74}${color}${tcp_portmon 51413 51413 count} peer(s)
 ${voffset 3}${offset 22}${color1}seeding${goto 74}${color}${exec lsof -c transmission -n | grep -v deleted | grep -cE '[0-9]+[a-z|A-Z] +REG +[0-9]+,[0-9]+ +[0-9]{6,}'} file(s)
 # :::::::: bittorrent connection peers :::::::::::::::::
 ${if_running transmission-gt}\
 <#assign body = 166>
-<@menu.table theme=conky x=0 y=y width=160 header=top body=body/>
-<#assign y += top + body + space>
+<@menu.table theme=conky x=0 y=y width=160 header=header body=body/>
+<#assign y += header + body + space>
 ${voffset 9}${offset 5}${color1}ip address${alignr 64}remote port${voffset 5}
 ${if_match ${tcp_portmon 51413 51413 count} > 0}\
 <#list 0..9 as x>
@@ -150,7 +150,7 @@ ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-transparent.png -p 0,[=y?c]}\
 <#assign body = 800, y += body>
 </#list>
-${voffset 8}${alignc}${color1}dnf package management
+${voffset [=3 + space]}${alignc}${color1}dnf package management
 ${voffset 3}${alignc}${color}${lines /tmp/conky/dnf.packages.formatted} package update(s) available
 ${voffset 8}${offset 5}${color1}package${alignr 5}version
 # the dnf package lookup script refreshes the package list every 10m
@@ -159,7 +159,7 @@ ${voffset 2}${color}${execpi 30 head -n [=lines] /tmp/conky/dnf.packages.formatt
 <#else>
 <#assign body = 20>
 <@menu.verticaltable theme=conky x=0 y=y header=57 body=103 height=body/>
-${voffset 11}${offset 5}${color1}dnf${goto 62}${color}${lines /tmp/conky/dnf.packages.formatted} update(s)${voffset 4}
+${voffset [=6 + space]}${offset 5}${color1}dnf${goto 62}${color}${lines /tmp/conky/dnf.packages.formatted} update(s)${voffset 4}
 </#if>
 ${endif}\
 ]];
