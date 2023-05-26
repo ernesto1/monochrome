@@ -10,7 +10,7 @@ conky.config = {
   -- window alignment
   <#if conky == "widgets-dock"><#assign alignment = "bottom_left"><#else><#assign alignment = "bottom_right"></#if>
   alignment = '[=alignment]',  -- top|middle|bottom_left|right
-  <#if conky == "widgets-dock"><#assign x = 150, y = 119><#else><#assign x = 5, y = 5></#if>
+  <#if conky == "widgets-dock"><#assign x = 142, y = 119><#else><#assign x = 5, y = 5></#if>
   gap_x = [=x],
   gap_y = [=y],
 
