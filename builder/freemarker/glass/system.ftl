@@ -112,7 +112,7 @@ ${template1 [=i]}
 <@menu.verticaltable theme=conky x=0 y=y header=57 body=103 height=body/>
 <#assign y += body + 2>
 ${voffset [=10 + space]}${offset 5}${color1}network${goto 62}${color}${lua_parse truncate_string ${wireless_essid [=networkDevices[system]?first.name]} 15}
-${voffset 3}${offset 5}${color1}local ip${goto 62}${color}${addr [=networkDevices[system]?first.name]}
+${voffset 3}${offset 5}${color1}local ip${goto 62}${color}${addr [=networkDevices[system]?first.name]}${voffset 5}<#-- since the next table is optional, add the voffset in order to display the table bottom border properly -->
 </#if>
 <#if system == "desktop">
 # ::::::::::::::::: bittorrent & zoom :::::::::::::::::
@@ -159,7 +159,7 @@ ${voffset 2}${color}${execpi 30 head -n [=lines] /tmp/conky/dnf.packages.formatt
 <#else>
 <#assign body = 22>
 <@menu.verticaltable theme=conky x=0 y=y header=57 body=103 height=body/>
-${voffset [=9 + space]}${offset 5}${color1}dnf${goto 62}${color}${lines /tmp/conky/dnf.packages.formatted} update(s)${voffset 4}
+${voffset [=3 + space]}${offset 5}${color1}dnf${goto 62}${color}${lines /tmp/conky/dnf.packages.formatted} update(s)${voffset 4}
 </#if>
 ${endif}\
 ]];

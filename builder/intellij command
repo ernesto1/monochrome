@@ -1,0 +1,65 @@
+-Dlogback.configurationFile=/home/ernesto/conky/monochrome/builder/java-tools/music-player/src/main/config/logback.xml
+
+
+package com.conky.musicplayer;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+
+/**
+ * Runnable task to download album art from the web
+ */
+public class ImageDownloader implements Runnable {
+    private static final Logger logger = LoggerFactory.getLogger(ImageDownloader.class);
+    private MusicPlayerDatabase database;
+    private String url;
+    private Path albumArtPath;
+
+    /**
+     * Create a new instance of this image download task
+     * @param database      music player database
+     * @param url           URL of the image to download, ex. <tt>https://i.scdn.co/image/ab67616d0000b</tt>
+     * @param albumArtPath  target file path of the image to be downloaded
+     */
+    public ImageDownloader(MusicPlayerDatabase database, String url, Path albumArtPath) {
+        this.database = database;
+        this.url = url;
+        this.albumArtPath = albumArtPath;
+    }
+
+    @Override
+    public void run() {
+        if (Files.exists(albumArtPath, LinkOption.NOFOLLOW_LINKS)) {
+            logger.info("album art {} is already available on disk, no need to download it again from the web", albumArtPath);
+            return;
+        }
+
+        // if the album art to be downloaded is not for the current song being played
+        // then drop this image download request
+        String filePath = database.getCurrentAlbumArtPath();
+
+        if (filePath.compareTo(albumArtPath.toString()) != 0) {
+            logger.info("skipping album art download request for {}, song is not being played", filePath);
+            return;
+        }
+
+        try {
+            ReadableByteChannel readableByteChannel = Channels.newChannel(new URL(url).openStream());
+            FileOutputStream fileOutputStream = new FileOutputStream(albumArtPath.toFile());
+            fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
+            fileOutputStream.close();
+            logger.info("placed album art at: {}", albumArtPath);
+        } catch (IOException e) {
+            logger.error("unable to download album art from the web");
+        }
+    }
+}
