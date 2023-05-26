@@ -1,5 +1,5 @@
 # -------------- cpu
-${if_match ${cpu cpu0} < 85}\
+${if_match ${cpu cpu0} < [=threshold.cpu]}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-cpu.png -p 0,0}
 ${else}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-cpu-high.png -p 0,0}

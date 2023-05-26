@@ -1,5 +1,5 @@
 # -------------- memory
-${if_match ${memperc} < 85}\
+${if_match ${memperc} < [=threshold.mem]}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-mem.png -p 0,0}\
 ${else}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-mem-high.png -p 0,0}\

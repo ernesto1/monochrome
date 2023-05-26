@@ -11,7 +11,7 @@ pushd /tmp/monochrome && \
 buildSidebar.bash config cpu memory network disk system bottom-edge && \
 echo ']];' >> /tmp/monochrome/sidebar && \
 mv sidebar bittorrent packages musicPlayer ~/conky/monochrome/compact && \
-sleep 1 && \
+sleep 2 && \
 mv memoryGraph temperature ~/conky/monochrome/compact && \
 popd
 

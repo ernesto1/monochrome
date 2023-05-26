@@ -98,7 +98,7 @@ ${endif}\
 ${voffset 44}${offset 12}${cpugraph cpu0 33,33 ${template1}}
 ${voffset -31}${goto 67}${color}${font1}${cpu cpu0}${font0}%
 # :::::::::::::::::::: memory
-${if_match ${memperc} < 85}\
+${if_match ${memperc} < 90}\
 ${image ~/conky/monochrome/images/widgets-dock/yellow-mem.png -p 0,98}\
 ${else}\
 ${image ~/conky/monochrome/images/widgets-dock/yellow-mem-high.png -p 0,98}\
