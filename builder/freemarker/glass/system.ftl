@@ -13,8 +13,6 @@
 
      hence the pletora of conditional statements in this config -->
 conky.config = {
-  lua_load = '~/conky/monochrome/common.lua',
-
   update_interval = 2,  -- update interval in seconds
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
   xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
@@ -111,7 +109,7 @@ ${template1 [=i]}
 <#assign body = 39>
 <@menu.verticaltable theme=conky x=0 y=y header=57 body=103 height=body/>
 <#assign y += body + 2>
-${voffset [=10 + space]}${offset 5}${color1}network${goto 62}${color}${lua_parse truncate_string ${wireless_essid [=networkDevices[system]?first.name]} 15}
+${voffset [=10 + space]}${offset 5}${color1}network${goto 62}${color}${wireless_essid [=networkDevices[system]?first.name]}
 ${voffset 3}${offset 5}${color1}local ip${goto 62}${color}${addr [=networkDevices[system]?first.name]}${voffset 5}<#-- since the next table is optional, add the voffset in order to display the table bottom border properly -->
 </#if>
 <#if system == "desktop">
