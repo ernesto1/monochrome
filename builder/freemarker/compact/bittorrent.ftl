@@ -38,8 +38,8 @@ conky.config = {
   draw_outline = false,     -- black outline around text (not good if text is black)
   -- colors
   default_color = '[=colors.menuText]',  -- regular text
-  color1 = '[=colors.labels]',
-  color2 = '[=colors.highlight]',         -- highlight important packages
+  color1 = '[=colors.labels]',            -- labels
+  color2 = '[=(colors.warning)?c]',         -- bar critical
   
   -- torrent peer ip/port: ${template1 #}
   template1 = [[${voffset 3}${offset 5}${color}${tcp_portmon 51413 51413 rip \1}${alignr 5}${tcp_portmon 51413 51413 rport \1}]]
@@ -56,6 +56,7 @@ ${if_running transmission-gt}\
          windowYcoordinate = y> <#-- starting y coordinate of the current window -->
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-horizontal.png -p 0,[=y?c]}\
 ${voffset 2}${offset 5}${color1}bittorrent${goto 75}${color}${tcp_portmon 51413 51413 count} peer(s)
+${voffset -5}${color2}${hr 1}${voffset -8}
 <#assign y += top>
 ${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
 <#assign y += 1>
@@ -86,6 +87,7 @@ ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-horizontal.
 <#assign file = "/tmp/conky/bittorrent">
 ${lua compute ${exec lsof -c transmission -n | grep -v deleted | grep -E '[0-9]+[a-z|A-Z] +REG +[0-9]+,[0-9]+ +[0-9]{6,}' | sed 's|.\+/||' | sed 's/^/${voffset 3}${offset 5}/' | sed 's/#/\\#/g' | sort > [=file]}}\
 ${voffset 2}${offset 5}${color1}seeding${goto 75}${color}${lua compute_and_save files ${lines [=file]}} files
+${voffset -5}${color2}${hr 1}${voffset -8}
 <#assign y += top>
 ${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
 <#assign y += 1>

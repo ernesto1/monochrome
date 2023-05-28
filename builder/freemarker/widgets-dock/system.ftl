@@ -94,6 +94,7 @@ ${voffset 10}\
 ${if_running transmission-gt}\
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-horizontal.png -p 0,[=y?c]}\
 ${voffset 2}${offset 5}${color1}bittorrent${goto 75}${color}${tcp_portmon 51413 51413 count} peer(s)
+${voffset -5}${hr 1}${voffset -8}
 <#assign y += top>
 ${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
 <#assign y += 1, windowYcoordinate = y>

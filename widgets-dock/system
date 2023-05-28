@@ -97,6 +97,7 @@ ${voffset 10}\
 ${if_running transmission-gt}\
 ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-horizontal.png -p 0,356}\
 ${voffset 2}${offset 5}${color1}bittorrent${goto 75}${color}${tcp_portmon 51413 51413 count} peer(s)
+${voffset -5}${hr 1}${voffset -8}
 ${image ~/conky/monochrome/images/menu-blank.png -p 0,375}\
 ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-top-flat.png -p 0,376}\
 ${image ~/conky/monochrome/images/widgets-dock/yellow-menu.png -p 0,395}\
