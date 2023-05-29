@@ -41,9 +41,9 @@ conky.config = {
   draw_shades = false,      -- black shadow on text (not good if text is black)
   draw_outline = false,     -- black outline around text (not good if text is black)
   -- colors
-  default_color = '703d0a',  -- regular text
+  default_color = 'c596c7',  -- regular text
   color1 = 'white',
-  color2 = 'white',         -- highlight important packages
+  color2 = 'd7511c',         -- highlight important packages
   
   -- top cpu process: ${template1 processNumber}
   template1 = [[${voffset 3}${color}${offset 5}${top name \1}${alignr 5}${top cpu \1}% ${top pid \1}]],
@@ -55,9 +55,16 @@ conky.config = {
 
 conky.text = [[
 # :::::::::::: top cpu processes
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-top.png -p 0,0}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu.png -p 0,19}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-bottom.png -p 0,128}\
+# ----------- table image ------------
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-dark.png -p 0,0}\
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-dark-edge-top-left.png -p 0,0}\
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-dark-edge-top-right.png -p 182,0}\
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-light.png -p 0,19}\
+${image ~/conky/monochrome/images/menu-blank.png -p 189,0}\
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-light-edge-bottom-left.png -p 0,128}\
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-light-edge-bottom-right.png -p 182,128}\
+${image ~/conky/monochrome/images/menu-blank.png -p 0,135}\
+# -------- end of table image ---------
 ${voffset 2}${color1}${offset 5}process${alignr 5}cpu   pid${voffset 3}
 ${template1 1}
 ${template1 2}
@@ -67,8 +74,16 @@ ${template1 5}
 ${template1 6}
 ${template1 7}
 # :::::::::::: top mem processes
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-top.png -p 0,140}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-bottom.png -p 0,268}\
+# ----------- table image ------------
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-dark.png -p 0,140}\
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-dark-edge-top-left.png -p 0,140}\
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-dark-edge-top-right.png -p 182,140}\
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-light.png -p 0,159}\
+${image ~/conky/monochrome/images/menu-blank.png -p 189,140}\
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-light-edge-bottom-left.png -p 0,268}\
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-light-edge-bottom-right.png -p 182,268}\
+${image ~/conky/monochrome/images/menu-blank.png -p 0,275}\
+# -------- end of table image ---------
 ${voffset 12}${color1}${offset 5}process${alignr 5}memory   pid${voffset 3}
 ${template2 1}
 ${template2 2}
@@ -79,30 +94,43 @@ ${template2 6}
 ${template2 7}
 # :::::::::::: network
 # assumption: only one network device will be connected to the internet at a time
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-horizontal.png -p 0,280}\
-${image ~/conky/monochrome/images/menu-blank.png -p 0,351}\
 # :::: ethernet
 ${if_up enp0s25}\
+# -------  vertical table image -------
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-dark.png -p 0,280}\
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-dark-edge-top-left.png -p 0,280}\
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-light.png -p 69,280}\
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-light-edge-top-right.png -p 182,280}\
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-dark-edge-bottom-left.png -p 0,344}\
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-light-edge-bottom-right.png -p 182,344}\
+${image ~/conky/monochrome/images/menu-blank.png -p 189,280}\
+${image ~/conky/monochrome/images/menu-blank.png -p 0,351}\
+# --------- end of table image ---------
 ${voffset 15}${offset 5}${color1}local ip${goto 75}${color}${addr enp0s25}
 ${voffset 3}${offset 5}${color1}speed${goto 75}${color}${execi 180 ethtool enp0s25 2>/dev/null | grep -i speed | cut -d ' ' -f 2}
 ${voffset 3}${offset 5}${color1}total up${goto 75}${color}${totalup enp0s25}
 ${voffset 3}${offset 5}${color1}total down${goto 75}${color}${totaldown enp0s25}
 ${else}\
-# in case no internet connection is available we have to "fill the gap" so the next section prints properly
-${image ~/conky/monochrome/images/menu-blank.png -p 0,280}\
 ${voffset 76}\
 ${endif}\
 ${voffset 10}\
 # :::::::::::: bittorrent peers
 ${if_running transmission-gt}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-horizontal.png -p 0,356}\
+# ------- composite table image -------
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-dark.png -p 0,356}\
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-dark-edge-top-left.png -p 0,356}\
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-light.png -p 69,356}\
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-light-edge-top-right.png -p 182,356}\
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-dark.png -p 0,376}\
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-light.png -p 0,395}\
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-light-edge-bottom-left.png -p 0,552}\
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-light-edge-bottom-right.png -p 182,552}\
+${image ~/conky/monochrome/images/menu-blank.png -p 0,559}\
+${image ~/conky/monochrome/images/menu-blank.png -p 189,356}\
+# -------- end of table image ---------
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-peers.png -p 38,410}\
 ${voffset 2}${offset 5}${color1}bittorrent${goto 75}${color}${tcp_portmon 51413 51413 count} peer(s)
 ${voffset -5}${hr 1}${voffset -8}
-${image ~/conky/monochrome/images/menu-blank.png -p 0,375}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-top-flat.png -p 0,376}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu.png -p 0,395}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-bittorrent.png -p 38,410}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-bottom.png -p 0,552}\
 ${voffset 7}${offset 5}${color1}ip address${alignr 5}remote port${voffset 3}
 ${if_match ${tcp_portmon 51413 51413 count} > 0}\
 ${template3 0}
@@ -120,16 +148,21 @@ ${voffset 67}${alignc}${color}no peer connections
 ${voffset 3}${alignc}established${voffset 74}
 ${endif}\
 ${else}\
-${image ~/conky/monochrome/images/menu-blank.png -p 0,376}\
+${image ~/conky/monochrome/images/menu-blank.png -p 0,356}\
 ${voffset 208}\
 ${endif}\
 # :::::::::::: package updates
 ${if_existing /tmp/conky/dnf.packages.formatted}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-top.png -p 0,564}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu.png -p 0,583}\
+# ----------- table image ------------
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-dark.png -p 0,564}\
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-dark-edge-top-left.png -p 0,564}\
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-dark-edge-top-right.png -p 182,564}\
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-light.png -p 0,583}\
+${image ~/conky/monochrome/images/menu-blank.png -p 189,564}\
+# -------- end of table image ---------
 # optional dnf branding, can be removed or won't matter if the image does not exist
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dnf.png -p 114,585}\
-${lua_parse bottom_edge_parse widgets-dock yellow-menu-bottom.png 0 583 2 ${lines /tmp/conky/dnf.packages.formatted} 54}\
+${image ~/conky/monochrome/images/widgets-dock/grape-menu-dnf.png -p 114,585}\
+${lua_parse bottom_edge_parse widgets-dock grape-menu-light-edge-bottom 0 583 189 2 ${lines /tmp/conky/dnf.packages.formatted} 54}\
 ${voffset 2}${offset 5}${color1}package${alignr 5}version${voffset 4}
 ${color}${execpi 30 head -n 54 /tmp/conky/dnf.packages.formatted}${voffset 5}
 ${endif}\

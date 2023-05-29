@@ -1,3 +1,5 @@
+<#import "/lib/menu-round.ftl" as menu>
+
 <#macro network devices mainDeviceType>
 <#assign device = devices?first>
 # :::: [=device.type]
@@ -50,23 +52,23 @@ ${voffset 48}
   if multiple devices are connected to the internet, the one at the top of the hierarchy
   is displayed
 -->
-<#macro networkDetails devices height>
+<#macro networkDetails devices y width>
 <#assign device = devices?first>
 # :::: [=device.type]
 ${if_up [=device.name]}\
 <#if device.type == "wifi">
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-horizontal-data.png -p 57,[=height]}\
+<@menu.verticalTable x=0 y=y header=57 body=width-57 height=71/>
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-horizontal-data.png -p 57,[=y]}\
 <@wifiDetails device/>
 <#else>
+<@menu.verticalTable x=0 y=y header=69 body=width-69 height=71/>
 <@ethernetDetails device/>
 </#if>
 <#if devices?size gt 1>
 ${else}\
-<@networkDetails devices[1..<devices?size] height/>
+<@networkDetails devices=devices[1..<devices?size] y=y width=width/>
 <#else>
 ${else}\
-# in case no internet connection is available we have to "fill the gap" so the next section prints properly
-${image ~/conky/monochrome/images/menu-blank.png -p 0,[=height]}\
 ${voffset 76}\
 </#if>
 ${endif}\

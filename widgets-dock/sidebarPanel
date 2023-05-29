@@ -11,7 +11,7 @@ conky.config = {
   gap_y = -430,
 
   -- window settings
-    minimum_width = 56,      -- conky will add an extra pixel to this
+    minimum_width = 55,      -- conky will add an extra pixel to this
   minimum_height = 10,
   own_window = true,
   own_window_type = 'panel',    -- values: desktop (background), panel (bar)
@@ -42,9 +42,9 @@ conky.config = {
   font3 = 'URW Gothic:size=12',  -- medium
   
   -- colors
-  default_color = 'c15124',  -- regular text
-  color1 = '8a2700',
-  color3 = 'd70d2f',
+  default_color = '906c9c',  -- regular text
+  color1 = 'f2c7ff',
+  color3 = 'c33855',
   
   -- device temperature: ${template8 (value|conky expression}}
   template7 = [[${voffset 7}${offset 12}${font0}${color}\1${voffset -28}${font3}°${offset 4}${voffset -4}${font0}C${font}${color}${voffset 9}]]

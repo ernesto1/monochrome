@@ -83,6 +83,27 @@ function conky_bottom_edge(theme, filename, x, y, voffset, lines)
   return s
 end
 
+--[[ TODO replace og conky_bottom_edge with this one once compact theme is updated]]
+function round_bottom_edge(theme, filename, x, y, width, voffset, lines)
+  local lineMultiplier = 15
+  
+  if voffset > 2 then
+    lineMultiplier = lineMultiplier + voffset - 2
+  end
+
+  lines = (lines > 0) and lines or 0
+  y = y + (lines * lineMultiplier) - 1
+  local imageDir = "~/conky/monochrome/images/"
+  local path = imageDir .. theme .. "/" .. filename .. "-left.png"
+  local s = build_image_variable(path, x, y)
+  path = imageDir .. theme .. "/" .. filename .. "-right.png"
+  s = s .. build_image_variable(path, x+width-7, y)
+  -- add a blank image right below the bottom edge image, bottom edges are 7px
+  s = s .. build_image_variable(imageDir .. "menu-blank.png", x, y + 7)
+
+  return s
+end
+
 --[[ wrapper method for the 'bottom_edge' function
 allows the client to provide a conky expression/variable that when computed/parsed will return the number of lines in the body of the menu
 
@@ -92,12 +113,12 @@ arguments:
     maxLines    optional | maximun number of lines, will override the expression line count if it computes
                 to a bigger number
 ]]
-function conky_bottom_edge_parse(theme, filename, x, y, voffset, expression, maxLines)
+function conky_bottom_edge_parse(theme, filename, x, y, width, voffset, expression, maxLines)
   maxLines = tonumber(maxLines) or 1000
   local lines = tonumber(conky_parse(expression))
   lines = (lines > maxLines) and maxLines or lines
   
-  return conky_bottom_edge(theme, filename, x, y, voffset, lines)
+  return round_bottom_edge(theme, filename, tonumber(x), tonumber(y), tonumber(width), tonumber(voffset), lines)
 end
 
 --[[ wrapper method for the 'bottom_edge' function
