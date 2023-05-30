@@ -142,12 +142,7 @@ ${endif}\
 # ::::::::::::::::: package updates :::::::::::::::::
 ${if_existing /tmp/conky/dnf.packages.formatted}\
 <#if system == "desktop">
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-solid.png -p 0,[=y?c]}\
-<#assign body = 38, y += body>
-<#list 1..2 as x>
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-menu-transparent.png -p 0,[=y?c]}\
-<#assign body = 800, y += body>
-</#list>
+<@menu.table theme=conky x=0 y=y width=windowWidth header=38 body=1000/>
 ${voffset [=3 + space]}${alignc}${color1}dnf package management
 ${voffset 3}${alignc}${color}${lines /tmp/conky/dnf.packages.formatted} package update(s) available
 ${voffset 8}${offset 5}${color1}package${alignr 5}version

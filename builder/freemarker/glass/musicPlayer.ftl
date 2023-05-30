@@ -74,8 +74,8 @@ ${else}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-sound-wave.png -p 0,0}\
 ${endif}\
 # ::::::::: track details
-${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-solid.png 71 0}\
-${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-transparent.png 116 0}\
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-dark.png 71 0}\
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-light.png 116 0}\
 # add blank out images to ensure the menu image comes out correctly
 # right side
 ${lua_parse draw_image ~/conky/monochrome/images/menu-blank.png 290 0}\
