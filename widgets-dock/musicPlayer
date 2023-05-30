@@ -77,7 +77,7 @@ ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light-edge-bottom-lef
 ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light-edge-bottom-right.png -p 182,197}\
 ${image ~/conky/monochrome/images/menu-blank.png -p 0,204}\
 # -------- end of table image ---------
-${voffset 2}${alignc}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} : ${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
+${voffset 2}${alignc}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} ${color}: ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}${color1}${endif}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
 ${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4,19}\
 ${voffset 196}\
 # :::: track details

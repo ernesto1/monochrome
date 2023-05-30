@@ -69,7 +69,7 @@ ${if_existing /tmp/conky/musicplayer.albumArtPath}\
          body = 185,  <#-- size of the album window without the header -->
          space = 3>   <#-- empty space between windows -->
 <@menu.table x=0 y=y width=width header=header body=body/>
-${voffset 2}${alignc}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} : ${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
+${voffset 2}${alignc}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} ${color}: ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}${color1}${endif}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
 ${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4,[=(header)?c]}\
 <#assign y += header + body + space>
 ${voffset 196}\

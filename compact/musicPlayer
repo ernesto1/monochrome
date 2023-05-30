@@ -60,7 +60,7 @@ ${else}\
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
 ${image ~/conky/monochrome/images/compact/burgundy-menu-top.png -p 0,0}\
 ${image ~/conky/monochrome/images/compact/burgundy-menu.png -p 0,19}\
-${voffset 2}${alignc}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} : ${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
+${voffset 2}${alignc}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} ${color}: ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}${color1}${endif}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
 ${image ~/conky/monochrome/images/compact/burgundy-menu-bottom.png -p 0,197}\
 ${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4,19}\
 ${lua add_offsets 0 207}${voffset 196}\
