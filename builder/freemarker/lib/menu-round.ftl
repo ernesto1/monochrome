@@ -58,6 +58,7 @@ ${image ~/conky/monochrome/images/menu-blank.png -p [=(x+width)?c],[=y?c]}\
 <#macro menu x y width height>
 # ----------- menu image ------------
 <@menuHeader x=x y=y width=width type="light"/>
+${image ~/conky/monochrome/images/menu-blank.png -p [=(x+width)?c],[=y?c]}\
 <#local y += height>
 <@menuBottom x=x y=y width=width/>
 # -------- end of menu image ---------
