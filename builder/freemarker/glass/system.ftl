@@ -20,7 +20,7 @@ conky.config = {
 
   -- window alignment
   alignment = 'top_left',     -- top|middle|bottom_left|middle|right
-  gap_x = 125,                    -- same as passing -x at command line
+  gap_x = 121,                    -- same as passing -x at command line
   gap_y = 42,
 
   -- window settings
@@ -74,8 +74,8 @@ conky.config = {
 
 conky.text = [[
 <#assign y = 0,
-         header = 19>   <#-- table header height -->
-<#if system == "desktop"><#assign space = 5><#else><#assign space = 3></#if><#-- empty space between windows -->
+         header = 19,   <#-- table header height -->
+         space = 3>     <#-- empty space between windows -->
 <#if system == "desktop">
 # ::::::::::::::::: system :::::::::::::::::
 <#assign body = 53>
