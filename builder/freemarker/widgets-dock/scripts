@@ -8,9 +8,11 @@
 # the java freemarker template app will output the conky blocks in the /tmp/monochrome folder
 
 # ::::::: desktop sidebar
-java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar widgets-dock grape desktop && \
+java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar widgets-dock yellow desktop && \
 pushd /tmp/monochrome && \
-mv system musicPlayer ~/conky/monochrome/widgets-dock && \
+buildSidebar.bash config cpu-mem network disk temperature packages time bottom-edge && \
+echo '${voffset -360}]];' >> sidebar && \
+mv system sidebarPanel musicPlayer sidebar ~/conky/monochrome/widgets-dock && \
 popd
 
 # ::::::: laptop sidebar
@@ -35,3 +37,15 @@ top cpu window
   bottom  7     1px below the text's main body
   
   each row of text adds 16 pixels (lines with a 3px voffset)
+
+# ::::: image update due to new templating
+git mv purple-menu-bittorrent.png purple-menu-peers.png;
+git mv purple-menu.png purple-menu-light.png
+git mv purple-menu-rhythmbox.png purple-rhythmbox.png;
+git rm purple-menu-!(peers|dnf*);
+
+
+mkdir -p /tmp/images
+cp grape-menu-*edge* /tmp/images
+prename 's/grape/purple/' /tmp/images/*
+mv /tmp/images/* .

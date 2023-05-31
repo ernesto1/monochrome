@@ -22,18 +22,45 @@ ${image ~/conky/monochrome/images/menu-blank.png -p [=(x+width)?c],[=y?c]}\
 </#macro>
 
 
-<#macro menuHeader x y width type="dark">
-<#-- edge images are 7x7px -->
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-[=type].png -p [=x?c],[=y?c]}\
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-[=type]-edge-top-left.png -p [=x?c],[=y?c]}\
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-[=type]-edge-top-right.png -p [=(x+width-7)?c],[=y?c]}\
+<#-- creates a composite menu image with the given dimensions
+ (x,y)
+    ╭─────────────╮      -+-
+    │             │       |
+    │             │       |
+    │             │     height (px)
+    │             │       |
+    │             │       |
+    ╰─────────────╯      -+-
+       width (px)
+ -->
+<#macro menu x y width height isDark=false>
+# ----------- menu image ------------
+<#local theme = getTheme(isDark)>
+<@menuHeader x=x y=y width=width theme=theme/>
+${image ~/conky/monochrome/images/menu-blank.png -p [=(x+width)?c],[=y?c]}\
+<#local y += height>
+<@menuBottom x=x y=y width=width theme=theme/>
+# -------- end of menu image ---------
 </#macro>
 
 
-<#macro menuBottom x y width>
+<#function getTheme isDark>
+  <#return isDark?then("dark", "light")>
+</#function>
+
+
+<#macro menuHeader x y width theme="dark">
+<#-- edge images are 7x7px -->
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-[=theme].png -p [=x?c],[=y?c]}\
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-[=theme]-edge-top-left.png -p [=x?c],[=y?c]}\
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-[=theme]-edge-top-right.png -p [=(x+width-7)?c],[=y?c]}\
+</#macro>
+
+
+<#macro menuBottom x y width theme="light">
 <#local y -= 7><#-- edge images are 7x7px -->
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-light-edge-bottom-left.png -p [=x?c],[=y?c]}\
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-light-edge-bottom-right.png -p [=(x+width-7)?c],[=y?c]}\
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-[=theme]-edge-bottom-left.png -p [=x?c],[=y?c]}\
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-[=theme]-edge-bottom-right.png -p [=(x+width-7)?c],[=y?c]}\
 ${image ~/conky/monochrome/images/menu-blank.png -p [=x?c],[=(y + 7)?c]}\
 </#macro>
 
@@ -51,17 +78,6 @@ ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-light.png 
 <@menuBottom x=x y=yCoordinate  width=width/>
 ${image ~/conky/monochrome/images/menu-blank.png -p [=(x+width)?c],[=y?c]}\
 # -------- end of table image ---------
-</#macro>
-
-
-<#-- same as the 'table' macro above but with no header row -->
-<#macro menu x y width height>
-# ----------- menu image ------------
-<@menuHeader x=x y=y width=width type="light"/>
-${image ~/conky/monochrome/images/menu-blank.png -p [=(x+width)?c],[=y?c]}\
-<#local y += height>
-<@menuBottom x=x y=y width=width/>
-# -------- end of menu image ---------
 </#macro>
 
 

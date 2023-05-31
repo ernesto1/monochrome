@@ -67,16 +67,15 @@ ${voffset 4}${offset 63}${color}no player running
 ${else}\
 # :::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
-# ----------- table image ------------
+# ----------- menu image ------------
 ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark.png -p 0,0}\
 ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark-edge-top-left.png -p 0,0}\
 ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark-edge-top-right.png -p 182,0}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light.png -p 0,19}\
 ${image ~/conky/monochrome/images/menu-blank.png -p 189,0}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light-edge-bottom-left.png -p 0,197}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light-edge-bottom-right.png -p 182,197}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark-edge-bottom-left.png -p 0,197}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark-edge-bottom-right.png -p 182,197}\
 ${image ~/conky/monochrome/images/menu-blank.png -p 0,204}\
-# -------- end of table image ---------
+# -------- end of menu image ---------
 ${voffset 2}${alignc}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} ${color}: ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}${color1}${endif}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
 ${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4,19}\
 ${voffset 196}\
