@@ -65,22 +65,6 @@ ${image ~/conky/monochrome/images/menu-blank.png -p [=x?c],[=(y + 7)?c]}\
 </#macro>
 
 
-<#-- table that combines both vertical and horizontal table layouts -->
-<#macro compositeTable x y width vheader hbody vheight=19 hheader=19>
-<#local startingy = y>
-# ------- composite table image -------
-<@verticalMenuHeader x=x y=y header=vheader body=width-vheader/>
-<#local yCoordinate = y + vheight + 1>
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-dark.png -p [=x?c],[=yCoordinate?c]}\
-<#local yCoordinate += hheader>
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-light.png -p [=x?c],[=yCoordinate?c]}\
-<#local yCoordinate += hbody>
-<@menuBottom x=x y=yCoordinate  width=width/>
-${image ~/conky/monochrome/images/menu-blank.png -p [=(x+width)?c],[=y?c]}\
-# -------- end of table image ---------
-</#macro>
-
-
 <#-- creates a composite vertical table image with the given dimensions
  (x,y)
     ╭─────────+──────────────────╮
@@ -111,4 +95,20 @@ ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-dark.png -
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-dark-edge-top-left.png -p [=x?c],[=y?c]}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-light.png -p [=(x+header)?c],[=y?c]}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-light-edge-top-right.png -p [=(x+header+body-7)?c],[=y?c]}\
+</#macro>
+
+
+<#-- table that combines both vertical and horizontal table layouts -->
+<#macro compositeTable x y width vheader hbody vheight=19 hheader=19>
+<#local startingy = y>
+# ------- composite table image -------
+<@verticalMenuHeader x=x y=y header=vheader body=width-vheader/>
+<#local yCoordinate = y + vheight + 1>
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-dark.png -p [=x?c],[=yCoordinate?c]}\
+<#local yCoordinate += hheader>
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-light.png -p [=x?c],[=yCoordinate?c]}\
+<#local yCoordinate += hbody>
+<@menuBottom x=x y=yCoordinate  width=width/>
+${image ~/conky/monochrome/images/menu-blank.png -p [=(x+width)?c],[=y?c]}\
+# -------- end of table image ---------
 </#macro>

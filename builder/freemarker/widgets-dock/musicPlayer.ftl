@@ -82,9 +82,9 @@ ${voffset 3}${offset 5}${color1}genre${goto 50}${color}${lua_parse truncate_stri
 ${else}\
 # :::: no album art 
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-rhythmbox.png -p 0,0}\
-<@menu.table x=54 y=0 width=width-54 header=19 body=71-19/>
-${voffset 3}${offset 59}${color}${if_existing /tmp/conky/musicplayer.playbackStatus Playing}${color1}${endif}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.title} 21}
-${voffset 5}${offset 59}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.album} 21}
+<@menu.menu x=54 y=0 width=width-54 height=71 isDark=false/>
+${voffset 4}${offset 59}${color}${if_existing /tmp/conky/musicplayer.playbackStatus Playing}${color1}${endif}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.title} 21}
+${voffset 3}${offset 59}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.album} 21}
 ${voffset 3}${offset 59}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.artist} 21}
 ${voffset 3}${offset 59}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.genre} 21}
 ${endif}\
