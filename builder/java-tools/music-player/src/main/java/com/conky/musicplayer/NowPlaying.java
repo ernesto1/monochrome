@@ -3,7 +3,6 @@ package com.conky.musicplayer;
 import org.freedesktop.dbus.connections.impl.DBusConnection;
 import org.freedesktop.dbus.connections.impl.DBusConnectionBuilder;
 import org.freedesktop.dbus.interfaces.DBus;
-import org.freedesktop.dbus.interfaces.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
@@ -11,7 +10,7 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -85,7 +84,7 @@ public class NowPlaying {
                 TimeUnit.HOURS.sleep(1);
             }
         } catch (Exception e) {
-            logger.error("unable to interact with the dbus", e);
+            logger.error("the application failed to start", e);
         }
     }
 
@@ -146,7 +145,7 @@ public class NowPlaying {
         Thread deleteOutputFiles = new Thread(() -> {
             logger.info("deleting all output files");
             try {
-                Files.list(Paths.get(OUTPUT_DIR))
+                Files.list(Path.of(OUTPUT_DIR))
                      .filter(p -> p.getFileName().toString().startsWith(MusicPlayerWriter.FILE_PREFIX + "."))
                      .forEach(file -> {
                         try {

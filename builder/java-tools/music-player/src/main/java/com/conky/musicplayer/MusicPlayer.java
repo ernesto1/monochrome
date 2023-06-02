@@ -9,7 +9,7 @@ import java.util.Objects;
  *     <li>Current or last played song information</li>
  * </ul>
  * Depending on how the player communicates through the dbus, some are initialized with no details until a song
- * is played.  Others already have a pre selected track upon boot.
+ * is played.  Others already have a pre-selected track upon boot.
  */
 public class MusicPlayer {
     public static final MusicPlayer DUMMY_PLAYER = new MusicPlayer("Nameless Player", ":1.23");
@@ -37,7 +37,7 @@ public class MusicPlayer {
         trackInfo.setTitle(player.getTitle());
         trackInfo.setAlbum(player.getAlbum());
         trackInfo.setGenre(player.getGenre());
-        trackInfo.setAlbumArtPath(player.getAlbumArtPath());
+        trackInfo.setAlbumArtURL(player.getAlbumArtURL());
     }
 
     /**
@@ -88,8 +88,8 @@ public class MusicPlayer {
         return trackInfo.getGenre();
     }
 
-    public String getAlbumArtPath() {
-        return trackInfo.getAlbumArtPath();
+    public String getAlbumArtURL() {
+        return trackInfo.getAlbumArtURL();
     }
 
     public String getDBusUniqueName() {

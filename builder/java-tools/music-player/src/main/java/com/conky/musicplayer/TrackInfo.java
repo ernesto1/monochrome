@@ -12,11 +12,10 @@ public class TrackInfo {
     private String artist;
     private String album;
     private String genre;
-
     /**
-     * File path of the cover art image
+     * URL of the album art image
      */
-    private String albumArtPath;
+    private String albumArtURL;
 
     public TrackInfo(String id) {
         if (id == null) {
@@ -28,7 +27,7 @@ public class TrackInfo {
         artist = "unknown artist";
         album = "unknown album";
         genre = "unknown genre";
-        albumArtPath = null;
+        albumArtURL = null;
     }
 
     public void setTitle(String title) {
@@ -55,9 +54,9 @@ public class TrackInfo {
         }
     }
 
-    public void setAlbumArtPath(String albumArtPath) {
-        if (isNotEmpty(albumArtPath)) {
-            this.albumArtPath = albumArtPath;
+    public void setAlbumArtURL(String albumArtURL) {
+        if (isNotEmpty(albumArtURL)) {
+            this.albumArtURL = albumArtURL;
         }
     }
 
@@ -86,8 +85,8 @@ public class TrackInfo {
         return genre;
     }
 
-    public String getAlbumArtPath() {
-        return albumArtPath;
+    public String getAlbumArtURL() {
+        return albumArtURL;
     }
 
     public String getTrackId() {
@@ -96,6 +95,6 @@ public class TrackInfo {
 
     @Override
     public String toString() {
-        return String.format("%s | %s | %s | %s | %s", artist, album, title, genre, albumArtPath);
+        return String.format("%s | %s | %s | %s | %s", artist, album, title, genre, albumArtURL);
     }
 }

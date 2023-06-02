@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.time.Duration;
 import java.time.Instant;
@@ -43,7 +43,7 @@ public class AlbumArtHouseKeeper implements Runnable {
         Instant now = Instant.now();
 
         try {
-            Files.list(Paths.get(directory))
+            Files.list(Path.of(directory))
                  .filter(p -> p.getFileName().toString().startsWith(MusicPlayerWriter.ALBUM_ART))
                  .collect(Collectors.toList())
                  .stream()

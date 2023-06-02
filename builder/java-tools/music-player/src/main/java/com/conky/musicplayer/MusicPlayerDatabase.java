@@ -148,7 +148,7 @@ public class MusicPlayerDatabase {
     public Set<String> getAlbumArtPaths() {
         Set<String> images = musicPlayers.values()
                                          .stream()
-                                         .map(player -> player.getAlbumArtPath())
+                                         .map(player -> player.getAlbumArtURL())
                                          .collect(Collectors.toSet());
         return images;
     }

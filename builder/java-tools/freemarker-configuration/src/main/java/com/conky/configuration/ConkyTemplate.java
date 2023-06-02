@@ -54,31 +54,28 @@ public class ConkyTemplate {
             System.exit(1);
         }
 
+        // 3. freemarker setup
         // add user defined directives
         root.put("outputFileDirective", new OutputFileDirective(OUTPUT_DIR));
         // create the output directory
         File outputDirectory = new File(OUTPUT_DIR);
+        outputDirectory.mkdirs();   // will not throw an exception if the directory already exists
 
         if (!outputDirectory.exists()) {
-            // turns out the create directory operation "fails" if the directory already exists
-            boolean isDirectoryCreated = outputDirectory.mkdirs();
-
-            if (!isDirectoryCreated) {
-                logger.error("unable to create the output directory {}", OUTPUT_DIR);
-                System.exit(1);
-            }
+            logger.error("unable to create the output directory '{}'", OUTPUT_DIR);
+            System.exit(1);
         }
 
-        // set up freemarker engine configuration
+        // configure freemarker engine
         Configuration cfg = createFreemarkerConfiguration(TEMPLATE_ROOT_DIR);
         logger.info("processing template files:");
 
-        // merge freemarker templates and the data model to create the output files
-        for (File templateFile : conkyTemplateDir.listFiles((d, f) -> f.endsWith(".ftl"))) {
-            logger.info("> {}", templateFile.getName());
-            Template template = cfg.getTemplate(conky + "/" + templateFile.getName());
-            int dotPosition = templateFile.getName().lastIndexOf('.');
-            Writer out = new FileWriter(new File(outputDirectory, templateFile.getName().substring(0, dotPosition)));
+        // 4. merge freemarker templates and the data model to create the output files
+        for (String templateFile : conkyTemplateDir.list((d, f) -> f.endsWith(".ftl"))) {
+            logger.info("> {}", templateFile);
+            Template template = cfg.getTemplate(conky + "/" + templateFile);
+            int dotPosition = templateFile.lastIndexOf('.');
+            Writer out = new FileWriter(new File(outputDirectory, templateFile.substring(0, dotPosition)));
             template.process(root, out);
             out.close();
         }

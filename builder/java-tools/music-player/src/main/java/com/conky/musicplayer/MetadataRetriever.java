@@ -83,7 +83,7 @@ public class MetadataRetriever {
         property = extractArray(metadata.get("xesam:genre"));
         property.ifPresent(trackInfo::setGenre);
         property = extractProperty(metadata.get("mpris:artUrl"));
-        property.ifPresent(trackInfo::setAlbumArtPath);
+        property.ifPresent(trackInfo::setAlbumArtURL);
 
         return trackInfo;
     }
