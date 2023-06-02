@@ -1,3 +1,4 @@
+<#import "/lib/menu-round.ftl" as menu>
 conky.config = {
   lua_load = '~/conky/monochrome/menu.lua',
   
@@ -11,8 +12,9 @@ conky.config = {
   gap_y = 125,
 
   -- window settings
-  minimum_width = 189,      -- conky will add an extra pixel to this  
-  maximum_width = 189,
+  <#assign width = 189>
+  minimum_width = [=width],      -- conky will add an extra pixel to this  
+  maximum_width = [=width],
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -46,27 +48,18 @@ conky.text = [[
 # :::::::::::: package updates
 ${if_existing /tmp/conky/dnf.packages.formatted}\
 <#assign y = 0, 
-         top = 19,    <#-- menu header -->
-         body = 990,  <#-- size of the current window without the top and bottom edges -->
-         bottom = 7,  <#-- window bottom edge -->
-         space = 5,   <#-- empty space between windows -->
-         windowYcoordinate = y> <#-- starting y coordinate of the current window -->
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-horizontal.png -p 0,[=y?c]}\
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-horizontal-data.png -p 51,[=y?c]}\
+         header = 19, <#-- menu header -->
+         body = 1400,  <#-- menu window without the header -->
+         gap = 3>     <#-- empty space between windows -->
+<@menu.compositeTable x=0 y=y width=width vheader=51 hbody=body/>
+# optional dnf branding, can be removed or won't matter if the image does not exist
+<#assign y += header + 1 + header>
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-dnf.png -p 114,[=(y+2)?c]}\
 ${voffset 2}${offset 5}${color1}dnf${goto 57}${color}${lua compute_and_save packages ${lines /tmp/conky/dnf.packages.formatted}} package updates
 ${voffset -5}${color2}${hr 1}${voffset -8}
-<#assign y += top>
-${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
-<#assign y += 1>
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-top-flat.png -p 0,[=y?c]}\
-<#assign y += top>
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu.png -p 0,[=y?c]}\
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu.png -p 0,[=(y+1000)?c]}\
-# optional dnf branding, can be removed or won't matter if the image does not exist
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-dnf.png -p 114,[=(y+2)?c]}\
-<#if system == "desktop"><#assign maxLines = 82><#else><#assign maxLines = 15></#if>
-${lua_parse bottom_edge_load_value compact [=image.primaryColor]-menu-bottom.png 0 [=y?c] 2 packages [=maxLines]}\
 ${voffset 7}${offset 5}${color1}package${alignr 5}version${voffset 4}
+<#if system == "desktop"><#assign maxLines = 82><#else><#assign maxLines = 15></#if>
 ${color}${execp head -n [=maxLines] /tmp/conky/dnf.packages.formatted}${voffset 4}
+${lua_parse bottom_edge_load_value [=conky] [=image.primaryColor]-menu-light-edge-bottom 0 [=y?c] [=width?c] 2 packages [=maxLines]}\
 ${endif}\
 ]];

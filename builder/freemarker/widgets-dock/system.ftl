@@ -84,7 +84,7 @@ ${voffset 10}\
 # :::::::::::: bittorrent peers
 ${if_running transmission-gt}\
 <@menu.compositeTable x=0 y=y width=width vheader=69 hbody=164/>
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-peers.png -p 38,[=(y+54)?c]}\
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-peers.png -p 38,[=(y+54)?c]}\
 ${voffset 2}${offset 5}${color1}bittorrent${goto 75}${color}${tcp_portmon 51413 51413 count} peer(s)
 ${voffset -5}${hr 1}${voffset -8}
 ${voffset 7}${offset 5}${color1}ip address${alignr 5}remote port${voffset 3}
@@ -107,9 +107,9 @@ ${if_existing /tmp/conky/dnf.packages.formatted}\
 <@menu.table x=0 y=y width=width header=header body=1000 bottomEdges=false/>
 <#assign y += header>
 # optional dnf branding, can be removed or won't matter if the image does not exist
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-menu-dnf.png -p 114,[=(y+2)?c]}\
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-dnf.png -p 114,[=(y+2)?c]}\
 <#if system == "desktop"><#assign maxLines = 54><#else><#assign maxLines = 23></#if>
-${lua_parse bottom_edge_parse widgets-dock [=image.primaryColor]-menu-light-edge-bottom 0 [=y?c] [=width?c] 2 ${lines /tmp/conky/dnf.packages.formatted} [=maxLines]}\
+${lua_parse bottom_edge_parse [=conky] [=image.primaryColor]-menu-light-edge-bottom 0 [=y?c] [=width?c] 2 ${lines /tmp/conky/dnf.packages.formatted} [=maxLines]}\
 ${voffset 2}${offset 5}${color1}package${alignr 5}version${voffset 4}
 ${color}${execpi 30 head -n [=maxLines] /tmp/conky/dnf.packages.formatted}${voffset 5}
 ${endif}\

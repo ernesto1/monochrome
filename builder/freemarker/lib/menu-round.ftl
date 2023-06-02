@@ -33,13 +33,15 @@ ${image ~/conky/monochrome/images/menu-blank.png -p [=(x+width)?c],[=y?c]}\
     ╰─────────────╯      -+-
        width (px)
  -->
-<#macro menu x y width height isDark=false>
+<#macro menu x y width height isDark=false bottomEdges=true>
 # ----------- menu image ------------
 <#local theme = getTheme(isDark)>
 <@menuHeader x=x y=y width=width theme=theme/>
 ${image ~/conky/monochrome/images/menu-blank.png -p [=(x+width)?c],[=y?c]}\
 <#local y += height>
+<#if bottomEdges>
 <@menuBottom x=x y=y width=width theme=theme/>
+</#if>
 # -------- end of menu image ---------
 </#macro>
 
@@ -98,8 +100,17 @@ ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-light-edge
 </#macro>
 
 
-<#-- table that combines both vertical and horizontal table layouts -->
-<#macro compositeTable x y width vheader hbody vheight=19 hheader=19>
+<#-- table that combines both vertical and horizontal table layouts
+ (x,y)
+           vertical
+           header
+           width (px)
+          ╭─────────+──────────────────╮
+          │         │                  │  vetical table height
+          ╰─────────+──────────────────╯
+ 
+ -->
+<#macro compositeTable x y width vheader hbody vheight=19 hheader=19 bottomEdges=true>
 <#local startingy = y>
 # ------- composite table image -------
 <@verticalMenuHeader x=x y=y header=vheader body=width-vheader/>
@@ -108,7 +119,9 @@ ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-dark.png -
 <#local yCoordinate += hheader>
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-light.png -p [=x?c],[=yCoordinate?c]}\
 <#local yCoordinate += hbody>
+<#if bottomEdges>
 <@menuBottom x=x y=yCoordinate  width=width/>
+</#if>
 ${image ~/conky/monochrome/images/menu-blank.png -p [=(x+width)?c],[=y?c]}\
 # -------- end of table image ---------
 </#macro>

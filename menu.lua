@@ -48,7 +48,7 @@ function conky_compute_and_save(key, expression)
   return computations[key]
 end
 
---[[ prints the menu's bottom edge ${image} variable based on the number of lines in the body
+--[[ prints the menu's bottom edge ${image} variables based on the number of lines in the body
 
 arguments:
     theme     conky theme: compact, widets, glass, etc...
@@ -65,26 +65,7 @@ arguments:
                                  
     lines     number of lines in the body
 ]]
-function conky_bottom_edge(theme, filename, x, y, voffset, lines)
-  local lineMultiplier = 15
-  
-  if tonumber(voffset) > 2 then
-    lineMultiplier = lineMultiplier + tonumber(voffset) - 2
-  end
-
-  lines = (lines > 0) and lines or 0
-  y = tonumber(y) + (lines * lineMultiplier) - 1
-  local imageDir = "~/conky/monochrome/images/"
-  local path = imageDir .. theme .. "/" .. filename
-  local s = build_image_variable(path, x, y)
-  -- add a blank image right below the bottom edge image, assume bottom edges will never be greater than 15px
-  s = s .. build_image_variable(imageDir .. "menu-blank.png", x, y + 15)
-
-  return s
-end
-
---[[ TODO replace og conky_bottom_edge with this one once compact theme is updated]]
-function round_bottom_edge(theme, filename, x, y, width, voffset, lines)
+function draw_round_bottom_edges(theme, filename, x, y, width, voffset, lines)
   local lineMultiplier = 15
   
   if voffset > 2 then
@@ -100,7 +81,7 @@ function round_bottom_edge(theme, filename, x, y, width, voffset, lines)
   s = s .. build_image_variable(path, x+width-7, y)
   -- add a blank image right below the bottom edge image, bottom edges are 7px
   s = s .. build_image_variable(imageDir .. "menu-blank.png", x, y + 7)
-
+  
   return s
 end
 
@@ -108,7 +89,7 @@ end
 allows the client to provide a conky expression/variable that when computed/parsed will return the number of lines in the body of the menu
 
 arguments:
-    ...         same arguments as conky_bottom_edge(..)
+    ...         same arguments as draw_round_bottom_edges(..)
     expression  conky expression to evaluate, must return a number representing the number of lines
     maxLines    optional | maximun number of lines, will override the expression line count if it computes
                 to a bigger number
@@ -118,7 +99,7 @@ function conky_bottom_edge_parse(theme, filename, x, y, width, voffset, expressi
   local lines = tonumber(conky_parse(expression))
   lines = (lines > maxLines) and maxLines or lines
   
-  return round_bottom_edge(theme, filename, tonumber(x), tonumber(y), tonumber(width), tonumber(voffset), lines)
+  return draw_round_bottom_edges(theme, filename, tonumber(x), tonumber(y), tonumber(width), tonumber(voffset), lines)
 end
 
 --[[ wrapper method for the 'bottom_edge' function
@@ -126,13 +107,13 @@ allows the client to provide a 'key' which can be used to retrieve the total num
 of the menu from a previously computed conky variable, see the method conky_compute_and_save()
 
 arguments:
-    ...         same arguments as conky_bottom_edge(..)
+    ...         same arguments as draw_round_bottom_edges(..)
     key         string used to store the previously computed number of lines computation
                 see the conky_compute_and_save() function
     maxLines    optional | maximum number of lines, will override the expression line count if it computes
                 to a bigger number
 ]]
-function conky_bottom_edge_load_value(theme, filename, x, y, voffset, key, maxLines)
+function conky_bottom_edge_load_value(theme, filename, x, y, width, voffset, key, maxLines)
   if not computations[key] then
     print("the key: '" .. key .. "' does not exist, image '" .. filename .. "' will not be drawn")
     return ''
@@ -141,7 +122,8 @@ function conky_bottom_edge_load_value(theme, filename, x, y, voffset, key, maxLi
   local lines = tonumber(computations[key])
   maxLines = tonumber(maxLines) or 1000
   lines = (lines > maxLines) and maxLines or lines
-  return conky_bottom_edge(theme, filename, x, y, voffset, lines)
+  
+  return draw_round_bottom_edges(theme, filename, tonumber(x), tonumber(y), tonumber(width), tonumber(voffset), lines)
 end
 
 --[[ creates a conky image variable string, ex. ${image /directory/image.jpg -p 0,0}

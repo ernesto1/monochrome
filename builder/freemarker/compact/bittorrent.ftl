@@ -1,3 +1,4 @@
+<#import "/lib/menu-round.ftl" as menu>
 conky.config = {
   lua_load = '~/conky/monochrome/menu.lua',
   
@@ -6,15 +7,16 @@ conky.config = {
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'top_left',  -- top|middle|bottom_left|right
+  alignment = 'top_left',  -- header|middle|bottom_left|right
   gap_x = 205,
   gap_y = 557,
 
   -- window settings
-  minimum_width = 189,      -- conky will add an extra pixel to this  
-  maximum_width = 189,
+  <#assign width = 189>
+  minimum_width = [=width],      -- conky will add an extra pixel to this  
+  maximum_width = [=width],
   own_window = true,
-  own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
+  own_window_type = 'deskheader',    -- values: deskheader (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
   -- window borders
@@ -49,24 +51,13 @@ conky.text = [[
 # :::::::::::: bittorrent peers
 ${if_running transmission-gt}\
 <#assign y = 0, 
-         top = 19,    <#-- menu header -->
-         body = 190,  <#-- size of the current window without the top and bottom edges -->
-         bottom = 7,  <#-- window bottom edge -->
-         space = 5,   <#-- empty space between windows -->
-         windowYcoordinate = y> <#-- starting y coordinate of the current window -->
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-horizontal.png -p 0,[=y?c]}\
+         header = 19, <#-- menu header -->
+         body = 197,  <#-- menu window without the header -->
+         gap = 3>     <#-- empty space between windows -->
+<@menu.compositeTable x=0 y=y width=width vheader=69 hbody=body/>
 ${voffset 2}${offset 5}${color1}bittorrent${goto 75}${color}${tcp_portmon 51413 51413 count} peer(s)
 ${voffset -5}${color2}${hr 1}${voffset -8}
-<#assign y += top>
-${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
-<#assign y += 1>
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-top-flat.png -p 0,[=y?c]}\
-<#assign y += top>
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu.png -p 0,[=y?c]}\
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-bittorrent.png -p 38,[=(y+32)?c]}\
-<#assign y += body>
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-bottom.png -p 0,[=y?c]}\
-<#assign y += bottom + space>
+<#assign y += header + 1 + header + body + gap>
 ${voffset 7}${offset 5}${color1}ip address${alignr 5}remote port${voffset 3}
 ${if_match ${tcp_portmon 51413 51413 count} > 0}\
 <#list 0..11 as x>
@@ -77,7 +68,7 @@ ${voffset 84}${alignc}${color}no peer connections
 ${voffset 3}${alignc}established${voffset 90}
 ${endif}\
 # :::::::::::: files being seeded at the moment
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-horizontal.png -p 0,[=y?c]}\
+<@menu.compositeTable x=0 y=y width=width vheader=69 hbody=400 bottomEdges=false/>
 # sample 'lsof' lines being grep'ed for determining files being seeded by transmission
 # FD     TYPE DEVICE     SIZE/OFF      NODE NAME
 # 102r   REG  8,16     3297924792 163446839 /media/movie.mp4            < use read file descriptor pattern
@@ -86,16 +77,11 @@ ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-horizontal.
 # files less than 1000 bytes are ignored, ex. txt, nfo, info files
 <#assign file = "/tmp/conky/bittorrent">
 ${lua compute ${exec lsof -c transmission -n | grep -v deleted | grep -E '[0-9]+[a-z|A-Z] +REG +[0-9]+,[0-9]+ +[0-9]{6,}' | sed 's|.\+/||' | sed 's/^/${voffset 3}${offset 5}/' | sed 's/#/\\#/g' | sort > [=file]}}\
-${voffset 2}${offset 5}${color1}seeding${goto 75}${color}${lua compute_and_save files ${lines [=file]}} files
+${offset 5}${color1}seeding${goto 75}${color}${lua compute_and_save files ${lines [=file]}} files
 ${voffset -5}${color2}${hr 1}${voffset -8}
-<#assign y += top>
-${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y?c]}\
-<#assign y += 1>
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-top-flat.png -p 0,[=y?c]}\
-<#assign y += top>
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu.png -p 0,[=y?c]}\
-${lua_parse bottom_edge_load_value compact [=image.primaryColor]-menu-bottom.png 0 [=y?c] 3 files}\
 ${voffset 7}${offset 5}${color1}file name${voffset 4}
 ${color}${catp [=file]}${voffset 5}
+<#assign y += header + 1 + header, maxLines = 50>
+${lua_parse bottom_edge_load_value [=conky] [=image.primaryColor]-menu-light-edge-bottom 0 [=y?c] [=width?c] 3 files [=maxLines]}\
 ${endif}\
 ]];

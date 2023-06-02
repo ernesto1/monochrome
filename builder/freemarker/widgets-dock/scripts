@@ -39,13 +39,13 @@ top cpu window
   each row of text adds 16 pixels (lines with a 3px voffset)
 
 # ::::: image update due to new templating
-git mv purple-menu-bittorrent.png purple-menu-peers.png;
-git mv purple-menu.png purple-menu-light.png
-git mv purple-menu-rhythmbox.png purple-rhythmbox.png;
-git rm purple-menu-!(peers|dnf*);
+git mv burgundy-menu-bittorrent.png burgundy-menu-peers.png;
+git mv burgundy-menu.png burgundy-menu-light.png
+git mv burgundy-menu-rhythmbox.png burgundy-rhythmbox.png;
+git rm burgundy-menu-!(peers*|dnf*|light*);
 
 
-mkdir -p /tmp/images
-cp grape-menu-*edge* /tmp/images
-prename 's/grape/purple/' /tmp/images/*
-mv /tmp/images/* .
+mkdir -p /tmp/images;
+cp ../widgets-dock/grape-menu-*edge* /tmp/images;
+prename 's/grape/burgundy/' /tmp/images/*;
+mv /tmp/images/* .;
