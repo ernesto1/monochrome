@@ -51,13 +51,13 @@ ${if_existing /tmp/conky/dnf.packages.formatted}\
          header = 19, <#-- menu header -->
          body = 1400,  <#-- menu window without the header -->
          gap = 3>     <#-- empty space between windows -->
-<@menu.compositeTable x=0 y=y width=width vheader=51 hbody=body/>
+<@menu.menu x=0 y=y width=width height=body bottomEdges=false/>
 # optional dnf branding, can be removed or won't matter if the image does not exist
-<#assign y += header + 1 + header>
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-dnf.png -p 114,[=(y+2)?c]}\
-${voffset 2}${offset 5}${color1}dnf${goto 57}${color}${lua compute_and_save packages ${lines /tmp/conky/dnf.packages.formatted}} package updates
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-dnf.png -p 114,[=(y+19+1+19+2)?c]}\
+${voffset 2}${offset 5}${color1}dnf${offset 8}${color}${lua compute_and_save packages ${lines /tmp/conky/dnf.packages.formatted}} package updates
 ${voffset -5}${color2}${hr 1}${voffset -8}
-${voffset 7}${offset 5}${color1}package${alignr 5}version${voffset 4}
+${voffset 7}${offset 5}${color1}package${alignr 5}version${voffset 1}
+<#assign y += header + 1 + header - 3>
 <#if system == "desktop"><#assign maxLines = 82><#else><#assign maxLines = 15></#if>
 ${color}${execp head -n [=maxLines] /tmp/conky/dnf.packages.formatted}${voffset 4}
 ${lua_parse bottom_edge_load_value [=conky] [=image.primaryColor]-menu-light-edge-bottom 0 [=y?c] [=width?c] 2 packages [=maxLines]}\

@@ -52,13 +52,13 @@ conky.text = [[
 ${if_running transmission-gt}\
 <#assign y = 0, 
          header = 19, <#-- menu header -->
-         body = 197,  <#-- menu window without the header -->
+         body = 234,  <#-- menu window without the header -->
          gap = 3>     <#-- empty space between windows -->
-<@menu.compositeTable x=0 y=y width=width vheader=69 hbody=body/>
+<@menu.menu x=0 y=y width=width height=body/>
 ${voffset 2}${offset 5}${color1}bittorrent${goto 75}${color}${tcp_portmon 51413 51413 count} peer(s)
 ${voffset -5}${color2}${hr 1}${voffset -8}
-<#assign y += header + 1 + header + body + gap>
-${voffset 7}${offset 5}${color1}ip address${alignr 5}remote port${voffset 3}
+<#assign y += body + gap>
+${voffset 7}${offset 5}${color1}ip address${alignr 5}remote port${voffset 1}
 ${if_match ${tcp_portmon 51413 51413 count} > 0}\
 <#list 0..11 as x>
 ${template1 [=x]}<#if x?is_last>${voffset 11}</#if>
@@ -68,7 +68,7 @@ ${voffset 84}${alignc}${color}no peer connections
 ${voffset 3}${alignc}established${voffset 90}
 ${endif}\
 # :::::::::::: files being seeded at the moment
-<@menu.compositeTable x=0 y=y width=width vheader=69 hbody=400 bottomEdges=false/>
+<@menu.menu x=0 y=y width=width height=400 bottomEdges=false/>
 # sample 'lsof' lines being grep'ed for determining files being seeded by transmission
 # FD     TYPE DEVICE     SIZE/OFF      NODE NAME
 # 102r   REG  8,16     3297924792 163446839 /media/movie.mp4            < use read file descriptor pattern
@@ -79,9 +79,9 @@ ${endif}\
 ${lua compute ${exec lsof -c transmission -n | grep -v deleted | grep -E '[0-9]+[a-z|A-Z] +REG +[0-9]+,[0-9]+ +[0-9]{6,}' | sed 's|.\+/||' | sed 's/^/${voffset 3}${offset 5}/' | sed 's/#/\\#/g' | sort > [=file]}}\
 ${offset 5}${color1}seeding${goto 75}${color}${lua compute_and_save files ${lines [=file]}} files
 ${voffset -5}${color2}${hr 1}${voffset -8}
-${voffset 7}${offset 5}${color1}file name${voffset 4}
+${voffset 7}${offset 5}${color1}file name${voffset 1}
 ${color}${catp [=file]}${voffset 5}
-<#assign y += header + 1 + header, maxLines = 50>
+<#assign y += header + 1 + header - 3, maxLines = 50>
 ${lua_parse bottom_edge_load_value [=conky] [=image.primaryColor]-menu-light-edge-bottom 0 [=y?c] [=width?c] 3 files [=maxLines]}\
 ${endif}\
 ]];
