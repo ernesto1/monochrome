@@ -34,6 +34,10 @@ function conky_compute(expression)
   return ''
 end
 
+function conky_retrieve(key)
+  return computations[key]
+end
+
 --[[ parses the given conky expression and stores its value in the 'computations' table for future use
 within the conky cycle
 
@@ -46,6 +50,22 @@ arguments:
 function conky_compute_and_save(key, expression)
   computations[key] = conky_parse(expression)
   return computations[key]
+end
+
+function conky_pad_lines(key, required)
+  local lines = tonumber(computations[key])
+  local required = tonumber(required)
+  local s = ''
+
+  if lines < required then
+    local i = required - lines
+    repeat
+      s = s .. '${voffset 3}\n'
+      i = i-1
+    until i == 0
+  end
+
+  return s
 end
 
 --[[ prints the menu's bottom edge ${image} variables based on the number of lines in the body

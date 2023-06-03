@@ -32,6 +32,7 @@ conky.config = {
   
   -- images
   imlib_cache_flush_interval = 250,
+  text_buffer_size=2048,
   
   if_up_strictness = 'address', -- network device must be up, having link and an assigned IP address
                                 -- to be considered "up" by ${if_up}
@@ -44,13 +45,12 @@ conky.config = {
   default_color = '703d0a',  -- regular text
   color1 = 'white',
   color2 = 'white',         -- highlight important packages
+  color3 = 'c15124',       -- composite table horizontal line
   
   -- top cpu process: ${template1 processNumber}
   template1 = [[${voffset 3}${color}${offset 5}${top name \1}${alignr 5}${top cpu \1}% ${top pid \1}]],
   -- top mem process: ${template2 processNumber}
-  template2 = [[${voffset 3}${color}${offset 5}${top_mem name \1}${alignr 5}${top_mem mem_res \1} ${top_mem pid \1}]],
-  -- torrent peer ip/port: ${template3 #}
-  template3 = [[${voffset 3}${offset 5}${color}${tcp_portmon 51413 51413 rip \1}${alignr 5}${tcp_portmon 51413 51413 rport \1}]]
+  template2 = [[${voffset 3}${color}${offset 5}${top_mem name \1}${alignr 5}${top_mem mem_res \1} ${top_mem pid \1}]]
 };
 
 conky.text = [[
@@ -115,6 +115,7 @@ ${voffset 76}\
 ${endif}\
 ${voffset 10}\
 # :::::::::::: bittorrent peers
+# this panel requires the 'remote control' feature enabled in the transmission bittorrent client: edit > preferences > remote
 ${if_running transmission-gt}\
 # ------- composite table image -------
 ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark.png -p 0,356}\
@@ -123,26 +124,16 @@ ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light.png -p 69,356}\
 ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light-edge-top-right.png -p 182,356}\
 ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark.png -p 0,376}\
 ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light.png -p 0,395}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light-edge-bottom-left.png -p 0,552}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light-edge-bottom-right.png -p 182,552}\
-${image ~/conky/monochrome/images/menu-blank.png -p 0,559}\
 ${image ~/conky/monochrome/images/menu-blank.png -p 189,356}\
 # -------- end of table image ---------
 ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-peers.png -p 38,410}\
-${voffset 2}${offset 5}${color1}bittorrent${goto 75}${color}${tcp_portmon 51413 51413 count} peer(s)
-${voffset -5}${hr 1}${voffset -8}
-${voffset 7}${offset 5}${color1}ip address${alignr 5}remote port${voffset 3}
-${if_match ${tcp_portmon 51413 51413 count} > 0}\
-${template3 0}
-${template3 1}
-${template3 2}
-${template3 3}
-${template3 4}
-${template3 5}
-${template3 6}
-${template3 7}
-${template3 8}
-${template3 9}${voffset 10}
+${lua compute ${exec transmission-remote -t active -pi | grep -e '^[0-9]' | cut -c 1-15,78-100 --output-delimiter='  ' | sort -t . -k 1n -k 2n -k 3n -k 4n | sed 's/^/${voffset 3}${offset 5}/' | head -10 > /tmp/conky/bittorrent.peers.widgets-dock}}\
+${voffset 2}${offset 5}${color1}swarm${goto 75}${color}${lua compute_and_save peers ${lines /tmp/conky/bittorrent.peers.widgets-dock}} peer(s)
+${voffset -5}${color3}${hr 1}${voffset -8}
+${voffset 7}${offset 5}${color1}ip address${goto 113}client${voffset 3}
+${if_match ${lua retrieve peers} > 0}\
+${color}${catp /tmp/conky/bittorrent.peers.widgets-dock}${lua_parse pad_lines peers 10}${voffset 10}
+${lua_parse bottom_edge_load_value widgets-dock yellow-menu-light-edge-bottom 0 393 189 3 peers 10}\
 ${else}\
 ${voffset 67}${alignc}${color}no peer connections
 ${voffset 3}${alignc}established${voffset 74}
