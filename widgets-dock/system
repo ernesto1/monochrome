@@ -1,5 +1,5 @@
 conky.config = {
-  lua_load = '~/conky/monochrome/menu.lua',
+  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
   
   update_interval = 2,    -- update interval in seconds
   xinerama_head = 1,      -- for multi monitor setups, select monitor to run on: 0,1,2
@@ -99,62 +99,74 @@ ${if_up enp0s25}\
 # -------  vertical table image -------
 ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark.png -p 0,280}\
 ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark-edge-top-left.png -p 0,280}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light.png -p 69,280}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light.png -p 75,280}\
 ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light-edge-top-right.png -p 182,280}\
 ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark-edge-bottom-left.png -p 0,344}\
 ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light-edge-bottom-right.png -p 182,344}\
 ${image ~/conky/monochrome/images/menu-blank.png -p 189,280}\
 ${image ~/conky/monochrome/images/menu-blank.png -p 0,351}\
 # --------- end of table image ---------
-${voffset 15}${offset 5}${color1}local ip${goto 75}${color}${addr enp0s25}
-${voffset 3}${offset 5}${color1}speed${goto 75}${color}${execi 180 ethtool enp0s25 2>/dev/null | grep -i speed | cut -d ' ' -f 2}
-${voffset 3}${offset 5}${color1}total up${goto 75}${color}${totalup enp0s25}
-${voffset 3}${offset 5}${color1}total down${goto 75}${color}${totaldown enp0s25}
+${voffset 15}${offset 5}${color1}local ip${goto 81}${color}${addr enp0s25}
+${voffset 3}${offset 5}${color1}speed${goto 81}${color}${execi 180 ethtool enp0s25 2>/dev/null | grep -i speed | cut -d ' ' -f 2}
+${voffset 3}${offset 5}${color1}total up${goto 81}${color}${totalup enp0s25}
+${voffset 3}${offset 5}${color1}total down${goto 81}${color}${totaldown enp0s25}
 ${else}\
 ${voffset 76}\
 ${endif}\
 ${voffset 10}\
-# :::::::::::: bittorrent peers
-# this panel requires the 'remote control' feature enabled in the transmission bittorrent client: edit > preferences > remote
+# :::::::::::: transmission bittorrent client
+# this panel requires:
+# - the 'remote control' feature enabled in the transmission bittorrent client: edit > preferences > remote
+# - the transmission.bash script running in the background
 ${if_running transmission-gt}\
-# ------- composite table image -------
+# -------  vertical table image -------
 ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark.png -p 0,356}\
 ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark-edge-top-left.png -p 0,356}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light.png -p 69,356}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light.png -p 75,356}\
 ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light-edge-top-right.png -p 182,356}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark.png -p 0,376}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light.png -p 0,395}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark-edge-bottom-left.png -p 0,420}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light-edge-bottom-right.png -p 182,420}\
 ${image ~/conky/monochrome/images/menu-blank.png -p 189,356}\
+${image ~/conky/monochrome/images/menu-blank.png -p 0,427}\
+# --------- end of table image ---------
+${voffset 5}${offset 5}${color1}swarm${goto 81}${color}${lua pad ${lines /tmp/conky/transmission.peers}} peer(s)
+${voffset 2}${offset 5}${color1}seeding${goto 81}${color}${lua pad ${lines /tmp/conky/transmission.seeding}} torrent(s)
+${voffset 3}${offset 5}${color1}downloading${goto 81}${color}${lua pad ${lines /tmp/conky/transmission.downloading}} torrent(s)
+${voffset 3}${offset 5}${color1}idle${goto 81}${color}${lua pad ${lines /tmp/conky/transmission.idle}} torrent(s)
+${voffset 13}\
+${if_match ${lua compute_and_save active ${lines /tmp/conky/transmission.activeTorrents}} > 0}\
+# ----------- table image ------------
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark.png -p 0,432}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark-edge-top-left.png -p 0,432}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark-edge-top-right.png -p 182,432}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light.png -p 0,451}\
+${image ~/conky/monochrome/images/menu-blank.png -p 189,432}\
 # -------- end of table image ---------
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-peers.png -p 38,410}\
-${lua compute ${exec transmission-remote -t active -pi | grep -e '^[0-9]' | cut -c 1-15,78-100 --output-delimiter='  ' | sort -t . -k 1n -k 2n -k 3n -k 4n | sed 's/^/${voffset 3}${offset 5}/' | head -10 > /tmp/conky/bittorrent.peers.widgets-dock}}\
-${voffset 2}${offset 5}${color1}swarm${goto 75}${color}${lua compute_and_save peers ${lines /tmp/conky/bittorrent.peers.widgets-dock}} peer(s)
-${voffset -5}${color3}${hr 1}${voffset -8}
-${voffset 7}${offset 5}${color1}ip address${goto 113}client${voffset 3}
-${if_match ${lua retrieve peers} > 0}\
-${color}${catp /tmp/conky/bittorrent.peers.widgets-dock}${lua_parse pad_lines peers 10}${voffset 10}
-${lua_parse bottom_edge_load_value widgets-dock yellow-menu-light-edge-bottom 0 393 189 3 peers 10}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-peers.png -p 38,453}\
+${alignc}${color1}active torrents${voffset 3}
+${color}${execp head -7 /tmp/conky/transmission.activeTorrents}${lua_parse pad_lines active 7}${voffset 10}
+${lua_parse bottom_edge_load_value widgets-dock yellow-menu-light-edge-bottom 0 449 189 3 active 7}\
 ${else}\
-${voffset 67}${alignc}${color}no peer connections
-${voffset 3}${alignc}established${voffset 74}
+# no active torrents -> empty space
+${voffset 125}
 ${endif}\
 ${else}\
-${image ~/conky/monochrome/images/menu-blank.png -p 0,356}\
-${voffset 208}\
+# tranmission is not running -> empty space
+${voffset 203}
 ${endif}\
 # :::::::::::: package updates
 ${if_existing /tmp/conky/dnf.packages.formatted}\
 # ----------- table image ------------
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark.png -p 0,564}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark-edge-top-left.png -p 0,564}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark-edge-top-right.png -p 182,564}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light.png -p 0,583}\
-${image ~/conky/monochrome/images/menu-blank.png -p 189,564}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark.png -p 0,572}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark-edge-top-left.png -p 0,572}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark-edge-top-right.png -p 182,572}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light.png -p 0,591}\
+${image ~/conky/monochrome/images/menu-blank.png -p 189,572}\
 # -------- end of table image ---------
 # optional dnf branding, can be removed or won't matter if the image does not exist
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dnf.png -p 114,585}\
-${lua_parse bottom_edge_parse widgets-dock yellow-menu-light-edge-bottom 0 583 189 2 ${lines /tmp/conky/dnf.packages.formatted} 54}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dnf.png -p 114,593}\
+${lua_parse bottom_edge_parse widgets-dock yellow-menu-light-edge-bottom 0 591 189 2 ${lines /tmp/conky/dnf.packages.formatted} 54}\
 ${voffset 2}${offset 5}${color1}package${alignr 5}version${voffset 4}
-${color}${execpi 30 head -n 54 /tmp/conky/dnf.packages.formatted}${voffset 5}
+${color}${execpi 60 head -n 54 /tmp/conky/dnf.packages.formatted}${voffset 5}
 ${endif}\
 ]];

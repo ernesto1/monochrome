@@ -61,7 +61,7 @@ ${if_up [=device.name]}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-horizontal-data.png -p 57,[=y]}\
 <@wifiDetails device/>
 <#else>
-<@menu.verticalTable x=0 y=y header=69 body=width-69 height=71/>
+<@menu.verticalTable x=0 y=y header=75 body=width-75 height=71/>
 <@ethernetDetails device/>
 </#if>
 <#if devices?size gt 1>
@@ -82,8 +82,8 @@ ${voffset 3}${offset 5}${color1}channel${goto 63}${color}${wireless_channel [=de
 </#macro>
 
 <#macro ethernetDetails device>
-${voffset 15}${offset 5}${color1}local ip${goto 75}${color}${addr [=device.name]}
-${voffset 3}${offset 5}${color1}speed${goto 75}${color}${execi 180 ethtool [=device.name] 2>/dev/null | grep -i speed | cut -d ' ' -f 2}
-${voffset 3}${offset 5}${color1}total up${goto 75}${color}${totalup [=device.name]}
-${voffset 3}${offset 5}${color1}total down${goto 75}${color}${totaldown [=device.name]}
+${voffset 15}${offset 5}${color1}local ip${goto 81}${color}${addr [=device.name]}
+${voffset 3}${offset 5}${color1}speed${goto 81}${color}${execi 180 ethtool [=device.name] 2>/dev/null | grep -i speed | cut -d ' ' -f 2}
+${voffset 3}${offset 5}${color1}total up${goto 81}${color}${totalup [=device.name]}
+${voffset 3}${offset 5}${color1}total down${goto 81}${color}${totaldown [=device.name]}
 </#macro>

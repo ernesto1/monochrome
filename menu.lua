@@ -34,10 +34,6 @@ function conky_compute(expression)
   return ''
 end
 
-function conky_retrieve(key)
-  return computations[key]
-end
-
 --[[ parses the given conky expression and stores its value in the 'computations' table for future use
 within the conky cycle
 
@@ -49,6 +45,10 @@ arguments:
 ]]
 function conky_compute_and_save(key, expression)
   computations[key] = conky_parse(expression)
+  return computations[key]
+end
+
+function conky_retrieve(key)
   return computations[key]
 end
 

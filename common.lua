@@ -1,5 +1,12 @@
 -- :::::: common functions ::::::
 
+function conky_pad(expression)
+    local text = conky_parse(expression)
+    text = (text ~= '') and text or '0'
+
+    return string.format('%3s', text)
+end
+
 --[[ prints the value provided by the conky variable after a applying a 'threshold' check to it.
 If the threshhold is breached, the conky color variable is used to highlight the text, ex:
 

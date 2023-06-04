@@ -1,7 +1,7 @@
 <#import "/lib/menu-round.ftl" as menu>
 <#import "lib/network.ftl" as net>
 conky.config = {
-  lua_load = '~/conky/monochrome/menu.lua',
+  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
   
   update_interval = 2,    -- update interval in seconds
   xinerama_head = 1,      -- for multi monitor setups, select monitor to run on: 0,1,2
@@ -61,16 +61,16 @@ conky.text = [[
 <#assign y = 0, 
          header = 19, <#-- menu header -->
          body = 116,  <#-- size of the current window without the header -->
-         space = 5>   <#-- empty space between windows -->
+         gap = 5>     <#-- empty space between windows -->
 <@menu.table x=0 y=y width=width header=header body=body/>
-<#assign y += header + body + space>
+<#assign y += header + body + gap>
 ${voffset 2}${color1}${offset 5}process${alignr 5}cpu   pid${voffset 3}
 <#list 1..7 as x>
 ${template1 [=x]}
 </#list>
 # :::::::::::: top mem processes
 <@menu.table x=0 y=y width=width header=header body=body/>
-<#assign y += header + body + space>
+<#assign y += header + body + gap>
 ${voffset 12}${color1}${offset 5}process${alignr 5}memory   pid${voffset 3}
 <#list 1..7 as x>
 ${template2 [=x]}
@@ -78,30 +78,46 @@ ${template2 [=x]}
 # :::::::::::: network
 # assumption: only one network device will be connected to the internet at a time
 <@net.networkDetails devices=networkDevices[system] y=y width=width/>
-<#assign y += 71 + space>
+<#assign y += 71 + gap>
 ${voffset 10}\
 <#if system == "desktop">
-# :::::::::::: bittorrent peers
-# this panel requires the 'remote control' feature enabled in the transmission bittorrent client: edit > preferences > remote
+# :::::::::::: transmission bittorrent client
+# this panel requires:
+# - the 'remote control' feature enabled in the transmission bittorrent client: edit > preferences > remote
+# - the transmission.bash script running in the background
 ${if_running transmission-gt}\
-<@menu.compositeTable x=0 y=y width=width vheader=69 hbody=164 bottomEdges=false/>
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-peers.png -p 38,[=(y+54)?c]}\
-<#assign file = "/tmp/conky/bittorrent.peers.widgets-dock", maxLines = 10>
-${lua compute ${exec transmission-remote -t active -pi | grep -e '^[0-9]' | cut -c 1-15,78-100 --output-delimiter='  ' | sort -t . -k 1n -k 2n -k 3n -k 4n | sed 's/^/${voffset 3}${offset 5}/' | head -[=maxLines] > [=file]}}\
-${voffset 2}${offset 5}${color1}swarm${goto 75}${color}${lua compute_and_save peers ${lines [=file]}} peer(s)
-${voffset -5}${color3}${hr 1}${voffset -8}
-${voffset 7}${offset 5}${color1}ip address${goto 113}client${voffset 3}
-${if_match ${lua retrieve peers} > 0}\
-${color}${catp [=file]}${lua_parse pad_lines peers [=maxLines]}${voffset 10}
-${lua_parse bottom_edge_load_value [=conky] [=image.primaryColor]-menu-light-edge-bottom 0 [=(y+header+1+header-2)?c] [=width?c] 3 peers 10}\
+<#assign header = 75, <#-- menu header -->
+         body = 71,   <#-- menu window without the header -->
+         gap = 5>     <#-- empty space between windows -->
+<@menu.verticalTable x=0 y=y header=header body=width-header height=body/>
+<#assign inputDir = "/tmp/conky"
+         peersFile = inputDir + "/transmission.peers",
+         seedingFile = inputDir + "/transmission.seeding"
+         downloadingFile = inputDir + "/transmission.downloading",
+         idleFile = inputDir + "/transmission.idle",
+         activeTorrentsFile = inputDir + "/transmission.activeTorrents">
+${voffset 5}${offset 5}${color1}swarm${goto 81}${color}${lua pad ${lines [=peersFile]}} peer(s)
+${voffset 2}${offset 5}${color1}seeding${goto 81}${color}${lua pad ${lines [=seedingFile]}} torrent(s)
+${voffset 3}${offset 5}${color1}downloading${goto 81}${color}${lua pad ${lines [=downloadingFile]}} torrent(s)
+${voffset 3}${offset 5}${color1}idle${goto 81}${color}${lua pad ${lines [=idleFile]}} torrent(s)
+${voffset 13}\
+<#assign y += body + gap>
+${if_match ${lua compute_and_save active ${lines [=activeTorrentsFile]}} > 0}\
+<#assign header = 19, body = 116>
+<@menu.table x=0 y=y width=width header=header body=body bottomEdges=false/>
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-peers.png -p 38,[=(y+header+2)?c]}\
+<#assign maxLines = 7>
+${alignc}${color1}active torrents${voffset 3}
+${color}${execp head -[=maxLines] [=activeTorrentsFile]}${lua_parse pad_lines active [=maxLines]}${voffset 10}
+${lua_parse bottom_edge_load_value [=conky] [=image.primaryColor]-menu-light-edge-bottom 0 [=y+header-2] [=width?c] 3 active [=maxLines]}\
+<#assign y += header + body + gap>
 ${else}\
-${voffset 67}${alignc}${color}no peer connections
-${voffset 3}${alignc}established${voffset 74}
+# no active torrents -> empty space
+${voffset 125}
 ${endif}\
 ${else}\
-${image ~/conky/monochrome/images/menu-blank.png -p 0,[=y]}\
-<#assign y += header + 1 + header + 164 + space>
-${voffset 208}\
+# tranmission is not running -> empty space
+${voffset 203}
 ${endif}\
 </#if>
 # :::::::::::: package updates
@@ -113,6 +129,6 @@ ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-dnf.png -p
 <#if system == "desktop"><#assign maxLines = 54><#else><#assign maxLines = 23></#if>
 ${lua_parse bottom_edge_parse [=conky] [=image.primaryColor]-menu-light-edge-bottom 0 [=y?c] [=width?c] 2 ${lines /tmp/conky/dnf.packages.formatted} [=maxLines]}\
 ${voffset 2}${offset 5}${color1}package${alignr 5}version${voffset 4}
-${color}${execpi 30 head -n [=maxLines] /tmp/conky/dnf.packages.formatted}${voffset 5}
+${color}${execpi 60 head -n [=maxLines] /tmp/conky/dnf.packages.formatted}${voffset 5}
 ${endif}\
 ]];
