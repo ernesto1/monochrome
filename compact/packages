@@ -45,18 +45,24 @@ conky.config = {
 conky.text = [[
 # :::::::::::: package updates
 ${if_existing /tmp/conky/dnf.packages.formatted}\
-# ----------- menu image ------------
-${image ~/conky/monochrome/images/compact/burgundy-menu-light.png -p 0,0}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-light-edge-top-left.png -p 0,0}\
+# ------- composite table image -------
+${image ~/conky/monochrome/images/compact/burgundy-menu-dark.png -p 0,0}\
+${image ~/conky/monochrome/images/compact/burgundy-menu-dark-edge-top-left.png -p 0,0}\
+${image ~/conky/monochrome/images/compact/burgundy-menu-light.png -p 51,0}\
 ${image ~/conky/monochrome/images/compact/burgundy-menu-light-edge-top-right.png -p 182,0}\
+${image ~/conky/monochrome/images/compact/burgundy-menu-dark.png -p 0,20}\
+${image ~/conky/monochrome/images/compact/burgundy-menu-light.png -p 0,39}\
+${image ~/conky/monochrome/images/compact/burgundy-menu-light-edge-bottom-left.png -p 0,1432}\
+${image ~/conky/monochrome/images/compact/burgundy-menu-light-edge-bottom-right.png -p 182,1432}\
+${image ~/conky/monochrome/images/menu-blank.png -p 0,1439}\
 ${image ~/conky/monochrome/images/menu-blank.png -p 189,0}\
-# -------- end of menu image ---------
+# -------- end of table image ---------
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${image ~/conky/monochrome/images/compact/burgundy-menu-dnf.png -p 114,41}\
-${voffset 2}${offset 5}${color1}dnf${offset 8}${color}${lua compute_and_save packages ${lines /tmp/conky/dnf.packages.formatted}} package updates
+${voffset 2}${offset 5}${color1}dnf${goto 57}${color}${lua compute_and_save packages ${lines /tmp/conky/dnf.packages.formatted}} package updates
 ${voffset -5}${color2}${hr 1}${voffset -8}
-${voffset 7}${offset 5}${color1}package${alignr 5}version${voffset 1}
+${voffset 7}${offset 5}${color1}package${alignr 5}version${voffset 4}
 ${color}${execp head -n 82 /tmp/conky/dnf.packages.formatted}${voffset 4}
-${lua_parse bottom_edge_load_value compact burgundy-menu-light-edge-bottom 0 36 189 2 packages 82}\
+${lua_parse bottom_edge_load_value compact burgundy-menu-light-edge-bottom 0 39 189 2 packages 82}\
 ${endif}\
 ]];
