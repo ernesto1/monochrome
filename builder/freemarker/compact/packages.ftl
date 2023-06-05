@@ -2,7 +2,7 @@
 conky.config = {
   lua_load = '~/conky/monochrome/menu.lua',
   
-  update_interval = 30,    -- update interval in seconds
+  update_interval = 300,  -- update interval in seconds
   xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 

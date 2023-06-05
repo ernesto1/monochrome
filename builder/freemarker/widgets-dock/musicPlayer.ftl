@@ -12,7 +12,7 @@ conky.config = {
   <#if conky == "widgets-dock"><#assign alignment = "bottom_left"><#else><#assign alignment = "bottom_right"></#if>
   alignment = '[=alignment]',  -- top|middle|bottom_left|right
   gap_x = 142,
-  gap_y = 111,
+  gap_y = 108,
 
   -- window settings
   <#assign width = 189>

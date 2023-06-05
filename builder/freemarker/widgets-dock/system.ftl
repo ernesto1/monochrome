@@ -95,7 +95,7 @@ ${if_running transmission-gt}\
          seedingFile = inputDir + "/transmission.seeding"
          downloadingFile = inputDir + "/transmission.downloading",
          idleFile = inputDir + "/transmission.idle",
-         activeTorrentsFile = inputDir + "/transmission.activeTorrents">
+         activeTorrentsFile = inputDir + "/transmission.active">
 ${voffset 5}${offset 5}${color1}swarm${goto 81}${color}${lua pad ${lines [=peersFile]}} peer(s)
 ${voffset 2}${offset 5}${color1}seeding${goto 81}${color}${lua pad ${lines [=seedingFile]}} torrent(s)
 ${voffset 3}${offset 5}${color1}downloading${goto 81}${color}${lua pad ${lines [=downloadingFile]}} torrent(s)
@@ -103,32 +103,21 @@ ${voffset 3}${offset 5}${color1}idle${goto 81}${color}${lua pad ${lines [=idleFi
 ${voffset 13}\
 <#assign y += body + gap>
 ${if_match ${lua compute_and_save active ${lines [=activeTorrentsFile]}} > 0}\
-<#assign header = 19, body = 116>
+<#assign header = 19, body = 164>
 <@menu.table x=0 y=y width=width header=header body=body bottomEdges=false/>
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-peers.png -p 38,[=(y+header+2)?c]}\
-<#assign maxLines = 7>
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-peers.png -p 38,[=(y+header+18)?c]}\
+<#assign maxLines = 10>
 ${alignc}${color1}active torrents${voffset 3}
 ${color}${execp head -[=maxLines] [=activeTorrentsFile]}${lua_parse pad_lines active [=maxLines]}${voffset 10}
 ${lua_parse bottom_edge_load_value [=conky] [=image.primaryColor]-menu-light-edge-bottom 0 [=y+header-2] [=width?c] 3 active [=maxLines]}\
 <#assign y += header + body + gap>
 ${else}\
 # no active torrents -> empty space
-${voffset 125}
+${voffset [=header + body + gap + 2]}
 ${endif}\
 ${else}\
 # tranmission is not running -> empty space
-${voffset 203}
+${voffset [=71 + gap + header + body + gap + 2]}
 ${endif}\
 </#if>
-# :::::::::::: package updates
-${if_existing /tmp/conky/dnf.packages.formatted}\
-<@menu.table x=0 y=y width=width header=header body=1000 bottomEdges=false/>
-<#assign y += header>
-# optional dnf branding, can be removed or won't matter if the image does not exist
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-dnf.png -p 114,[=(y+2)?c]}\
-<#if system == "desktop"><#assign maxLines = 54><#else><#assign maxLines = 23></#if>
-${lua_parse bottom_edge_parse [=conky] [=image.primaryColor]-menu-light-edge-bottom 0 [=y?c] [=width?c] 2 ${lines /tmp/conky/dnf.packages.formatted} [=maxLines]}\
-${voffset 2}${offset 5}${color1}package${alignr 5}version${voffset 4}
-${color}${execpi 60 head -n [=maxLines] /tmp/conky/dnf.packages.formatted}${voffset 5}
-${endif}\
 ]];

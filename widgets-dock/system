@@ -134,7 +134,7 @@ ${voffset 2}${offset 5}${color1}seeding${goto 81}${color}${lua pad ${lines /tmp/
 ${voffset 3}${offset 5}${color1}downloading${goto 81}${color}${lua pad ${lines /tmp/conky/transmission.downloading}} torrent(s)
 ${voffset 3}${offset 5}${color1}idle${goto 81}${color}${lua pad ${lines /tmp/conky/transmission.idle}} torrent(s)
 ${voffset 13}\
-${if_match ${lua compute_and_save active ${lines /tmp/conky/transmission.activeTorrents}} > 0}\
+${if_match ${lua compute_and_save active ${lines /tmp/conky/transmission.active}} > 0}\
 # ----------- table image ------------
 ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark.png -p 0,432}\
 ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark-edge-top-left.png -p 0,432}\
@@ -142,31 +142,16 @@ ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark-edge-top-right.p
 ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light.png -p 0,451}\
 ${image ~/conky/monochrome/images/menu-blank.png -p 189,432}\
 # -------- end of table image ---------
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-peers.png -p 38,453}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-peers.png -p 38,469}\
 ${alignc}${color1}active torrents${voffset 3}
-${color}${execp head -7 /tmp/conky/transmission.activeTorrents}${lua_parse pad_lines active 7}${voffset 10}
-${lua_parse bottom_edge_load_value widgets-dock yellow-menu-light-edge-bottom 0 449 189 3 active 7}\
+${color}${execp head -10 /tmp/conky/transmission.active}${lua_parse pad_lines active 10}${voffset 10}
+${lua_parse bottom_edge_load_value widgets-dock yellow-menu-light-edge-bottom 0 449 189 3 active 10}\
 ${else}\
 # no active torrents -> empty space
-${voffset 125}
+${voffset 190}
 ${endif}\
 ${else}\
 # tranmission is not running -> empty space
-${voffset 203}
-${endif}\
-# :::::::::::: package updates
-${if_existing /tmp/conky/dnf.packages.formatted}\
-# ----------- table image ------------
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark.png -p 0,572}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark-edge-top-left.png -p 0,572}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark-edge-top-right.png -p 182,572}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light.png -p 0,591}\
-${image ~/conky/monochrome/images/menu-blank.png -p 189,572}\
-# -------- end of table image ---------
-# optional dnf branding, can be removed or won't matter if the image does not exist
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dnf.png -p 114,593}\
-${lua_parse bottom_edge_parse widgets-dock yellow-menu-light-edge-bottom 0 591 189 2 ${lines /tmp/conky/dnf.packages.formatted} 54}\
-${voffset 2}${offset 5}${color1}package${alignr 5}version${voffset 4}
-${color}${execpi 60 head -n 54 /tmp/conky/dnf.packages.formatted}${voffset 5}
+${voffset 266}
 ${endif}\
 ]];

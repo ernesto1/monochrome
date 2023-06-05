@@ -2,17 +2,18 @@ conky.config = {
   lua_load = '~/conky/monochrome/menu.lua',
   
   update_interval = 300,  -- update interval in seconds
-  xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
+  xinerama_head = 1,      -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'middle_right',  -- top|middle|bottom_left|right
-  gap_x = 5,
-  gap_y = 125,
+  alignment = 'top_left',  -- top|middle|bottom_left|right
+  gap_x = 142,
+  gap_y = 740,
 
   -- window settings
   minimum_width = 189,      -- conky will add an extra pixel to this  
   maximum_width = 189,
+  minimum_height = 20,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -31,38 +32,31 @@ conky.config = {
   
   -- images
   imlib_cache_flush_interval = 250,
-
+  
   -- font settings
   use_xft = false,
   draw_shades = false,      -- black shadow on text (not good if text is black)
   draw_outline = false,     -- black outline around text (not good if text is black)
   -- colors
-  default_color = 'cf9c7b',  -- regular text
+  default_color = '703d0a',  -- regular text
   color1 = 'white',
-  color2 = 'bf241f'          -- highlight important packages
+  color2 = 'white'         -- highlight important packages
 };
 
 conky.text = [[
 # :::::::::::: package updates
 ${if_existing /tmp/conky/dnf.packages.formatted}\
-# ------- composite table image -------
-${image ~/conky/monochrome/images/compact/burgundy-menu-dark.png -p 0,0}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-dark-edge-top-left.png -p 0,0}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-light.png -p 51,0}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-light-edge-top-right.png -p 182,0}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-dark.png -p 0,20}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-light.png -p 0,39}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-light-edge-bottom-left.png -p 0,1432}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-light-edge-bottom-right.png -p 182,1432}\
-${image ~/conky/monochrome/images/menu-blank.png -p 0,1439}\
+# ----------- table image ------------
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark.png -p 0,0}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark-edge-top-left.png -p 0,0}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark-edge-top-right.png -p 182,0}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light.png -p 0,19}\
 ${image ~/conky/monochrome/images/menu-blank.png -p 189,0}\
 # -------- end of table image ---------
 # optional dnf branding, can be removed or won't matter if the image does not exist
-${image ~/conky/monochrome/images/compact/burgundy-menu-dnf.png -p 114,41}\
-${voffset 2}${offset 5}${color1}dnf${goto 57}${color}${lua compute_and_save packages ${lines /tmp/conky/dnf.packages.formatted}} package updates
-${voffset -5}${color2}${hr 1}${voffset -8}
-${voffset 7}${offset 5}${color1}package${alignr 5}version${voffset 4}
-${color}${execp head -n 82 /tmp/conky/dnf.packages.formatted}${voffset 4}
-${lua_parse bottom_edge_load_value compact burgundy-menu-light-edge-bottom 0 39 189 2 packages 82}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dnf.png -p 114,21}\
+${lua_parse bottom_edge_parse widgets-dock yellow-menu-light-edge-bottom 0 19 189 2 ${lines /tmp/conky/dnf.packages.formatted} 51}\
+${voffset 2}${offset 5}${color1}package${alignr 5}version${voffset 4}
+${color}${execp head -n 51 /tmp/conky/dnf.packages.formatted}${voffset 5}
 ${endif}\
-]];
+]]
