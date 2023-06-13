@@ -61,6 +61,10 @@ function printHeader {
   printf "${GREEN}$1${NOCOLOR}\n"
 }
 
+function logError {
+  printf "${RED}ERROR${NOCOLOR} $1\n" >&2
+}
+
 # kills the monochrome conky and related support jobs that are currently running if any
 function killSession {
   printHeader '\n::: killing the currently running processes of this conky suite\n'
@@ -88,6 +92,7 @@ function detectDuplicateEntries {
 NOCOLOR='\033[0m'
 GREEN='\033[32m'
 ORANGE='\033[0;33m'
+RED='\033[0;31m'
 
 # ensure at least one parameter was provided
 if [[ $# < 1 ]]; then
@@ -96,6 +101,7 @@ if [[ $# < 1 ]]; then
 fi
 
 # define default variables
+monochromeHome=~/conky/monochrome
 enablePackageLookup=true          # dnf package lookup is enabled
 enableMusicPlayerListener=true    # java music player dbus listener is disabled
 versionWidth=7                    # number of characters to print for package version updates
@@ -103,22 +109,22 @@ versionWidth=7                    # number of characters to print for package ve
 while (( "$#" )); do
   case $1 in
     --widgets)
-      directory=${HOME}/conky/monochrome/widgets
+      conkyDir=${monochromeHome}/widgets
       width=32      
       enableMusicPlayerListener=false
       shift
       ;;
     --widgets-dock)
-      directory=${HOME}/conky/monochrome/widgets-dock
+      conkyDir=${monochromeHome}/widgets-dock
       width=30
       shift
       ;;
     --glass)
-      directory=${HOME}/conky/monochrome/glass
+      conkyDir=${monochromeHome}/glass
       shift
       ;;
     --compact)
-      directory=${HOME}/conky/monochrome/compact
+      conkyDir=${monochromeHome}/compact
       width=30
       shift
       ;;
@@ -136,7 +142,7 @@ while (( "$#" )); do
         usage
         exit 2
       else
-        layoutFile="$(echo ${directory}/layout.${fileTag}.cfg)"   # need to use echo in order for the variable
+        layoutFile="$(echo ${conkyDir}/layout.${fileTag}.cfg)"   # need to use echo in order for the variable
                                                                   # to hold the actual pathname expansion
         if [[ ! -f ${layoutFile} ]]; then
           echo "layout override file '${layoutFile}' not found" >&2          
@@ -167,7 +173,7 @@ while (( "$#" )); do
 done
 
 printHeader "::: launching conky with the following settings\n"
-echo    "conky theme:          $(basename ${directory})"
+echo    "conky theme:          $(basename ${conkyDir})"
 echo    "dnf package service:  ${enablePackageLookup}"
 echo    "music player service: ${enableMusicPlayerListener}"
 
@@ -187,9 +193,9 @@ IFS=$'\n'
 
 # all available conky configs in the target directory will be launched
 # config file names are expected to not have an extension, ie. cpu vs cpu.cfg
-for conkyConfigPath in $(find "${directory}" -maxdepth 1 -not -name '*.*' -not -type d)
+for conkyConfigPath in $(find "${conkyDir}" -maxdepth 1 -not -name '*.*' -not -type d)
 do
-  conkyConfig=${conkyConfigPath##*/}    # remove the file path ~/conky/monochrome/.. from the file name
+  conkyConfig=${conkyConfigPath##*/}    # remove the path ${monochromeHome}/.. from the file name
   echo "- ${conkyConfig}"
   # 1. conky exclusion override, ie. exclude a configuration from being loaded
   #    override is of the format: ignore:<conkyFilename>
@@ -247,9 +253,10 @@ done
 
 printHeader "\n::: starting support services\n"
 
-# using shell builtins
-if "$enablePackageLookup"; then
-  echo "- dnf package updates service"
+# :: bash scripts
+
+if ${enablePackageLookup}; then
+  echo "- dnf package updates service (bash)"
 
   if [[ "${width}" ]]; then
     dnfParameters=(--width ${width})
@@ -259,10 +266,22 @@ if "$enablePackageLookup"; then
     dnfParameters+=(--version-width ${versionWidth})
   fi
 
-  ~/conky/monochrome/dnfPackageLookup.bash ${dnfParameters[@]} &
+  ${monochromeHome}/dnfPackageLookup.bash ${dnfParameters[@]} &
 fi
 
-if "$enableMusicPlayerListener"; then
-  echo "- now playing music service"
-  java -jar ~/conky/monochrome/java/music-player-*.jar &
+# :: java applications
+msg="the java JDK is not installed on this system, unable to launch the java applications\n      some conkys will not work properly"
+type java > /dev/null 2>&1 || { logError "$msg"; exit 1; }
+
+if ${enableMusicPlayerListener}; then
+  echo "- now playing music service (java)"
+  musicJar=(${monochromeHome}/java/music-player-*.jar)
+  
+  if [[ -e "${musicJar[0]}" ]]; then
+    java -jar ${monochromeHome}/java/music-player-*.jar &   # assumes only 1 version of the jar will exist in the folder
+  else
+    msg="the music player jar has not been compiled and deployed to the ${monochromeHome}/java directory\n"
+    msg="${msg}      the 'now playing' conky will not work properly"
+    logError $msg
+  fi
 fi
