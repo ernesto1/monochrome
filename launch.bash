@@ -13,7 +13,7 @@
 
 function usage() {
   cat <<-END
-	$(basename $0) --theme [--monitor n] [--layout-override <tag>] [--silent]
+	$(basename $0) --theme [--monitor n] [--layout-override <tag>] [--silent] [--shutdown]
 	
 	Theme options
 	  --compact
@@ -44,6 +44,9 @@ function usage() {
 	    
 	  --silent
 	    all conky output (STDOUT and STDERR) is suppressed
+	  
+	  --shutdown
+	    kills the current running monochrome conkys and any support jobs launched
 
 	Examples
 	  $(basename $0) --widgets-dock
@@ -58,8 +61,19 @@ function printHeader {
   printf "${GREEN}$1${NOCOLOR}\n"
 }
 
+# kills the monochrome conky and related support jobs that are currently running if any
+function killSession {
+  printHeader '\n::: killing the currently running processes of this conky suite\n'
+  pgrep -f 'conky/monochrome' -l -a | sed 's/ /:/' | column -s ':' -t -N PID,process
+  echo -e "\nclosing remarks"
+  pkill -f 'conky/monochrome'
+  sleep 1s  # wait a bit in order to capture the STDOUT of the 'dnfPackageLookup.bash' script
+            # it tends to print right below the 'launching conky' banner below
+  printHeader "\n::: launching conky configs\n"
+}
+
 # exits the script on error if the override file has any duplicate entries for a particular conky configuration
-function detectDuplicateEntries() {
+function detectDuplicateEntries {
   # remove comment lines '#', empty lines and 'ignore' entries from the file, then look for dupes
   duplicates=$(grep -vE '#|^$|ignore' $1 | cut -d: -f1 | sort | uniq -d)
   
@@ -141,6 +155,10 @@ while (( "$#" )); do
       usage
       exit
       ;;
+    --shutdown)
+      killSession
+      exit
+      ;;
     *)
       usage
       exit 2
@@ -149,7 +167,9 @@ while (( "$#" )); do
 done
 
 printHeader "::: launching conky with the following settings\n"
-echo    "conky folder:         ${directory}"
+echo    "conky theme:          $(basename ${directory})"
+echo    "dnf package service:  ${enablePackageLookup}"
+echo    "music player service: ${enableMusicPlayerListener}"
 
 if [[ ${monitor} ]]; then
   echo  "window compositor:    $(echo $XDG_SESSION_TYPE)"
@@ -162,13 +182,7 @@ if [[ ! -z ${layoutFile} ]]; then
   # TODO file integrity: ensure number of override elements is 2 or 3
 fi
 
-printHeader '\n::: killing the currently running processes of this conky suite\n'
-pgrep -f 'conky/monochrome' -l -a | sed 's/ /:/' | column -s ':' -t -N PID,process
-echo -e "\nclosing remarks"
-pkill -f 'conky/monochrome'
-sleep 1s  # wait a bit in order to capture the STDOUT of the 'dnfPackageLookup.bash' script
-          # it tends to print right below the 'launching conky' banner below
-printHeader "\n::: launching conky configs\n"
+killSession
 IFS=$'\n'
 
 # all available conky configs in the target directory will be launched
