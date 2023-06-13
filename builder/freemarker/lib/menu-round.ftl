@@ -9,7 +9,7 @@
     ╰─────────────╯                          -+-
        width (px)
  -->
-<#macro table x y width header body bottomEdges=true>
+<#macro table x y width header body=200 bottomEdges=true>
 # ----------- table image ------------
 <@menuHeader x=x y=y width=width/>
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-light.png -p [=x?c],[=(y+header)?c]}\

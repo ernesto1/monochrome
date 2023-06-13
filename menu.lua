@@ -130,8 +130,8 @@ arguments:
     ...         same arguments as draw_round_bottom_edges(..)
     key         string used to store the previously computed number of lines computation
                 see the conky_compute_and_save() function
-    maxLines    optional | maximum number of lines, will override the expression line count if it computes
-                to a bigger number
+    maxLines    optional | maximum number of lines, will override the cached line count if it 
+                is greater than this threshold
 ]]
 function conky_bottom_edge_load_value(theme, filename, x, y, width, voffset, key, maxLines)
   if not computations[key] then

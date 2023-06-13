@@ -53,9 +53,8 @@ conky.config = {
 conky.text = [[
 # :::::::::::: package updates
 <#assign y = 0, 
-         header = 19, <#-- menu header -->
-         body = 1000,  <#-- size of the current window without the header -->
-         gap = 5>     <#-- empty space between windows -->
+         header = 19,  <#-- menu header -->
+         body = 1000>  <#-- size of the current window without the header -->
 ${if_existing /tmp/conky/dnf.packages.formatted}\
 <@menu.table x=0 y=y width=width header=header body=body bottomEdges=false/>
 <#assign y += header>

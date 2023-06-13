@@ -1,7 +1,8 @@
+<#import "/lib/menu-round.ftl" as menu>
 conky.config = {
   lua_load = '~/conky/monochrome/menu.lua',
   
-  update_interval = 30,  -- update interval in seconds
+  update_interval = 300,  -- update interval in seconds
   xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
@@ -11,8 +12,9 @@ conky.config = {
   gap_y = -19,
 
   -- window settings
-  minimum_width = 200,
-  maximum_width = 200,
+  <#assign width = 200>
+  minimum_width = [=width],      -- conky will add an extra pixel to this  
+  maximum_width = [=width],
   own_window = true,
   own_window_type = 'desktop',              -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -51,15 +53,18 @@ conky.text = [[
 # :::::::::::: package updates
 ${if_existing /tmp/conky/dnf.packages.formatted}\
 <#assign y = 0, 
-         top = 39>    <#-- menu header -->
-${image ~/conky/monochrome/images/widgets/green-packages.png -p 0,[=y?c]}\
+         header = 39>    <#-- menu header -->
+<@menu.table x=0 y=y width=width header=header bottomEdges=false/>
+<#assign y += header>
+# optional dnf branding, can be removed or won't matter if the image does not exist
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-dnf.png -p 121,[=(y+17)?c]}\
 ${voffset 3}${alignc}${color1}dnf package management
 ${voffset 5}${alignc}${color}${lua compute_and_save packages ${lines /tmp/conky/dnf.packages.formatted}} package update(s) available
-${voffset 5}${offset 5}${color1}package${alignr 4}version${voffset 2}
+${voffset 6}${offset 5}${color1}package${alignr 4}version${voffset 2}
 # the dnf package lookup script refreshes the package list every 10m
 <#assign maxLines = 100>
 ${color}${execp head -n [=maxLines] /tmp/conky/dnf.packages.formatted}
-<#assign y += top + 15><#-- account for the 'invisible' package/version header -->
-${lua_parse bottom_edge_load_value widgets [=image.primaryColor]-packages-bottom.png 0 [=y?c] 2 packages [=maxLines]}
+<#assign y += 15><#-- account for the 'invisible' package/version header -->
+${lua_parse bottom_edge_load_value [=conky] [=image.primaryColor]-menu-light-edge-bottom 0 [=y?c] [=width] 2 packages [=maxLines]}
 ${endif}\
 ]];
