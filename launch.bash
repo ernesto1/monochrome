@@ -1,4 +1,6 @@
 #!/bin/bash
+shopt -s extglob    # enable extended globs for filename pattern matching
+
 # script to launch a conky configuration for a particular mode/resolution
 # the 'mode' (laptop/desktop) determines the target folder where all the conky configs will be loaded from
 #
@@ -146,9 +148,9 @@ while (( "$#" )); do
         exit 2
       else
         layoutFile="$(echo ${conkyDir}/layout.${fileTag}.cfg)"   # need to use echo in order for the variable
-                                                                  # to hold the actual pathname expansion
+                                                                 # to hold the actual pathname expansion
         if [[ ! -f ${layoutFile} ]]; then
-          echo "layout override file '${layoutFile}' not found" >&2          
+          echo "layout override file '${layoutFile}' not found" >&2
           echo 'please provide the proper override file name tag' >&2
           exit 2
         fi
@@ -176,13 +178,14 @@ while (( "$#" )); do
 done
 
 printHeader "::: launching conky with the following settings\n"
-echo    "conky theme:          $(basename ${conkyDir})"
-echo    "dnf package service:  ${enablePackageLookup}"
-echo    "music player service: ${enableMusicPlayerListener}"
+echo   "conky theme:          $(basename ${conkyDir})"
+echo   "dnf package service:  ${enablePackageLookup}"
+echo   "music player service: ${enableMusicPlayerListener}"
+echo   "transmission service: ${enableTransmissionPoller}"
 
 if [[ ${monitor} ]]; then
-  echo  "window compositor:    $(echo $XDG_SESSION_TYPE)"
-  echo  "monitor:              ${monitor}"
+  echo "window compositor:    $(echo $XDG_SESSION_TYPE)"
+  echo "monitor:              ${monitor}"
 fi
 
 if [[ ! -z ${layoutFile} ]]; then
@@ -192,12 +195,12 @@ if [[ ! -z ${layoutFile} ]]; then
 fi
 
 killSession
-IFS=$'\n'
 
 # all available conky configs in the target directory will be launched
 # config file names are expected to not have an extension, ie. cpu vs cpu.cfg
-for conkyConfigPath in $(find "${conkyDir}" -maxdepth 1 -not -name '*.*' -not -type d)
+for conkyConfigPath in ${conkyDir}/!(*.*)
 do
+  [ -f "${conkyConfigPath}" ] || continue
   conkyConfig=${conkyConfigPath##*/}    # remove the path ${monochromeHome}/.. from the file name
   echo "- ${conkyConfig}"
   # 1. conky exclusion override, ie. exclude a configuration from being loaded
@@ -215,9 +218,10 @@ do
   #                               cpu:10:50:top_right
   [[ -f ${layoutFile} ]] && override=$(grep -v \# "${layoutFile}" | grep ^"${conkyConfig}":)
 
-  if [[ ${override} ]]; then    
-    IFS=:
-    layoutOverride=(${override})      # create an array out of the string in order to have it word split    
+  if [[ ${override} ]]; then
+    IFS_bk=${IFS} IFS=:
+    layoutOverride=(${override})      # create an array out of the string in order to have it word split
+    IFS=${IFS_bk}
     # construct the position parameters for conky, ie. -x 10 -y 50 -a top_right
     alignment="${layoutOverride[3]}"  # optional field, may not exist
     layoutOverride=(-x "${layoutOverride[1]}" -y "${layoutOverride[2]}")
@@ -249,9 +253,8 @@ do
     arguments+=('--pause' 1)
   fi
   
-  conky -c ${conkyConfigPath} "${arguments[@]}" &  
-  unset arguments
-  IFS=$'\n'
+  conky -c ${conkyConfigPath} "${arguments[@]}" &
+  unset arguments  
 done
 
 printHeader "\n::: starting support services\n"
