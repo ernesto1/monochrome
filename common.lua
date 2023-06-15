@@ -2,8 +2,6 @@
 
 function conky_pad(expression)
     local text = conky_parse(expression)
-    text = (text ~= '') and text or '0'
-
     return string.format('%3s', text)
 end
 

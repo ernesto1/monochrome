@@ -102,9 +102,11 @@ fi
 
 # define default variables
 monochromeHome=~/conky/monochrome
-enablePackageLookup=true          # dnf package lookup is enabled
-enableMusicPlayerListener=true    # java music player dbus listener is disabled
-versionWidth=7                    # number of characters to print for package version updates
+versionWidth=7                    # number of characters to print for the package version updates output
+# enable/disable supporting scripts/java apps
+enablePackageLookup=true
+enableMusicPlayerListener=true
+enableTransmissionPoller=false
 
 while (( "$#" )); do
   case $1 in
@@ -117,6 +119,7 @@ while (( "$#" )); do
     --widgets-dock)
       conkyDir=${monochromeHome}/widgets-dock
       width=30
+      enableTransmissionPoller=true
       shift
       ;;
     --glass)
@@ -256,7 +259,7 @@ printHeader "\n::: starting support services\n"
 # :: bash scripts
 
 if ${enablePackageLookup}; then
-  echo "- dnf package updates service (bash)"
+  echo "- dnf package updates service | bash"
 
   if [[ "${width}" ]]; then
     dnfParameters=(--width ${width})
@@ -269,15 +272,28 @@ if ${enablePackageLookup}; then
   ${monochromeHome}/dnfPackageLookup.bash ${dnfParameters[@]} &
 fi
 
+if ${enableTransmissionPoller}; then
+  echo "- transmission bittorrent poller | bash"
+
+  if type transmission-remote > /dev/null 2>&1; then
+    echo -e "  ${ORANGE}ensure${NOCOLOR} the ${ORANGE}remote control${NOCOLOR} option is enabled in transmission"
+    ${monochromeHome}/transmission.bash &
+  else
+    msg="the transmission bittorrent client is not installed on this system\n"
+    msg="${msg}      the transmission conky will not work properly"
+    logError $msg
+  fi
+fi
+
 # :: java applications
 msg="the java JDK is not installed on this system, unable to launch the java applications\n      some conkys will not work properly"
 type java > /dev/null 2>&1 || { logError "$msg"; exit 1; }
 
 if ${enableMusicPlayerListener}; then
-  echo "- now playing music service (java)"
+  echo "- now playing music service | java"
   musicJar=(${monochromeHome}/java/music-player-*.jar)
   
-  if [[ -e "${musicJar[0]}" ]]; then
+  if [[ -f "${musicJar[0]}" ]]; then
     java -jar ${monochromeHome}/java/music-player-*.jar &   # assumes only 1 version of the jar will exist in the folder
   else
     msg="the music player jar has not been compiled and deployed to the ${monochromeHome}/java directory\n"
