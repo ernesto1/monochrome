@@ -46,7 +46,7 @@ conky.config = {
 };
 
 conky.text = [[
-${if_match ${memperc} < 85}\
+${if_match ${memperc} < 90}\
 ${image ~/conky/monochrome/images/widgets/green-memory.png -p 0,0}\
 ${else}\
 ${image ~/conky/monochrome/images/widgets/green-memory-high.png -p 0,0}\
