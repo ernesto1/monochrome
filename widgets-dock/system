@@ -13,7 +13,7 @@ conky.config = {
   -- window settings
   minimum_width = 189,      -- conky will add an extra pixel to this  
   maximum_width = 189,
-  minimum_height = 275,
+  minimum_height = 615,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -134,6 +134,8 @@ ${voffset 2}${offset 5}${color1}seeding${goto 81}${color}${lua pad ${lines /tmp/
 ${voffset 3}${offset 5}${color1}downloading${goto 81}${color}${lua pad ${lines /tmp/conky/transmission.downloading}} torrent(s)
 ${voffset 3}${offset 5}${color1}idle${goto 81}${color}${lua pad ${lines /tmp/conky/transmission.idle}} torrent(s)
 ${voffset 13}\
+# :::::::::::: active torrents
+${if_existing /tmp/conky/transmission.active}\
 ${if_match ${lua compute_and_save active ${lines /tmp/conky/transmission.active}} > 0}\
 # ----------- table image ------------
 ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark.png -p 0,432}\
@@ -142,16 +144,28 @@ ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark-edge-top-right.p
 ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light.png -p 0,451}\
 ${image ~/conky/monochrome/images/menu-blank.png -p 189,432}\
 # -------- end of table image ---------
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-peers.png -p 38,469}\
+${image ~/conky/monochrome/images/compact/yellow-menu-peers.png -p 18,473}\
 ${alignc}${color1}active torrents${voffset 3}
-${color}${execp head -10 /tmp/conky/transmission.active}${lua_parse pad_lines active 10}${voffset 10}
+${color}${execp head -10 /tmp/conky/transmission.active}${voffset 10}
 ${lua_parse bottom_edge_load_value widgets-dock yellow-menu-light-edge-bottom 0 449 189 3 active 10}\
+${lua conky_add_offsets 0 5}\
 ${else}\
-# no active torrents -> empty space
-${voffset 190}
+${lua conky_add_offsets 0 74}\
 ${endif}\
 ${else}\
-# tranmission is not running -> empty space
-${voffset 266}
+# ----------- menu image ------------
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light.png -p 0,432}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light-edge-top-left.png -p 0,432}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light-edge-top-right.png -p 182,432}\
+${image ~/conky/monochrome/images/menu-blank.png -p 189,432}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light-edge-bottom-left.png -p 0,460}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light-edge-bottom-right.png -p 182,460}\
+${image ~/conky/monochrome/images/menu-blank.png -p 0,467}\
+# -------- end of menu image ---------
+${lua conky_add_offsets 0 40}\
+${offset 5}${alignc}${color}active torrents input file
+${voffset 3}${alignc}is missing
+${voffset 12}\
+${endif}\
 ${endif}\
 ]];

@@ -1,6 +1,7 @@
 <#import "/lib/menu-round.ftl" as menu>
 conky.config = {
   lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
+  lua_draw_hook_pre = 'reset_state',
   
   update_interval = 3,    -- update interval in seconds
   xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
@@ -15,6 +16,7 @@ conky.config = {
   <#assign width = 189>
   minimum_width = [=width],      -- conky will add an extra pixel to this  
   maximum_width = [=width],
+  minimum_height = 1035,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -39,8 +41,8 @@ conky.config = {
   draw_shades = false,      -- black shadow on text (not good if text is black)
   draw_outline = false,     -- black outline around text (not good if text is black)
   -- colors
-  default_color = '[=colors.menuText]',  -- regular text
-  color1 = '[=colors.labels]',            -- labels
+  default_color = '[=colors.menuText]', -- regular text
+  color1 = '[=colors.labels]',         -- labels
   color2 = '[=(colors.warning)?c]'         -- bar critical
 };
 
@@ -48,7 +50,7 @@ conky.text = [[
 # this conky requires:
 # - the 'remote control' feature enabled in the transmission bittorrent client: edit > preferences > remote
 # - the transmission.bash script running in the background
-# :::::::::::: bittorrent peers
+# :::::::::::: torrents overview
 ${if_running transmission-gt}\
 <#assign y = 0, 
          header = 75, <#-- menu header -->
@@ -66,27 +68,45 @@ ${voffset 5}${offset 5}${color1}swarm${goto 81}${color}${lua pad ${lua conky_com
 ${voffset 3}${offset 5}${color1}seeding${goto 81}${color}${lua pad ${lines [=seedingFile]}} torrent(s)
 ${voffset 3}${offset 5}${color1}downloading${goto 81}${color}${lua pad ${lines [=downloadingFile]}} torrent(s)
 ${voffset 3}${offset 5}${color1}idle${goto 81}${color}${lua pad ${lines [=idleFile]}} torrent(s)
-${voffset 8}\
-# :::::::::::: torrents being downloaded or seeded
+${voffset [= 7 + gap]}\
+# :::::::::::: active torrents
+${if_existing [=activeTorrentsFile]}\
 ${if_match ${lua compute_and_save active ${lines [=activeTorrentsFile]}} > 0}\
-<#assign header = 19, body = 244>
-<@menu.table x=0 y=y width=width header=header body=body bottomEdges=false/>
+<#assign header = 19>
+<@menu.table x=0 y=y width=width header=header bottomEdges=false/>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-peers.png -p 38,[=y+header+22]}\
-${voffset 2}${alignc}${color1}active torrents${voffset 3}
-<#assign maxLines = 15>
-${color}${execp head -[=maxLines] [=activeTorrentsFile]}${lua_parse pad_lines active [=maxLines]}${voffset 10}
+${alignc}${color1}active torrents${voffset 3}
+<#assign maxLines = 25>
+${color}${execp head -[=maxLines] [=activeTorrentsFile]}${voffset 10}
 ${lua_parse bottom_edge_load_value [=conky] [=image.primaryColor]-menu-light-edge-bottom 0 [=(y+header-2)?c] [=width?c] 3 active [=maxLines]}\
-<#assign y += header + body + gap>
+${lua conky_add_offsets 0 [=gap]}\
 ${else}\
-${voffset [=header + body + gap + 2]}\
+${lua conky_add_offsets 0 74}\
 ${endif}\
+${else}\
+<#assign body = 35>
+<@menu.menu x=0 y=y width=width height=body/>
+${lua conky_add_offsets 0 [=body + gap]}\
+${offset 5}${alignc}${color}active torrents input file
+${voffset 3}${alignc}is missing
+${voffset [= 7 + gap]}\
+${endif}\
+# :::::::::::: peers
+${if_existing [=activeTorrentsFile]}\
 ${if_match ${lua retrieve peers} > 0}\
-<#assign header = 19, body = 212>
-<@menu.table x=0 y=y width=width header=header body=body bottomEdges=false/>
+<@menu.table x=0 y=0 width=width header=header bottomEdges=false fixed=false/>
+${lua conky_add_offsets 0 17}\
 ${offset 5}${color1}ip address${goto 108}client${voffset 3}
-<#assign maxLines = 50>
+<#assign maxLines = 32>
 ${color}${catp [=peersFile]}
-${lua_parse bottom_edge_load_value [=conky] [=image.primaryColor]-menu-light-edge-bottom 0 [=y+header-2] [=width?c] 3 peers [=maxLines]}${voffset 6}\
+${lua_parse bottom_edge_offset_parse [=conky] [=image.primaryColor]-menu-light-edge-bottom [=width?c] 3 ${lines /tmp/conky/transmission.peers} [=maxLines]}\
+${endif}\
+${else}\
+<#assign body = 35>
+<@menu.menu x=0 y=y width=width height=32 fixed=false/>
+${lua conky_add_offsets 0 [=body + gap]}\
+${voffset 6}${offset 5}${alignc}${color}peers input file is missing
+${voffset [= 7 + gap]}\
 ${endif}\
 ${endif}\
 ]];

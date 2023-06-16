@@ -1,7 +1,7 @@
 --[[  :::::: functions for drawing menus with dynamic sizes ::::::
 
-all these methods allow a conky client to manipulate x,y positions
-for images or text dynamically at runtime, examples:
+methods to allow a conky client to manipulate x,y positions of images or text at runtime,
+examples:
 
 1) drawing menu windows
 
@@ -9,9 +9,9 @@ for images or text dynamically at runtime, examples:
       |----------|    of several images imposed on top of each other
       |          |
       |          |    
-      |          |    for menu's with a variable amount of text
-      +----------+  < the position of the bottom edge image is determined at runtime based
-                      on the amount of text/lines in the body of the menu
+      |          |    for menus with a variable amount of text, the position of the bottom edge
+      +----------+  < images are determined at runtime based on the number of lines
+                      in the body of the menu
 
 2) draw an image taking into account a x,y offsets to alter the image's original x,y coordinates
 3) alter text ${goto x} or ${offset x} statements with a runtime x offset
@@ -101,7 +101,7 @@ function draw_round_bottom_edges(theme, filename, x, y, width, voffset, lines)
   s = s .. build_image_variable(path, x+width-7, y)
   -- add a blank image right below the bottom edge image, bottom edges are 7px
   s = s .. build_image_variable(imageDir .. "menu-blank.png", x, y + 7)
-  
+  computations["yOffset"] = y + 7
   return s
 end
 
@@ -120,6 +120,14 @@ function conky_bottom_edge_parse(theme, filename, x, y, width, voffset, expressi
   lines = (lines > maxLines) and maxLines or lines
   
   return draw_round_bottom_edges(theme, filename, tonumber(x), tonumber(y), tonumber(width), tonumber(voffset), lines)
+end
+
+function conky_bottom_edge_offset_parse(theme, filename, width, voffset, expression, maxLines)
+  maxLines = tonumber(maxLines) or 1000
+  local lines = tonumber(conky_parse(expression))
+  lines = (lines > maxLines) and maxLines or lines
+  
+  return draw_round_bottom_edges(theme, filename, computations["xOffset"], computations["yOffset"], tonumber(width), tonumber(voffset), lines)
 end
 
 --[[ wrapper method for the 'bottom_edge' function
@@ -144,6 +152,19 @@ function conky_bottom_edge_load_value(theme, filename, x, y, width, voffset, key
   lines = (lines > maxLines) and maxLines or lines
   
   return draw_round_bottom_edges(theme, filename, tonumber(x), tonumber(y), tonumber(width), tonumber(voffset), lines)
+end
+
+function conky_bottom_edge_offset_load_value(theme, filename, width, voffset, key, maxLines)
+  if not computations[key] then
+    print("the key: '" .. key .. "' does not exist, image '" .. filename .. "' will not be drawn")
+    return ''
+  end
+  
+  local lines = tonumber(computations[key])
+  maxLines = tonumber(maxLines) or 1000
+  lines = (lines > maxLines) and maxLines or lines
+  
+  return draw_round_bottom_edges(theme, filename, computations["xOffset"], computations["yOffset"], tonumber(width), tonumber(voffset), lines)
 end
 
 --[[ creates a conky image variable string, ex. ${image /directory/image.jpg -p 0,0}
@@ -180,6 +201,14 @@ function conky_add_offsets(xOffset, yOffset)
 
   local y = computations["yOffset"] or 0
   y = y + tonumber(yOffset)
+  computations["yOffset"] = y
+  return ''
+end
+
+function conky_add_y_offset(key)
+  local increment = tonumber(computations[key]) or 0
+  local y = computations["yOffset"] or 0
+  y = y + increment
   computations["yOffset"] = y
   return ''
 end

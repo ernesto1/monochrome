@@ -16,7 +16,7 @@ conky.config = {
   <#assign width = 189>
   minimum_width = [=width],      -- conky will add an extra pixel to this  
   maximum_width = [=width],
-  minimum_height = 275,
+  minimum_height = 615,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -90,6 +90,7 @@ ${if_running transmission-gt}\
          body = 71,   <#-- menu window without the header -->
          gap = 5>     <#-- empty space between windows -->
 <@menu.verticalTable x=0 y=y header=header body=width-header height=body/>
+<#assign y += body + gap>
 <#assign inputDir = "/tmp/conky"
          peersFile = inputDir + "/transmission.peers",
          seedingFile = inputDir + "/transmission.seeding"
@@ -100,24 +101,29 @@ ${voffset 5}${offset 5}${color1}swarm${goto 81}${color}${lua pad ${lines [=peers
 ${voffset 2}${offset 5}${color1}seeding${goto 81}${color}${lua pad ${lines [=seedingFile]}} torrent(s)
 ${voffset 3}${offset 5}${color1}downloading${goto 81}${color}${lua pad ${lines [=downloadingFile]}} torrent(s)
 ${voffset 3}${offset 5}${color1}idle${goto 81}${color}${lua pad ${lines [=idleFile]}} torrent(s)
-${voffset 13}\
-<#assign y += body + gap>
+${voffset [= 8 + gap]}\
+# :::::::::::: active torrents
+${if_existing [=activeTorrentsFile]}\
 ${if_match ${lua compute_and_save active ${lines [=activeTorrentsFile]}} > 0}\
-<#assign header = 19, body = 164>
-<@menu.table x=0 y=y width=width header=header body=body bottomEdges=false/>
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-peers.png -p 38,[=(y+header+18)?c]}\
-<#assign maxLines = 10>
+<#assign header = 19>
+<@menu.table x=0 y=y width=width header=header bottomEdges=false/>
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-peers.png -p 18,[=y+header+22]}\
 ${alignc}${color1}active torrents${voffset 3}
-${color}${execp head -[=maxLines] [=activeTorrentsFile]}${lua_parse pad_lines active [=maxLines]}${voffset 10}
-${lua_parse bottom_edge_load_value [=conky] [=image.primaryColor]-menu-light-edge-bottom 0 [=y+header-2] [=width?c] 3 active [=maxLines]}\
-<#assign y += header + body + gap>
+<#assign maxLines = 10>
+${color}${execp head -[=maxLines] [=activeTorrentsFile]}${voffset 10}
+${lua_parse bottom_edge_load_value [=conky] [=image.primaryColor]-menu-light-edge-bottom 0 [=(y+header-2)?c] [=width?c] 3 active [=maxLines]}\
+${lua conky_add_offsets 0 [=gap]}\
 ${else}\
-# no active torrents -> empty space
-${voffset [=header + body + gap + 2]}
+${lua conky_add_offsets 0 74}\
 ${endif}\
 ${else}\
-# tranmission is not running -> empty space
-${voffset [=71 + gap + header + body + gap + 2]}
+<#assign body = 35>
+<@menu.menu x=0 y=y width=width height=body/>
+${lua conky_add_offsets 0 [=body + gap]}\
+${offset 5}${alignc}${color}active torrents input file
+${voffset 3}${alignc}is missing
+${voffset [= 7 + gap]}\
+${endif}\
 ${endif}\
 </#if>
 ]];
