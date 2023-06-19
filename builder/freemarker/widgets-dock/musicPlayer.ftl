@@ -1,7 +1,6 @@
 <#import "/lib/menu-round.ftl" as menu>
 conky.config = {
   lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
-  lua_draw_hook_pre = 'reset_state',
   
   update_interval = 2,    -- update interval in seconds
   <#if conky == "widgets-dock"><#assign monitor = 1><#else><#assign monitor = 0></#if>
