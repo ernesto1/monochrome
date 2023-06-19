@@ -13,9 +13,8 @@ conky.config = {
   gap_y = 553,
 
   -- window settings
-  <#assign width = 189>
-  minimum_width = [=width],      -- conky will add an extra pixel to this  
-  maximum_width = [=width],
+  minimum_width = 273,      -- conky will add an extra pixel to this  
+  maximum_width = 273,
   minimum_height = 1035,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -55,6 +54,7 @@ ${if_running transmission-gt}\
 <#assign y = 0, 
          header = 75, <#-- menu header -->
          body = 71,   <#-- menu window without the header -->
+         width = 189, <#-- default window width -->
          gap = 3>     <#-- empty space between windows -->
 <@menu.verticalTable x=0 y=y header=header body=width-header height=body/>
 <#assign y += body + gap>
@@ -72,13 +72,15 @@ ${voffset [= 7 + gap]}\
 # :::::::::::: active torrents
 ${if_existing [=activeTorrentsFile]}\
 ${if_match ${lua compute_and_save active ${lines [=activeTorrentsFile]}} > 0}\
-<#assign header = 19>
+<#assign header = 19, miniWindow = 39>
 <@menu.table x=0 y=y width=width header=header bottomEdges=false/>
+<@menu.table x=width+gap y=y width=39 header=header bottomEdges=false/>
+<@menu.table x=width+gap+miniWindow+gap y=y width=39 header=header bottomEdges=false/>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-peers.png -p 38,[=y+header+22]}\
-${alignc}${color1}active torrents${voffset 3}
+${goto 48}${color1}active torrents${goto 207}up${goto 243}down${voffset 3}
 <#assign maxLines = 25>
 ${color}${execp head -[=maxLines] [=activeTorrentsFile]}${voffset 10}
-${lua_parse bottom_edge_load_value [=conky] [=image.primaryColor]-menu-light-edge-bottom 0 [=(y+header-2)?c] [=width?c] 3 active [=maxLines]}\
+${lua_parse bottom_edge_load_value [=conky] [=image.primaryColor]-menu-light-edge-bottom 0 [=(y+header-2)?c] [=width?c] 3 active [=maxLines]}${lua_parse bottom_edge_load_value [=conky] [=image.primaryColor]-menu-light-edge-bottom [=width+gap] [=(y+header-2)?c] 39 3 active [=maxLines]}${lua_parse bottom_edge_load_value [=conky] [=image.primaryColor]-menu-light-edge-bottom [=width+gap+miniWindow+gap] [=(y+header-2)?c] 39 3 active [=maxLines]}\
 ${lua conky_add_offsets 0 [=gap]}\
 ${else}\
 ${lua conky_add_offsets 0 74}\
@@ -87,8 +89,8 @@ ${else}\
 <#assign body = 35>
 <@menu.menu x=0 y=y width=width height=body/>
 ${lua conky_add_offsets 0 [=body + gap]}\
-${offset 5}${alignc}${color}active torrents input file
-${voffset 3}${alignc}is missing
+${goto 17}${color}active torrents input file
+${voffset 3}${goto 65}is missing
 ${voffset [= 7 + gap]}\
 ${endif}\
 # :::::::::::: peers
@@ -105,7 +107,7 @@ ${else}\
 <#assign body = 35>
 <@menu.menu x=0 y=y width=width height=32 fixed=false/>
 ${lua conky_add_offsets 0 [=body + gap]}\
-${voffset 6}${offset 5}${alignc}${color}peers input file is missing
+${voffset 6}${goto 14}${color}peers input file is missing
 ${voffset [= 7 + gap]}\
 ${endif}\
 ${endif}\
