@@ -28,17 +28,22 @@ public class ConkyTemplate {
      */
     public static void main(String[] args) throws IOException, TemplateException {
         // 1. validate user input
-        validateArguments(args);
+        ParameterValidator validator = new ParameterValidator(TEMPLATE_ROOT_DIR.getAbsolutePath());
 
+        if (!validator.isUserInputProper(args)) {
+            System.exit(1);
+        }
+
+        String conky = args[0];
+        logger.info("creating configuration files for the '{}' conky", conky);
         // 2. freemarker data model creation
         // load global data model
         InputStream globalSettingsStream = new FileInputStream(new File(TEMPLATE_ROOT_DIR, "hardware.yml"));
         Yaml yaml = new Yaml();
         Map<String, Object> root = yaml.load(globalSettingsStream);
-        root.put("conky", args[0]);                 // conky theme being configured
+        root.put("conky", conky);                 // conky theme being configured
         root.put("system", args[2].toLowerCase());  // desktop or laptop
         // load conky theme data model
-        String conky = args[0];
         File conkyTemplateDir = new File(TEMPLATE_ROOT_DIR, conky);
         InputStream colorPaletteStream = new FileInputStream(new File(conkyTemplateDir, "colorPalette.yml"));
         Map<String, Object> themes = yaml.load(colorPaletteStream);
@@ -81,76 +86,32 @@ public class ConkyTemplate {
         }
     }
 
-    /**
-     * Ensures the required arguments were provided and that they are proper, ie.
-     * <ul>
-     *     <li>the conky theme must exist, ie. a template directory under its name exists</li>
-     *     <li>system is either <tt>desktop</tt> or <tt>laptop</tt></li>
-     * </ul>
-     * If a validation fails the method will <b>exit</b> the program with an error status code.
-     *
-     * @param args command line arguments provided to the program
-     */
-    private static void validateArguments(String[] args) {
-        if (args.length !=3) {
-            logger.error("usage: conkyTemplate <conky theme> <color> <device>");
-            logger.error("where device can be 'desktop' or 'laptop'");
-            System.exit(1);
-        }
-
-        // verify conky theme directory exists
-        String conkyTheme = args[0];
-        File conkyDir = new File(MONOCHROME_ROOT_DIR, conkyTheme);
-
-        if (conkyDir.isDirectory()) {
-            logger.info("creating configuration files for the '{}' conky", conkyTheme);
-        } else {
-            logger.error("'{}' conky does not exist under the monochrome conky suite", conkyTheme);
-            System.exit(1);
-        }
-
-        // 'system' argument must be a valid value
-        try {
-            Device.valueOf(args[2].toUpperCase());
-        } catch(IllegalArgumentException e) {
-            logger.error("'{}' is not a supported device, accepted values are: {}", args[2], Device.values());
-            System.exit(1);
-        }
-    }
-
     private static Configuration createFreemarkerConfiguration(File templateDirectory) throws IOException {
-        // Create your Configuration instance, and specify if up to what FreeMarker
-        // version (here 2.3.29) do you want to apply the fixes that are not 100%
-        // backward-compatible. See the Configuration JavaDoc for details.
+        // Create your configuration instance and specify if up to what FreeMarker version (here 2.3.29) do you want
+        // to apply the fixes that are not 100% backward-compatible. See the Configuration JavaDoc for details.
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_29);
 
-        // Specify the source where the template files come from. Here I set a
-        // plain directory for it, but non-file-system sources are possible too:
+        // Specify the source where the template files come from. Here I set a plain directory for it,
+        // but non-file-system sources are possible too:
         cfg.setDirectoryForTemplateLoading(templateDirectory);
 
-        // From here we will set the settings recommended for new projects. These
-        // aren't the defaults for backward compatibilty.
+        // From here we will set the settings recommended for new projects.
+        // These aren't the defaults for backward compatibility.
 
-        // Set the preferred charset template files are stored in. UTF-8 is
-        // a good choice in most applications:
+        // Set the preferred charset template files are stored in. UTF-8 is a good choice in most applications.
         cfg.setDefaultEncoding("UTF-8");
-
-        // change interpolation syntax from ${x} to [=x]
-        // this is because conky uses ${..} for its variables
+        // change interpolation syntax from ${x} to [=x], this is because conky uses ${..} for its variables
         cfg.setInterpolationSyntax(Configuration.SQUARE_BRACKET_INTERPOLATION_SYNTAX);
-
         // Sets how errors will appear.
         // During web page *development* TemplateExceptionHandler.HTML_DEBUG_HANDLER is better.
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-
         // Don't log exceptions inside FreeMarker that it will throw at you anyway:
         cfg.setLogTemplateExceptions(false);
-
         // Wrap unchecked exceptions thrown during template processing into TemplateException-s:
         cfg.setWrapUncheckedExceptions(true);
-
         // Do not fall back to higher scopes when reading a null loop variable:
         cfg.setFallbackOnNullLoopVariable(false);
+
         return cfg;
     }
 }

@@ -7,7 +7,7 @@ public class TrackInfo {
     /**
      * Unique id for this track as specified by the MPRIS specification
      */
-    private String id;
+    private final String id;
     private String title;
     private String artist;
     private String album;
@@ -61,7 +61,7 @@ public class TrackInfo {
     }
 
     /**
-     * Dertermines if the string actually has a value, ie. not empty or null
+     * Determines if the string actually has a value, ie. not empty or null
      * @param s string to analyze
      * @return <tt>true</tt> if the string has a value
      */
@@ -95,6 +95,7 @@ public class TrackInfo {
 
     @Override
     public String toString() {
-        return String.format("%s | %s | %s | %s | %s", artist, album, title, genre, albumArtURL);
+        final String art = (albumArtURL != null) ? albumArtURL : "no album art";
+        return String.format("%s | %s | %s | %s | %s", artist, album, title, genre, art);
     }
 }
