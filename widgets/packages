@@ -1,5 +1,6 @@
 conky.config = {
   lua_load = '~/conky/monochrome/menu.lua',
+  lua_draw_hook_pre = 'reset_state',
   
   update_interval = 300,  -- update interval in seconds
   xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
@@ -57,13 +58,14 @@ ${image ~/conky/monochrome/images/widgets/green-menu-dark-edge-top-right.png -p 
 ${image ~/conky/monochrome/images/widgets/green-menu-light.png -p 0,39}\
 ${image ~/conky/monochrome/images/menu-blank.png -p 200,0}\
 # -------- end of table image ---------
+${lua configure_menu widgets green-menu-light-edge-bottom 200 2}\
+${lua add_offsets 0 55}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
-${image ~/conky/monochrome/images/widgets/green-menu-dnf.png -p 121,56}\
+${image ~/conky/monochrome/images/widgets/green-menu-dnf.png -p 121,58}\
 ${voffset 3}${alignc}${color1}dnf package management
-${voffset 5}${alignc}${color}${lua compute_and_save packages ${lines /tmp/conky/dnf.packages.formatted}} package update(s) available
-${voffset 6}${offset 5}${color1}package${alignr 4}version${voffset 2}
+${voffset 5}${alignc}${color}${lines /tmp/conky/dnf.packages.formatted} package update(s) available
+${voffset 7}${offset 5}${color1}package${alignr 4}version${voffset 1}
 # the dnf package lookup script refreshes the package list every 10m
-${color}${execp head -n 100 /tmp/conky/dnf.packages.formatted}
-${lua_parse bottom_edge_load_value widgets green-menu-light-edge-bottom 0 54 200 2 packages 100}
+${color}${lua_parse head /tmp/conky/dnf.packages.formatted 100}${voffset 5}
 ${endif}\
 ]];

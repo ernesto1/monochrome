@@ -1,5 +1,6 @@
 conky.config = {
   lua_load = '~/conky/monochrome/menu.lua',
+  lua_draw_hook_pre = 'reset_state',
   
   update_interval = 300,  -- update interval in seconds
   xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
@@ -57,12 +58,13 @@ ${image ~/conky/monochrome/images/compact/burgundy-menu-light-edge-bottom-right.
 ${image ~/conky/monochrome/images/menu-blank.png -p 0,1439}\
 ${image ~/conky/monochrome/images/menu-blank.png -p 189,0}\
 # -------- end of table image ---------
+${lua configure_menu compact burgundy-menu-light-edge-bottom 189 2}\
+${lua add_offsets 0 39}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${image ~/conky/monochrome/images/compact/burgundy-menu-dnf.png -p 114,41}\
-${voffset 2}${offset 5}${color1}dnf${goto 57}${color}${lua compute_and_save packages ${lines /tmp/conky/dnf.packages.formatted}} package updates
+${voffset 2}${offset 5}${color1}dnf${goto 57}${color}${lines /tmp/conky/dnf.packages.formatted} package updates
 ${voffset -5}${color2}${hr 1}${voffset -8}
 ${voffset 7}${offset 5}${color1}package${alignr 5}version${voffset 4}
-${color}${execp head -n 82 /tmp/conky/dnf.packages.formatted}${voffset 4}
-${lua_parse bottom_edge_load_value compact burgundy-menu-light-edge-bottom 0 39 189 2 packages 82}\
+${color}${lua_parse head /tmp/conky/dnf.packages.formatted 82}${voffset 6}
 ${endif}\
 ]];

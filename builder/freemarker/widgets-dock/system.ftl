@@ -2,6 +2,7 @@
 <#import "lib/network.ftl" as net>
 conky.config = {
   lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
+  lua_draw_hook_pre = 'reset_state',
   
   update_interval = 2,    -- update interval in seconds
   xinerama_head = 1,      -- for multi monitor setups, select monitor to run on: 0,1,2
@@ -80,6 +81,7 @@ ${template2 [=x]}
 <@net.networkDetails devices=networkDevices[system] y=y width=width/>
 <#assign y += 71 + gap>
 ${voffset 10}\
+${lua add_offsets 0 [=y]}\
 <#if system == "desktop">
 # :::::::::::: transmission bittorrent client
 # this panel requires:
@@ -91,35 +93,35 @@ ${if_running transmission-gt}\
          gap = 5>     <#-- empty space between windows -->
 <@menu.verticalTable x=0 y=y header=header body=width-header height=body/>
 <#assign y += body + gap>
+${lua add_offsets 0 [=body + gap]}\
 <#assign inputDir = "/tmp/conky"
          peersFile = inputDir + "/transmission.peers",
          seedingFile = inputDir + "/transmission.seeding"
          downloadingFile = inputDir + "/transmission.downloading",
          idleFile = inputDir + "/transmission.idle",
          activeTorrentsFile = inputDir + "/transmission.active">
-${voffset 5}${offset 5}${color1}swarm${goto 81}${color}${lua pad ${lines [=peersFile]}} peer(s)
-${voffset 2}${offset 5}${color1}seeding${goto 81}${color}${lua pad ${lines [=seedingFile]}} torrent(s)
-${voffset 3}${offset 5}${color1}downloading${goto 81}${color}${lua pad ${lines [=downloadingFile]}} torrent(s)
-${voffset 3}${offset 5}${color1}idle${goto 81}${color}${lua pad ${lines [=idleFile]}} torrent(s)
-${voffset [= 8 + gap]}\
+${voffset 5}${offset 5}${color1}swarm${goto 81}${color}${if_existing [=peersFile]}${lua pad ${lua compute_and_save peers ${lines [=peersFile]}}} peer(s)${else}file missing${endif}
+${voffset 3}${offset 5}${color1}seeding${goto 81}${color}${if_existing [=seedingFile]}${lua pad ${lines [=seedingFile]}} torrent(s)${else}file missing${endif}
+${voffset 3}${offset 5}${color1}downloading${goto 81}${color}${if_existing [=downloadingFile]}${lua pad ${lines [=downloadingFile]}} torrent(s)${else}file missing${endif}
+${voffset 3}${offset 5}${color1}idle${goto 81}${color}${if_existing [=idleFile]}${lua pad ${lines [=idleFile]}} torrent(s)${else}file missing${endif}
+${voffset [= 7 + gap]}\
 # :::::::::::: active torrents
 ${if_existing [=activeTorrentsFile]}\
 ${if_match ${lua compute_and_save active ${lines [=activeTorrentsFile]}} > 0}\
 <#assign header = 19>
 <@menu.table x=0 y=y width=width header=header bottomEdges=false/>
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-peers.png -p 18,[=y+header+22]}\
+${lua configure_menu [=conky] [=image.primaryColor]-menu-light-edge-bottom [=width?c] 3}\
+${lua add_offsets 0 [=header - 2]}\
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-peers.png -p 38,[=y+header+22]}\
 ${alignc}${color1}active torrents${voffset 3}
 <#assign maxLines = 10>
-${color}${execp head -[=maxLines] [=activeTorrentsFile]}${voffset 10}
-${lua_parse bottom_edge_load_value [=conky] [=image.primaryColor]-menu-light-edge-bottom 0 [=(y+header-2)?c] [=width?c] 3 active [=maxLines]}\
-${lua conky_add_offsets 0 [=gap]}\
-${else}\
-${lua conky_add_offsets 0 74}\
+${color}${color}${lua_parse head [=activeTorrentsFile] [=maxLines]}${voffset [= 7 + gap]}
+${lua add_offsets 0 [=gap]}\
 ${endif}\
 ${else}\
 <#assign body = 35>
 <@menu.menu x=0 y=y width=width height=body/>
-${lua conky_add_offsets 0 [=body + gap]}\
+${lua add_offsets 0 [=body + gap]}\
 ${offset 5}${alignc}${color}active torrents input file
 ${voffset 3}${alignc}is missing
 ${voffset [= 7 + gap]}\

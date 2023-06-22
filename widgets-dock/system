@@ -1,5 +1,6 @@
 conky.config = {
   lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
+  lua_draw_hook_pre = 'reset_state',
   
   update_interval = 2,    -- update interval in seconds
   xinerama_head = 1,      -- for multi monitor setups, select monitor to run on: 0,1,2
@@ -114,6 +115,7 @@ ${else}\
 ${voffset 76}\
 ${endif}\
 ${voffset 10}\
+${lua add_offsets 0 356}\
 # :::::::::::: transmission bittorrent client
 # this panel requires:
 # - the 'remote control' feature enabled in the transmission bittorrent client: edit > preferences > remote
@@ -129,11 +131,12 @@ ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light-edge-bottom-rig
 ${image ~/conky/monochrome/images/menu-blank.png -p 189,356}\
 ${image ~/conky/monochrome/images/menu-blank.png -p 0,427}\
 # --------- end of table image ---------
-${voffset 5}${offset 5}${color1}swarm${goto 81}${color}${lua pad ${lines /tmp/conky/transmission.peers}} peer(s)
-${voffset 2}${offset 5}${color1}seeding${goto 81}${color}${lua pad ${lines /tmp/conky/transmission.seeding}} torrent(s)
-${voffset 3}${offset 5}${color1}downloading${goto 81}${color}${lua pad ${lines /tmp/conky/transmission.downloading}} torrent(s)
-${voffset 3}${offset 5}${color1}idle${goto 81}${color}${lua pad ${lines /tmp/conky/transmission.idle}} torrent(s)
-${voffset 13}\
+${lua add_offsets 0 76}\
+${voffset 5}${offset 5}${color1}swarm${goto 81}${color}${if_existing /tmp/conky/transmission.peers}${lua pad ${lua compute_and_save peers ${lines /tmp/conky/transmission.peers}}} peer(s)${else}file missing${endif}
+${voffset 3}${offset 5}${color1}seeding${goto 81}${color}${if_existing /tmp/conky/transmission.seeding}${lua pad ${lines /tmp/conky/transmission.seeding}} torrent(s)${else}file missing${endif}
+${voffset 3}${offset 5}${color1}downloading${goto 81}${color}${if_existing /tmp/conky/transmission.downloading}${lua pad ${lines /tmp/conky/transmission.downloading}} torrent(s)${else}file missing${endif}
+${voffset 3}${offset 5}${color1}idle${goto 81}${color}${if_existing /tmp/conky/transmission.idle}${lua pad ${lines /tmp/conky/transmission.idle}} torrent(s)${else}file missing${endif}
+${voffset 12}\
 # :::::::::::: active torrents
 ${if_existing /tmp/conky/transmission.active}\
 ${if_match ${lua compute_and_save active ${lines /tmp/conky/transmission.active}} > 0}\
@@ -144,13 +147,12 @@ ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark-edge-top-right.p
 ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light.png -p 0,451}\
 ${image ~/conky/monochrome/images/menu-blank.png -p 189,432}\
 # -------- end of table image ---------
-${image ~/conky/monochrome/images/compact/yellow-menu-peers.png -p 18,473}\
+${lua configure_menu widgets-dock yellow-menu-light-edge-bottom 189 3}\
+${lua add_offsets 0 17}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-peers.png -p 38,473}\
 ${alignc}${color1}active torrents${voffset 3}
-${color}${execp head -10 /tmp/conky/transmission.active}${voffset 10}
-${lua_parse bottom_edge_load_value widgets-dock yellow-menu-light-edge-bottom 0 449 189 3 active 10}\
-${lua conky_add_offsets 0 5}\
-${else}\
-${lua conky_add_offsets 0 74}\
+${color}${color}${lua_parse head /tmp/conky/transmission.active 10}${voffset 12}
+${lua add_offsets 0 5}\
 ${endif}\
 ${else}\
 # ----------- menu image ------------
@@ -162,7 +164,7 @@ ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light-edge-bottom-lef
 ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light-edge-bottom-right.png -p 182,460}\
 ${image ~/conky/monochrome/images/menu-blank.png -p 0,467}\
 # -------- end of menu image ---------
-${lua conky_add_offsets 0 40}\
+${lua add_offsets 0 40}\
 ${offset 5}${alignc}${color}active torrents input file
 ${voffset 3}${alignc}is missing
 ${voffset 12}\

@@ -54,59 +54,60 @@ ${if_running transmission-gt}\
 <#assign y = 0, 
          header = 75, <#-- menu header -->
          body = 71,   <#-- menu window without the header -->
-         width = 189, <#-- default window width -->
+         width = 189, <#-- default menu width -->
          gap = 3>     <#-- empty space between windows -->
 <@menu.verticalTable x=0 y=y header=header body=width-header height=body/>
 <#assign y += body + gap>
+${lua add_offsets 0 [=y?c]}\
 <#assign inputDir = "/tmp/conky"
          peersFile = inputDir + "/transmission.peers",
          seedingFile = inputDir + "/transmission.seeding",
          downloadingFile = inputDir + "/transmission.downloading",
          idleFile = inputDir + "/transmission.idle",
          activeTorrentsFile = inputDir + "/transmission.active">
-${voffset 5}${offset 5}${color1}swarm${goto 81}${color}${lua pad ${lua conky_compute_and_save peers ${lines [=peersFile]}}} peer(s)
-${voffset 3}${offset 5}${color1}seeding${goto 81}${color}${lua pad ${lines [=seedingFile]}} torrent(s)
-${voffset 3}${offset 5}${color1}downloading${goto 81}${color}${lua pad ${lines [=downloadingFile]}} torrent(s)
-${voffset 3}${offset 5}${color1}idle${goto 81}${color}${lua pad ${lines [=idleFile]}} torrent(s)
+${voffset 5}${offset 5}${color1}swarm${goto 81}${color}${if_existing [=peersFile]}${lua pad ${lua compute_and_save peers ${lines [=peersFile]}}} peer(s)${else}file missing${endif}
+${voffset 3}${offset 5}${color1}seeding${goto 81}${color}${if_existing [=seedingFile]}${lua pad ${lines [=seedingFile]}} torrent(s)${else}file missing${endif}
+${voffset 3}${offset 5}${color1}downloading${goto 81}${color}${if_existing [=downloadingFile]}${lua pad ${lines [=downloadingFile]}} torrent(s)${else}file missing${endif}
+${voffset 3}${offset 5}${color1}idle${goto 81}${color}${if_existing [=idleFile]}${lua pad ${lines [=idleFile]}} torrent(s)${else}file missing${endif}
 ${voffset [= 7 + gap]}\
 # :::::::::::: active torrents
 ${if_existing [=activeTorrentsFile]}\
-${if_match ${lua compute_and_save active ${lines [=activeTorrentsFile]}} > 0}\
+${if_match ${lines [=activeTorrentsFile]} > 0}\
 <#assign header = 19, miniWindow = 39>
 <@menu.table x=0 y=y width=width header=header bottomEdges=false/>
 <@menu.table x=width+gap y=y width=39 header=header bottomEdges=false/>
 <@menu.table x=width+gap+miniWindow+gap y=y width=39 header=header bottomEdges=false/>
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-peers.png -p 38,[=y+header+22]}\
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-peers.png -p 38,[=y+header+22]}\
+${lua configure_menu [=conky] [=image.primaryColor]-menu-light-edge-bottom [=width?c] 3}\
+<#assign y += header>
+${lua add_offsets 0 [=header]}\
 ${goto 48}${color1}active torrents${goto 207}up${goto 243}down${voffset 3}
 <#assign maxLines = 25>
-${color}${execp head -[=maxLines] [=activeTorrentsFile]}${voffset 10}
-${lua_parse bottom_edge_load_value [=conky] [=image.primaryColor]-menu-light-edge-bottom 0 [=(y+header-2)?c] [=width?c] 3 active [=maxLines]}${lua_parse bottom_edge_load_value [=conky] [=image.primaryColor]-menu-light-edge-bottom [=width+gap] [=(y+header-2)?c] 39 3 active [=maxLines]}${lua_parse bottom_edge_load_value [=conky] [=image.primaryColor]-menu-light-edge-bottom [=width+gap+miniWindow+gap] [=(y+header-2)?c] 39 3 active [=maxLines]}\
-${lua conky_add_offsets 0 [=gap]}\
-${else}\
-${lua conky_add_offsets 0 74}\
+${color}${lua_parse head [=activeTorrentsFile] [=maxLines]}${voffset [= 7 + gap]}
+${lua_parse draw_bottom_edges [=width+gap] [=y?c] 39}${lua_parse draw_bottom_edges [=width+gap+miniWindow+gap] [=y?c] 39}\
+${lua add_offsets 0 [=gap]}\
 ${endif}\
 ${else}\
 <#assign body = 35>
-<@menu.menu x=0 y=y width=width height=body/>
-${lua conky_add_offsets 0 [=body + gap]}\
+<@menu.menu x=0 y=71 + gap width=width height=body/>
+${lua add_offsets 0 [=body + gap]}\
 ${goto 17}${color}active torrents input file
 ${voffset 3}${goto 65}is missing
 ${voffset [= 7 + gap]}\
 ${endif}\
 # :::::::::::: peers
-${if_existing [=activeTorrentsFile]}\
+${if_existing [=peersFile]}\
 ${if_match ${lua retrieve peers} > 0}\
 <@menu.table x=0 y=0 width=width header=header bottomEdges=false fixed=false/>
-${lua conky_add_offsets 0 17}\
+${lua configure_menu compact [=image.primaryColor]-menu-light-edge-bottom [=width?c] 3}\
+${lua add_offsets 0 [=header]}\
 ${offset 5}${color1}ip address${goto 108}client${voffset 3}
 <#assign maxLines = 32>
-${color}${catp [=peersFile]}
-${lua_parse bottom_edge_offset_parse [=conky] [=image.primaryColor]-menu-light-edge-bottom [=width?c] 3 ${lines /tmp/conky/transmission.peers} [=maxLines]}\
+${color}${lua_parse head [=peersFile]}
 ${endif}\
 ${else}\
-<#assign body = 35>
-<@menu.menu x=0 y=y width=width height=32 fixed=false/>
-${lua conky_add_offsets 0 [=body + gap]}\
+<@menu.menu x=0 y=0 width=width height=body fixed=false/>
+${lua add_offsets 0 [=body + gap]}\
 ${voffset 6}${goto 14}${color}peers input file is missing
 ${voffset [= 7 + gap]}\
 ${endif}\

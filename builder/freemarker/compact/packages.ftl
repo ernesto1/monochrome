@@ -1,6 +1,7 @@
 <#import "/lib/menu-round.ftl" as menu>
 conky.config = {
   lua_load = '~/conky/monochrome/menu.lua',
+  lua_draw_hook_pre = 'reset_state',
   
   update_interval = 300,  -- update interval in seconds
   xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
@@ -46,20 +47,22 @@ conky.config = {
 
 conky.text = [[
 # :::::::::::: package updates
-${if_existing /tmp/conky/dnf.packages.formatted}\
+<#assign packagesFile = "/tmp/conky/dnf.packages.formatted">
+${if_existing [=packagesFile]}\
 <#assign y = 0, 
          header = 19, <#-- menu header -->
          body = 1400,  <#-- menu window without the header -->
          gap = 3>     <#-- empty space between windows -->
 <@menu.compositeTable x=0 y=y width=width vheader=51 hbody=body/>
-# optional dnf branding, can be removed or won't matter if the image does not exist
+${lua configure_menu [=conky] [=image.primaryColor]-menu-light-edge-bottom [=width?c] 2}\
 <#assign y += header + 1 + header>
+${lua add_offsets 0 [=y]}\
+# optional dnf branding, can be removed or won't matter if the image does not exist
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-dnf.png -p 114,[=(y+2)?c]}\
-${voffset 2}${offset 5}${color1}dnf${goto 57}${color}${lua compute_and_save packages ${lines /tmp/conky/dnf.packages.formatted}} package updates
+${voffset 2}${offset 5}${color1}dnf${goto 57}${color}${lines [=packagesFile]} package updates
 ${voffset -5}${color2}${hr 1}${voffset -8}
 ${voffset 7}${offset 5}${color1}package${alignr 5}version${voffset 4}
 <#if system == "desktop"><#assign maxLines = 82><#else><#assign maxLines = 15></#if>
-${color}${execp head -n [=maxLines] /tmp/conky/dnf.packages.formatted}${voffset 4}
-${lua_parse bottom_edge_load_value [=conky] [=image.primaryColor]-menu-light-edge-bottom 0 [=y?c] [=width?c] 2 packages [=maxLines]}\
+${color}${lua_parse head [=packagesFile] [=maxLines]}${voffset 5}
 ${endif}\
 ]];
