@@ -38,22 +38,21 @@ end
 
 
 --[[ 
-parses the given conky expression and stores its value in the 'vars' table for future use
-within the conky cycle
-
-this will allow you to run an expensive command once and then use its output multiple times within a session
+parses the given conky expression and stores its value for future use
+if the 'expression' is not provided, the current value stored for the variable is returned
 
 arguments:
-    key           key to store the expression as
-    expression    conky variable to parse
+    name          name of the variable
+    expression    conky variable to parse (optional argument)
 ]]
-function conky_compute_and_save(key, expression)
-  vars[key] = conky_parse(expression)
-  return vars[key]
-end
-
-function conky_retrieve(key)
-  return vars[key]
+function conky_get(name, expression)
+  if expression ~= nil then 
+    vars[name] = conky_parse(expression) 
+  else 
+    print("variable '" .. name .. "does not exist")
+  end
+  
+  return vars[name]
 end
 
 
@@ -216,9 +215,25 @@ end
 complementary method to the head() function in order to print the bottom edges of a table
 next to the one being populated by said head() method
 
+use this when you are splitting the columns of a table into individual tables
+
+                 x coordinate
+                     |
+        table 1         table 2
+      ╭──────────╮   ╭──────────╮
+      |──────────|   |──────────| < y coordinate is where the table's header ends, ie. the body of the table begins
+      |          |   |          |
+      |          |   |          | 
+      |          |   |          |
+      ╰──────────╯   ╰──────────╯ < you want to print the edges for this colum here
+           \                        head() saves the # of lines read under the "lines" variable
+            \
+           head() is driving the height of the table
+           and will print its edges
+
 arguments:
-    x       starting x coordinate
-    y       starting y coordinate
+    x       x coordinate
+    y       y coordinate
     width   width of this table
 ]]
 function conky_draw_bottom_edges(x,y, width)
@@ -227,7 +242,7 @@ function conky_draw_bottom_edges(x,y, width)
     return ''
   end
   
-  return draw_round_bottom_edges(vars["theme"], vars["image"], tonumber(x) + vars["xOffset"], tonumber(y), tonumber(width), vars["textVOffset"], vars["lines"])
+  return draw_round_bottom_edges(vars["theme"], vars["image"], tonumber(x), tonumber(y), tonumber(width), vars["textVOffset"], vars["lines"])
 end
 
 

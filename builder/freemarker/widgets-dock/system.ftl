@@ -100,14 +100,14 @@ ${lua add_offsets 0 [=body + gap]}\
          downloadingFile = inputDir + "/transmission.downloading",
          idleFile = inputDir + "/transmission.idle",
          activeTorrentsFile = inputDir + "/transmission.active">
-${voffset 5}${offset 5}${color1}swarm${goto 81}${color}${if_existing [=peersFile]}${lua pad ${lua compute_and_save peers ${lines [=peersFile]}}} peer(s)${else}file missing${endif}
+${voffset 5}${offset 5}${color1}swarm${goto 81}${color}${if_existing [=peersFile]}${lua pad ${lua get peers ${lines [=peersFile]}}} peer(s)${else}file missing${endif}
 ${voffset 3}${offset 5}${color1}seeding${goto 81}${color}${if_existing [=seedingFile]}${lua pad ${lines [=seedingFile]}} torrent(s)${else}file missing${endif}
 ${voffset 3}${offset 5}${color1}downloading${goto 81}${color}${if_existing [=downloadingFile]}${lua pad ${lines [=downloadingFile]}} torrent(s)${else}file missing${endif}
 ${voffset 3}${offset 5}${color1}idle${goto 81}${color}${if_existing [=idleFile]}${lua pad ${lines [=idleFile]}} torrent(s)${else}file missing${endif}
 ${voffset [= 7 + gap]}\
 # :::::::::::: active torrents
 ${if_existing [=activeTorrentsFile]}\
-${if_match ${lua compute_and_save active ${lines [=activeTorrentsFile]}} > 0}\
+${if_match ${lua get active ${lines [=activeTorrentsFile]}} > 0}\
 <#assign header = 19>
 <@menu.table x=0 y=y width=width header=header bottomEdges=false/>
 ${lua configure_menu [=conky] [=image.primaryColor]-menu-light-edge-bottom [=width?c] 3}\
