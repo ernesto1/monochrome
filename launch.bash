@@ -67,15 +67,14 @@ function logError {
   printf "${RED}ERROR${NOCOLOR} $1\n" >&2
 }
 
-# kills the monochrome conky and related support jobs that are currently running if any
+# kills the monochrome conky and related support jobs that are currently running (if any)
 function killSession {
   printHeader '\n::: killing the currently running processes of this conky suite\n'
   pgrep -f 'conky/monochrome' -l -a | sed 's/ /:/' | column -s ':' -t -N PID,process
   echo -e "\nclosing remarks"
   pkill -f 'conky/monochrome'
   sleep 1s  # wait a bit in order to capture the STDOUT of the 'dnfPackageLookup.bash' script
-            # it tends to print right below the 'launching conky' banner below
-  printHeader "\n::: launching conky configs\n"
+            # it tends to print right below the 'launching conky' banner below  
 }
 
 # exits the script on error if the override file has any duplicate entries for a particular conky configuration
@@ -195,6 +194,7 @@ if [[ ! -z ${layoutFile} ]]; then
 fi
 
 killSession
+printHeader "\n::: launching conky configs\n"
 
 # all available conky configs in the target directory will be launched
 # config file names are expected to not have an extension, ie. cpu vs cpu.cfg
