@@ -56,6 +56,7 @@ ${if_running transmission-gt}\
          body = 71,   <#-- menu window without the header -->
          width = 189, <#-- default menu width -->
          gap = 3>     <#-- empty space between windows -->
+${lua configure_menu [=conky] [=image.primaryColor]-menu-light-edge-bottom [=width?c] 3}\
 <@menu.verticalTable x=0 y=y header=header body=width-header height=body/>
 <#assign y += body + gap>
 ${lua add_offsets 0 [=y?c]}\
@@ -78,13 +79,12 @@ ${if_match ${lines [=activeTorrentsFile]} > 0}\
 <@menu.table x=width+gap y=y width=39 header=header bottomEdges=false/>
 <@menu.table x=width+gap+miniWindow+gap y=y width=39 header=header bottomEdges=false/>
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-peers.png -p 38,[=y+header+22]}\
-${lua configure_menu [=conky] [=image.primaryColor]-menu-light-edge-bottom [=width?c] 3}\
 <#assign y += header>
 ${lua add_offsets 0 [=header]}\
 ${goto 48}${color1}active torrents${goto 207}up${goto 243}down${voffset 3}
 <#assign maxLines = 25>
-${color}${lua_parse head [=activeTorrentsFile] [=maxLines]}${voffset [= 7 + gap]}
-${lua_parse draw_bottom_edges [=width+gap] [=y?c] 39}${lua_parse draw_bottom_edges [=width+gap+miniWindow+gap] [=y?c] 39}\
+${color}${lua_parse populate_menu [=activeTorrentsFile] [=maxLines]}${voffset [= 7 + gap]}
+${lua_parse draw_bottom_edges [=width+gap] 39}${lua_parse draw_bottom_edges [=width+gap+miniWindow+gap] 39}\
 ${lua add_offsets 0 [=gap]}\
 ${endif}\
 ${else}\
@@ -99,11 +99,10 @@ ${endif}\
 ${if_existing [=peersFile]}\
 ${if_match ${lua get peers} > 0}\
 <@menu.table x=0 y=0 width=width header=header bottomEdges=false fixed=false/>
-${lua configure_menu compact [=image.primaryColor]-menu-light-edge-bottom [=width?c] 3}\
 ${lua add_offsets 0 [=header]}\
 ${offset 5}${color1}ip address${goto 108}client${voffset 3}
 <#assign maxLines = 32>
-${color}${lua_parse head [=peersFile]}
+${color}${lua_parse populate_menu [=peersFile]}
 ${endif}\
 ${else}\
 <@menu.menu x=0 y=0 width=width height=body fixed=false/>

@@ -151,7 +151,7 @@ ${lua configure_menu widgets-dock yellow-menu-light-edge-bottom 189 3}\
 ${lua add_offsets 0 17}\
 ${image ~/conky/monochrome/images/widgets-dock/yellow-menu-peers.png -p 38,473}\
 ${alignc}${color1}active torrents${voffset 3}
-${color}${color}${lua_parse head /tmp/conky/transmission.active 10}${voffset 12}
+${color}${color}${lua_parse populate_menu /tmp/conky/transmission.active 10}${voffset 12}
 ${lua add_offsets 0 5}\
 ${endif}\
 ${else}\

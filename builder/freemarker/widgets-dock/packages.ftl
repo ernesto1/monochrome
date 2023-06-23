@@ -65,6 +65,6 @@ ${lua add_offsets 0 [=y]}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-dnf.png -p 114,[=(y+2)?c]}\
 ${voffset 2}${offset 5}${color1}package${alignr 5}version${voffset 4}
 <#if system == "desktop"><#assign maxLines = 51><#else><#assign maxLines = 46></#if>
-${color}${lua_parse head [=packagesFile] [=maxLines]}${voffset 5}
+${color}${lua_parse populate_menu [=packagesFile] [=maxLines]}${voffset 5}
 ${endif}\
 ]]

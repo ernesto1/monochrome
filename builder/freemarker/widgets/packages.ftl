@@ -67,6 +67,6 @@ ${voffset 5}${alignc}${color}${lines [=packagesFile]} package update(s) availabl
 ${voffset 7}${offset 5}${color1}package${alignr 4}version${voffset 1}
 # the dnf package lookup script refreshes the package list every 10m
 <#assign maxLines = 100>
-${color}${lua_parse head [=packagesFile] [=maxLines]}${voffset 5}
+${color}${lua_parse populate_menu [=packagesFile] [=maxLines]}${voffset 5}
 ${endif}\
 ]];

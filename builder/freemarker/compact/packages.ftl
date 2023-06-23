@@ -63,6 +63,6 @@ ${voffset 2}${offset 5}${color1}dnf${goto 57}${color}${lines [=packagesFile]} pa
 ${voffset -5}${color2}${hr 1}${voffset -8}
 ${voffset 7}${offset 5}${color1}package${alignr 5}version${voffset 4}
 <#if system == "desktop"><#assign maxLines = 82><#else><#assign maxLines = 15></#if>
-${color}${lua_parse head [=packagesFile] [=maxLines]}${voffset 5}
+${color}${lua_parse populate_menu [=packagesFile] [=maxLines]}${voffset 5}
 ${endif}\
 ]];

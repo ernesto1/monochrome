@@ -115,7 +115,7 @@ ${lua add_offsets 0 [=header - 2]}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-peers.png -p 38,[=y+header+22]}\
 ${alignc}${color1}active torrents${voffset 3}
 <#assign maxLines = 10>
-${color}${color}${lua_parse head [=activeTorrentsFile] [=maxLines]}${voffset [= 7 + gap]}
+${color}${color}${lua_parse populate_menu [=activeTorrentsFile] [=maxLines]}${voffset [= 7 + gap]}
 ${lua add_offsets 0 [=gap]}\
 ${endif}\
 ${else}\
