@@ -31,12 +31,9 @@ arguments:
     expression    conky variable to parse (optional argument)
 ]]
 function conky_get(name, expression)
-  if expression ~= nil then 
-    vars[name] = conky_parse(expression) 
-  else 
-    print("variable '" .. name .. "does not exist")
-  end
-  
+  if expression ~= nil then vars[name] = conky_parse(expression) end
+  if vars[name] == nil then print("variable '" .. name .. "' does not exist") end
+
   return vars[name]
 end
 
