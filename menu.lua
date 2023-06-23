@@ -23,21 +23,6 @@ vars = {}
 
 
 --[[ 
-call this method to execute a linux command whose output you don't care about, ex. create a file
-in the local file system
-
-the method returns an empty string
-
-arguments:
-      expression    conky variable to parse
-]]
-function conky_compute(expression)
-  conky_parse(expression)
-  return ''
-end
-
-
---[[ 
 parses the given conky expression and stores its value for future use
 if the 'expression' is not provided, the current value stored for the variable is returned
 
@@ -243,23 +228,4 @@ function conky_draw_bottom_edges(x,y, width)
   end
   
   return draw_round_bottom_edges(vars["theme"], vars["image"], tonumber(x), tonumber(y), tonumber(width), vars["textVOffset"], vars["lines"])
-end
-
-
--- :::::::: methods to be deprecated
-
-function conky_pad_lines(key, required)
-  local lines = tonumber(vars[key])
-  local required = tonumber(required)
-  local s = ''
-
-  if lines < required then
-    local i = required - lines
-    repeat
-      s = s .. '${voffset 3}\n'
-      i = i-1
-    until i == 0
-  end
-
-  return s
 end
