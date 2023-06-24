@@ -262,7 +262,7 @@ printHeader "\n::: starting support services\n"
 # :: bash scripts
 
 if ${enablePackageLookup}; then
-  echo "- dnf package updates service | bash"
+  echo "- bash | dnf package updates service"
 
   if [[ "${width}" ]]; then
     dnfParameters=(--width ${width})
@@ -276,15 +276,15 @@ if ${enablePackageLookup}; then
 fi
 
 if ${enableTransmissionPoller}; then
-  echo "- transmission bittorrent poller | bash"
+  echo "- bash | transmission bittorrent service"
 
   if type transmission-remote > /dev/null 2>&1; then
-    echo -e "  ${ORANGE}ensure${NOCOLOR} the ${ORANGE}remote control${NOCOLOR} option is enabled in transmission"
+    echo -e "         ${ORANGE}ensure${NOCOLOR} the ${ORANGE}remote control${NOCOLOR} option is enabled in transmission"
     ${monochromeHome}/transmission.bash &
   else
     msg="the transmission bittorrent client is not installed on this system\n"
-    msg="${msg}      the transmission conky will not work properly"
-    logError $msg
+    msg="${msg}      the transmission conky will not be operational"
+    logError "$msg"
   fi
 fi
 
@@ -293,7 +293,7 @@ msg="the java JDK is not installed on this system, unable to launch the java app
 type java > /dev/null 2>&1 || { logError "$msg"; exit 1; }
 
 if ${enableMusicPlayerListener}; then
-  echo "- now playing music service | java"
+  echo "- java | now playing music service"
   musicJar=(${monochromeHome}/java/music-player-*.jar)
   
   if [[ -f "${musicJar[0]}" ]]; then

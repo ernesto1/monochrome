@@ -19,9 +19,10 @@ These command line jobs were written to support this conky setup:
 
 - A bash script for launching multiple conky configs and supporting applications
 - A bash script to monitor for new dnf package updates
+- A bash script to retrieve torrent activity from the transmission bittorrent client
 - A java program that listens to the dbus for music player activity
 
-For more details on these applications [see this wiki](https://github.com/ernesto1/monochrome/wiki/Scripts).
+For details on these applications [see this wiki](https://github.com/ernesto1/monochrome/wiki/Scripts).
 
 # How to install
 ## Dependencies
@@ -66,7 +67,7 @@ You require `maven` and the `java jdk` in order to build it from source.
 
 ```shell
 # ::: fedora users
-# the java jdk comes installed by default on fedora
+# the java jdk comes installed by default
 # to install maven run
 dnf install maven
 
@@ -88,4 +89,11 @@ Compact|`~/conky/monochrome/launch.bash --compact`
 Glass|`~/conky/monochrome/launch.bash --glass`
 Widgets dock | `~/conky/monochrome/launch.bash --widgets-dock`
 Widgets | `~/conky/monochrome/launch.bash --widgets`
-I recommend you take advantage of the launch script's `--silent` flag.  It suppresses conky logging which will clutter the terminal (ex. `~/conky/monochrome/launch.bash --compact --silent)`.
+I recommend you take advantage of the launch script's `--silent` flag.  It suppresses conky logging which clutters the terminal (ex. `~/conky/monochrome/launch.bash --compact --silent)`.
+
+### Shutting down
+To close all conkys and supporting jobs started by the launch script you can run the `shutdown` command
+
+```shell
+~/conky/monochrome/launch.bash --shutdown
+```
