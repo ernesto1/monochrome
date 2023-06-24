@@ -3,7 +3,7 @@ conky.config = {
   lua_load = '~/conky/monochrome/menu.lua',
   lua_draw_hook_pre = 'reset_state',
   
-  update_interval = 300,  -- update interval in seconds
+  update_interval = 3,  -- update interval in seconds
   xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
@@ -53,7 +53,7 @@ ${if_existing [=packagesFile]}\
          header = 19, <#-- menu header -->
          body = 1400,  <#-- menu window without the header -->
          gap = 3>     <#-- empty space between windows -->
-<@menu.compositeTable x=0 y=y width=width vheader=51 hbody=body/>
+<@menu.compositeTable x=0 y=y width=width vheader=51 hheight=body/>
 ${lua configure_menu [=conky] [=image.primaryColor]-menu-light-edge-bottom [=width?c] 2}\
 <#assign y += header + 1 + header>
 ${lua add_offsets 0 [=y]}\
@@ -63,6 +63,6 @@ ${voffset 2}${offset 5}${color1}dnf${goto 57}${color}${lines [=packagesFile]} pa
 ${voffset -5}${color2}${hr 1}${voffset -8}
 ${voffset 7}${offset 5}${color1}package${alignr 5}version${voffset 4}
 <#if system == "desktop"><#assign maxLines = 82><#else><#assign maxLines = 15></#if>
-${color}${lua_parse populate_menu [=packagesFile] [=maxLines]}${voffset 5}
+${color}${lua_parse populate_menu [=packagesFile] [=maxLines] 900}${voffset 5}
 ${endif}\
 ]];

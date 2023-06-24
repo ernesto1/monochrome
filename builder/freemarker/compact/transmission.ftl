@@ -88,12 +88,11 @@ ${lua_parse draw_bottom_edges [=width+gap] 39}${lua_parse draw_bottom_edges [=wi
 ${lua add_offsets 0 [=gap]}\
 ${endif}\
 ${else}\
-<#assign body = 35>
+<#assign body = 36>
 <@menu.menu x=0 y=71 + gap width=width height=body/>
 ${lua add_offsets 0 [=body + gap]}\
 ${goto 17}${color}active torrents input file
-${voffset 3}${goto 65}is missing
-${voffset [= 7 + gap]}\
+${voffset 3}${goto 65}is missing${voffset [= 7 + gap]}
 ${endif}\
 # :::::::::::: peers
 ${if_existing [=peersFile]}\
@@ -107,8 +106,7 @@ ${endif}\
 ${else}\
 <@menu.menu x=0 y=0 width=width height=body fixed=false/>
 ${lua add_offsets 0 [=body + gap]}\
-${voffset 6}${goto 14}${color}peers input file is missing
-${voffset [= 7 + gap]}\
+${voffset 8}${goto 14}${color}peers input file is missing
 ${endif}\
 ${endif}\
 ]];

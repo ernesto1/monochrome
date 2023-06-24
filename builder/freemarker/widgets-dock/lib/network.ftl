@@ -52,24 +52,24 @@ ${voffset 48}
   if multiple devices are connected to the internet, the one at the top of the hierarchy
   is displayed
 -->
-<#macro networkDetails devices y width>
+<#macro networkDetails devices y width gap>
 <#assign device = devices?first>
 # :::: [=device.type]
 ${if_up [=device.name]}\
+<#local height = 71>
 <#if device.type == "wifi">
-<@menu.verticalTable x=0 y=y header=57 body=width-57 height=71/>
+<@menu.verticalTable x=0 y=y header=57 body=width-57 height=height/>
+${lua add_offsets 0 [=height + gap]}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-horizontal-data.png -p 57,[=y]}\
 <@wifiDetails device/>
 <#else>
-<@menu.verticalTable x=0 y=y header=75 body=width-75 height=71/>
+<@menu.verticalTable x=0 y=y header=75 body=width-75 height=height/>
+${lua add_offsets 0 [=height + gap]}\
 <@ethernetDetails device/>
 </#if>
 <#if devices?size gt 1>
 ${else}\
 <@networkDetails devices=devices[1..<devices?size] y=y width=width/>
-<#else>
-${else}\
-${voffset 76}\
 </#if>
 ${endif}\
 </#macro>

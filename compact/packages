@@ -2,7 +2,7 @@ conky.config = {
   lua_load = '~/conky/monochrome/menu.lua',
   lua_draw_hook_pre = 'reset_state',
   
-  update_interval = 300,  -- update interval in seconds
+  update_interval = 3,  -- update interval in seconds
   xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
@@ -65,6 +65,6 @@ ${image ~/conky/monochrome/images/compact/burgundy-menu-dnf.png -p 114,41}\
 ${voffset 2}${offset 5}${color1}dnf${goto 57}${color}${lines /tmp/conky/dnf.packages.formatted} package updates
 ${voffset -5}${color2}${hr 1}${voffset -8}
 ${voffset 7}${offset 5}${color1}package${alignr 5}version${voffset 4}
-${color}${lua_parse populate_menu /tmp/conky/dnf.packages.formatted 82}${voffset 5}
+${color}${lua_parse populate_menu /tmp/conky/dnf.packages.formatted 82 900}${voffset 5}
 ${endif}\
 ]];

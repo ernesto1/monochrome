@@ -88,24 +88,24 @@ ${lua_parse draw_image [=filePath] [=x?c] [=y?c]}\
      header       body width (px)
      width (px)
  -->
-<#macro verticalTable x y header body height>
+<#macro verticalTable x y header body height fixed=true>
 # -------  vertical table image -------
-<@verticalMenuHeader x=x y=y header=header body=body/>
+<@verticalMenuHeader x=x y=y header=header body=body fixed=fixed/>
 <#local yCoordinate = y + height - 7>
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-dark-edge-bottom-left.png -p [=x?c],[=yCoordinate?c]}\
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-light-edge-bottom-right.png -p [=(x+header+body-7)?c],[=yCoordinate?c]}\
-${image ~/conky/monochrome/images/menu-blank.png -p [=(x+header+body)?c],[=y?c]}\
-${image ~/conky/monochrome/images/menu-blank.png -p [=x?c],[=(yCoordinate+7)?c]}\
+<@drawImage filePath="~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-dark-edge-bottom-left.png" x=x y=yCoordinate fixed=fixed/>
+<@drawImage filePath="~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-light-edge-bottom-right.png" x=x+header+body-7 y=yCoordinate fixed=fixed/>
+<@drawImage filePath="~/conky/monochrome/images/menu-blank.png" x=x+header+body y=y fixed=fixed/>
+<@drawImage filePath="~/conky/monochrome/images/menu-blank.png" x=x y=yCoordinate+7 fixed=fixed/>
 # --------- end of table image ---------
 </#macro>
 
 
-<#macro verticalMenuHeader x y header body>
+<#macro verticalMenuHeader x y header body fixed=true>
 <#-- edge images are 7x7px -->
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-dark.png -p [=x?c],[=y?c]}\
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-dark-edge-top-left.png -p [=x?c],[=y?c]}\
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-light.png -p [=(x+header)?c],[=y?c]}\
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-light-edge-top-right.png -p [=(x+header+body-7)?c],[=y?c]}\
+<@drawImage filePath="~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-dark.png" x=x y=y fixed=fixed/>
+<@drawImage filePath="~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-dark-edge-top-left.png" x=x y=y fixed=fixed/>
+<@drawImage filePath="~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-light.png" x=x+header y=y fixed=fixed/>
+<@drawImage filePath="~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-light-edge-top-right.png" x=x+header+body-7 y=y fixed=fixed/>
 </#macro>
 
 
@@ -114,12 +114,23 @@ ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-light-edge
            vertical
            header
            width (px)
-          ╭─────────+──────────────────╮
-          │         │                  │  vetical table height
-          ╰─────────+──────────────────╯
+           (vheader)
+          ╭─────────+───────────────╮
+          │ title   │ value         │   vetical table height (vheight)
+          │ title 2 │ value         │  
+          +─────────+───────────────+
+          │         title 3         │   horizontal header height (px)
+          │─────────────────────────│ < hheader                           -+-
+          │ value                   │                                      |          
+          │ value                   │                                      |
+          │ value                   │ body height (px)               horizontal table height (hheight)
+          │                         │                                      |
+          │                         │                                      |
+          ╰─────────────────────────╯                                     -+-
+                    width (px)
  
  -->
-<#macro compositeTable x y width vheader hbody vheight=19 hheader=19 bottomEdges=true>
+<#macro compositeTable x y width vheader hheight vheight=19 hheader=19 bottomEdges=true>
 <#local startingy = y>
 # ------- composite table image -------
 <@verticalMenuHeader x=x y=y header=vheader body=width-vheader/>
@@ -127,7 +138,7 @@ ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-light-edge
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-dark.png -p [=x?c],[=yCoordinate?c]}\
 <#local yCoordinate += hheader>
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-light.png -p [=x?c],[=yCoordinate?c]}\
-<#local yCoordinate += hbody>
+<#local yCoordinate += hheight>
 <#if bottomEdges>
 <@menuBottom x=x y=yCoordinate  width=width/>
 </#if>

@@ -53,7 +53,7 @@ function conky_reset_state()
 end
 
 
---[[ 
+--[[
 adds an offset to the x & y coordinates
 the client can then call the following methods which will take these offsets into account:
 
@@ -76,7 +76,7 @@ function conky_add_offsets(xOffset, yOffset)
 end
 
 
---[[ 
+--[[
 update the conky variable with the current 'x' offset
 call this method with ${goto} or ${offset} conky variables
 ]]
@@ -86,9 +86,9 @@ function conky_add_x_offset(variable, x)
 end
 
 
---[[ 
+--[[
 creates a conky image variable string at the x,y coordinate position after any available offsets are applied,
-ex. calling conky_draw_image(/directory/image.jpg, 0, 50) 
+ex. calling conky_draw_image(/directory/image.jpg, 0, 50)
     with the current offsets being x = 10, y = 50
     would yield the image variable: ${image /directory/image.jpg -p 10,100}
 
@@ -106,7 +106,7 @@ end
 
 --[[
 Set up method to configure the basic properties of a menu window displayed by a conky client.
-If all the menus within a conky are the same, this method only needs to be invoked once at the beginning of the conky. 
+If all the menus within a conky are the same, this method only needs to be invoked once at the beginning of the conky.
 
 Call this method prior to invoking conky_populate_menu() in your conky.
 
@@ -121,7 +121,6 @@ arguments:
                       ${voffset 3} bla bla bla
                                  \
                                  you have to provide this value here
-                                 
 ]]
 function conky_configure_menu(theme, image, width, voffset)
   vars["theme"] = theme;
@@ -131,7 +130,7 @@ function conky_configure_menu(theme, image, width, voffset)
   return ''
 end
 
---[[ 
+--[[
 convenience method to populate the contents of a menu window by reading a file
 it performs two steps:
 
@@ -147,16 +146,17 @@ method dependency tree:
 arguments:
     filepath  absolute path to the file
     max       maximun number of lines to print
+    interval  [optional] number of seconds to wait between reads
 ]]
-function conky_populate_menu(filepath, max)
-  local text, lines = conky_head(filepath, max)
+function conky_populate_menu(filepath, max, interval)
+  local text, lines = conky_head(filepath, max, interval)
   local y = calculate_bottom_edge_y_coordinate(lines)
 
   return text .. draw_round_bottom_edges(vars["xOffset"], y, vars["width"])
 end
 
 
---[[ 
+--[[
 determines the y coordinate of a menu's bottom edges based on the number of lines printed inside of it
 
 arguments:
@@ -170,7 +170,7 @@ function calculate_bottom_edge_y_coordinate(lines)
   end
 
   lines = (lines > 0) and lines or 0
-  y = vars["yOffset"] + (lines * lineMultiplier) - vars["textVOffset"]  
+  y = vars["yOffset"] + (lines * lineMultiplier) - vars["textVOffset"]
 
   return y
 end
@@ -212,7 +212,7 @@ end
 
 
 --[[
-complementary method to the populate_menu() function 
+complementary method to the populate_menu() function
 
 it allows the client to print the bottom edges of a table next to the one already populated
 by a prior invocation to the populate_menu() method
@@ -225,39 +225,70 @@ use this when you are splitting the columns of a table into individual table ima
       ╭──────────╮   ╭──────────╮
       │──────────│   │──────────│
       │          │   │          │
-      │          │   │          │ 
+      │          │   │          │
       │          │               
       ╰──────────╯   ╰ ──────── ╯ < you want to print the edges for the 2nd table (column)
            \
             \
-           a prior call to the populate_menu() method would have determined 
+           a prior call to the populate_menu() method would have determined
            the height of the table, ie. the 'y' coordinate is known
 
 arguments:
     x       x coordinate
     width   width of this table
 ]]
-function conky_draw_bottom_edges(x, width)  
+function conky_draw_bottom_edges(x, width)
   return draw_round_bottom_edges(tonumber(x), vars["yOffset"] - 7, tonumber(width))
 end
 
 
 --[[
-lua version of the linux 'head' command
-returns the file contents and the number of lines read
+lua improved version of the conky ${head} variable, it provides:
 
-if the text contains a new line on its last line, it is removed
+- no line cap
+- content of the file can be parsed if invoked with ${lua_parse}, same effect as using ${catp}
+  so you can insert things like ${color red}hi!${color} in your file and have it correctly parsed by conky
+- if the text contains a new line on its last line, it will be removed
+- perform file reads on intervals
 
 arguments:
     filepath  absolute path to the file
     max       maximun number of lines to print
+    interval  [optional] number of seconds to wait between reads
+
+returns:
+    the file contents and the number of lines read
 ]]
-function conky_head(filepath, max)
-  max = (max~=nil) and tonumber(max) or 30
-  local text = conky_parse("${cat " .. filepath .. "}")
-  local lines = select(2, text:gsub('\n','\n')) + 1     -- last line will not have a new line so we increase by 1
-  lines = (lines < max) and lines or max
+function conky_head(filepath, max, interval)
+  max = (max ~= nil) and tonumber(max) or 30
+  interval = (interval ~= nil) and tonumber(interval) or conky_info["update_interval"]
+  -- interval cannot be lower than the conky refresh rate
+  interval = (interval > conky_info["update_interval"]) and interval or conky_info["update_interval"]
+  local text = "undefined"; lines = 1
+  local modulus = math.floor(interval / conky_info["update_interval"] + 0.5)
+
+  -- determine if we need to read the file or read from memory for this iteration
+  if (vars[filepath] == nil) or (conky_parse("${updates}") % modulus == 0) then
+    text, lines = head(filepath, max)
+    
+    -- save to memory only if multiple iterations are required in order to meet the interval
+    -- ie. future iterations will pull from memory
+    if modulus ~= 1 then
+      vars[filepath] = text
+      vars[filepath .. ".lines"] = lines
+    end
+  else
+    text = vars[filepath]
+    lines = vars[filepath .. ".lines"]
+  end
   
+  return text, lines
+end
+
+function head(filepath, max)
+  local text = conky_parse("${cat " .. filepath .. "}")
+  local lines = select(2, text:gsub('\n','\n')) + 1   -- last line will not have a new line so we increase by 1
+  lines = (lines < max) and lines or max
   local i = 0
   local pos = 0
   
@@ -268,7 +299,7 @@ function conky_head(filepath, max)
   end
   
   text = string.sub(text, 1, pos)
-  text = string.gsub(text, '\n$', '')     -- remove last new line (if any)  
-
+  text = string.gsub(text, '\n$', '')     -- remove last new line (if any)
+  
   return text, lines
 end
