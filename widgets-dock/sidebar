@@ -162,17 +162,17 @@ ${voffset 3}${goto 67}available
 ${voffset 27}
 ${endif}\
 # :::::::::::::::::::: disk maxtor
-${if_existing /dev/sdg}\
+${if_existing /dev/sde}\
 # disk io
 ${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/yellow-diskio-1.png -p 0,775}${endif}\
 ${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/yellow-diskio-2.png -p 0,775}${endif}\
-${template5 sdg 6000 60000}
+${template5 sde 6000 60000}
 # partitions
 ${image ~/conky/monochrome/images/widgets-dock/yellow-disk-usbdrive.png -p 0,839}\
 ${template6 maxtor /run/media/ernesto/MAXTOR}
 ${else}\
 ${image ~/conky/monochrome/images/widgets-dock/green-disk-disconnected.png -p 0,775}\
-${voffset 59}${goto 67}sdg not
+${voffset 59}${goto 67}sde not
 ${voffset 3}${goto 67}available
 ${voffset 27}
 ${endif}\

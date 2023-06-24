@@ -162,16 +162,16 @@ ${voffset 13}${offset 5}${color1}sdd device
 ${voffset 3}${offset 5}${color1}${font4}is not connected
 ${voffset 48}
 ${endif}\
-# ---------- sdg
-${if_existing /dev/sdg}\
+# ---------- sde
+${if_existing /dev/sde}\
 ${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 0,905}\
-${template5 sdg 6000 60000}
+${template5 sde 6000 60000}
 ${voffset 6}\
 ${image ~/conky/monochrome/images/compact/burgundy-filesystem.png -p 0,977}\
 ${template6 maxtor /run/media/ernesto/MAXTOR}
 ${else}\
 ${image ~/conky/monochrome/images/compact/ochre-disk-disconnected.png -p 0,905}\
-${voffset 13}${offset 5}${color1}sdg device
+${voffset 13}${offset 5}${color1}sde device
 ${voffset 3}${offset 5}${color1}${font4}is not connected
 ${voffset 48}
 ${endif}\
