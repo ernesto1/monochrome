@@ -3,15 +3,13 @@ conky.config = {
   lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
   
   update_interval = 2,    -- update interval in seconds
-  <#if conky == "widgets-dock"><#assign monitor = 1><#else><#assign monitor = 0></#if>
-  xinerama_head = [=monitor],      -- for multi monitor setups, select monitor to run on: 0,1,2
+  xinerama_head = 1,      -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  <#if conky == "widgets-dock"><#assign alignment = "bottom_left"><#else><#assign alignment = "bottom_right"></#if>
-  alignment = '[=alignment]',  -- top|middle|bottom_left|right
+  alignment = 'bottom_left',  -- top|middle|bottom_left|right
   gap_x = 142,
-  gap_y = 108,
+  gap_y = 121,
 
   -- window settings
   <#assign width = 189>
@@ -65,12 +63,12 @@ ${else}\
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
 <#assign header = 19,    <#-- menu header -->
          body = 185,  <#-- size of the album window without the header -->
-         space = 3>   <#-- empty space between windows -->
+         gap = 5>   <#-- empty space between windows -->
 <@menu.menu x=0 y=y width=width height=header+body isDark=true/>
 ${voffset 2}${alignc}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} ${color}: ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}${color1}${endif}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
 ${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4,[=(header)?c]}\
-<#assign y += header + body + space>
-${voffset 196}\
+<#assign y += header + body + gap>
+${voffset [=193 + gap]}\
 # :::: track details
 <@menu.verticalTable x=0 y=y header=45 body=width-45 height=71/>
 ${offset 5}${color1}title${goto 50}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.title}}

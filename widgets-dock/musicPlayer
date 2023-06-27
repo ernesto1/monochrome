@@ -8,7 +8,7 @@ conky.config = {
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
   gap_x = 142,
-  gap_y = 108,
+  gap_y = 121,
 
   -- window settings
   minimum_width = 189,      -- conky will add an extra pixel to this  
@@ -77,17 +77,17 @@ ${image ~/conky/monochrome/images/menu-blank.png -p 0,204}\
 # -------- end of menu image ---------
 ${voffset 2}${alignc}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} ${color}: ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}${color1}${endif}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
 ${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4,19}\
-${voffset 196}\
+${voffset 198}\
 # :::: track details
 # -------  vertical table image -------
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark.png -p 0,207}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark-edge-top-left.png -p 0,207}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light.png -p 45,207}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light-edge-top-right.png -p 182,207}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark-edge-bottom-left.png -p 0,271}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light-edge-bottom-right.png -p 182,271}\
-${image ~/conky/monochrome/images/menu-blank.png -p 189,207}\
-${image ~/conky/monochrome/images/menu-blank.png -p 0,278}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark.png -p 0,209}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark-edge-top-left.png -p 0,209}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light.png -p 45,209}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light-edge-top-right.png -p 182,209}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-dark-edge-bottom-left.png -p 0,273}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-menu-light-edge-bottom-right.png -p 182,273}\
+${image ~/conky/monochrome/images/menu-blank.png -p 189,209}\
+${image ~/conky/monochrome/images/menu-blank.png -p 0,280}\
 # --------- end of table image ---------
 ${offset 5}${color1}title${goto 50}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.title}}
 ${voffset 3}${offset 5}${color1}album${goto 50}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.album}}
