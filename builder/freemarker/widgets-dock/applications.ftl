@@ -16,7 +16,8 @@ conky.config = {
   <#assign width = 189>
   minimum_width = [=width],      -- conky will add an extra pixel to this  
   maximum_width = [=width],
-  minimum_height = 1040,
+  <#if system == "desktop"><#assign windowHeight=1040><#else><#assign windowHeight=20></#if>
+  minimum_height = [=windowHeight],
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',

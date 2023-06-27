@@ -69,7 +69,7 @@ ${lua add_offsets 0 [=height + gap]}\
 </#if>
 <#if devices?size gt 1>
 ${else}\
-<@networkDetails devices=devices[1..<devices?size] y=y width=width/>
+<@networkDetails devices=devices[1..<devices?size] y=y width=width gap=gap/>
 </#if>
 ${endif}\
 </#macro>
