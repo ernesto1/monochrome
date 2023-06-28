@@ -9,7 +9,7 @@ conky.config = {
   gap_y = 121,
 
   -- window settings
-  minimum_width = 189,      -- conky will add an extra pixel to this  
+  minimum_width = 189,      -- conky will add an extra pixel to this
   maximum_width = 189,
   minimum_height = 351,
   own_window = true,

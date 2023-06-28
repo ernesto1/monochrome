@@ -12,7 +12,7 @@ conky.config = {
 
   -- window settings
   <#assign width = 189>
-  minimum_width = [=width],      -- conky will add an extra pixel to this  
+  minimum_width = [=width],      -- conky will add an extra pixel to this
   maximum_width = [=width],
   minimum_height = 351,
   own_window = true,
