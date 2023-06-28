@@ -41,16 +41,16 @@ while [ true ]; do
   # $ transmission-remote -t active -l
   #     ID   Done       Have  ETA           Up    Down  Ratio  Status       Name
   #    168   100%   11.74 GB  17 days      0.0     0.0   2.47  Seeding      fedora 37.iso
-  #     87   100%    2.96 GB  4 days      12.0     0.0   95.8  Seeding      photo gallery
-  #    126*  100%   114.0 MB  230 days     0.0     0.0    108  Seeding      books
+  #    320    35%   989.0 MB  8 min     1538.0  3620.0   0.14  Up & Down    photo gallery
+  #    126*  100%   114.0 MB  Done      1189.0     0.0    107  Seeding      books
   #    127   100%   16.99 GB  230 days     0.0     0.0   97.7  Idle         magazines   << iddle entries are ignored
   # Sum:            31.69 GB              12.0     0.0
-  transmission-remote -t active -l | grep -E '(Seeding|Downloading)' | sed 's/\.0   /  /g' | sed 's/  \+/:/g' | cut -d ':' -f 6,7,10 | awk -F ':' "{printf \"\${voffset 3}\${offset 5}%-30.30s  %5.5s  %5.5s\n\", \$3, \$1, \$2}" | sort > ${activeFile}.$$
+  transmission-remote -t active -l | grep -E '(Seeding|Downloading|Up & Down)' | sed 's/\.0  /  /g' | sed 's/  \+/:/g' | cut -d ':' -f 6,7,10 | awk -F ':' "{printf \"\${voffset 3}\${offset 5}%-30.30s  %5.5s  %5.5s\n\", \$3, \$1, \$2}" | sort > ${activeFile}.$$
   # Address                                   Flags         Done  Down    Up      Client
   # 72.178.162.10                             ?E            0.0      0.0     0.0  µTorrent 1.8.3
   # 95.168.162.205                            DE            100.0 5349.0     0.0  libTorrent (Rakshasa) 0.13.8
   # 116.121.146.69                            UKEI          42.8     0.0     0.0  qBittorrent 4.4.2
-  transmission-remote -t active -pi | grep -e '^[0-9]' | sed 's/\.0 /  /g'  | sed 's/  \+/:/g' | cut -d ':' -f 1,6 | sort -t . -k 1n -k 2n -k 3n -k 4n | awk -F ':' "{printf \"\${voffset 3}\${offset 5}%-15s  %-13.13s\n\", \$1, \$2}" > ${peersFile}.$$
+  transmission-remote -t active -pi | grep -e '^[0-9]' | sed -r 's/ ([0-9]+)\.0 /\1  /g' | sed 's/  \+/:/g' | cut -d ':' -f 1,4,5,6 | sort -t . -k 1n -k 2n -k 3n -k 4n | awk -F ':' "{printf \"\${voffset 3}\${offset 5}%-15s  %-13.13s  %5.5s  %5.5s\n\", \$1, \$4, \$3, \$2}" | grep -vE '0 +0' > ${peersFile}.$$
   
   mv ${seedingFile}.$$ ${seedingFile}
   mv ${downloadingFile}.$$ ${downloadingFile}

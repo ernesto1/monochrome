@@ -50,13 +50,11 @@ conky.text = [[
 # - the 'remote control' feature enabled in the transmission bittorrent client: edit > preferences > remote
 # - the transmission.bash script running in the background
 # :::::::::::: torrents overview
-${if_running transmission-gt}\
 <#assign y = 0, 
          header = 75, <#-- menu header -->
          body = 71,   <#-- menu window without the header -->
          width = 189, <#-- default menu width -->
          gap = 3>     <#-- empty space between windows -->
-${lua configure_menu [=conky] [=image.primaryColor]-menu-light-edge-bottom [=width?c] 3}\
 <@menu.verticalTable x=0 y=y header=header body=width-header height=body/>
 <#assign y += body + gap>
 ${lua add_offsets 0 [=y?c]}\
@@ -74,17 +72,18 @@ ${voffset [= 7 + gap]}\
 # :::::::::::: active torrents
 ${if_existing [=activeTorrentsFile]}\
 ${if_match ${lines [=activeTorrentsFile]} > 0}\
-<#assign header = 19, miniWindow = 39>
+${lua configure_menu [=conky] [=image.primaryColor]-menu-light-edge-bottom [=width?c] 3}\
+<#assign header = 19, speedCol = 39>
 <@menu.table x=0 y=y width=width header=header bottomEdges=false/>
 <@menu.table x=width+gap y=y width=39 header=header bottomEdges=false/>
-<@menu.table x=width+gap+miniWindow+gap y=y width=39 header=header bottomEdges=false/>
+<@menu.table x=width+gap+speedCol+gap y=y width=39 header=header bottomEdges=false/>
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-peers.png -p 38,[=y+header+22]}\
 <#assign y += header>
 ${lua add_offsets 0 [=header]}\
 ${goto 48}${color1}active torrents${goto 207}up${goto 243}down${voffset 3}
 <#assign maxLines = 25>
 ${color}${lua_parse populate_menu [=activeTorrentsFile] [=maxLines]}${voffset [= 7 + gap]}
-${lua_parse draw_bottom_edges [=width+gap] 39}${lua_parse draw_bottom_edges [=width+gap+miniWindow+gap] 39}\
+${lua_parse draw_bottom_edges [=width+gap] 39}${lua_parse draw_bottom_edges [=width+gap+speedCol+gap] 39}\
 ${lua add_offsets 0 [=gap]}\
 ${endif}\
 ${else}\
@@ -97,16 +96,21 @@ ${endif}\
 # :::::::::::: peers
 ${if_existing [=peersFile]}\
 ${if_match ${lua get peers} > 0}\
-<@menu.table x=0 y=0 width=width header=header bottomEdges=false fixed=false/>
+<#assign ipCol = 98, clientCol = 87>
+${lua configure_menu [=conky] [=image.primaryColor]-menu-light-edge-bottom [=ipCol] 3}\
+<@menu.table x=0 y=0 width=ipCol header=header bottomEdges=false fixed=false/>
+<@menu.table x=ipCol+gap y=0 width=clientCol header=header bottomEdges=false fixed=false/>
+<@menu.table x=width+gap y=0 width=39 header=header bottomEdges=false fixed=false/>
+<@menu.table x=width+gap+speedCol+gap y=0 width=39 header=header bottomEdges=false fixed=false/>
 ${lua add_offsets 0 [=header]}\
-${offset 5}${color1}ip address${goto 108}client${voffset 3}
+${offset 15}${color1}ip address${goto 128}client${goto 207}up${goto 243}down${voffset 3}
 <#assign maxLines = 32>
 ${color}${lua_parse populate_menu [=peersFile]}
+${lua_parse draw_bottom_edges [=ipCol+gap] [=clientCol]}${lua_parse draw_bottom_edges [=width+gap] [=speedCol]}${lua_parse draw_bottom_edges [=width+gap+speedCol+gap] [=speedCol]}\
 ${endif}\
 ${else}\
 <@menu.menu x=0 y=0 width=width height=body fixed=false/>
 ${lua add_offsets 0 [=body + gap]}\
 ${voffset 8}${goto 14}${color}peers input file is missing
-${endif}\
 ${endif}\
 ]];
