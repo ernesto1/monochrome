@@ -13,8 +13,8 @@ conky.config = {
   gap_y = 553,
 
   -- window settings
-  minimum_width = 273,      -- conky will add an extra pixel to this  
-  maximum_width = 273,
+  minimum_width = 275,      -- conky will add an extra pixel to this
+  maximum_width = 275,
   minimum_height = 1035,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
