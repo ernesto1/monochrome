@@ -1,6 +1,4 @@
 #!/bin/bash
-shopt -s extglob    # enable extended globs for filename pattern matching
-
 # script to launch a conky configuration for a particular mode/resolution
 # the 'mode' (laptop/desktop) determines the target folder where all the conky configs will be loaded from
 #
@@ -12,6 +10,9 @@ shopt -s extglob    # enable extended globs for filename pattern matching
 # - the alignment override file must follow the naming convention: layout.<tag>.cfg, ex. layout.laptop.cfg
 # - the tag is provided by the user at runtime with the --layout-override someTag
 # - the override file must exist in the conky target folder
+
+shopt -s extglob    # enable extended globs for filename pattern matching
+. ~/conky/monochrome/logging.bash
 
 function usage() {
   cat <<-END
@@ -63,10 +64,6 @@ function printHeader {
   printf "${GREEN}$1${NOCOLOR}\n"
 }
 
-function logError {
-  printf "${RED}ERROR${NOCOLOR} $1\n" >&2
-}
-
 # kills the monochrome conky and related support jobs that are currently running (if any)
 function killSession {
   printHeader '\n::: killing the currently running processes of this conky suite\n'
@@ -88,12 +85,7 @@ function detectDuplicateEntries {
   fi
 }
 
-
 # ---------- script begins
-NOCOLOR='\033[0m'
-GREEN='\033[32m'
-ORANGE='\033[0;33m'
-RED='\033[0;31m'
 
 # ensure at least one parameter was provided
 if [[ $# < 1 ]]; then
@@ -277,15 +269,8 @@ fi
 
 if ${enableTransmissionPoller}; then
   echo "- bash | transmission bittorrent service"
-
-  if type transmission-remote > /dev/null 2>&1; then
-    echo -e "         ${ORANGE}ensure${NOCOLOR} the ${ORANGE}remote control${NOCOLOR} option is enabled in transmission"
-    ${monochromeHome}/transmission.bash &
-  else
-    msg="the transmission bittorrent client is not installed on this system\n"
-    msg="${msg}      the transmission conky will not be operational"
-    logError "$msg"
-  fi
+  echo -e "         ${ORANGE}ensure${NOCOLOR} the ${ORANGE}remote control${NOCOLOR} option is enabled in transmission"
+  ${monochromeHome}/transmission.bash &
 fi
 
 # :: java applications

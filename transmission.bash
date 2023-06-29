@@ -2,23 +2,22 @@
 # script to retrieve and parse torrent details from the transmission bittorrent client.
 # torrent data is saved as files in the /tmp folder for conky to read.
 
+. ~/conky/monochrome/logging.bash
+
 function onExitSignal {
   log 'received shutdown signal, deleting output files'
   rm -f ${outputDir}/transmission.*
   exit 0
 }
 
-# prints the message using logback compatible formatting
-# arguments:
-#    message  string to print
-function log {
-  local NOCOLOR='\033[0m'
-  local BLUE='\033[0;34m'
-  local ORANGE='\033[0;33m'
-  printf "$(date +'%T.%3N') ${BLUE}INFO  ${ORANGE}$(basename $0)${NOCOLOR} - $1\n"
-}
-
 trap onExitSignal SIGINT SIGTERM
+
+if ! type transmission-remote > /dev/null 2>&1; then
+  msg="the transmission bittorrent client is not installed on this system\n"
+  msg="${msg}      the transmission conky will not be operational"
+  logError "$msg"
+  exit 1
+fi
 
 log 'starting transmission torrent info service'
 outputDir=/tmp/conky
