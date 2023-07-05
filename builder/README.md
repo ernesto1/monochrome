@@ -1,21 +1,16 @@
-# Dynamically building a conky sidebar configuration
-Each section of a sidebar can be thought of as a **block**.  These blocks can be assembled together in order to build a conky sidebar.
+# Build assets
+This directory contains the source code to build the different conky themes and the supporting applications.
 
-Block examples:
+### Conky configuration templates
+Conkys are built using the [java freemarker engine](https://freemarker.apache.org/).  This allows me to:
 
-- CPU
-- Memory
-- Network interface (wifi, ethernet)
-- Disk
-- Power/battery
-- Device temperatures
+- [Dynamically build conky sidebars](dynamicSidebar.md) based on the target device: desktop or laptop
+- Change the conky color scheme
+- See `java-tools/freemarker-configuration`, `buildSidebar.bash` and the `freemarker` directory
 
-With this setup, we have the flexibility to easily rearrange/add blocks in order to customize the sidebar for the type of system we wish to monitor.
+### Java applications
+Supporting java applications will be under the `java-tools` maven project.
 
-![system differences](system-differences.png)
-
-If we compare the use case of monitoring a laptop vs a desktop; a pc will most likely have multiple disks to monitor, while a laptop introduces power implications (on battery, charging, plugged in) not applicable to a desktop.
-
-## Design considerations
-- If a block contains an image, the image's `y coordinate` would **change** depending where in the stack the particular block is placed.
-- The `vertical offset` of the last line or graph in a block must be consistent.  We want to be able to place a block anywhere in the sidebar stack and not have to worry about it's text/graph alignment shifting.
+### Bug tracking
+Any conky issues I've had to compensate for are tracking in this [log](bugLog.md).  
+This may help explain why I had to make certain design decisions.
