@@ -122,12 +122,19 @@ arguments:
                                  \
                                  you have to provide this value here
 ]]
-function conky_configure_menu(theme, image, width, voffset)
+function conky_configure_menu(theme, image, width, voffset, round)
   vars["theme"] = theme;
   vars["image"] = image;
   vars["width"] = tonumber(width);
   vars["textVOffset"] = tonumber(voffset);
+  vars["roundEdges"] = (round == nil) and true or stringToBoolean(round)
   return ''
+end
+
+
+function stringToBoolean(s)
+  local map={ ["true"]=true, ["false"]=false }
+  return map[s]
 end
 
 --[[
@@ -185,13 +192,18 @@ arguments:
 ]]
 function draw_round_bottom_edges(x, y, width)
   local imageRoot = "~/conky/monochrome/images/"
-  local imagePath = imageRoot .. vars["theme"] .. "/" .. vars["image"]
-  local image = imagePath .. "-left.png"
-  local s = build_image_variable(image, x, y)
-  image = imagePath .. "-right.png"
-  -- bottom edge images are 7x7px
-  s = s .. build_image_variable(image, x + width - 7, y)
-  -- add a blank image right below the bottom edge images
+  local s = ''
+    
+  if vars["roundEdges"] then
+    local imagePath = imageRoot .. vars["theme"] .. "/" .. vars["image"]
+    local image = imagePath .. "-left.png"
+    s = build_image_variable(image, x, y)
+    image = imagePath .. "-right.png"
+    -- bottom edge images are 7x7px
+    s = s .. build_image_variable(image, x + width - 7, y)
+    -- add a blank image right below the bottom edge images
+  end
+  
   y = y + 7
   s = s .. build_image_variable(imageRoot .. "menu-blank.png", x, y)
   vars["yOffset"] = y

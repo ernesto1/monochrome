@@ -117,6 +117,8 @@ while (( "$#" )); do
       ;;
     --glass)
       conkyDir=${monochromeHome}/glass
+      enableTransmissionPoller=true
+      torrentNameWidth=25
       shift
       ;;
     --compact)
@@ -246,7 +248,7 @@ do
   fi
   
   conky -c ${conkyConfigPath} "${arguments[@]}" &
-  unset arguments  
+  unset arguments
 done
 
 printHeader "\n::: starting support services\n"
@@ -257,20 +259,26 @@ if ${enablePackageLookup}; then
   echo "- bash | dnf package updates service"
 
   if [[ "${width}" ]]; then
-    dnfParameters=(--width ${width})
+    arguments=(--width ${width})
   fi
   
   if [[ "${versionWidth}" ]]; then
-    dnfParameters+=(--version-width ${versionWidth})
+    arguments+=(--version-width ${versionWidth})
   fi
 
-  ${monochromeHome}/dnfPackageLookup.bash ${dnfParameters[@]} &
+  ${monochromeHome}/dnfPackageLookup.bash ${arguments[@]} &
+  unset arguments
 fi
 
 if ${enableTransmissionPoller}; then
   echo "- bash | transmission bittorrent service"
   echo -e "         ${ORANGE}ensure${NOCOLOR} the ${ORANGE}remote control${NOCOLOR} option is enabled in transmission"
-  ${monochromeHome}/transmission.bash &
+  
+  if [[ "${torrentNameWidth}" ]]; then
+    arguments=(--width ${torrentNameWidth})
+  fi
+  
+  ${monochromeHome}/transmission.bash "${arguments[@]}" &
 fi
 
 # :: java applications

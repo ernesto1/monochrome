@@ -8,8 +8,6 @@
       top cpu             top cpu
       top mem             top mem
                           wifi
-      bittorrent
-      packages            packages (just the package update count)
 
      hence the pletora of conditional statements in this config -->
 conky.config = {
@@ -21,13 +19,14 @@ conky.config = {
   -- window alignment
   alignment = 'top_left',     -- top|middle|bottom_left|middle|right
   gap_x = 121,                    -- same as passing -x at command line
-  gap_y = 42,
+  gap_y = 39,
 
   -- window settings
   <#if system == "desktop"><#assign windowWidth = 219><#else><#assign windowWidth = 159></#if>
   minimum_width = [=windowWidth],
   maximum_width = [=windowWidth],
-  minimum_height = 245,
+  <#if system == "desktop"><#assign windowHeight=363><#else><#assign windowHeight=309></#if>
+  minimum_height = [=windowHeight?c],
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -74,85 +73,48 @@ conky.config = {
 
 conky.text = [[
 <#assign y = 0,
-         header = 19,   <#-- table header height -->
-         space = 3>     <#-- empty space between windows -->
+         header = 19, <#-- table header height -->
+         gap = 3>     <#-- empty space between windows -->
 <#if system == "desktop">
-# ::::::::::::::::: system :::::::::::::::::
+# ::::::::::::::::: system
 <#assign body = 53>
-<@menu.verticaltable theme=conky x=0 y=y header=69 body=150 height=body/>
-<#assign y += body + space>
+<@menu.verticalTable x=0 y=y header=69 body=150 height=body/>
+<#assign y += body + gap>
 ${voffset 3}${offset 29}${color1}kernel${goto 74}${color}${kernel}
 ${voffset 3}${offset 29}${color1}uptime${goto 74}${color}${uptime}
 ${voffset 3}${offset 5}${color1}compositor${goto 74}${color}${execi 3600 echo $XDG_SESSION_TYPE}
-${voffset [=5 + space]}\
+${voffset [=5 + gap]}\
 </#if>
-# ::::::::::::::::: top cpu :::::::::::::::::
+# ::::::::::::::::: top cpu
 <#if system == "desktop"><#assign processes = 8><#else><#assign processes = 6></#if>
 <#assign body = 5 + 16 * processes>
-<@menu.table theme=conky x=0 y=y width=windowWidth header=header body=body/>
-<#assign y += header + body + space>
+<@menu.table x=0 y=y width=windowWidth header=header body=body/>
+<#assign y += header + body + gap>
 ${voffset 2}${offset 5}${color1}process${alignr 5}cpu<#if system == "desktop">   pid</#if>${voffset 4}
 <#list 1..processes as i>
 ${template0 [=i]}
 </#list>
-# ::::::::::::::::: top memory :::::::::::::::::
+# ::::::::::::::::: top memory
 <#assign body = 5 + 16 * processes>
-<@menu.table theme=conky x=0 y=y width=windowWidth header=header body=body/>
-<#assign y += header + body + space>
-${voffset [=7 + space]}${offset 5}${color1}process${alignr 5}mem<#if system == "desktop">   pid</#if>${voffset 4}
+<@menu.table x=0 y=y width=windowWidth header=header body=body/>
+<#assign y += header + body + gap>
+${voffset [=7 + gap]}${offset 5}${color1}process${alignr 5}mem<#if system == "desktop">   pid</#if>${voffset 4}
 <#list 1..processes as i>
 ${template1 [=i]}
 </#list>
 <#if system == "laptop">
-# ::::::::::::::::: wifi network :::::::::::::::::
+# ::::::::::::::::: wifi network
 <#-- TODO only show network details when wifi is online -->
 <#assign body = 39>
-<@menu.verticaltable theme=conky x=0 y=y header=57 body=103 height=body/>
+<@menu.verticalTable x=0 y=y header=57 body=103 height=body/>
 <#assign y += body + 2>
-${voffset [=10 + space]}${offset 5}${color1}network${goto 62}${color}${wireless_essid [=networkDevices[system]?first.name]}
+${voffset [=10 + gap]}${offset 5}${color1}network${goto 62}${color}${wireless_essid [=networkDevices[system]?first.name]}
 ${voffset 3}${offset 5}${color1}local ip${goto 62}${color}${addr [=networkDevices[system]?first.name]}${voffset 5}<#-- since the next table is optional, add the voffset in order to display the table bottom border properly -->
-</#if>
-<#if system == "desktop">
-# ::::::::::::::::: bittorrent & zoom :::::::::::::::::
-<#assign body = 53>
-<@menu.verticaltable theme=conky x=0 y=y header=69 body=91 height=body/>
-<#assign y += body + 2><#-- a 2px mini gap between this table and the next -->
-${voffset [=8 + space]}${offset 41}${color1}zoom${goto 74}${color}${if_running zoom}running${else}off${endif}
-${voffset 3}${offset 5}${color1}bittorrent${goto 74}${color}${tcp_portmon 51413 51413 count} peer(s)
-${voffset 3}${offset 22}${color1}seeding${goto 74}${color}${exec lsof -c transmission -n | grep -v deleted | grep -cE '[0-9]+[a-z|A-Z] +REG +[0-9]+,[0-9]+ +[0-9]{6,}'} file(s)
-# :::::::: bittorrent connection peers :::::::::::::::::
-${if_running transmission-gt}\
-<#assign body = 166>
-<@menu.table theme=conky x=0 y=y width=160 header=header body=body/>
-<#assign y += header + body + space>
-${voffset 9}${offset 5}${color1}ip address${alignr 64}remote port${voffset 5}
-${if_match ${tcp_portmon 51413 51413 count} > 0}\
-<#list 0..9 as x>
-${template2 [=x]}
-</#list>
-${voffset 5}\
-${else}\
-${voffset 66}${offset 23}${color}no peer connections
-${voffset 3}${offset 47}established${voffset 70}
-${endif}\
-${else}\
-${voffset 192}\
-${endif}\
-</#if>
-# ::::::::::::::::: package updates :::::::::::::::::
+# ::::::::::::::::: package updates
 ${if_existing /tmp/conky/dnf.packages.formatted}\
-<#if system == "desktop">
-<@menu.table theme=conky x=0 y=y width=windowWidth header=38 body=1000/>
-${voffset [=3 + space]}${alignc}${color1}dnf package management
-${voffset 3}${alignc}${color}${lines /tmp/conky/dnf.packages.formatted} package update(s) available
-${voffset 8}${offset 5}${color1}package${alignr 5}version
-# the dnf package lookup script refreshes the package list every 10m
-<#assign lines = 47>
-${voffset 2}${color}${execpi 30 head -n [=lines] /tmp/conky/dnf.packages.formatted}${voffset 5}
-<#else>
 <#assign body = 22>
-<@menu.verticaltable theme=conky x=0 y=y header=57 body=103 height=body/>
-${voffset [=3 + space]}${offset 5}${color1}dnf${goto 62}${color}${lines /tmp/conky/dnf.packages.formatted} update(s)${voffset 4}
-</#if>
+<@menu.verticalTable x=0 y=y header=57 body=103 height=body/>
+${voffset [=3 + gap]}${offset 5}${color1}dnf${goto 62}${color}${lines /tmp/conky/dnf.packages.formatted} update(s)${voffset 4}
 ${endif}\
+</#if>
 ]];

@@ -10,7 +10,7 @@ conky.config = {
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
   gap_x = 121,
-  gap_y = 11,
+  gap_y = 10,
 
   -- window settings
   minimum_width = 382,      -- conky will add an extra pixel to this width
@@ -54,7 +54,7 @@ conky.text = [[
 # :::: no player available
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-sound-wave-small.png -p 0,0}\
-<@menu.table theme=conky x=49 y=0 width=110 header=3 body=43/>
+<@menu.table x=49 y=0 width=110 header=3 body=43/>
 ${voffset 10}${goto 55}${color1}now playing
 ${voffset 4}${goto 55}${color}no player running\
 ${else}\

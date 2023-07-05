@@ -1,29 +1,29 @@
-<#-- creates a composite table image with the given dimensions
- theme = conky theme to source images from
+<#import "/lib/menu-common.ftl" as cmn>
 
+<#-- creates a composite table image with the given dimensions
  (x,y)
     +-------------+                          -+-
     |-------------| < header height (px)      |
     |             |                           |
-    |             | body height (px)        height
+    |             | body height (px)        height = header + body
     |             |                           |
     |             |                           |
     +-------------+                          -+-
        width (px)
  -->
-<#macro table theme x y width header body>
+<#macro table x y width header body=200 bottomEdges=true fixed=true>
 # ------- composite table image -------
-${image ~/conky/monochrome/images/[=theme]/[=image.primaryColor]-menu-dark.png -p [=x?c],[=y?c]}\
-${image ~/conky/monochrome/images/[=theme]/[=image.primaryColor]-menu-light.png -p [=x?c],[=(y+header)?c]}\
-${image ~/conky/monochrome/images/menu-blank.png -p [=(x+width)?c],[=y?c]}\
-${image ~/conky/monochrome/images/menu-blank.png -p [=x?c],[=(y + header + body)?c]}\
+<@cmn.drawImage filePath="~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-dark.png" x=x y=y fixed=fixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-light.png" x=x y=y+header fixed=fixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/menu-blank.png" x=x+width y=y fixed=fixed/>
+<#if bottomEdges>
+<@cmn.drawImage filePath="~/conky/monochrome/images/menu-blank.png" x=x y=y+header+body fixed=fixed/>
+</#if>
 # --------- end of table image --------
 </#macro>
 
 
 <#-- creates a composite vertical table image with the given dimensions
- theme = conky theme to source images from
-
  (x,y)
     +---------+--------------------+
     |         |                    |
@@ -35,11 +35,33 @@ ${image ~/conky/monochrome/images/menu-blank.png -p [=x?c],[=(y + header + body)
      header       body width (px)
      width (px)
  -->
-<#macro verticaltable theme x y header body height>
+<#macro verticalTable x y header body height>
 # --- composite vertical table image ---
-${image ~/conky/monochrome/images/[=theme]/[=image.primaryColor]-menu-dark.png -p [=x?c],[=y?c]}\
-${image ~/conky/monochrome/images/[=theme]/[=image.primaryColor]-menu-light.png -p [=(x+header)?c],[=y?c]}\
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-dark.png -p [=x?c],[=y?c]}\
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-light.png -p [=(x+header)?c],[=y?c]}\
 ${image ~/conky/monochrome/images/menu-blank.png -p [=(x+header+body)?c],[=y?c]}\
 ${image ~/conky/monochrome/images/menu-blank.png -p [=x?c],[=(y+height)?c]}\
 # --------- end of table image ---------
+</#macro>
+
+
+<#-- creates a composite menu image with the given dimensions
+ (x,y)
+    ╭─────────────╮      -+-
+    │             │       |
+    │             │       |
+    │             │     height (px)
+    │             │       |
+    │             │       |
+    ╰─────────────╯      -+-
+       width (px)
+ -->
+<#macro menu x y width height isDark=false bottomEdges=true fixed=true>
+# ----------- menu image ------------
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-light.png -p [=x?c],[=y?c]}\
+${image ~/conky/monochrome/images/menu-blank.png -p [=(x+width)?c],[=y?c]}\
+<#if bottomEdges>
+${image ~/conky/monochrome/images/menu-blank.png -p [=x?c],[=(y + height)?c]}\
+</#if>
+# -------- end of menu image ---------
 </#macro>
