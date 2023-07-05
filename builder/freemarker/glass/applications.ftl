@@ -48,11 +48,11 @@ conky.config = {
 conky.text = [[
 <#assign y = 0,
          header = 75,
-         height = 23,
+         height = 22,
          gap = 3>     <#-- empty space between windows -->
 <@menu.verticalTable x=0 y=y header=header body=159-header height=height/>
 ${lua add_offsets 0 [= height + gap]}\
-${voffset [=2 + gap]}${offset 5}${color1}zoom${goto 81}${color}${if_running zoom}running${else}off${endif}
+${voffset [=1 + gap]}${offset 5}${color1}zoom${goto 81}${color}${if_running zoom}running${else}off${endif}
 ${voffset [= 7 + gap]}\
 <#assign y += height + gap, height = 87>
 <@menu.verticalTable x=0 y=y header=header body=159-header height=height/>
@@ -73,17 +73,17 @@ ${voffset [= 7 + gap]}\
 # :::::::::::: active torrents
 ${if_existing [=activeTorrentsFile]}\
 ${if_match ${lua get active} > 0}\
-<#assign header = 19, width = 159, speedCol = 39>
+<#assign header = 19, width = 159, speedCol = 39, colGap = 3>
 <@menu.table x=0 y=y width=width header=header bottomEdges=false/>
-<@menu.table x=width+gap y=y width=speedCol header=header bottomEdges=false/>
-<@menu.table x=width+gap+speedCol+gap y=y width=speedCol header=header bottomEdges=false/>
-${lua configure_menu [=conky] [=image.primaryColor]-menu-light-edge-bottom [=width?c] 3}\
+<@menu.table x=width+colGap y=y width=speedCol header=header bottomEdges=false/>
+<@menu.table x=width+colGap+speedCol+colGap y=y width=speedCol header=header bottomEdges=false/>
+${lua configure_menu [=conky] [=image.primaryColor]-menu-light-edge-bottom [=width?c] 3 false}\
 ${lua add_offsets 0 [=header]}\
 ${offset 5}${color1}active torrents${goto 186}up${offset 18}down${voffset 3}
 <#assign maxLines = 10>
 ${color}${color}${lua_parse populate_menu [=activeTorrentsFile] [=maxLines] 3}
 ${voffset [= 7 + gap]}\
-${lua_parse draw_bottom_edges [=width+gap] 39}${lua_parse draw_bottom_edges [=width+gap+speedCol+gap] 39}\
+${lua_parse draw_bottom_edges [=width+colGap] 39}${lua_parse draw_bottom_edges [=width+colGap+speedCol+colGap] 39}\
 ${lua add_offsets 0 [=gap]}\
 ${endif}\
 ${else}\
@@ -97,14 +97,18 @@ ${endif}\
 # ::::::::::::::::: package updates :::::::::::::::::
 ${if_existing /tmp/conky/dnf.packages.formatted}\
 <#assign packagesFile = "/tmp/conky/dnf.packages.formatted", 
-         header = 36,
-         width = 219>
+         header = 75,
+         height = 22>
+<@menu.verticalTable x=0 y=0 header=header body=159-header height=height fixed=false/>
+${lua add_offsets 0 [= height + gap]}\
+${voffset 2}${offset 5}${color1}dnf${goto 81}${color}${lines [=packagesFile]} packages
+${voffset [= 7 + gap]}\
+<#assign header = 19, versionCol = 51>
 <@menu.table x=0 y=0 width=width header=header bottomEdges=false fixed=false/>
-${lua configure_menu [=conky] [=image.primaryColor]-menu-light-edge-bottom [=width?c] 2}\
-${lua add_offsets 0 [=header + 19]}\
-${goto 45}${color1}dnf package management
-${voffset 3}${goto 20}${color}${lines [=packagesFile]} package update(s) available
-${voffset 7}${offset 5}${color1}package${goto 174}version${voffset 4}
+<@menu.table x=width+colGap y=0 width=versionCol header=header bottomEdges=false fixed=false/>
+${lua configure_menu [=conky] [=image.primaryColor]-menu-light-edge-bottom [=width?c] 2 false}\
+${lua add_offsets 0 [=header]}\
+${offset 5}${color1}package${goto 168}version${voffset 4}
 <#assign maxLines = 44>
 ${color}${lua_parse populate_menu [=packagesFile] [=maxLines] 900}
 ${endif}\

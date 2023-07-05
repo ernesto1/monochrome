@@ -62,7 +62,7 @@ fi
 
 log 'starting dnf repo package lookup'
 log "output list of new packages will be of ${width} characters"
-packageWidth=$(( width - versionWidth - 1 ))  # width for the package name column
+packageWidth=$(( width - versionWidth - 2 ))  # width for the package name column
 outputDir=/tmp/conky
 mkdir -p ${outputDir}
 totalCores=$(grep -c processor /proc/cpuinfo)
@@ -104,7 +104,7 @@ while [ true ]; do
         # - an ${offset} is added to each line in order for the package list to be printed with a left border
         # - packages of interest are surrounded by a ${color} variable in order to have them highlighted
         highlightRegex='kernel\|firefox\|transmission'
-        cat ${packagesFile} | awk "{ printf \"%-${packageWidth}.${packageWidth}s %${versionWidth}.${versionWidth}s\n\", \$1, \$2 }" \
+        cat ${packagesFile} | awk "{ printf \"%-${packageWidth}.${packageWidth}s  %${versionWidth}.${versionWidth}s\n\", \$1, \$2 }" \
         | sed 's/^/${voffset 2}${offset 5}/' \
         | sed "s:\($highlightRegex\):$\{color2\}\1$\{color\}:" > ${outputDir}/dnf.packages.formatted
     else

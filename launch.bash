@@ -105,7 +105,7 @@ while (( "$#" )); do
   case $1 in
     --widgets)
       conkyDir=${monochromeHome}/widgets
-      width=32      
+      width=32
       enableMusicPlayerListener=false
       shift
       ;;
@@ -117,6 +117,7 @@ while (( "$#" )); do
       ;;
     --glass)
       conkyDir=${monochromeHome}/glass
+      width=34
       enableTransmissionPoller=true
       torrentNameWidth=25
       shift
