@@ -8,12 +8,12 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 121,
+  gap_x = 123,
   gap_y = 10,
 
   -- window settings
-  minimum_width = 382,      -- conky will add an extra pixel to this width
-  maximum_width = 382,
+  minimum_width = 373,      -- conky will add an extra pixel to this width
+  maximum_width = 373,
   minimum_height = 46,      -- conky will add an extra pixel to this height
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -65,14 +65,14 @@ ${else}\
 # :::::::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
 ${image ~/conky/monochrome/images/glass/blue-music-player-album.png -p 0,0}\
-${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 146x146 7,7}\
+${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 146x146 6,7}\
 # having album art will push the track details text & images towards the bottom right
-${lua add_offsets 94 86}\
+${lua add_offsets 91 84}\
 # ::: player header
-${voffset 67}${goto 171}${color1}\
+${voffset 64}${goto 168}${color1}\
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}now playing on\
 ${else}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}${endif}\
-${goto 310}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}${voffset 6}
+${goto 310}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}${voffset 7}
 # :::::::: no album art
 ${else}\
 ${image ~/conky/monochrome/images/glass/blue-sound-wave.png -p 0,0}\
@@ -82,13 +82,13 @@ ${lua_parse draw_image ~/conky/monochrome/images/glass/blue-menu-dark.png 71 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/glass/blue-menu-light.png 116 0}\
 # add blank out images to ensure the menu image comes out correctly
 # right side
-${lua_parse draw_image ~/conky/monochrome/images/menu-blank.png 290 0}\
+${lua_parse draw_image ~/conky/monochrome/images/menu-blank.png 282 0}\
 # bottom
 ${lua_parse draw_image ~/conky/monochrome/images/menu-blank.png 71 69}${lua_parse draw_image ~/conky/monochrome/images/menu-blank.png 96 69}\
-${voffset 3}${lua_parse add_x_offset goto 77}${color1}title${lua_parse add_x_offset goto 122}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.title} 27}
-${voffset 3}${lua_parse add_x_offset goto 77}${color1}album${lua_parse add_x_offset goto 122}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.album} 27}
-${voffset 3}${lua_parse add_x_offset goto 77}${color1}artist${lua_parse add_x_offset goto 122}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.artist} 27}
-${voffset 3}${lua_parse add_x_offset goto 77}${color1}genre${lua_parse add_x_offset goto 122}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.genre} 27}\
+${voffset 3}${lua_parse add_x_offset goto 77}${color1}title${lua_parse add_x_offset goto 122}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.title} 26}
+${voffset 3}${lua_parse add_x_offset goto 77}${color1}album${lua_parse add_x_offset goto 122}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.album} 26}
+${voffset 3}${lua_parse add_x_offset goto 77}${color1}artist${lua_parse add_x_offset goto 122}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.artist} 26}
+${voffset 3}${lua_parse add_x_offset goto 77}${color1}genre${lua_parse add_x_offset goto 122}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.genre} 26}\
 ${endif}\
 # the final vertical offset required depends on what UI is active
 ${voffset 5}${if_existing /tmp/conky/musicplayer.albumArtPath}${voffset 5}${endif}\

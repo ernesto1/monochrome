@@ -53,7 +53,7 @@
     │             │     height (px)
     │             │       |
     │             │       |
-    ╰─────────────╯      -+-
+    ╰─────────────╯      -+-      TODO implement isDark & fixed functionalities
        width (px)
  -->
 <#macro menu x y width height isDark=false bottomEdges=true fixed=true>

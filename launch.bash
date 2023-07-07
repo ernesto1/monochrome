@@ -95,37 +95,33 @@ fi
 
 # define default variables
 monochromeHome=~/conky/monochrome
-versionWidth=7                    # number of characters to print for the package version updates output
 # enable/disable supporting scripts/java apps
 enablePackageLookup=true
 enableMusicPlayerListener=true
-enableTransmissionPoller=false
+enableTransmissionPoller=true
 
 while (( "$#" )); do
   case $1 in
     --widgets)
-      conkyDir=${monochromeHome}/widgets
-      width=32
-      enableMusicPlayerListener=false
       shift
+      conkyDir=${monochromeHome}/widgets
+      numCharacters=24
+      enableMusicPlayerListener=false
       ;;
     --widgets-dock)
-      conkyDir=${monochromeHome}/widgets-dock
-      width=30
-      enableTransmissionPoller=true
       shift
+      conkyDir=${monochromeHome}/widgets-dock
       ;;
     --glass)
-      conkyDir=${monochromeHome}/glass
-      width=34
-      enableTransmissionPoller=true
-      torrentNameWidth=25
       shift
+      conkyDir=${monochromeHome}/glass
+      numCharacters=25
+      offset=10
       ;;
     --compact)
-      conkyDir=${monochromeHome}/compact
-      width=30
       shift
+      conkyDir=${monochromeHome}/compact
+      enableTransmissionPoller=false
       ;;
     --monitor)
       # TODO validate a proper number was provided to the monitor flag
@@ -259,12 +255,12 @@ printHeader "\n::: starting support services\n"
 if ${enablePackageLookup}; then
   echo "- bash | dnf package updates service"
 
-  if [[ "${width}" ]]; then
-    arguments=(--width ${width})
+  if [[ "${numCharacters}" ]]; then
+    arguments=(--package-width ${numCharacters})
   fi
   
-  if [[ "${versionWidth}" ]]; then
-    arguments+=(--version-width ${versionWidth})
+  if [[ "${offset}" ]]; then
+    arguments+=(--offset ${offset})
   fi
 
   ${monochromeHome}/dnfPackageLookup.bash ${arguments[@]} &
@@ -275,11 +271,16 @@ if ${enableTransmissionPoller}; then
   echo "- bash | transmission bittorrent service"
   echo -e "         ${ORANGE}ensure${NOCOLOR} the ${ORANGE}remote control${NOCOLOR} option is enabled in transmission"
   
-  if [[ "${torrentNameWidth}" ]]; then
-    arguments=(--width ${torrentNameWidth})
+  if [[ "${numCharacters}" ]]; then
+    arguments=(--name-width ${numCharacters})
+  fi
+  
+  if [[ "${offset}" ]]; then
+    arguments+=(--offset ${offset})
   fi
   
   ${monochromeHome}/transmission.bash "${arguments[@]}" &
+  unset arguments
 fi
 
 # :: java applications
@@ -291,7 +292,7 @@ if ${enableMusicPlayerListener}; then
   musicJar=(${monochromeHome}/java/music-player-*.jar)
   
   if [[ -f "${musicJar[0]}" ]]; then
-    java -jar ${monochromeHome}/java/music-player-*.jar &   # assumes only 1 version of the jar will exist in the folder
+    java -jar ${musicJar[0]} &   # if multiple jars are available, one will be picked at random
   else
     msg="the music player jar has not been compiled and deployed to the ${monochromeHome}/java directory\n"
     msg="${msg}      the 'now playing' conky will not work properly"

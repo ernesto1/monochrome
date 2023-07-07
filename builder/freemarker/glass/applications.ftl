@@ -9,7 +9,7 @@ conky.config = {
 
   -- window alignment
   alignment = 'top_left',  -- top|middle|bottom_left|right
-  gap_x = 121,
+  gap_x = 123,
   gap_y = 405,
 
   -- window settings
@@ -73,13 +73,13 @@ ${voffset [= 7 + gap]}\
 # :::::::::::: active torrents
 ${if_existing [=activeTorrentsFile]}\
 ${if_match ${lua get active} > 0}\
-<#assign header = 19, width = 159, speedCol = 39, colGap = 3>
+<#assign header = 19, width = 159, speedCol = 39, colGap = 1>
 <@menu.table x=0 y=y width=width header=header bottomEdges=false/>
 <@menu.table x=width+colGap y=y width=speedCol header=header bottomEdges=false/>
 <@menu.table x=width+colGap+speedCol+colGap y=y width=speedCol header=header bottomEdges=false/>
 ${lua configure_menu [=conky] [=image.primaryColor]-menu-light-edge-bottom [=width?c] 3 false}\
 ${lua add_offsets 0 [=header]}\
-${offset 5}${color1}active torrents${goto 186}up${offset 18}down${voffset 3}
+${offset 5}${color1}active torrents${goto 184}up${offset 16}down${voffset 3}
 <#assign maxLines = 10>
 ${color}${color}${lua_parse populate_menu [=activeTorrentsFile] [=maxLines] 3}
 ${voffset [= 7 + gap]}\
@@ -97,19 +97,19 @@ ${endif}\
 # ::::::::::::::::: package updates :::::::::::::::::
 ${if_existing /tmp/conky/dnf.packages.formatted}\
 <#assign packagesFile = "/tmp/conky/dnf.packages.formatted", 
-         header = 75,
+         header = 27,
          height = 22>
 <@menu.verticalTable x=0 y=0 header=header body=159-header height=height fixed=false/>
 ${lua add_offsets 0 [= height + gap]}\
-${voffset 2}${offset 5}${color1}dnf${goto 81}${color}${lines [=packagesFile]} packages
+${voffset 2}${offset 5}${color1}dnf${goto 33}${color}${lines [=packagesFile]} package updates
 ${voffset [= 7 + gap]}\
 <#assign header = 19, versionCol = 51>
 <@menu.table x=0 y=0 width=width header=header bottomEdges=false fixed=false/>
 <@menu.table x=width+colGap y=0 width=versionCol header=header bottomEdges=false fixed=false/>
 ${lua configure_menu [=conky] [=image.primaryColor]-menu-light-edge-bottom [=width?c] 2 false}\
 ${lua add_offsets 0 [=header]}\
-${offset 5}${color1}package${goto 168}version${voffset 4}
-<#assign maxLines = 44>
+${offset 5}${color1}package${goto 166}version${voffset 4}
+<#assign maxLines = 45>
 ${color}${lua_parse populate_menu [=packagesFile] [=maxLines] 900}
 ${endif}\
 ]]

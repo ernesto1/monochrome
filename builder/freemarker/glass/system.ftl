@@ -18,11 +18,11 @@ conky.config = {
 
   -- window alignment
   alignment = 'top_left',     -- top|middle|bottom_left|middle|right
-  gap_x = 121,                    -- same as passing -x at command line
+  gap_x = 123,                    -- same as passing -x at command line
   gap_y = 39,
 
   -- window settings
-  <#if system == "desktop"><#assign windowWidth = 250><#else><#assign windowWidth = 159></#if>
+  <#if system == "desktop"><#assign windowWidth = 246><#else><#assign windowWidth = 159></#if>
   minimum_width = [=windowWidth],
   maximum_width = [=windowWidth],
   <#if system == "desktop"><#assign windowHeight=363><#else><#assign windowHeight=309></#if>
@@ -64,11 +64,17 @@ conky.config = {
   
   -- templates
   -- top cpu process
-  template0 = [[${voffset 3}${offset 5}${color}${top name \1}${alignr 5}${top cpu \1}%<#if system == "desktop">  ${top pid \1}</#if>]],
+  <#if system == "desktop">
+  template0 = [[${voffset 3}${offset 5}${color}${top name \1}${offset 4}${top cpu \1}%${offset 10}${top pid \1}]],
+  <#else>
+  template0 = [[${voffset 3}${offset 5}${color}${top name \1}${alignr 5}${top cpu \1}%]],
+  </#if>
   -- top mem process
-  template1 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${alignr 5}${top_mem mem_res \1}<#if system == "desktop">  ${top_mem pid \1}</#if>]],
-  -- torrent peer ip/port: ${template3 #}
-  template2 = [[${voffset 3}${offset 5}${color}${tcp_portmon 51413 51413 rip \1}${alignr 64}${tcp_portmon 51413 51413 rport \1}]]
+  <#if system == "desktop">
+  template1 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${offset 10}${top_mem mem_res \1}${offset 10}${top_mem pid \1}]]
+  <#else>
+  template1 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${alignr 5}${top_mem mem_res \1}]]
+  </#if>
 };
 
 conky.text = [[
@@ -78,7 +84,7 @@ conky.text = [[
 <#if system == "desktop">
 # ::::::::::::::::: system
 <#assign height = 53> 
-<@menu.verticalTable x=0 y=y header=69 body=138 height=height/>
+<@menu.verticalTable x=0 y=y header=69 body=136 height=height/>
 <#assign y += height + gap>
 ${voffset 3}${offset 29}${color1}kernel${goto 74}${color}${kernel}
 ${voffset 3}${offset 29}${color1}uptime${goto 74}${color}${uptime}
@@ -86,7 +92,7 @@ ${voffset 3}${offset 5}${color1}compositor${goto 74}${color}${execi 3600 echo $X
 ${voffset [=5 + gap]}\
 </#if>
 # ::::::::::::::::: top cpu
-<#if system == "desktop"><#assign processes = 8, width = 159, smallCol = 45, colGap = 3>
+<#if system == "desktop"><#assign processes = 8, width = 159, smallCol = 45, colGap = 1>
 <#else><#assign processes = 6, width = windowWidth></#if>
 <#assign body = 5 + 16 * processes>
 <@menu.table x=0 y=y width=width header=header body=body/>
@@ -95,7 +101,11 @@ ${voffset [=5 + gap]}\
 <@menu.table x=width+colGap+smallCol+colGap y=y width=smallCol-6 header=header body=body/>
 </#if>
 <#assign y += header + body + gap>
-${voffset 2}${offset 5}${color1}process${alignr 5}cpu<#if system == "desktop">    pid</#if>${voffset 4}
+<#if system == "desktop">
+${voffset 2}${offset 5}${color1}process${goto 183}cpu${goto 223}pid${voffset 4}
+<#else>
+${voffset 2}${offset 5}${color1}process${alignr 5}cpu${voffset 4}
+</#if>
 <#list 1..processes as i>
 ${template0 [=i]}
 </#list>
@@ -107,7 +117,11 @@ ${template0 [=i]}
 <@menu.table x=width+colGap+smallCol+colGap y=y width=smallCol-6 header=header body=body/>
 </#if>
 <#assign y += header + body + gap>
-${voffset [=7 + gap]}${offset 5}${color1}process${alignr 5}mem<#if system == "desktop">    pid</#if>${voffset 4}
+<#if system == "desktop">
+${voffset [=7 + gap]}${offset 5}${color1}process${goto 183}mem${goto 223}pid${voffset 4}
+<#else>
+${voffset [=7 + gap]}${offset 5}${color1}process${alignr 5}mem${voffset 4}
+</#if>
 <#list 1..processes as i>
 ${template1 [=i]}
 </#list>
