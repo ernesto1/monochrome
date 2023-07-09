@@ -7,7 +7,8 @@
       o/s
       top cpu             top cpu
       top mem             top mem
-                          wifi
+      zoom                wifi
+                          dnf
 
      hence the pletora of conditional statements in this config -->
 conky.config = {
@@ -25,7 +26,7 @@ conky.config = {
   <#if system == "desktop"><#assign windowWidth = 246><#else><#assign windowWidth = 159></#if>
   minimum_width = [=windowWidth],
   maximum_width = [=windowWidth],
-  <#if system == "desktop"><#assign windowHeight=363><#else><#assign windowHeight=309></#if>
+  <#if system == "desktop"><#assign windowHeight=397><#else><#assign windowHeight=309></#if>
   minimum_height = [=windowHeight?c],
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -125,19 +126,24 @@ ${voffset [=7 + gap]}${offset 5}${color1}process${alignr 5}mem${voffset 4}
 <#list 1..processes as i>
 ${template1 [=i]}
 </#list>
-<#if system == "laptop">
+${voffset [= 7 + gap]}\
+<#if system == "desktop">
+<#assign header = 75, height = 22>
+<@menu.verticalTable x=0 y=y header=header body=159-header height=height/>
+${voffset 2}${offset 5}${color1}zoom${goto 81}${color}${if_running zoom}running${else}off${endif}
+<#else>
 # ::::::::::::::::: wifi network
 <#-- TODO only show network details when wifi is online -->
-<#assign body = 39>
-<@menu.verticalTable x=0 y=y header=57 body=103 height=body/>
-<#assign y += body + 2>
-${voffset [=10 + gap]}${offset 5}${color1}network${goto 62}${color}${wireless_essid [=networkDevices[system]?first.name]}
-${voffset 3}${offset 5}${color1}local ip${goto 62}${color}${addr [=networkDevices[system]?first.name]}${voffset 5}<#-- since the next table is optional, add the voffset in order to display the table bottom border properly -->
+<#assign header = 57, height = 39>
+<@menu.verticalTable x=0 y=y header=header body=windowWidth-header height=height/>
+<#assign y += height + 2>
+${voffset 3}${offset 5}${color1}network${goto 62}${color}${wireless_essid [=networkDevices[system]?first.name]}
+${voffset 3}${offset 5}${color1}local ip${goto 62}${color}${addr [=networkDevices[system]?first.name]}${voffset [=8 + gap]}
 # ::::::::::::::::: package updates
 ${if_existing /tmp/conky/dnf.packages.formatted}\
-<#assign body = 22>
-<@menu.verticalTable x=0 y=y header=57 body=103 height=body/>
-${voffset [=3 + gap]}${offset 5}${color1}dnf${goto 62}${color}${lines /tmp/conky/dnf.packages.formatted} update(s)${voffset 4}
+<#assign height = 22>
+<@menu.verticalTable x=0 y=y header=header body=windowWidth-header height=height/>
+${offset 5}${color1}dnf${goto 62}${color}${lines /tmp/conky/dnf.packages.formatted} update(s)${voffset 4}
 ${endif}\
 </#if>
 ]];

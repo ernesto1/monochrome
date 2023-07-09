@@ -12,7 +12,7 @@ conky.config = {
   -- window settings
   minimum_width = 246,
   maximum_width = 246,
-  minimum_height = 363,
+  minimum_height = 397,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -121,4 +121,12 @@ ${template1 5}
 ${template1 6}
 ${template1 7}
 ${template1 8}
+${voffset 10}\
+# --- composite vertical table image ---
+${image ~/conky/monochrome/images/glass/blue-menu-dark.png -p 0,366}\
+${image ~/conky/monochrome/images/glass/blue-menu-light.png -p 75,366}\
+${image ~/conky/monochrome/images/menu-blank.png -p 159,366}\
+${image ~/conky/monochrome/images/menu-blank.png -p 0,388}\
+# --------- end of table image ---------
+${voffset 2}${offset 5}${color1}zoom${goto 81}${color}${if_running zoom}running${else}off${endif}
 ]];

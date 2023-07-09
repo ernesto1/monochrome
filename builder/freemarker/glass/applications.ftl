@@ -10,7 +10,7 @@ conky.config = {
   -- window alignment
   alignment = 'top_left',  -- top|middle|bottom_left|right
   gap_x = 123,
-  gap_y = 405,
+  gap_y = 430,
 
   -- window settings
   minimum_width = 245,      -- conky will add an extra pixel to this  
@@ -48,13 +48,8 @@ conky.config = {
 conky.text = [[
 <#assign y = 0,
          header = 75,
-         height = 22,
+         height = 87,
          gap = 3>     <#-- empty space between windows -->
-<@menu.verticalTable x=0 y=y header=header body=159-header height=height/>
-${lua add_offsets 0 [= height + gap]}\
-${voffset [=1 + gap]}${offset 5}${color1}zoom${goto 81}${color}${if_running zoom}running${else}off${endif}
-${voffset [= 7 + gap]}\
-<#assign y += height + gap, height = 87>
 <@menu.verticalTable x=0 y=y header=header body=159-header height=height/>
 <#assign y += height + gap>
 ${lua add_offsets 0 [= height + gap]}\
@@ -64,7 +59,7 @@ ${lua add_offsets 0 [= height + gap]}\
          downloadingFile = inputDir + "/transmission.downloading",
          idleFile = inputDir + "/transmission.idle",
          activeTorrentsFile = inputDir + "/transmission.active">
-${voffset 3}${offset 5}${color1}swarm${goto 81}${color}${if_existing [=peersFile]}${lua pad ${lua get peers ${lines [=peersFile]}}} peers${else}file missing${endif}
+${voffset [=2 + gap]}${offset 5}${color1}swarm${goto 81}${color}${if_existing [=peersFile]}${lua pad ${lua get peers ${lines [=peersFile]}}} peers${else}file missing${endif}
 ${voffset 3}${offset 5}${color1}active${goto 81}${color}${if_existing [=activeTorrentsFile]}${lua pad ${lua get active ${lines [=activeTorrentsFile]}}} torrents${else}file missing${endif}
 ${voffset 3}${offset 5}${color1}seeding${goto 81}${color}${if_existing [=seedingFile]}${lua pad ${lines [=seedingFile]}} torrents${else}file missing${endif}
 ${voffset 3}${offset 5}${color1}downloading${goto 81}${color}${if_existing [=downloadingFile]}${lua pad ${lines [=downloadingFile]}} torrents${else}file missing${endif}
