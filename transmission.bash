@@ -13,6 +13,7 @@ function usage {
 function onExitSignal {
   log 'received shutdown signal, deleting output files'
   rm -f ${outputDir}/transmission.*
+  kill $(jobs -p)     # kill any child processes, ie. the sleep command
   exit 0
 }
 
@@ -106,5 +107,6 @@ while [ true ]; do
   mv ${activeFile}.$$ ${activeFile}
   mv ${peersFile}.$$ ${peersFile}
   
-  sleep 3s
+  sleep 3s &  # run sleep in the background so we can kill it if we get a termination signal
+  wait        # wait for the sleep process to complete
 done

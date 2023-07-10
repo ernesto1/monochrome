@@ -5,6 +5,8 @@
 # the list of new package updates are written to the output file: dnf.packages.formatted
 # conky variables are introduced in order for the data to be properly formatted for conky to display
 
+. ~/conky/monochrome/logging.bash
+
 function usage {
   echo $(basename $0) [--package-width n] [--version-width n] [--offset n]
   echo 'where package width is the number of characters to print for the pacakge name'
@@ -17,16 +19,6 @@ function onExitSignal {
   rm -f ${outputDir}/dnf.packages.formatted    # file read by conky
   kill $(jobs -p)     # kill any child processes, ie. the sleep command
   exit 0
-}
-
-# prints the message using logback compatible formatting
-# arguments:
-#    message  string to print
-function log {
-  local NOCOLOR='\033[0m'
-  local BLUE='\033[0;34m'
-  local ORANGE='\033[0;33m'
-  printf "$(date +'%T.%3N') ${BLUE}INFO  ${ORANGE}$(basename $0)${NOCOLOR} - $1\n"
 }
 
 trap onExitSignal SIGINT SIGTERM
