@@ -8,10 +8,9 @@ conky.config = {
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'bottom_right',  -- top|middle|bottom_left|right
-  <#if conky == "widgets-dock"><#assign x = 142, y = 119><#else><#assign x = 5, y = 5></#if>
-  gap_x = [=x],
-  gap_y = [=y],
+  alignment = 'bottom_left',  -- top|middle|bottom_left|right
+  gap_x = 205,
+  gap_y = 8,
 
   -- window settings
   <#assign width = 189>

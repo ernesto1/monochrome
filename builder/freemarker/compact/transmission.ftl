@@ -10,7 +10,7 @@ conky.config = {
   -- window alignment
   alignment = 'top_left',  -- header|middle|bottom_left|right
   gap_x = 205,
-  gap_y = 572,
+  gap_y = 659,
 
   -- window settings
   minimum_width = 275,      -- conky will add an extra pixel to this
@@ -81,7 +81,7 @@ ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-peers.png 
 <#assign y += header>
 ${lua add_offsets 0 [=header]}\
 ${goto 48}${color1}active torrents${goto 207}up${goto 243}down${voffset 3}
-<#assign maxLines = 25>
+<#assign maxLines = 17>
 ${color}${lua_parse populate_menu [=activeTorrentsFile] [=maxLines]}${voffset [= 7 + gap]}
 ${lua_parse draw_bottom_edges [=width+gap] 39}${lua_parse draw_bottom_edges [=width+gap+speedCol+gap] 39}\
 ${lua add_offsets 0 [=gap]}\
@@ -96,7 +96,7 @@ ${endif}\
 # :::::::::::: peers
 ${if_existing [=peersFile]}\
 ${if_match ${lua get peers} > 0}\
-<#assign ipCol = 98, clientCol = 87>
+<#assign ipCol = 99, clientCol = 87>
 ${lua configure_menu [=conky] [=image.primaryColor]-menu-light-edge-bottom [=ipCol] 3}\
 <@menu.table x=0 y=0 width=ipCol header=header bottomEdges=false fixed=false/>
 <@menu.table x=ipCol+gap y=0 width=clientCol header=header bottomEdges=false fixed=false/>
@@ -104,7 +104,7 @@ ${lua configure_menu [=conky] [=image.primaryColor]-menu-light-edge-bottom [=ipC
 <@menu.table x=width+gap+speedCol+gap y=0 width=39 header=header bottomEdges=false fixed=false/>
 ${lua add_offsets 0 [=header]}\
 ${offset 15}${color1}ip address${goto 128}client${goto 207}up${goto 243}down${voffset 3}
-<#assign maxLines = 32>
+<#assign maxLines = 16>
 ${color}${lua_parse populate_menu [=peersFile]}
 ${lua_parse draw_bottom_edges [=ipCol+gap] [=clientCol]}${lua_parse draw_bottom_edges [=width+gap] [=speedCol]}${lua_parse draw_bottom_edges [=width+gap+speedCol+gap] [=speedCol]}\
 ${endif}\

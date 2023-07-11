@@ -8,9 +8,9 @@ conky.config = {
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'middle_right',  -- top|middle|bottom_left|right
-  gap_x = 5,
-  gap_y = 125,
+  alignment = 'top_left',  -- top|middle|bottom_left|right
+  gap_x = 205,
+  gap_y = 40,
 
   -- window settings
   <#assign width = 189>
@@ -62,7 +62,7 @@ ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-menu-dnf.png -p 
 ${voffset 2}${offset 5}${color1}dnf${goto 57}${color}${lines [=packagesFile]} package updates
 ${voffset -5}${color2}${hr 1}${voffset -8}
 ${voffset 7}${offset 5}${color1}package${alignr 5}version${voffset 4}
-<#if system == "desktop"><#assign maxLines = 82><#else><#assign maxLines = 15></#if>
+<#if system == "desktop"><#assign maxLines = 38><#else><#assign maxLines = 15></#if>
 ${color}${lua_parse populate_menu [=packagesFile] [=maxLines] 900}${voffset 5}
 ${endif}\
 ]];

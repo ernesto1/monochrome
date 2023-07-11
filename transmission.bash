@@ -96,9 +96,10 @@ while [ true ]; do
     | grep -e '^[0-9]' \
     | sed -r 's/ ([0-9]+)\.0 /\1  /g' \
     | sed 's/  \+/:/g' \
+    | sed 's/µ/u/' \
     | cut -d ':' -f 1,4,5,6 \
-    | sort -t . -k 1n -k 2n -k 3n -k 4n \
     | grep -vE ':0:0:' \
+    | sort -t . -k 1n -k 2n -k 3n -k 4n \
     | awk -F ':' "{printf \"\${voffset 3}\${offset 5}%-15s\${offset ${offset}}%-13.13s\${offset ${offset}}%5.5s\${offset ${offset}}%5.5s\n\", \$1, \$4, \$3, \$2}" > ${peersFile}.$$
   
   mv ${seedingFile}.$$ ${seedingFile}

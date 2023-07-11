@@ -7,9 +7,9 @@ conky.config = {
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'middle_right',  -- top|middle|bottom_left|right
-  gap_x = 5,
-  gap_y = 125,
+  alignment = 'top_left',  -- top|middle|bottom_left|right
+  gap_x = 205,
+  gap_y = 40,
 
   -- window settings
   minimum_width = 189,      -- conky will add an extra pixel to this  
@@ -65,6 +65,6 @@ ${image ~/conky/monochrome/images/compact/burgundy-menu-dnf.png -p 114,41}\
 ${voffset 2}${offset 5}${color1}dnf${goto 57}${color}${lines /tmp/conky/dnf.packages.formatted} package updates
 ${voffset -5}${color2}${hr 1}${voffset -8}
 ${voffset 7}${offset 5}${color1}package${alignr 5}version${voffset 4}
-${color}${lua_parse populate_menu /tmp/conky/dnf.packages.formatted 82 900}${voffset 5}
+${color}${lua_parse populate_menu /tmp/conky/dnf.packages.formatted 38 900}${voffset 5}
 ${endif}\
 ]];

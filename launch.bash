@@ -122,7 +122,6 @@ while (( "$#" )); do
     --compact)
       shift
       conkyDir=${monochromeHome}/compact
-      enableTransmissionPoller=false
       ;;
     --monitor)
       # TODO validate a proper number was provided to the monitor flag
