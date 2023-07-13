@@ -92,7 +92,7 @@ ${image ~/conky/monochrome/images/menu-blank.png -p 273,74}\
 # -------- end of table image ---------
 ${image ~/conky/monochrome/images/compact/burgundy-menu-peers.png -p 38,115}\
 ${lua add_offsets 0 19}\
-${goto 48}${color1}active torrents${goto 207}up${goto 243}down${voffset 3}
+${offset 5}${color1}active torrents${goto 216}up${goto 246}down${voffset 3}
 ${color}${lua_parse populate_menu /tmp/conky/transmission.active 17}${voffset 10}
 ${lua_parse draw_bottom_edges 192 39}${lua_parse draw_bottom_edges 234 39}\
 ${lua add_offsets 0 3}\
@@ -144,7 +144,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/compact/burgundy-menu-light.png
 ${lua_parse draw_image ~/conky/monochrome/images/menu-blank.png 273 0}\
 # -------- end of table image ---------
 ${lua add_offsets 0 19}\
-${offset 15}${color1}ip address${goto 128}client${goto 207}up${goto 243}down${voffset 3}
+${offset 5}${color1}ip address${goto 108}client${goto 216}up${goto 246}down${voffset 3}
 ${color}${lua_parse populate_menu /tmp/conky/transmission.peers}
 ${lua_parse draw_bottom_edges 102 87}${lua_parse draw_bottom_edges 192 39}${lua_parse draw_bottom_edges 234 39}\
 ${endif}\

@@ -80,7 +80,7 @@ ${lua configure_menu [=conky] [=image.primaryColor]-menu-light-edge-bottom [=wid
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-peers.png -p 38,[=y+header+22]}\
 <#assign y += header>
 ${lua add_offsets 0 [=header]}\
-${goto 48}${color1}active torrents${goto 207}up${goto 243}down${voffset 3}
+${offset 5}${color1}active torrents${goto 216}up${goto 246}down${voffset 3}
 <#assign maxLines = 17>
 ${color}${lua_parse populate_menu [=activeTorrentsFile] [=maxLines]}${voffset [= 7 + gap]}
 ${lua_parse draw_bottom_edges [=width+gap] 39}${lua_parse draw_bottom_edges [=width+gap+speedCol+gap] 39}\
@@ -103,7 +103,7 @@ ${lua configure_menu [=conky] [=image.primaryColor]-menu-light-edge-bottom [=ipC
 <@menu.table x=width+gap y=0 width=39 header=header bottomEdges=false fixed=false/>
 <@menu.table x=width+gap+speedCol+gap y=0 width=39 header=header bottomEdges=false fixed=false/>
 ${lua add_offsets 0 [=header]}\
-${offset 15}${color1}ip address${goto 128}client${goto 207}up${goto 243}down${voffset 3}
+${offset 5}${color1}ip address${goto 108}client${goto 216}up${goto 246}down${voffset 3}
 <#assign maxLines = 16>
 ${color}${lua_parse populate_menu [=peersFile]}
 ${lua_parse draw_bottom_edges [=ipCol+gap] [=clientCol]}${lua_parse draw_bottom_edges [=width+gap] [=speedCol]}${lua_parse draw_bottom_edges [=width+gap+speedCol+gap] [=speedCol]}\
