@@ -1,3 +1,4 @@
+<#import "/lib/menu-square.ftl" as menu>
 conky.config = {
   update_interval = 2,  -- update interval in seconds
   xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
@@ -5,11 +6,12 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',
-  gap_x = 248,         -- gap between border of the screen and the conky window, same as passing -x at command line
-  gap_y = 56,
+  gap_x = 64,         -- gap between border of the screen and the conky window, same as passing -x at command line
+  gap_y = 6,
 
   -- window settings
-  minimum_width = 209,
+  minimum_width = 391,
+  minimum_height = 130,
   own_window = true,
   own_window_type = 'desktop',              -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -49,17 +51,38 @@ conky.config = {
 };
 
 conky.text = [[
-${image ~/conky/monochrome/images/widgets/green-system.png -p 0,0}\
+# :::::::::::: o/s
+<#assign y = 0,
+         header = 69,
+         width = 205 - header
+         height = 53,
+         gap = 5>     <#-- empty space between windows -->
+<@menu.verticalTable x=0 y=y header=header body=width height=height/>
+<#assign y += height + gap>
 ${voffset 3}${offset 5}${color1}kernel${goto 76}${color}${kernel}
 ${voffset 3}${offset 5}${color1}uptime${goto 76}${color}${uptime}
 ${voffset 3}${offset 5}${color1}compositor${goto 76}${color}${execi 3600 echo $XDG_SESSION_TYPE}
-# :::::::::::: temperatures
-${voffset 11}${offset 5}${color1}device${alignr 4}temperature
-${voffset 8}${offset 5}${color}AMD Radeon HD7570${alignr 4}${template1 radeon temp 1 75}°C
+${voffset [= 7 + gap]}\
+# :::::::::::: applications
+<@menu.verticalTable x=0 y=y header=header body=52 height=19/>
+${offset 5}${color1}zoom${goto 76}${color}${if_running zoom}running${else}off${endif}
+<#assign x = header + width + gap,
+         y = 0,
+         header = 19,
+         width = 182,
+         body = 70>
 # :::::::::::: fans
-${voffset 11}${offset 5}${color1}fan${alignr 4}revolutions
-${voffset 8}${offset 5}${color}chasis front intake${alignr 4}${template1 atk0110 fan 3 2400} rpm
-${voffset 3}${offset 5}${color}cpu fan${alignr 4}${template1 atk0110 fan 1 2500} rpm
-${voffset 3}${offset 5}${color}case top exhaust fan${alignr 4}${template1 atk0110 fan 2 2500} rpm
-${voffset 3}${offset 5}${color}case back exhaust fan${alignr 4}${template1 atk0110 fan 4 2500} rpm${voffset 4}
+<@menu.table x=x y=0 width=width header=header body=body/>
+<#assign y += header + body + gap>
+${voffset -70}${goto [=x+5]}${color1}fan${alignr 4}revolutions
+${voffset 7}${goto [=x+5]}${color}chasis front intake${alignr 4}${template1 atk0110 fan 3 2400} rpm
+${voffset 3}${goto [=x+5]}${color}cpu fan${alignr 4}${template1 atk0110 fan 1 2500} rpm
+${voffset 3}${goto [=x+5]}${color}case top exhaust${alignr 4}${template1 atk0110 fan 2 2500} rpm
+${voffset 3}${goto [=x+5]}${color}case back exhaust${alignr 4}${template1 atk0110 fan 4 2500} rpm
+${voffset [= 7 + gap]}\
+# :::::::::::: temperatures
+<#assign body = 19>
+<@menu.table x=x y=y width=width header=header body=body/>
+${goto [=x+5]}${color1}device${alignr 4}temperature
+${voffset 6}${goto [=x+5]}${color}AMD Radeon HD7570${alignr}${template1 radeon temp 1 75}°C
 ]];

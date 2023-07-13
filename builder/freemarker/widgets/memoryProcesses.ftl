@@ -33,7 +33,7 @@ conky.config = {
                               -- does not include bars, ie. wifi strength bar, cpu bar
 
   top_name_verbose = true,    -- show full command in ${top ...}
-  top_name_width = 20,        -- how many characters to print
+  top_name_width = 21,        -- how many characters to print
 
   imlib_cache_flush_interval = 250,
   -- use the parameter -n on ${image ..} to never cache and always update the image upon a change

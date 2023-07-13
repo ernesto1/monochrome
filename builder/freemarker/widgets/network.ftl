@@ -52,8 +52,8 @@ conky.text = [[
 ${if_up [=device.name]}\
 ${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-network.png -p 0,0}\
 ${voffset 3}${offset 11}${color1}local ip${goto 81}${color}${addr [=device.name]}
-${voffset 3}${offset 11}${color1}bittorrent${goto 81}${color}${tcp_portmon 51413 51413 count} peer(s)
-${voffset 3}${offset 11}${color1}zoom${goto 81}${color}${if_running zoom}running${else}off${endif}
+${voffset 3}${offset 11}${color1}torrents${goto 81}${color}${lines /tmp/conky/transmission.active} active
+${voffset 3}${offset 11}${color1}swarm${goto 81}${color}${lines /tmp/conky/transmission.peers} peers
 ${voffset 6}${offset 68}${upspeedgraph [=device.name] 37,97 [=colors.readGraph] [=device.maxUp?c]}
 ${voffset -7}${offset 68}${downspeedgraph [=device.name] 37,97 [=colors.writeGraph] [=device.maxDown?c]}
 ${voffset 6}${offset 7}${color1}up${alignr 128}${color}${upspeed [=device.name]}

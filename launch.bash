@@ -107,7 +107,6 @@ while (( "$#" )); do
       conkyDir=${monochromeHome}/widgets
       numCharacters=24
       enableMusicPlayerListener=false
-      enableTransmissionPoller=false
       ;;
     --widgets-dock)
       shift

@@ -10,7 +10,7 @@ conky.config = {
   -- window alignment
   alignment = 'middle_left',
   gap_x = 24,
-  gap_y = -19,
+  gap_y = 53,
 
   -- window settings
   <#assign width = 200>
@@ -66,7 +66,7 @@ ${voffset 3}${alignc}${color1}dnf package management
 ${voffset 5}${alignc}${color}${lines [=packagesFile]} package update(s) available
 ${voffset 7}${offset 5}${color1}package${alignr 4}version${voffset 1}
 # the dnf package lookup script refreshes the package list every 10m
-<#assign maxLines = 100>
+<#assign maxLines = 85>
 ${color}${lua_parse populate_menu [=packagesFile] [=maxLines]}${voffset 5}
 ${endif}\
 ]];

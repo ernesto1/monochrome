@@ -9,7 +9,7 @@ conky.config = {
   -- window alignment
   alignment = 'middle_left',
   gap_x = 24,
-  gap_y = -19,
+  gap_y = 53,
 
   -- window settings
   minimum_width = 200,      -- conky will add an extra pixel to this  
@@ -66,6 +66,6 @@ ${voffset 3}${alignc}${color1}dnf package management
 ${voffset 5}${alignc}${color}${lines /tmp/conky/dnf.packages.formatted} package update(s) available
 ${voffset 7}${offset 5}${color1}package${alignr 4}version${voffset 1}
 # the dnf package lookup script refreshes the package list every 10m
-${color}${lua_parse populate_menu /tmp/conky/dnf.packages.formatted 100}${voffset 5}
+${color}${lua_parse populate_menu /tmp/conky/dnf.packages.formatted 85}${voffset 5}
 ${endif}\
 ]];
