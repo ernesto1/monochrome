@@ -85,6 +85,11 @@ function conky_add_x_offset(variable, x)
   return "${" .. variable .. " " .. tonumber(x) + xOffset .. "}"
 end
 
+function conky_add_y_offset(variable, y)
+  local yOffset = vars["yOffset"] or 0
+  return "${" .. variable .. " " .. tonumber(y) + yOffset .. "}"
+end
+
 
 --[[
 creates a conky image variable string at the x,y coordinate position after any available offsets are applied,
