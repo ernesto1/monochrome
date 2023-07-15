@@ -52,16 +52,16 @@ conky.text = [[
 # :::::::::::: package updates
 ${if_existing /tmp/conky/dnf.packages.formatted}\
 # ----------- table image ------------
-${image ~/conky/monochrome/images/widgets/green-menu-dark.png -p 0,0}\
-${image ~/conky/monochrome/images/widgets/green-menu-dark-edge-top-left.png -p 0,0}\
-${image ~/conky/monochrome/images/widgets/green-menu-dark-edge-top-right.png -p 193,0}\
-${image ~/conky/monochrome/images/widgets/green-menu-light.png -p 0,39}\
-${image ~/conky/monochrome/images/menu-blank.png -p 200,0}\
+${image ~/conky/monochrome/images/common/green-menu-dark.png -p 0,0}\
+${image ~/conky/monochrome/images/common/green-menu-dark-edge-top-left.png -p 0,0}\
+${image ~/conky/monochrome/images/common/green-menu-dark-edge-top-right.png -p 193,0}\
+${image ~/conky/monochrome/images/common/green-menu-light.png -p 0,39}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 200,0}\
 # -------- end of table image ---------
-${lua configure_menu widgets green-menu-light-edge-bottom 200 2}\
+${lua configure_menu green-menu-light-edge-bottom 200 2}\
 ${lua add_offsets 0 55}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
-${image ~/conky/monochrome/images/widgets/green-menu-dnf.png -p 121,58}\
+${image ~/conky/monochrome/images/common/green-menu-dnf.png -p 121,58}\
 ${voffset 3}${alignc}${color1}dnf package management
 ${voffset 5}${alignc}${color}${lines /tmp/conky/dnf.packages.formatted} package update(s) available
 ${voffset 7}${offset 5}${color1}package${alignr 4}version${voffset 1}

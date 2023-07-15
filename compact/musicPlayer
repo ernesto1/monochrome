@@ -51,15 +51,15 @@ conky.text = [[
 #                                                          song with no album art
 # :::::::: no player available
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
-${image ~/conky/monochrome/images/compact/burgundy-rhythmbox.png -p 0,0}\
+${image ~/conky/monochrome/images/common/burgundy-rhythmbox.png -p 0,0}\
 # ----------- menu image ------------
-${image ~/conky/monochrome/images/compact/burgundy-menu-light.png -p 55,33}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-light-edge-top-left.png -p 55,33}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-light-edge-top-right.png -p 161,33}\
-${image ~/conky/monochrome/images/menu-blank.png -p 168,33}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-light-edge-bottom-left.png -p 55,64}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-light-edge-bottom-right.png -p 161,64}\
-${image ~/conky/monochrome/images/menu-blank.png -p 55,71}\
+${image ~/conky/monochrome/images/common/burgundy-menu-light.png -p 55,33}\
+${image ~/conky/monochrome/images/common/burgundy-menu-light-edge-top-left.png -p 55,33}\
+${image ~/conky/monochrome/images/common/burgundy-menu-light-edge-top-right.png -p 161,33}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 168,33}\
+${image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-left.png -p 55,64}\
+${image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-right.png -p 161,64}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 55,71}\
 # -------- end of menu image ---------
 ${voffset 36}${offset 61}${color1}now playing
 ${voffset 4}${offset 61}${color}no player running
@@ -67,50 +67,50 @@ ${else}\
 # :::::::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
 # ----------- menu image ------------
-${image ~/conky/monochrome/images/compact/burgundy-menu-dark.png -p 0,0}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-dark-edge-top-left.png -p 0,0}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-dark-edge-top-right.png -p 182,0}\
-${image ~/conky/monochrome/images/menu-blank.png -p 189,0}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-dark-edge-bottom-left.png -p 0,197}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-dark-edge-bottom-right.png -p 182,197}\
-${image ~/conky/monochrome/images/menu-blank.png -p 0,204}\
+${image ~/conky/monochrome/images/common/burgundy-menu-dark.png -p 0,0}\
+${image ~/conky/monochrome/images/common/burgundy-menu-dark-edge-top-left.png -p 0,0}\
+${image ~/conky/monochrome/images/common/burgundy-menu-dark-edge-top-right.png -p 182,0}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 189,0}\
+${image ~/conky/monochrome/images/common/burgundy-menu-dark-edge-bottom-left.png -p 0,197}\
+${image ~/conky/monochrome/images/common/burgundy-menu-dark-edge-bottom-right.png -p 182,197}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 0,204}\
 # -------- end of menu image ---------
 ${voffset 2}${alignc}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} ${color}: ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}${color1}${endif}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
 ${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4,19}\
 # -------  vertical table image -------
-${image ~/conky/monochrome/images/compact/burgundy-menu-dark.png -p 0,207}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-dark-edge-top-left.png -p 0,207}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-light.png -p 45,207}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-light-edge-top-right.png -p 182,207}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-dark-edge-bottom-left.png -p 0,271}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-light-edge-bottom-right.png -p 182,271}\
-${image ~/conky/monochrome/images/menu-blank.png -p 189,207}\
-${image ~/conky/monochrome/images/menu-blank.png -p 0,278}\
+${image ~/conky/monochrome/images/common/burgundy-menu-dark.png -p 0,207}\
+${image ~/conky/monochrome/images/common/burgundy-menu-dark-edge-top-left.png -p 0,207}\
+${image ~/conky/monochrome/images/common/burgundy-menu-light.png -p 45,207}\
+${image ~/conky/monochrome/images/common/burgundy-menu-light-edge-top-right.png -p 182,207}\
+${image ~/conky/monochrome/images/common/burgundy-menu-dark-edge-bottom-left.png -p 0,271}\
+${image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-right.png -p 182,271}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 189,207}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 0,278}\
 # --------- end of table image ---------
 ${voffset 196}\
 ${else}\
 # :::::::: no album art available
-${image ~/conky/monochrome/images/compact/burgundy-rhythmbox.png -p 0,0}\
+${image ~/conky/monochrome/images/common/burgundy-rhythmbox.png -p 0,0}\
 # ----------- menu image ------------
-${image ~/conky/monochrome/images/compact/burgundy-menu-dark.png -p 55,33}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-dark-edge-top-left.png -p 55,33}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-dark-edge-top-right.png -p 182,33}\
-${image ~/conky/monochrome/images/menu-blank.png -p 189,33}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-dark-edge-bottom-left.png -p 55,64}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-dark-edge-bottom-right.png -p 182,64}\
-${image ~/conky/monochrome/images/menu-blank.png -p 55,71}\
+${image ~/conky/monochrome/images/common/burgundy-menu-dark.png -p 55,33}\
+${image ~/conky/monochrome/images/common/burgundy-menu-dark-edge-top-left.png -p 55,33}\
+${image ~/conky/monochrome/images/common/burgundy-menu-dark-edge-top-right.png -p 182,33}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 189,33}\
+${image ~/conky/monochrome/images/common/burgundy-menu-dark-edge-bottom-left.png -p 55,64}\
+${image ~/conky/monochrome/images/common/burgundy-menu-dark-edge-bottom-right.png -p 182,64}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 55,71}\
 # -------- end of menu image ---------
 ${voffset 36}${offset 61}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}
 ${voffset 4}${offset 61}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
 # -------  vertical table image -------
-${image ~/conky/monochrome/images/compact/burgundy-menu-dark.png -p 0,74}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-dark-edge-top-left.png -p 0,74}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-light.png -p 45,74}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-light-edge-top-right.png -p 182,74}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-dark-edge-bottom-left.png -p 0,138}\
-${image ~/conky/monochrome/images/compact/burgundy-menu-light-edge-bottom-right.png -p 182,138}\
-${image ~/conky/monochrome/images/menu-blank.png -p 189,74}\
-${image ~/conky/monochrome/images/menu-blank.png -p 0,145}\
+${image ~/conky/monochrome/images/common/burgundy-menu-dark.png -p 0,74}\
+${image ~/conky/monochrome/images/common/burgundy-menu-dark-edge-top-left.png -p 0,74}\
+${image ~/conky/monochrome/images/common/burgundy-menu-light.png -p 45,74}\
+${image ~/conky/monochrome/images/common/burgundy-menu-light-edge-top-right.png -p 182,74}\
+${image ~/conky/monochrome/images/common/burgundy-menu-dark-edge-bottom-left.png -p 0,138}\
+${image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-right.png -p 182,138}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 189,74}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 0,145}\
 # --------- end of table image ---------
 ${voffset 12}\
 ${endif}\

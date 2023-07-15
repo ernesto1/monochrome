@@ -74,13 +74,13 @@ ${else}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-sound-wave.png -p 0,0}\
 ${endif}\
 # ::::::::: track details
-${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-dark.png 71 0}\
-${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-light.png 116 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dark.png 71 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-light.png 116 0}\
 # add blank out images to ensure the menu image comes out correctly
 # right side
-${lua_parse draw_image ~/conky/monochrome/images/menu-blank.png 282 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 282 0}\
 # bottom
-${lua_parse draw_image ~/conky/monochrome/images/menu-blank.png 71 69}${lua_parse draw_image ~/conky/monochrome/images/menu-blank.png 96 69}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 71 69}${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 96 69}\
 ${voffset 3}${lua_parse add_x_offset goto 77}${color1}title${lua_parse add_x_offset goto 122}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.title} 26}
 ${voffset 3}${lua_parse add_x_offset goto 77}${color1}album${lua_parse add_x_offset goto 122}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.album} 26}
 ${voffset 3}${lua_parse add_x_offset goto 77}${color1}artist${lua_parse add_x_offset goto 122}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.artist} 26}

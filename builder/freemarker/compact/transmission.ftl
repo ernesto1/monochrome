@@ -72,12 +72,12 @@ ${voffset [= 7 + gap]}\
 # :::::::::::: active torrents
 ${if_existing [=activeTorrentsFile]}\
 ${if_match ${lines [=activeTorrentsFile]} > 0}\
-${lua configure_menu [=conky] [=image.primaryColor]-menu-light-edge-bottom [=width?c] 3}\
+${lua configure_menu [=image.primaryColor]-menu-light-edge-bottom [=width?c] 3}\
 <#assign header = 19, speedCol = 39>
 <@menu.table x=0 y=y width=width header=header bottomEdges=false/>
 <@menu.table x=width+gap y=y width=39 header=header bottomEdges=false/>
 <@menu.table x=width+gap+speedCol+gap y=y width=39 header=header bottomEdges=false/>
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-peers.png -p 38,[=y+header+22]}\
+${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-peers.png -p 38,[=y+header+22]}\
 <#assign y += header>
 ${lua add_offsets 0 [=header]}\
 ${offset 5}${color1}active torrents${goto 216}up${goto 246}down${voffset 3}
@@ -97,7 +97,7 @@ ${endif}\
 ${if_existing [=peersFile]}\
 ${if_match ${lua get peers} > 0}\
 <#assign ipCol = 99, clientCol = 87>
-${lua configure_menu [=conky] [=image.primaryColor]-menu-light-edge-bottom [=ipCol] 3}\
+${lua configure_menu [=image.primaryColor]-menu-light-edge-bottom [=ipCol] 3}\
 <@menu.table x=0 y=0 width=ipCol header=header bottomEdges=false fixed=false/>
 <@menu.table x=ipCol+gap y=0 width=clientCol header=header bottomEdges=false fixed=false/>
 <@menu.table x=width+gap y=0 width=39 header=header bottomEdges=false fixed=false/>

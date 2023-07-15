@@ -72,7 +72,7 @@ ${if_match ${lua get active} > 0}\
 <@menu.table x=0 y=y width=width header=header bottomEdges=false/>
 <@menu.table x=width+colGap y=y width=speedCol header=header bottomEdges=false/>
 <@menu.table x=width+colGap+speedCol+colGap y=y width=speedCol header=header bottomEdges=false/>
-${lua configure_menu [=conky] [=image.primaryColor]-menu-light-edge-bottom [=width?c] 3 false}\
+${lua configure_menu [=image.primaryColor]-menu-light-edge-bottom [=width?c] 3 false}\
 ${lua add_offsets 0 [=header]}\
 ${offset 5}${color1}active torrents${goto 184}up${offset 16}down${voffset 3}
 <#assign maxLines = 10>
@@ -101,7 +101,7 @@ ${voffset [= 7 + gap]}\
 <#assign header = 19, versionCol = 51>
 <@menu.table x=0 y=0 width=width header=header bottomEdges=false fixed=false/>
 <@menu.table x=width+colGap y=0 width=versionCol header=header bottomEdges=false fixed=false/>
-${lua configure_menu [=conky] [=image.primaryColor]-menu-light-edge-bottom [=width?c] 2 false}\
+${lua configure_menu [=image.primaryColor]-menu-light-edge-bottom [=width?c] 2 false}\
 ${lua add_offsets 0 [=header]}\
 ${offset 5}${color1}package${goto 166}version${voffset 4}
 <#assign maxLines = 45>

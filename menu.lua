@@ -116,7 +116,6 @@ If all the menus within a conky are the same, this method only needs to be invok
 Call this method prior to invoking conky_populate_menu() in your conky.
 
 arguments:
-    theme     conky theme: compact, widets, glass, etc...
     filename  image file name
     width     width of the table
     voffset   vertical offset used for each line in the menu's body
@@ -127,8 +126,7 @@ arguments:
                                  \
                                  you have to provide this value here
 ]]
-function conky_configure_menu(theme, image, width, voffset, round)
-  vars["theme"] = theme;
+function conky_configure_menu(image, width, voffset, round)
   vars["image"] = image;
   vars["width"] = tonumber(width);
   vars["textVOffset"] = tonumber(voffset);
@@ -196,11 +194,11 @@ arguments:
     width   width of the menu
 ]]
 function draw_round_bottom_edges(x, y, width)
-  local imageRoot = "~/conky/monochrome/images/"
+  local imageRoot = "~/conky/monochrome/images/common/"
   local s = ''
     
   if vars["roundEdges"] then
-    local imagePath = imageRoot .. vars["theme"] .. "/" .. vars["image"]
+    local imagePath = imageRoot .. vars["image"]
     local image = imagePath .. "-left.png"
     s = build_image_variable(image, x, y)
     image = imagePath .. "-right.png"

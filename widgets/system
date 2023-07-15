@@ -52,10 +52,10 @@ conky.config = {
 conky.text = [[
 # :::::::::::: o/s
 # --- composite vertical table image ---
-${image ~/conky/monochrome/images/widgets/green-menu-dark.png -p 0,0}\
-${image ~/conky/monochrome/images/widgets/green-menu-light.png -p 69,0}\
-${image ~/conky/monochrome/images/menu-blank.png -p 205,0}\
-${image ~/conky/monochrome/images/menu-blank.png -p 0,53}\
+${image ~/conky/monochrome/images/common/green-menu-dark.png -p 0,0}\
+${image ~/conky/monochrome/images/common/green-menu-light.png -p 69,0}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 205,0}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 0,53}\
 # --------- end of table image ---------
 ${voffset 3}${offset 5}${color1}kernel${goto 76}${color}${kernel}
 ${voffset 3}${offset 5}${color1}uptime${goto 76}${color}${uptime}
@@ -63,18 +63,18 @@ ${voffset 3}${offset 5}${color1}compositor${goto 76}${color}${execi 3600 echo $X
 ${voffset 12}\
 # :::::::::::: applications
 # --- composite vertical table image ---
-${image ~/conky/monochrome/images/widgets/green-menu-dark.png -p 0,58}\
-${image ~/conky/monochrome/images/widgets/green-menu-light.png -p 69,58}\
-${image ~/conky/monochrome/images/menu-blank.png -p 121,58}\
-${image ~/conky/monochrome/images/menu-blank.png -p 0,77}\
+${image ~/conky/monochrome/images/common/green-menu-dark.png -p 0,58}\
+${image ~/conky/monochrome/images/common/green-menu-light.png -p 69,58}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 121,58}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 0,77}\
 # --------- end of table image ---------
 ${offset 5}${color1}zoom${goto 76}${color}${if_running zoom}running${else}off${endif}
 # :::::::::::: fans
 # ------- composite table image -------
-${image ~/conky/monochrome/images/widgets/green-menu-dark.png -p 210,0}\
-${image ~/conky/monochrome/images/widgets/green-menu-light.png -p 210,19}\
-${image ~/conky/monochrome/images/menu-blank.png -p 392,0}\
-${image ~/conky/monochrome/images/menu-blank.png -p 210,89}\
+${image ~/conky/monochrome/images/common/green-menu-dark.png -p 210,0}\
+${image ~/conky/monochrome/images/common/green-menu-light.png -p 210,19}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 392,0}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 210,89}\
 # --------- end of table image --------
 ${voffset -70}${goto 215}${color1}fan${alignr 4}revolutions
 ${voffset 7}${goto 215}${color}chasis front intake${alignr 4}${template1 atk0110 fan 3 2400} rpm
@@ -84,10 +84,10 @@ ${voffset 3}${goto 215}${color}case back exhaust${alignr 4}${template1 atk0110 f
 ${voffset 12}\
 # :::::::::::: temperatures
 # ------- composite table image -------
-${image ~/conky/monochrome/images/widgets/green-menu-dark.png -p 210,94}\
-${image ~/conky/monochrome/images/widgets/green-menu-light.png -p 210,113}\
-${image ~/conky/monochrome/images/menu-blank.png -p 392,94}\
-${image ~/conky/monochrome/images/menu-blank.png -p 210,132}\
+${image ~/conky/monochrome/images/common/green-menu-dark.png -p 210,94}\
+${image ~/conky/monochrome/images/common/green-menu-light.png -p 210,113}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 392,94}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 210,132}\
 # --------- end of table image --------
 ${goto 215}${color1}device${alignr 4}temperature
 ${voffset 6}${goto 215}${color}AMD Radeon HD7570${alignr}${template1 radeon temp 1 75}°C

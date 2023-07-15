@@ -59,7 +59,7 @@ conky.text = [[
 # :::::::: no player available
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
 <#assign y = 42>
-${image ~/conky/monochrome/images/widgets-dock/grape-rhythmbox.png -p 15,[=y]}\
+${image ~/conky/monochrome/images/common/grape-rhythmbox.png -p 15,[=y]}\
 ${voffset 70}${offset 75}${font1}${color3}now playing
 ${voffset 4}${offset 75}${color2}no player running
 ${else}\
@@ -71,7 +71,7 @@ ${image ~/conky/monochrome/images/[=conky]/album-shadow.png -p 0,[=y]}\
 ${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 110x110 15,[=y]}\
 ${lua add_offsets 65 20}\
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/grape-rhythmbox.png -p 15,42}\
+${image ~/conky/monochrome/images/common/grape-rhythmbox.png -p 15,42}\
 ${endif}\
 # ::::::::: track details
 ${lua_parse add_y_offset voffset 42}${lua_parse add_x_offset offset 78}${font0}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.title} 34}

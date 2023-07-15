@@ -14,8 +14,8 @@
 <#macro table x y width header body=200 bottomEdges=true fixed=true>
 # ----------- table image ------------
 <@menuHeader x=x y=y width=width fixed=fixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-light.png" x=x y=y+header fixed=fixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/menu-blank.png" x=x+width y=y fixed=fixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-light.png" x=x y=y+header fixed=fixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x+width y=y fixed=fixed/>
 <#local y += header + body>
 <#if bottomEdges>
 <@menuBottom x=x y=y width=width/>
@@ -26,17 +26,17 @@
 
 <#macro menuHeader x y width theme="dark" fixed=true>
 <#-- edge images are 7x7px -->
-<@cmn.drawImage filePath="~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-[=theme].png" x=x y=y fixed=fixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-[=theme]-edge-top-left.png" x=x y=y fixed=fixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-[=theme]-edge-top-right.png" x=x+width-7 y=y fixed=fixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-[=theme].png" x=x y=y fixed=fixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-[=theme]-edge-top-left.png" x=x y=y fixed=fixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-[=theme]-edge-top-right.png" x=x+width-7 y=y fixed=fixed/>
 </#macro>
 
 
 <#macro menuBottom x y width theme="light" fixed=true>
 <#local y -= 7><#-- edge images are 7x7px -->
-<@cmn.drawImage filePath="~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-[=theme]-edge-bottom-left.png" x=x y=y fixed=fixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-[=theme]-edge-bottom-right.png" x=x+width-7 y=y fixed=fixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/menu-blank.png" x=x y=y + 7 fixed=fixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-[=theme]-edge-bottom-left.png" x=x y=y fixed=fixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-[=theme]-edge-bottom-right.png" x=x+width-7 y=y fixed=fixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x y=y + 7 fixed=fixed/>
 </#macro>
 
 
@@ -56,7 +56,7 @@
 # ----------- menu image ------------
 <#local theme = getTheme(isDark)>
 <@menuHeader x=x y=y width=width theme=theme fixed=fixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/menu-blank.png" x=x+width y=y fixed=fixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x+width y=y fixed=fixed/>
 <#local y += height>
 <#if bottomEdges>
 <@menuBottom x=x y=y width=width theme=theme fixed=fixed/>
@@ -86,20 +86,20 @@
 # -------  vertical table image -------
 <@verticalMenuHeader x=x y=y header=header body=body fixed=fixed/>
 <#local yCoordinate = y + height - 7>
-<@cmn.drawImage filePath="~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-dark-edge-bottom-left.png" x=x y=yCoordinate fixed=fixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-light-edge-bottom-right.png" x=x+header+body-7 y=yCoordinate fixed=fixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/menu-blank.png" x=x+header+body y=y fixed=fixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/menu-blank.png" x=x y=yCoordinate+7 fixed=fixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-dark-edge-bottom-left.png" x=x y=yCoordinate fixed=fixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-light-edge-bottom-right.png" x=x+header+body-7 y=yCoordinate fixed=fixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x+header+body y=y fixed=fixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x y=yCoordinate+7 fixed=fixed/>
 # --------- end of table image ---------
 </#macro>
 
 
 <#macro verticalMenuHeader x y header body fixed=true>
 <#-- edge images are 7x7px -->
-<@cmn.drawImage filePath="~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-dark.png" x=x y=y fixed=fixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-dark-edge-top-left.png" x=x y=y fixed=fixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-light.png" x=x+header y=y fixed=fixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-light-edge-top-right.png" x=x+header+body-7 y=y fixed=fixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-dark.png" x=x y=y fixed=fixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-dark-edge-top-left.png" x=x y=y fixed=fixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-light.png" x=x+header y=y fixed=fixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-light-edge-top-right.png" x=x+header+body-7 y=y fixed=fixed/>
 </#macro>
 
 
@@ -129,13 +129,13 @@
 # ------- composite table image -------
 <@verticalMenuHeader x=x y=y header=vheader body=width-vheader/>
 <#local yCoordinate = y + vheight + 1>
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-dark.png -p [=x?c],[=yCoordinate?c]}\
+${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dark.png -p [=x?c],[=yCoordinate?c]}\
 <#local yCoordinate += hheader>
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-light.png -p [=x?c],[=yCoordinate?c]}\
+${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-light.png -p [=x?c],[=yCoordinate?c]}\
 <#local yCoordinate += hheight>
 <#if bottomEdges>
 <@menuBottom x=x y=yCoordinate  width=width/>
 </#if>
-${image ~/conky/monochrome/images/menu-blank.png -p [=(x+width)?c],[=y?c]}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p [=(x+width)?c],[=y?c]}\
 # -------- end of table image ---------
 </#macro>
