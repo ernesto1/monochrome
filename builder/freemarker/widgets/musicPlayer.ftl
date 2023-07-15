@@ -13,8 +13,9 @@ conky.config = {
   gap_y = 0,
 
   -- window settings
-  minimum_width = 400,      -- conky will add an extra pixel to this  
-  minimum_height = 163,      -- conky will add an extra pixel to this height
+  minimum_width = 400,      -- conky will add an extra pixel to this
+  maximum_width = 400,
+  minimum_height = 163,     -- conky will add an extra pixel to this height
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -32,7 +33,7 @@ conky.config = {
   own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
   
   -- images
-  imlib_cache_flush_interval = 2,
+  imlib_cache_flush_interval = 250,
 
   -- font settings
   use_xft = true,
@@ -45,8 +46,6 @@ conky.config = {
   -- colors
   default_color = '[=colors.text]',  -- regular text
   color1 = '[=colors.bar]',        -- track title
-  color2 = '[=colors.labels]',     -- labels
-  color3 = 'white'     -- labels
   
   -- n.b. this conky requires the music-player java app to be running in the background
   --      it generates input files under /tmp/conky/musicplayer.* which this conky will read
@@ -57,25 +56,20 @@ conky.text = [[
 #                                                          song with album art
 #                                                          song with no album art
 # :::::::: no player available
-${if_existing /tmp/conky/musicplayer.name Nameless}\
-<#assign y = 42>
-${image ~/conky/monochrome/images/common/grape-rhythmbox.png -p 15,[=y]}\
-${voffset 70}${offset 75}${font1}${color3}now playing
-${voffset 4}${offset 75}${color2}no player running
-${else}\
-# :::::::: album art
-${if_existing /tmp/conky/musicplayer.albumArtPath}\
 <#assign y = 0>
 ${image ~/conky/monochrome/images/[=conky]/album-shadow.png -p 0,[=y]}\
 <#assign y = 22>
-${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 110x110 15,[=y]}\
-${lua add_offsets 65 20}\
+${image ~/conky/monochrome/images/widgets/green-album-cover.png -p 15,[=y]}\
+${if_existing /tmp/conky/musicplayer.name Nameless}\
+${image ~/conky/monochrome/images/widgets/purple-album-cover.png -p 15,[=y]}\
 ${else}\
-${image ~/conky/monochrome/images/common/grape-rhythmbox.png -p 15,42}\
+# :::::::: album art
+${if_existing /tmp/conky/musicplayer.albumArtPath}\
+${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 110x110 15,[=y]}\
 ${endif}\
 # ::::::::: track details
-${lua_parse add_y_offset voffset 42}${lua_parse add_x_offset offset 78}${font0}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.title} 34}
-${lua_parse add_x_offset offset 78}${font}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.album} 36}
-${voffset 4}${lua_parse add_x_offset offset 78}${font}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.artist} 36}
+${voffset 57}${offset 139}${font0}${color1}${cat /tmp/conky/musicplayer.title}
+${offset 139}${font}${color}${cat /tmp/conky/musicplayer.album}
+${voffset 4}${offset 139}${font}${color}${cat /tmp/conky/musicplayer.artist}
 ${endif}\
 ]];
