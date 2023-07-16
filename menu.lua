@@ -22,7 +22,7 @@ The following use cases are supported:
        conky_add_offsets()
 
 3) dynamically update ${goto x} or ${offset x} variables with an offset at runtime
-
+                                   ${voffset y}
 ]]
 
 -- table to hold variables

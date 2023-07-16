@@ -42,7 +42,7 @@ conky.config = {
   draw_outline = false,     -- black outline around text (not good if text is black)
   font = 'Typo Round Light Demo:size=11',     -- text
   font0 = 'Typo Round Light Demo:size=15',      -- title
-  font1 = 'Typo Round Light Demo:size=10',      -- small text
+  
   -- colors
   default_color = '[=colors.text]',  -- regular text
   color1 = '[=colors.bar]',        -- track title
@@ -68,8 +68,12 @@ ${if_existing /tmp/conky/musicplayer.albumArtPath}\
 ${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 110x110 15,[=y]}\
 ${endif}\
 # ::::::::: track details
-${voffset 57}${offset 139}${font0}${color1}${cat /tmp/conky/musicplayer.title}
+# genre is optional (not all tracks have it defined) so we don't display if it is not available
+# hence we shift the text when the data point is missing
+${if_match "${lua get genre ${cat /tmp/conky/musicplayer.genre}}" == "unknown genre"}${voffset 22}${endif}\
+${voffset 40}${offset 139}${font0}${color}${if_existing /tmp/conky/musicplayer.playbackStatus Playing}${color1}${endif}${cat /tmp/conky/musicplayer.title}
 ${offset 139}${font}${color}${cat /tmp/conky/musicplayer.album}
 ${voffset 4}${offset 139}${font}${color}${cat /tmp/conky/musicplayer.artist}
+${if_match "${lua get genre}" != "unknown genre"}${voffset 4}${offset 139}${font}${color}${lua get genre}${endif}
 ${endif}\
 ]];
