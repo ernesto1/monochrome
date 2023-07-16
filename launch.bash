@@ -64,11 +64,11 @@ function printHeader {
   printf "${GREEN}$1${NOCOLOR}\n"
 }
 
-# kills the monochrome conky and related support jobs that are currently running (if any)
+# kills any currently running monochrome conkys and support jobs
 function killSession {
   printHeader '\n::: killing the currently running processes of this conky suite\n'
   pgrep -f 'conky/monochrome' -l -a | sed 's/ /:/' | column -s ':' -t -N PID,process
-  echo -e "\nclosing remarks"
+  printHeader "\nclosing remarks"
   pkill -f 'conky/monochrome'
   sleep 1s  # wait a bit in order to capture the STDOUT of the 'dnfPackageLookup.bash' script
             # it tends to print right below the 'launching conky' banner below  
@@ -136,12 +136,7 @@ while (( "$#" )); do
         exit 2
       else
         layoutFile="$(echo ${conkyDir}/layout.${fileTag}.cfg)"   # need to use echo in order for the variable
-                                                                 # to hold the actual pathname expansion
-        if [[ ! -f ${layoutFile} ]]; then
-          echo "layout override file '${layoutFile}' not found" >&2
-          echo 'please provide the proper override file name tag' >&2
-          exit 2
-        fi
+                                                                 # to hold the actual pathname expansion        
       fi
       
       shift 2
@@ -178,6 +173,12 @@ fi
 
 if [[ ! -z ${layoutFile} ]]; then
   echo "layout override file: ${layoutFile}"
+  
+  if [[ ! -f ${layoutFile} ]]; then
+    logError "layout override file 'layout.${fileTag}.cfg' not found, please provide the proper override file name tag"
+    exit 2
+  fi
+  
   detectDuplicateEntries "${layoutFile}"
   # TODO file integrity: ensure number of override elements is 2 or 3
 fi
