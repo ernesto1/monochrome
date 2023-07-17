@@ -54,7 +54,7 @@ ${if_existing [=packagesFile]}\
          body = 1400,  <#-- menu window without the header -->
          gap = 3>     <#-- empty space between windows -->
 <@menu.compositeTable x=0 y=y width=width vheader=51 hheight=body/>
-${lua configure_menu [=image.primaryColor]-menu-light-edge-bottom [=width?c] 2}\
+${lua configure_menu [=image.primaryColor] light [=width?c] 2}\
 <#assign y += header + 1 + header>
 ${lua add_offsets 0 [=y]}\
 # optional dnf branding, can be removed or won't matter if the image does not exist

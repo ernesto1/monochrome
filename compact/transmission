@@ -68,7 +68,7 @@ ${voffset 10}\
 # :::::::::::: active torrents
 ${if_existing /tmp/conky/transmission.active}\
 ${if_match ${lines /tmp/conky/transmission.active} > 0}\
-${lua configure_menu burgundy-menu-light-edge-bottom 189 3}\
+${lua configure_menu burgundy light 189 3}\
 # ----------- table image ------------
 ${image ~/conky/monochrome/images/common/burgundy-menu-dark.png -p 0,74}\
 ${image ~/conky/monochrome/images/common/burgundy-menu-dark-edge-top-left.png -p 0,74}\
@@ -114,7 +114,7 @@ ${endif}\
 # :::::::::::: peers
 ${if_existing /tmp/conky/transmission.peers}\
 ${if_match ${lua get peers} > 0}\
-${lua configure_menu burgundy-menu-light-edge-bottom 99 3}\
+${lua configure_menu burgundy light 99 3}\
 # ----------- table image ------------
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-dark.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-dark-edge-top-left.png 0 0}\

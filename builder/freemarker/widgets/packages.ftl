@@ -57,7 +57,7 @@ ${if_existing [=packagesFile]}\
 <#assign y = 0, 
          header = 39>    <#-- menu header -->
 <@menu.table x=0 y=y width=width header=header bottomEdges=false/>
-${lua configure_menu [=image.primaryColor]-menu-light-edge-bottom [=width?c] 2}\
+${lua configure_menu [=image.primaryColor] light [=width?c] 2}\
 <#assign y += header + 16>
 ${lua add_offsets 0 [=y]}\
 # optional dnf branding, can be removed or won't matter if the image does not exist

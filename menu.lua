@@ -119,7 +119,8 @@ If all the menus within a conky are the same, this method only needs to be invok
 Call this method prior to invoking conky_populate_menu() in your conky.
 
 arguments:
-    filename  image file name
+    color     color image to use (a menu image set must exist for this color)
+    value     light or dark
     width     width of the table
     voffset   vertical offset used for each line in the menu's body
               ie. if the text uses this notation
@@ -129,8 +130,9 @@ arguments:
                                  \
                                  you have to provide this value here
 ]]
-function conky_configure_menu(image, width, voffset, round)
-  vars["image"] = image;
+function conky_configure_menu(color, value, width, voffset, round)
+  vars["color"] = color;
+  vars["value"] = value;
   vars["width"] = tonumber(width);
   vars["textVOffset"] = tonumber(voffset);
   vars["roundEdges"] = (round == nil) and true or stringToBoolean(round)
@@ -144,13 +146,13 @@ function stringToBoolean(s)
 end
 
 --[[
-convenience method to populate the contents of a menu window by reading a file
-it performs two steps:
+Convenience method to populate the contents of a menu window by reading a file.
+It performs two steps:
 
    - reads a file similar to the linux 'head' command
-   - prints the menu bottom edge images taking into account the number of text lines printed
+   - prints the menu's bottom edge images taking into account the number of text lines printed
 
-n.b. the y offset is updated to pixel right after the table image ends
+n.b. the 'y' offset is updated to the pixel right after the table image ends
 
 method dependency tree:
 
@@ -203,7 +205,7 @@ function draw_round_bottom_edges(x, y, width)
   local s = ''
     
   if vars["roundEdges"] then
-    local imagePath = imageRoot .. vars["image"]
+    local imagePath = imageRoot .. vars["color"] .. "-menu-" .. vars["value"] .. "-edge-bottom"
     local image = imagePath .. "-left.png"
     s = build_image_variable(image, x, y)
     image = imagePath .. "-right.png"

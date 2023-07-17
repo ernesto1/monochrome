@@ -58,7 +58,7 @@ ${image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-right.p
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 0,1439}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 189,0}\
 # -------- end of table image ---------
-${lua configure_menu burgundy-menu-light-edge-bottom 189 2}\
+${lua configure_menu burgundy light 189 2}\
 ${lua add_offsets 0 39}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${image ~/conky/monochrome/images/common/burgundy-menu-dnf.png -p 114,41}\

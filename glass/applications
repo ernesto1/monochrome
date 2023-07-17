@@ -76,7 +76,7 @@ ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 200,90}\
 ${image ~/conky/monochrome/images/common/blue-menu-light.png -p 200,109}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 239,90}\
 # --------- end of table image --------
-${lua configure_menu blue-menu-light-edge-bottom 159 3 false}\
+${lua configure_menu blue light 159 3 false}\
 ${lua add_offsets 0 19}\
 ${offset 5}${color1}active torrents${goto 184}up${offset 16}down${voffset 3}
 ${color}${color}${lua_parse populate_menu /tmp/conky/transmission.active 10 3}
@@ -116,7 +116,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-dark.png 160 0
 ${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-light.png 160 19}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 211 0}\
 # --------- end of table image --------
-${lua configure_menu blue-menu-light-edge-bottom 159 2 false}\
+${lua configure_menu blue light 159 2 false}\
 ${lua add_offsets 0 19}\
 ${offset 5}${color1}package${goto 166}version${voffset 4}
 ${color}${lua_parse populate_menu /tmp/conky/dnf.packages.formatted 45 900}

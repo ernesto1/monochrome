@@ -77,7 +77,7 @@ ${if_existing [=activeTorrentsFile]}\
 ${if_match ${lua get active ${lines [=activeTorrentsFile]}} > 0}\
 <#assign header = 19>
 <@menu.table x=0 y=0 width=width header=header bottomEdges=false fixed=false/>
-${lua configure_menu [=image.primaryColor]-menu-light-edge-bottom [=width?c] 3}\
+${lua configure_menu [=image.primaryColor] light [=width?c] 3}\
 ${lua add_offsets 0 [=header]}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-peers.png 38 22}\
 ${alignc}${color1}active torrents${voffset 3}
@@ -99,7 +99,7 @@ ${endif}\
 ${if_existing [=packagesFile]}\
 <@menu.table x=0 y=0 width=width header=header bottomEdges=false fixed=false/>
 ${lua add_offsets 0 [=header]}\
-${lua configure_menu [=image.primaryColor]-menu-light-edge-bottom [=width?c] 2}\
+${lua configure_menu [=image.primaryColor] light [=width?c] 2}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dnf.png 114 2}\
 ${offset 5}${color1}package${alignr 4}version${voffset 4}

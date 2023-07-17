@@ -76,7 +76,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-dark-edge-to
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light.png 0 19}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 189 0}\
 # -------- end of table image ---------
-${lua configure_menu yellow-menu-light-edge-bottom 189 3}\
+${lua configure_menu yellow light 189 3}\
 ${lua add_offsets 0 19}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-peers.png 38 22}\
 ${alignc}${color1}active torrents${voffset 3}
@@ -107,7 +107,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light.png 0 
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 189 0}\
 # -------- end of table image ---------
 ${lua add_offsets 0 19}\
-${lua configure_menu yellow-menu-light-edge-bottom 189 2}\
+${lua configure_menu yellow light 189 2}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-dnf.png 114 2}\
 ${offset 5}${color1}package${alignr 4}version${voffset 4}
