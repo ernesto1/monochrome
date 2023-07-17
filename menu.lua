@@ -3,7 +3,16 @@
 methods to allow a conky client to manipulate x,y positions of images or text at runtime.
 The following use cases are supported:
 
-1) drawing dynamic menu windows
+1) dynamically change the position of an image by taking into account runtime x,y offsets to alter the image's 
+   original x,y coordinates
+   
+   see conky_reset_state()
+       conky_add_offsets()
+       conky_draw_image()
+
+2) dynamically update ${goto x} or ${offset x} variables with an offset at runtime
+                                   ${voffset y}
+3) drawing dynamic menu windows
 
       ╭──────────╮    a menu window is drawn by conky using a combination
       │──────────│    of several images imposed on top of each other
@@ -14,15 +23,9 @@ The following use cases are supported:
                       based on the number of lines of the file
 
       see conky_reset_state()
+          conky_add_offsets()
           conky_configure_menu()
           conky_populate_menu()
-
-2) draw an image taking into account x,y offsets to alter the image's original x,y coordinates
-   see conky_reset_state()
-       conky_add_offsets()
-
-3) dynamically update ${goto x} or ${offset x} variables with an offset at runtime
-                                   ${voffset y}
 ]]
 
 -- table to hold variables
@@ -151,11 +154,13 @@ n.b. the y offset is updated to pixel right after the table image ends
 
 method dependency tree:
 
-  conky_configure_menu(..) -> conky_populate_menu(..)
-
+  conky_add_offsets(..) -> conky_configure_menu(..) -> conky_populate_menu(..)
+        \
+       place 'y' coordinate below the table's header
+       
 arguments:
     filepath  absolute path to the file
-    max       maximun number of lines to print
+    max       [optional] maximun number of lines to print
     interval  [optional] number of seconds to wait between reads
 ]]
 function conky_populate_menu(filepath, max, interval)

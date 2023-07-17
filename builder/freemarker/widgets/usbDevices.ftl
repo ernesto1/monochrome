@@ -5,12 +5,12 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 2163,               -- same as passing -x at command line
-  gap_y = 26,
+  gap_x = 1998,               -- same as passing -x at command line
+  gap_y = 141,
 
   -- window settings
   minimum_width = 150,
-  minimum_height = 105,
+  minimum_height = 106,
   own_window = true,
   own_window_type = 'desktop',              -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -71,4 +71,5 @@ ${else}\
 ${image ~/conky/monochrome/images/widgets/[=image.secondaryColor]-usb-slot-disconnected.png -p 0,55}\
 ${template2 sandisk\ sd\ card}
 ${endif}\
+${voffset -20}\
 ]];

@@ -57,6 +57,7 @@ if [[ $offset -lt 1 ]]; then
 fi
 
 log 'starting transmission torrent info service'
+log "torrent listing format will be ${nameWidth} | offset ${offset} | up | offset ${offset} | down"
 outputDir=/tmp/conky
 mkdir -p ${outputDir}
 peersFile=${outputDir}/transmission.peers

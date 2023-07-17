@@ -7,7 +7,7 @@ TODO
 rm -fr /tmp/monochrome && \
 java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar widgets green desktop && \
 pushd /tmp/monochrome && \
-mv !(disk|memoryProcesses) ~/conky/monochrome/widgets && \
+mv !(disk|memoryProcesses|usbDevices) ~/conky/monochrome/widgets && \
 sleep 1 && \
 mv memoryProcesses ~/conky/monochrome/widgets && \
 popd

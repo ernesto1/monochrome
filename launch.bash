@@ -105,7 +105,9 @@ while (( "$#" )); do
     --widgets)
       shift
       conkyDir=${monochromeHome}/widgets
-      numCharacters=24
+      numPackageCharacters=23
+      numTorrentCharacters=32
+      offsetTorrent=10
       ;;
     --widgets-dock)
       shift
@@ -114,8 +116,10 @@ while (( "$#" )); do
     --glass)
       shift
       conkyDir=${monochromeHome}/glass
-      numCharacters=25
-      offset=10
+      numPackageCharacters=25
+      offsetPackage=10
+      numTorrentCharacters=${numPackageCharacters}
+      offsetTorrent=${offsetPackage}
       ;;
     --compact)
       shift
@@ -254,12 +258,12 @@ printHeader "\n::: starting support services\n"
 if ${enablePackageLookup}; then
   echo "- bash | dnf package updates service"
 
-  if [[ "${numCharacters}" ]]; then
-    arguments=(--package-width ${numCharacters})
+  if [[ "${numPackageCharacters}" ]]; then
+    arguments=(--package-width ${numPackageCharacters})
   fi
   
-  if [[ "${offset}" ]]; then
-    arguments+=(--offset ${offset})
+  if [[ "${offsetPackage}" ]]; then
+    arguments+=(--offset ${offsetPackage})
   fi
 
   ${monochromeHome}/dnfPackageLookup.bash ${arguments[@]} &
@@ -270,12 +274,12 @@ if ${enableTransmissionPoller}; then
   echo "- bash | transmission bittorrent service"
   echo -e "         ${ORANGE}ensure${NOCOLOR} the ${ORANGE}remote control${NOCOLOR} option is enabled in transmission"
   
-  if [[ "${numCharacters}" ]]; then
-    arguments=(--name-width ${numCharacters})
+  if [[ "${numTorrentCharacters}" ]]; then
+    arguments=(--name-width ${numTorrentCharacters})
   fi
   
-  if [[ "${offset}" ]]; then
-    arguments+=(--offset ${offset})
+  if [[ "${offsetTorrent}" ]]; then
+    arguments+=(--offset ${offsetTorrent})
   fi
   
   ${monochromeHome}/transmission.bash "${arguments[@]}" &

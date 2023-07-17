@@ -23,9 +23,9 @@ function onExitSignal {
 
 trap onExitSignal SIGINT SIGTERM
 
-packageWidth=22   # number of characters to print for the package name
+packageWidth=21   # number of characters to print for the package name
 versionWidth=7    # number of characters to print for the version number
-offset=5          # number of pixels between the package name and its version number
+offset=11         # number of pixels between the package name and its version number
 
 while (( "$#" )); do
   case $1 in

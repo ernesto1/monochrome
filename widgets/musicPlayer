@@ -41,7 +41,7 @@ conky.config = {
   draw_outline = false,     -- black outline around text (not good if text is black)
   font = 'Typo Round Light Demo:size=11',     -- text
   font0 = 'Typo Round Light Demo:size=15',      -- title
-  font1 = 'Typo Round Light Demo:size=10',      -- small text
+  
   -- colors
   default_color = 'a7aa71',  -- regular text
   color1 = '9fc14a',        -- track title
