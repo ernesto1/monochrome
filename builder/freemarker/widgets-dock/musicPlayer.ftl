@@ -33,7 +33,7 @@ conky.config = {
   own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
   
   -- images
-  imlib_cache_flush_interval = 2,
+  imlib_cache_flush_interval = 250,
 
   -- font settings
   use_xft = false,
@@ -66,6 +66,7 @@ ${if_existing /tmp/conky/musicplayer.albumArtPath}\
          gap = 5>   <#-- empty space between windows -->
 <@menu.menu x=0 y=y width=width height=header+body isDark=true/>
 ${voffset 2}${alignc}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} ${color}: ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}${color1}${endif}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
+${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-album-placeholder.png -p 4,19}\
 ${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4,[=(header)?c]}\
 <#assign y += header + body + gap>
 ${voffset [=193 + gap]}\
