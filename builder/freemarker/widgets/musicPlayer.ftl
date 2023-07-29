@@ -59,9 +59,9 @@ conky.text = [[
 <#assign y = 0>
 ${image ~/conky/monochrome/images/[=conky]/album-shadow.png -p 0,[=y]}\
 <#assign y = 22>
-${image ~/conky/monochrome/images/widgets/green-album-cover.png -p 15,[=y]}\
+${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-album-cover.png -p 15,[=y]}\
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
-${image ~/conky/monochrome/images/widgets/purple-album-cover.png -p 15,[=y]}\
+${image ~/conky/monochrome/images/widgets/[=image.secondaryColor]-album-cover.png -p 15,[=y]}\
 ${else}\
 # :::::::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\

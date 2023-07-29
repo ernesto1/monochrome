@@ -58,7 +58,7 @@ conky.text = [[
 ${image ~/conky/monochrome/images/widgets/album-shadow.png -p 0,0}\
 ${image ~/conky/monochrome/images/widgets/green-album-cover.png -p 15,22}\
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
-${image ~/conky/monochrome/images/widgets/purple-album-cover.png -p 15,22}\
+${image ~/conky/monochrome/images/widgets/grape-album-cover.png -p 15,22}\
 ${else}\
 # :::::::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\

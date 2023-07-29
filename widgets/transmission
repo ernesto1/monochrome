@@ -1,0 +1,94 @@
+conky.config = {
+  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
+  lua_draw_hook_pre = 'reset_state',
+  
+  update_interval = 3,    -- update interval in seconds
+  xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
+  double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
+
+  -- window alignment
+  alignment = 'bottom_left',  -- header|middle|bottom_left|right
+  gap_x = 1299,
+  gap_y = 141,
+
+  -- window settings
+  minimum_width = 281,      -- conky will add an extra pixel to this
+  maximum_width = 281,
+  --minimum_height = 400,
+  own_window = true,
+  own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
+  own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+
+  -- window borders
+  draw_borders = false,     -- draw borders around the conky window
+  border_width = 1,         -- width of border window in pixels
+  border_inner_margin = 0,  -- margin between the border and text in pixels
+  border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
+  
+  -- transparency configuration
+  draw_blended = false,
+  own_window_transparent = true,
+  own_window_argb_visual = true,  -- turn on transparency
+  own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
+  
+  imlib_cache_flush_interval = 250,
+  text_buffer_size=2096,
+
+  -- font settings
+  use_xft = false,
+  draw_shades = false,      -- black shadow on text (not good if text is black)
+  draw_outline = false,     -- black outline around text (not good if text is black)
+  -- colors
+  default_color = 'c596c7', -- regular text
+  color1 = 'd2b8f2',        -- text labels
+};
+
+conky.text = [[
+# this conky requires:
+# - the 'remote control' feature enabled in the transmission bittorrent client: edit > preferences > remote
+# - the transmission.bash script running in the background
+# :::::::::::: torrents overview
+# :::::::::::: active torrents
+${if_existing /tmp/conky/transmission.active}\
+${if_match ${lines /tmp/conky/transmission.active} > 0}\
+# ----------- table image ------------
+${image ~/conky/monochrome/images/common/grape-menu-dark.png -p 0,0}\
+${image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-left.png -p 0,0}\
+${image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-right.png -p 195,0}\
+${image ~/conky/monochrome/images/common/grape-menu-light.png -p 0,19}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 202,0}\
+# -------- end of table image ---------
+# ----------- table image ------------
+${image ~/conky/monochrome/images/common/grape-menu-dark.png -p 203,0}\
+${image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-left.png -p 203,0}\
+${image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-right.png -p 235,0}\
+${image ~/conky/monochrome/images/common/grape-menu-light.png -p 203,19}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 242,0}\
+# -------- end of table image ---------
+# ----------- table image ------------
+${image ~/conky/monochrome/images/common/grape-menu-dark.png -p 243,0}\
+${image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-left.png -p 243,0}\
+${image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-right.png -p 275,0}\
+${image ~/conky/monochrome/images/common/grape-menu-light.png -p 243,19}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 282,0}\
+# -------- end of table image ---------
+${lua add_offsets 0 19}\
+${lua configure_menu grape light 202 3 true}\
+${voffset 2}${offset 5}${color1}active torrents${goto 226}up${goto 254}down${voffset 3}
+${color}${lua_parse populate_menu /tmp/conky/transmission.active}${voffset 4}
+${lua_parse draw_bottom_edges 203 39}${lua_parse draw_bottom_edges 243 39}\
+${endif}\
+${else}\
+# ----------- menu image ------------
+${image ~/conky/monochrome/images/common/green-menu-light.png -p 0,0}\
+${image ~/conky/monochrome/images/common/green-menu-light-edge-top-left.png -p 0,0}\
+${image ~/conky/monochrome/images/common/green-menu-light-edge-top-right.png -p 195,0}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 202,0}\
+${image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-left.png -p 0,29}\
+${image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-right.png -p 195,29}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 0,36}\
+# -------- end of menu image ---------
+${voffset 2}${goto 24}${color}active torrents input file
+${voffset 3}${goto 72}is missing${voffset 4}
+${endif}\
+]];

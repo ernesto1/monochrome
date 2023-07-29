@@ -65,7 +65,7 @@ ${voffset -13}${goto 97}${color1}temp${offset 7}${color}n/a
 ${voffset -125}${goto 97}${color1}sde partitions
 ${template1 /run/media/ernesto/MAXTOR maxtor}
 ${else}\
-${image ~/conky/monochrome/images/widgets/purple-disk-disconnected.png -p 0,0}\
+${image ~/conky/monochrome/images/widgets/grape-disk-disconnected.png -p 0,0}\
 ${voffset 113}${alignr 125}${color4}sde
 ${endif}\
 ]];

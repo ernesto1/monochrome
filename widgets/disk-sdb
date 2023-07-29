@@ -65,7 +65,7 @@ ${voffset -13}${goto 97}${color1}temp${offset 7}${color}${template2 1 temp 1 42}
 ${voffset -125}${goto 97}${color1}sdb partitions
 ${template1 /media/veronica veronica}
 ${else}\
-${image ~/conky/monochrome/images/widgets/purple-disk-disconnected.png -p 0,0}\
+${image ~/conky/monochrome/images/widgets/grape-disk-disconnected.png -p 0,0}\
 ${voffset 113}${alignr 125}${color4}sdb
 ${endif}\
 ]];

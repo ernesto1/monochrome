@@ -1,7 +1,7 @@
 green:
   image:
     primaryColor: green
-    secondaryColor: purple
+    secondaryColor: grape
   colors:
     text: a7aa71
     labels: d2b8f2  # light gold eac9a7
