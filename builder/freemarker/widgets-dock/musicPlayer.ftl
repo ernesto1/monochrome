@@ -1,6 +1,7 @@
 <#import "/lib/menu-round.ftl" as menu>
 conky.config = {
   lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
+  lua_draw_hook_pre = 'reset_state',
   
   update_interval = 2,    -- update interval in seconds
   xinerama_head = 1,      -- for multi monitor setups, select monitor to run on: 0,1,2
@@ -61,29 +62,21 @@ ${voffset 4}${offset 63}${color}no player running
 ${else}\
 # :::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
-<#assign header = 19,    <#-- menu header -->
-         body = 185,  <#-- size of the album window without the header -->
-         gap = 5>   <#-- empty space between windows -->
+<#assign header = 19,   <#-- menu header -->
+         body = 185,    <#-- size of the album art window without the header -->
+         gap = 5>       <#-- empty space between windows -->
 <@menu.menu x=0 y=y width=width height=header+body isDark=true/>
 ${voffset 2}${alignc}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} ${color}: ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}${color1}${endif}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
 ${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-album-placeholder.png -p 4,19}\
 ${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4,[=(header)?c]}\
 <#assign y += header + body + gap>
-${voffset [=193 + gap]}\
+${voffset [=body + 4 + gap]}${lua add_offsets 0 [=y]}\
+${endif}\
 # :::: track details
-<@menu.verticalTable x=0 y=y header=45 body=width-45 height=71/>
-${offset 5}${color1}title${goto 50}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.title}}
+<@menu.verticalTable x=0 y=0 header=45 body=width-45 height=71 fixed=false/>
+${voffset 4}${offset 5}${color1}title${goto 50}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.title}}
 ${voffset 3}${offset 5}${color1}album${goto 50}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.album}}
 ${voffset 3}${offset 5}${color1}artist${goto 50}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.artist}}
 ${voffset 3}${offset 5}${color1}genre${goto 50}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.genre}}${voffset 5}
-${else}\
-# :::: no album art 
-${image ~/conky/monochrome/images/common/[=image.primaryColor]-rhythmbox.png -p 0,0}\
-<@menu.menu x=54 y=0 width=width-54 height=71 isDark=false/>
-${voffset 4}${offset 59}${color}${if_existing /tmp/conky/musicplayer.playbackStatus Playing}${color1}${endif}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.title} 21}
-${voffset 3}${offset 59}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.album} 21}
-${voffset 3}${offset 59}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.artist} 21}
-${voffset 3}${offset 59}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.genre} 21}
-${endif}\
 ${endif}\
 ]];

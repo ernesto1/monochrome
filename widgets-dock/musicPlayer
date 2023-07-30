@@ -1,5 +1,6 @@
 conky.config = {
   lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
+  lua_draw_hook_pre = 'reset_state',
   
   update_interval = 2,    -- update interval in seconds
   xinerama_head = 1,      -- for multi monitor setups, select monitor to run on: 0,1,2
@@ -78,38 +79,22 @@ ${image ~/conky/monochrome/images/common/menu-blank.png -p 0,204}\
 ${voffset 2}${alignc}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} ${color}: ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}${color1}${endif}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
 ${image ~/conky/monochrome/images/common/yellow-menu-album-placeholder.png -p 4,19}\
 ${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4,19}\
-${voffset 198}\
+${voffset 194}${lua add_offsets 0 209}\
+${endif}\
 # :::: track details
 # -------  vertical table image -------
-${image ~/conky/monochrome/images/common/yellow-menu-dark.png -p 0,209}\
-${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-top-left.png -p 0,209}\
-${image ~/conky/monochrome/images/common/yellow-menu-light.png -p 45,209}\
-${image ~/conky/monochrome/images/common/yellow-menu-light-edge-top-right.png -p 182,209}\
-${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-bottom-left.png -p 0,273}\
-${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png -p 182,273}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 189,209}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 0,280}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-dark.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-dark-edge-top-left.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light.png 45 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light-edge-top-right.png 182 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-dark-edge-bottom-left.png 0 64}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png 182 64}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 189 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 71}\
 # --------- end of table image ---------
-${offset 5}${color1}title${goto 50}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.title}}
+${voffset 4}${offset 5}${color1}title${goto 50}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.title}}
 ${voffset 3}${offset 5}${color1}album${goto 50}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.album}}
 ${voffset 3}${offset 5}${color1}artist${goto 50}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.artist}}
 ${voffset 3}${offset 5}${color1}genre${goto 50}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.genre}}${voffset 5}
-${else}\
-# :::: no album art 
-${image ~/conky/monochrome/images/common/yellow-rhythmbox.png -p 0,0}\
-# ----------- menu image ------------
-${image ~/conky/monochrome/images/common/yellow-menu-light.png -p 54,0}\
-${image ~/conky/monochrome/images/common/yellow-menu-light-edge-top-left.png -p 54,0}\
-${image ~/conky/monochrome/images/common/yellow-menu-light-edge-top-right.png -p 182,0}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 189,0}\
-${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-left.png -p 54,64}\
-${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png -p 182,64}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 54,71}\
-# -------- end of menu image ---------
-${voffset 4}${offset 59}${color}${if_existing /tmp/conky/musicplayer.playbackStatus Playing}${color1}${endif}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.title} 21}
-${voffset 3}${offset 59}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.album} 21}
-${voffset 3}${offset 59}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.artist} 21}
-${voffset 3}${offset 59}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.genre} 21}
-${endif}\
 ${endif}\
 ]];

@@ -49,7 +49,9 @@ public class TrackInfo {
     }
 
     public void setGenre(String genre) {
-        if (isNotEmpty(genre)) {
+        // if genre metadata contains some form of unknown verbiage (ex. Unknown Detail), it will be ignored
+        // and the default verbiage will be used instead
+        if (isNotEmpty(genre) && !genre.toLowerCase().contains("unknown")) {
             this.genre = genre;
         }
     }
