@@ -52,14 +52,14 @@
     ╰─────────────╯      -+-
        width (px)
  -->
-<#macro menu x y width height isDark=false bottomEdges=true fixed=true>
+<#macro menu x y width height isDark=false bottomEdges=true fixed=true color=image.primaryColor>
 # ----------- menu image ------------
 <#local theme = getTheme(isDark)>
-<@menuHeader x=x y=y width=width theme=theme fixed=fixed/>
+<@menuHeader x=x y=y width=width theme=theme fixed=fixed color=color/>
 <@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x+width y=y fixed=fixed/>
 <#local y += height>
 <#if bottomEdges>
-<@menuBottom x=x y=y width=width theme=theme fixed=fixed/>
+<@menuBottom x=x y=y width=width theme=theme fixed=fixed color=color/>
 </#if>
 # -------- end of menu image ---------
 </#macro>

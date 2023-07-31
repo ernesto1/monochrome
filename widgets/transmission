@@ -14,7 +14,6 @@ conky.config = {
   -- window settings
   minimum_width = 281,      -- conky will add an extra pixel to this
   maximum_width = 281,
-  --minimum_height = 400,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -80,12 +79,12 @@ ${lua_parse draw_bottom_edges 203 39}${lua_parse draw_bottom_edges 243 39}\
 ${endif}\
 ${else}\
 # ----------- menu image ------------
-${image ~/conky/monochrome/images/common/green-menu-light.png -p 0,0}\
-${image ~/conky/monochrome/images/common/green-menu-light-edge-top-left.png -p 0,0}\
-${image ~/conky/monochrome/images/common/green-menu-light-edge-top-right.png -p 195,0}\
+${image ~/conky/monochrome/images/common/grape-menu-light.png -p 0,0}\
+${image ~/conky/monochrome/images/common/grape-menu-light-edge-top-left.png -p 0,0}\
+${image ~/conky/monochrome/images/common/grape-menu-light-edge-top-right.png -p 195,0}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 202,0}\
-${image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-left.png -p 0,29}\
-${image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-right.png -p 195,29}\
+${image ~/conky/monochrome/images/common/grape-menu-light-edge-bottom-left.png -p 0,29}\
+${image ~/conky/monochrome/images/common/grape-menu-light-edge-bottom-right.png -p 195,29}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 0,36}\
 # -------- end of menu image ---------
 ${voffset 2}${goto 24}${color}active torrents input file

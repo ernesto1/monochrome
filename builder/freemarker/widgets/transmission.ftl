@@ -15,7 +15,6 @@ conky.config = {
   -- window settings
   minimum_width = 281,      -- conky will add an extra pixel to this
   maximum_width = 281,
-  --minimum_height = 400,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -40,7 +39,7 @@ conky.config = {
   draw_shades = false,      -- black shadow on text (not good if text is black)
   draw_outline = false,     -- black outline around text (not good if text is black)
   -- colors
-  default_color = 'c596c7', -- regular text
+  default_color = '[=colors.secondary.text]', -- regular text
   color1 = '[=colors.labels]',        -- text labels
 };
 
@@ -61,9 +60,9 @@ conky.text = [[
 # :::::::::::: active torrents
 ${if_existing [=activeTorrentsFile]}\
 ${if_match ${lines [=activeTorrentsFile]} > 0}\
-<@menu.table x=0 y=y width=width header=header bottomEdges=false color="grape"/>
-<@menu.table x=width+colGap y=y width=speedCol header=header bottomEdges=false color="grape"/>
-<@menu.table x=width+colGap+speedCol+colGap y=y width=speedCol header=header bottomEdges=false color="grape"/>
+<@menu.table x=0 y=y width=width header=header bottomEdges=false color=image.secondaryColor/>
+<@menu.table x=width+colGap y=y width=speedCol header=header bottomEdges=false color=image.secondaryColor/>
+<@menu.table x=width+colGap+speedCol+colGap y=y width=speedCol header=header bottomEdges=false color=image.secondaryColor/>
 ${lua add_offsets 0 [=header]}\
 ${lua configure_menu grape light [=width?c] 3 true}\
 <#assign y += header>
@@ -74,7 +73,7 @@ ${lua_parse draw_bottom_edges [=width+colGap] [=speedCol]}${lua_parse draw_botto
 ${endif}\
 ${else}\
 <#assign body = 36>
-<@menu.menu x=0 y=0 width=width height=body/>
+<@menu.menu x=0 y=0 width=width height=body color=image.secondaryColor/>
 ${voffset 2}${goto 24}${color}active torrents input file
 ${voffset 3}${goto 72}is missing${voffset 4}
 ${endif}\
