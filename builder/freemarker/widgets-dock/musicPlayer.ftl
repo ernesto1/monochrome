@@ -16,7 +16,7 @@ conky.config = {
   <#assign width = 189>
   minimum_width = [=width],      -- conky will add an extra pixel to this  
   maximum_width = [=width],
-  minimum_height = 71,      -- conky will add an extra pixel to this height
+  minimum_height = 55,      -- conky will add an extra pixel to this height
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -73,10 +73,19 @@ ${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4
 ${voffset [=body + 4 + gap]}${lua add_offsets 0 [=y]}\
 ${endif}\
 # :::: track details
-<@menu.verticalTable x=0 y=0 header=45 body=width-45 height=71 fixed=false/>
+<#assign height = 71>
+<@menu.verticalTable x=0 y=0 header=45 body=width-45 height=height fixed=false/>
 ${voffset 4}${offset 5}${color1}title${goto 50}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.title}}
 ${voffset 3}${offset 5}${color1}album${goto 50}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.album}}
 ${voffset 3}${offset 5}${color1}artist${goto 50}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.artist}}
-${voffset 3}${offset 5}${color1}genre${goto 50}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.genre}}${voffset 5}
+# genre is not always defined
+${if_match "${lua get genre ${cat /tmp/conky/musicplayer.genre}}" != "unknown genre"}\
+${voffset 3}${offset 5}${color1}genre${goto 50}${color}${lua get genre}${voffset 5}
+${else}\
+# hence if not available we don't display it and must shrink the menu as well
+${voffset -8}\<#-- conky still considers this a new line so we have to undo it -->
+<#assign y = height - 16>  <#-- edge images are 7x7 px -->
+<@menu.menuBottom x=0 y=y width=width fixed=false color=image.primaryColor/>
+${endif}\
 ${endif}\
 ]];
