@@ -99,9 +99,9 @@ ${image ~/conky/monochrome/images/common/yellow-menu-dark.png -p 0,280}\
 ${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-top-left.png -p 0,280}\
 ${image ~/conky/monochrome/images/common/yellow-menu-light.png -p 75,280}\
 ${image ~/conky/monochrome/images/common/yellow-menu-light-edge-top-right.png -p 182,280}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 189,280}\
 ${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-bottom-left.png -p 0,344}\
 ${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png -p 182,344}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 189,280}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 0,351}\
 # --------- end of table image ---------
 ${lua add_offsets 0 76}\

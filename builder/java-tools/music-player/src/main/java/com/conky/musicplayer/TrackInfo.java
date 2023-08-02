@@ -49,9 +49,7 @@ public class TrackInfo {
     }
 
     public void setGenre(String genre) {
-        // if genre metadata contains some form of unknown verbiage (ex. Unknown Detail), it will be ignored
-        // and the default verbiage will be used instead
-        if (isNotEmpty(genre) && !genre.toLowerCase().contains("unknown")) {
+        if (isNotEmpty(genre) && isActualData(genre)) {
             this.genre = genre;
         }
     }
@@ -69,6 +67,15 @@ public class TrackInfo {
      */
     private boolean isNotEmpty(String s) {
         return s != null && !s.isEmpty();
+    }
+
+    /**
+     * Determines if the string contains an actual value
+     * @param s string to analyze
+     * @return <tt>true</tt> if the data point is valid, <tt>false</tt> if it is some version of 'unknown'
+     */
+    private boolean isActualData(String s) {
+        return !s.toLowerCase().contains("unknown");
     }
 
     public String getTitle() {

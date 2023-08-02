@@ -16,7 +16,7 @@ conky.config = {
   <#assign width = 189>
   minimum_width = [=width],      -- conky will add an extra pixel to this  
   maximum_width = [=width],
-  minimum_height = 37,      -- conky will add an extra pixel to this height
+  minimum_height = 22,      -- conky will add an extra pixel to this height
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -58,7 +58,7 @@ ${if_existing /tmp/conky/musicplayer.name Nameless}\
 ${image ~/conky/monochrome/images/common/[=image.primaryColor]-rhythmbox.png -p 0,[=y]}\
 <@menu.menu x=58 y=33 width=111 height=38/>
 ${voffset 36}${offset 63}${color1}now playing
-${voffset 4}${offset 63}${color}no player running
+${voffset 4}${offset 63}${color}no player running${voffset 5}
 ${else}\
 # :::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
@@ -77,14 +77,16 @@ ${endif}\
 # the position of the bottom edge images is shifted down 16px for each field
 <#-- 3 px top border | 16 px text | 3 px bottom border -->
 # -------  vertical table image top -------
-<#assign header = 45, height = 38>
+<#assign header = 45, height = 22>
 <@menu.verticalMenuHeader x=0 y=0 header=header body=width-header fixed=false/>
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 189 0}\
 # --------- end of table image top ---------
 <#assign y = height - 7><#-- edges are 7x7 px -->
 ${lua add_offsets 0 [=y]}\
 ${voffset 3}${offset 5}${color1}title${goto 50}${color}${cat /tmp/conky/musicplayer.title}
-${voffset 3}${offset 5}${color1}album${goto 50}${color}${cat /tmp/conky/musicplayer.album}
+${if_match "${lua get album ${cat /tmp/conky/musicplayer.album}}" != "unknown album"}\
+${voffset 3}${offset 5}${color1}album${goto 50}${color}${lua get album}${lua add_offsets 0 16}
+${endif}\
 ${if_match "${lua get artist ${cat /tmp/conky/musicplayer.artist}}" != "unknown artist"}\
 ${voffset 3}${offset 5}${color1}artist${goto 50}${color}${lua get artist}${lua add_offsets 0 16}
 ${endif}\

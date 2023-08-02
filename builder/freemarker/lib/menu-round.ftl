@@ -97,12 +97,12 @@
 <@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-dark-edge-top-left.png" x=x y=y fixed=fixed/>
 <@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-light.png" x=x+header y=y fixed=fixed/>
 <@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-light-edge-top-right.png" x=x+header+body-7 y=y fixed=fixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x+header+body y=y fixed=fixed/>
 </#macro>
 
 <#macro verticalMenuBottom x y header body fixed=true>
 <@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-dark-edge-bottom-left.png" x=x y=y fixed=fixed/>
 <@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-light-edge-bottom-right.png" x=x+header+body-7 y=y fixed=fixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x+header+body y=y fixed=fixed/>
 <@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x y=y+7 fixed=fixed/>
 </#macro>
 
