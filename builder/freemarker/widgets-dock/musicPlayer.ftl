@@ -16,7 +16,7 @@ conky.config = {
   <#assign width = 189>
   minimum_width = [=width],      -- conky will add an extra pixel to this  
   maximum_width = [=width],
-  minimum_height = 55,      -- conky will add an extra pixel to this height
+  minimum_height = 37,      -- conky will add an extra pixel to this height
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -73,19 +73,27 @@ ${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4
 ${voffset [=body + 4 + gap]}${lua add_offsets 0 [=y]}\
 ${endif}\
 # :::: track details
-<#assign height = 71>
-<@menu.verticalTable x=0 y=0 header=45 body=width-45 height=height fixed=false/>
-${voffset 4}${offset 5}${color1}title${goto 50}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.title}}
-${voffset 3}${offset 5}${color1}album${goto 50}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.album}}
-${voffset 3}${offset 5}${color1}artist${goto 50}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.artist}}
-# genre is not always defined
-${if_match "${lua get genre ${cat /tmp/conky/musicplayer.genre}}" != "unknown genre"}\
-${voffset 3}${offset 5}${color1}genre${goto 50}${color}${lua get genre}${voffset 5}
-${else}\
-# hence if not available we don't display it and must shrink the menu as well
-${voffset -8}\<#-- conky still considers this a new line so we have to undo it -->
-<#assign y = height - 16>  <#-- edge images are 7x7 px -->
-<@menu.menuBottom x=0 y=y width=width fixed=false color=image.primaryColor/>
+# menu expands based on the track metadata fields available
+# the position of the bottom edge images is shifted down 16px for each field
+<#-- 3 px top border | 16 px text | 3 px bottom border -->
+# -------  vertical table image top -------
+<#assign header = 45, height = 38>
+<@menu.verticalMenuHeader x=0 y=0 header=header body=width-header fixed=false/>
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 189 0}\
+# --------- end of table image top ---------
+<#assign y = height - 7><#-- edges are 7x7 px -->
+${lua add_offsets 0 [=y]}\
+${voffset 3}${offset 5}${color1}title${goto 50}${color}${cat /tmp/conky/musicplayer.title}
+${voffset 3}${offset 5}${color1}album${goto 50}${color}${cat /tmp/conky/musicplayer.album}
+${if_match "${lua get artist ${cat /tmp/conky/musicplayer.artist}}" != "unknown artist"}\
+${voffset 3}${offset 5}${color1}artist${goto 50}${color}${lua get artist}${lua add_offsets 0 16}
 ${endif}\
+${if_match "${lua get genre ${cat /tmp/conky/musicplayer.genre}}" != "unknown genre"}\
+${voffset 3}${offset 5}${color1}genre${goto 50}${color}${lua get genre}${lua add_offsets 0 16}
+${endif}\
+${voffset -7}\
+# ------  vertical table image bottom ------
+<@menu.verticalMenuBottom x=0 y=0 header=header body=width-header fixed=false/>
+# -------- end of table image bottom -------
 ${endif}\
 ]];
