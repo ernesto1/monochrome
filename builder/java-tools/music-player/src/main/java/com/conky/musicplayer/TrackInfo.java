@@ -49,7 +49,7 @@ public class TrackInfo {
     }
 
     public void setGenre(String genre) {
-        if (isNotEmpty(genre) && isActualData(genre)) {
+        if (isNotEmpty(genre) && isNotUnknown(genre)) {
             this.genre = genre;
         }
     }
@@ -70,11 +70,12 @@ public class TrackInfo {
     }
 
     /**
-     * Determines if the string contains an actual value
+     * Determines if the track metadata string contains an actual value and not a filler value
+     * for missing details like <i>Unknown</i>
      * @param s string to analyze
-     * @return <tt>true</tt> if the data point is valid, <tt>false</tt> if it is some version of 'unknown'
+     * @return <tt>true</tt> if the metadata is not some verbiage of 'unknown', <tt>false</tt> otherwise
      */
-    private boolean isActualData(String s) {
+    private boolean isNotUnknown(String s) {
         return !s.toLowerCase().contains("unknown");
     }
 

@@ -1,6 +1,7 @@
 <#import "/lib/menu-round.ftl" as menu>
 conky.config = {
   lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
+  lua_draw_hook_pre = 'reset_state',
   
   update_interval = 2,    -- update interval in seconds
   <#if conky == "widgets-dock"><#assign monitor = 1><#else><#assign monitor = 0></#if>
@@ -16,7 +17,7 @@ conky.config = {
   <#assign width = 189>
   minimum_width = [=width],      -- conky will add an extra pixel to this  
   maximum_width = [=width],
-  minimum_height = 71,      -- conky will add an extra pixel to this height
+  minimum_height = 22,      -- conky will add an extra pixel to this height
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -66,11 +67,12 @@ ${if_existing /tmp/conky/musicplayer.albumArtPath}\
          body = 185,  <#-- size of the current window without the header -->
          gap = 3>   <#-- empty space between windows -->
 <@menu.menu x=0 y=y width=width height=top+body isDark=true/>
+${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-album-placeholder.png -p 4,19}\
 ${voffset 2}${alignc}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} ${color}: ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}${color1}${endif}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
 ${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4,[=(top)?c]}\
 <#assign y += y + top + body + gap, body = 71>
-<@menu.verticalTable x=0 y=y header=45 body=width-45 height=body/>
-${voffset 196}\
+${lua add_offsets 0 [=y]}\
+${voffset 193}\
 ${else}\
 # :::::::: no album art available
 <#assign y = 0>
@@ -79,13 +81,32 @@ ${image ~/conky/monochrome/images/common/[=image.primaryColor]-rhythmbox.png -p 
 ${voffset 36}${offset 61}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}
 ${voffset 4}${offset 61}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
 <#assign y += 71 + gap, body = 71>
-<@menu.verticalTable x=0 y=y header=45 body=width-45 height=body/>
-${voffset 12}\
+${lua add_offsets 0 [=y]}\
+${voffset 9}\
 ${endif}\
 # :::::::: track details
-${offset 5}${color1}title${goto 50}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.title}}
-${voffset 3}${offset 5}${color1}album${goto 50}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.album}}
-${voffset 3}${offset 5}${color1}artist${goto 50}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.artist}}
-${voffset 3}${offset 5}${color1}genre${goto 50}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.genre}}${voffset 5}
+# menu expands based on the track metadata fields available
+# the position of the bottom edge images is shifted down 16px for each field
+<#-- 3 px top border | 16 px text | 3 px bottom border -->
+# -------  vertical table image top -------
+<#assign header = 45, height = 22>
+<@menu.verticalMenuHeader x=0 y=0 header=header body=width-header fixed=false/>
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 189 0}\
+# --------- end of table image top ---------
+${lua add_offsets 0 [=height - 7]}\<#-- edges are 7x7 px -->
+${voffset 3}${offset 5}${color1}title${goto 50}${color}${cat /tmp/conky/musicplayer.title}
+${if_match "${lua get album ${cat /tmp/conky/musicplayer.album}}" != "unknown album"}\
+${voffset 3}${offset 5}${color1}album${goto 50}${color}${lua get album}${lua add_offsets 0 16}
+${endif}\
+${if_match "${lua get artist ${cat /tmp/conky/musicplayer.artist}}" != "unknown artist"}\
+${voffset 3}${offset 5}${color1}artist${goto 50}${color}${lua get artist}${lua add_offsets 0 16}
+${endif}\
+${if_match "${lua get genre ${cat /tmp/conky/musicplayer.genre}}" != "unknown genre"}\
+${voffset 3}${offset 5}${color1}genre${goto 50}${color}${lua get genre}${lua add_offsets 0 16}
+${endif}\
+${voffset -7}\
+# ------  vertical table image bottom ------
+<@menu.verticalMenuBottom x=0 y=0 header=header body=width-header fixed=false/>
+# -------- end of table image bottom -------
 ${endif}\
 ]];
