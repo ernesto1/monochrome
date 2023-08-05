@@ -107,7 +107,6 @@ while (( "$#" )); do
       conkyDir=${monochromeHome}/widgets
       numPackageCharacters=23
       numTorrentCharacters=32
-      offsetTorrent=10
       ;;
     --widgets-dock)
       shift
@@ -119,7 +118,6 @@ while (( "$#" )); do
       numPackageCharacters=25
       offsetPackage=10
       numTorrentCharacters=${numPackageCharacters}
-      offsetTorrent=${offsetPackage}
       ;;
     --compact)
       shift

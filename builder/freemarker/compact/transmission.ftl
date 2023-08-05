@@ -73,17 +73,17 @@ ${voffset [= 7 + gap]}\
 ${if_existing [=activeTorrentsFile]}\
 ${if_match ${lines [=activeTorrentsFile]} > 0}\
 ${lua configure_menu [=image.primaryColor] light [=width?c] 3}\
-<#assign header = 19, speedCol = 39>
+<#assign header = 19, speedCol = 39, colGap = 1>
 <@menu.table x=0 y=y width=width header=header bottomEdges=false/>
-<@menu.table x=width+gap y=y width=39 header=header bottomEdges=false/>
-<@menu.table x=width+gap+speedCol+gap y=y width=39 header=header bottomEdges=false/>
+<@menu.table x=width+colGap y=y width=39 header=header bottomEdges=false/>
+<@menu.table x=width+colGap+speedCol+colGap y=y width=39 header=header bottomEdges=false/>
 ${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-peers.png -p 38,[=y+header+22]}\
 <#assign y += header>
 ${lua add_offsets 0 [=header]}\
-${offset 5}${color1}active torrents${goto 216}up${goto 246}down${voffset 3}
+${offset 5}${color1}active torrents${goto 214}up${offset 16}down${voffset 3}
 <#assign maxLines = 17>
 ${color}${lua_parse populate_menu [=activeTorrentsFile] [=maxLines]}${voffset [= 7 + gap]}
-${lua_parse draw_bottom_edges [=width+gap] 39}${lua_parse draw_bottom_edges [=width+gap+speedCol+gap] 39}\
+${lua_parse draw_bottom_edges [=width+colGap] 39}${lua_parse draw_bottom_edges [=width+colGap+speedCol+colGap] 39}\
 ${lua add_offsets 0 [=gap]}\
 ${endif}\
 ${else}\
@@ -96,17 +96,17 @@ ${endif}\
 # :::::::::::: peers
 ${if_existing [=peersFile]}\
 ${if_match ${lua get peers} > 0}\
-<#assign ipCol = 99, clientCol = 87>
+<#assign ipCol = 101, clientCol = 87>
 ${lua configure_menu [=image.primaryColor] light [=ipCol] 3}\
 <@menu.table x=0 y=0 width=ipCol header=header bottomEdges=false fixed=false/>
-<@menu.table x=ipCol+gap y=0 width=clientCol header=header bottomEdges=false fixed=false/>
-<@menu.table x=width+gap y=0 width=39 header=header bottomEdges=false fixed=false/>
-<@menu.table x=width+gap+speedCol+gap y=0 width=39 header=header bottomEdges=false fixed=false/>
+<@menu.table x=ipCol+colGap y=0 width=clientCol header=header bottomEdges=false fixed=false/>
+<@menu.table x=width+colGap y=0 width=39 header=header bottomEdges=false fixed=false/>
+<@menu.table x=width+colGap+speedCol+colGap y=0 width=39 header=header bottomEdges=false fixed=false/>
 ${lua add_offsets 0 [=header]}\
-${offset 5}${color1}ip address${goto 108}client${goto 216}up${goto 246}down${voffset 3}
+${offset 5}${color1}ip address${goto 108}client${goto 214}up${offset 16}down${voffset 3}
 <#assign maxLines = 16>
 ${color}${lua_parse populate_menu [=peersFile]}
-${lua_parse draw_bottom_edges [=ipCol+gap] [=clientCol]}${lua_parse draw_bottom_edges [=width+gap] [=speedCol]}${lua_parse draw_bottom_edges [=width+gap+speedCol+gap] [=speedCol]}\
+${lua_parse draw_bottom_edges [=ipCol+colGap] [=clientCol]}${lua_parse draw_bottom_edges [=width+colGap] [=speedCol]}${lua_parse draw_bottom_edges [=width+colGap+speedCol+colGap] [=speedCol]}\
 ${endif}\
 ${else}\
 <@menu.menu x=0 y=0 width=width height=body fixed=false/>

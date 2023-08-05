@@ -26,7 +26,7 @@ if ! type transmission-remote > /dev/null 2>&1; then
   exit 1
 fi
 
-offset=12
+offset=10
 nameWidth=30          # number of characters for the active torrent names
 
 while (( "$#" )); do
@@ -101,7 +101,7 @@ while [ true ]; do
     | cut -d ':' -f 1,4,5,6 \
     | grep -vE ':0:0:' \
     | sort -t . -k 1n -k 2n -k 3n -k 4n \
-    | awk -F ':' "{printf \"\${voffset 3}\${offset 5}%-15s\${offset ${offset}}%-13.13s\${offset ${offset}}%5.5s\${offset ${offset}}%5.5s\n\", \$1, \$4, \$3, \$2}" > ${peersFile}.$$
+    | awk -F ':' "{printf \"\${voffset 3}\${offset 5}%-15s\${offset 12}%-13.13s\${offset ${offset}}%5.5s\${offset ${offset}}%5.5s\n\", \$1, \$4, \$3, \$2}" > ${peersFile}.$$
   
   mv ${seedingFile}.$$ ${seedingFile}
   mv ${downloadingFile}.$$ ${downloadingFile}
