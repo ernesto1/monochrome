@@ -59,7 +59,7 @@ ${if_existing /tmp/conky/musicplayer.name Nameless}\
 ${image ~/conky/monochrome/images/common/[=image.primaryColor]-rhythmbox.png -p 0,[=y]}\
 <@menu.menu x=55 y=33 width=113 height=38/>
 ${voffset 36}${offset 61}${color1}now playing
-${voffset 4}${offset 61}${color}no player running
+${voffset 4}${offset 61}${color}no player running${voffset 5}
 ${else}\
 # :::::::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\

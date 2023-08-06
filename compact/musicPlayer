@@ -63,7 +63,7 @@ ${image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-right.p
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 55,71}\
 # -------- end of menu image ---------
 ${voffset 36}${offset 61}${color1}now playing
-${voffset 4}${offset 61}${color}no player running
+${voffset 4}${offset 61}${color}no player running${voffset 5}
 ${else}\
 # :::::::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
