@@ -1,0 +1,55 @@
+# record screen one frame a second
+# -r 1              1 fps
+# -s 200x768        screen size
+# -f x11grab        is what actually tells FFmpeg to record your screen
+# -i :0.0+200,300   grab image from upper-left corner at (x=200, y=300)
+ffmpeg -r 1 -s 200x768 -f x11grab -i :0.0 -c:v libx264rgb -crf 0 -preset ultrafast conky.avi
+
+# create gif from video | 1 frame every 2 seconds
+ffmpeg -i conky.avi -vf fps=1/2 frame%05d.png;\
+
+
+::: laptop
+mkdir -p /tmp/recording;
+cd /tmp/recording;\
+rm *;\
+ffmpeg -r 1 -s 200x768 -f x11grab -i :0.0 -c:v libx264rgb -crf 0 -preset ultrafast conky.avi;\
+ffmpeg -i conky.avi -vf fps=1/2 frame%05d.png;\
+convert -delay 100 -loop 0 *.png ~/conky/monochrome/images/screenshots/widgets-dock.gif
+
+
+::: desktop
+music conky   -s 325x325 -f x11grab -i :0.0+82,1500      # music conky within widgets-dock
+compact       -s 425x1380 -f x11grab -i :0.0+1200,110
+glass         -s 515x1503 -f x11grab -i :0.0+1200,75
+widgets dock  -s 360x1700 -f x11grab -i :0.0+0,110
+                            \
+                        order of parameters does matter -f ... -i ...
+
+mkdir -p /tmp/recording;\
+cd /tmp/recording;\
+rm *;\
+ffmpeg -r 1 -s 425x1380 -f x11grab -i :0.0+1200,110 -c:v libx264rgb -crf 0 -preset ultrafast conky.avi;\
+ffmpeg -i conky.avi -vf fps=1/2 frame%02d.png;\
+gifski --fps 1 -o conky.gif frame*;\
+mv conky.gif ~/conky/monochrome/images/screenshots/glass.gif
+                                                   compact.gif
+                                                   widgets-dock.gif
+
+-- deprecated gif conversion (huge color loss)
+convert -delay 100 -loop 0 *.png video.gif
+
+
+music player states:    no player
+                        song no album cover
+                        song with album cover
+
+
+references
+----------------------------------------------------
+https://mo-profile.com/screen-recording-with-ffmpeg/
+https://averagelinuxuser.com/make-gif-in-linux-with-one-simple-command/
+https://superuser.com/questions/1388870/how-to-capture-first-x-frames-every-x-seconds-into-a-png-with-ffmpeg
+
+did not use
+https://bytefreaks.net/gnulinux/making-high-quality-gif-from-video-in-ubuntu-20-04lts
