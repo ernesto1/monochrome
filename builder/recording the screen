@@ -9,19 +9,10 @@ ffmpeg -r 1 -s 200x768 -f x11grab -i :0.0 -c:v libx264rgb -crf 0 -preset ultrafa
 ffmpeg -i conky.avi -vf fps=1/2 frame%05d.png;\
 
 
-::: laptop
-mkdir -p /tmp/recording;
-cd /tmp/recording;\
-rm *;\
-ffmpeg -r 1 -s 200x768 -f x11grab -i :0.0 -c:v libx264rgb -crf 0 -preset ultrafast conky.avi;\
-ffmpeg -i conky.avi -vf fps=1/2 frame%05d.png;\
-convert -delay 100 -loop 0 *.png ~/conky/monochrome/images/screenshots/widgets-dock.gif
-
-
 ::: desktop
 music conky   -s 325x325 -f x11grab -i :0.0+82,1500      # music conky within widgets-dock
-compact       -s 425x1380 -f x11grab -i :0.0+1200,110
-glass         -s 515x1503 -f x11grab -i :0.0+1200,75
+compact       -s 500x1567 -f x11grab -i :0.0+1200,33
+glass         -s 500x1567 -f x11grab -i :0.0+1200,33
 widgets dock  -s 360x1700 -f x11grab -i :0.0+0,110
                             \
                         order of parameters does matter -f ... -i ...
@@ -29,12 +20,13 @@ widgets dock  -s 360x1700 -f x11grab -i :0.0+0,110
 mkdir -p /tmp/recording;\
 cd /tmp/recording;\
 rm *;\
-ffmpeg -r 1 -s 425x1380 -f x11grab -i :0.0+1200,110 -c:v libx264rgb -crf 0 -preset ultrafast conky.avi;\
+ffmpeg -r 1 -s 500x1567 -f x11grab -i :0.0+1200,33 -c:v libx264rgb -crf 0 -preset ultrafast conky.avi;\
 ffmpeg -i conky.avi -vf fps=1/2 frame%02d.png;\
 gifski --fps 1 -o conky.gif frame*;\
 mv conky.gif ~/conky/monochrome/images/screenshots/glass.gif
-                                                   compact.gif
-                                                   widgets-dock.gif
+
+mv conky.gif ~/conky/monochrome/images/screenshots/widgets-dock.gif
+mv conky.gif ~/conky/monochrome/images/screenshots/compact.gif
 
 -- deprecated gif conversion (huge color loss)
 convert -delay 100 -loop 0 *.png video.gif
@@ -43,6 +35,18 @@ convert -delay 100 -loop 0 *.png video.gif
 music player states:    no player
                         song no album cover
                         song with album cover
+
+external hard drive     disconnected
+                        plugged in
+
+
+::: laptop
+mkdir -p /tmp/recording;
+cd /tmp/recording;\
+rm *;\
+ffmpeg -r 1 -s 200x768 -f x11grab -i :0.0 -c:v libx264rgb -crf 0 -preset ultrafast conky.avi;\
+ffmpeg -i conky.avi -vf fps=1/2 frame%05d.png;\
+convert -delay 100 -loop 0 *.png ~/conky/monochrome/images/screenshots/widgets-dock.gif
 
 
 references
