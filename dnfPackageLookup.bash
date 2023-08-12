@@ -108,7 +108,7 @@ while [ true ]; do
         highlightRegex='kernel\|firefox\|transmission'
         cat ${packagesFile} \
           | awk "{ printf \"%-${packageWidth}.${packageWidth}s\${offset ${offset}}%${versionWidth}.${versionWidth}s\n\", \$1, \$2 }" \
-          | sed 's/^/${voffset 2}${offset 5}/' \
+          | sed 's/^/${voffset 3}${offset 5}/' \
           | sed "s:\($highlightRegex\):$\{color2\}\1$\{color\}:" > ${outputDir}/dnf.packages.formatted
     else
         log 'no updates available'

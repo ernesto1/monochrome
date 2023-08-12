@@ -58,13 +58,13 @@ ${image ~/conky/monochrome/images/common/green-menu-dark-edge-top-right.png -p 1
 ${image ~/conky/monochrome/images/common/green-menu-light.png -p 0,39}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 200,0}\
 # -------- end of table image ---------
-${lua configure_menu green light 200 2}\
-${lua add_offsets 0 55}\
+${lua configure_menu green light 200 3}\
+${lua add_offsets 0 56}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
-${image ~/conky/monochrome/images/common/green-menu-dnf.png -p 121,58}\
+${image ~/conky/monochrome/images/common/green-menu-dnf.png -p 121,59}\
 ${voffset 3}${alignc}${color1}dnf package management
 ${voffset 5}${alignc}${color}${lines /tmp/conky/dnf.packages.formatted} package update(s) available
-${voffset 7}${offset 5}${color1}package${alignr 4}version${voffset 1}
+${voffset 6}${offset 5}${color1}package${alignr 4}version${voffset 1}
 # the dnf package lookup script refreshes the package list every 10m
 ${color}${lua_parse populate_menu /tmp/conky/dnf.packages.formatted 85}${voffset 5}
 ${endif}\

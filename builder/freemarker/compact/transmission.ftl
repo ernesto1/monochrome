@@ -10,7 +10,7 @@ conky.config = {
   -- window alignment
   alignment = 'top_left',  -- header|middle|bottom_left|right
   gap_x = 205,
-  gap_y = 659,
+  gap_y = 662,
 
   -- window settings
   minimum_width = 275,      -- conky will add an extra pixel to this
@@ -49,8 +49,10 @@ conky.text = [[
 # this conky requires:
 # - the 'remote control' feature enabled in the transmission bittorrent client: edit > preferences > remote
 # - the transmission.bash script running in the background
+<#assign totalLines = 33>
+${lua set_global_vars [=totalLines]}\
 # :::::::::::: torrents overview
-<#assign y = 0, 
+<#assign y = 0,
          header = 75, <#-- menu header -->
          body = 71,   <#-- menu window without the header -->
          width = 189, <#-- default menu width -->
@@ -64,14 +66,14 @@ ${lua add_offsets 0 [=y?c]}\
          downloadingFile = inputDir + "/transmission.downloading",
          idleFile = inputDir + "/transmission.idle",
          activeTorrentsFile = inputDir + "/transmission.active">
-${voffset 5}${offset 5}${color1}swarm${goto 81}${color}${if_existing [=peersFile]}${lua pad ${lua get peers ${lines [=peersFile]}}} peer(s)${else}file missing${endif}
-${voffset 3}${offset 5}${color1}seeding${goto 81}${color}${if_existing [=seedingFile]}${lua pad ${lines [=seedingFile]}} torrent(s)${else}file missing${endif}
-${voffset 3}${offset 5}${color1}downloading${goto 81}${color}${if_existing [=downloadingFile]}${lua pad ${lines [=downloadingFile]}} torrent(s)${else}file missing${endif}
-${voffset 3}${offset 5}${color1}idle${goto 81}${color}${if_existing [=idleFile]}${lua pad ${lines [=idleFile]}} torrent(s)${else}file missing${endif}
+${voffset 5}${offset 5}${color1}swarm${goto 81}${color}${if_existing [=peersFile]}${lua pad ${lua get peers ${lines [=peersFile]}}} peers${else}file missing${endif}
+${voffset 3}${offset 5}${color1}seeding${goto 81}${color}${if_existing [=seedingFile]}${lua pad ${lines [=seedingFile]}} torrents${else}file missing${endif}
+${voffset 3}${offset 5}${color1}downloading${goto 81}${color}${if_existing [=downloadingFile]}${lua pad ${lines [=downloadingFile]}} torrents${else}file missing${endif}
+${voffset 3}${offset 5}${color1}idle${goto 81}${color}${if_existing [=idleFile]}${lua pad ${lines [=idleFile]}} torrents${else}file missing${endif}
 ${voffset [= 7 + gap]}\
 # :::::::::::: active torrents
 ${if_existing [=activeTorrentsFile]}\
-${if_match ${lines [=activeTorrentsFile]} > 0}\
+${if_match ${lua get activeNum ${lines [=activeTorrentsFile]}} > 0}\
 ${lua configure_menu [=image.primaryColor] light [=width?c] 3}\
 <#assign header = 19, speedCol = 39, colGap = 1>
 <@menu.table x=0 y=y width=width header=header bottomEdges=false/>
@@ -80,9 +82,8 @@ ${lua configure_menu [=image.primaryColor] light [=width?c] 3}\
 ${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-peers.png -p 38,[=y+header+22]}\
 <#assign y += header>
 ${lua add_offsets 0 [=header]}\
-${offset 5}${color1}active torrents${goto 214}up${offset 16}down${voffset 3}
-<#assign maxLines = 17>
-${color}${lua_parse populate_menu [=activeTorrentsFile] [=maxLines]}${voffset [= 7 + gap]}
+${offset 5}${color1}active torrents ${color}(${color}${lua get activeNum}${color})${color1}${goto 214}up${offset 16}down${voffset 3}
+${color}${lua_parse populate_menu [=activeTorrentsFile] [=totalLines - 3]}${voffset [= 7 + gap]}
 ${lua_parse draw_bottom_edges [=width+colGap] 39}${lua_parse draw_bottom_edges [=width+colGap+speedCol+colGap] 39}\
 ${lua add_offsets 0 [=gap]}\
 ${endif}\
@@ -104,8 +105,7 @@ ${lua configure_menu [=image.primaryColor] light [=ipCol] 3}\
 <@menu.table x=width+colGap+speedCol+colGap y=0 width=39 header=header bottomEdges=false fixed=false/>
 ${lua add_offsets 0 [=header]}\
 ${offset 5}${color1}ip address${goto 108}client${goto 214}up${offset 16}down${voffset 3}
-<#assign maxLines = 16>
-${color}${lua_parse populate_menu [=peersFile]}
+${color}${lua_parse populate_menu [=peersFile] [=totalLines]}
 ${lua_parse draw_bottom_edges [=ipCol+colGap] [=clientCol]}${lua_parse draw_bottom_edges [=width+colGap] [=speedCol]}${lua_parse draw_bottom_edges [=width+colGap+speedCol+colGap] [=speedCol]}\
 ${endif}\
 ${else}\

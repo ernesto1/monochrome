@@ -14,7 +14,7 @@ conky.config = {
   -- window settings
   minimum_width = 189,      -- conky will add an extra pixel to this  
   maximum_width = 189,
-  minimum_height = 1040,
+  minimum_height = 1072,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -45,6 +45,7 @@ conky.config = {
 };
 
 conky.text = [[
+${lua set_global_vars 57}\
 ${voffset 2}\
 # :::::::::::: transmission bittorrent client
 # this panel requires:
@@ -61,14 +62,14 @@ ${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 0,71}\
 # --------- end of table image ---------
 ${lua add_offsets 0 76}\
-${voffset 3}${offset 5}${color1}swarm${goto 81}${color}${if_existing /tmp/conky/transmission.peers}${lua pad ${lua get peers ${lines /tmp/conky/transmission.peers}}} peer(s)${else}file missing${endif}
-${voffset 3}${offset 5}${color1}seeding${goto 81}${color}${if_existing /tmp/conky/transmission.seeding}${lua pad ${lines /tmp/conky/transmission.seeding}} torrent(s)${else}file missing${endif}
-${voffset 3}${offset 5}${color1}downloading${goto 81}${color}${if_existing /tmp/conky/transmission.downloading}${lua pad ${lines /tmp/conky/transmission.downloading}} torrent(s)${else}file missing${endif}
-${voffset 3}${offset 5}${color1}idle${goto 81}${color}${if_existing /tmp/conky/transmission.idle}${lua pad ${lines /tmp/conky/transmission.idle}} torrent(s)${else}file missing${endif}
+${voffset 3}${offset 5}${color1}swarm${goto 81}${color}${if_existing /tmp/conky/transmission.peers}${lua pad ${lua get peers ${lines /tmp/conky/transmission.peers}}} peers${else}file missing${endif}
+${voffset 3}${offset 5}${color1}seeding${goto 81}${color}${if_existing /tmp/conky/transmission.seeding}${lua pad ${lines /tmp/conky/transmission.seeding}} torrents${else}file missing${endif}
+${voffset 3}${offset 5}${color1}downloading${goto 81}${color}${if_existing /tmp/conky/transmission.downloading}${lua pad ${lines /tmp/conky/transmission.downloading}} torrents${else}file missing${endif}
+${voffset 3}${offset 5}${color1}idle${goto 81}${color}${if_existing /tmp/conky/transmission.idle}${lua pad ${lines /tmp/conky/transmission.idle}} torrents${else}file missing${endif}
 ${voffset 12}\
 # :::::::::::: active torrents
 ${if_existing /tmp/conky/transmission.active}\
-${if_match ${lua get active ${lines /tmp/conky/transmission.active}} > 0}\
+${if_match ${lua get activeNum ${lines /tmp/conky/transmission.active}} > 0}\
 # ----------- table image ------------
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-dark.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-dark-edge-top-left.png 0 0}\
@@ -79,8 +80,8 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 189 0}\
 ${lua configure_menu yellow light 189 3}\
 ${lua add_offsets 0 19}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-peers.png 38 22}\
-${alignc}${color1}active torrents${voffset 3}
-${color}${color}${lua_parse populate_menu /tmp/conky/transmission.active 10 3}${voffset 12}
+${alignc}${color1}active torrents ${color}(${color}${lua get activeNum}${color})${color1}${voffset 3}
+${color}${color}${lua_parse populate_menu /tmp/conky/transmission.active 52 3}${voffset 12}
 ${lua add_offsets 0 5}\
 ${endif}\
 ${else}\
@@ -107,10 +108,10 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light.png 0 
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 189 0}\
 # -------- end of table image ---------
 ${lua add_offsets 0 19}\
-${lua configure_menu yellow light 189 2}\
+${lua configure_menu yellow light 189 3}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-dnf.png 114 2}\
-${offset 5}${color1}package${alignr 4}version${voffset 4}
-${color}${lua_parse populate_menu /tmp/conky/dnf.packages.formatted 50 900}${voffset 5}
+${offset 5}${color1}package${alignr 4}version${voffset 3}
+${color}${lua_parse populate_menu /tmp/conky/dnf.packages.formatted 57 900}${voffset 5}
 ${endif}\
 ]]

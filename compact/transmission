@@ -9,7 +9,7 @@ conky.config = {
   -- window alignment
   alignment = 'top_left',  -- header|middle|bottom_left|right
   gap_x = 205,
-  gap_y = 659,
+  gap_y = 662,
 
   -- window settings
   minimum_width = 275,      -- conky will add an extra pixel to this
@@ -48,6 +48,7 @@ conky.text = [[
 # this conky requires:
 # - the 'remote control' feature enabled in the transmission bittorrent client: edit > preferences > remote
 # - the transmission.bash script running in the background
+${lua set_global_vars 33}\
 # :::::::::::: torrents overview
 # -------  vertical table image -------
 ${image ~/conky/monochrome/images/common/burgundy-menu-dark.png -p 0,0}\
@@ -60,14 +61,14 @@ ${image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-right.p
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 0,71}\
 # --------- end of table image ---------
 ${lua add_offsets 0 74}\
-${voffset 5}${offset 5}${color1}swarm${goto 81}${color}${if_existing /tmp/conky/transmission.peers}${lua pad ${lua get peers ${lines /tmp/conky/transmission.peers}}} peer(s)${else}file missing${endif}
-${voffset 3}${offset 5}${color1}seeding${goto 81}${color}${if_existing /tmp/conky/transmission.seeding}${lua pad ${lines /tmp/conky/transmission.seeding}} torrent(s)${else}file missing${endif}
-${voffset 3}${offset 5}${color1}downloading${goto 81}${color}${if_existing /tmp/conky/transmission.downloading}${lua pad ${lines /tmp/conky/transmission.downloading}} torrent(s)${else}file missing${endif}
-${voffset 3}${offset 5}${color1}idle${goto 81}${color}${if_existing /tmp/conky/transmission.idle}${lua pad ${lines /tmp/conky/transmission.idle}} torrent(s)${else}file missing${endif}
+${voffset 5}${offset 5}${color1}swarm${goto 81}${color}${if_existing /tmp/conky/transmission.peers}${lua pad ${lua get peers ${lines /tmp/conky/transmission.peers}}} peers${else}file missing${endif}
+${voffset 3}${offset 5}${color1}seeding${goto 81}${color}${if_existing /tmp/conky/transmission.seeding}${lua pad ${lines /tmp/conky/transmission.seeding}} torrents${else}file missing${endif}
+${voffset 3}${offset 5}${color1}downloading${goto 81}${color}${if_existing /tmp/conky/transmission.downloading}${lua pad ${lines /tmp/conky/transmission.downloading}} torrents${else}file missing${endif}
+${voffset 3}${offset 5}${color1}idle${goto 81}${color}${if_existing /tmp/conky/transmission.idle}${lua pad ${lines /tmp/conky/transmission.idle}} torrents${else}file missing${endif}
 ${voffset 10}\
 # :::::::::::: active torrents
 ${if_existing /tmp/conky/transmission.active}\
-${if_match ${lines /tmp/conky/transmission.active} > 0}\
+${if_match ${lua get activeNum ${lines /tmp/conky/transmission.active}} > 0}\
 ${lua configure_menu burgundy light 189 3}\
 # ----------- table image ------------
 ${image ~/conky/monochrome/images/common/burgundy-menu-dark.png -p 0,74}\
@@ -92,8 +93,8 @@ ${image ~/conky/monochrome/images/common/menu-blank.png -p 269,74}\
 # -------- end of table image ---------
 ${image ~/conky/monochrome/images/common/burgundy-menu-peers.png -p 38,115}\
 ${lua add_offsets 0 19}\
-${offset 5}${color1}active torrents${goto 214}up${offset 16}down${voffset 3}
-${color}${lua_parse populate_menu /tmp/conky/transmission.active 17}${voffset 10}
+${offset 5}${color1}active torrents ${color}(${color}${lua get activeNum}${color})${color1}${goto 214}up${offset 16}down${voffset 3}
+${color}${lua_parse populate_menu /tmp/conky/transmission.active 30}${voffset 10}
 ${lua_parse draw_bottom_edges 190 39}${lua_parse draw_bottom_edges 230 39}\
 ${lua add_offsets 0 3}\
 ${endif}\
@@ -145,7 +146,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 269 0}\
 # -------- end of table image ---------
 ${lua add_offsets 0 19}\
 ${offset 5}${color1}ip address${goto 108}client${goto 214}up${offset 16}down${voffset 3}
-${color}${lua_parse populate_menu /tmp/conky/transmission.peers}
+${color}${lua_parse populate_menu /tmp/conky/transmission.peers 33}
 ${lua_parse draw_bottom_edges 102 87}${lua_parse draw_bottom_edges 190 39}${lua_parse draw_bottom_edges 230 39}\
 ${endif}\
 ${else}\

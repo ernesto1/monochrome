@@ -57,14 +57,14 @@ ${if_existing [=packagesFile]}\
 <#assign y = 0, 
          header = 39>    <#-- menu header -->
 <@menu.table x=0 y=y width=width header=header bottomEdges=false/>
-${lua configure_menu [=image.primaryColor] light [=width?c] 2}\
-<#assign y += header + 16>
+${lua configure_menu [=image.primaryColor] light [=width?c] 3}\
+<#assign y += header + 17>
 ${lua add_offsets 0 [=y]}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dnf.png -p 121,[=(y+3)?c]}\
 ${voffset 3}${alignc}${color1}dnf package management
 ${voffset 5}${alignc}${color}${lines [=packagesFile]} package update(s) available
-${voffset 7}${offset 5}${color1}package${alignr 4}version${voffset 1}
+${voffset 6}${offset 5}${color1}package${alignr 4}version${voffset 1}
 # the dnf package lookup script refreshes the package list every 10m
 <#assign maxLines = 85>
 ${color}${lua_parse populate_menu [=packagesFile] [=maxLines]}${voffset 5}

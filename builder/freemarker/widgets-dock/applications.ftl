@@ -16,7 +16,7 @@ conky.config = {
   <#assign width = 189>
   minimum_width = [=width],      -- conky will add an extra pixel to this  
   maximum_width = [=width],
-  <#if system == "desktop"><#assign windowHeight=1040><#else><#assign windowHeight=20></#if>
+  <#if system == "desktop"><#assign windowHeight=1072><#else><#assign windowHeight=20></#if>
   minimum_height = [=windowHeight?c],
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -48,6 +48,8 @@ conky.config = {
 };
 
 conky.text = [[
+<#if system == "desktop"><#assign totalLines = 57><#else><#assign totalLines = 46></#if>
+${lua set_global_vars [=totalLines]}\
 ${voffset 2}\
 <#if system == "desktop">
 # :::::::::::: transmission bittorrent client
@@ -67,22 +69,21 @@ ${lua add_offsets 0 [=body + gap]}\
          downloadingFile = inputDir + "/transmission.downloading",
          idleFile = inputDir + "/transmission.idle",
          activeTorrentsFile = inputDir + "/transmission.active">
-${voffset 3}${offset 5}${color1}swarm${goto 81}${color}${if_existing [=peersFile]}${lua pad ${lua get peers ${lines [=peersFile]}}} peer(s)${else}file missing${endif}
-${voffset 3}${offset 5}${color1}seeding${goto 81}${color}${if_existing [=seedingFile]}${lua pad ${lines [=seedingFile]}} torrent(s)${else}file missing${endif}
-${voffset 3}${offset 5}${color1}downloading${goto 81}${color}${if_existing [=downloadingFile]}${lua pad ${lines [=downloadingFile]}} torrent(s)${else}file missing${endif}
-${voffset 3}${offset 5}${color1}idle${goto 81}${color}${if_existing [=idleFile]}${lua pad ${lines [=idleFile]}} torrent(s)${else}file missing${endif}
+${voffset 3}${offset 5}${color1}swarm${goto 81}${color}${if_existing [=peersFile]}${lua pad ${lua get peers ${lines [=peersFile]}}} peers${else}file missing${endif}
+${voffset 3}${offset 5}${color1}seeding${goto 81}${color}${if_existing [=seedingFile]}${lua pad ${lines [=seedingFile]}} torrents${else}file missing${endif}
+${voffset 3}${offset 5}${color1}downloading${goto 81}${color}${if_existing [=downloadingFile]}${lua pad ${lines [=downloadingFile]}} torrents${else}file missing${endif}
+${voffset 3}${offset 5}${color1}idle${goto 81}${color}${if_existing [=idleFile]}${lua pad ${lines [=idleFile]}} torrents${else}file missing${endif}
 ${voffset [= 7 + gap]}\
 # :::::::::::: active torrents
 ${if_existing [=activeTorrentsFile]}\
-${if_match ${lua get active ${lines [=activeTorrentsFile]}} > 0}\
+${if_match ${lua get activeNum ${lines [=activeTorrentsFile]}} > 0}\
 <#assign header = 19>
 <@menu.table x=0 y=0 width=width header=header bottomEdges=false fixed=false/>
 ${lua configure_menu [=image.primaryColor] light [=width?c] 3}\
 ${lua add_offsets 0 [=header]}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-peers.png 38 22}\
-${alignc}${color1}active torrents${voffset 3}
-<#assign maxLines = 10>
-${color}${color}${lua_parse populate_menu [=activeTorrentsFile] [=maxLines] 3}${voffset [= 7 + gap]}
+${alignc}${color1}active torrents ${color}(${color}${lua get activeNum}${color})${color1}${voffset 3}
+${color}${color}${lua_parse populate_menu [=activeTorrentsFile] [=totalLines-5] 3}${voffset [= 7 + gap]}
 ${lua add_offsets 0 [=gap]}\
 ${endif}\
 ${else}\
@@ -99,11 +100,10 @@ ${endif}\
 ${if_existing [=packagesFile]}\
 <@menu.table x=0 y=0 width=width header=header bottomEdges=false fixed=false/>
 ${lua add_offsets 0 [=header]}\
-${lua configure_menu [=image.primaryColor] light [=width?c] 2}\
+${lua configure_menu [=image.primaryColor] light [=width?c] 3}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dnf.png 114 2}\
-${offset 5}${color1}package${alignr 4}version${voffset 4}
-<#if system == "desktop"><#assign maxLines = 50><#else><#assign maxLines = 46></#if>
-${color}${lua_parse populate_menu [=packagesFile] [=maxLines] 900}${voffset 5}
+${offset 5}${color1}package${alignr 4}version${voffset 3}
+${color}${lua_parse populate_menu [=packagesFile] [=totalLines] 900}${voffset 5}
 ${endif}\
 ]]

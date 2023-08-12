@@ -14,7 +14,7 @@ conky.config = {
   -- window settings
   minimum_width = 245,      -- conky will add an extra pixel to this  
   maximum_width = 245,
-  minimum_height = 1021,
+  minimum_height = 1020,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -45,6 +45,7 @@ conky.config = {
 };
 
 conky.text = [[
+${lua set_global_vars 52}\
 # --- composite vertical table image ---
 ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 0,0}\
 ${image ~/conky/monochrome/images/common/blue-menu-light.png -p 75,0}\
@@ -79,7 +80,7 @@ ${image ~/conky/monochrome/images/common/menu-blank.png -p 239,90}\
 ${lua configure_menu blue light 159 3 false}\
 ${lua add_offsets 0 19}\
 ${offset 5}${color1}active torrents${goto 184}up${offset 16}down${voffset 3}
-${color}${color}${lua_parse populate_menu /tmp/conky/transmission.active 10 3}
+${color}${color}${lua_parse populate_menu /tmp/conky/transmission.active 47 3}
 ${voffset 10}\
 ${lua_parse draw_bottom_edges 160 39}${lua_parse draw_bottom_edges 200 39}\
 ${lua add_offsets 0 3}\
@@ -116,9 +117,9 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-dark.png 160 0
 ${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-light.png 160 19}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 211 0}\
 # --------- end of table image --------
-${lua configure_menu blue light 159 2 false}\
+${lua configure_menu blue light 159 3 false}\
 ${lua add_offsets 0 19}\
-${offset 5}${color1}package${goto 166}version${voffset 4}
-${color}${lua_parse populate_menu /tmp/conky/dnf.packages.formatted 45 900}
+${offset 5}${color1}package${goto 166}version${voffset 3}
+${color}${lua_parse populate_menu /tmp/conky/dnf.packages.formatted 52 900}
 ${endif}\
 ]]

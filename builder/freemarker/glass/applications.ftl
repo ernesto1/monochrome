@@ -15,7 +15,7 @@ conky.config = {
   -- window settings
   minimum_width = 245,      -- conky will add an extra pixel to this  
   maximum_width = 245,
-  minimum_height = 1021,
+  minimum_height = 1020,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -46,6 +46,8 @@ conky.config = {
 };
 
 conky.text = [[
+<#assign totalLines = 52>
+${lua set_global_vars [=totalLines]}\
 <#assign y = 0,
          header = 75,
          height = 87,
@@ -75,8 +77,7 @@ ${if_match ${lua get active} > 0}\
 ${lua configure_menu [=image.primaryColor] light [=width?c] 3 false}\
 ${lua add_offsets 0 [=header]}\
 ${offset 5}${color1}active torrents${goto 184}up${offset 16}down${voffset 3}
-<#assign maxLines = 10>
-${color}${color}${lua_parse populate_menu [=activeTorrentsFile] [=maxLines] 3}
+${color}${color}${lua_parse populate_menu [=activeTorrentsFile] [=totalLines - 5] 3}
 ${voffset [= 7 + gap]}\
 ${lua_parse draw_bottom_edges [=width+colGap] 39}${lua_parse draw_bottom_edges [=width+colGap+speedCol+colGap] 39}\
 ${lua add_offsets 0 [=gap]}\
@@ -101,10 +102,9 @@ ${voffset [= 7 + gap]}\
 <#assign header = 19, versionCol = 51>
 <@menu.table x=0 y=0 width=width header=header bottomEdges=false fixed=false/>
 <@menu.table x=width+colGap y=0 width=versionCol header=header bottomEdges=false fixed=false/>
-${lua configure_menu [=image.primaryColor] light [=width?c] 2 false}\
+${lua configure_menu [=image.primaryColor] light [=width?c] 3 false}\
 ${lua add_offsets 0 [=header]}\
-${offset 5}${color1}package${goto 166}version${voffset 4}
-<#assign maxLines = 45>
-${color}${lua_parse populate_menu [=packagesFile] [=maxLines] 900}
+${offset 5}${color1}package${goto 166}version${voffset 3}
+${color}${lua_parse populate_menu [=packagesFile] [=totalLines] 900}
 ${endif}\
 ]]

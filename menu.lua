@@ -53,6 +53,7 @@ end
 function conky_reset_state()
   vars["xOffset"] = 0
   vars["yOffset"] = 0
+  vars["totalLines"] = 1000   -- total lines to print for dynamic text, ie. files read within the conky
 end
 
 
@@ -112,6 +113,12 @@ function conky_draw_image(path, x, y)
 end
 
 
+function conky_set_global_vars(totalLines)
+  vars["totalLines"] = tonumber(totalLines)
+  return ''
+end
+
+
 --[[
 Set up method to configure the basic properties of a menu window displayed by a conky client.
 If all the menus within a conky are the same, this method only needs to be invoked once at the beginning of the conky.
@@ -129,12 +136,13 @@ arguments:
                       ${voffset 3} bla bla bla
                                  \
                                  you have to provide this value here
+    round     'true' if menu has round edges, false otherwise
 ]]
 function conky_configure_menu(color, value, width, voffset, round)
-  vars["color"] = color;
-  vars["value"] = value;
-  vars["width"] = tonumber(width);
-  vars["textVOffset"] = tonumber(voffset);
+  vars["color"] = color
+  vars["value"] = value
+  vars["width"] = tonumber(width)
+  vars["textVOffset"] = tonumber(voffset)
   vars["roundEdges"] = (round == nil) and true or stringToBoolean(round)
   return ''
 end
@@ -166,7 +174,10 @@ arguments:
     interval  [optional] number of seconds to wait between reads
 ]]
 function conky_populate_menu(filepath, max, interval)
+  max = (max ~= nil) and tonumber(max) or 30
+  max = (vars["totalLines"] > max) and max or vars["totalLines"]
   local text, lines = conky_head(filepath, max, interval)
+  vars["totalLines"] = vars["totalLines"] - lines;
   local y = calculate_bottom_edge_y_coordinate(lines)
 
   return text .. draw_round_bottom_edges(vars["xOffset"], y, vars["width"])
@@ -177,17 +188,17 @@ end
 determines the y coordinate of a menu's bottom edges based on the number of lines printed inside of it
 
 arguments:
-    lines   number of lines
+    numLines   number of lines
 ]]
-function calculate_bottom_edge_y_coordinate(lines)
+function calculate_bottom_edge_y_coordinate(numLines)
   local lineMultiplier = 15
   
   if vars["textVOffset"] > 2 then
     lineMultiplier = lineMultiplier + vars["textVOffset"] - 2
   end
 
-  lines = (lines > 0) and lines or 0
-  y = vars["yOffset"] + (lines * lineMultiplier) - vars["textVOffset"]
+  numLines = (numLines > 0) and numLines or 0
+  y = vars["yOffset"] + (numLines * lineMultiplier) - vars["textVOffset"]
 
   return y
 end
@@ -286,35 +297,31 @@ function conky_head(filepath, max, interval)
   interval = (interval ~= nil) and tonumber(interval) or conky_info["update_interval"]
   -- interval cannot be lower than the conky refresh rate
   interval = (interval > conky_info["update_interval"]) and interval or conky_info["update_interval"]
-  local text = "undefined"; lines = 1
+  local text, abbreviatedtext, linesRead = "unread text file", "unread abbreviated text file", 1
   local modulus = math.floor(interval / conky_info["update_interval"] + 0.5)
 
   -- determine if we need to read the file or read from memory for this iteration
   if (vars[filepath] == nil) or (conky_parse("${updates}") % modulus == 0) then
-    text, lines = head(filepath, max)
-    
+    text = conky_parse("${cat " .. filepath .. "}")
     -- save to memory only if multiple iterations are required in order to meet the interval
     -- ie. future iterations will pull from memory
     if modulus ~= 1 then
       vars[filepath] = text
-      vars[filepath .. ".lines"] = lines
     end
   else
-    text = vars[filepath]
-    lines = vars[filepath .. ".lines"]
+    text = vars[filepath]     -- retrieve text from memory
   end
   
-  return text, lines
+  abbreviatedtext, linesRead = cutText(text, max)
+
+  return abbreviatedtext, linesRead
 end
 
-function head(filepath, max)
-  local text = conky_parse("${cat " .. filepath .. "}")
-  local lines = select(2, text:gsub('\n','\n')) + 1   -- last line will not have a new line so we increase by 1
-  lines = (lines < max) and lines or max
-  local i = 0
-  local pos = 0
+function cutText(text, max)
+  local i, pos, linesRead = 0, 0, 0
   
   while i < max do
+    linesRead = linesRead + 1
     pos = string.find(text, "\n", pos+1)
     if pos == nil then break end
     i = i + 1
@@ -323,5 +330,5 @@ function head(filepath, max)
   text = string.sub(text, 1, pos)
   text = string.gsub(text, '\n$', '')     -- remove last new line (if any)
   
-  return text, lines
+  return text, linesRead
 end
