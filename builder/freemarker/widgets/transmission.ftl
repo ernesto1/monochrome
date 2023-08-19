@@ -13,8 +13,8 @@ conky.config = {
   gap_y = 141,
 
   -- window settings
-  minimum_width = 281,      -- conky will add an extra pixel to this
-  maximum_width = 281,
+  minimum_width = 555,      -- conky will add an extra pixel to this
+  maximum_width = 555,
   minimum_height = 342,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -66,18 +66,54 @@ ${lua read_file [=activeTorrentsFile]}${lua calculate_voffset [=activeTorrentsFi
 <@menu.table x=0 y=y width=width header=header bottomEdges=false color=image.secondaryColor fixed=false/>
 <@menu.table x=width+colGap y=y width=speedCol header=header bottomEdges=false color=image.secondaryColor fixed=false/>
 <@menu.table x=width+colGap+speedCol+colGap y=y width=speedCol header=header bottomEdges=false color=image.secondaryColor fixed=false/>
-${lua configure_menu grape light [=width?c] 3 true}\
+${lua configure_menu [=image.secondaryColor] light [=width?c] 3 true}\
 ${lua_parse add_y_offset voffset 2}${offset 5}${color1}active torrents${goto 226}up${goto 254}down${voffset 3}
 ${lua add_offsets 0 [=header]}\
 <#assign y += header>
-<#assign maxLines = 17>
 ${color}${lua_parse populate_menu_from_mem [=activeTorrentsFile] [=max]}${voffset 4}
 ${lua_parse draw_bottom_edges [=width+colGap] [=speedCol]}${lua_parse draw_bottom_edges [=width+colGap+speedCol+colGap] [=speedCol]}\
+<#assign x = width + colGap + speedCol + colGap + speedCol + gap>
+${lua reset_state}${lua add_offsets [=x] 0}\
+${else}\
+${lua add_offsets 0 323}\
+<@menu.menu x=0 y=0 width=width height=3+16+1 color=image.secondaryColor fixed=false/>
+${lua_parse add_y_offset voffset 2}${goto 49}${color}no active torrents${voffset 4}
+${lua reset_state}${lua add_offsets [=width + 14] 0}\
 ${endif}\
 ${else}\
 <#assign body = 36>
-<@menu.menu x=0 y=0 width=width height=body color=image.secondaryColor/>
-${voffset 2}${goto 24}${color}active torrents input file
+${lua add_offsets 0 307}\
+<@menu.menu x=0 y=0 width=width height=body color=image.secondaryColor fixed=false/>
+${lua_parse add_y_offset voffset 2}${goto 24}${color}active torrents input file
 ${voffset 3}${goto 72}is missing${voffset 4}
+${lua reset_state}${lua add_offsets [=width + 14] 0}\
+${endif}\
+# :::::::::::: peers
+# peers menu is displayed on the right side of the active torrents menu
+${voffset -342}\
+<#assign peersFile = inputDir + "/transmission.peers">
+${if_existing [=peersFile]}\
+${if_match ${lines [=peersFile]} > 0}\
+${lua read_file [=peersFile]}${lua calculate_voffset [=peersFile] [=max]}\
+<#assign ipCol = 101, clientCol = 87>
+${lua configure_menu [=image.secondaryColor] light [=ipCol] 3}\
+<@menu.table x=0 y=0 width=ipCol header=header bottomEdges=false fixed=false color=image.secondaryColor/>
+<@menu.table x=ipCol+colGap y=0 width=clientCol header=header bottomEdges=false fixed=false color=image.secondaryColor/>
+<@menu.table x=ipCol+colGap+clientCol+colGap y=0 width=39 header=header bottomEdges=false fixed=false color=image.secondaryColor/>
+<@menu.table x=ipCol+colGap+clientCol+colGap+speedCol+colGap y=0 width=39 header=header bottomEdges=false fixed=false color=image.secondaryColor/>
+${lua_parse add_y_offset voffset 2}${lua_parse add_x_offset offset 5}${color1}ip address${offset 43}client${offset 69}up${offset 16}down${voffset 3}
+${lua add_offsets 0 [=header]}\
+${color}${lua_parse populate_menu_from_mem [=peersFile] [=max] 0}
+${lua_parse draw_bottom_edges [=ipCol+colGap] [=clientCol]}${lua_parse draw_bottom_edges [=ipCol+colGap+clientCol+colGap] [=speedCol]}${lua_parse draw_bottom_edges [=ipCol+colGap+clientCol+colGap+speedCol+colGap] [=speedCol]}\
+${else}\
+${lua add_offsets 0 323}\
+<@menu.menu x=0 y=0 width=width height=3+16+1 color=image.secondaryColor fixed=false/>
+${lua_parse add_y_offset voffset 2}${lua_parse add_x_offset offset 47}${color}no peers connected${voffset 4}
+${endif}\
+${else}\
+${lua add_offsets 0 307}\
+<@menu.menu x=0 y=0 width=width height=body color=image.secondaryColor fixed=false/>
+${lua_parse add_y_offset voffset 2}${lua_parse add_x_offset offset 27}${color}torrent peers input file
+${voffset 3}${lua_parse add_x_offset offset 72}is missing
 ${endif}\
 ]];

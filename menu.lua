@@ -54,6 +54,7 @@ function conky_reset_state()
   vars["xOffset"] = 0
   vars["yOffset"] = 0
   vars["totalLines"] = 1000   -- total lines to print for dynamic text, ie. files read within the conky
+  return ''
 end
 
 
@@ -177,12 +178,16 @@ function conky_populate_menu(filepath, max, interval)
   max = (max ~= nil) and tonumber(max) or 30
   max = (vars["totalLines"] > max) and max or vars["totalLines"]
   local text, lines = conky_head(filepath, max, interval)
-  vars["totalLines"] = vars["totalLines"] - lines;
+  conky_decrease_total_lines(lines)
   local y = calculate_bottom_edge_y_coordinate(lines)
 
   return text .. draw_round_bottom_edges(vars["xOffset"], y, vars["width"])
 end
 
+function conky_decrease_total_lines(lines)
+  vars["totalLines"] = vars["totalLines"] - lines;
+  return ''
+end
 
 --[[
 determines the y coordinate of a menu's bottom edges based on the number of lines printed inside of it
@@ -252,7 +257,7 @@ by a prior invocation to the populate_menu() method
 
 use this when you are splitting the columns of a table into individual table images
 
-                 x coordinate
+                 x coordinate (will internally account for the available xoffset)
                      |
         table 1      |  table 2
       ╭──────────╮   ╭──────────╮
@@ -271,7 +276,7 @@ arguments:
     width   width of this table
 ]]
 function conky_draw_bottom_edges(x, width)
-  return draw_round_bottom_edges(tonumber(x), vars["yOffset"] - 7, tonumber(width))
+  return draw_round_bottom_edges(vars["xOffset"] + tonumber(x), vars["yOffset"] - 7, tonumber(width))
 end
 
 
@@ -332,7 +337,7 @@ function cutText(text, max)
   return text, linesRead
 end
 
--- :::::::: experimental API
+-- :::::::: experimental API ::::::::
 
 function conky_read_file(file)
   vars[file] = conky_parse('${cat ' .. file .. '}')
@@ -346,25 +351,25 @@ function conky_calculate_voffset(file, max)
   local emptyLines = max - linesRead
   local voffset = emptyLines * 16
   conky_add_offsets(0, voffset)
-  
+
   return ''
 end
 
 function lines(string)
-  local i, position = 0, 0
-  
-  while true do
-    i = i + 1
-    position = string.find(string, "\n", position+1)
-    if position == nil then break end
-  end
-  
-  return i
+  local _, lines = string.gsub(string, "\n", "\n")
+  return lines + 1    -- last line in the text file won't have a new line so we need to account for it
 end
 
-function conky_populate_menu_from_mem(filepath, max)
+function conky_populate_menu_from_mem(filepath, max, x)
   max = (max ~= nil) and tonumber(max) or 30
   local text, lines = cutText(vars[filepath], max)
+
+  if x ~=nil then
+    x = x + vars["xOffset"]
+    text = '${offset ' .. x .. '}' .. text
+    text = string.gsub(text, "\n", "\n" .. '${offset ' .. x .. '}')
+  end
+  
   local y = calculate_bottom_edge_y_coordinate(lines)
 
   return text .. draw_round_bottom_edges(vars["xOffset"], y, vars["width"])
