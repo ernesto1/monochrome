@@ -318,17 +318,54 @@ function conky_head(filepath, max, interval)
 end
 
 function cutText(text, max)
-  local i, pos, linesRead = 0, 0, 0
+  local linesRead, position = 0, 0, 0
   
-  while i < max do
+  while linesRead < max do
     linesRead = linesRead + 1
-    pos = string.find(text, "\n", pos+1)
-    if pos == nil then break end
-    i = i + 1
+    position = string.find(text, "\n", position+1)
+    if position == nil then break end
   end
   
-  text = string.sub(text, 1, pos)
+  text = string.sub(text, 1, position)
   text = string.gsub(text, '\n$', '')     -- remove last new line (if any)
   
   return text, linesRead
+end
+
+-- :::::::: experimental API
+
+function conky_read_file(file)
+  vars[file] = conky_parse('${cat ' .. file .. '}')
+  return ''
+end
+
+function conky_calculate_voffset(file, max)
+  local linesRead = lines(vars[file])
+  max = tonumber(max)
+  linesRead = (linesRead < max) and linesRead or max
+  local emptyLines = max - linesRead
+  local voffset = emptyLines * 16
+  conky_add_offsets(0, voffset)
+  
+  return ''
+end
+
+function lines(string)
+  local i, position = 0, 0
+  
+  while true do
+    i = i + 1
+    position = string.find(string, "\n", position+1)
+    if position == nil then break end
+  end
+  
+  return i
+end
+
+function conky_populate_menu_from_mem(filepath, max)
+  max = (max ~= nil) and tonumber(max) or 30
+  local text, lines = cutText(vars[filepath], max)
+  local y = calculate_bottom_edge_y_coordinate(lines)
+
+  return text .. draw_round_bottom_edges(vars["xOffset"], y, vars["width"])
 end

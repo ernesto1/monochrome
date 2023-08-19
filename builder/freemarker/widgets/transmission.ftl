@@ -15,6 +15,7 @@ conky.config = {
   -- window settings
   minimum_width = 281,      -- conky will add an extra pixel to this
   maximum_width = 281,
+  minimum_height = 342,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -56,19 +57,21 @@ conky.text = [[
          inputDir = "/tmp/conky",
          activeTorrentsFile = inputDir + "/transmission.active",
          speedCol = 39,
-         colGap = 1>
+         colGap = 1,
+         max = 20>
 # :::::::::::: active torrents
 ${if_existing [=activeTorrentsFile]}\
 ${if_match ${lines [=activeTorrentsFile]} > 0}\
-<@menu.table x=0 y=y width=width header=header bottomEdges=false color=image.secondaryColor/>
-<@menu.table x=width+colGap y=y width=speedCol header=header bottomEdges=false color=image.secondaryColor/>
-<@menu.table x=width+colGap+speedCol+colGap y=y width=speedCol header=header bottomEdges=false color=image.secondaryColor/>
-${lua add_offsets 0 [=header]}\
+${lua read_file [=activeTorrentsFile]}${lua calculate_voffset [=activeTorrentsFile] [=max]}\
+<@menu.table x=0 y=y width=width header=header bottomEdges=false color=image.secondaryColor fixed=false/>
+<@menu.table x=width+colGap y=y width=speedCol header=header bottomEdges=false color=image.secondaryColor fixed=false/>
+<@menu.table x=width+colGap+speedCol+colGap y=y width=speedCol header=header bottomEdges=false color=image.secondaryColor fixed=false/>
 ${lua configure_menu grape light [=width?c] 3 true}\
+${lua_parse add_y_offset voffset 2}${offset 5}${color1}active torrents${goto 226}up${goto 254}down${voffset 3}
+${lua add_offsets 0 [=header]}\
 <#assign y += header>
-${voffset 2}${offset 5}${color1}active torrents${goto 226}up${goto 254}down${voffset 3}
 <#assign maxLines = 17>
-${color}${lua_parse populate_menu [=activeTorrentsFile]}${voffset 4}
+${color}${lua_parse populate_menu_from_mem [=activeTorrentsFile] [=max]}${voffset 4}
 ${lua_parse draw_bottom_edges [=width+colGap] [=speedCol]}${lua_parse draw_bottom_edges [=width+colGap+speedCol+colGap] [=speedCol]}\
 ${endif}\
 ${else}\

@@ -14,6 +14,7 @@ conky.config = {
   -- window settings
   minimum_width = 281,      -- conky will add an extra pixel to this
   maximum_width = 281,
+  minimum_height = 342,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -50,31 +51,32 @@ conky.text = [[
 # :::::::::::: active torrents
 ${if_existing /tmp/conky/transmission.active}\
 ${if_match ${lines /tmp/conky/transmission.active} > 0}\
+${lua read_file /tmp/conky/transmission.active}${lua calculate_voffset /tmp/conky/transmission.active 20}\
 # ----------- table image ------------
-${image ~/conky/monochrome/images/common/grape-menu-dark.png -p 0,0}\
-${image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-left.png -p 0,0}\
-${image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-right.png -p 195,0}\
-${image ~/conky/monochrome/images/common/grape-menu-light.png -p 0,19}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 202,0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-left.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-right.png 195 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light.png 0 19}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 202 0}\
 # -------- end of table image ---------
 # ----------- table image ------------
-${image ~/conky/monochrome/images/common/grape-menu-dark.png -p 203,0}\
-${image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-left.png -p 203,0}\
-${image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-right.png -p 235,0}\
-${image ~/conky/monochrome/images/common/grape-menu-light.png -p 203,19}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 242,0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark.png 203 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-left.png 203 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-right.png 235 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light.png 203 19}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 242 0}\
 # -------- end of table image ---------
 # ----------- table image ------------
-${image ~/conky/monochrome/images/common/grape-menu-dark.png -p 243,0}\
-${image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-left.png -p 243,0}\
-${image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-right.png -p 275,0}\
-${image ~/conky/monochrome/images/common/grape-menu-light.png -p 243,19}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 282,0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark.png 243 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-left.png 243 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-right.png 275 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light.png 243 19}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 282 0}\
 # -------- end of table image ---------
-${lua add_offsets 0 19}\
 ${lua configure_menu grape light 202 3 true}\
-${voffset 2}${offset 5}${color1}active torrents${goto 226}up${goto 254}down${voffset 3}
-${color}${lua_parse populate_menu /tmp/conky/transmission.active}${voffset 4}
+${lua_parse add_y_offset voffset 2}${offset 5}${color1}active torrents${goto 226}up${goto 254}down${voffset 3}
+${lua add_offsets 0 19}\
+${color}${lua_parse populate_menu_from_mem /tmp/conky/transmission.active 20}${voffset 4}
 ${lua_parse draw_bottom_edges 203 39}${lua_parse draw_bottom_edges 243 39}\
 ${endif}\
 ${else}\
