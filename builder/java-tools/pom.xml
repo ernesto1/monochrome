@@ -71,10 +71,17 @@
           <version>3.8.0</version>
         </plugin>
         <plugin>
-          <!-- download source and documentation for dependencies, see https://www.baeldung.com/maven-download-sources-javadoc -->
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-dependency-plugin</artifactId>
+          <version>3.5.0</version>
+          <configuration>
+            <ignoredUnusedDeclaredDependencies>
+              <ignoredUnusedDeclaredDependency>com.github.hypfvieh:dbus-java-transport-jnr-unixsocket</ignoredUnusedDeclaredDependency>
+              <ignoredUnusedDeclaredDependency>ch.qos.logback:logback-classic</ignoredUnusedDeclaredDependency>
+            </ignoredUnusedDeclaredDependencies>
+          </configuration>
           <executions>
+            <!-- download source and documentation for dependencies, see https://www.baeldung.com/maven-download-sources-javadoc -->
             <execution>
               <goals>
                 <goal>sources</goal>
@@ -124,5 +131,12 @@
         </plugin>
       </plugins>
     </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+      </plugin>
+    </plugins>
   </build>
 </project>
