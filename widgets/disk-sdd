@@ -56,7 +56,7 @@ conky.text = [[
 ${if_existing /dev/sdd}\
 # disk io
 ${image ~/conky/monochrome/images/widgets/green-disk-single-partition.png -p 0,0}\
-${voffset -1}${offset 18}${diskiograph_read sdd 37,67 8666ae d2b8f2 6000}
+${voffset -1}${offset 18}${diskiograph_read sdd 37,67 6c3a55 a67fba 6000}
 ${voffset -7}${offset 18}${diskiograph_write sdd 37,67 4c6e3b 9fc14a 250000}
 ${voffset 6}${offset 5}${color1}read${alignr 120}${color}${diskio_read sdd}
 ${voffset 4}${offset 5}${color1}write${alignr 120}${color}${diskio_write sdd}

@@ -10,7 +10,7 @@ green:
     warning: ad2724
     offlineText: d2b8f2 # text for conkys in an offline state, ex. disk not connected
     writeGraph: 4c6e3b 9fc14a
-    readGraph: 8666ae d2b8f2
+    readGraph: 6c3a55 a67fba
     windowColor: 2f2d1e # background color for plain conkys with no images
     # secondary/alternate menu colors
     secondary:
