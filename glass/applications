@@ -9,7 +9,7 @@ conky.config = {
   -- window alignment
   alignment = 'top_left',  -- top|middle|bottom_left|right
   gap_x = 123,
-  gap_y = 430,
+  gap_y = 433,
 
   -- window settings
   minimum_width = 245,      -- conky will add an extra pixel to this  
@@ -45,7 +45,7 @@ conky.config = {
 };
 
 conky.text = [[
-${lua set_global_vars 52}\
+${lua set_total_lines 52}\
 # --- composite vertical table image ---
 ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 0,0}\
 ${image ~/conky/monochrome/images/common/blue-menu-light.png -p 75,0}\

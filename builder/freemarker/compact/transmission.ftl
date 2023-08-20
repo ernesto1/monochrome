@@ -50,7 +50,7 @@ conky.text = [[
 # - the 'remote control' feature enabled in the transmission bittorrent client: edit > preferences > remote
 # - the transmission.bash script running in the background
 <#assign totalLines = 33>
-${lua set_global_vars [=totalLines]}\
+${lua set_total_lines [=totalLines]}\
 # :::::::::::: torrents overview
 <#assign y = 0,
          header = 75, <#-- menu header -->

@@ -114,8 +114,13 @@ function conky_draw_image(path, x, y)
 end
 
 
-function conky_set_global_vars(totalLines)
+function conky_set_total_lines(totalLines)
   vars["totalLines"] = tonumber(totalLines)
+  return ''
+end
+
+function conky_decrease_total_lines(lines)
+  vars["totalLines"] = vars["totalLines"] - tonumber(lines);
   return ''
 end
 
@@ -182,11 +187,6 @@ function conky_populate_menu(filepath, max, interval)
   local y = calculate_bottom_edge_y_coordinate(lines)
 
   return text .. draw_round_bottom_edges(vars["xOffset"], y, vars["width"])
-end
-
-function conky_decrease_total_lines(lines)
-  vars["totalLines"] = vars["totalLines"] - lines;
-  return ''
 end
 
 --[[

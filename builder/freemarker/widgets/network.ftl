@@ -10,6 +10,7 @@ conky.config = {
 
   -- window settings
   minimum_width = 209,
+  maximum_width = 209,
   minimum_height = 188,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)

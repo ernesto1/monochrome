@@ -48,8 +48,8 @@ conky.config = {
 };
 
 conky.text = [[
-<#if system == "desktop"><#assign totalLines = 57><#else><#assign totalLines = 46></#if>
-${lua set_global_vars [=totalLines]}\
+<#if system == "desktop"><#assign totalLines = 58><#else><#assign totalLines = 46></#if>
+${lua set_total_lines [=totalLines]}\
 ${voffset 2}\
 <#if system == "desktop">
 # :::::::::::: transmission bittorrent client
@@ -89,7 +89,7 @@ ${endif}\
 ${else}\
 <#assign body = 36>
 <@menu.menu x=0 y=0 width=width height=body fixed=false/>
-${lua add_offsets 0 [=body + gap]}\
+${lua add_offsets 0 [=body + gap]}${lua decrease_total_lines 1}\
 ${offset 5}${alignc}${color}active torrents input file
 ${voffset 3}${alignc}is missing${voffset [= 7 + gap]}
 ${endif}\

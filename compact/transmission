@@ -48,7 +48,7 @@ conky.text = [[
 # this conky requires:
 # - the 'remote control' feature enabled in the transmission bittorrent client: edit > preferences > remote
 # - the transmission.bash script running in the background
-${lua set_global_vars 33}\
+${lua set_total_lines 33}\
 # :::::::::::: torrents overview
 # -------  vertical table image -------
 ${image ~/conky/monochrome/images/common/burgundy-menu-dark.png -p 0,0}\

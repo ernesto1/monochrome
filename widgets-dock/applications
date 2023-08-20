@@ -45,7 +45,7 @@ conky.config = {
 };
 
 conky.text = [[
-${lua set_global_vars 57}\
+${lua set_total_lines 58}\
 ${voffset 2}\
 # :::::::::::: transmission bittorrent client
 # this panel requires:
@@ -81,7 +81,7 @@ ${lua configure_menu yellow light 189 3}\
 ${lua add_offsets 0 19}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-peers.png 38 22}\
 ${alignc}${color1}active torrents ${color}(${color}${lua get activeNum}${color})${color1}${voffset 3}
-${color}${color}${lua_parse populate_menu /tmp/conky/transmission.active 52 3}${voffset 12}
+${color}${color}${lua_parse populate_menu /tmp/conky/transmission.active 53 3}${voffset 12}
 ${lua add_offsets 0 5}\
 ${endif}\
 ${else}\
@@ -94,7 +94,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light-edge-b
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png 182 29}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 36}\
 # -------- end of menu image ---------
-${lua add_offsets 0 41}\
+${lua add_offsets 0 41}${lua decrease_total_lines 1}\
 ${offset 5}${alignc}${color}active torrents input file
 ${voffset 3}${alignc}is missing${voffset 12}
 ${endif}\
@@ -112,6 +112,6 @@ ${lua configure_menu yellow light 189 3}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-dnf.png 114 2}\
 ${offset 5}${color1}package${alignr 4}version${voffset 3}
-${color}${lua_parse populate_menu /tmp/conky/dnf.packages.formatted 57 900}${voffset 5}
+${color}${lua_parse populate_menu /tmp/conky/dnf.packages.formatted 58 900}${voffset 5}
 ${endif}\
 ]]

@@ -10,7 +10,7 @@ conky.config = {
   -- window alignment
   alignment = 'top_left',  -- top|middle|bottom_left|right
   gap_x = 123,
-  gap_y = 430,
+  gap_y = 433,
 
   -- window settings
   minimum_width = 245,      -- conky will add an extra pixel to this  
@@ -47,7 +47,7 @@ conky.config = {
 
 conky.text = [[
 <#assign totalLines = 52>
-${lua set_global_vars [=totalLines]}\
+${lua set_total_lines [=totalLines]}\
 <#assign y = 0,
          header = 75,
          height = 87,
