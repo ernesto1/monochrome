@@ -51,9 +51,9 @@ conky.config = {
 conky.text = [[
 ${if_up enp0s25}\
 ${image ~/conky/monochrome/images/widgets/green-network.png -p 0,0}\
-${voffset 3}${offset 11}${color1}local ip${goto 81}${color}${addr enp0s25}
-${voffset 3}${offset 11}${color1}torrents${goto 81}${color}${lines /tmp/conky/transmission.active} active
-${voffset 3}${offset 11}${color1}swarm${goto 81}${color}${lines /tmp/conky/transmission.peers} peers
+${voffset 3}${offset 11}${color1}local ip${goto 69}${color}${addr enp0s25}
+${voffset 3}${offset 11}${color1}torrents${goto 69}${color}${lines /tmp/conky/transmission.active} active
+${voffset 3}${offset 11}${color1}swarm${goto 69}${color}${lines /tmp/conky/transmission.peers} peers
 ${voffset 6}${offset 68}${upspeedgraph enp0s25 37,97 6c3a55 a67fba 3000}
 ${voffset -7}${offset 68}${downspeedgraph enp0s25 37,97 4c6e3b 9fc14a 60000}
 ${voffset 6}${offset 7}${color1}up${alignr 128}${color}${upspeed enp0s25}
