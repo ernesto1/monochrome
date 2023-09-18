@@ -92,7 +92,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light-edge-t
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 189 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 189 0}\
 # --------- end of table image top ---------
-${lua add_offsets 0 15}\
+${lua add_offsets 0 14}\
 ${voffset 3}${offset 5}${color1}title${goto 50}${color}${cat /tmp/conky/musicplayer.title}
 ${if_match "${lua get album ${cat /tmp/conky/musicplayer.album}}" != "unknown album"}\
 ${voffset 3}${offset 5}${color1}album${goto 50}${color}${lua get album}${lua add_offsets 0 16}

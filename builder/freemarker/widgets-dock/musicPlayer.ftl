@@ -75,9 +75,9 @@ ${endif}\
 # :::: track details
 # menu expands based on the track metadata fields available
 # the position of the bottom edge images is shifted down 16px for each field
-<#-- 3 px top border | 16 px text | 3 px bottom border -->
+<#-- 3 px top border | 16 px text | 2 px bottom border -->
 # -------  vertical table image top -------
-<#assign header = 45, height = 22>
+<#assign header = 45, height = 21>
 <@menu.verticalMenuHeader x=0 y=0 header=header body=width-header fixed=false/>
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 189 0}\
 # --------- end of table image top ---------
