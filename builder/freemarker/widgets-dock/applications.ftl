@@ -44,11 +44,12 @@ conky.config = {
   -- colors
   default_color = '[=colors.menuText]',  -- regular text
   color1 = '[=colors.labels]',
-  color2 = '[=colors.highlight]'         -- highlight important packages
+  color2 = '[=colors.highlight]',          -- highlight important packages
+  color3 = '[=colors.secondary.text]'
 };
 
 conky.text = [[
-<#if system == "desktop"><#assign totalLines = 58><#else><#assign totalLines = 46></#if>
+<#if system == "desktop"><#assign totalLines = 57><#else><#assign totalLines = 46></#if>
 ${lua set_total_lines [=totalLines]}\
 ${voffset 2}\
 <#if system == "desktop">
@@ -85,12 +86,14 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-me
 ${alignc}${color1}active torrents ${color}(${color}${lua get activeNum}${color})${color1}${voffset 3}
 ${color}${color}${lua_parse populate_menu [=activeTorrentsFile] [=totalLines-5] 3}${voffset [= 7 + gap]}
 ${lua add_offsets 0 [=gap]}\
+${else}\
+${lua set_total_lines [=totalLines+1]}\
 ${endif}\
 ${else}\
 <#assign body = 36>
-<@menu.menu x=0 y=0 width=width height=body fixed=false/>
+<@menu.menu x=0 y=0 width=width height=body fixed=false color=image.secondaryColor/>
 ${lua add_offsets 0 [=body + gap]}${lua decrease_total_lines 1}\
-${offset 5}${alignc}${color}active torrents input file
+${offset 5}${alignc}${color3}active torrents input file
 ${voffset 3}${alignc}is missing${voffset [= 7 + gap]}
 ${endif}\
 </#if>
@@ -104,6 +107,6 @@ ${lua configure_menu [=image.primaryColor] light [=width?c] 3}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dnf.png 114 2}\
 ${offset 5}${color1}package${alignr 4}version${voffset 3}
-${color}${lua_parse populate_menu [=packagesFile] [=totalLines] 900}${voffset 5}
+${color}${lua_parse populate_menu [=packagesFile] [=totalLines+10] 900}${voffset 5}
 ${endif}\
 ]]

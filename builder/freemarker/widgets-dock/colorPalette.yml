@@ -13,6 +13,8 @@ grape:
     highlight: d7511c       # flag important package updates
     readGraph: 6c1c1b d7511c
     writeGraph: 51295e a36dec
+    secondary:
+      text: white
   border: false             # add 1px border to panel sidebar width - optional, default is true
                             # set to 'false' for sidebars that don't have an accent border
 yellow:
@@ -30,6 +32,9 @@ yellow:
     highlight: white
     readGraph: 123e01 68a315
     writeGraph: c12504 ff3c13
+    secondary:
+      text: a7aa71
+
 purple:
   image:
     primaryColor: purple
@@ -45,3 +50,5 @@ purple:
     highlight: a3c2bc
     readGraph: 689693 a3c2bc
     writeGraph: 8a00a1 c800ea
+    secondary:
+      text: white
