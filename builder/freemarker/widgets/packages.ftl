@@ -3,9 +3,9 @@ conky.config = {
   lua_load = '~/conky/monochrome/menu.lua',
   lua_draw_hook_pre = 'reset_state',
   
-  update_interval = 300,  -- update interval in seconds
-  xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
-  double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
+  update_interval = 300,   -- update interval in seconds
+  xinerama_head = 0,       -- for multi monitor setups, select monitor to run on: 0,1,2
+  double_buffer = true,    -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
   alignment = 'middle_right',
@@ -34,11 +34,10 @@ conky.config = {
   border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
 
   -- graph settings
-  draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
+  draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed graph
                               -- does not include bars, ie. wifi strength bar, cpu bar
 
   imlib_cache_flush_interval = 250,
-  -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
 
   -- font settings
   draw_shades = false,    -- black shadow on text (not good if text is black)
@@ -46,8 +45,7 @@ conky.config = {
   -- colors
   default_color = '[=colors.text]', -- regular text
   color1 = '[=colors.labels]',        -- text labels
-  color2 = '[=colors.bar]',        -- bar
-  color3 = '[=colors.warning]',        -- bar critical
+  color2 = '[=colors.bar]'         -- bar
 };
 
 conky.text = [[
@@ -65,7 +63,6 @@ ${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dnf.png -p 1
 ${voffset 3}${alignc}${color1}dnf package management
 ${voffset 5}${alignc}${color}${lines [=packagesFile]} package update(s) available
 ${voffset 6}${offset 5}${color1}package${alignr 4}version${voffset 1}
-# the dnf package lookup script refreshes the package list every 10m
 <#assign maxLines = 85>
 ${color}${lua_parse populate_menu [=packagesFile] [=maxLines]}${voffset 5}
 ${endif}\
