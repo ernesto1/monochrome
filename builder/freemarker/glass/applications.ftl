@@ -46,7 +46,7 @@ conky.config = {
 };
 
 conky.text = [[
-<#assign totalLines = 52>
+<#assign totalLines = 47>
 ${lua set_total_lines [=totalLines]}\
 <#assign y = 0,
          header = 75,
