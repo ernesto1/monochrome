@@ -10,7 +10,7 @@ conky.config = {
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
   gap_x = 123,
-  gap_y = 10,
+  gap_y = 5,
 
   -- window settings
   <#assign width = 159>
@@ -63,22 +63,24 @@ ${lua load_track_info}\
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
 # :::::::: album art
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-music-player-album.png -p 0,0}\
-${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 146x146 6,7}\
+${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 147x147 6,6}\
 ${endif}\
-<#assign y = width + 3>
+<#assign y = width + 2>
 ${lua add_offsets 0 [=y]}\
 # ::: player header
 <#assign height = 19>
 <@menu.verticalTable x=0 y=0 header=90 body=width-90 height=height fixed=false/>
 ${lua_parse conky_draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-music-player-separator.png 58 0}\
-<#assign y += height + 3>
+<#assign y += height + 2>
 ${lua add_offsets 0 [=y]}\
-${voffset [=width+3+2]}${offset 5}${color1}\
-${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}${alignr 3}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}${voffset 7}
+${voffset [=width+3+1]}${offset 5}${color1}\
+${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}${alignr 3}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}${voffset 6}
 # ::: track details
 # menu expands based on the track metadata fields available, only 'title' is considered mandatory
 <@menu.menu x=0 y=y width=width height=height bottomEdges=false fixed=false/>
+${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-sound-wave.png -p [=width-69],[=y]}\
+${endif}\
 ${voffset 3}${offset 5}${color}${lua_parse truncate_string ${lua get title} 25}\
 ${if_match "${lua get album}" != "unknown album"}\
 <#-- vertical offset would normally be 3px between fields but in order to support optional fields and not introduce

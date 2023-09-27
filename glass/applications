@@ -9,7 +9,7 @@ conky.config = {
   -- window alignment
   alignment = 'top_left',  -- top|middle|bottom_left|right
   gap_x = 123,
-  gap_y = 433,
+  gap_y = 427,
 
   -- window settings
   minimum_width = 245,      -- conky will add an extra pixel to this  
@@ -45,7 +45,7 @@ conky.config = {
 };
 
 conky.text = [[
-${lua set_total_lines 47}\
+${lua set_total_lines 48}\
 # --- composite vertical table image ---
 ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 0,0}\
 ${image ~/conky/monochrome/images/common/blue-menu-light.png -p 75,0}\
@@ -62,6 +62,7 @@ ${voffset 10}\
 # :::::::::::: active torrents
 ${if_existing /tmp/conky/transmission.active}\
 ${if_match ${lua get active} > 0}\
+${lua decrease_total_lines 1}\
 # ------- composite table image -------
 ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 0,90}\
 ${image ~/conky/monochrome/images/common/blue-menu-light.png -p 0,109}\
@@ -80,12 +81,13 @@ ${image ~/conky/monochrome/images/common/menu-blank.png -p 239,90}\
 ${lua configure_menu blue light 159 3 false}\
 ${lua add_offsets 0 19}\
 ${offset 5}${color1}active torrents${goto 184}up${offset 16}down${voffset 3}
-${color}${color}${lua_parse populate_menu /tmp/conky/transmission.active 42 3}
+${color}${color}${lua_parse populate_menu /tmp/conky/transmission.active 43 3}
 ${voffset 10}\
 ${lua_parse draw_bottom_edges 160 39}${lua_parse draw_bottom_edges 200 39}\
 ${lua add_offsets 0 3}\
 ${endif}\
 ${else}\
+${lua decrease_total_lines 1}\
 # ----------- menu image ------------
 ${image ~/conky/monochrome/images/common/blue-menu-light.png -p 0,90}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 159,90}\
@@ -120,6 +122,6 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 211 0}\
 ${lua configure_menu blue light 159 3 false}\
 ${lua add_offsets 0 19}\
 ${offset 5}${color1}package${goto 166}version${voffset 3}
-${color}${lua_parse populate_menu /tmp/conky/dnf.packages.formatted 47 900}
+${color}${lua_parse populate_menu /tmp/conky/dnf.packages.formatted 48 900}
 ${endif}\
 ]]

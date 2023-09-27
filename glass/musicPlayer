@@ -9,7 +9,7 @@ conky.config = {
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
   gap_x = 123,
-  gap_y = 10,
+  gap_y = 5,
 
   -- window settings
   minimum_width = 158,      -- conky will add an extra pixel to this width
@@ -66,9 +66,9 @@ ${lua load_track_info}\
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
 # :::::::: album art
 ${image ~/conky/monochrome/images/glass/blue-music-player-album.png -p 0,0}\
-${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 146x146 6,7}\
+${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 147x147 6,6}\
 ${endif}\
-${lua add_offsets 0 162}\
+${lua add_offsets 0 161}\
 # ::: player header
 # --- composite vertical table image ---
 ${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-dark.png 0 0}\
@@ -77,16 +77,18 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 159 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 19}\
 # --------- end of table image ---------
 ${lua_parse conky_draw_image ~/conky/monochrome/images/glass/blue-music-player-separator.png 58 0}\
-${lua add_offsets 0 184}\
-${voffset 164}${offset 5}${color1}\
-${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}${alignr 3}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}${voffset 7}
+${lua add_offsets 0 182}\
+${voffset 163}${offset 5}${color1}\
+${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}${alignr 3}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}${voffset 6}
 # ::: track details
 # menu expands based on the track metadata fields available, only 'title' is considered mandatory
 # ----------- menu image ------------
-${image ~/conky/monochrome/images/common/blue-menu-light.png -p 0,184}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 159,184}\
+${image ~/conky/monochrome/images/common/blue-menu-light.png -p 0,182}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 159,182}\
 # -------- end of menu image ---------
-${image ~/conky/monochrome/images/glass/blue-sound-wave.png -p 90,184}\
+${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
+${image ~/conky/monochrome/images/glass/blue-sound-wave.png -p 90,182}\
+${endif}\
 ${voffset 3}${offset 5}${color}${lua_parse truncate_string ${lua get title} 25}\
 ${if_match "${lua get album}" != "unknown album"}\
 ${voffset 16}${goto 5}${color}${lua_parse truncate_string ${lua get album} 25}\

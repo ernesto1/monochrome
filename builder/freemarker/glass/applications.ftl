@@ -10,7 +10,7 @@ conky.config = {
   -- window alignment
   alignment = 'top_left',  -- top|middle|bottom_left|right
   gap_x = 123,
-  gap_y = 433,
+  gap_y = 427,
 
   -- window settings
   minimum_width = 245,      -- conky will add an extra pixel to this  
@@ -46,7 +46,9 @@ conky.config = {
 };
 
 conky.text = [[
-<#assign totalLines = 47>
+<#assign totalLines = 48><#-- total lines is calculated for the scenario where no active torrents (0) are running,
+so the package update list will take all the space.  If torrents are running, each use case will start reducing
+the total lines available in order to account for the addtional menu space plus menu spacing -->
 ${lua set_total_lines [=totalLines]}\
 <#assign y = 0,
          header = 75,
@@ -70,6 +72,7 @@ ${voffset [= 7 + gap]}\
 # :::::::::::: active torrents
 ${if_existing [=activeTorrentsFile]}\
 ${if_match ${lua get active} > 0}\
+${lua decrease_total_lines 1}\
 <#assign header = 19, width = 159, speedCol = 39, colGap = 1>
 <@menu.table x=0 y=y width=width header=header bottomEdges=false/>
 <@menu.table x=width+colGap y=y width=speedCol header=header bottomEdges=false/>
@@ -84,6 +87,7 @@ ${lua add_offsets 0 [=gap]}\
 ${endif}\
 ${else}\
 <#assign body = 36>
+${lua decrease_total_lines 1}\
 <@menu.menu x=0 y=y width=width height=body/>
 ${lua add_offsets 0 [=body + gap]}\
 ${offset 5}${color}active torrents input
