@@ -65,8 +65,14 @@ ${if_existing /tmp/conky/musicplayer.albumArtPath}\
 <#assign header = 19,   <#-- menu header -->
          body = 185,    <#-- size of the album art window without the header -->
          gap = 5>       <#-- empty space between windows -->
+${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
 <@menu.menu x=0 y=y width=width height=header+body isDark=true/>
-${voffset 2}${alignc}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} ${color}: ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}${color1}${endif}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
+${color1}\
+${else}\
+<@menu.menu x=0 y=y width=width height=header+body/>
+${color}\
+${endif}\
+${voffset 2}${alignc}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} ${color}: ${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
 ${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-album-placeholder.png -p 4,19}\
 ${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4,[=(header)?c]}\
 <#assign y += header + body + gap>

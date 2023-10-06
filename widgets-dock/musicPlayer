@@ -67,6 +67,7 @@ ${voffset 4}${offset 63}${color}no player running${voffset 5}
 ${else}\
 # :::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
+${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
 # ----------- menu image ------------
 ${image ~/conky/monochrome/images/common/yellow-menu-dark.png -p 0,0}\
 ${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-top-left.png -p 0,0}\
@@ -76,7 +77,20 @@ ${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-bottom-left.png -
 ${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-bottom-right.png -p 182,197}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 0,204}\
 # -------- end of menu image ---------
-${voffset 2}${alignc}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} ${color}: ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}${color1}${endif}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
+${color1}\
+${else}\
+# ----------- menu image ------------
+${image ~/conky/monochrome/images/common/yellow-menu-light.png -p 0,0}\
+${image ~/conky/monochrome/images/common/yellow-menu-light-edge-top-left.png -p 0,0}\
+${image ~/conky/monochrome/images/common/yellow-menu-light-edge-top-right.png -p 182,0}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 189,0}\
+${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-left.png -p 0,197}\
+${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png -p 182,197}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 0,204}\
+# -------- end of menu image ---------
+${color}\
+${endif}\
+${voffset 2}${alignc}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} ${color}: ${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
 ${image ~/conky/monochrome/images/common/yellow-menu-album-placeholder.png -p 4,19}\
 ${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4,19}\
 ${voffset 194}${lua add_offsets 0 209}\
