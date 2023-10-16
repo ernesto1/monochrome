@@ -41,7 +41,7 @@ conky.config = {
   -- colors
   default_color = '703d0a',  -- regular text
   color1 = 'white',
-  color2 = 'white',          -- highlight important packages
+  color2 = 'fbfcdc',          -- highlight important packages
   color3 = 'a7aa71'
 };
 
