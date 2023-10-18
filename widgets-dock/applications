@@ -1,5 +1,5 @@
 conky.config = {
-  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
+  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua ~/conky/monochrome/musicPlayer.lua',
   lua_draw_hook_pre = 'reset_state',
   
   update_interval = 3,    -- update interval in seconds
@@ -7,14 +7,14 @@ conky.config = {
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'top_left',  -- top|middle|bottom_left|right
+  alignment = 'middle_left',  -- top|middle|bottom_left|right
   gap_x = 142,
-  gap_y = 477,
+  gap_y = -164,
 
   -- window settings
   minimum_width = 189,      -- conky will add an extra pixel to this  
   maximum_width = 189,
-  minimum_height = 1072,
+  minimum_height = 1295,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -39,14 +39,16 @@ conky.config = {
   draw_shades = false,      -- black shadow on text (not good if text is black)
   draw_outline = false,     -- black outline around text (not good if text is black)
   -- colors
-  default_color = '703d0a',  -- regular text
+  default_color = '703d0a', -- regular text
   color1 = 'white',
-  color2 = 'fbfcdc',          -- highlight important packages
-  color3 = 'a7aa71'
+  color2 = 'fbfcdc',        -- highlight important packages
+  color3 = 'a7aa71'         -- error text (secondary color menu)
 };
 
 conky.text = [[
-${lua set_total_lines 58}\
+${lua set_total_lines 74}\
+# decrease the total number of lines depending on the window size of the music player conky placed below this conky
+${lua decrease_music_player_lines 3 13}\
 ${voffset 2}\
 # :::::::::::: transmission bittorrent client
 # this panel requires:
@@ -83,7 +85,7 @@ ${lua configure_menu yellow light 189 3}\
 ${lua add_offsets 0 19}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-peers.png 38 22}\
 ${alignc}${color1}active torrents ${color}(${color}${lua get activeNum}${color})${color1}${voffset 3}
-${color}${color}${lua_parse populate_menu /tmp/conky/transmission.active 53 3}${voffset 12}
+${color}${color}${lua_parse populate_menu /tmp/conky/transmission.active 69 3}${voffset 12}
 ${lua add_offsets 0 5}\
 ${endif}\
 ${else}\
@@ -114,6 +116,6 @@ ${lua configure_menu yellow light 189 3}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-dnf.png 114 2}\
 ${offset 5}${color1}package${alignr 4}version${voffset 3}
-${color}${lua_parse populate_menu /tmp/conky/dnf.packages.formatted 58 900}${voffset 5}
+${color}${lua_parse populate_menu /tmp/conky/dnf.packages.formatted 74 900}${voffset 5}
 ${endif}\
 ]]

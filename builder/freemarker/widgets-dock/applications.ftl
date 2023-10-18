@@ -1,6 +1,6 @@
 <#import "/lib/menu-round.ftl" as menu>
 conky.config = {
-  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
+  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua ~/conky/monochrome/musicPlayer.lua',
   lua_draw_hook_pre = 'reset_state',
   
   update_interval = 3,    -- update interval in seconds
@@ -8,15 +8,15 @@ conky.config = {
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'top_left',  -- top|middle|bottom_left|right
+  alignment = 'middle_left',  -- top|middle|bottom_left|right
   gap_x = 142,
-  gap_y = 477,
+  gap_y = -164,
 
   -- window settings
   <#assign width = 189>
   minimum_width = [=width],      -- conky will add an extra pixel to this  
   maximum_width = [=width],
-  <#if system == "desktop"><#assign windowHeight=1072><#else><#assign windowHeight=20></#if>
+  <#if system == "desktop"><#assign windowHeight=1295><#else><#assign windowHeight=20></#if>
   minimum_height = [=windowHeight?c],
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -42,15 +42,17 @@ conky.config = {
   draw_shades = false,      -- black shadow on text (not good if text is black)
   draw_outline = false,     -- black outline around text (not good if text is black)
   -- colors
-  default_color = '[=colors.menuText]',  -- regular text
+  default_color = '[=colors.menuText]', -- regular text
   color1 = '[=colors.labels]',
-  color2 = '[=colors.highlight]',          -- highlight important packages
-  color3 = '[=colors.secondary.text]'
+  color2 = '[=colors.highlight]',        -- highlight important packages
+  color3 = '[=colors.secondary.text]'         -- error text (secondary color menu)
 };
 
 conky.text = [[
-<#if system == "desktop"><#assign totalLines = 58><#else><#assign totalLines = 46></#if>
+<#if system == "desktop"><#assign totalLines = 74><#else><#assign totalLines = 46></#if>
 ${lua set_total_lines [=totalLines]}\
+# decrease the total number of lines depending on the window size of the music player conky placed below this conky
+${lua decrease_music_player_lines 3 13}\
 ${voffset 2}\
 <#if system == "desktop">
 # :::::::::::: transmission bittorrent client

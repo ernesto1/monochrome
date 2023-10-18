@@ -1,6 +1,6 @@
 <#import "/lib/menu-square.ftl" as menu>
 conky.config = {
-  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
+  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua ~/conky/monochrome/musicPlayer.lua',
   lua_draw_hook_pre = 'reset_state',
   
   update_interval = 3,    -- update interval in seconds
@@ -15,7 +15,7 @@ conky.config = {
   -- window settings
   minimum_width = 245,      -- conky will add an extra pixel to this  
   maximum_width = 245,
-  minimum_height = 1020,
+  minimum_height = 1150,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -40,20 +40,22 @@ conky.config = {
   draw_shades = false,      -- black shadow on text (not good if text is black)
   draw_outline = false,     -- black outline around text (not good if text is black)
   -- colors
-  default_color = '[=colors.systemText]',  -- regular text
+  default_color = '[=colors.systemText]', -- regular text
   color1 = '[=colors.systemLabels]',
   color2 = '[=colors.highlight]'         -- highlight important packages
 };
 
 conky.text = [[
-<#assign totalLines = 48><#-- total lines is calculated for the scenario where no active torrents (0) are running,
+<#assign totalLines = 61><#-- total lines is calculated for the scenario where no active torrents (0) are running,
 so the package update list will take all the space.  If torrents are running, each use case will start reducing
 the total lines available in order to account for the addtional menu space plus menu spacing -->
 ${lua set_total_lines [=totalLines]}\
+# decrease the total number of lines depending on the window size of the music player conky placed below this conky
+${lua decrease_music_player_lines 1 10}\
 <#assign y = 0,
          header = 75,
          height = 87,
-         gap = 3>     <#-- empty space between windows -->
+         gap = 3>     <#-- empty space between menus -->
 <@menu.verticalTable x=0 y=y header=header body=159-header height=height/>
 <#assign y += height + gap>
 ${lua add_offsets 0 [= height + gap]}\

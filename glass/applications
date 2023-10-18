@@ -1,5 +1,5 @@
 conky.config = {
-  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
+  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua ~/conky/monochrome/musicPlayer.lua',
   lua_draw_hook_pre = 'reset_state',
   
   update_interval = 3,    -- update interval in seconds
@@ -14,7 +14,7 @@ conky.config = {
   -- window settings
   minimum_width = 245,      -- conky will add an extra pixel to this  
   maximum_width = 245,
-  minimum_height = 1020,
+  minimum_height = 1150,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -39,13 +39,15 @@ conky.config = {
   draw_shades = false,      -- black shadow on text (not good if text is black)
   draw_outline = false,     -- black outline around text (not good if text is black)
   -- colors
-  default_color = 'e5e5e5',  -- regular text
+  default_color = 'e5e5e5', -- regular text
   color1 = '839bc1',
   color2 = 'dfa22f'         -- highlight important packages
 };
 
 conky.text = [[
-${lua set_total_lines 48}\
+${lua set_total_lines 61}\
+# decrease the total number of lines depending on the window size of the music player conky placed below this conky
+${lua decrease_music_player_lines 1 10}\
 # --- composite vertical table image ---
 ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 0,0}\
 ${image ~/conky/monochrome/images/common/blue-menu-light.png -p 75,0}\
@@ -81,7 +83,7 @@ ${image ~/conky/monochrome/images/common/menu-blank.png -p 239,90}\
 ${lua configure_menu blue light 159 3 false}\
 ${lua add_offsets 0 19}\
 ${offset 5}${color1}active torrents${goto 184}up${offset 16}down${voffset 3}
-${color}${color}${lua_parse populate_menu /tmp/conky/transmission.active 43 3}
+${color}${color}${lua_parse populate_menu /tmp/conky/transmission.active 56 3}
 ${voffset 10}\
 ${lua_parse draw_bottom_edges 160 39}${lua_parse draw_bottom_edges 200 39}\
 ${lua add_offsets 0 3}\
@@ -122,6 +124,6 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 211 0}\
 ${lua configure_menu blue light 159 3 false}\
 ${lua add_offsets 0 19}\
 ${offset 5}${color1}package${goto 166}version${voffset 3}
-${color}${lua_parse populate_menu /tmp/conky/dnf.packages.formatted 48 900}
+${color}${lua_parse populate_menu /tmp/conky/dnf.packages.formatted 61 900}
 ${endif}\
 ]]
