@@ -5,12 +5,12 @@ conky.config = {
 
   -- window alignment
   alignment = 'middle_left',    -- top|middle|bottom_left|middle|right
-  gap_x = 5,                 -- same as passing -x at command line
+  gap_x = 0,                 -- same as passing -x at command line
   gap_y = -16,
 
   -- window settings
-  minimum_width = 113,
-  minimum_height = 1255,
+  minimum_width = 150,
+  minimum_height = 1380,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -65,45 +65,46 @@ conky.config = {
   -- network device bandwith: ${template4 deviceName maxUpSpeed maxDownSpeed}
   template4 = [[
 # upload
-${voffset -4}${upspeedgraph \1 48,112 ${template2} \2}
-${voffset -54}${offset 5}${color1}${font0}upload${font}
-${voffset 1}${alignr 6}${color}${font2}${upspeed \1}${font}
-${voffset 8}${alignr 6}${color}${font}${totalup \1} total
+${voffset -4}${offset 5}${upspeedgraph \1 48,112 ${template2} \2}
+${voffset -54}${offset 10}${color1}${font0}upload${font}
+${voffset 1}${alignr 38}${color}${font2}${upspeed \1}${font}
+${voffset 8}${alignr 38}${color}${font}${totalup \1} total
 # download
-${voffset -1}${downspeedgraph \1 48,112 ${template1} \3}
-${voffset -54}${offset 5}${color1}${font0}download${font}
-${voffset 1}${alignr 6}${color}${font2}${downspeed \1}${font}
-${voffset 8}${alignr 6}${color}${font}${totaldown \1} total${font}${voffset -13}]],
+${voffset -1}${offset 5}${downspeedgraph \1 48,112 ${template1} \3}
+${voffset -54}${offset 10}${color1}${font0}download${font}
+${voffset 1}${alignr 38}${color}${font2}${downspeed \1}${font}
+${voffset 8}${alignr 38}${color}${font}${totaldown \1} total${font}${voffset -13}]],
   
   -- hard disk: ${template5 device readSpeed writeSpeed}
   template5 = [[
 # disk read
-${voffset -4}${diskiograph_read /dev/\1 48,112 ${template2} \2}
-${voffset -56}${offset 5}${color1}${font0}disk read${alignr 6}${color}\1${font}
-${voffset 3}${alignr 6}${color}${font2}${diskio_read /dev/\1}${font}
+${voffset -4}${offset 5}${diskiograph_read /dev/\1 48,112 ${template2} \2}
+${voffset -56}${offset 10}${color1}${font0}disk read${alignr 38}${color}\1${font}
+${voffset 3}${alignr 38}${color}${font2}${diskio_read /dev/\1}${font}
 # disk write
-${voffset -1}${diskiograph_write /dev/\1 48,112 ${template1} \3}
-${voffset -56}${offset 5}${color1}${font0}disk write${font}
-${voffset 3}${alignr 6}${color}${font2}${diskio_write /dev/\1}${font}${voffset 6}]],
+${voffset -1}${offset 5}${diskiograph_write /dev/\1 48,112 ${template1} \3}
+${voffset -56}${offset 10}${color1}${font0}disk write${font}
+${voffset 3}${alignr 38}${color}${font2}${diskio_write /dev/\1}${font}${voffset 6}]],
 
   -- filesystem: ${template6 filesystemName fileSystemPath}
   template6 = [[
-${voffset 3}${offset 5}${color1}${font0}\1${font}
-${voffset -14}${alignr 6}${color}${font2}${fs_used_perc \2}${font3}%${font}
-${voffset -2}${offset 14}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3,94 \2}
-${voffset -4}${alignr 6}${color}${font}${fs_used \2} / ${fs_size \2}${voffset 3}]],
+${voffset 3}${offset 10}${color1}${font0}\1${font}
+${voffset -14}${alignr 38}${color}${font2}${fs_used_perc \2}${font3}%${font}
+${voffset -2}${offset 19}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3,94 \2}
+${voffset -4}${alignr 38}${color}${font}${fs_used \2} / ${fs_size \2}${voffset 3}]],
 
   -- filesystem usb device: ${template7 filesystemName fileSystemPath}
   template7 = [[
-${voffset 7}${offset 5}${color1}${font0}\1
-${if_mounted \2}${voffset -13}${alignr 6}${font2}${fs_used_perc \2}${font3}%
+${voffset 7}${offset 10}${color1}${font0}\1
+${if_mounted \2}${voffset -13}${alignr 38}${font2}${fs_used_perc \2}${font3}%
 ${voffset -2}${offset 13}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3,94 \2}
-${voffset -4}${alignr 6}${color}${font}${fs_used \2} / ${fs_size \2}${voffset -8}
-${else}${voffset 4}${alignr 6}${color}${font}device is not
-${alignr 6}${color}connected${voffset 4}${endif}]],
+${voffset -4}${alignr 38}${color}${font}${fs_used \2} / ${fs_size \2}${voffset -8}
+${else}${voffset 4}${alignr 38}${color}${font}device is not
+${alignr 38}${color}connected${voffset 4}${endif}]],
 
   -- hwmon entry: ${template9 index/device type index threshold}
   template8 = [[${if_match ${hwmon \1 \2 \3} > \4}${color3}${else}${color}${endif}${hwmon \1 \2 \3}]]
 };
 
 conky.text = [[
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-sidebar.png -p 0,0}\

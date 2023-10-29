@@ -3,12 +3,16 @@
 methods to allow a conky client to manipulate x,y positions of images or text at runtime.
 The following use cases are supported:
 
-1) dynamically change the position of an image by taking into account runtime x,y offsets to alter the image's 
-   original x,y coordinates
+1) dynamically change the position of an image by taking into account runtime x,y offsets to alter 
+
+   - an image's original x,y coordinates
+   - text's horizontal or vertical offset
    
    see conky_reset_state()
        conky_add_offsets()
        conky_draw_image()
+       conky_add_x_offset()
+       conky_add_y_offset()
 
 2) dynamically update ${goto x} or ${offset x} variables with an offset at runtime
                                    ${voffset y}
@@ -28,9 +32,8 @@ The following use cases are supported:
           conky_populate_menu()
 ]]
 
--- table to hold variables
+-- table to hold global variables
 vars = {}
-
 
 --[[ 
 parses the given conky expression and stores its value for future use
@@ -48,8 +51,8 @@ function conky_get(name, expression)
 end
 
 
--- resets the x,y offsets
--- this method must be invoked by conky on each refresh cycle
+-- resets global variables, such as the x,y offsets
+-- this method must be invoked by conky on each refresh cycle (use the lua_draw_hook_pre setting)
 function conky_reset_state()
   vars["xOffset"] = 0
   vars["yOffset"] = 0
@@ -64,6 +67,7 @@ the client can then call the following methods which will take these offsets int
 
   - conky_draw_image(..)
   - conky_add_x_offset(..)
+  - conky_add_y_offset(..)
 
 on each conky session the offsets are reset to 0 (see the conky_reset_state() method)
 this methoed is cumulative, ie. the numbers are increased each times the method is called
@@ -82,14 +86,18 @@ end
 
 
 --[[
-update the conky variable with the current 'x' offset
-call this method with ${goto} or ${offset} conky variables
+add the 'x' offset to the conky variable's argument
+call this method with the ${goto} or ${offset} conky variables
 ]]
 function conky_add_x_offset(variable, x)
   local xOffset = vars["xOffset"] or 0
   return "${" .. variable .. " " .. tonumber(x) + xOffset .. "}"
 end
 
+--[[
+add the 'y' offset to the conky variable's argument
+call this method with the ${voffset} conky variable
+]]
 function conky_add_y_offset(variable, y)
   local yOffset = vars["yOffset"] or 0
   return "${" .. variable .. " " .. tonumber(y) + yOffset .. "}"
