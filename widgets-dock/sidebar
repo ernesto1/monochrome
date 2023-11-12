@@ -180,7 +180,7 @@ ${endif}\
 # :::::::: cpu
 ${image ~/conky/monochrome/images/widgets-dock/yellow-temp-cpu-desktop.png -p 0,903}\
 # due to a conky/lua bug the temperature items had to be moved to the sidebarPanel conky :(
-# the complementary temperature/fan speeds displayed to the right of the sidebar will remain on this conky 
+# the complementary cpu core temperatures & fan speeds displayed to the right of the sidebar will remain on this conky
 ${voffset 24}${goto 67}${font}${color}${hwmon coretemp temp 2}°C${offset 9}${hwmon coretemp temp 3}°C
 ${voffset 8}${goto 67}${color}${hwmon coretemp temp 4}°C${offset 9}${hwmon coretemp temp 5}°C
 # :::::::: ati video card
