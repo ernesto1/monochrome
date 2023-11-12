@@ -97,7 +97,9 @@ ${endif}\
 # -------  vertical table image top -------
 <#assign header = 45, height = 22>
 <@menu.verticalMenuHeader x=0 y=0 header=header body=width-header fixed=false/>
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 189 0}\
+${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-sound-wave.png [=width-53-7] 0}\
+${endif}\
 # --------- end of table image top ---------
 ${lua add_offsets 0 [=height - 7]}\<#-- edges are 7x7 px -->
 ${voffset 3}${offset 5}${color1}title${goto 50}${color}${cat /tmp/conky/musicplayer.title}

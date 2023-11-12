@@ -104,7 +104,9 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-dark-edge-to
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light.png 45 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light-edge-top-right.png 182 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 189 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 189 0}\
+${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-sound-wave.png 129 0}\
+${endif}\
 # --------- end of table image top ---------
 ${lua add_offsets 0 14}\
 ${voffset 3}${offset 5}${color1}title${goto 50}${color}${cat /tmp/conky/musicplayer.title}
