@@ -17,7 +17,7 @@ popd
 # TODO update laptop sidebar
 java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar glass blue laptop && \
 pushd /tmp/monochrome && \
-buildSidebar.bash config cpu-mem network disk power bottom-edge && \
+buildSidebar.bash config cpu-mem network disk power && \
 echo '${voffset -900}]];' >> sidebar && \
 mv sidebar system musicPlayer ~/conky/monochrome/glass && \
 popd

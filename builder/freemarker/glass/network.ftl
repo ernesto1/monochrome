@@ -26,8 +26,8 @@ ${else}\
 <#assign type = networkDevices[system]?first.type>
 ${image ~/conky/monochrome/images/glass/[=image.secondaryColor]-network-disconnected-[=type].png -p 5,0}\
 ${voffset 7}${offset 10}${color}${font0}network${font}
-${voffset 142}${alignc}${color}no [=type]
-${alignc}connection
+${voffset 142}${offset 46}${color}no [=type]
+${offset 34}connection
 <#if system == "desktop">${voffset -26}<#else>${voffset -45}</#if>
 </#if>
 </#list>

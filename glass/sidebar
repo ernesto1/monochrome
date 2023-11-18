@@ -137,8 +137,8 @@ ${else}\
 # :::::: no network/internet
 ${image ~/conky/monochrome/images/glass/ochre-network-disconnected-ethernet.png -p 5,254}\
 ${voffset 7}${offset 10}${color}${font0}network${font}
-${voffset 142}${alignc}${color}no ethernet
-${alignc}connection
+${voffset 142}${offset 46}${color}no ethernet
+${offset 34}connection
 ${voffset -26}
 ${endif}
 # ::::::::::::::::: disk sda

@@ -107,4 +107,4 @@ ${alignr 38}${color}connected${voffset 4}${endif}]],
 };
 
 conky.text = [[
-${image ~/conky/monochrome/images/glass/[=image.primaryColor]-sidebar.png -p 0,0}\
+${image ~/conky/monochrome/images/glass/[=image.primaryColor]-sidebar<#if system == "laptop">-laptop</#if>.png -p 0,0}\
