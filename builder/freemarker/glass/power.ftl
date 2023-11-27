@@ -4,8 +4,8 @@ ${if_match "${acpiacadapter}"=="on-line"}\
 ${if_match ${battery_percent BAT0} > 80}\
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-power-plug.png -p 5,0}\
 ${voffset 4}${offset 10}${color1}${font0}power${font}
-${voffset -4}${alignr 38}${color}${font}laptop is${font}
-${voffset 3}${alignr 38}${color}plugged in${font}
+${voffset -2}${alignr 38}${color}${font}laptop is${font}
+${alignr 38}${color}plugged in${font}
 # on power plug | charging battery
 ${else}\
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-power-battery.png -p 5,0}\

@@ -12,6 +12,9 @@
 
      hence the pletora of conditional statements in this config -->
 conky.config = {
+  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
+  lua_draw_hook_pre = 'reset_state',
+  
   update_interval = 2,  -- update interval in seconds
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
   xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
@@ -26,7 +29,7 @@ conky.config = {
   <#if system == "desktop"><#assign windowWidth = 246><#else><#assign windowWidth = 159></#if>
   minimum_width = [=windowWidth],
   maximum_width = [=windowWidth],
-  <#if system == "desktop"><#assign windowHeight=397><#else><#assign windowHeight=309></#if>
+  <#if system == "desktop"><#assign windowHeight=397><#else><#assign windowHeight=342></#if>
   minimum_height = [=windowHeight?c],
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -52,6 +55,10 @@ conky.config = {
   <#if system == "desktop">
   top_name_verbose = true,    -- show full command in ${top ...}
   top_name_width = 24,        -- how many characters to print
+  <#else>
+  if_up_strictness = 'address', -- network device must be up, having link and an assigned IP address
+                                -- to be considered "up" by ${if_up}
+                                -- values are: up, link or address
   </#if>
 
   -- font settings
@@ -132,18 +139,22 @@ ${voffset [= 7 + gap]}\
 <@menu.verticalTable x=0 y=y header=header body=159-header height=height/>
 ${voffset 2}${offset 5}${color1}zoom${goto 81}${color}${if_running zoom}running${else}off${endif}
 <#else>
+${lua add_offsets 0 [=y]}\
 # ::::::::::::::::: wifi network
-<#-- TODO only show network details when wifi is online -->
+<#-- TODO iterate through network devices and build the conditional tree for wifi devices -->
+${if_up [=networkDevices[system]?first.name]}\
 <#assign header = 57, height = 39>
-<@menu.verticalTable x=0 y=y header=header body=windowWidth-header height=height/>
+<@menu.verticalTable x=0 y=0 header=header body=windowWidth-header height=height fixed=false/>
 <#assign y += height + 2>
 ${voffset 3}${offset 5}${color1}network${goto 62}${color}${wireless_essid [=networkDevices[system]?first.name]}
-${voffset 3}${offset 5}${color1}local ip${goto 62}${color}${addr [=networkDevices[system]?first.name]}${voffset [=8 + gap]}
-# ::::::::::::::::: package updates
-${if_existing /tmp/conky/dnf.packages.formatted}\
-<#assign height = 22>
-<@menu.verticalTable x=0 y=y header=header body=windowWidth-header height=height/>
-${offset 5}${color1}dnf${goto 62}${color}${lines /tmp/conky/dnf.packages.formatted} update(s)${voffset 4}
+${voffset 3}${offset 5}${color1}local ip${goto 62}${color}${addr [=networkDevices[system]?first.name]}${voffset 4}
+${voffset [=gap + 3]}${lua add_offsets 0 [=height+gap]}\
 ${endif}\
+# ::::::::::::::::: miscellaneous details
+<#assign height = 53>
+<@menu.verticalTable x=0 y=0 header=header body=windowWidth-header height=height fixed=false/>
+${voffset 2}${offset 5}${color1}kernel${goto 62}${color}${kernel}
+${voffset 3}${offset 5}${color1}uptime${goto 62}${color}${uptime}
+${voffset 3}${offset 5}${color1}dnf${goto 62}${color}${if_existing /tmp/conky/dnf.packages.formatted}${lines /tmp/conky/dnf.packages.formatted} update(s)${else}no updates${endif}${voffset 4}
 </#if>
 ]];

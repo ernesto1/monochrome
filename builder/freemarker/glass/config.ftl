@@ -73,7 +73,7 @@ ${voffset 8}${alignr 38}${color}${font}${totalup \1} total
 ${voffset -1}${offset 5}${downspeedgraph \1 48,112 ${template1} \3}
 ${voffset -54}${offset 10}${color1}${font0}download${font}
 ${voffset 1}${alignr 38}${color}${font2}${downspeed \1}${font}
-${voffset 8}${alignr 38}${color}${font}${totaldown \1} total${font}${voffset -13}]],
+${voffset 8}${alignr 38}${color}${font}${totaldown \1} total${font}${voffset 3}]],
   
   -- hard disk: ${template5 device readSpeed writeSpeed}
   template5 = [[
