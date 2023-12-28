@@ -3,7 +3,7 @@
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-temp-cpu-[=system].png -p 0,0}\
 <#if system == "laptop" >
 # laptop only reports cpu core temperatures, displaying the hottest of the two cores
-${voffset 8}${if_match ${hwmon coretemp temp 2} > ${hwmon coretemp temp 3}}${template8 coretemp temp 2 [=threshold.tempCPUCore]}${else}${template8 coretemp temp 3 [=threshold.tempCPUCore]}${endif}
+${voffset 15}${if_match ${hwmon coretemp temp 2} > ${hwmon coretemp temp 3}}${template8 coretemp temp 2 [=threshold.tempCPUCore]}${else}${template8 coretemp temp 3 [=threshold.tempCPUCore]}${endif}
 <#else>
 # due to a conky/lua bug the temperature items had to be moved to the sidebarPanel conky :(
 # the complementary cpu core temperatures & fan speeds displayed to the right of the sidebar will remain on this conky
