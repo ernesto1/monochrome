@@ -33,8 +33,9 @@ public class NowPlaying {
     /**
      * Directory to write the song track info files for conky to read
      */
-    private static String OUTPUT_DIR = "/tmp";
-    private static int ALBUM_CUTOFF = 30;
+    private static String OUTPUT_DIR = "/tmp/conky";
+    private static String ALBUM_ART_DIR = OUTPUT_DIR + "/albumArt";
+    private static int ALBUM_CACHE_SIZE = 1000000;
     private static List<String> SUPPORTED_PLAYERS;
 
     static {
@@ -61,7 +62,7 @@ public class NowPlaying {
                                                                          TimeUnit.MILLISECONDS,
                                                                          new ArrayBlockingQueue<>(1),
                                                                          new ThreadPoolExecutor.DiscardOldestPolicy());
-            MusicPlayerWriter writer = new MusicPlayerWriter(OUTPUT_DIR, albumArtExecutor);
+            MusicPlayerWriter writer = new MusicPlayerWriter(OUTPUT_DIR, ALBUM_ART_DIR, albumArtExecutor);
             writer.init();
             MusicPlayerDatabase playerDatabase = new MusicPlayerDatabase(writer);
             playerDatabase.init();
@@ -75,8 +76,8 @@ public class NowPlaying {
             conn.addSigHandler(DBus.NameOwnerChanged.class, availabilityHandler);
             logger.info("listening to the dbus for media player activity");
             // maintenance operations
-            ScheduledExecutorService albumArtHouseKeeperExecutor = Executors.newSingleThreadScheduledExecutor();
-            albumArtHouseKeeperExecutor.scheduleAtFixedRate(new AlbumArtHouseKeeper(OUTPUT_DIR, ALBUM_CUTOFF, playerDatabase), 65, 30, TimeUnit.MINUTES);
+            ExecutorService albumArtHouseKeeperExecutor = Executors.newSingleThreadExecutor();
+            albumArtHouseKeeperExecutor.execute(new AlbumArtHouseKeeper(ALBUM_ART_DIR, ALBUM_CACHE_SIZE, playerDatabase));
             registerShutdownHooks(conn, albumArtExecutor, albumArtHouseKeeperExecutor);
 
             while(true) {
@@ -104,7 +105,8 @@ public class NowPlaying {
 
         logger.info("configuration: {}", config);
         OUTPUT_DIR = (String) config.getOrDefault("outputDir", OUTPUT_DIR);
-        ALBUM_CUTOFF = (Integer) config.getOrDefault("albumCutoff", ALBUM_CUTOFF);
+        ALBUM_ART_DIR = (String) config.getOrDefault("albumArtDir", ALBUM_ART_DIR);
+        ALBUM_CACHE_SIZE = (Integer) config.getOrDefault("albumCacheSize", ALBUM_CACHE_SIZE);
         SUPPORTED_PLAYERS = (List<String>) config.getOrDefault("supportedPlayers", SUPPORTED_PLAYERS);
     }
 
@@ -130,9 +132,10 @@ public class NowPlaying {
                 executor.shutdown();
 
                 try {
-                    boolean isExecutorShutdown = executor.awaitTermination(600, TimeUnit.MILLISECONDS);
-                    if (!isExecutorShutdown) {
-                        logger.warn("welp! executor service still has not shutdown after 600ms");
+                    executor.shutdownNow();
+
+                    if (!executor.awaitTermination(1300, TimeUnit.MILLISECONDS)) {
+                        logger.warn("welp! an executor service was not able to shutdown after 1300ms");
                     }
                 } catch (InterruptedException e) {
                     logger.error("was not able to wait for the thread pool to close", e);

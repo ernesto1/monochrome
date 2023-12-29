@@ -5,7 +5,7 @@ pushd ~/conky/monochrome/builder/java-tools && \
 mvn clean package && \
 printf "\n${ORANGE}:::::: deploying java apps${NOCOLOR}\n"; \
 mkdir -p ~/conky/monochrome/java && \
-rm -rf ~/conky/monochrome/java/* && \
+rm -rf ~/conky/monochrome/java/!(albumArt) && \
 cp -rn */target/{lib,*.jar,*.yaml,*.xml} ~/conky/monochrome/java && \
 ls -R ~/conky/monochrome/java && \
 popd; \

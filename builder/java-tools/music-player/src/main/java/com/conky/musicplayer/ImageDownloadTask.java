@@ -34,7 +34,7 @@ public class ImageDownloadTask implements Runnable {
     @Override
     public void run() {
         if (Files.exists(imagePath, LinkOption.NOFOLLOW_LINKS)) {
-            logger.info("album art {} is already available on disk, no need to download it again from the web", imagePath);
+            logger.info("album art available in the local cache: {}", imagePath);
             return;
         }
 
@@ -47,7 +47,7 @@ public class ImageDownloadTask implements Runnable {
             fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
             fileOutputStream.close();
             Files.move(tempFile, imagePath, StandardCopyOption.REPLACE_EXISTING);
-            logger.info("saved album art to disk: {}", imagePath);
+            logger.info("downloaded album art to cache: {}", imagePath);
         } catch (IOException e) {
             logger.error("unable to download album art from the web", e);
         }

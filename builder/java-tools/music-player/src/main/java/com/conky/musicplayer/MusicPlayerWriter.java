@@ -16,27 +16,32 @@ public class MusicPlayerWriter {
     private static final Logger logger = LoggerFactory.getLogger(MusicPlayerWriter.class);
     public static final String FILE_PREFIX = "musicplayer";
     public static final String ALBUM_ART = FILE_PREFIX + ".albumArt";
-    private static final String ALBUM_ART_PATH = "albumArtPath";
+    /**
+     * Name of the file that contains the location on disk of the track's cover art
+     */
+    private static final String ALBUM_ART_PATH_FILENAME = "albumArtPath";
+    /**
+     * Directory to write all music player track info files to
+     */
     private final String outputDirectory;
+    private final String albumArtDirectory;
     private final ExecutorService executor;
 
-    public MusicPlayerWriter(String outputDirectory, ExecutorService executor) {
+    public MusicPlayerWriter(String outputDirectory, String albumArtDir, ExecutorService executor) {
         this.outputDirectory = outputDirectory;
+        this.albumArtDirectory = albumArtDir;
         this.executor = executor;
     }
 
     /**
-     * Creates the output directory if it does not exist
-     * @throws IOException
+     * Creates the output directories if they do not exist
+     * @throws IOException if a failure occurs while creating the directories
      */
     public void init() throws IOException {
-        Path outputDirPath = Path.of(outputDirectory);
-        Files.createDirectories(outputDirPath);
-
-        if (!Files.isDirectory(outputDirPath)) {
-            logger.error("unable to create the output directory {}", outputDirPath);
-            throw new RuntimeException("output directory does not exist");
-        }
+        Path outputDir = Path.of(outputDirectory);
+        Files.createDirectories(outputDir);
+        Path albumArtDir = Path.of(albumArtDirectory);
+        Files.createDirectories(albumArtDir);
     }
 
     public void writePlayerState(MusicPlayer player) {
@@ -64,15 +69,15 @@ public class MusicPlayerWriter {
                     // ex. https://i.scdn.co/image/ab67616d0000b273bbf0146981704a073405b6c2
                     String resourceLocation = coverArtURL.getFile();
                     String id = resourceLocation.substring(resourceLocation.lastIndexOf('/') + 1);    // get the resource name
-                    Path imagePath = Path.of(outputDirectory, ALBUM_ART + "." + id);
+                    Path imagePath = Path.of(albumArtDirectory, ALBUM_ART + "." + id);
                     executor.execute(new ImageDownloadTask(coverArtURL, imagePath));
                     albumArtFilePath = imagePath.toString();
                 }
 
-                writeFile(ALBUM_ART_PATH, albumArtFilePath);
+                writeFile(ALBUM_ART_PATH_FILENAME, albumArtFilePath);
             } else {
                 // if no album art is available, delete the conky album art path file
-                Path coverArt = Path.of(outputDirectory, FILE_PREFIX + "." + ALBUM_ART_PATH);
+                Path coverArt = Path.of(outputDirectory, FILE_PREFIX + "." + ALBUM_ART_PATH_FILENAME);
                 try {
                     Files.deleteIfExists(coverArt);
                 } catch (IOException e) {
