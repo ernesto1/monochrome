@@ -30,7 +30,8 @@ conky.config = {
   
   -- images
   imlib_cache_flush_interval = 250,
-  text_buffer_size=2048,
+  
+  text_buffer_size = 2048,
   
   if_up_strictness = 'address', -- network device must be up, having link and an assigned IP address
                                 -- to be considered "up" by ${if_up}
@@ -43,10 +44,11 @@ conky.config = {
   default_color = '703d0a',  -- regular text
   color1 = 'white',
   
-  -- top cpu process: ${template1 processNumber}
-  template1 = [[${voffset 3}${color}${offset 5}${top name \1}${alignr 5}${top cpu \1}% ${top pid \1}]],
-  -- top mem process: ${template2 processNumber}
-  template2 = [[${voffset 3}${color}${offset 5}${top_mem name \1}${alignr 5}${top_mem mem_res \1} ${top_mem pid \1}]]
+  -- templates
+  -- top cpu process: ${template0 processNumber}
+  template0 = [[${voffset 3}${offset 5}${color}${top name \1}${alignr 5}${top cpu \1}% ${top pid \1}]],
+  -- top mem process: ${template1 processNumber}
+  template1 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${alignr 5}${top_mem mem_res \1} ${top_mem pid \1}]]
 };
 
 conky.text = [[
@@ -61,14 +63,14 @@ ${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-left.png 
 ${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png -p 182,128}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 0,135}\
 # -------- end of table image ---------
-${voffset 2}${color1}${offset 5}process${alignr 5}cpu   pid${voffset 3}
-${template1 1}
-${template1 2}
-${template1 3}
-${template1 4}
-${template1 5}
-${template1 6}
-${template1 7}
+${voffset 2}${offset 5}${color1}process${alignr 5}cpu   pid${voffset 3}
+${template0 1}
+${template0 2}
+${template0 3}
+${template0 4}
+${template0 5}
+${template0 6}
+${template0 7}
 # :::::::::::: top mem processes
 # ----------- table image ------------
 ${image ~/conky/monochrome/images/common/yellow-menu-dark.png -p 0,140}\
@@ -80,14 +82,14 @@ ${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-left.png 
 ${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png -p 182,268}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 0,275}\
 # -------- end of table image ---------
-${voffset 12}${color1}${offset 5}process${alignr 5}memory   pid${voffset 3}
-${template2 1}
-${template2 2}
-${template2 3}
-${template2 4}
-${template2 5}
-${template2 6}
-${template2 7}
+${voffset 12}${offset 5}${color1}process${alignr 5}memory   pid${voffset 3}
+${template1 1}
+${template1 2}
+${template1 3}
+${template1 4}
+${template1 5}
+${template1 6}
+${template1 7}
 # :::::::::::: network
 # assumption: only one network device will be connected to the internet at a time
 # :::: ethernet

@@ -12,7 +12,7 @@ conky.config = {
   gap_y = 120,
 
   -- window settings
-  minimum_width = 189,      -- conky will add an extra pixel to this  
+  minimum_width = 189,      -- conky will add an extra pixel to this
   maximum_width = 189,
   minimum_height = 22,      -- conky will add an extra pixel to this height
   own_window = true,
@@ -91,7 +91,7 @@ ${image ~/conky/monochrome/images/common/menu-blank.png -p 0,204}\
 ${color}\
 ${endif}\
 ${voffset 2}${alignc}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} ${color}: ${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
-${image ~/conky/monochrome/images/common/yellow-menu-album-placeholder.png -p 4,19}\
+${image ~/conky/monochrome/images/common/yellow-menu-album-placeholder.png -p 20,35}\
 ${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4,19}\
 ${voffset 194}${lua add_offsets 0 209}\
 ${endif}\

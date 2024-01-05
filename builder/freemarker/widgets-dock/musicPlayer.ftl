@@ -13,8 +13,8 @@ conky.config = {
   gap_y = 120,
 
   -- window settings
-  <#assign width = 189>
-  minimum_width = [=width],      -- conky will add an extra pixel to this  
+  <#if system == "desktop"><#assign width = 189><#else><#assign width = 169></#if>
+  minimum_width = [=width],      -- conky will add an extra pixel to this
   maximum_width = [=width],
   minimum_height = 22,      -- conky will add an extra pixel to this height
   own_window = true,
@@ -62,8 +62,9 @@ ${voffset 4}${offset 63}${color}no player running${voffset 5}
 ${else}\
 # :::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
+<#if system == "desktop"><#assign innerBorder = 4><#else><#assign innerBorder = 2></#if><#-- border width between the window and the album art -->
 <#assign header = 19,   <#-- menu header -->
-         body = 185,    <#-- size of the album art window without the header -->
+         body = width - innerBorder,    <#-- size of the album art window without the header and no top border -->
          gap = 5>       <#-- empty space between windows -->
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
 <@menu.menu x=0 y=y width=width height=header+body isDark=true/>
@@ -73,8 +74,9 @@ ${else}\
 ${color}\
 ${endif}\
 ${voffset 2}${alignc}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} ${color}: ${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
-${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-album-placeholder.png -p 4,19}\
-${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4,[=(header)?c]}\
+<#if system == "desktop"><#assign offset = 16><#else><#assign offset = 0></#if><#-- offset for pc due to placeholder image being smaller for the laptop version -->
+${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-album-placeholder.png -p [=innerBorder + offset],[=header + offset]}\
+${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} [=width-innerBorder*2]x[=width-innerBorder*2] [=innerBorder],[=(header)?c]}\
 <#assign y += header + body + gap>
 ${voffset [=body + 4 + gap]}${lua add_offsets 0 [=y]}\
 ${endif}\
