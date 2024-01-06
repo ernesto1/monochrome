@@ -74,7 +74,7 @@ ${else}\
 ${color}\
 ${endif}\
 ${voffset 2}${alignc}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} ${color}: ${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
-<#if system == "desktop"><#assign offset = 16><#else><#assign offset = 0></#if><#-- offset for pc due to placeholder image being smaller for the laptop version -->
+<#if system == "desktop"><#assign offset = 8><#else><#assign offset = 0></#if><#-- offset for pc due to placeholder image being smaller for the laptop version -->
 ${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-album-placeholder.png -p [=innerBorder + offset],[=header + offset]}\
 ${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} [=width-innerBorder*2]x[=width-innerBorder*2] [=innerBorder],[=(header)?c]}\
 <#assign y += header + body + gap>
