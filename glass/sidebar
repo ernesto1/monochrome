@@ -73,7 +73,7 @@ ${voffset 8}${alignr 38}${color}${font}${totalup \1} total
 ${voffset -1}${offset 5}${downspeedgraph \1 48,112 ${template1} \3}
 ${voffset -54}${offset 10}${color1}${font0}download${font}
 ${voffset 1}${alignr 38}${color}${font2}${downspeed \1}${font}
-${voffset 8}${alignr 38}${color}${font}${totaldown \1} total${font}${voffset -13}]],
+${voffset 8}${alignr 38}${color}${font}${totaldown \1} total${font}${voffset 3}]],
   
   -- hard disk: ${template5 device readSpeed writeSpeed}
   template5 = [[
@@ -109,12 +109,13 @@ ${alignr 38}${color}connected${voffset 4}${endif}]],
 conky.text = [[
 ${image ~/conky/monochrome/images/glass/blue-sidebar.png -p 0,0}\
 # ::::::::::::::::: cpu
-${image ~/conky/monochrome/images/glass/blue-cpu-mem.png -p 5,37}\
+${image ~/conky/monochrome/images/glass/blue-cpu.png -p 5,37}\
 ${voffset 29}${color}${offset 5}${cpugraph cpu0 48,112 ${template1}}
 ${voffset -56}${offset 10}${color1}${font0}cpu${font}
 ${voffset -7}${alignr 38}${color}${font1}${cpu cpu0}${font2}%${font}
 ${voffset 12}${alignr 38}${color}${font}${loadavg}
 # ::::::::::::::::: memory
+${image ~/conky/monochrome/images/glass/blue-mem.png -p 5,110}\
 ${voffset -1}${offset 5}${memgraph 48,112 ${template1}}
 ${voffset -56}${offset 10}${color1}${font0}memory${font}
 ${voffset -7}${alignr 38}${color}${font1}${memperc}${font2}%${font}
@@ -131,16 +132,15 @@ ${image ~/conky/monochrome/images/glass/blue-network-ethernet.png -p 5,254}\
 ${image ~/conky/monochrome/images/glass/blue-network-internet.png -p 5,308}\
 ${voffset 7}${offset 10}${color1}${font0}ethernet${font}
 ${voffset 1}${alignr 38}${color}${execi 180 ethtool enp0s25 2>/dev/null | grep -i speed | cut -d ' ' -f 2}
-${alignr 38}${color}${addr enp0s25}${voffset 3}
+${alignr 38}${color}${addr enp0s25}
 ${template4 enp0s25 3000 60000}
 ${else}\
 # :::::: no network/internet
 ${image ~/conky/monochrome/images/glass/ochre-network-disconnected-ethernet.png -p 5,254}\
 ${voffset 7}${offset 10}${color}${font0}network${font}
-${voffset 142}${offset 46}${color}no ethernet
-${offset 34}connection
-${voffset -26}
-${endif}
+${voffset 142}${offset 33}${color}no ethernet
+${offset 34}connection${voffset 3}
+${endif}\
 # ::::::::::::::::: disk sda
 ${image ~/conky/monochrome/images/glass/blue-disk.png -p 5,451}\
 ${template5 sda 200000 280000}

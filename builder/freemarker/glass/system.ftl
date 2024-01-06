@@ -12,9 +12,10 @@
 
      hence the pletora of conditional statements in this config -->
 conky.config = {
+  <#if system == "laptop">
   lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
   lua_draw_hook_pre = 'reset_state',
-  
+  </#if>
   update_interval = 2,  -- update interval in seconds
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
   xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2

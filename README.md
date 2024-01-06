@@ -6,7 +6,7 @@ Keep tabs on your system's cpu, memory, disk, network, battery usage and device 
 ![compact dock](images/screenshots/compact.gif)
 
 ### Glass dock
-![glass dock](images/screenshots/glass.gif)
+![glass dock](images/screenshots/glass.jpg)
 
 ### Widgets dock
 ![widgets dock](images/screenshots/widgets-dock.gif)
