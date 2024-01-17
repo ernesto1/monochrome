@@ -8,7 +8,6 @@ ${voffset 2}${alignr 38}${color}${font1}${battery_percent BAT0}${font2}%${font}
 ${else}\
 ${image ~/conky/monochrome/images/glass/[=image.primaryColor]-power-battery.png -p 5,0}\
 ${voffset 4}${offset 10}${color1}${font0}battery${font}
-${voffset -19}${alignr 38}${color}${font1}${battery_percent BAT0}${font3}%${font}
-${voffset -2}${offset 19}${color2}${if_match ${battery_percent BAT0} < 30}${color3}${endif}${battery_bar 3,93 BAT0}
-${voffset -4}${alignr 38}${color}${font}${battery_time BAT0} left${font}
+${voffset -7}${alignr 38}${color}${font1}${battery_percent BAT0}${font2}%${font}
+${voffset -3}${offset 19}${color2}${if_match ${battery_percent BAT0} < 30}${color3}${endif}${battery_bar 3,93 BAT0}
 ${endif}\
