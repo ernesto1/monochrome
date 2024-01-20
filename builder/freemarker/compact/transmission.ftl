@@ -9,7 +9,7 @@ conky.config = {
 
   -- window alignment
   alignment = 'top_left',  -- header|middle|bottom_left|right
-  gap_x = 205,
+  gap_x = 195,
   gap_y = 662,
 
   -- window settings
@@ -42,7 +42,7 @@ conky.config = {
   -- colors
   default_color = '[=colors.menuText]', -- regular text
   color1 = '[=colors.labels]',         -- labels
-  color2 = '[=(colors.warning)?c]'         -- bar critical
+  color2 = '[=colors.warning]'         -- bar critical
 };
 
 conky.text = [[

@@ -8,7 +8,7 @@ conky.config = {
 
   -- window alignment
   alignment = 'top_left',  -- header|middle|bottom_left|right
-  gap_x = 205,
+  gap_x = 195,
   gap_y = 662,
 
   -- window settings
@@ -41,7 +41,7 @@ conky.config = {
   -- colors
   default_color = 'cf9c7b', -- regular text
   color1 = 'white',         -- labels
-  color2 = '800020'         -- bar critical
+  color2 = 'c01e20'         -- bar critical
 };
 
 conky.text = [[

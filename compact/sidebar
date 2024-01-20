@@ -47,7 +47,7 @@ conky.config = {
   default_color = 'a98162',  -- regular text
   color1 = 'white',         -- text labels
   color2 = '94131f',        -- bar
-  color3 = '800020',        -- bar critical
+  color3 = 'c01e20',        -- bar critical
   
   -- ::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   --  n.b. the line break escape character '\' is not supported in templates :(
@@ -105,7 +105,7 @@ ${else}\
 ${image ~/conky/monochrome/images/compact/burgundy-mem-high.png -p 0,202}\
 ${endif}\
 # memory graph and usage are displayed on a separate conky due to a bug with these memory variables computing bad data if other variables like ${top ...} and one of the network upload/download exists in the same conky
-${voffset 68}${offset 5}${color1}swap${goto 38}${voffset 1}${color2}${swapbar 3,97}${alignr 59}${voffset -1}${color}${swapperc}%
+${voffset 68}${offset 5}${color1}swap${goto 41}${voffset 1}${color2}${swapbar 3,97}${alignr 59}${voffset -1}${color}${swapperc}%
 ${voffset 8}${offset 5}${color1}process${alignr 59}mem   pid${voffset 3}
 ${template8 1}
 ${template8 2}

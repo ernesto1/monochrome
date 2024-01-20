@@ -10,7 +10,7 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 205,
+  gap_x = 195,
   gap_y = 5,
 
   -- window settings

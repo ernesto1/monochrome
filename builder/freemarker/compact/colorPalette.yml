@@ -6,7 +6,7 @@ burgundy:
     text: a98162
     labels: white
     bar: 94131f
-    warning: 800020
+    warning: c01e20
     writeGraph: 5c111f c01e20
     readGraph: a98162 d3b699
     menuText: cf9c7b  # d19f77
