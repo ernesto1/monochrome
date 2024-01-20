@@ -1,5 +1,4 @@
-<#assign width = 202,         <#-- disk image width + gap between conkys -->
-         space = 14,          <#-- horizontal space in between disk conkys -->
+<#assign width = 216,         <#-- disk image width + gap between conkys -->
          x = 1285 - width >   <#-- x is the x coordinate of the first disk conky -->
 <#list hardDisks[system] as hardDisk>
 <#assign diskName = hardDisk.name!hardDisk.device>
@@ -10,12 +9,12 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  <#assign x += width + space>
+  <#assign x += width>
   gap_x = [=x?c],               -- same as passing -x at command line
   gap_y = 3,
 
   -- window settings
-  minimum_width = 202,
+  minimum_width = [=width],
   minimum_height = 133,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -51,9 +50,10 @@ conky.config = {
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   -- disk partition: ${template1 partition name}
-  template1 = [[${voffset 4}${goto 97}${color}\2${alignr 4}${fs_type \1}
-${voffset 4}${goto 97}${color}${fs_used \1} /${alignr 4}${color}${fs_size \1}
-${voffset 1}${goto 97}${color2}${if_match ${fs_used_perc \1} > 90}${color3}${endif}${fs_bar 3, 100 \1}]],
+  <#assign offset = 14>
+  template1 = [[${voffset 4}${goto [=offset+97]}${color}\2${alignr 4}${fs_type \1}
+${voffset 4}${goto [=offset+97]}${color}${fs_used \1} /${alignr 4}${color}${fs_size \1}
+${voffset 1}${goto [=offset+97]}${color2}${if_match ${fs_used_perc \1} > 90}${color3}${endif}${fs_bar 3, 100 \1}]],
   
   -- hwmon entry: index/device type index threshold
   template2 = [[${if_match ${hwmon \1 \2 \3} > \4}${color3}${else}${color}${endif}${hwmon \1 \2 \3}]]
@@ -67,13 +67,13 @@ ${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-disk.png -p 0,0}
 <#else>
 ${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-disk-single-partition.png -p 0,0}\
 </#if>
-${voffset -1}${offset 18}${diskiograph_read [=hardDisk.device] 37,67 [=colors.readGraph] [=hardDisk.readSpeed?c]}
-${voffset -7}${offset 18}${diskiograph_write [=hardDisk.device] 37,67 [=colors.writeGraph] [=hardDisk.writeSpeed?c]}
-${voffset 6}${offset 5}${color1}read${alignr 120}${color}${diskio_read [=hardDisk.device]}
-${voffset 4}${offset 5}${color1}write${alignr 120}${color}${diskio_write [=hardDisk.device]}
-${voffset -13}${goto 97}${color1}temp${offset 7}${color}<#if hardDisk.hwmonIndex??>${template2 [=hardDisk.hwmonIndex] temp 1 [=threshold.tempDisk]}°C<#else>n/a</#if>
+${voffset -1}${offset [=offset+18]}${diskiograph_read [=hardDisk.device] 37,67 [=colors.readGraph] [=hardDisk.readSpeed?c]}
+${voffset -7}${offset [=offset+18]}${diskiograph_write [=hardDisk.device] 37,67 [=colors.writeGraph] [=hardDisk.writeSpeed?c]}
+${voffset 6}${offset [=offset+5]}${color1}read${alignr 120}${color}${diskio_read [=hardDisk.device]}
+${voffset 4}${offset [=offset+5]}${color1}write${alignr 120}${color}${diskio_write [=hardDisk.device]}
+${voffset -13}${goto [=offset+97]}${color1}temp${offset 7}${color}<#if hardDisk.hwmonIndex??>${template2 [=hardDisk.hwmonIndex] temp 1 [=threshold.tempDisk]}°C<#else>n/a</#if>
 # partitions
-${voffset -125}${goto 97}${color1}[=hardDisk.device] partitions
+${voffset -125}${goto [=offset+97]}${color1}[=hardDisk.device] partitions
 <#list hardDisk.partitions as partition>
 ${template1 [=partition.path] [=partition.name]}
 </#list>

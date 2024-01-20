@@ -5,12 +5,12 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 1115,               -- same as passing -x at command line
+  gap_x = 1104,               -- same as passing -x at command line
   gap_y = 3,
 
   -- window settings
-  minimum_width = 209,
-  maximum_width = 209,
+  minimum_width = 220,
+  maximum_width = 220,
   minimum_height = 188,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -52,18 +52,18 @@ conky.text = [[
 <#assign device = networkDevices[system]?first>
 ${if_up [=device.name]}\
 ${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-network.png -p 0,0}\
-${voffset 3}${offset 11}${color1}local ip${goto 69}${color}${addr [=device.name]}
-${voffset 3}${offset 11}${color1}torrents${goto 69}${color}${lines /tmp/conky/transmission.active} active
-${voffset 3}${offset 11}${color1}swarm${goto 69}${color}${lines /tmp/conky/transmission.peers} peers
-${voffset 6}${offset 68}${upspeedgraph [=device.name] 37,97 [=colors.readGraph] [=device.maxUp?c]}
-${voffset -7}${offset 68}${downspeedgraph [=device.name] 37,97 [=colors.writeGraph] [=device.maxDown?c]}
-${voffset 6}${offset 7}${color1}up${alignr 128}${color}${upspeed [=device.name]}
-${voffset 4}${offset 7}${color1}down${alignr 128}${color}${downspeed [=device.name]}
-${voffset -30}${goto 90}${color1}total${alignr 43}${color}${totalup [=device.name]}
-${voffset 4}${goto 90}${color1}total${alignr 43}${color}${totaldown [=device.name]}
+${voffset 3}${offset 22}${color1}local ip${goto 80}${color}${addr [=device.name]}
+${voffset 3}${offset 22}${color1}torrents${goto 80}${color}${lines /tmp/conky/transmission.active} active
+${voffset 3}${offset 22}${color1}swarm${goto 80}${color}${lines /tmp/conky/transmission.peers} peers
+${voffset 6}${offset 79}${upspeedgraph [=device.name] 37,97 [=colors.readGraph] [=device.maxUp?c]}
+${voffset -7}${offset 79}${downspeedgraph [=device.name] 37,97 [=colors.writeGraph] [=device.maxDown?c]}
+${voffset 6}${offset 18}${color1}up${alignr 128}${color}${upspeed [=device.name]}
+${voffset 4}${offset 18}${color1}down${alignr 128}${color}${downspeed [=device.name]}
+${voffset -30}${goto 101}${color1}total${alignr 43}${color}${totalup [=device.name]}
+${voffset 4}${goto 101}${color1}total${alignr 43}${color}${totaldown [=device.name]}
 # we need to remove the trailing spacing added the moment we voffset'ed the upload graph 
 ${voffset -20}
 ${else}\
-${image ~/conky/monochrome/images/widgets/[=image.secondaryColor]-ethernet-offline.png -p 0,30}
+${image ~/conky/monochrome/images/widgets/[=image.secondaryColor]-ethernet-offline.png -p 11,30}
 ${endif}\
 ]];

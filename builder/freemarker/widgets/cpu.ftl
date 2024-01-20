@@ -5,11 +5,12 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 471,               -- same as passing -x at command line
+  gap_x = 456,               -- same as passing -x at command line
   gap_y = 3,
 
   -- window settings
-  minimum_width = 323,
+  minimum_width = 338,
+  maximum_width = 338,
   minimum_height = 138,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -49,10 +50,10 @@ conky.config = {
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   -- cpu bar: ${template0 cpuCore}
-  template0 = [[${voffset -3}${offset 16}${color2}${if_match ${cpu cpu\1} >= [=threshold.cpu]}${color3}${endif}${cpubar cpu\1 4, 66}]],
+  template0 = [[${voffset -3}${offset 32}${color2}${if_match ${cpu cpu\1} >= [=threshold.cpu]}${color3}${endif}${cpubar cpu\1 4,66}]],
 
   -- top cpu process: ${template1 process#}
-  template1 = [[${voffset 3}${goto 110}${color}${top name \1}${top cpu \1}% ${top pid \1}]],
+  template1 = [[${voffset 3}${goto 125}${color}${top name \1}${top cpu \1}% ${top pid \1}]],
   
   -- hwmon entry: index/device type index threshold
   template2 = [[${if_match ${hwmon \1 \2 \3} > \4}${color3}${else}${color}${endif}${hwmon \1 \2 \3}]]
@@ -61,11 +62,11 @@ conky.config = {
 conky.text = [[
 ${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-cpu.png -p 0,0}\
 ${voffset 12}<#list 1..8 as x>${template0 [=x]}<#sep>[='\n']</#sep></#list>
-${voffset 7}${offset 9}${cpugraph cpu0 31,82 [=colors.writeGraph]}
-${voffset -135}${goto 109}${color1}process${alignr 5}cpu   pid${voffset 4}
+${voffset 5}${offset 23}${cpugraph cpu0 33,84 [=colors.writeGraph]}
+${voffset -135}${goto 124}${color1}process${alignr 5}cpu   pid${voffset 4}
 <#list 1..4 as x>
 ${template1 [=x]}
 </#list>
-${voffset 14}${goto 109}${color1}cpu${goto 139}${color}${cpu cpu0}%${alignr 5}${template2 atk0110 temp 1 [=threshold.tempCPU]}°C ${color1}cpu temp
-${voffset 4}${goto 109}${color1}load${goto 139}${color}${loadavg}${alignr 5}${template2 coretemp temp 2 [=threshold.tempCPUCore]}°C${color1}core temp
+${voffset 14}${goto 124}${color1}cpu${goto 154}${color}${cpu cpu0}%${alignr 5}${template2 atk0110 temp 1 [=threshold.tempCPU]}°C ${color1}cpu temp
+${voffset 4}${goto 124}${color1}load${goto 154}${color}${loadavg}${alignr 5}${template2 coretemp temp 2 [=threshold.tempCPUCore]}°C${color1}core temp
 ]];

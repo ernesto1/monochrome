@@ -5,12 +5,12 @@ conky.config = {
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 1115,               -- same as passing -x at command line
+  gap_x = 1104,               -- same as passing -x at command line
   gap_y = 3,
 
   -- window settings
-  minimum_width = 209,
-  maximum_width = 209,
+  minimum_width = 220,
+  maximum_width = 220,
   minimum_height = 188,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -51,18 +51,18 @@ conky.config = {
 conky.text = [[
 ${if_up enp0s25}\
 ${image ~/conky/monochrome/images/widgets/green-network.png -p 0,0}\
-${voffset 3}${offset 11}${color1}local ip${goto 69}${color}${addr enp0s25}
-${voffset 3}${offset 11}${color1}torrents${goto 69}${color}${lines /tmp/conky/transmission.active} active
-${voffset 3}${offset 11}${color1}swarm${goto 69}${color}${lines /tmp/conky/transmission.peers} peers
-${voffset 6}${offset 68}${upspeedgraph enp0s25 37,97 6c3a55 a67fba 3000}
-${voffset -7}${offset 68}${downspeedgraph enp0s25 37,97 4c6e3b 9fc14a 60000}
-${voffset 6}${offset 7}${color1}up${alignr 128}${color}${upspeed enp0s25}
-${voffset 4}${offset 7}${color1}down${alignr 128}${color}${downspeed enp0s25}
-${voffset -30}${goto 90}${color1}total${alignr 43}${color}${totalup enp0s25}
-${voffset 4}${goto 90}${color1}total${alignr 43}${color}${totaldown enp0s25}
+${voffset 3}${offset 22}${color1}local ip${goto 80}${color}${addr enp0s25}
+${voffset 3}${offset 22}${color1}torrents${goto 80}${color}${lines /tmp/conky/transmission.active} active
+${voffset 3}${offset 22}${color1}swarm${goto 80}${color}${lines /tmp/conky/transmission.peers} peers
+${voffset 6}${offset 79}${upspeedgraph enp0s25 37,97 6c3a55 a67fba 3000}
+${voffset -7}${offset 79}${downspeedgraph enp0s25 37,97 4c6e3b 9fc14a 60000}
+${voffset 6}${offset 18}${color1}up${alignr 128}${color}${upspeed enp0s25}
+${voffset 4}${offset 18}${color1}down${alignr 128}${color}${downspeed enp0s25}
+${voffset -30}${goto 101}${color1}total${alignr 43}${color}${totalup enp0s25}
+${voffset 4}${goto 101}${color1}total${alignr 43}${color}${totaldown enp0s25}
 # we need to remove the trailing spacing added the moment we voffset'ed the upload graph 
 ${voffset -20}
 ${else}\
-${image ~/conky/monochrome/images/widgets/grape-ethernet-offline.png -p 0,30}
+${image ~/conky/monochrome/images/widgets/grape-ethernet-offline.png -p 11,30}
 ${endif}\
 ]];
