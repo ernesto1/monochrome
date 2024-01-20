@@ -15,7 +15,7 @@ conky.config = {
   -- window settings
   minimum_width = 400,      -- conky will add an extra pixel to this
   maximum_width = 400,
-  minimum_height = 163,     -- conky will add an extra pixel to this height
+  minimum_height = 157,     -- conky will add an extra pixel to this height
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -59,9 +59,9 @@ conky.text = [[
 <#assign y = 0>
 ${image ~/conky/monochrome/images/[=conky]/album-shadow.png -p 0,[=y]}\
 <#assign y = 22>
-${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-album-cover.png -p 15,[=y]}\
-${if_existing /tmp/conky/musicplayer.name Nameless}\
 ${image ~/conky/monochrome/images/widgets/[=image.secondaryColor]-album-cover.png -p 15,[=y]}\
+${if_existing /tmp/conky/musicplayer.name Nameless}\
+# no music player running, do nothing
 ${else}\
 # :::::::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
@@ -76,5 +76,6 @@ ${voffset 40}${offset 139}${font0}${color}${if_existing /tmp/conky/musicplayer.p
 ${offset 139}${font}${color}${cat /tmp/conky/musicplayer.album}
 ${if_match "${lua get artist}" != "unknown artist"}${voffset 4}${offset 139}${font}${color}${lua get artist}${endif}
 ${if_match "${lua get genre}" != "unknown genre"}${voffset 4}${offset 139}${font}${color}${lua get genre}${endif}
+${voffset -100}
 ${endif}\
 ]];
