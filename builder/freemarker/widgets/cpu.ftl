@@ -6,12 +6,12 @@ conky.config = {
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
   gap_x = 456,               -- same as passing -x at command line
-  gap_y = 3,
+  gap_y = 5,
 
   -- window settings
   minimum_width = 338,
   maximum_width = 338,
-  minimum_height = 138,
+  minimum_height = 151,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -37,9 +37,8 @@ conky.config = {
   top_name_width = 21,        -- how many characters to print
 
   imlib_cache_flush_interval = 250,
-  -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
 
-  -- font settingsr
+  -- font settings
   draw_shades = false,    -- black shadow on text (not good if text is black)
   
   -- colors
@@ -61,9 +60,10 @@ conky.config = {
 
 conky.text = [[
 ${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-cpu.png -p 0,0}\
-${voffset 12}<#list 1..8 as x>${template0 [=x]}<#sep>[='\n']</#sep></#list>
+<#assign voffset = 15><#-- offset to account for border added by the background image -->
+${voffset [=voffset+12]}<#list 1..8 as x>${template0 [=x]}<#sep>[='\n']</#sep></#list>
 ${voffset 5}${offset 23}${cpugraph cpu0 33,84 [=colors.writeGraph]}
-${voffset -135}${goto 124}${color1}process${alignr 5}cpu   pid${voffset 4}
+${voffset -136}${goto 124}${color1}process${alignr 5}cpu   pid${voffset 5}
 <#list 1..4 as x>
 ${template1 [=x]}
 </#list>

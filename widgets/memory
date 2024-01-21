@@ -6,11 +6,11 @@ conky.config = {
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
   gap_x = 794,                -- same as passing -x at command line
-  gap_y = 4,
+  gap_y = 5,
 
   -- window settings
   minimum_width = 310,
-  minimum_height = 132,
+  minimum_height = 151,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -33,7 +33,6 @@ conky.config = {
                               -- does not include bars, ie. wifi strength bar, cpu bar
 
   imlib_cache_flush_interval = 250,
-  -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
 
   -- font settings
   draw_shades = false,    -- black shadow on text (not good if text is black)
@@ -51,7 +50,7 @@ ${image ~/conky/monochrome/images/widgets/green-memory.png -p 0,0}\
 ${else}\
 ${image ~/conky/monochrome/images/widgets/green-memory-high.png -p 0,0}\
 ${endif}\
-${voffset 0}${color}${offset 29}${memgraph 78, 42 4c6e3b 9fc14a}
+${voffset 20]}${color}${offset 29}${memgraph 78, 42 4c6e3b 9fc14a}
 ${voffset 7}${goto 98}${color1}mem${goto 131}${color}${memperc}%${goto 163}${mem} / ${memmax}
 ${voffset 4}${goto 98}${color1}swap${goto 131}${color}${swapperc}%${goto 163}${color2}${if_match ${swapperc} >= 70}${color3}${endif}${swapbar 3, 100}
 ]];

@@ -5,11 +5,11 @@ conky.config = {
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
   gap_x = 1717,               -- same as passing -x at command line
-  gap_y = 3,
+  gap_y = 5,
 
   -- window settings
   minimum_width = 216,
-  minimum_height = 133,
+  minimum_height = 145,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -56,13 +56,13 @@ conky.text = [[
 ${if_existing /dev/sdd}\
 # disk io
 ${image ~/conky/monochrome/images/widgets/green-disk-single-partition.png -p 0,0}\
-${voffset -1}${offset 32}${diskiograph_read sdd 37,67 6c3a55 a67fba 6000}
+${voffset 13}${offset 32}${diskiograph_read sdd 37,67 6c3a55 a67fba 6000}
 ${voffset -7}${offset 32}${diskiograph_write sdd 37,67 4c6e3b 9fc14a 250000}
 ${voffset 6}${offset 19}${color1}read${alignr 120}${color}${diskio_read sdd}
 ${voffset 4}${offset 19}${color1}write${alignr 120}${color}${diskio_write sdd}
 ${voffset -13}${goto 111}${color1}temp${offset 7}${color}${template2 2 temp 1 42}°C
 # partitions
-${voffset -125}${goto 111}${color1}sdd partitions
+${voffset -126}${goto 111}${color1}sdd partitions${voffset 1}
 ${template1 /media/betty betty}
 ${else}\
 ${image ~/conky/monochrome/images/widgets/grape-disk-disconnected.png -p 0,0}\

@@ -55,7 +55,7 @@ conky.config = {
 conky.text = [[
 # a bug in conky causes the memory graph to jitter if the ${top_mem} variables are used in the same file
 # hence why the memory processes had to be placed in their own conky : /
-${voffset 2}${offset 5}${color1}process${alignr 2}mem   pid${voffset 4}
+${voffset 1}${offset 5}${color1}process${alignr 2}mem   pid${voffset 5}
 ${template0 1}
 ${template0 2}
 ${template0 3}
