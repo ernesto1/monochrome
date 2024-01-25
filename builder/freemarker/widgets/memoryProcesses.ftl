@@ -33,7 +33,7 @@ conky.config = {
                               -- does not include bars, ie. wifi strength bar, cpu bar
 
   top_name_verbose = true,    -- show full command in ${top ...}
-  top_name_width = 21,        -- how many characters to print
+  top_name_width = 20,        -- how many characters to print
 
   imlib_cache_flush_interval = 250,
   -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
@@ -49,13 +49,13 @@ conky.config = {
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   -- memory process
-  template0 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${alignr 2}${top_mem mem_res \1} ${top_mem pid \1}]]
+  template0 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${alignr 2}${top_mem mem_res \1}${top_mem mem \1}%]]
 };
 
 conky.text = [[
 # a bug in conky causes the memory graph to jitter if the ${top_mem} variables are used in the same file
 # hence why the memory processes had to be placed in their own conky : /
-${voffset 1}${offset 5}${color1}process${alignr 2}mem   pid${voffset 5}
+${voffset 1}${offset 5}${color1}process${alignr 2}mem   perc${voffset 5}
 <#list 1..4 as x>
 ${template0 [=x]}
 </#list>

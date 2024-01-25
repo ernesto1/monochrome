@@ -34,7 +34,7 @@ conky.config = {
                               -- does not include bars, ie. wifi strength bar, cpu bar
 
   top_name_verbose = true,    -- show full command in ${top ...}
-  top_name_width = 21,        -- how many characters to print
+  top_name_width = 20,        -- how many characters to print
 
   imlib_cache_flush_interval = 250,
 
@@ -52,7 +52,7 @@ conky.config = {
   template0 = [[${voffset -3}${offset 32}${color2}${if_match ${cpu cpu\1} >= [=threshold.cpu]}${color3}${endif}${cpubar cpu\1 4,66}]],
 
   -- top cpu process: ${template1 process#}
-  template1 = [[${voffset 3}${goto 125}${color}${top name \1}${top cpu \1}% ${top pid \1}]],
+  template1 = [[${voffset 3}${goto 124}${color}${top name \1}${offset 1}${top cpu \1}%${top mem \1}%]],
   
   -- hwmon entry: index/device type index threshold
   template2 = [[${if_match ${hwmon \1 \2 \3} > \4}${color3}${else}${color}${endif}${hwmon \1 \2 \3}]]
@@ -63,10 +63,10 @@ ${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-cpu.png -p 0,0}\
 <#assign voffset = 15><#-- offset to account for border added by the background image -->
 ${voffset [=voffset+12]}<#list 1..8 as x>${template0 [=x]}<#sep>[='\n']</#sep></#list>
 ${voffset 5}${offset 23}${cpugraph cpu0 33,84 [=colors.writeGraph]}
-${voffset -136}${goto 124}${color1}process${alignr 5}cpu   pid${voffset 5}
+${voffset -136}${goto 124}${color1}process${alignr 4}cpu    mem${voffset 5}
 <#list 1..4 as x>
 ${template1 [=x]}
 </#list>
-${voffset 14}${goto 124}${color1}cpu${goto 154}${color}${cpu cpu0}%${alignr 5}${template2 atk0110 temp 1 [=threshold.tempCPU]}°C ${color1}cpu temp
-${voffset 4}${goto 124}${color1}load${goto 154}${color}${loadavg}${alignr 5}${template2 coretemp temp 2 [=threshold.tempCPUCore]}°C${color1}core temp
+${voffset 14}${goto 124}${color1}cpu${goto 154}${color}${cpu cpu0}%${alignr 4}${template2 atk0110 temp 1 [=threshold.tempCPU]}°C ${color1}cpu temp
+${voffset 4}${goto 124}${color1}load${goto 154}${color}${loadavg}${alignr 4}${template2 coretemp temp 2 [=threshold.tempCPUCore]}°C${color1}core temp
 ]];
