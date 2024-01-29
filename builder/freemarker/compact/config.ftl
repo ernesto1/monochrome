@@ -75,10 +75,10 @@ ${voffset -2}${offset 5}${color1}read  ${color}${diskio_read /dev/\1}${alignr 59
 ${voffset 2}${alignr 59}${color}${fs_used \2} / ${fs_size \2}]],
 
   -- top cpu process: ${template7 processNumber}
-  template7 = [[${voffset 3}${color}${offset 5}${top name \1}${alignr 59}${top cpu \1}% ${top pid \1}]],
+  template7 = [[${voffset 3}${color}${offset 5}${top name \1}${alignr 59}${top cpu \1}%${top mem \1}%]],
   
   -- top mem process: ${template8 processNumber}
-  template8 = [[${voffset 3}${color}${offset 5}${top_mem name \1}${alignr 59}${top_mem mem_res \1} ${top_mem pid \1}]]
+  template8 = [[${voffset 3}${color}${offset 5}${top_mem name \1}${alignr 59}${top_mem mem_res \1}${top_mem mem \1}%]]
 };
 
 conky.text = [[

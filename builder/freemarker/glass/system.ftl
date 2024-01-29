@@ -27,7 +27,7 @@ conky.config = {
   gap_y = 36,
 
   -- window settings
-  <#if system == "desktop"><#assign windowWidth = 246><#else><#assign windowWidth = 159></#if>
+  <#if system == "desktop"><#assign windowWidth = 252><#else><#assign windowWidth = 159></#if>
   minimum_width = [=windowWidth],
   maximum_width = [=windowWidth],
   <#if system == "desktop"><#assign windowHeight=397><#else><#assign windowHeight=342></#if>
@@ -74,13 +74,13 @@ conky.config = {
   -- templates
   -- top cpu process
   <#if system == "desktop">
-  template0 = [[${voffset 3}${offset 5}${color}${top name \1}${offset 4}${top cpu \1}%${offset 10}${top pid \1}]],
+  template0 = [[${voffset 3}${offset 5}${color}${top name \1}${offset 4}${top cpu \1}%${offset 4}${top mem \1}%]],
   <#else>
   template0 = [[${voffset 3}${offset 5}${color}${top name \1}${alignr 5}${top cpu \1}%]],
   </#if>
   -- top mem process
   <#if system == "desktop">
-  template1 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${offset 10}${top_mem mem_res \1}${offset 10}${top_mem pid \1}]]
+  template1 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${offset 10}${top_mem mem_res \1}${offset 4}${top_mem mem \1}%]]
   <#else>
   template1 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${alignr 5}${top_mem mem_res \1}]]
   </#if>
@@ -107,11 +107,11 @@ ${voffset [=5 + gap]}\
 <@menu.table x=0 y=y width=width header=header body=body/>
 <#if system == "desktop">
 <@menu.table x=width+colGap y=y width=smallCol header=header body=body/>
-<@menu.table x=width+colGap+smallCol+colGap y=y width=smallCol-6 header=header body=body/>
+<@menu.table x=width+colGap+smallCol+colGap y=y width=smallCol header=header body=body/>
 </#if>
 <#assign y += header + body + gap>
 <#if system == "desktop">
-${voffset 2}${offset 5}${color1}process${goto 183}cpu${goto 223}pid${voffset 4}
+${voffset 2}${offset 5}${color1}process${goto 183}cpu${goto 211}memory${voffset 4}
 <#else>
 ${voffset 2}${offset 5}${color1}process${alignr 5}cpu${voffset 4}
 </#if>
@@ -123,11 +123,11 @@ ${template0 [=i]}
 <@menu.table x=0 y=y width=width header=header body=body/>
 <#if system == "desktop">
 <@menu.table x=width+colGap y=y width=smallCol header=header body=body/>
-<@menu.table x=width+colGap+smallCol+colGap y=y width=smallCol-6 header=header body=body/>
+<@menu.table x=width+colGap+smallCol+colGap y=y width=smallCol header=header body=body/>
 </#if>
 <#assign y += header + body + gap>
 <#if system == "desktop">
-${voffset [=7 + gap]}${offset 5}${color1}process${goto 183}mem${goto 223}pid${voffset 4}
+${voffset [=7 + gap]}${offset 5}${color1}process${goto 165}memory${goto 223}perc${voffset 4}
 <#else>
 ${voffset [=7 + gap]}${offset 5}${color1}process${alignr 5}mem${voffset 4}
 </#if>
