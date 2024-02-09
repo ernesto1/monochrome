@@ -13,7 +13,7 @@ conky.config = {
   gap_y = -164,
 
   -- window settings
-  <#assign width = 189>
+  <#assign width = 169>
   minimum_width = [=width],      -- conky will add an extra pixel to this  
   maximum_width = [=width],
   <#if system == "desktop"><#assign windowHeight=1295><#else><#assign windowHeight=20></#if>
@@ -31,10 +31,10 @@ conky.config = {
   -- transparency configuration
   draw_blended = false,
   own_window_transparent = true,
-  own_window_argb_visual = true,  -- turn on transparency
-  own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
+  own_window_argb_visual = true,    -- turn on transparency
+  own_window_argb_value = 255,      -- range from 0 (transparent) to 255 (opaque)
   
-  -- images
+  -- miscellanous settings
   imlib_cache_flush_interval = 250,
   
   -- font settings
@@ -85,10 +85,15 @@ ${lua decrease_total_lines 1}\
 <@menu.table x=0 y=0 width=width header=header bottomEdges=false fixed=false/>
 ${lua configure_menu [=image.primaryColor] light [=width?c] 3}\
 ${lua add_offsets 0 [=header]}\
-${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-peers.png 38 22}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-peers.png [=((width-112)/2)?round] 22}\
 ${alignc}${color1}active torrents ${color}(${color}${lua get activeNum}${color})${color1}${voffset 3}
-${color}${color}${lua_parse populate_menu [=activeTorrentsFile] [=totalLines-5] 3}${voffset [= 7 + gap]}
+${color}${color}${lua_parse populate_menu [=activeTorrentsFile] [=totalLines-5] 3}${voffset [=7 + gap]}
 ${lua add_offsets 0 [=gap]}\
+${else}\
+<#assign body = 20>
+<@menu.menu x=0 y=71 + gap width=width height=body color=image.secondaryColor/>
+${lua add_offsets 0 [=body + gap]}\
+${alignc}${color3}no active torrents${voffset [=7 + gap]}
 ${endif}\
 ${else}\
 <#assign body = 36>

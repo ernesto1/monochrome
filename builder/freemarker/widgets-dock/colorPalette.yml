@@ -9,13 +9,13 @@ grape:
     warning: c33855
     widgetText: 906c9c
     widgetTextSmall: f2c7ff # small thin text requires darker shade to be readable
-    menuText: c596c7     # system bar default text
+    menuText: c596c7        # system bar default text
     highlight: d7511c       # flag important package updates
     readGraph: 6c1c1b d7511c
     writeGraph: 51295e a36dec
     secondary:
       text: white
-  border: false             # add 1px border to panel sidebar width - optional, default is true
+  border: false             # add 1px border to panel sidebar width - optional, default is 'true'
                             # set to 'false' for sidebars that don't have an accent border
 yellow:
   image:
@@ -25,7 +25,7 @@ yellow:
     text: white
     labels: white
     bar: c15124
-    warning: d70d2f
+    warning: 1a5c00
     widgetText: c15124
     widgetTextSmall: 8a2700
     menuText: 703d0a

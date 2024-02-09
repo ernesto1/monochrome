@@ -12,7 +12,7 @@ conky.config = {
   gap_y = 0,
 
   -- window settings
-  minimum_width = 136,
+  minimum_width = 146,
   minimum_height = 1461,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -54,7 +54,7 @@ conky.config = {
   default_color = 'white',  -- regular text
   color1 = 'white',         -- text labels
   color2 = 'c15124',        -- bar
-  color3 = 'd70d2f',        -- bar critical
+  color3 = '1a5c00',        -- bar critical
   color4 = 'c15124',        -- temperature text
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::

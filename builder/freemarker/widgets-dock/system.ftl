@@ -11,7 +11,7 @@ conky.config = {
   gap_y = 664,
 
   -- window settings
-  <#if system == "desktop"><#assign width = 189><#else><#assign width = 169></#if>
+  <#assign width = 169>
   minimum_width = [=width],      -- conky will add an extra pixel to this
   maximum_width = [=width],
   minimum_height = 351,
@@ -28,21 +28,17 @@ conky.config = {
   -- transparency configuration
   draw_blended = false,
   own_window_transparent = true,
-  own_window_argb_visual = true,  -- turn on transparency
-  own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
+  own_window_argb_visual = true,    -- turn on transparency
+  own_window_argb_value = 255,      -- range from 0 (transparent) to 255 (opaque)
   
-  -- images
+  -- miscellanous settings
   imlib_cache_flush_interval = 250,
-  
-  <#if system == "laptop">
-  top_name_verbose = true,    -- show full command in ${top ...}
-  top_name_width = 18,        -- how many characters to print
-  </#if>
+  top_name_verbose = true,          -- show full command in ${top ...}
+  top_name_width = 18,              -- how many characters to print
   text_buffer_size = 2048,
-  
-  if_up_strictness = 'address', -- network device must be up, having link and an assigned IP address
-                                -- to be considered "up" by ${if_up}
-                                -- values are: up, link or address  
+  if_up_strictness = 'address',     -- network device must be up, having link and an assigned IP address
+                                    -- to be considered "up" by ${if_up}
+                                    -- values are: up, link or address
   -- font settings
   use_xft = false,
   draw_shades = false,      -- black shadow on text (not good if text is black)
@@ -53,17 +49,9 @@ conky.config = {
   
   -- templates
   -- top cpu process: ${template0 processNumber}
-  <#if system == "desktop">
-  template0 = [[${voffset 3}${offset 5}${color}${top name \1}${alignr 5}${top cpu \1}% ${top pid \1}]],
-  <#else>
   template0 = [[${voffset 3}${offset 5}${color}${top name \1}${alignr 4}${top cpu \1}%]],
-  </#if>
   -- top mem process: ${template1 processNumber}
-  <#if system == "desktop">
-  template1 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${alignr 5}${top_mem mem_res \1} ${top_mem pid \1}]]
-  <#else>
   template1 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${alignr 4}${top_mem mem_res \1}]]
-  </#if>
 };
 
 conky.text = [[
@@ -74,22 +62,14 @@ conky.text = [[
          gap = 5>     <#-- empty space between windows -->
 <@menu.table x=0 y=y width=width header=header body=body/>
 <#assign y += header + body + gap>
-<#if system == "desktop">
-${voffset 2}${offset 5}${color1}process${alignr 5}cpu   pid${voffset 3}
-<#else>
 ${voffset 2}${offset 5}${color1}process${alignr 4}cpu${voffset 3}
-</#if>
 <#list 1..7 as x>
 ${template0 [=x]}
 </#list>
 # :::::::::::: top mem processes
 <@menu.table x=0 y=y width=width header=header body=body/>
 <#assign y += header + body + gap>
-<#if system == "desktop">
-${voffset 12}${offset 5}${color1}process${alignr 5}memory   pid${voffset 3}
-<#else>
 ${voffset 12}${offset 5}${color1}process${alignr 4}memory${voffset 3}
-</#if>
 <#list 1..7 as x>
 ${template1 [=x]}
 </#list>

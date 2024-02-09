@@ -13,7 +13,7 @@ conky.config = {
   gap_y = 120,
 
   -- window settings
-  <#if system == "desktop"><#assign width = 189><#else><#assign width = 169></#if>
+  <#assign width = 169>
   minimum_width = [=width],      -- conky will add an extra pixel to this
   maximum_width = [=width],
   minimum_height = 22,      -- conky will add an extra pixel to this height
@@ -30,10 +30,10 @@ conky.config = {
   -- transparency configuration
   draw_blended = false,
   own_window_transparent = true,
-  own_window_argb_visual = true,  -- turn on transparency
-  own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
+  own_window_argb_visual = true,    -- turn on transparency
+  own_window_argb_value = 255,      -- range from 0 (transparent) to 255 (opaque)
   
-  -- images
+  -- miscellanous settings
   imlib_cache_flush_interval = 250,
 
   -- font settings
@@ -62,10 +62,10 @@ ${voffset 4}${offset 63}${color}no player running${voffset 5}
 ${else}\
 # :::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
-<#if system == "desktop"><#assign innerBorder = 4><#else><#assign innerBorder = 2></#if><#-- border width between the window and the album art -->
-<#assign header = 19,   <#-- menu header -->
+<#assign header = 19,                   <#-- menu header -->
+         innerBorder = 2,               <#-- border width between the window and the album art -->
          body = width - innerBorder,    <#-- size of the album art window without the header and no top border -->
-         gap = 5>       <#-- empty space between windows -->
+         gap = 5>                       <#-- empty space between windows -->
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
 <@menu.menu x=0 y=y width=width height=header+body isDark=true/>
 ${color1}\
@@ -74,8 +74,7 @@ ${else}\
 ${color}\
 ${endif}\
 ${voffset 2}${alignc}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} ${color}: ${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
-<#if system == "desktop"><#assign offset = 8><#else><#assign offset = 0></#if><#-- offset for pc due to placeholder image being smaller for the laptop version -->
-${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-album-placeholder.png -p [=innerBorder + offset],[=header + offset]}\
+${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-album-placeholder.png -p [=innerBorder],[=header]}\
 ${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} [=width-innerBorder*2]x[=width-innerBorder*2] [=innerBorder],[=(header)?c]}\
 <#assign y += header + body + gap>
 ${voffset [=body + 4 + gap]}${lua add_offsets 0 [=y]}\

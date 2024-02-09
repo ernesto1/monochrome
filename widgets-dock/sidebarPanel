@@ -44,7 +44,7 @@ conky.config = {
   -- colors
   default_color = 'c15124',  -- regular text
   color1 = '8a2700',
-  color3 = 'd70d2f',
+  color3 = '1a5c00',
   
   -- device temperature: ${template8 (value|conky expression}}
   template7 = [[${voffset 7}${offset 12}${font0}${color}\1${voffset -28}${font3}°${offset 4}${voffset -4}${font0}C${font}${color}${voffset 9}]]
@@ -59,9 +59,9 @@ conky.config = {
 conky.text = [[
 ${voffset 8}${template7 ${lua_parse\ print_resource_usage\ ${hwmon\ atk0110\ temp\ 1}\ 78\ ${color3}}}
 ${template7 ${lua_parse\ print_resource_usage\ ${hwmon\ radeon\ temp\ 1}\ 75\ ${color3}}}
-${template7 ${lua_parse\ print_resource_usage\ ${hwmon\ 0\ temp\ 1}\ 42\ ${color3}}}
 ${template7 ${lua_parse\ print_resource_usage\ ${hwmon\ 1\ temp\ 1}\ 42\ ${color3}}}
 ${template7 ${lua_parse\ print_resource_usage\ ${hwmon\ 2\ temp\ 1}\ 42\ ${color3}}}
+${template7 ${lua_parse\ print_resource_usage\ ${hwmon\ 3\ temp\ 1}\ 42\ ${color3}}}
 ${voffset 7}${offset 7}${font0}${color}${lua_parse print_resource_usage ${hwmon atk0110 fan 1} 2300 ${color3}}${font}${color}${voffset 16}
 ${alignc}${font0}${color}${if_existing /tmp/conky/dnf.packages.formatted}${lines /tmp/conky/dnf.packages.formatted}${else}0${endif}${voffset 7}
 ${alignc}${font0}${color}${time %I}${font1}:${time %M}

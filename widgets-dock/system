@@ -9,8 +9,8 @@ conky.config = {
   gap_y = 664,
 
   -- window settings
-  minimum_width = 189,      -- conky will add an extra pixel to this
-  maximum_width = 189,
+  minimum_width = 169,      -- conky will add an extra pixel to this
+  maximum_width = 169,
   minimum_height = 351,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -25,17 +25,17 @@ conky.config = {
   -- transparency configuration
   draw_blended = false,
   own_window_transparent = true,
-  own_window_argb_visual = true,  -- turn on transparency
-  own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
+  own_window_argb_visual = true,    -- turn on transparency
+  own_window_argb_value = 255,      -- range from 0 (transparent) to 255 (opaque)
   
-  -- images
+  -- miscellanous settings
   imlib_cache_flush_interval = 250,
-  
+  top_name_verbose = true,          -- show full command in ${top ...}
+  top_name_width = 18,              -- how many characters to print
   text_buffer_size = 2048,
-  
-  if_up_strictness = 'address', -- network device must be up, having link and an assigned IP address
-                                -- to be considered "up" by ${if_up}
-                                -- values are: up, link or address  
+  if_up_strictness = 'address',     -- network device must be up, having link and an assigned IP address
+                                    -- to be considered "up" by ${if_up}
+                                    -- values are: up, link or address
   -- font settings
   use_xft = false,
   draw_shades = false,      -- black shadow on text (not good if text is black)
@@ -46,9 +46,9 @@ conky.config = {
   
   -- templates
   -- top cpu process: ${template0 processNumber}
-  template0 = [[${voffset 3}${offset 5}${color}${top name \1}${alignr 5}${top cpu \1}% ${top pid \1}]],
+  template0 = [[${voffset 3}${offset 5}${color}${top name \1}${alignr 4}${top cpu \1}%]],
   -- top mem process: ${template1 processNumber}
-  template1 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${alignr 5}${top_mem mem_res \1} ${top_mem pid \1}]]
+  template1 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${alignr 4}${top_mem mem_res \1}]]
 };
 
 conky.text = [[
@@ -56,14 +56,14 @@ conky.text = [[
 # ----------- table image ------------
 ${image ~/conky/monochrome/images/common/yellow-menu-dark.png -p 0,0}\
 ${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-top-left.png -p 0,0}\
-${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-top-right.png -p 182,0}\
+${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-top-right.png -p 162,0}\
 ${image ~/conky/monochrome/images/common/yellow-menu-light.png -p 0,19}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 189,0}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 169,0}\
 ${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-left.png -p 0,128}\
-${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png -p 182,128}\
+${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png -p 162,128}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 0,135}\
 # -------- end of table image ---------
-${voffset 2}${offset 5}${color1}process${alignr 5}cpu   pid${voffset 3}
+${voffset 2}${offset 5}${color1}process${alignr 4}cpu${voffset 3}
 ${template0 1}
 ${template0 2}
 ${template0 3}
@@ -75,14 +75,14 @@ ${template0 7}
 # ----------- table image ------------
 ${image ~/conky/monochrome/images/common/yellow-menu-dark.png -p 0,140}\
 ${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-top-left.png -p 0,140}\
-${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-top-right.png -p 182,140}\
+${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-top-right.png -p 162,140}\
 ${image ~/conky/monochrome/images/common/yellow-menu-light.png -p 0,159}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 189,140}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 169,140}\
 ${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-left.png -p 0,268}\
-${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png -p 182,268}\
+${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png -p 162,268}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 0,275}\
 # -------- end of table image ---------
-${voffset 12}${offset 5}${color1}process${alignr 5}memory   pid${voffset 3}
+${voffset 12}${offset 5}${color1}process${alignr 4}memory${voffset 3}
 ${template1 1}
 ${template1 2}
 ${template1 3}
@@ -98,10 +98,10 @@ ${if_up enp0s25}\
 ${image ~/conky/monochrome/images/common/yellow-menu-dark.png -p 0,280}\
 ${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-top-left.png -p 0,280}\
 ${image ~/conky/monochrome/images/common/yellow-menu-light.png -p 75,280}\
-${image ~/conky/monochrome/images/common/yellow-menu-light-edge-top-right.png -p 182,280}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 189,280}\
+${image ~/conky/monochrome/images/common/yellow-menu-light-edge-top-right.png -p 162,280}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 169,280}\
 ${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-bottom-left.png -p 0,344}\
-${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png -p 182,344}\
+${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png -p 162,344}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 0,351}\
 # --------- end of table image ---------
 ${lua add_offsets 0 76}\
