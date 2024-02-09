@@ -60,9 +60,9 @@ ${voffset 3}${offset 5}${color}cpu core 2${alignr 53}${lua_parse print_resource_
 ${voffset 3}${offset 5}${color}cpu core 3${alignr 53}${lua_parse print_resource_usage ${hwmon coretemp temp 4} [=threshold.tempCPUCore] ${color3}}°C
 ${voffset 3}${offset 5}${color}cpu core 4${alignr 53}${lua_parse print_resource_usage ${hwmon coretemp temp 5} [=threshold.tempCPUCore] ${color3}}°C
 ${voffset 3}${offset 5}${color}AMD Radeon HD7570${alignr 53}${lua_parse print_resource_usage ${hwmon radeon temp 1} [=threshold.tempVideo] ${color3}}°C
-${voffset 3}${offset 5}${color}samsung SSD HD${alignr 53}${lua_parse print_resource_usage ${hwmon 0 temp 1} [=threshold.tempDisk] ${color3}}°C
-${voffset 3}${offset 5}${color}seagate HD${alignr 53}${lua_parse print_resource_usage ${hwmon 1 temp 1} [=threshold.tempDisk] ${color3}}°C
+${voffset 3}${offset 5}${color}samsung SSD HD${alignr 53}${lua_parse print_resource_usage ${hwmon 1 temp 1} [=threshold.tempDisk] ${color3}}°C
 ${voffset 3}${offset 5}${color}seagate HD${alignr 53}${lua_parse print_resource_usage ${hwmon 2 temp 1} [=threshold.tempDisk] ${color3}}°C
+${voffset 3}${offset 5}${color}seagate HD${alignr 53}${lua_parse print_resource_usage ${hwmon 3 temp 1} [=threshold.tempDisk] ${color3}}°C
 ${voffset 8}${offset 5}${color1}fan${alignr 59}revolutions
 ${voffset 5}${offset 5}${color}chasis front intake${alignr 59}${lua_parse print_resource_usage ${hwmon atk0110 fan 3} [=(threshold.fanSpeed)?c] ${color3}} rpm
 ${voffset 3}${offset 5}${color}cpu fan${alignr 59}${lua_parse print_resource_usage ${hwmon atk0110 fan 1} [=(threshold.fanSpeed)?c] ${color3}} rpm

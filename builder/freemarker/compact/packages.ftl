@@ -10,7 +10,7 @@ conky.config = {
   -- window alignment
   alignment = 'top_left',  -- top|middle|bottom_left|right
   gap_x = 195,
-  gap_y = 38,
+  gap_y = 37,
 
   -- window settings
   <#assign width = 189>
@@ -50,19 +50,23 @@ conky.text = [[
 <#assign packagesFile = "/tmp/conky/dnf.packages.formatted">
 ${if_existing [=packagesFile]}\
 <#assign y = 0, 
-         header = 19, <#-- menu header -->
-         body = 1400,  <#-- menu window without the header -->
+         header = 51, <#-- menu header -->
+         body = 20,  <#-- menu window without the header -->
          gap = 3>     <#-- empty space between windows -->
-<@menu.compositeTable x=0 y=y width=width vheader=51 hheight=body/>
-${lua configure_menu [=image.primaryColor] light [=width?c] 3}\
-<#assign y += header + 1 + header>
+<@menu.verticalTable x=0 y=y header=header body=width-header height=body/>
+${voffset 2}${offset 5}${color1}dnf${goto 57}${color}${lines [=packagesFile]} package updates
+<#assign y += body + gap>
+<#assign header = 19, packageCol = 136, colGap = 1, versionCol = width - packageCol - colGap>
+<@menu.table x=0 y=y header=header width=packageCol bottomEdges=false/>
+${lua configure_menu [=image.primaryColor] light [=packageCol] 3}\
+<@menu.table x=packageCol + colGap y=y width=versionCol header=header bottomEdges=false/>
+<#assign y += header>
 ${lua add_offsets 0 [=y]}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
-${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dnf.png -p 114,[=(y+2)?c]}\
-${voffset 2}${offset 5}${color1}dnf${goto 57}${color}${lines [=packagesFile]} package updates
-${voffset -5}${color2}${hr 1}${voffset -8}
-${voffset 7}${offset 5}${color1}package${alignr 5}version${voffset 3}
+${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dnf.png -p [=packageCol-42],[=(y+2)?c]}\
+${voffset 10}${offset 5}${color1}package${alignr 5}version${voffset 3}
 <#if system == "desktop"><#assign maxLines = 36><#else><#assign maxLines = 15></#if>
 ${color}${lua_parse populate_menu [=packagesFile] [=maxLines] 900}${voffset 5}
+${lua_parse draw_bottom_edges [=packageCol + colGap] [=versionCol]}\
 ${endif}\
 ]];

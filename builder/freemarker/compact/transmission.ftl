@@ -86,6 +86,11 @@ ${offset 5}${color1}active torrents ${color}(${color}${lua get activeNum}${color
 ${color}${lua_parse populate_menu [=activeTorrentsFile] [=totalLines - 3]}${voffset [= 7 + gap]}
 ${lua_parse draw_bottom_edges [=width+colGap] 39}${lua_parse draw_bottom_edges [=width+colGap+speedCol+colGap] 39}\
 ${lua add_offsets 0 [=gap]}\
+${else}\
+<#assign body = 20>
+<@menu.menu x=0 y=71 + gap width=width height=body/>
+${lua add_offsets 0 [=body + gap]}\
+${offset 41}${color}no active torrents
 ${endif}\
 ${else}\
 <#assign body = 36>
@@ -109,8 +114,9 @@ ${color}${lua_parse populate_menu [=peersFile] [=totalLines]}
 ${lua_parse draw_bottom_edges [=ipCol+colGap] [=clientCol]}${lua_parse draw_bottom_edges [=width+colGap] [=speedCol]}${lua_parse draw_bottom_edges [=width+colGap+speedCol+colGap] [=speedCol]}\
 ${endif}\
 ${else}\
+<#assign body = 20>
 <@menu.menu x=0 y=0 width=width height=body fixed=false/>
 ${lua add_offsets 0 [=body + gap]}\
-${voffset 8}${goto 14}${color}peers input file is missing
+${goto 14}${color}peers input file is missing
 ${endif}\
 ]];

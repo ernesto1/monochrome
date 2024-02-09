@@ -151,6 +151,7 @@ arguments:
                                  \
                                  you have to provide this value here
     round     'true' if menu has round edges, false otherwise
+              default is 'true'
 ]]
 function conky_configure_menu(color, value, width, voffset, round)
   vars["color"] = color
