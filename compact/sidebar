@@ -120,7 +120,7 @@ ${image ~/conky/monochrome/images/compact/burgundy-network-desktop.png -p 0,417}
 ${voffset 14}${goto 45}${color1}local ip${goto 99}${color}${addr enp0s25}
 ${voffset 3}${goto 45}${color1}speed${goto 99}${color}${template3 enp0s25}
 # :: upload/download speeds
-${template4 enp0s25 3000 60000}
+${template4 enp0s25 3000 73000}
 ${else}\
 ${image ~/conky/monochrome/images/compact/ochre-network-no-internet.png -p 0,417}\
 ${voffset 12}${offset 5}${color1}no network
@@ -128,7 +128,7 @@ ${voffset 3}${offset 5}connection
 ${voffset 92}
 ${endif}\
 # -------------- disk(s)
-# ---------- sda
+# :::: sda
 ${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 0,565}\
 ${template5 sda 200000 280000}
 ${voffset 6}\
@@ -136,7 +136,7 @@ ${image ~/conky/monochrome/images/compact/burgundy-filesystem.png -p 0,637}\
 ${template6 fedora /}
 ${image ~/conky/monochrome/images/compact/burgundy-filesystem.png -p 0,668}\
 ${template6 home /home}
-# ---------- sdb
+# :::: sdb
 ${if_existing /dev/sdb}\
 ${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 0,699}\
 ${template5 sdb 6000 250000}
@@ -149,7 +149,7 @@ ${voffset 13}${offset 5}${color1}sdb device
 ${voffset 3}${offset 5}${color1}${font4}is not connected
 ${voffset 48}
 ${endif}\
-# ---------- sdd
+# :::: sdd
 ${if_existing /dev/sdd}\
 ${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 0,802}\
 ${template5 sdd 6000 250000}
@@ -162,7 +162,7 @@ ${voffset 13}${offset 5}${color1}sdd device
 ${voffset 3}${offset 5}${color1}${font4}is not connected
 ${voffset 48}
 ${endif}\
-# ---------- sde
+# :::: sde
 ${if_existing /dev/sde}\
 ${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 0,905}\
 ${template5 sde 6000 60000}

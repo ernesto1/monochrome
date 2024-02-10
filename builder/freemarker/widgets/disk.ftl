@@ -1,7 +1,7 @@
 <#assign width = 216,         <#-- disk image width + gap between conkys -->
          x = 1285 - width >   <#-- x is the x coordinate of the first disk conky -->
 <#list hardDisks[system] as hardDisk>
-<#assign diskName = hardDisk.name!hardDisk.device>
+<#assign diskName = hardDisk.fileSuffix!hardDisk.device>
 <@outputFileDirective file="disk-" + diskName>
 conky.config = {
   update_interval = 2,  -- update interval in seconds

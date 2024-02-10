@@ -133,7 +133,7 @@ ${image ~/conky/monochrome/images/glass/blue-network-internet.png -p 5,308}\
 ${voffset 7}${offset 10}${color1}${font0}ethernet${font}
 ${voffset 1}${alignr 38}${color}${execi 180 ethtool enp0s25 2>/dev/null | grep -i speed | cut -d ' ' -f 2}
 ${alignr 38}${color}${addr enp0s25}
-${template4 enp0s25 3000 60000}
+${template4 enp0s25 3000 73000}
 ${else}\
 # :::::: no network/internet
 ${image ~/conky/monochrome/images/glass/yellow-network-disconnected-ethernet.png -p 5,254}\

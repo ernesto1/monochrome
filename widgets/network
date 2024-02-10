@@ -55,7 +55,7 @@ ${voffset 3}${offset 22}${color1}local ip${goto 80}${color}${addr enp0s25}
 ${voffset 3}${offset 22}${color1}torrents${goto 80}${color}${lines /tmp/conky/transmission.active} active
 ${voffset 3}${offset 22}${color1}swarm${goto 80}${color}${lines /tmp/conky/transmission.peers} peers
 ${voffset 6}${offset 79}${upspeedgraph enp0s25 37,97 6c3a55 a67fba 3000}
-${voffset -7}${offset 79}${downspeedgraph enp0s25 37,97 4c6e3b 9fc14a 60000}
+${voffset -7}${offset 79}${downspeedgraph enp0s25 37,97 4c6e3b 9fc14a 73000}
 ${voffset 6}${offset 18}${color1}up${alignr 128}${color}${upspeed enp0s25}
 ${voffset 4}${offset 18}${color1}down${alignr 128}${color}${downspeed enp0s25}
 ${voffset -30}${goto 101}${color1}total${alignr 43}${color}${totalup enp0s25}

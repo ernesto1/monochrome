@@ -14,7 +14,7 @@ networkDevices:
     - name: enp0s25
       type: ethernet
       maxUp: 3000       # speed in KiB
-      maxDown: 60000
+      maxDown: 73000
   laptop:
     - name: wlp4s0
       type: wifi
@@ -28,6 +28,7 @@ networkDevices:
 hardDisks:
   desktop:
     - device: sda
+      name: samsung SSD HD
       readSpeed: 200000
       writeSpeed: 280000
       hwmonIndex: 1     # optional | linux hardware monitor index, ex. hwmon3
@@ -39,6 +40,7 @@ hardDisks:
           path: /home
           icon: home
     - device: sdb
+      name: seagate HD
       readSpeed: 6000
       writeSpeed: 250000
       hwmonIndex: 2
@@ -47,6 +49,7 @@ hardDisks:
           path: /media/veronica
           icon: partition
     - device: sdd
+      name: seagate HD
       readSpeed: 6000
       writeSpeed: 250000
       hwmonIndex: 3
@@ -57,7 +60,7 @@ hardDisks:
     - device: sde
       readSpeed: 6000
       writeSpeed: 60000
-      name: maxtor      # optional | name to append to the output file name, ex. disk-maxtor
+      fileSuffix: maxtor      # optional | name to append to the output file name, ex. disk-maxtor
       partitions:
         - name: maxtor
           path: /run/media/ernesto/MAXTOR

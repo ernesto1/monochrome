@@ -1,7 +1,7 @@
 # -------------- disk(s)
 <#assign height = 0, diskioHeight = 72, partitionHeight = 31>
 <#list hardDisks[system] as disk>
-# ---------- [=disk.device]
+# :::: [=disk.device]
 <#assign discBlockHeight = height>
 <#if disk.partitions?size == 1><#-- for disk with single partition add connected/disconnected state -->
 ${if_existing /dev/[=disk.device]}\
