@@ -42,7 +42,9 @@ conky.config = {
   -- colors
   default_color = '[=colors.systemText]', -- regular text
   color1 = '[=colors.systemLabels]',
-  color2 = '[=colors.highlight]'         -- highlight important packages
+  color2 = '[=colors.highlight]',        -- highlight important packages
+  color3 = '[=colors.secondary.labels]',         -- secondary menu labels
+  color4 = '[=colors.secondary.text]'         -- secondary menu text
 };
 
 conky.text = [[
@@ -77,14 +79,14 @@ ${if_match ${lua get active} > 0}\
 ${lua decrease_total_lines 1}\
 <#assign header = 19, width = 159, speedCol = 39, colGap = 1>
 <@menu.table x=0 y=y width=width header=header bottomEdges=false/>
-<@menu.table x=width+colGap y=y width=speedCol header=header bottomEdges=false/>
+<@menu.table x=width+colGap y=y width=speedCol header=header bottomEdges=false color=image.secondaryColor/>
 <@menu.table x=width+colGap+speedCol+colGap y=y width=speedCol header=header bottomEdges=false/>
 ${lua configure_menu [=image.primaryColor] light [=width?c] 3 false}\
 ${lua add_offsets 0 [=header]}\
-${offset 5}${color1}active torrents${goto 184}up${offset 16}down${voffset 3}
+${offset 5}${color1}active torrents${goto 184}${color3}up${offset 16}down${voffset 3}
 ${color}${color}${lua_parse populate_menu [=activeTorrentsFile] [=totalLines - 5] 3}
+${lua_parse draw_bottom_edges [=width+colGap] 39 color=image.secondaryColor}${lua_parse draw_bottom_edges [=width+colGap+speedCol+colGap] 39}\
 ${voffset [= 7 + gap]}\
-${lua_parse draw_bottom_edges [=width+colGap] 39}${lua_parse draw_bottom_edges [=width+colGap+speedCol+colGap] 39}\
 ${lua add_offsets 0 [=gap]}\
 ${endif}\
 ${else}\

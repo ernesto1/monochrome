@@ -1,7 +1,7 @@
 blue:
   image:
     primaryColor: blue
-    secondaryColor: ochre
+    secondaryColor: yellow
   colors:
     text: white
     labels: dfa22f
@@ -14,4 +14,8 @@ blue:
     systemLabels: 839bc1
     highlight: dfa22f       # flag important package updates
     ownWindow: 2f3757
+    # secondary/alternate menu colors
+    secondary:
+      labels: white
+      text: 703d0a
     

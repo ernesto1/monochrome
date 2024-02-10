@@ -10,11 +10,15 @@
     |             |                           |
     +-------------+                          -+-
        width (px)
+       
+  fixed   'true' if the given x,y coordinates are final, 'false' if you want to consider the current x,y offsets
+          default is 'true'
+  color   color scheme to use, default is the conky primary color scheme
  -->
-<#macro table x y width header body=200 bottomEdges=true fixed=true>
+<#macro table x y width header body=200 bottomEdges=true fixed=true color=image.primaryColor>
 # ------- composite table image -------
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-dark.png" x=x y=y fixed=fixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-light.png" x=x y=y+header fixed=fixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-menu-dark.png" x=x y=y fixed=fixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-menu-light.png" x=x y=y+header fixed=fixed/>
 <@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x+width y=y fixed=fixed/>
 <#if bottomEdges>
 <@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x y=y+header+body fixed=fixed/>

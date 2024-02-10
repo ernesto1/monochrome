@@ -50,7 +50,7 @@ conky.config = {
   
   -- colors
   default_color = '[=colors.text]',  -- regular text
-  color1 = '[=colors.labels]',         -- text labels
+  color1 = '[=colors.labels]',        -- text labels
   color2 = '[=colors.bar]',        -- bar
   color3 = '[=colors.warning]',        -- bar critical
   

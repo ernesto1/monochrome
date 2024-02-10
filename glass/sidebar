@@ -50,7 +50,7 @@ conky.config = {
   
   -- colors
   default_color = 'white',  -- regular text
-  color1 = 'dfa22f',         -- text labels
+  color1 = 'dfa22f',        -- text labels
   color2 = '4a71bc',        -- bar
   color3 = 'd43207',        -- bar critical
   
@@ -136,9 +136,9 @@ ${alignr 38}${color}${addr enp0s25}
 ${template4 enp0s25 3000 60000}
 ${else}\
 # :::::: no network/internet
-${image ~/conky/monochrome/images/glass/ochre-network-disconnected-ethernet.png -p 5,254}\
+${image ~/conky/monochrome/images/glass/yellow-network-disconnected-ethernet.png -p 5,254}\
 ${voffset 7}${offset 10}${color}${font0}network${font}
-${voffset 142}${offset 33}${color}no ethernet
+${voffset 142}${offset 32}no ethernet
 ${offset 34}connection${voffset 3}
 ${endif}\
 # ::::::::::::::::: disk sda

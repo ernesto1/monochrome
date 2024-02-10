@@ -33,7 +33,7 @@ ${voffset -29}${goto 67}${color}${font1}${wireless_link_qual_perc [=device.name]
 
 <#macro ethernet>
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-ethernet.png -p 0,0}\
-# ethernet details printed on the system conky
+# ethernet details are printed on the system conky
 ${voffset 48}
 </#macro>
 
