@@ -42,7 +42,9 @@ conky.config = {
   -- colors
   default_color = '[=colors.menuText]', -- regular text
   color1 = '[=colors.labels]',         -- labels
-  color2 = '[=colors.warning]'         -- bar critical
+  color2 = '[=colors.warning]',        -- bar critical
+  color3 = '[=colors.secondary.labels]',         -- secondary menu labels
+  color4 = '[=colors.secondary.text]'         -- secondary menu text
 };
 
 conky.text = [[
@@ -77,14 +79,14 @@ ${if_match ${lua get activeNum ${lines [=activeTorrentsFile]}} > 0}\
 ${lua configure_menu [=image.primaryColor] light [=width?c] 3}\
 <#assign header = 19, speedCol = 39, colGap = 1>
 <@menu.table x=0 y=y width=width header=header bottomEdges=false/>
-<@menu.table x=width+colGap y=y width=39 header=header bottomEdges=false/>
+<@menu.table x=width+colGap y=y width=39 header=header bottomEdges=false color=image.secondaryColor/>
 <@menu.table x=width+colGap+speedCol+colGap y=y width=39 header=header bottomEdges=false/>
 ${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-peers.png -p 38,[=y+header+22]}\
 <#assign y += header>
 ${lua add_offsets 0 [=header]}\
-${offset 5}${color1}active torrents ${color}(${color}${lua get activeNum}${color})${color1}${goto 214}up${offset 16}down${voffset 3}
+${offset 5}${color1}active torrents ${color}(${color}${lua get activeNum}${color})${color1}${goto 214}${color3}up${offset 16}${color1}down${voffset 3}
 ${color}${lua_parse populate_menu [=activeTorrentsFile] [=totalLines - 3]}${voffset [= 7 + gap]}
-${lua_parse draw_bottom_edges [=width+colGap] 39}${lua_parse draw_bottom_edges [=width+colGap+speedCol+colGap] 39}\
+${lua_parse draw_bottom_edges [=width+colGap] 39 [=image.secondaryColor]}${lua_parse draw_bottom_edges [=width+colGap+speedCol+colGap] 39}\
 ${lua add_offsets 0 [=gap]}\
 ${else}\
 <#assign body = 20>
@@ -93,11 +95,10 @@ ${lua add_offsets 0 [=body + gap]}\
 ${offset 41}${color}no active torrents
 ${endif}\
 ${else}\
-<#assign body = 36>
-<@menu.menu x=0 y=71 + gap width=width height=body/>
+<#assign body = 20>
+<@menu.menu x=0 y=71 + gap width=width height=body color=image.secondaryColor/>
 ${lua add_offsets 0 [=body + gap]}\
-${goto 17}${color}active torrents input file
-${voffset 3}${goto 65}is missing${voffset [= 7 + gap]}
+${goto 12}${color4}missing active torrents file${voffset [= 7 + gap]}
 ${endif}\
 # :::::::::::: peers
 ${if_existing [=peersFile]}\
@@ -106,17 +107,17 @@ ${if_match ${lua get peers} > 0}\
 ${lua configure_menu [=image.primaryColor] light [=ipCol] 3}\
 <@menu.table x=0 y=0 width=ipCol header=header bottomEdges=false fixed=false/>
 <@menu.table x=ipCol+colGap y=0 width=clientCol header=header bottomEdges=false fixed=false/>
-<@menu.table x=width+colGap y=0 width=39 header=header bottomEdges=false fixed=false/>
+<@menu.table x=width+colGap y=0 width=39 header=header bottomEdges=false fixed=false color=image.secondaryColor/>
 <@menu.table x=width+colGap+speedCol+colGap y=0 width=39 header=header bottomEdges=false fixed=false/>
 ${lua add_offsets 0 [=header]}\
-${offset 5}${color1}ip address${goto 108}client${goto 214}up${offset 16}down${voffset 3}
+${offset 5}${color1}ip address${goto 108}client${goto 214}${color3}up${offset 16}${color1}down${voffset 3}
 ${color}${lua_parse populate_menu [=peersFile] [=totalLines]}
-${lua_parse draw_bottom_edges [=ipCol+colGap] [=clientCol]}${lua_parse draw_bottom_edges [=width+colGap] [=speedCol]}${lua_parse draw_bottom_edges [=width+colGap+speedCol+colGap] [=speedCol]}\
+${lua_parse draw_bottom_edges [=ipCol+colGap] [=clientCol]}${lua_parse draw_bottom_edges [=width+colGap] [=speedCol] [=image.secondaryColor]}${lua_parse draw_bottom_edges [=width+colGap+speedCol+colGap] [=speedCol]}\
 ${endif}\
 ${else}\
 <#assign body = 20>
-<@menu.menu x=0 y=0 width=width height=body fixed=false/>
+<@menu.menu x=0 y=0 width=width height=body fixed=false color=image.secondaryColor/>
 ${lua add_offsets 0 [=body + gap]}\
-${goto 14}${color}peers input file is missing
+${goto 24}${color4}missing peers input file
 ${endif}\
 ]];

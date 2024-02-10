@@ -11,3 +11,7 @@ burgundy:
     readGraph: a98162 d3b699
     menuText: cf9c7b  # d19f77
     highlight: bf241f
+    # secondary/alternate menu colors
+    secondary:
+      labels: white
+      text: 623f28

@@ -51,11 +51,12 @@ function conky_get(name, expression)
 end
 
 
--- resets global variables, such as the x,y offsets
+-- resets the global variables, such as the x,y offsets
 -- this method must be invoked by conky on each refresh cycle (use the lua_draw_hook_pre setting)
 function conky_reset_state()
   vars["xOffset"] = 0
   vars["yOffset"] = 0
+  vars["color"] = "burgundy"
   vars["totalLines"] = 1000   -- total lines to print for dynamic text, ie. files read within the conky
   return ''
 end
@@ -224,13 +225,15 @@ arguments:
     x       image x coordinate
     y       image y coordinate
     width   width of the menu
+    color   menu color, default is the color defined by a prior 'conky_configure_menu()' invocation
 ]]
-function draw_round_bottom_edges(x, y, width)
+function draw_round_bottom_edges(x, y, width, color)
   local imageRoot = "~/conky/monochrome/images/common/"
   local s = ''
+  color = (color ~= nil) and color or vars["color"]
     
   if vars["roundEdges"] then
-    local imagePath = imageRoot .. vars["color"] .. "-menu-" .. vars["value"] .. "-edge-bottom"
+    local imagePath = imageRoot .. color .. "-menu-" .. vars["value"] .. "-edge-bottom"
     local image = imagePath .. "-left.png"
     s = build_image_variable(image, x, y)
     image = imagePath .. "-right.png"
@@ -284,8 +287,8 @@ arguments:
     x       x coordinate
     width   width of this table
 ]]
-function conky_draw_bottom_edges(x, width)
-  return draw_round_bottom_edges(vars["xOffset"] + tonumber(x), vars["yOffset"] - 7, tonumber(width))
+function conky_draw_bottom_edges(x, width, color)
+  return draw_round_bottom_edges(vars["xOffset"] + tonumber(x), vars["yOffset"] - 7, tonumber(width), color)
 end
 
 

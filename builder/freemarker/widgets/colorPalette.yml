@@ -14,4 +14,4 @@ green:
     windowColor: 2f2d1e # background color for plain conkys with no images
     # secondary/alternate menu colors
     secondary:
-      text: c596c7    
+      text: c596c7

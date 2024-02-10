@@ -10,6 +10,11 @@
     │             │                           |
     ╰─────────────╯                          -+-
        width (px)
+
+  bottomEdges   draw the round bottom edges, default is 'true'
+  fixed         'true' if the given x,y coordinates are final, 'false' if you want to consider the current x,y offsets
+                default is 'true'
+  color         color scheme to use, default is the conky primary color scheme
  -->
 <#macro table x y width header body=200 bottomEdges=true fixed=true color=image.primaryColor>
 # ----------- table image ------------
@@ -51,6 +56,11 @@
     │             │       |
     ╰─────────────╯      -+-
        width (px)
+
+  bottomEdges   draw the round bottom edges, default is 'true'
+  fixed         'true' if the given x,y coordinates are final, 'false' if you want to consider the current x,y offsets
+                default is 'true'
+  color         color scheme to use, default is the conky primary color scheme
  -->
 <#macro menu x y width height isDark=false bottomEdges=true fixed=true color=image.primaryColor>
 # ----------- menu image ------------
@@ -81,6 +91,9 @@
     ╰─────────+──────────────────╯
      header       body width (px)
      width (px)
+
+  fixed         'true' if the given x,y coordinates are final, 'false' if you want to consider the current x,y offsets
+                default is 'true'
  -->
 <#macro verticalTable x y header body height fixed=true>
 # -------  vertical table image -------
@@ -126,8 +139,9 @@
           │                         │                                      |
           ╰─────────────────────────╯                                     -+-
                     width (px)
- 
- -->
+
+  bottomEdges   draw the round bottom edges, default is 'true'
+-->
 <#macro compositeTable x y width vheader hheight vheight=19 hheader=19 bottomEdges=true>
 <#local startingy = y>
 # ------- composite table image -------
