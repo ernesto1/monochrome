@@ -10,7 +10,7 @@ conky.config = {
 
   -- window settings
   minimum_width = 150,
-  minimum_height = 1380,
+  minimum_height = 1524,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -114,8 +114,16 @@ ${voffset 29}${color}${offset 5}${cpugraph cpu0 48,112 ${template1}}
 ${voffset -56}${offset 10}${color1}${font0}cpu${font}
 ${voffset -7}${alignr 38}${color}${font1}${cpu cpu0}${font2}%${font}
 ${voffset 12}${alignr 38}${color}${font}${loadavg}
+${voffset 2}${offset 10}${font}${color1}1  ${color}${cpu cpu1}%${alignr 38}${freq_g 1}GHz
+${voffset 2}${offset 10}${font}${color1}2  ${color}${cpu cpu2}%${alignr 38}${freq_g 2}GHz
+${voffset 2}${offset 10}${font}${color1}3  ${color}${cpu cpu3}%${alignr 38}${freq_g 3}GHz
+${voffset 2}${offset 10}${font}${color1}4  ${color}${cpu cpu4}%${alignr 38}${freq_g 4}GHz
+${voffset 2}${offset 10}${font}${color1}5  ${color}${cpu cpu5}%${alignr 38}${freq_g 5}GHz
+${voffset 2}${offset 10}${font}${color1}6  ${color}${cpu cpu6}%${alignr 38}${freq_g 6}GHz
+${voffset 2}${offset 10}${font}${color1}7  ${color}${cpu cpu7}%${alignr 38}${freq_g 7}GHz
+${voffset 2}${offset 10}${font}${color1}8  ${color}${cpu cpu8}%${alignr 38}${freq_g 8}GHz
 # ::::::::::::::::: memory
-${image ~/conky/monochrome/images/glass/blue-mem.png -p 5,110}\
+${image ~/conky/monochrome/images/glass/blue-mem.png -p 5,254}\
 ${voffset -1}${offset 5}${memgraph 48,112 ${template1}}
 ${voffset -56}${offset 10}${color1}${font0}memory${font}
 ${voffset -7}${alignr 38}${color}${font1}${memperc}${font2}%${font}
@@ -128,48 +136,48 @@ ${voffset -5}${alignr 38}${color}${font}${swap} / ${swapmax}
 # ::::::::::::::::: network
 ${if_up enp0s25}\
 # :::::: ethernet
-${image ~/conky/monochrome/images/glass/blue-network-ethernet.png -p 5,254}\
-${image ~/conky/monochrome/images/glass/blue-network-internet.png -p 5,308}\
+${image ~/conky/monochrome/images/glass/blue-network-ethernet.png -p 5,398}\
+${image ~/conky/monochrome/images/glass/blue-network-internet.png -p 5,452}\
 ${voffset 7}${offset 10}${color1}${font0}ethernet${font}
 ${voffset 1}${alignr 38}${color}${execi 180 ethtool enp0s25 2>/dev/null | grep -i speed | cut -d ' ' -f 2}
 ${alignr 38}${color}${addr enp0s25}
 ${template4 enp0s25 3000 73000}
 ${else}\
 # :::::: no network/internet
-${image ~/conky/monochrome/images/glass/yellow-network-disconnected-ethernet.png -p 5,254}\
+${image ~/conky/monochrome/images/glass/yellow-network-disconnected-ethernet.png -p 5,398}\
 ${voffset 7}${offset 10}${color}${font0}network${font}
 ${voffset 142}${offset 32}no ethernet
 ${offset 34}connection${voffset 3}
 ${endif}\
-# ::::::::::::::::: disk sda
-${image ~/conky/monochrome/images/glass/blue-disk.png -p 5,451}\
+# ::::::::::::::::: disk samsung SSD HD
+${image ~/conky/monochrome/images/glass/blue-disk.png -p 5,595}\
 ${template5 sda 200000 280000}
 # :::::: partitions
-${image ~/conky/monochrome/images/glass/blue-block-small.png -p 5,550}\
+${image ~/conky/monochrome/images/glass/blue-block-small.png -p 5,694}\
 ${template6 fedora /}
-${image ~/conky/monochrome/images/glass/blue-block-small.png -p 5,606}\
+${image ~/conky/monochrome/images/glass/blue-block-small.png -p 5,750}\
 ${template6 home /home}
-# ::::::::::::::::: disk sdb
-${image ~/conky/monochrome/images/glass/blue-disk.png -p 5,662}\
+# ::::::::::::::::: disk seagate HD
+${image ~/conky/monochrome/images/glass/blue-disk.png -p 5,806}\
 ${template5 sdb 6000 250000}
 # :::::: partitions
-${image ~/conky/monochrome/images/glass/blue-block-small.png -p 5,761}\
+${image ~/conky/monochrome/images/glass/blue-block-small.png -p 5,905}\
 ${template6 veronica /media/veronica}
-# ::::::::::::::::: disk sdd
-${image ~/conky/monochrome/images/glass/blue-disk.png -p 5,817}\
+# ::::::::::::::::: disk seagate HD
+${image ~/conky/monochrome/images/glass/blue-disk.png -p 5,961}\
 ${template5 sdd 6000 250000}
 # :::::: partitions
-${image ~/conky/monochrome/images/glass/blue-block-small.png -p 5,916}\
+${image ~/conky/monochrome/images/glass/blue-block-small.png -p 5,1060}\
 ${template6 betty /media/betty}
-# ::::::::::::::::: disk maxtor
-${image ~/conky/monochrome/images/glass/blue-disk.png -p 5,972}\
+# ::::::::::::::::: disk sde
+${image ~/conky/monochrome/images/glass/blue-disk.png -p 5,1116}\
 ${template5 sde 6000 60000}
 # :::::: partitions
-${image ~/conky/monochrome/images/glass/blue-block-small.png -p 5,1071}\
+${image ~/conky/monochrome/images/glass/blue-block-small.png -p 5,1215}\
 ${template6 maxtor /run/media/ernesto/MAXTOR}
 # ::::::::::::::::: temperatures
-${if_updatenr 1}${image ~/conky/monochrome/images/glass/blue-temperature-desktop-1.png -p 5,1127}${endif}\
-${if_updatenr 2}${image ~/conky/monochrome/images/glass/blue-temperature-desktop-2.png -p 5,1127}${endif}\
+${if_updatenr 1}${image ~/conky/monochrome/images/glass/blue-temperature-desktop-1.png -p 5,1271}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/glass/blue-temperature-desktop-2.png -p 5,1271}${endif}\
 # :::: cpu
 ${voffset 4}${offset 10}${color1}${font0}cpu${font}
 ${voffset -13}${alignr 38}${color}${font2}${template8 atk0110 temp 1 78}°C${font}
@@ -185,7 +193,7 @@ ${voffset 7}${offset 10}${color1}${font0}fans${font}
 ${voffset -8}${alignr 38}${color}${font2}${template8 atk0110 fan 1 2300}${font}
 ${voffset -4}${alignr 38}${font}rpm${font}${voffset 10}
 # ::::::::::::::::: time
-${image ~/conky/monochrome/images/glass/blue-divider.png -p 5,1291}\
+${image ~/conky/monochrome/images/glass/blue-divider.png -p 5,1435}\
 ${voffset 1}${offset 10}${color1}${font Promenade de la Croisette:size=40}${time %I}${font Promenade de la Croisette:size=37}:${time %M}${font}${voffset -30}${alignr 38}${color}${time %A}
 ${voffset -1}${alignr 38}${time %B}
 ${voffset -1}${alignr 38}${time %d}
