@@ -16,6 +16,7 @@ conky.config = {
   <#assign width = 189>
   minimum_width = [=width],      -- conky will add an extra pixel to this  
   maximum_width = [=width],
+  minimum_height = 38,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -68,5 +69,10 @@ ${voffset 10}${offset 5}${color1}package${alignr 5}version${voffset 3}
 <#if system == "desktop"><#assign maxLines = 36><#else><#assign maxLines = 15></#if>
 ${color}${lua_parse populate_menu [=packagesFile] [=maxLines] 900}${voffset 5}
 ${lua_parse draw_bottom_edges [=packageCol + colGap] [=versionCol]}\
+${else}\
+${image ~/conky/monochrome/images/compact/[=image.secondaryColor]-packages.png -p 0,0}\
+<@menu.menu x=41 y=0 width=117 height=38/>
+${voffset 4}${offset 46}${color1}dnf
+${voffset 2}${offset 46}${color}no package updates
 ${endif}\
 ]];

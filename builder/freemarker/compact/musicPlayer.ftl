@@ -17,7 +17,7 @@ conky.config = {
   <#assign width = 189>
   minimum_width = [=width],      -- conky will add an extra pixel to this  
   maximum_width = [=width],
-  minimum_height = 22,      -- conky will add an extra pixel to this height
+  minimum_height = 38,      -- conky will add an extra pixel to this height
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -56,10 +56,10 @@ conky.text = [[
 # :::::::: no player available
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
 <#assign y = 0>
-${image ~/conky/monochrome/images/common/[=image.primaryColor]-rhythmbox.png -p 0,[=y]}\
-<@menu.menu x=55 y=33 width=113 height=38/>
-${voffset 36}${offset 61}${color1}now playing
-${voffset 4}${offset 61}${color}no player running${voffset 5}
+${image ~/conky/monochrome/images/compact/[=image.secondaryColor]-sound-wave.png -p 0,[=y]}\
+<@menu.menu x=41 y=0 width=113 height=38/>
+${voffset 4}${offset 46}${color1}now playing
+${voffset 2}${offset 46}${color}no player running${voffset 5}
 ${else}\
 # :::::::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\

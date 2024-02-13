@@ -14,7 +14,7 @@ conky.config = {
   -- window settings
   minimum_width = 169,      -- conky will add an extra pixel to this
   maximum_width = 169,
-  minimum_height = 22,      -- conky will add an extra pixel to this height
+  minimum_height = 53,      -- conky will add an extra pixel to this height
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -52,18 +52,19 @@ conky.text = [[
 #                                                          song with no album art
 # :::: no player available
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
-${image ~/conky/monochrome/images/common/yellow-rhythmbox.png -p 0,0}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-rhythmbox.png -p 0,0}\
 # ----------- menu image ------------
-${image ~/conky/monochrome/images/common/yellow-menu-light.png -p 58,33}\
-${image ~/conky/monochrome/images/common/yellow-menu-light-edge-top-left.png -p 58,33}\
-${image ~/conky/monochrome/images/common/yellow-menu-light-edge-top-right.png -p 162,33}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 169,33}\
-${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-left.png -p 58,64}\
-${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png -p 162,64}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 58,71}\
+${image ~/conky/monochrome/images/common/yellow-menu-light.png -p 56,0}\
+${image ~/conky/monochrome/images/common/yellow-menu-light-edge-top-left.png -p 56,0}\
+${image ~/conky/monochrome/images/common/yellow-menu-light-edge-top-right.png -p 162,0}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 169,0}\
+${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-left.png -p 56,46}\
+${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png -p 162,46}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 56,53}\
 # -------- end of menu image ---------
-${voffset 36}${offset 63}${color1}now playing
-${voffset 4}${offset 63}${color}no player running${voffset 5}
+${voffset 5}${offset 62}${color1}now playing
+${voffset 2}${offset 62}${color}no player running
+${voffset 0}${offset 62}${color}...
 ${else}\
 # :::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
