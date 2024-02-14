@@ -111,7 +111,7 @@ ${if_existing [=packagesFile]}\
 ${lua add_offsets 0 [=header]}\
 ${lua configure_menu [=image.primaryColor] light [=width?c] 3}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
-${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dnf.png 114 2}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dnf.png 111 2}\
 ${offset 5}${color1}package${alignr 4}version${voffset 3}
 ${color}${lua_parse populate_menu [=packagesFile] [=totalLines] 900}${voffset 5}
 ${endif}\

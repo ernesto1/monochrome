@@ -64,7 +64,7 @@ ${lua configure_menu [=image.primaryColor] light [=packageCol] 3}\
 <#assign y += header>
 ${lua add_offsets 0 [=y]}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
-${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dnf.png -p [=packageCol-42],[=(y+2)?c]}\
+${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dnf.png -p [=packageCol-35-2],[=(y+2)?c]}\
 ${voffset 10}${offset 5}${color1}package${alignr 5}version${voffset 3}
 <#if system == "desktop"><#assign maxLines = 36><#else><#assign maxLines = 15></#if>
 ${color}${lua_parse populate_menu [=packagesFile] [=maxLines] 900}${voffset 5}

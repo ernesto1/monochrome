@@ -126,7 +126,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 169 0}\
 ${lua add_offsets 0 19}\
 ${lua configure_menu yellow light 169 3}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
-${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-dnf.png 114 2}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-dnf.png 111 2}\
 ${offset 5}${color1}package${alignr 4}version${voffset 3}
 ${color}${lua_parse populate_menu /tmp/conky/dnf.packages.formatted 74 900}${voffset 5}
 ${endif}\

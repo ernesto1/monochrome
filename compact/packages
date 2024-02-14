@@ -75,7 +75,7 @@ ${image ~/conky/monochrome/images/common/menu-blank.png -p 189,23}\
 # -------- end of table image ---------
 ${lua add_offsets 0 42}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
-${image ~/conky/monochrome/images/common/burgundy-menu-dnf.png -p 94,44}\
+${image ~/conky/monochrome/images/common/burgundy-menu-dnf.png -p 99,44}\
 ${voffset 10}${offset 5}${color1}package${alignr 5}version${voffset 3}
 ${color}${lua_parse populate_menu /tmp/conky/dnf.packages.formatted 36 900}${voffset 5}
 ${lua_parse draw_bottom_edges 137 52}\
