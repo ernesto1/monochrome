@@ -43,8 +43,9 @@ conky.config = {
   draw_outline = false,     -- black outline around text (not good if text is black)
   -- colors
   default_color = '[=colors.menuText]',  -- regular text
-  color1 = '[=colors.labels]'
-  
+  color1 = '[=colors.labels]',
+  color3 = '[=colors.secondary.labels]',         -- secondary menu labels
+  color4 = '[=colors.secondary.text]'         -- secondary menu text  
   -- n.b. this conky requires the music-player java app to be running in the background
   --      it generates input files under /tmp/conky/musicplayer.* which this conky will read
 };
@@ -67,14 +68,15 @@ ${if_existing /tmp/conky/musicplayer.albumArtPath}\
          body = 185,  <#-- size of the current window without the header -->
          gap = 3>   <#-- empty space between windows -->
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
-<@menu.menu x=0 y=y width=width height=top+body isDark=true/>
-${color1}\
+<@menu.menu x=0 y=y width=width height=top+body isDark=false color=image.secondaryColor/>
+${voffset 2}${alignc}${color3}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} ${color4}: ${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
+${image ~/conky/monochrome/images/common/[=image.secondaryColor]-menu-album-placeholder.png -p [=4+8],[=19+8]}\
 ${else}\
 <@menu.menu x=0 y=y width=width height=top+body/>
+${voffset 2}${alignc}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} ${color}: ${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
+${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-album-placeholder.png -p [=4+8],[=19+8]}\
 ${color}\
 ${endif}\
-${voffset 2}${alignc}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} ${color}: ${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
-${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-album-placeholder.png -p 4,19}\
 ${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4,[=(top)?c]}\
 <#assign y += y + top + body + gap, body = 71>
 ${lua add_offsets 0 [=y]}\

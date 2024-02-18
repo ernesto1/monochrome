@@ -14,7 +14,8 @@ grape:
     readGraph: 6c1c1b d7511c
     writeGraph: 51295e a36dec
     secondary:
-      text: white
+      labels: white
+      text: f6ced1
   border: false             # add 1px border to panel sidebar width - optional, default is 'true'
                             # set to 'false' for sidebars that don't have an accent border
 yellow:
@@ -33,6 +34,7 @@ yellow:
     readGraph: 123e01 68a315
     writeGraph: c12504 ff3c13
     secondary:
+      labels: white
       text: a7aa71
 
 purple:
@@ -51,4 +53,5 @@ purple:
     readGraph: 689693 a3c2bc
     writeGraph: 8a00a1 c800ea
     secondary:
+      labels: white
       text: white
