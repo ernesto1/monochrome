@@ -52,7 +52,7 @@ conky.text = [[
 <#if system == "desktop"><#assign totalLines = 74><#else><#assign totalLines = 46></#if>
 ${lua set_total_lines [=totalLines]}\
 # decrease the total number of lines depending on the window size of the music player conky placed below this conky
-${lua decrease_music_player_lines 3 13}\
+${lua decrease_music_player_lines 2 12}\
 ${voffset 2}\
 <#if system == "desktop">
 # :::::::::::: transmission bittorrent client
@@ -92,13 +92,13 @@ ${lua add_offsets 0 [=gap]}\
 ${else}\
 <#assign body = 20>
 <@menu.menu x=0 y=71 + gap width=width height=body color=image.secondaryColor/>
-${lua add_offsets 0 [=body + gap]}\
+${lua add_offsets 0 [=body + gap]}${lua decrease_total_lines 1}\
 ${alignc}${color3}no active torrents${voffset [=7 + gap]}
 ${endif}\
 ${else}\
 <#assign body = 36>
 <@menu.menu x=0 y=0 width=width height=body fixed=false color=image.secondaryColor/>
-${lua add_offsets 0 [=body + gap]}${lua decrease_total_lines 1}\
+${lua add_offsets 0 [=body + gap]}${lua decrease_total_lines 2}\
 ${offset 5}${alignc}${color3}active torrents input file
 ${voffset 3}${alignc}is missing${voffset [= 7 + gap]}
 ${endif}\

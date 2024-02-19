@@ -48,7 +48,7 @@ conky.config = {
 conky.text = [[
 ${lua set_total_lines 74}\
 # decrease the total number of lines depending on the window size of the music player conky placed below this conky
-${lua decrease_music_player_lines 3 13}\
+${lua decrease_music_player_lines 2 12}\
 ${voffset 2}\
 # :::::::::::: transmission bittorrent client
 # this panel requires:
@@ -97,7 +97,7 @@ ${image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-left.png -
 ${image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-right.png -p 162,89}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 0,96}\
 # -------- end of menu image ---------
-${lua add_offsets 0 25}\
+${lua add_offsets 0 25}${lua decrease_total_lines 1}\
 ${alignc}${color3}no active torrents${voffset 12}
 ${endif}\
 ${else}\
@@ -110,7 +110,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-light-edge-bo
 ${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-right.png 162 29}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 36}\
 # -------- end of menu image ---------
-${lua add_offsets 0 41}${lua decrease_total_lines 1}\
+${lua add_offsets 0 41}${lua decrease_total_lines 2}\
 ${offset 5}${alignc}${color3}active torrents input file
 ${voffset 3}${alignc}is missing${voffset 12}
 ${endif}\

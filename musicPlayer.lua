@@ -64,12 +64,3 @@ function assess_missing_metadata(fields)
   
   return count
 end
-
-function conky_apply_vertical_offset(offset, ...)
-  local fields = {...}  
-  local count = assess_missing_metadata(fields)
-  local voffset = offset * count
-  conky_add_offsets(0, voffset)
-  --print(vars["xOffset"] .. ' ' .. vars["yOffset"] .. ' ' .. voffset)
-  return ''
-end
