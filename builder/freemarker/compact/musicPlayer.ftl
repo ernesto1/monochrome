@@ -58,9 +58,9 @@ conky.text = [[
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
 <#assign y = 0>
 ${image ~/conky/monochrome/images/compact/[=image.secondaryColor]-sound-wave.png -p 0,[=y]}\
-<@menu.menu x=41 y=0 width=113 height=38/>
-${voffset 4}${offset 46}${color1}now playing
-${voffset 2}${offset 46}${color}no player running${voffset 5}
+<@menu.menu x=41 y=0 width=189-41 height=38/>
+${voffset 4}${offset 48}${color1}now playing
+${voffset 2}${offset 48}${color}no player running${voffset 5}
 ${else}\
 # :::::::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\

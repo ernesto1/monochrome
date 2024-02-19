@@ -10,14 +10,14 @@ conky.config = {
   -- window alignment
   alignment = 'top_left',  -- header|middle|bottom_left|right
   gap_x = 195,
-  gap_y = 662,
+  gap_y = 686,
 
   -- window settings
-  minimum_width = 275,      -- conky will add an extra pixel to this
+  minimum_width = 275,          -- conky will add an extra pixel to height and width
   maximum_width = 275,
   minimum_height = 1035,
   own_window = true,
-  own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
+  own_window_type = 'desktop',  -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
   -- window borders

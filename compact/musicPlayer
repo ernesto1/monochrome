@@ -57,14 +57,14 @@ ${image ~/conky/monochrome/images/compact/ochre-sound-wave.png -p 0,0}\
 # ----------- menu image ------------
 ${image ~/conky/monochrome/images/common/burgundy-menu-light.png -p 41,0}\
 ${image ~/conky/monochrome/images/common/burgundy-menu-light-edge-top-left.png -p 41,0}\
-${image ~/conky/monochrome/images/common/burgundy-menu-light-edge-top-right.png -p 147,0}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 154,0}\
+${image ~/conky/monochrome/images/common/burgundy-menu-light-edge-top-right.png -p 182,0}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 189,0}\
 ${image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-left.png -p 41,31}\
-${image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-right.png -p 147,31}\
+${image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-right.png -p 182,31}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 41,38}\
 # -------- end of menu image ---------
-${voffset 4}${offset 46}${color1}now playing
-${voffset 2}${offset 46}${color}no player running${voffset 5}
+${voffset 4}${offset 48}${color1}now playing
+${voffset 2}${offset 48}${color}no player running${voffset 5}
 ${else}\
 # :::::::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\

@@ -10,7 +10,7 @@ conky.config = {
   -- window alignment
   alignment = 'top_left',  -- top|middle|bottom_left|right
   gap_x = 195,
-  gap_y = 37,
+  gap_y = 39,
 
   -- window settings
   <#assign width = 189>
@@ -66,13 +66,13 @@ ${lua add_offsets 0 [=y]}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dnf.png -p [=packageCol-35-2],[=(y+2)?c]}\
 ${voffset 10}${offset 5}${color1}package${alignr 5}version${voffset 3}
-<#if system == "desktop"><#assign maxLines = 36><#else><#assign maxLines = 15></#if>
+<#if system == "desktop"><#assign maxLines = 37><#else><#assign maxLines = 15></#if>
 ${color}${lua_parse populate_menu [=packagesFile] [=maxLines] 900}${voffset 5}
 ${lua_parse draw_bottom_edges [=packageCol + colGap] [=versionCol]}\
 ${else}\
 ${image ~/conky/monochrome/images/compact/[=image.secondaryColor]-packages.png -p 0,0}\
-<@menu.menu x=41 y=0 width=117 height=38/>
-${voffset 4}${offset 46}${color1}dnf
-${voffset 2}${offset 46}${color}no package updates
+<@menu.menu x=41 y=0 width=189-41 height=38/>
+${voffset 4}${offset 48}${color1}dandified yum
+${voffset 2}${offset 48}${color}no package updates
 ${endif}\
 ]];

@@ -9,7 +9,7 @@ conky.config = {
   -- window alignment
   alignment = 'top_left',  -- top|middle|bottom_left|right
   gap_x = 195,
-  gap_y = 37,
+  gap_y = 39,
 
   -- window settings
   minimum_width = 189,      -- conky will add an extra pixel to this  
@@ -77,20 +77,20 @@ ${lua add_offsets 0 42}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${image ~/conky/monochrome/images/common/burgundy-menu-dnf.png -p 99,44}\
 ${voffset 10}${offset 5}${color1}package${alignr 5}version${voffset 3}
-${color}${lua_parse populate_menu /tmp/conky/dnf.packages.formatted 36 900}${voffset 5}
+${color}${lua_parse populate_menu /tmp/conky/dnf.packages.formatted 37 900}${voffset 5}
 ${lua_parse draw_bottom_edges 137 52}\
 ${else}\
 ${image ~/conky/monochrome/images/compact/ochre-packages.png -p 0,0}\
 # ----------- menu image ------------
 ${image ~/conky/monochrome/images/common/burgundy-menu-light.png -p 41,0}\
 ${image ~/conky/monochrome/images/common/burgundy-menu-light-edge-top-left.png -p 41,0}\
-${image ~/conky/monochrome/images/common/burgundy-menu-light-edge-top-right.png -p 151,0}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 158,0}\
+${image ~/conky/monochrome/images/common/burgundy-menu-light-edge-top-right.png -p 182,0}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 189,0}\
 ${image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-left.png -p 41,31}\
-${image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-right.png -p 151,31}\
+${image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-right.png -p 182,31}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 41,38}\
 # -------- end of menu image ---------
-${voffset 4}${offset 46}${color1}dnf
-${voffset 2}${offset 46}${color}no package updates
+${voffset 4}${offset 48}${color1}dandified yum
+${voffset 2}${offset 48}${color}no package updates
 ${endif}\
 ]];
