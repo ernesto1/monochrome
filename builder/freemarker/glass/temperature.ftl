@@ -1,4 +1,5 @@
 # ::::::::::::::::: temperatures
+<#if system == "desktop">
 <#-- TODO use lua function to determine hottest core, disk -->
 ${if_updatenr 1}${image ~/conky/monochrome/images/glass/[=image.primaryColor]-temperature-desktop-1.png -p 5,0}${endif}\
 ${if_updatenr 2}${image ~/conky/monochrome/images/glass/[=image.primaryColor]-temperature-desktop-2.png -p 5,0}${endif}\
@@ -17,3 +18,4 @@ ${voffset -13}${alignr 38}${color}${font2}${template8 [=disk.hwmonIndex] temp 1 
 ${voffset 7}${offset 10}${color1}${font0}fans${font}
 ${voffset -8}${alignr 38}${color}${font2}${template8 atk0110 fan 1 [=(threshold.fanSpeed)?c]}${font}
 ${voffset -4}${alignr 38}${font}rpm${font}${voffset 10}
+</#if>
