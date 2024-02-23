@@ -62,7 +62,7 @@
                 default is 'true'
   color         color scheme to use, default is the conky primary color scheme
  -->
-<#macro menu x y width height isDark=false bottomEdges=true fixed=true color=image.primaryColor>
+<#macro menu x y width height=100 isDark=false bottomEdges=true fixed=true color=image.primaryColor>
 # ----------- menu image ------------
 <#local theme = getTheme(isDark)>
 <@menuHeader x=x y=y width=width theme=theme fixed=fixed color=color/>
