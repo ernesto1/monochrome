@@ -63,7 +63,7 @@ ${lua load_track_info}\
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
 # :::::::: album art
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-music-player-album.png -p 0,0}\
-${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 147x147 6,6}\
+${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 147x147 6 6}\
 ${endif}\
 <#assign y = width + 2>
 ${lua add_offsets 0 [=y]}\

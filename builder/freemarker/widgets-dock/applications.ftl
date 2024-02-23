@@ -10,13 +10,13 @@ conky.config = {
   -- window alignment
   alignment = 'middle_left',  -- top|middle|bottom_left|right
   gap_x = 142,
-  gap_y = -164,
+  gap_y = -172,
 
   -- window settings
   <#assign width = 169>
   minimum_width = [=width],      -- conky will add an extra pixel to this  
   maximum_width = [=width],
-  <#if system == "desktop"><#assign windowHeight=1295><#else><#assign windowHeight=20></#if>
+  <#if system == "desktop"><#assign windowHeight=1311><#else><#assign windowHeight=20></#if>
   minimum_height = [=windowHeight?c],
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -49,10 +49,10 @@ conky.config = {
 };
 
 conky.text = [[
-<#if system == "desktop"><#assign totalLines = 74><#else><#assign totalLines = 46></#if>
+<#if system == "desktop"><#assign totalLines = 75><#else><#assign totalLines = 48></#if>
 ${lua set_total_lines [=totalLines]}\
 # decrease the total number of lines depending on the window size of the music player conky placed below this conky
-${lua decrease_music_player_lines 2 12}\
+${lua decrease_music_player_lines 3 4 16}\
 ${voffset 2}\
 <#if system == "desktop">
 # :::::::::::: transmission bittorrent client

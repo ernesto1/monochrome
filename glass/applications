@@ -49,7 +49,7 @@ conky.config = {
 conky.text = [[
 ${lua set_total_lines 61}\
 # decrease the total number of lines depending on the window size of the music player conky placed below this conky
-${lua decrease_music_player_lines 1 10}\
+${lua decrease_music_player_lines 1 3 13}\
 # --- composite vertical table image ---
 ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 0,0}\
 ${image ~/conky/monochrome/images/common/blue-menu-light.png -p 75,0}\

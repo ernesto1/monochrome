@@ -1,3 +1,6 @@
+-- n.b. this conky requires the music-player java app to be running in the background
+--      it generates input files under /tmp/conky/musicplayer.* which this conky will read
+
 conky.config = {
   lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
   lua_draw_hook_pre = 'reset_state',
@@ -42,15 +45,13 @@ conky.config = {
   default_color = 'cf9c7b',  -- regular text
   color1 = 'white',
   color3 = 'white',         -- secondary menu labels
-  color4 = '623f28'         -- secondary menu text  
-  -- n.b. this conky requires the music-player java app to be running in the background
-  --      it generates input files under /tmp/conky/musicplayer.* which this conky will read
+  color4 = '623f28'         -- secondary menu text
 };
 
 conky.text = [[
-# the UI of this conky changes as per one of these states: no music player is running
-#                                                          song with album art
-#                                                          song with no album art
+# the UI of this conky has three states: no music player is running
+#                                        song with album art
+#                                        song with no album art
 # :::::::: no player available
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
 ${image ~/conky/monochrome/images/compact/ochre-sound-wave.png -p 0,0}\
@@ -94,7 +95,7 @@ ${voffset 2}${alignc}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.na
 ${image ~/conky/monochrome/images/common/burgundy-menu-album-placeholder.png -p 12,27}\
 ${color}\
 ${endif}\
-${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4,19}\
+${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4 19}\
 ${lua add_offsets 0 207}\
 ${voffset 193}\
 ${else}\

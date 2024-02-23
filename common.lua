@@ -34,13 +34,16 @@ by using the conky ${cat} variable
 arguments:
   expression    conky variable to parse, must yield an image file path
   dimensions    image dimensions in WxH format, ex. 200x200
-  position      image x,y coordinates, ex. 50,100
+  x             image x coordinate
+  y             image y coordinate
 returns:
   ${image picture.jpg -s 100x100 -p 0,0}
 ]]
-function conky_album_art_image(expression, dimensions, position)
+function conky_album_art_image(expression, dimensions, x, y)
   local path = conky_parse(expression)
-  local s = "${image " .. path .. " -s " .. dimensions .. " -p " .. position .."}"
+  local xOffset = vars["xOffset"] or 0
+  local yOffset = vars["yOffset"] or 0
+  local s = "${image " .. path .. " -s " .. dimensions .. " -p " .. tonumber(x) + xOffset .. "," .. tonumber(y)  + yOffset .."}"
   
   return s
 end

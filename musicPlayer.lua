@@ -24,23 +24,28 @@ best use of space for displaying information, since the size of the music player
 arguments:
   noPlayerLines   number of lines to decrease when no 'active' player is available
                   the music player conky window size will be the smallest in this state
+  noAlbumLines    number of lines to decrease when the track has no album art
   albumLines      number of lines to decrease when the track has album art
                   the music player conky window size will be the biggest in this state
 ]]
-function conky_decrease_music_player_lines(noPlayerLines, albumLines)
-  -- no player running
-  local count = tonumber(conky_parse('${if_existing /tmp/conky/musicplayer.name Nameless}' .. noPlayerLines .. '${else}0${endif}'))
-
-  if count == 0 then
-    -- album art
-    count = tonumber(conky_parse('${if_existing /tmp/conky/musicplayer.albumArtPath}' .. albumLines .. '${else}0${endif}'))
+function conky_decrease_music_player_lines(noPlayerLines, noAlbumLines, albumLines)
+  local count = 0
+  local isNoPlayer = conky_parse('${if_existing /tmp/conky/musicplayer.name Nameless}true${else}false${endif}')
+  --print(isNoPlayer)
+  
+  if isNoPlayer == 'true' then
+    --print('no player available')
+    count = tonumber(noPlayerLines)
+  else
+    -- is there album art?
+    count = tonumber(conky_parse('${if_existing /tmp/conky/musicplayer.albumArtPath}' .. albumLines .. '${else}' .. noAlbumLines .. '${endif}'))
     conky_load_track_info()
     -- album/author/genre
     fields = {}
     fields[1] = 'album'
     fields[2] = 'artist'
     fields[3] = 'genre'
-    count = count + 3 - assess_missing_metadata(fields)
+    count = count - assess_missing_metadata(fields)
   end
   
   --print(count)

@@ -9,12 +9,12 @@ conky.config = {
   -- window alignment
   alignment = 'middle_left',  -- top|middle|bottom_left|right
   gap_x = 142,
-  gap_y = -164,
+  gap_y = -172,
 
   -- window settings
   minimum_width = 169,      -- conky will add an extra pixel to this  
   maximum_width = 169,
-  minimum_height = 1295,
+  minimum_height = 1311,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -46,9 +46,9 @@ conky.config = {
 };
 
 conky.text = [[
-${lua set_total_lines 74}\
+${lua set_total_lines 75}\
 # decrease the total number of lines depending on the window size of the music player conky placed below this conky
-${lua decrease_music_player_lines 2 12}\
+${lua decrease_music_player_lines 3 4 16}\
 ${voffset 2}\
 # :::::::::::: transmission bittorrent client
 # this panel requires:
@@ -85,7 +85,7 @@ ${lua configure_menu yellow light 169 3}\
 ${lua add_offsets 0 19}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-peers.png 29 22}\
 ${alignc}${color1}active torrents ${color}(${color}${lua get activeNum}${color})${color1}${voffset 3}
-${color}${color}${lua_parse populate_menu /tmp/conky/transmission.active 69 3}${voffset 12}
+${color}${color}${lua_parse populate_menu /tmp/conky/transmission.active 70 3}${voffset 12}
 ${lua add_offsets 0 5}\
 ${else}\
 # ----------- menu image ------------
@@ -128,6 +128,6 @@ ${lua configure_menu yellow light 169 3}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-dnf.png 111 2}\
 ${offset 5}${color1}package${alignr 4}version${voffset 3}
-${color}${lua_parse populate_menu /tmp/conky/dnf.packages.formatted 74 900}${voffset 5}
+${color}${lua_parse populate_menu /tmp/conky/dnf.packages.formatted 75 900}${voffset 5}
 ${endif}\
 ]]

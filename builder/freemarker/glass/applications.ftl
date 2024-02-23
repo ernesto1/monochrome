@@ -53,7 +53,7 @@ so the package update list will take all the space.  If torrents are running, ea
 the total lines available in order to account for the addtional menu space plus menu spacing -->
 ${lua set_total_lines [=totalLines]}\
 # decrease the total number of lines depending on the window size of the music player conky placed below this conky
-${lua decrease_music_player_lines 1 10}\
+${lua decrease_music_player_lines 1 3 13}\
 <#assign y = 0,
          header = 75,
          height = 87,

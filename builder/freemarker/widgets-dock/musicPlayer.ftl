@@ -1,4 +1,7 @@
 <#import "/lib/menu-round.ftl" as menu>
+-- n.b. this conky requires the music-player java app to be running in the background
+--      it generates input files under /tmp/conky/musicplayer.* which this conky will read
+
 conky.config = {
   lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
   lua_draw_hook_pre = 'reset_state',
@@ -44,16 +47,13 @@ conky.config = {
   default_color = '[=colors.menuText]',  -- regular text
   color1 = '[=colors.labels]',
   color3 = '[=colors.secondary.labels]',         -- secondary menu labels
-  color4 = '[=colors.secondary.text]'         -- secondary menu text  
-  
-  -- n.b. this conky requires the music-player java app to be running in the background
-  --      it generates input files under /tmp/conky/musicplayer.* which this conky will read
+  color4 = '[=colors.secondary.text]'         -- secondary menu text
 };
 
 conky.text = [[
-# the UI of this conky changes as per one of these states: no music player is running
-#                                                          song with album art
-#                                                          song with no album art
+# the UI of this conky has three states: no music player is running
+#                                        song with album art
+#                                        song with no album art
 # :::: no player available
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
 <#assign y = 0>
@@ -79,7 +79,7 @@ ${voffset 2}${alignc}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.na
 ${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-album-placeholder.png -p [=innerBorder],[=header]}\
 ${color}\
 ${endif}\
-${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} [=width-innerBorder*2]x[=width-innerBorder*2] [=innerBorder],[=(header)?c]}\
+${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} [=width-innerBorder*2]x[=width-innerBorder*2] [=innerBorder] [=(header)?c]}\
 <#assign y += header + body + gap>
 ${voffset [=body + 4 + gap]}${lua add_offsets 0 [=y]}\
 ${endif}\
