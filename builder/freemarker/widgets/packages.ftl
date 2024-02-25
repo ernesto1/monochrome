@@ -64,6 +64,6 @@ ${voffset 3}${alignc}${color1}dnf package management
 ${voffset 5}${alignc}${color}${lines [=packagesFile]} package update(s) available
 ${voffset 6}${offset 5}${color1}package${alignr 4}version${voffset 1}
 <#assign maxLines = 85>
-${color}${lua_parse populate_menu [=packagesFile] [=maxLines]}${voffset 5}
+${color}${lua_parse populate_menu_from_file [=packagesFile] [=maxLines]}${voffset 5}
 ${endif}\
 ]];

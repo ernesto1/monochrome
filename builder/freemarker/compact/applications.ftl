@@ -84,7 +84,7 @@ ${lua configure_menu [=image.primaryColor] light [=packageCol] 3}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dnf.png [=packageCol-35-2] 2}\
 ${lua add_offsets 0 [=gap]}\
-${color}${lua_parse populate_menu [=packagesFile] [=packageLines] 900}${voffset [= 8 + bigGap]}
+${color}${lua_parse populate_menu_from_file [=packagesFile] [=packageLines]}${voffset [= 8 + bigGap]}
 ${lua_parse draw_bottom_edges [=packageCol + colGap] [=versionCol]}\
 ${lua add_offsets 0 [=bigGap]}\
 ${else}\
@@ -189,14 +189,14 @@ ${lua configure_menu [=image.primaryColor] light [=width] 3}\
 <@menu.menu x=0 y=0 width=width bottomEdges=false fixed=false/>
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-peers.png 38 22}\
 ${lua add_offsets 0 [=gap]}\
-${color}${lua_parse populate_menu [=activeTorrentsFile] [=torrentLines - 5]}${voffset [= 7 + gap]}
+${color}${lua_parse populate_menu_from_file [=activeTorrentsFile] [=torrentLines - 5]}${voffset [= 7 + gap]}
 ${lua add_offsets 0 [=gap]}\
 <#assign ipCol = 99, clientCol = 87, colGap = 3>
 ${lua configure_menu [=image.primaryColor] light [=ipCol] 3}\
 <@menu.menu x=0 y=0 width=ipCol bottomEdges=false fixed=false/>
 <@menu.menu x=ipCol+colGap y=0 width=clientCol bottomEdges=false fixed=false/>
 ${lua add_offsets 0 [=gap]}\
-${color}${lua_parse populate_menu [=peersFile] 35}${lua_parse draw_bottom_edges [=ipCol+colGap] [=clientCol]}
+${color}${lua_parse populate_menu_from_file [=peersFile] 35}${lua_parse draw_bottom_edges [=ipCol+colGap] [=clientCol]}
 ${endif}
 ${else}\
 # :::::: error state: input file not available

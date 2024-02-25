@@ -87,7 +87,7 @@ while [ true ]; do
     | sed 's/\.0  /  /g' \
     | \sed 's/  \+/:/g' \
     | cut -d ':' -f 6,7,10 \
-    | awk -F ':' "{printf \"\${voffset 3}\${offset 5}%-${nameWidth}.${nameWidth}s\${offset ${offset}}\${color4}%5.5s\${offset ${offset}}\${color}%5.5s\n\", \$3, \$1, \$2}" \
+    | awk -F ':' "{printf \"%-${nameWidth}.${nameWidth}s\${offset ${offset}}\${color4}%5.5s\${offset ${offset}}\${color}%5.5s\n\", \$3, \$1, \$2}" \
     | sort > ${activeFile}.$$
   # Address                                   Flags         Done  Down    Up      Client
   # 72.178.162.10                             ?E            0.0      0.0     0.0  µTorrent 1.8.3
@@ -101,7 +101,7 @@ while [ true ]; do
     | cut -d ':' -f 1,4,5,6 \
     | grep -vE ':0:0:' \
     | sort -t . -k 1n -k 2n -k 3n -k 4n \
-    | awk -F ':' "{printf \"\${voffset 3}\${offset 5}%-15s\${offset 12}%-13.13s\${offset ${offset}}\${color4}%5.5s\${offset ${offset}}\${color}%5.5s\n\", \$1, \$4, \$3, \$2}" > ${peersFile}.$$
+    | awk -F ':' "{printf \"%-15s\${offset 12}%-13.13s\${offset ${offset}}\${color4}%5.5s\${offset ${offset}}\${color}%5.5s\n\", \$1, \$4, \$3, \$2}" > ${peersFile}.$$
   
   mv ${seedingFile}.$$ ${seedingFile}
   mv ${downloadingFile}.$$ ${downloadingFile}

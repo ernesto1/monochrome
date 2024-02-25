@@ -84,7 +84,7 @@ ${lua decrease_total_lines 1}\
 ${lua configure_menu [=image.primaryColor] light [=width?c] 3 false}\
 ${lua add_offsets 0 [=header]}\
 ${offset 5}${color1}active torrents${goto 184}${color3}up${offset 16}down${voffset 3}
-${color}${color}${lua_parse populate_menu [=activeTorrentsFile] [=totalLines - 5] 3}
+${color}${color}${lua_parse populate_menu_from_file [=activeTorrentsFile] [=totalLines - 5]}
 ${lua_parse draw_bottom_edges [=width+colGap] 39 color=image.secondaryColor}${lua_parse draw_bottom_edges [=width+colGap+speedCol+colGap] 39}\
 ${voffset [= 7 + gap]}\
 ${lua add_offsets 0 [=gap]}\
@@ -113,6 +113,6 @@ ${voffset [= 7 + gap]}\
 ${lua configure_menu [=image.primaryColor] light [=width?c] 3 false}\
 ${lua add_offsets 0 [=header]}\
 ${offset 5}${color1}package${goto 166}version${voffset 3}
-${color}${lua_parse populate_menu [=packagesFile] [=totalLines] 900}
+${color}${lua_parse populate_menu_from_file [=packagesFile] [=totalLines]}
 ${endif}\
 ]]

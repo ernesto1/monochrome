@@ -372,14 +372,23 @@ function lines(string)
   return lines + 1    -- last line in the text file won't have a new line so we need to account for it
 end
 
-function conky_populate_menu_from_mem(filepath, max, x)
+function conky_populate_menu_from_file(filepath, max, x, y)
+  conky_read_file(filepath)
+  return conky_populate_menu_from_mem(filepath, max, x, y)
+end
+
+function conky_populate_menu_from_mem(filepath, max, x, y)
+  -- apply sensible defaults
   max = (max ~= nil) and tonumber(max) or 30
+  x = (x ~= nil) and tonumber(x) or 5
+  y = (y ~= nil) and tonumber(y) or 3
+  
   local text, lines = cutText(vars[filepath], max)
 
   if x ~=nil then
     x = x + vars["xOffset"]
-    text = '${offset ' .. x .. '}' .. text
-    text = string.gsub(text, "\n", "\n" .. '${offset ' .. x .. '}')
+    text = '${voffset ' .. y .. '}' .. '${offset ' .. x .. '}' .. text
+    text = string.gsub(text, "\n", "\n" .. '${voffset ' .. y .. '}' .. '${offset ' .. x .. '}')
   end
   
   local y = calculate_bottom_edge_y_coordinate(lines)

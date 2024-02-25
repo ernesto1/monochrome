@@ -145,7 +145,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 269 0}\
 # -------- end of table image ---------
 ${lua_parse add_y_offset voffset 2}${lua_parse add_x_offset offset 5}${color1}ip address${offset 43}client${offset 69}up${offset 16}down${voffset 3}
 ${lua add_offsets 0 19}\
-${color}${lua_parse populate_menu_from_mem /tmp/conky/transmission.peers 20 0}
+${color}${lua_parse populate_menu_from_mem /tmp/conky/transmission.peers 20}
 ${lua_parse draw_bottom_edges 102 87}${lua_parse draw_bottom_edges 190 39}${lua_parse draw_bottom_edges 230 39}\
 ${else}\
 ${lua add_offsets 0 323}\

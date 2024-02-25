@@ -67,7 +67,7 @@ ${lua add_offsets 0 [=y]}\
 ${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dnf.png -p [=packageCol-35-2],[=(y+2)?c]}\
 ${voffset 10}${offset 5}${color1}package${alignr 5}version${voffset 3}
 <#if system == "desktop"><#assign maxLines = 37><#else><#assign maxLines = 15></#if>
-${color}${lua_parse populate_menu [=packagesFile] [=maxLines] 900}${voffset 5}
+${color}${lua_parse populate_menu_from_file [=packagesFile] [=maxLines]}${voffset 5}
 ${lua_parse draw_bottom_edges [=packageCol + colGap] [=versionCol]}\
 ${else}\
 ${image ~/conky/monochrome/images/compact/[=image.secondaryColor]-packages.png -p 0,0}\

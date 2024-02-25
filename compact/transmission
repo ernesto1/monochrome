@@ -96,7 +96,7 @@ ${image ~/conky/monochrome/images/common/menu-blank.png -p 269,74}\
 ${image ~/conky/monochrome/images/common/burgundy-menu-peers.png -p 38,115}\
 ${lua add_offsets 0 19}\
 ${offset 5}${color1}active torrents ${color}(${color}${lua get activeNum}${color})${color1}${goto 214}${color3}up${offset 16}${color1}down${voffset 3}
-${color}${lua_parse populate_menu /tmp/conky/transmission.active 30}${voffset 10}
+${color}${lua_parse populate_menu_from_file /tmp/conky/transmission.active 30}${voffset 10}
 ${lua_parse draw_bottom_edges 190 39 ochre}${lua_parse draw_bottom_edges 230 39}\
 ${lua add_offsets 0 3}\
 ${else}\
@@ -159,7 +159,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 269 0}\
 # -------- end of table image ---------
 ${lua add_offsets 0 19}\
 ${offset 5}${color1}ip address${goto 108}client${goto 214}${color3}up${offset 16}${color1}down${voffset 3}
-${color}${lua_parse populate_menu /tmp/conky/transmission.peers 33}
+${color}${lua_parse populate_menu_from_file /tmp/conky/transmission.peers 33}
 ${lua_parse draw_bottom_edges 102 87}${lua_parse draw_bottom_edges 190 39 ochre}${lua_parse draw_bottom_edges 230 39}\
 ${endif}\
 ${else}\

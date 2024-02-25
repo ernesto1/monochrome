@@ -103,7 +103,7 @@ ${lua configure_menu [=image.secondaryColor] light [=ipCol] 3}\
 <@menu.table x=ipCol+colGap+clientCol+colGap+speedCol+colGap y=0 width=39 header=header bottomEdges=false fixed=false color=image.secondaryColor/>
 ${lua_parse add_y_offset voffset 2}${lua_parse add_x_offset offset 5}${color1}ip address${offset 43}client${offset 69}up${offset 16}down${voffset 3}
 ${lua add_offsets 0 [=header]}\
-${color}${lua_parse populate_menu_from_mem [=peersFile] [=max] 0}
+${color}${lua_parse populate_menu_from_mem [=peersFile] [=max]}
 ${lua_parse draw_bottom_edges [=ipCol+colGap] [=clientCol]}${lua_parse draw_bottom_edges [=ipCol+colGap+clientCol+colGap] [=speedCol]}${lua_parse draw_bottom_edges [=ipCol+colGap+clientCol+colGap+speedCol+colGap] [=speedCol]}\
 ${else}\
 ${lua add_offsets 0 323}\

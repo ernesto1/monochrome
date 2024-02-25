@@ -77,7 +77,7 @@ ${lua add_offsets 0 42}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${image ~/conky/monochrome/images/common/burgundy-menu-dnf.png -p 99,44}\
 ${voffset 10}${offset 5}${color1}package${alignr 5}version${voffset 3}
-${color}${lua_parse populate_menu /tmp/conky/dnf.packages.formatted 37 900}${voffset 5}
+${color}${lua_parse populate_menu_from_file /tmp/conky/dnf.packages.formatted 37}${voffset 5}
 ${lua_parse draw_bottom_edges 137 52}\
 ${else}\
 ${image ~/conky/monochrome/images/compact/ochre-packages.png -p 0,0}\
