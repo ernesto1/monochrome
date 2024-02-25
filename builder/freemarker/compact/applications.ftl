@@ -1,12 +1,13 @@
 <#import "/lib/menu-round.ftl" as menu>
 --[[ 
-this conky requires:
+this conky requires the following supporting scritps running in the background:
 
- - the music-player java app running in the background
- - the 'remote control' feature enabled in the transmission bittorrent client: edit > preferences > remote
- - the transmission.bash script running in the background
+ - dnfPackageLookup.bash
+ - the music-player java app
+ - transmission.bash
+   requires the 'remote control' feature enabled in the transmission bittorrent client: edit > preferences > remote
 
-input files from the supporting bash scripts are read from /tmp/conky
+input files from these supporting apps are read from /tmp/conky
 ]]
 
 conky.config = {
@@ -50,9 +51,9 @@ conky.config = {
   draw_shades = false,      -- black shadow on text (not good if text is black)
   draw_outline = false,     -- black outline around text (not good if text is black)
   -- colors
-  default_color = '[=colors.menuText]',  -- regular text
+  default_color = '[=colors.menuText]', -- regular text
   color1 = '[=colors.labels]',
-  color2 = '[=colors.highlight]',         -- highlight important packages
+  color2 = '[=colors.highlight]',        -- highlight important packages
   color3 = '[=colors.secondary.labels]',         -- secondary menu labels
   color4 = '[=colors.secondary.text]'         -- secondary menu text
 };
@@ -110,27 +111,24 @@ ${else}\
 # :::::: player status
 ${lua add_offsets 0 [=gap]}${voffset [=gap]}\
 ${lua_parse draw_image ~/conky/monochrome/images/compact/[=image.secondaryColor]-sound-wave.png 0 0}\
-<@menu.menu x=41 y=0 width=189-41 height=iconHeight fixed=false/>
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
-<@menu.menu x=41 y=0 width=189-41 height=iconHeight isDark=true fixed=false/>
-${endif}\
+<@menu.menu x=41 y=0 width=189-41 height=iconHeight fixed=false color=image.secondaryColor/>
+${voffset 2}${offset 48}${color3}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}
+${voffset 2}${offset 48}${color4}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
+${else}\
+<@menu.menu x=41 y=0 width=189-41 height=iconHeight fixed=false/>
 ${voffset 2}${offset 48}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}
 ${voffset 2}${offset 48}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
+${endif}\
 ${lua add_offsets 0 [=iconHeight + gap]}\
 ${voffset [= 7 + gap]}\
 # :::::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
 <#assign body = 189,    <#-- size of the current window without the header -->
          border = 4>
-${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
-<@menu.menu x=0 y=0 width=width height=body fixed=false color=image.secondaryColor/>
-${lua add_offsets 0 [=border]}\
-${lua_parse draw_image ~/conky/monochrome/images/common/[=image.secondaryColor]-menu-album-placeholder.png [=border+8] 8}\
-${else}\
 <@menu.menu x=0 y=0 width=width height=body fixed=false/>
 ${lua add_offsets 0 [=border]}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-album-placeholder.png [=border+8] 8}\
-${endif}\
 ${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4 0}\
 ${lua add_offsets 0 [=body-border + gap]}\
 ${voffset 192}\
