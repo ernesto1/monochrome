@@ -1,6 +1,6 @@
 #!/bin/bash
 # script to retrieve and parse torrent details from the transmission bittorrent client.
-# torrent data is saved as files in the /tmp folder for conky to read.
+# torrent data is saved as individual files in the /tmp/conky directory for conky to read.
 
 . ~/conky/monochrome/logging.bash
 
@@ -60,13 +60,18 @@ log 'starting transmission torrent info service'
 log "torrent listing format will be ${nameWidth} | offset ${offset} | up | offset ${offset} | down"
 outputDir=/tmp/conky
 mkdir -p ${outputDir}
-peersFile=${outputDir}/transmission.peers
 seedingFile=${outputDir}/transmission.seeding
 downloadingFile=${outputDir}/transmission.downloading
 idleFile=${outputDir}/transmission.idle
+active=${outputDir}/transmission.active.raw
 activeFile=${outputDir}/transmission.active
+activeFlippedFile=${outputDir}/transmission.active.flipped
+peers=${outputDir}/transmission.peers.raw
+peersFile=${outputDir}/transmission.peers
+peersFlippedFile=${outputDir}/transmission.peers.flipped
 
 while [ true ]; do
+  # ::: statistics
   # $ transmission-remote -F u -l
   #     ID   Done       Have  ETA           Up    Down  Ratio  Status       Name
   #     87   100%    2.96 GB  15 days      0.0     0.0   96.5  Seeding      fedora 37.iso
@@ -75,6 +80,8 @@ while [ true ]; do
   transmission-remote -F u -l | grep -E '^[[:space:]]+[[:digit:]]' > ${seedingFile}.$$
   transmission-remote -F d -l | grep -E '^[[:space:]]+[[:digit:]]' > ${downloadingFile}.$$
   transmission-remote -F i -l | grep -E '^[[:space:]]+[[:digit:]]' > ${idleFile}.$$
+  
+  # ::: active torrents
   # $ transmission-remote -t active -l
   #     ID   Done       Have  ETA           Up    Down  Ratio  Status       Name
   #    168   100%   11.74 GB  17 days      0.0     0.0   2.47  Seeding      fedora 37.iso
@@ -87,8 +94,12 @@ while [ true ]; do
     | sed 's/\.0  /  /g' \
     | \sed 's/  \+/:/g' \
     | cut -d ':' -f 6,7,10 \
-    | awk -F ':' "{printf \"%-${nameWidth}.${nameWidth}s\${offset ${offset}}\${color4}%5.5s\${offset ${offset}}\${color}%5.5s\n\", \$3, \$1, \$2}" \
-    | sort > ${activeFile}.$$
+    | sort -t ':' -k 3 > ${active}
+  awk -F ':' "{printf \"%-${nameWidth}.${nameWidth}s\${offset ${offset}}\${color4}%5.5s\${offset ${offset}}\${color}%5.5s\n\", \$3, \$1, \$2}" ${active} > ${activeFile}.$$
+  # flipped version
+  awk -F ':' "{printf \"\${color}%5.5s\${offset ${offset}}\${color4}%5.5s\${offset ${offset}}\${color}%-${nameWidth}.${nameWidth}s\n\", \$2, \$1, \$3}" ${active} > ${activeFlippedFile}.$$
+  
+  # ::: connected peers
   # Address                                   Flags         Done  Down    Up      Client
   # 72.178.162.10                             ?E            0.0      0.0     0.0  µTorrent 1.8.3
   # 95.168.162.205                            DE            100.0 5349.0     0.0  libTorrent (Rakshasa) 0.13.8
@@ -100,14 +111,18 @@ while [ true ]; do
     | sed 's/µ/u/' \
     | cut -d ':' -f 1,4,5,6 \
     | grep -vE ':0:0:' \
-    | sort -t . -k 1n -k 2n -k 3n -k 4n \
-    | awk -F ':' "{printf \"%-15s\${offset 12}%-13.13s\${offset ${offset}}\${color4}%5.5s\${offset ${offset}}\${color}%5.5s\n\", \$1, \$4, \$3, \$2}" > ${peersFile}.$$
+    | sort -t . -k 1n -k 2n -k 3n -k 4n > ${peers}
+  awk -F ':' "{printf \"%-15s\${offset 12}%-13.13s\${offset ${offset}}\${color4}%5.5s\${offset ${offset}}\${color}%5.5s\n\", \$1, \$4, \$3, \$2}" ${peers} > ${peersFile}.$$
+  # flipped version
+  awk -F ':' "{printf \"\${color}%5.5s\${offset ${offset}}\${color4}%5.5s\${offset ${offset}}\${color}%-15s\${offset ${offset}}%-13.13s\n\", \$2, \$3, \$1, \$4}" ${peers} > ${peersFlippedFile}.$$
   
   mv ${seedingFile}.$$ ${seedingFile}
   mv ${downloadingFile}.$$ ${downloadingFile}
   mv ${idleFile}.$$ ${idleFile}
   mv ${activeFile}.$$ ${activeFile}
+  mv ${activeFlippedFile}.$$ ${activeFlippedFile}
   mv ${peersFile}.$$ ${peersFile}
+  mv ${peersFlippedFile}.$$ ${peersFlippedFile}  
   
   sleep 3s &  # run sleep in the background so we can kill it if we get a termination signal
   wait        # wait for the sleep process to complete

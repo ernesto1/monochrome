@@ -10,7 +10,7 @@ java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar compact burgund
 pushd /tmp/monochrome && \
 buildSidebar.bash config cpu memory network disk system bottom-edge && \
 echo ']];' >> /tmp/monochrome/sidebar && \
-mv sidebar transmission packages musicPlayer ~/conky/monochrome/compact && \
+mv sidebar applications ~/conky/monochrome/compact && \
 sleep 2 && \
 mv memoryGraph temperature ~/conky/monochrome/compact && \
 popd

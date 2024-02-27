@@ -20,13 +20,16 @@ conky.config = {
 
   -- window alignment
   alignment = 'top_right',  -- top|middle|bottom_left|right
-  gap_x = 5,
-  gap_y = 39,
+  gap_x = 3,
+  gap_y = 36,
 
   -- window settings
-  <#assign width = 189>
-  minimum_width = [=width],      -- conky will add an extra pixel to this  
-  maximum_width = [=width],
+  <#assign width = 189, 
+           gap = 3,             <#-- empty space between menus of the same context -->
+           speedColWidth = 39,  <#-- width of upload/download columns -->
+           columnOffset = speedColWidth + gap>   <#-- additional left handed empty width added by the transmission down/up columns -->
+  minimum_width = [=columnOffset + width],      -- conky will add an extra pixel to this  
+  maximum_width = [=columnOffset + width],
   minimum_height = 1560,
   own_window = true,
   own_window_type = 'desktop',   -- values: desktop (background), panel (bar)
@@ -45,6 +48,7 @@ conky.config = {
   
   -- images
   imlib_cache_flush_interval = 250,
+  max_user_text = 18000,
 
   -- font settings
   use_xft = false,
@@ -59,25 +63,25 @@ conky.config = {
 };
 
 conky.text = [[
-<#assign totalLines = 100,
-         packageLines = 51>
+<#assign totalLines = 60,
+         packageLines = 42>
 ${lua set_total_lines [=totalLines]}\
+${lua add_offsets [=columnOffset] 0}\
 #
 # :::::::::::::::: package updates ::::::::::::::::
 #
 <#assign y = 0,
          iconHeight = 38, <#-- icon is a square -->
-         gap = 3,         <#-- empty space between menus of the same context -->
          bigGap = 5>      <#-- empty space between menus of different applications -->
-${image ~/conky/monochrome/images/compact/[=image.secondaryColor]-packages.png -p 0,0}\
+${lua_parse draw_image ~/conky/monochrome/images/compact/[=image.secondaryColor]-packages.png 0 0}\
 <#assign packagesFile = "/tmp/conky/dnf.packages.formatted">
 ${if_existing [=packagesFile]}\
 # :::::: updates vailable
-<@menu.menu x=iconHeight+3 y=0 width=189-(iconHeight+3) height=iconHeight isDark=true/>
-${voffset 4}${offset 48}${color1}dandified yum
-${voffset 2}${offset 48}${color}${lines [=packagesFile]} package updates${voffset 10}
+<@menu.menu x=iconHeight+gap y=0 width=189-(iconHeight+3) height=iconHeight fixed=false isDark=true/>
+${voffset 4}${lua_parse add_x_offset offset 48}${color1}dandified yum
+${voffset 2}${lua_parse add_x_offset offset 48}${color}${lines [=packagesFile]} package updates${voffset 10}
 ${lua add_offsets 0 [=iconHeight + gap]}\
-<#assign packageCol = 134, colGap = 3, versionCol = width - packageCol - colGap>
+<#assign packageCol = 134, colGap = gap, versionCol = width - packageCol - colGap>
 <@menu.menu x=0 y=0 width=packageCol bottomEdges=false fixed=false/>
 ${lua configure_menu [=image.primaryColor] light [=packageCol] 3}\
 <@menu.menu x=packageCol + colGap y=0 width=versionCol bottomEdges=false fixed=false/>
@@ -89,9 +93,9 @@ ${lua_parse draw_bottom_edges [=packageCol + colGap] [=versionCol]}\
 ${lua add_offsets 0 [=bigGap]}\
 ${else}\
 # :::::: no package updates
-<@menu.menu x=iconHeight+3 y=0 width=189-(iconHeight+3) height=iconHeight/>
-${voffset 4}${offset 48}${color1}dandified yum
-${voffset 2}${offset 48}${color}no package updates${voffset [= 8 + bigGap]}
+<@menu.menu x=iconHeight+3 y=0 width=189-(iconHeight+3) height=iconHeight fixed=false/>
+${voffset 4}${lua_parse add_x_offset offset 48}${color1}dandified yum
+${voffset 2}${lua_parse add_x_offset offset 48}${color}no package updates${voffset [= 8 + bigGap]}
 ${lua add_offsets 0 [=iconHeight + bigGap]}\
 ${endif}\
 #
@@ -104,8 +108,8 @@ ${endif}\
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
 ${lua_parse draw_image ~/conky/monochrome/images/compact/[=image.secondaryColor]-sound-wave.png 0 0}\
 <@menu.menu x=41 y=0 width=189-41 height=iconHeight fixed=false/>
-${voffset 2}${offset 48}${color1}now playing
-${voffset 2}${offset 48}${color}no player running${voffset [= 8 + bigGap]}
+${voffset 2}${lua_parse add_x_offset offset 48}${color1}now playing
+${voffset 2}${lua_parse add_x_offset offset 48}${color}no player running${voffset [= 8 + bigGap]}
 ${lua add_offsets 0 [=iconHeight + bigGap]}\
 ${else}\
 # :::::: player status
@@ -113,12 +117,12 @@ ${lua add_offsets 0 [=gap]}${voffset [=gap]}\
 ${lua_parse draw_image ~/conky/monochrome/images/compact/[=image.secondaryColor]-sound-wave.png 0 0}\
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
 <@menu.menu x=41 y=0 width=189-41 height=iconHeight fixed=false color=image.secondaryColor/>
-${voffset 2}${offset 48}${color3}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}
-${voffset 2}${offset 48}${color4}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
+${voffset 2}${lua_parse add_x_offset offset 48}${color3}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}
+${voffset 2}${lua_parse add_x_offset offset 48}${color4}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
 ${else}\
 <@menu.menu x=41 y=0 width=189-41 height=iconHeight fixed=false/>
-${voffset 2}${offset 48}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}
-${voffset 2}${offset 48}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
+${voffset 2}${lua_parse add_x_offset offset 48}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}
+${voffset 2}${lua_parse add_x_offset offset 48}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
 ${endif}\
 ${lua add_offsets 0 [=iconHeight + gap]}\
 ${voffset [= 7 + gap]}\
@@ -145,15 +149,15 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-so
 ${endif}\
 # --------- end of table image top ---------
 ${lua add_offsets 0 [=height - 7]}\<#-- edges are 7x7 px, therefore reduce the height of the bottom edges from the menu -->
-${voffset 3}${offset 5}${color1}title${goto 50}${color}${cat /tmp/conky/musicplayer.title}
+${voffset 3}${lua_parse add_x_offset offset 5}${color1}title${lua_parse add_x_offset goto 50}${color}${cat /tmp/conky/musicplayer.title}
 ${if_match "${lua get album ${cat /tmp/conky/musicplayer.album}}" != "unknown album"}\
-${voffset 3}${offset 5}${color1}album${goto 50}${color}${lua get album}${lua add_offsets 0 16}
+${voffset 3}${lua_parse add_x_offset offset 5}${color1}album${lua_parse add_x_offset goto 50}${color}${lua get album}${lua add_offsets 0 16}
 ${endif}\
 ${if_match "${lua get artist ${cat /tmp/conky/musicplayer.artist}}" != "unknown artist"}\
-${voffset 3}${offset 5}${color1}artist${goto 50}${color}${lua get artist}${lua add_offsets 0 16}
+${voffset 3}${lua_parse add_x_offset offset 5}${color1}artist${lua_parse add_x_offset goto 50}${color}${lua get artist}${lua add_offsets 0 16}
 ${endif}\
 ${if_match "${lua get genre ${cat /tmp/conky/musicplayer.genre}}" != "unknown genre"}\
-${voffset 3}${offset 5}${color1}genre${goto 50}${color}${lua get genre}${lua add_offsets 0 16}
+${voffset 3}${lua_parse add_x_offset offset 5}${color1}genre${lua_parse add_x_offset goto 50}${color}${lua get genre}${lua add_offsets 0 16}
 ${endif}\
 # ------  vertical table image bottom ------
 <#-- draw the bottom edges at the final calculated location -->
@@ -166,43 +170,55 @@ ${endif}\
 #
 # :::::::::::::::: torrents ::::::::::::::::
 #
-<#assign inputDir = "/tmp/conky"
-         peersFile = inputDir + "/transmission.peers",
-         activeTorrentsFile = inputDir + "/transmission.active",
-         torrentLines = 35>
+<#assign inputDir = "/tmp/conky/",
+         activeTorrentsFile = inputDir + "transmission.active.flipped",
+         peersFile = inputDir + "transmission.peers.flipped",
+         torrentLines = 29>
 ${lua_parse draw_image ~/conky/monochrome/images/compact/[=image.secondaryColor]-torrents.png 0 0}\
 # :::::: transmission script running
 ${if_existing [=activeTorrentsFile]}\
-${voffset 2}${offset 48}${color1}transmission
+${voffset 2}${lua_parse add_x_offset offset 48}${color1}transmission
 # ::: no active torrents
 ${if_match ${lua get activeNum ${lines [=activeTorrentsFile]}} == 0}\
 <@menu.menu x=iconHeight+3 y=0 width=189-(iconHeight+3) height=iconHeight fixed=false/>
-${voffset 2}${offset 48}${color}no active torrents${voffset [= 8 + bigGap]}
+${voffset 2}${lua_parse add_x_offset offset 48}${color}no active torrents${voffset [= 8 + bigGap]}
 ${lua add_offsets 0 [=iconHeight + bigGap]}\
 ${else}\
 # ::: torrenting files
 <@menu.menu x=iconHeight+3 y=0 width=189-(iconHeight+3) height=iconHeight+15 fixed=false isDark=true/>
-${voffset 2}${offset 48}${color}${lines [=activeTorrentsFile]} active torrents
-${voffset 2}${offset 48}${color}${lines [=peersFile]} peers in the swarm${voffset [= 7 + gap]}
-${lua add_offsets 0 [=iconHeight + 15 + gap]}\
-${lua configure_menu [=image.primaryColor] light [=width] 3}\
-<@menu.menu x=0 y=0 width=width bottomEdges=false fixed=false/>
-${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-peers.png 38 22}\
+${voffset 2}${lua_parse add_x_offset offset 48}${color}${lines [=activeTorrentsFile]} active torrents
+${voffset 2}${lua_parse add_x_offset offset 48}${color}${lines [=peersFile]} peers in the swarm${voffset [= 7 + gap]}
+${lua add_offsets [=-1 * columnOffset] [=iconHeight + 15 + gap]}\
+${lua configure_menu [=image.primaryColor] light [=speedColWidth] 3}\
+<@menu.menu x=0 y=0 width=speedColWidth bottomEdges=false fixed=false/>
+<@menu.menu x=speedColWidth+colGap y=0 width=speedColWidth  bottomEdges=false fixed=false color=image.secondaryColor/>
+<#assign menuWidth = width - speedColWidth - colGap>
+<@menu.menu x=speedColWidth * 2 + colGap * 2 y=0 width=menuWidth bottomEdges=false fixed=false/>
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-peers.png [=speedColWidth * 2 + colGap * 2 + 17] 22}\
 ${lua add_offsets 0 [=gap]}\
-${color}${lua_parse populate_menu_from_file [=activeTorrentsFile] [=torrentLines - 5]}${voffset [= 7 + gap]}
+${color}${lua_parse populate_menu_from_file [=activeTorrentsFile] [=torrentLines - 5]}${lua_parse draw_bottom_edges [=speedColWidth+colGap] [=speedColWidth] [=image.secondaryColor]}${lua_parse draw_bottom_edges [=speedColWidth * 2 + colGap * 2] [=menuWidth]}${voffset [= 7 + gap]}
 ${lua add_offsets 0 [=gap]}\
-<#assign ipCol = 99, clientCol = 87, colGap = 3>
-${lua configure_menu [=image.primaryColor] light [=ipCol] 3}\
-<@menu.menu x=0 y=0 width=ipCol bottomEdges=false fixed=false/>
-<@menu.menu x=ipCol+colGap y=0 width=clientCol bottomEdges=false fixed=false/>
+# ::: no peers
+${if_match ${lua get activeNum ${lines [=peersFile]}} == 0}\
+${lua add_offsets [=columnOffset] 0}\
+<@menu.menu x=speedColWidth + colGap y=0 width=menuWidth height=22 fixed=false/>
+${voffset 2}${lua_parse add_x_offset offset 48}${color}no peers connected${voffset [= 8 + bigGap]}
+${else}\
+# ::: peers connected
+<#assign ipCol = 99, clientCol = 87>
+<@menu.menu x=0 y=0 width=speedColWidth bottomEdges=false fixed=false/>
+<@menu.menu x=speedColWidth+colGap y=0 width=speedColWidth  bottomEdges=false fixed=false color=image.secondaryColor/>
+<@menu.menu x=speedColWidth * 2 + colGap * 2 y=0 width=ipCol bottomEdges=false fixed=false/>
+<@menu.menu x=speedColWidth * 2 + colGap * 3 + ipCol y=0 width=menuWidth-ipCol-colGap bottomEdges=false fixed=false/>
 ${lua add_offsets 0 [=gap]}\
-${color}${lua_parse populate_menu_from_file [=peersFile] 35}${lua_parse draw_bottom_edges [=ipCol+colGap] [=clientCol]}
-${endif}
+${color}${lua_parse populate_menu_from_file [=peersFile] [=torrentLines]}${lua_parse draw_bottom_edges [=speedColWidth+colGap] [=speedColWidth] [=image.secondaryColor]}${lua_parse draw_bottom_edges [=speedColWidth * 2 + colGap * 2] [=ipCol]}${lua_parse draw_bottom_edges [=speedColWidth * 2 + colGap * 3 + ipCol] [=menuWidth-ipCol-colGap]}
+${endif}\
+${endif}\
 ${else}\
 # :::::: error state: input file not available
 <@menu.menu x=iconHeight+3 y=0 width=189-(iconHeight+3) height=iconHeight fixed=false color=image.secondaryColor/>
-${voffset 2}${offset 48}${color3}transmission
-${voffset 2}${offset 48}${color4}input files are missing${voffset [= 8 + bigGap]}
+${voffset 2}${lua_parse add_x_offset offset 48}${color3}transmission
+${voffset 2}${lua_parse add_x_offset offset 48}${color4}input files are missing${voffset [= 8 + bigGap]}
 ${lua add_offsets 0 [=iconHeight + bigGap]}\
-${endif}
+${endif}\
 ]];

@@ -127,6 +127,7 @@ while (( "$#" )); do
     --compact)
       shift
       conkyDir=${monochromeHome}/compact
+      offsetTorrent=12
       ;;
     --monitor)
       # TODO validate a proper number was provided to the monitor flag
