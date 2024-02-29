@@ -111,6 +111,7 @@ while (( "$#" )); do
     --widgets-dock)
       shift
       conkyDir=${monochromeHome}/widgets-dock
+      offsetPackage=10
       ;;
     --glass)
       shift
