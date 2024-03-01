@@ -1,21 +1,26 @@
---[[  :::::: functions for drawing menus with dynamic sizes ::::::
-
+--[[
+:::::: functions for drawing menus with dynamic sizes ::::::
 methods to allow a conky client to manipulate x,y positions of images or text at runtime.
-The following use cases are supported:
 
-1) dynamically change the position of an image by taking into account runtime x,y offsets to alter 
+> how to use
+in order to use the methods in this library, the conky's 'lua_draw_hook_pre' setting must invoke
+the method conky_reset_state()
 
-   - an image's original x,y coordinates
-   - text's horizontal or vertical offset
+> library features
+
+1) dynamically change the position of an image by taking into account runtime x,y offsets to alter
+   an image's original x,y coordinates
    
-   see conky_reset_state()
-       conky_add_offsets()
+   see conky_add_offsets()
        conky_draw_image()
-       conky_add_x_offset()
-       conky_add_y_offset()
 
 2) dynamically update ${goto x} or ${offset x} variables with an offset at runtime
                                    ${voffset y}
+
+   see conky_add_offsets()
+       conky_add_x_offset()
+       conky_add_y_offset()
+
 3) drawing dynamic menu windows
 
       ╭──────────╮    a menu window is drawn by conky using a combination
@@ -26,8 +31,7 @@ The following use cases are supported:
       ╰──────────╯  < the position of the bottom edge images would be determined at runtime
                       based on the number of lines of the file
 
-      see conky_reset_state()
-          conky_add_offsets()
+      see conky_add_offsets()
           conky_configure_menu()
           conky_populate_menu()
 ]]
@@ -380,11 +384,13 @@ end
 function conky_populate_menu_from_mem(filepath, max, x, y)
   -- apply sensible defaults
   max = (max ~= nil) and tonumber(max) or 30
+  max = (vars["totalLines"] > max) and max or vars["totalLines"]
   x = (x ~= nil) and tonumber(x) or 5
   y = (y ~= nil) and tonumber(y) or 3
   
   local text, lines = cutText(vars[filepath], max)
-
+  conky_decrease_total_lines(lines)
+  
   if x ~=nil then
     x = x + vars["xOffset"]
     text = '${voffset ' .. y .. '}' .. '${offset ' .. x .. '}' .. text
