@@ -48,7 +48,7 @@ conky.config = {
   
   -- images
   imlib_cache_flush_interval = 250,
-  max_user_text = 18000,
+  max_user_text = 20000,
 
   -- font settings
   use_xft = false,
@@ -63,7 +63,7 @@ conky.config = {
 };
 
 conky.text = [[
-<#assign totalLines = 60,
+<#assign totalLines = 87,
          packageLines = 42>
 ${lua set_total_lines [=totalLines]}\
 ${lua add_offsets [=columnOffset] 0}\
@@ -134,7 +134,7 @@ ${if_existing /tmp/conky/musicplayer.albumArtPath}\
 ${lua add_offsets 0 [=border]}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-album-placeholder.png [=border+8] 8}\
 ${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4 0}\
-${lua add_offsets 0 [=body-border + gap]}\
+${lua add_offsets 0 [=body-border + gap]}${lua decrease_total_lines 12}\
 ${voffset 192}\
 ${endif}\
 # :::::: track details
@@ -149,15 +149,15 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-so
 ${endif}\
 # --------- end of table image top ---------
 ${lua add_offsets 0 [=height - 7]}\<#-- edges are 7x7 px, therefore reduce the height of the bottom edges from the menu -->
-${voffset 3}${lua_parse add_x_offset offset 5}${color1}title${lua_parse add_x_offset goto 50}${color}${cat /tmp/conky/musicplayer.title}
+${voffset 3}${lua_parse add_x_offset offset 5}${color1}title${lua_parse add_x_offset goto 50}${color}${cat /tmp/conky/musicplayer.title}${lua decrease_total_lines 2}
 ${if_match "${lua get album ${cat /tmp/conky/musicplayer.album}}" != "unknown album"}\
-${voffset 3}${lua_parse add_x_offset offset 5}${color1}album${lua_parse add_x_offset goto 50}${color}${lua get album}${lua add_offsets 0 16}
+${voffset 3}${lua_parse add_x_offset offset 5}${color1}album${lua_parse add_x_offset goto 50}${color}${lua get album}${lua add_offsets 0 16}${lua decrease_total_lines 1}
 ${endif}\
 ${if_match "${lua get artist ${cat /tmp/conky/musicplayer.artist}}" != "unknown artist"}\
-${voffset 3}${lua_parse add_x_offset offset 5}${color1}artist${lua_parse add_x_offset goto 50}${color}${lua get artist}${lua add_offsets 0 16}
+${voffset 3}${lua_parse add_x_offset offset 5}${color1}artist${lua_parse add_x_offset goto 50}${color}${lua get artist}${lua add_offsets 0 16}${lua decrease_total_lines 1}
 ${endif}\
 ${if_match "${lua get genre ${cat /tmp/conky/musicplayer.genre}}" != "unknown genre"}\
-${voffset 3}${lua_parse add_x_offset offset 5}${color1}genre${lua_parse add_x_offset goto 50}${color}${lua get genre}${lua add_offsets 0 16}
+${voffset 3}${lua_parse add_x_offset offset 5}${color1}genre${lua_parse add_x_offset goto 50}${color}${lua get genre}${lua add_offsets 0 16}${lua decrease_total_lines 1}
 ${endif}\
 # ------  vertical table image bottom ------
 <#-- draw the bottom edges at the final calculated location -->
@@ -171,9 +171,10 @@ ${endif}\
 # :::::::::::::::: torrents ::::::::::::::::
 #
 <#assign inputDir = "/tmp/conky/",
+         statusFile = inputDir + "transmission.status",
          activeTorrentsFile = inputDir + "transmission.active.flipped",
          peersFile = inputDir + "transmission.peers.flipped",
-         torrentLines = 29>
+         torrentLines = totalLines - packageLines>
 ${lua_parse draw_image ~/conky/monochrome/images/compact/[=image.secondaryColor]-torrents.png 0 0}\
 # :::::: transmission script running
 ${if_existing [=activeTorrentsFile]}\
@@ -185,33 +186,63 @@ ${voffset 2}${lua_parse add_x_offset offset 48}${color}no active torrents${voffs
 ${lua add_offsets 0 [=iconHeight + bigGap]}\
 ${else}\
 # ::: torrenting files
+# the active torrent table is composed of 3 columns: down | up | torrent details
+# the 'down' column is hidden unless data is actually being downloaded
+# offsets are used to move things around accross the x axis
 <@menu.menu x=iconHeight+3 y=0 width=189-(iconHeight+3) height=iconHeight+15 fixed=false isDark=true/>
 ${voffset 2}${lua_parse add_x_offset offset 48}${color}${lines [=activeTorrentsFile]} active torrents
 ${voffset 2}${lua_parse add_x_offset offset 48}${color}${lines [=peersFile]} peers in the swarm${voffset [= 7 + gap]}
-${lua add_offsets [=-1 * columnOffset] [=iconHeight + 15 + gap]}\
-${lua configure_menu [=image.primaryColor] light [=speedColWidth] 3}\
+${lua add_offsets 0 [=iconHeight + 15 + gap]}\
+${if_existing [=statusFile] torrents}\
+${lua add_offsets [=-1 * columnOffset] 0}\
 <@menu.menu x=0 y=0 width=speedColWidth bottomEdges=false fixed=false/>
-<@menu.menu x=speedColWidth+colGap y=0 width=speedColWidth  bottomEdges=false fixed=false color=image.secondaryColor/>
+${lua add_offsets [=columnOffset] 0}\
+${endif}\
+<@menu.menu x=0 y=0 width=speedColWidth  bottomEdges=false fixed=false color=image.secondaryColor/>
 <#assign menuWidth = width - speedColWidth - colGap>
-<@menu.menu x=speedColWidth * 2 + colGap * 2 y=0 width=menuWidth bottomEdges=false fixed=false/>
-${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-peers.png [=speedColWidth * 2 + colGap * 2 + 17] 22}\
+<@menu.menu x=speedColWidth + colGap y=0 width=menuWidth bottomEdges=false fixed=false/>
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-peers.png [=speedColWidth + colGap + 17] 22}\
 ${lua add_offsets 0 [=gap]}\
-${color}${lua_parse populate_menu_from_file [=activeTorrentsFile] [=torrentLines - 5]}${lua_parse draw_bottom_edges [=speedColWidth+colGap] [=speedColWidth] [=image.secondaryColor]}${lua_parse draw_bottom_edges [=speedColWidth * 2 + colGap * 2] [=menuWidth]}${voffset [= 7 + gap]}
+${if_existing [=statusFile] torrents}\
+${lua add_offsets [=-1 * columnOffset] 0}\
+${lua configure_menu [=image.primaryColor] light [=speedColWidth] 3}\
+${lua_parse populate_menu_from_file [=activeTorrentsFile] [=torrentLines - 5]}\
+${lua add_offsets [=columnOffset] 0}\
+${lua_parse draw_bottom_edges 0 [=speedColWidth] [=image.secondaryColor]}\
+${else}\
+${lua configure_menu [=image.secondaryColor] light [=speedColWidth] 3}\
+${lua_parse populate_menu_from_file [=activeTorrentsFile] [=torrentLines - 5]}\
+${endif}\
+${lua_parse draw_bottom_edges [=speedColWidth+colGap] [=menuWidth] [=image.primaryColor]}${voffset [= 7 + gap]}
 ${lua add_offsets 0 [=gap]}\
 # ::: no peers
 ${if_match ${lua get activeNum ${lines [=peersFile]}} == 0}\
-${lua add_offsets [=columnOffset] 0}\
 <@menu.menu x=speedColWidth + colGap y=0 width=menuWidth height=22 fixed=false/>
 ${voffset 2}${lua_parse add_x_offset offset 48}${color}no peers connected${voffset [= 8 + bigGap]}
 ${else}\
 # ::: peers connected
+# same as the active torrent table, the 'download' column is hidden unless data is being downloaded
 <#assign ipCol = 99, clientCol = 87>
+${if_existing [=statusFile] peers}\
+${lua add_offsets [=-1 * columnOffset] 0}\
 <@menu.menu x=0 y=0 width=speedColWidth bottomEdges=false fixed=false/>
-<@menu.menu x=speedColWidth+colGap y=0 width=speedColWidth  bottomEdges=false fixed=false color=image.secondaryColor/>
-<@menu.menu x=speedColWidth * 2 + colGap * 2 y=0 width=ipCol bottomEdges=false fixed=false/>
-<@menu.menu x=speedColWidth * 2 + colGap * 3 + ipCol y=0 width=menuWidth-ipCol-colGap bottomEdges=false fixed=false/>
+${lua add_offsets [=columnOffset] 0}\
+${endif}\
+<@menu.menu x=0 y=0 width=speedColWidth  bottomEdges=false fixed=false color=image.secondaryColor/>
+<@menu.menu x=speedColWidth + colGap y=0 width=ipCol bottomEdges=false fixed=false/>
+<@menu.menu x=speedColWidth + colGap * 2 + ipCol y=0 width=menuWidth-ipCol-colGap bottomEdges=false fixed=false/>
 ${lua add_offsets 0 [=gap]}\
-${color}${lua_parse populate_menu_from_file [=peersFile] [=torrentLines]}${lua_parse draw_bottom_edges [=speedColWidth+colGap] [=speedColWidth] [=image.secondaryColor]}${lua_parse draw_bottom_edges [=speedColWidth * 2 + colGap * 2] [=ipCol]}${lua_parse draw_bottom_edges [=speedColWidth * 2 + colGap * 3 + ipCol] [=menuWidth-ipCol-colGap]}
+${if_existing [=statusFile] peers}\
+${lua add_offsets [=-1 * columnOffset] 0}\
+${lua configure_menu [=image.primaryColor] light [=speedColWidth] 3}\
+${lua_parse populate_menu_from_file [=peersFile] [=torrentLines]}
+${lua add_offsets [=columnOffset] 0}\
+${lua_parse draw_bottom_edges 0 [=speedColWidth] [=image.secondaryColor]}\
+${else}\
+${lua configure_menu [=image.secondaryColor] light [=speedColWidth] 3}\
+${lua_parse populate_menu_from_file [=peersFile] [=torrentLines]}\
+${endif}\
+${lua_parse draw_bottom_edges [=speedColWidth + colGap] [=ipCol] [=image.primaryColor]}${lua_parse draw_bottom_edges [=speedColWidth + colGap * 2 + ipCol] [=menuWidth-ipCol-colGap] [=image.primaryColor]}
 ${endif}\
 ${endif}\
 ${else}\
