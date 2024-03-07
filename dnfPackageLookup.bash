@@ -2,16 +2,20 @@
 # script to periodically check for new dnf package updates when the system is "deemed iddle"
 # ie. less than half of the cores are in use in the 5 min load average
 #
-# the list of new package updates are written to the output file: dnf.packages.formatted
-# conky variables are introduced in order for the data to be properly formatted for conky to display
+# the list of new package updates are written to the output file: /tmp/conky/dnf.packages.formatted
+# conky ${color} variables are added in order to highlight packages of interest to the user
 
 . ~/conky/monochrome/logging.bash
 
 function usage {
-  echo $(basename $0) [--package-width n] [--version-width n] [--offset n]
-  echo 'where package width is the number of characters to print for the pacakge name'
-  echo '      version width is the number of characters to print for the version number'
-  echo '      offset is the number of pixels between the package name and its version number'
+  cat <<-END
+	$(basename $0) [--package-width n] [--version-width n] [--offset n] [--interval x]
+	
+	where package width is the number of characters to print for the pacakge name
+	      version width is the number of characters to print for the version number
+	      offset is the number of pixels between the package name and its version number
+	      interval is the wait time between queries, use a time range compatible with the sleep command, ex. 1h
+	END
 }
 
 function onExitSignal {
@@ -26,6 +30,7 @@ trap onExitSignal SIGINT SIGTERM
 packageWidth=21   # number of characters to print for the package name
 versionWidth=7    # number of characters to print for the version number
 offset=11         # number of pixels between the package name and its version number
+interval=15m      # wait time between queries to the package repository
 
 while (( "$#" )); do
   case $1 in
@@ -39,6 +44,10 @@ while (( "$#" )); do
       ;;
     --version-width)
       versionWidth=$2
+      shift 2
+      ;;
+    --interval)
+      interval=$2
       shift 2
       ;;
     *)
@@ -64,12 +73,13 @@ if [[ ${versionWidth} -lt 1 ]]; then
 fi
 
 log 'starting dnf repo package lookup'
+log "checking for package updates every ${interval}"
 log "new package updates format will be ${packageWidth} | offset ${offset} | ${versionWidth}"
 outputDir=/tmp/conky
 mkdir -p ${outputDir}
 totalCores=$(grep -c processor /proc/cpuinfo)
 halfCores=$(( totalCores / 2 ))
-log "system is deemed iddle if the 5 min cpu load average is less than ${halfCores}"
+log "system will be deemed iddle if the 5 min cpu load average is less than ${halfCores}"
 
 while [ true ]; do
   # the output format of `uptime` changes if the machine runs for longer than a day
@@ -117,6 +127,7 @@ while [ true ]; do
     log 'load average too high, trying again later'
   fi
   
-  sleep 15m &   # run sleep in the background so we can kill it if we get a termination signal
-  wait          # wait for the sleep process to complete
+  log "checking for updates again in ${interval}"
+  sleep ${interval} &   # run sleep in the background so we can kill it if we get a termination signal
+  wait                  # wait for the sleep process to complete
 done

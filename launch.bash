@@ -16,7 +16,7 @@ shopt -s extglob    # enable extended globs for filename pattern matching
 
 function usage() {
   cat <<-END
-	$(basename $0) --theme [--monitor n] [--layout-override <tag>] [--silent] [--shutdown]
+	$(basename $0) --theme [--monitor n] [--layout-override <tag>] [--silent] [--interval x] [--shutdown]
 	
 	Theme options
 	  --compact
@@ -28,7 +28,7 @@ function usage() {
 	  --monitor 0|1|2|3|...
 	    On multi monitor setups, use this flag to specify on which monitor you would like conky
 	    to draw itself.
-	    
+
 	                   +--------+
 	    +-----------+  |        |
 	    |           |  |        |   How your monitors get assigned their number depends
@@ -44,10 +44,14 @@ function usage() {
 	    you would like to run on your laptop but not on your desktop
 
 	    override file follows the naming convention: layout.<tag>.cfg
-	    
+
 	  --silent
 	    all conky output (STDOUT and STDERR) is suppressed
-	  
+
+	  --interval 10m,1h,6h
+	    wait time between package update queries, the default is 15 minutes
+	    use a time range compatible with the sleep command, ex. 1h
+
 	  --shutdown
 	    kills the current running monochrome conkys and any support jobs launched
 
@@ -147,6 +151,10 @@ while (( "$#" )); do
     --silent)
       silent=true
       shift
+      ;;
+    --interval)
+      interval=$2
+      shift 2
       ;;
     -h)
       usage
@@ -263,6 +271,10 @@ if ${enablePackageLookup}; then
   
   if [[ "${offsetPackage}" ]]; then
     arguments+=(--offset ${offsetPackage})
+  fi
+  
+  if [[ "${interval}" ]]; then
+    arguments+=(--interval ${interval})
   fi
 
   ${monochromeHome}/dnfPackageLookup.bash ${arguments[@]} &
