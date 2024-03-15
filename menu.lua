@@ -152,35 +152,6 @@ function stringToBoolean(s)
   return map[s]
 end
 
---[[
-Convenience method to populate the contents of a menu window by reading a file.
-It performs two steps:
-
-   - reads a file similar to the linux 'head' command
-   - prints the menu's bottom edge images taking into account the number of text lines printed
-
-n.b. the 'y' offset is updated to the pixel right after the table image ends
-
-method dependency tree:
-
-  conky_add_offsets(..) -> conky_configure_menu(..) -> conky_populate_menu(..)
-        \
-       place 'y' coordinate below the table's header
-       
-arguments:
-    filepath  absolute path to the file
-    max       [optional] maximun number of lines to print
-    interval  [optional] number of seconds to wait between reads
-]]
-function conky_populate_menu(filepath, max, interval)
-  max = (max ~= nil) and tonumber(max) or 30
-  max = (vars["totalLines"] > max) and max or vars["totalLines"]
-  local text, lines = conky_head(filepath, max, interval)
-  conky_decrease_total_lines(lines)
-  local y = calculate_bottom_edge_y_coordinate(lines)
-
-  return text .. draw_round_bottom_edges(vars["xOffset"], y, vars["width"])
-end
 
 --[[
 determines the y coordinate of a menu's bottom edges based on the number of lines printed inside of it
@@ -275,28 +246,7 @@ function conky_draw_bottom_edges(x, width, color)
 end
 
 
-function cutText(text, max)
-  local linesRead, position = 0, 0, 0
-  
-  while linesRead < max do
-    linesRead = linesRead + 1
-    position = string.find(text, "\n", position+1)
-    if position == nil then break end
-  end
-  
-  text = string.sub(text, 1, position)
-  text = string.gsub(text, '\n$', '')     -- remove last new line (if any)
-  
-  return text, linesRead
-end
-
 -- :::::::: experimental API ::::::::
-
-function conky_read_file(file)
-  vars[file] = conky_parse('${cat ' .. file .. '}')
-  return ''
-end
-
 function conky_calculate_voffset(file, max)
   local linesRead = lines(vars[file])
   max = tonumber(max)
@@ -339,7 +289,30 @@ function conky_populate_menu_from_mem(filepath, max, x, y)
   return text .. draw_round_bottom_edges(vars["xOffset"], y, vars["width"])
 end
 
-function conky_cat(filepath, max, x, y)
+--[[
+lua improved version of the conky ${head} variable, it provides:
+
+- no line cap
+- content of the file can be parsed if invoked with ${lua_parse}, same effect as using ${catp}
+  so you can insert things like ${color red}hi!${color} in your file and have it correctly parsed by conky
+- if the text contains a new line on its last line, it will be removed
+
+::: table/panel implications
+usage of this method implies that a panel or table is being populated by reading the contents of a file.
+in order to align the text in a panel properly:
+
+  - the 'y' offset is expected to be at the start of the panel
+  - lowercase text is expected to begin 10 pixels from the top of the panel
+  - the 'y' offset is updated to the pixel where the bottom of the panel should be
+    this will yield a 7 pixels border between the bottom of the text and the panel edge
+
+arguments:
+    filepath  absolute path to the file
+    max       [optional] maximun number of lines to print
+    x         [optional] ${offset}  to apply to every line of text, default is 5 pixels
+    y         [optional] ${voffset} to apply to every line of text, default is 3 pixels
+]]
+function conky_head(filepath, max, x, y)
   conky_read_file(filepath)
   -- apply sensible defaults
   max = (max ~= nil) and tonumber(max) or 30
@@ -358,6 +331,28 @@ function conky_cat(filepath, max, x, y)
   
   adjust_y_offset_for_bottom_edges(lines)
   return text
+end
+
+
+function conky_read_file(file)
+  vars[file] = conky_parse('${cat ' .. file .. '}')
+  return ''
+end
+
+
+function cutText(text, max)
+  local linesRead, position = 0, 0, 0
+  
+  while linesRead < max do
+    linesRead = linesRead + 1
+    position = string.find(text, "\n", position+1)
+    if position == nil then break end
+  end
+  
+  text = string.sub(text, 1, position)
+  text = string.gsub(text, '\n$', '')     -- remove last new line (if any)
+  
+  return text, linesRead
 end
 
 --[[

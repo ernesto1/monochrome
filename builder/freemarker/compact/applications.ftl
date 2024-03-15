@@ -86,7 +86,7 @@ ${lua add_offsets 0 [=iconHeight + gap]}\
 <@menu.columns x=0 y=0 widths=[packageCol,versionCol] gap=colGap fixed=false/>
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dnf.png [=packageCol-35-2] 5}\
-${color}${lua_parse cat [=packagesFile] [=packageLines]}${voffset [= 7 + bigGap]}
+${color}${lua_parse head [=packagesFile] [=packageLines]}${voffset [= 7 + bigGap]}
 <@menu.columnsBottom x=0 y=-7 widths=[packageCol,versionCol] gap=colGap fixed=false/>
 ${lua add_offsets 0 [=bigGap]}\
 ${else}\
@@ -199,7 +199,7 @@ ${endif}\
 <#assign menuWidth = width - speedColWidth - colGap>
 <@menu.columns x=0 y=0 widths=[speedColWidth, menuWidth] gap=colGap fixed=false highlight=[1]/>
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-peers.png [=speedColWidth + colGap + 17] 22}\
-${lua_parse cat [=activeTorrentsFile] [=torrentLines - 5]}${voffset [= 7 + gap]}
+${lua_parse head [=activeTorrentsFile] [=torrentLines - 5]}${voffset [= 7 + gap]}
 ${if_existing [=statusFile] torrents}\
 ${lua add_offsets [=-1 * columnOffset] 0}\
 <@menu.columnsBottom x=0 y=-7 widths=[speedColWidth] gap=colGap fixed=false/>
@@ -222,7 +222,7 @@ ${lua add_offsets [=-1 * columnOffset] 0}\
 ${lua add_offsets [=columnOffset] 0}\
 ${endif}\
 <@menu.columns x=0 y=0 widths=[speedColWidth,ipCol,menuWidth-ipCol-colGap] gap=colGap fixed=false highlight=[1]/>
-${lua_parse cat [=peersFile] [=torrentLines]}\
+${lua_parse head [=peersFile] [=torrentLines]}\
 ${if_existing [=statusFile] peers}\
 ${lua add_offsets [=-1 * columnOffset] 0}\
 <@menu.columnsBottom x=0 y=-7 widths=[speedColWidth] gap=colGap fixed=false/>
