@@ -146,7 +146,15 @@
 <@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x y=y+7 fixed=fixed/>
 </#macro>
 
+<#-- creates a table with multiple columns
 
+        column 1       column 2
+      ╭──────────╮   ╭──────────╮
+      │──────────│   │──────────│
+      │          │   │          │
+      │          │   │          │
+
+ -->
 <#macro columns x y widths height=100 gap=3 fixed=true theme="light" highlight=[]>
 # ------- [=widths?size] columns table | top edges    -------
 <#list widths as width>
@@ -171,43 +179,4 @@
 </#list>
 <@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x y=y+7 fixed=false/>
 # ------- [=widths?size] columns table | bottom edges -------
-</#macro>
-
-
-<#-- table that combines both vertical and horizontal table layouts
- (x,y)
-           vertical
-           header
-           width (px)
-           (vheader)
-          ╭─────────+───────────────╮
-          │ title   │ value         │   vetical table height (vheight)
-          │ title 2 │ value         │  
-          +─────────+───────────────+
-          │         title 3         │   horizontal header height (px)
-          │─────────────────────────│ < hheader                           -+-
-          │ value                   │                                      |          
-          │ value                   │                                      |
-          │ value                   │ body height (px)               horizontal table height (hheight)
-          │                         │                                      |
-          │                         │                                      |
-          ╰─────────────────────────╯                                     -+-
-                    width (px)
-
-  bottomEdges   draw the round bottom edges, default is 'true'
--->
-<#macro compositeTable x y width vheader hheight vheight=19 hheader=19 bottomEdges=true>
-<#local startingy = y>
-# ------- composite table image -------
-<@verticalMenuHeader x=x y=y header=vheader body=width-vheader/>
-<#local yCoordinate = y + vheight + 1>
-${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dark.png -p [=x?c],[=yCoordinate?c]}\
-<#local yCoordinate += hheader>
-${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-light.png -p [=x?c],[=yCoordinate?c]}\
-<#local yCoordinate += hheight>
-<#if bottomEdges>
-<@panelBottomCorners x=x y=yCoordinate  width=width/>
-</#if>
-${image ~/conky/monochrome/images/common/menu-blank.png -p [=(x+width)?c],[=y?c]}\
-# -------- end of table image ---------
 </#macro>

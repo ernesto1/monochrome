@@ -275,48 +275,6 @@ function conky_draw_bottom_edges(x, width, color)
 end
 
 
---[[
-lua improved version of the conky ${head} variable, it provides:
-
-- no line cap
-- content of the file can be parsed if invoked with ${lua_parse}, same effect as using ${catp}
-  so you can insert things like ${color red}hi!${color} in your file and have it correctly parsed by conky
-- if the text contains a new line on its last line, it will be removed
-- perform file reads on intervals
-
-arguments:
-    filepath  absolute path to the file
-    max       maximun number of lines to print
-    interval  [optional] number of seconds to wait between reads
-
-returns:
-    the file contents and the number of lines read
-]]
-function conky_head(filepath, max, interval)
-  max = (max ~= nil) and tonumber(max) or 30
-  interval = (interval ~= nil) and tonumber(interval) or conky_info["update_interval"]
-  -- interval cannot be lower than the conky refresh rate
-  interval = (interval > conky_info["update_interval"]) and interval or conky_info["update_interval"]
-  local text, abbreviatedtext, linesRead = "unread text file", "unread abbreviated text file", 1
-  local modulus = math.floor(interval / conky_info["update_interval"] + 0.5)
-
-  -- determine if we need to read the file or read from memory for this iteration
-  if (vars[filepath] == nil) or (conky_parse("${updates}") % modulus == 0) then
-    text = conky_parse("${cat " .. filepath .. "}")
-    -- save to memory only if multiple iterations are required in order to meet the interval
-    -- ie. future iterations will pull from memory
-    if modulus ~= 1 then
-      vars[filepath] = text
-    end
-  else
-    text = vars[filepath]     -- retrieve text from memory
-  end
-  
-  abbreviatedtext, linesRead = cutText(text, max)
-
-  return abbreviatedtext, linesRead
-end
-
 function cutText(text, max)
   local linesRead, position = 0, 0, 0
   
