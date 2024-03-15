@@ -18,6 +18,10 @@ function conky_get(name, expression)
   return vars[name]
 end
 
+function conky_set(name, value)
+  vars[name] = value
+  return ''
+end
 
 function conky_pad(expression)
     local text = conky_parse(expression)

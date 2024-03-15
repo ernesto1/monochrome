@@ -53,12 +53,12 @@ conky.text = [[
 # :::::::: no player available
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
 ${image ~/conky/monochrome/images/glass/blue-sound-wave-small.png -p 0,0}\
-# ------- composite table image -------
+# ------- single column table | top edge    -------
 ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 49,0}\
 ${image ~/conky/monochrome/images/common/blue-menu-light.png -p 49,3}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 159,0}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 49,46}\
-# --------- end of table image --------
+# ------- single column table | bottom edge -------
 ${voffset 10}${goto 55}${color1}now playing
 ${voffset 4}${goto 55}${color}no player running${voffset 5}\
 ${else}\
@@ -82,10 +82,10 @@ ${voffset 163}${offset 5}${color1}\
 ${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}${alignr 3}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}${voffset 6}
 # ::: track details
 # menu expands based on the track metadata fields available, only 'title' is considered mandatory
-# ----------- menu image ------------
+# ------- light panel top edge    -------
 ${image ~/conky/monochrome/images/common/blue-menu-light.png -p 0,182}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 159,182}\
-# -------- end of menu image ---------
+# ------- light panel bottom edge -------
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
 ${image ~/conky/monochrome/images/glass/blue-sound-wave.png -p 90,182}\
 ${endif}\

@@ -53,7 +53,7 @@ conky.config = {
 
 conky.text = [[
 # :::::::::::: top cpu processes
-# ----------- table image ------------
+# ------- single column table | top edge    -------
 ${image ~/conky/monochrome/images/common/yellow-menu-dark.png -p 0,0}\
 ${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-top-left.png -p 0,0}\
 ${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-top-right.png -p 162,0}\
@@ -62,7 +62,7 @@ ${image ~/conky/monochrome/images/common/menu-blank.png -p 169,0}\
 ${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-left.png -p 0,128}\
 ${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png -p 162,128}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 0,135}\
-# -------- end of table image ---------
+# ------- single column table | bottom edge -------
 ${voffset 2}${offset 5}${color1}process${alignr 4}cpu${voffset 3}
 ${template0 1}
 ${template0 2}
@@ -72,7 +72,7 @@ ${template0 5}
 ${template0 6}
 ${template0 7}
 # :::::::::::: top mem processes
-# ----------- table image ------------
+# ------- single column table | top edge    -------
 ${image ~/conky/monochrome/images/common/yellow-menu-dark.png -p 0,140}\
 ${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-top-left.png -p 0,140}\
 ${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-top-right.png -p 162,140}\
@@ -81,7 +81,7 @@ ${image ~/conky/monochrome/images/common/menu-blank.png -p 169,140}\
 ${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-left.png -p 0,268}\
 ${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png -p 162,268}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 0,275}\
-# -------- end of table image ---------
+# ------- single column table | bottom edge -------
 ${voffset 12}${offset 5}${color1}process${alignr 4}memory${voffset 3}
 ${template1 1}
 ${template1 2}

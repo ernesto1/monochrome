@@ -2,13 +2,13 @@ conky.config = {
   lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
   lua_draw_hook_pre = 'reset_state',
   
-  update_interval = 300,   -- update interval in seconds
-  xinerama_head = 0,       -- for multi monitor setups, select monitor to run on: 0,1,2
-  double_buffer = true,    -- use double buffering (reduces flicker, may not work for everyone)
+  update_interval = 4,    -- update interval in seconds
+  xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
+  double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
   alignment = 'middle_right',
-  gap_x = 24,
+  gap_x = 5,
   gap_y = 53,
 
   -- window settings
@@ -49,20 +49,22 @@ conky.config = {
 conky.text = [[
 # :::::::::::: package updates
 ${if_existing /tmp/conky/dnf.packages.formatted}\
-# ----------- table image ------------
+# ------- single column table | top edge    -------
 ${image ~/conky/monochrome/images/common/green-menu-dark.png -p 0,0}\
 ${image ~/conky/monochrome/images/common/green-menu-dark-edge-top-left.png -p 0,0}\
 ${image ~/conky/monochrome/images/common/green-menu-dark-edge-top-right.png -p 193,0}\
 ${image ~/conky/monochrome/images/common/green-menu-light.png -p 0,39}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 200,0}\
-# -------- end of table image ---------
-${lua configure_menu green light 200 3}\
-${lua add_offsets 0 56}\
+# ------- single column table | bottom edge -------
+${lua add_offsets 0 52}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
-${image ~/conky/monochrome/images/common/green-menu-dnf.png -p 121,59}\
+${image ~/conky/monochrome/images/common/green-menu-dnf.png -p 121,56}\
 ${voffset 3}${alignc}${color1}dnf package management
 ${voffset 5}${alignc}${color}${lines /tmp/conky/dnf.packages.formatted} package update(s) available
 ${voffset 6}${offset 5}${color1}package${alignr 4}version${voffset 1}
-${color}${lua_parse populate_menu_from_file /tmp/conky/dnf.packages.formatted 85}${voffset 5}
+${color}${lua_parse head /tmp/conky/dnf.packages.formatted 25}${voffset 5}
+${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-left.png 0 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-right.png 193 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\
 ${endif}\
 ]];

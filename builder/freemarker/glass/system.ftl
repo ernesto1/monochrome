@@ -145,7 +145,7 @@ ${lua add_offsets 0 [=y]}\
 <#-- TODO iterate through network devices and build the conditional tree for wifi devices -->
 ${if_up [=networkDevices[system]?first.name]}\
 <#assign header = 57, height = 39>
-<@menu.verticalTable x=0 y=0 header=header body=windowWidth-header height=height fixed=false/>
+<@menu.verticalTable x=0 y=0 header=header body=windowWidth-header height=height isFixed=false/>
 <#assign y += height + 2>
 ${voffset 3}${offset 5}${color1}network${goto 62}${color}${wireless_essid [=networkDevices[system]?first.name]}
 ${voffset 3}${offset 5}${color1}local ip${goto 62}${color}${addr [=networkDevices[system]?first.name]}${voffset 4}
@@ -153,7 +153,7 @@ ${voffset [=gap + 3]}${lua add_offsets 0 [=height+gap]}\
 ${endif}\
 # ::::::::::::::::: miscellaneous details
 <#assign height = 53>
-<@menu.verticalTable x=0 y=0 header=header body=windowWidth-header height=height fixed=false/>
+<@menu.verticalTable x=0 y=0 header=header body=windowWidth-header height=height isFixed=false/>
 ${voffset 2}${offset 5}${color1}kernel${goto 62}${color}${kernel}
 ${voffset 3}${offset 5}${color1}uptime${goto 62}${color}${uptime}
 ${voffset 3}${offset 5}${color1}dnf${goto 62}${color}${if_existing /tmp/conky/dnf.packages.formatted}${lines /tmp/conky/dnf.packages.formatted} update(s)${else}no updates${endif}${voffset 4}

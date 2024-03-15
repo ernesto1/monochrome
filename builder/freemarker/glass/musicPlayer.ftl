@@ -69,7 +69,7 @@ ${endif}\
 ${lua add_offsets 0 [=y]}\
 # ::: player header
 <#assign height = 19>
-<@menu.verticalTable x=0 y=0 header=90 body=width-90 height=height fixed=false/>
+<@menu.verticalTable x=0 y=0 header=90 body=width-90 height=height isFixed=false/>
 ${lua_parse conky_draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-music-player-separator.png 58 0}\
 <#assign y += height + 2>
 ${lua add_offsets 0 [=y]}\
@@ -77,7 +77,7 @@ ${voffset [=width+3+1]}${offset 5}${color1}\
 ${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}${alignr 3}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}${voffset 6}
 # ::: track details
 # menu expands based on the track metadata fields available, only 'title' is considered mandatory
-<@menu.menu x=0 y=y width=width height=height bottomEdges=false fixed=false/>
+<@menu.panel x=0 y=y width=width isFixed=false/>
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-sound-wave.png -p [=width-69],[=y]}\
 ${endif}\

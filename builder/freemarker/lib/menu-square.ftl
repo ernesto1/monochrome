@@ -15,15 +15,15 @@
           default is 'true'
   color   color scheme to use, default is the conky primary color scheme
  -->
-<#macro table x y width header body=200 bottomEdges=true fixed=true color=image.primaryColor>
-# ------- composite table image -------
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-menu-dark.png" x=x y=y fixed=fixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-menu-light.png" x=x y=y+header fixed=fixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x+width y=y fixed=fixed/>
-<#if bottomEdges>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x y=y+header+body fixed=fixed/>
+<#macro table x y width header body=0 isFixed=true color=image.primaryColor>
+# ------- single column table | top edge    -------
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-menu-dark.png" x=x y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-menu-light.png" x=x y=y+header isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x+width y=y isFixed=isFixed/>
+<#if body gt 0>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x y=y+header+body isFixed=isFixed/>
 </#if>
-# --------- end of table image --------
+# ------- single column table | bottom edge -------
 </#macro>
 
 
@@ -39,12 +39,12 @@
      header       body width (px)
      width (px)
  -->
-<#macro verticalTable x y header body height fixed=true>
+<#macro verticalTable x y header body height isFixed=true>
 # --- composite vertical table image ---
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-dark.png" x=x y=y fixed=fixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-light.png" x=x+header y=y fixed=fixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x+header+body y=y fixed=fixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x y=y+height fixed=fixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-dark.png" x=x y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-light.png" x=x+header y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x+header+body y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x y=y+height isFixed=isFixed/>
 # --------- end of table image ---------
 </#macro>
 
@@ -60,12 +60,12 @@
     ╰─────────────╯      -+-      TODO implement isDark & fixed functionalities
        width (px)
  -->
-<#macro menu x y width height isDark=false bottomEdges=true fixed=true>
-# ----------- menu image ------------
+<#macro panel x y width height=0 isDark=false isFixed=true>
+# ------- [=cmn.getTheme(isDark)] panel top edge    -------
 ${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-light.png -p [=x?c],[=y?c]}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p [=(x+width)?c],[=y?c]}\
-<#if bottomEdges>
+<#if height gt 0>
 ${image ~/conky/monochrome/images/common/menu-blank.png -p [=x?c],[=(y + height)?c]}\
 </#if>
-# -------- end of menu image ---------
+# ------- [=cmn.getTheme(isDark)] panel bottom edge -------
 </#macro>

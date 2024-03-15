@@ -58,9 +58,9 @@ ${if_existing [=packagesFile]}\
 ${voffset 2}${offset 5}${color1}dnf${goto 57}${color}${lines [=packagesFile]} package updates
 <#assign y += body + gap>
 <#assign header = 19, packageCol = 136, colGap = 1, versionCol = width - packageCol - colGap>
-<@menu.table x=0 y=y header=header width=packageCol bottomEdges=false/>
+<@menu.table x=0 y=y header=header width=packageCol />
 ${lua configure_menu [=image.primaryColor] light [=packageCol] 3}\
-<@menu.table x=packageCol + colGap y=y width=versionCol header=header bottomEdges=false/>
+<@menu.table x=packageCol + colGap y=y width=versionCol header=header />
 <#assign y += header>
 ${lua add_offsets 0 [=y]}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
@@ -71,7 +71,7 @@ ${color}${lua_parse populate_menu_from_file [=packagesFile] [=maxLines]}${voffse
 ${lua_parse draw_bottom_edges [=packageCol + colGap] [=versionCol]}\
 ${else}\
 ${image ~/conky/monochrome/images/compact/[=image.secondaryColor]-packages.png -p 0,0}\
-<@menu.menu x=41 y=0 width=189-41 height=38/>
+<@menu.panel x=41 y=0 width=189-41 height=38/>
 ${voffset 4}${offset 48}${color1}dandified yum
 ${voffset 2}${offset 48}${color}no package updates
 ${endif}\

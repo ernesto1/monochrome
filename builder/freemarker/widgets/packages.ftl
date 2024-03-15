@@ -3,13 +3,13 @@ conky.config = {
   lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
   lua_draw_hook_pre = 'reset_state',
   
-  update_interval = 300,   -- update interval in seconds
-  xinerama_head = 0,       -- for multi monitor setups, select monitor to run on: 0,1,2
-  double_buffer = true,    -- use double buffering (reduces flicker, may not work for everyone)
+  update_interval = 4,    -- update interval in seconds
+  xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
+  double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
   alignment = 'middle_right',
-  gap_x = 24,
+  gap_x = 5,
   gap_y = 53,
 
   -- window settings
@@ -54,16 +54,16 @@ conky.text = [[
 ${if_existing [=packagesFile]}\
 <#assign y = 0, 
          header = 39>    <#-- menu header -->
-<@menu.table x=0 y=y width=width header=header bottomEdges=false/>
-${lua configure_menu [=image.primaryColor] light [=width?c] 3}\
-<#assign y += header + 17>
+<@menu.table x=0 y=y width=width header=header/>
+<#assign y += header + 13><#-- head() function requires the file text to be at 10 px below its panel edge, so adding the remaining px due to package/version header -->
 ${lua add_offsets 0 [=y]}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
-${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dnf.png -p 121,[=(y+3)?c]}\
+${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dnf.png -p 121,[=(y+4)?c]}\
 ${voffset 3}${alignc}${color1}dnf package management
 ${voffset 5}${alignc}${color}${lines [=packagesFile]} package update(s) available
 ${voffset 6}${offset 5}${color1}package${alignr 4}version${voffset 1}
-<#assign maxLines = 85>
-${color}${lua_parse populate_menu_from_file [=packagesFile] [=maxLines]}${voffset 5}
+<#assign maxLines = 25>
+${color}${lua_parse head [=packagesFile] [=maxLines]}${voffset 5}
+<@menu.panelBottomCorners x=0 y=0 width=width isFixed=false/>
 ${endif}\
 ]];

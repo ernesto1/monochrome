@@ -66,24 +66,24 @@ ${voffset 3}${offset 29}${color1}uptime${goto 74}${color}${uptime}
 ${voffset 3}${offset 5}${color1}compositor${goto 74}${color}${execi 3600 echo $XDG_SESSION_TYPE}
 ${voffset 8}\
 # ::::::::::::::::: top cpu
-# ------- composite table image -------
+# ------- single column table | top edge    -------
 ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 0,56}\
 ${image ~/conky/monochrome/images/common/blue-menu-light.png -p 0,75}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 159,56}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 0,208}\
-# --------- end of table image --------
-# ------- composite table image -------
+# ------- single column table | bottom edge -------
+# ------- single column table | top edge    -------
 ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 160,56}\
 ${image ~/conky/monochrome/images/common/blue-menu-light.png -p 160,75}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 205,56}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 160,208}\
-# --------- end of table image --------
-# ------- composite table image -------
+# ------- single column table | bottom edge -------
+# ------- single column table | top edge    -------
 ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 206,56}\
 ${image ~/conky/monochrome/images/common/blue-menu-light.png -p 206,75}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 251,56}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 206,208}\
-# --------- end of table image --------
+# ------- single column table | bottom edge -------
 ${voffset 2}${offset 5}${color1}process${goto 183}cpu${goto 211}memory${voffset 4}
 ${template0 1}
 ${template0 2}
@@ -94,24 +94,24 @@ ${template0 6}
 ${template0 7}
 ${template0 8}
 # ::::::::::::::::: top memory
-# ------- composite table image -------
+# ------- single column table | top edge    -------
 ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 0,211}\
 ${image ~/conky/monochrome/images/common/blue-menu-light.png -p 0,230}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 159,211}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 0,363}\
-# --------- end of table image --------
-# ------- composite table image -------
+# ------- single column table | bottom edge -------
+# ------- single column table | top edge    -------
 ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 160,211}\
 ${image ~/conky/monochrome/images/common/blue-menu-light.png -p 160,230}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 205,211}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 160,363}\
-# --------- end of table image --------
-# ------- composite table image -------
+# ------- single column table | bottom edge -------
+# ------- single column table | top edge    -------
 ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 206,211}\
 ${image ~/conky/monochrome/images/common/blue-menu-light.png -p 206,230}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 251,211}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 206,363}\
-# --------- end of table image --------
+# ------- single column table | bottom edge -------
 ${voffset 10}${offset 5}${color1}process${goto 165}memory${goto 223}perc${voffset 4}
 ${template1 1}
 ${template1 2}

@@ -10,13 +10,13 @@ conky.config = {
   -- window alignment
   alignment = 'middle_left',  -- top|middle|bottom_left|right
   gap_x = 142,
-  gap_y = -172,
+  gap_y = -175,
 
   -- window settings
   <#assign width = 169>
   minimum_width = [=width],      -- conky will add an extra pixel to this  
   maximum_width = [=width],
-  <#if system == "desktop"><#assign windowHeight=1311><#else><#assign windowHeight=20></#if>
+  <#if system == "desktop"><#assign windowHeight=1317><#else><#assign windowHeight=20></#if>
   minimum_height = [=windowHeight?c],
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -63,7 +63,7 @@ ${voffset 2}\
          header = 75, <#-- menu header -->
          body = 71,   <#-- menu window without the header -->
          gap = 5>     <#-- empty space between windows -->
-<@menu.verticalTable x=0 y=y header=header body=width-header height=body fixed=true/>
+<@menu.verticalTable x=0 y=y header=header body=width-header height=body isFixed=true/>
 <#assign y += body + gap>
 ${lua add_offsets 0 [=body + gap]}\
 <#assign inputDir = "/tmp/conky"
@@ -82,22 +82,22 @@ ${if_existing [=activeTorrentsFile]}\
 ${if_match ${lua get activeNum ${lines [=activeTorrentsFile]}} > 0}\
 ${lua decrease_total_lines 1}\
 <#assign header = 19>
-<@menu.table x=0 y=0 width=width header=header bottomEdges=false fixed=false/>
-${lua configure_menu [=image.primaryColor] light [=width?c] 3}\
+<@menu.table x=0 y=0 width=width header=header isFixed=false/>
 ${lua add_offsets 0 [=header]}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-peers.png [=((width-112)/2)?round] 22}\
-${alignc}${color1}active torrents ${color}(${color}${lua get activeNum}${color})${color1}${voffset 3}
-${color}${color}${lua_parse populate_menu_from_file [=activeTorrentsFile] [=totalLines-5]}${voffset [=7 + gap]}
+${alignc}${color1}active torrents ${color}(${color}${lua get activeNum}${color})${color1}${voffset 6}
+${color}${lua_parse head [=activeTorrentsFile] [=totalLines-5]}${voffset [=7 + gap]}
+<@menu.panelBottomCorners x=0 y=0 width=width isFixed=false/>
 ${lua add_offsets 0 [=gap]}\
 ${else}\
 <#assign body = 20>
-<@menu.menu x=0 y=71 + gap width=width height=body color=image.secondaryColor/>
+<@menu.panel x=0 y=71 + gap width=width height=body color=image.secondaryColor/>
 ${lua add_offsets 0 [=body + gap]}${lua decrease_total_lines 1}\
 ${alignc}${color3}no active torrents${voffset [=7 + gap]}
 ${endif}\
 ${else}\
 <#assign body = 36>
-<@menu.menu x=0 y=0 width=width height=body fixed=false color=image.secondaryColor/>
+<@menu.panel x=0 y=0 width=width height=body isFixed=false color=image.secondaryColor/>
 ${lua add_offsets 0 [=body + gap]}${lua decrease_total_lines 2}\
 ${offset 5}${alignc}${color3}active torrents input file
 ${voffset 3}${alignc}is missing${voffset [= 7 + gap]}
@@ -107,12 +107,12 @@ ${endif}\
 <#assign packagesFile = "/tmp/conky/dnf.packages.formatted",
          header = 19>
 ${if_existing [=packagesFile]}\
-<@menu.table x=0 y=0 width=width header=header bottomEdges=false fixed=false/>
+<@menu.table x=0 y=0 width=width header=header isFixed=false/>
 ${lua add_offsets 0 [=header]}\
-${lua configure_menu [=image.primaryColor] light [=width?c] 3}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dnf.png 111 2}\
-${offset 5}${color1}package${alignr 4}version${voffset 3}
-${color}${lua_parse populate_menu_from_file [=packagesFile] [=totalLines]}${voffset 5}
+${offset 5}${color1}package${alignr 4}version${voffset 6}
+${color}${lua_parse head [=packagesFile] [=totalLines]}${voffset 5}
+<@menu.panelBottomCorners x=0 y=0 width=width isFixed=false/>
 ${endif}\
 ]]

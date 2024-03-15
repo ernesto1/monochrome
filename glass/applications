@@ -67,36 +67,35 @@ ${voffset 10}\
 ${if_existing /tmp/conky/transmission.active}\
 ${if_match ${lua get active} > 0}\
 ${lua decrease_total_lines 1}\
-# ------- composite table image -------
+# ------- single column table | top edge    -------
 ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 0,90}\
 ${image ~/conky/monochrome/images/common/blue-menu-light.png -p 0,109}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 159,90}\
-# --------- end of table image --------
-# ------- composite table image -------
+# ------- single column table | bottom edge -------
+# ------- single column table | top edge    -------
 ${image ~/conky/monochrome/images/common/yellow-menu-dark.png -p 160,90}\
 ${image ~/conky/monochrome/images/common/yellow-menu-light.png -p 160,109}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 199,90}\
-# --------- end of table image --------
-# ------- composite table image -------
+# ------- single column table | bottom edge -------
+# ------- single column table | top edge    -------
 ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 200,90}\
 ${image ~/conky/monochrome/images/common/blue-menu-light.png -p 200,109}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 239,90}\
-# --------- end of table image --------
-${lua configure_menu blue light 159 3 false}\
+# ------- single column table | bottom edge -------
 ${lua add_offsets 0 19}\
-${offset 5}${color1}active torrents${goto 184}${color3}up${offset 16}down${voffset 3}
-${color}${color}${lua_parse populate_menu_from_file /tmp/conky/transmission.active 56}
-${lua_parse draw_bottom_edges 160 39 color=image.secondaryColor}${lua_parse draw_bottom_edges 200 39}\
-${voffset 10}\
+${offset 5}${color1}active torrents${goto 184}${color3}up${offset 16}${color1}down${voffset 3}
+${color}${lua_parse head /tmp/conky/transmission.active 56}${voffset 10}
+${lua add_offsets 0 -3}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 160 0}\
 ${lua add_offsets 0 3}\
 ${endif}\
 ${else}\
 ${lua decrease_total_lines 1}\
-# ----------- menu image ------------
+# ------- light panel top edge    -------
 ${image ~/conky/monochrome/images/common/blue-menu-light.png -p 0,90}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 159,90}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 0,126}\
-# -------- end of menu image ---------
+# ------- light panel bottom edge -------
 ${lua add_offsets 0 39}\
 ${offset 5}${color}active torrents input
 ${voffset 3}${offset 5}file is missing
@@ -113,19 +112,20 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 22}\
 ${lua add_offsets 0 25}\
 ${voffset 2}${offset 5}${color1}dnf${goto 33}${color}${lines /tmp/conky/dnf.packages.formatted} package updates
 ${voffset 10}\
-# ------- composite table image -------
+# ------- single column table | top edge    -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-dark.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-light.png 0 19}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 159 0}\
-# --------- end of table image --------
-# ------- composite table image -------
+# ------- single column table | bottom edge -------
+# ------- single column table | top edge    -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-dark.png 160 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-light.png 160 19}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 211 0}\
-# --------- end of table image --------
-${lua configure_menu blue light 159 3 false}\
+# ------- single column table | bottom edge -------
 ${lua add_offsets 0 19}\
 ${offset 5}${color1}package${goto 166}version${voffset 3}
-${color}${lua_parse populate_menu_from_file /tmp/conky/dnf.packages.formatted 61}
+${color}${lua_parse head /tmp/conky/dnf.packages.formatted 61}
+${lua add_offsets 0 -3}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\
 ${endif}\
 ]]
