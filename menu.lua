@@ -3,8 +3,8 @@
 methods to allow a conky client to manipulate x,y positions of images or text at runtime.
 
 > how to use
-in order to use the methods in this library, the conky's 'lua_draw_hook_pre' setting must invoke
-the method conky_reset_state()
+  - requires the common.lua library to be imported by conky
+  - the method conky_reset_state() must be invoked by the conky's 'lua_draw_hook_pre' setting
 
 > library features
 
@@ -35,25 +35,6 @@ the method conky_reset_state()
           conky_configure_menu()
           conky_populate_menu()
 ]]
-
--- table to hold global variables
-vars = {}
-
---[[ 
-parses the given conky expression and stores its value for future use
-if the 'expression' is not provided, the current value stored for the variable is returned
-
-arguments:
-    name          name of the variable
-    expression    conky variable to parse (optional argument)
-]]
-function conky_get(name, expression)
-  if expression ~= nil then vars[name] = conky_parse(expression) end
-  if vars[name] == nil then print("variable '" .. name .. "' does not exist") end
-
-  return vars[name]
-end
-
 
 -- resets the global variables, such as the x,y offsets
 -- this method must be invoked by conky on each refresh cycle (use the lua_draw_hook_pre setting)
@@ -89,7 +70,6 @@ function conky_add_offsets(xOffset, yOffset)
   return ''
 end
 
-
 --[[
 add the 'x' offset to the conky variable's argument
 call this method with the ${goto} or ${offset} conky variables
@@ -107,7 +87,6 @@ function conky_add_y_offset(variable, y)
   local yOffset = vars["yOffset"] or 0
   return "${" .. variable .. " " .. tonumber(y) + yOffset .. "}"
 end
-
 
 --[[
 creates a conky image variable string at the x,y coordinate position after any available offsets are applied,
@@ -400,4 +379,40 @@ function conky_populate_menu_from_mem(filepath, max, x, y)
   local y = calculate_bottom_edge_y_coordinate(lines)
 
   return text .. draw_round_bottom_edges(vars["xOffset"], y, vars["width"])
+end
+
+function conky_cat(filepath, max, x, y)
+  conky_read_file(filepath)
+  -- apply sensible defaults
+  max = (max ~= nil) and tonumber(max) or 30
+  max = (vars["totalLines"] > max) and max or vars["totalLines"]
+  x = (x ~= nil) and tonumber(x) or 5
+  y = (y ~= nil) and tonumber(y) or 3
+  
+  local text, lines = cutText(vars[filepath], max)
+  conky_decrease_total_lines(lines)
+  
+  if x ~=nil then
+    x = x + vars["xOffset"]
+    text = '${voffset ' .. y .. '}' .. '${offset ' .. x .. '}' .. text
+    text = string.gsub(text, "\n", "\n" .. '${voffset ' .. y .. '}' .. '${offset ' .. x .. '}')
+  end
+  
+  adjust_y_offset_for_bottom_edges(lines)
+  return text
+end
+
+--[[
+adjusts the y offset in order to draw a menu's bottom edges based on the number of lines read from a file
+
+arguments:
+    numLines   number of lines
+]]
+function adjust_y_offset_for_bottom_edges(numLines)
+  -- TODO this math has only been tested for text using a ${voffset 3}, improve it to handle any text voffset
+  lineMultiplier = 16
+  numLines = (numLines > 0) and numLines or 0
+  vars["yOffset"] = vars["yOffset"] + (numLines * lineMultiplier) + 7
+
+  return ''
 end

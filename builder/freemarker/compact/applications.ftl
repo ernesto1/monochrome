@@ -48,7 +48,8 @@ conky.config = {
   
   -- images
   imlib_cache_flush_interval = 250,
-  max_user_text = 20000,
+  max_user_text = 22000,    -- max size of user text buffer in bytes, i.e. text inside conky.text section 
+                            -- default is 16,384 bytes
 
   -- font settings
   use_xft = false,
@@ -79,17 +80,14 @@ ${if_existing [=packagesFile]}\
 # :::::: updates vailable
 <@menu.menu x=iconHeight+gap y=0 width=189-(iconHeight+3) height=iconHeight fixed=false isDark=true/>
 ${voffset 4}${lua_parse add_x_offset offset 48}${color1}dandified yum
-${voffset 2}${lua_parse add_x_offset offset 48}${color}${lines [=packagesFile]} package updates${voffset 10}
+${voffset 2}${lua_parse add_x_offset offset 48}${color}${lines [=packagesFile]} package updates${voffset 11}
 ${lua add_offsets 0 [=iconHeight + gap]}\
 <#assign packageCol = 134, colGap = gap, versionCol = width - packageCol - colGap>
-<@menu.menu x=0 y=0 width=packageCol bottomEdges=false fixed=false/>
-${lua configure_menu [=image.primaryColor] light [=packageCol] 3}\
-<@menu.menu x=packageCol + colGap y=0 width=versionCol bottomEdges=false fixed=false/>
+<@menu.columns x=0 y=0 widths=[packageCol,versionCol] gap=colGap fixed=false/>
 # optional dnf branding, can be removed or won't matter if the image does not exist
-${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dnf.png [=packageCol-35-2] 2}\
-${lua add_offsets 0 [=gap]}\
-${color}${lua_parse populate_menu_from_file [=packagesFile] [=packageLines]}${voffset [= 8 + bigGap]}
-${lua_parse draw_bottom_edges [=packageCol + colGap] [=versionCol]}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dnf.png [=packageCol-35-2] 5}\
+${color}${lua_parse cat [=packagesFile] [=packageLines]}${voffset [= 7 + bigGap]}
+<@menu.columnsBottom x=0 y=-7 widths=[packageCol,versionCol] gap=colGap fixed=false/>
 ${lua add_offsets 0 [=bigGap]}\
 ${else}\
 # :::::: no package updates
@@ -195,25 +193,19 @@ ${voffset 2}${lua_parse add_x_offset offset 48}${color}${lines [=peersFile]} pee
 ${lua add_offsets 0 [=iconHeight + 15 + gap]}\
 ${if_existing [=statusFile] torrents}\
 ${lua add_offsets [=-1 * columnOffset] 0}\
-<@menu.menu x=0 y=0 width=speedColWidth bottomEdges=false fixed=false/>
+<@menu.columns x=0 y=0 widths=[speedColWidth] gap=colGap fixed=false/>
 ${lua add_offsets [=columnOffset] 0}\
 ${endif}\
-<@menu.menu x=0 y=0 width=speedColWidth  bottomEdges=false fixed=false color=image.secondaryColor/>
 <#assign menuWidth = width - speedColWidth - colGap>
-<@menu.menu x=speedColWidth + colGap y=0 width=menuWidth bottomEdges=false fixed=false/>
+<@menu.columns x=0 y=0 widths=[speedColWidth, menuWidth] gap=colGap fixed=false highlight=[1]/>
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-peers.png [=speedColWidth + colGap + 17] 22}\
-${lua add_offsets 0 [=gap]}\
+${lua_parse cat [=activeTorrentsFile] [=torrentLines - 5]}${voffset [= 7 + gap]}
 ${if_existing [=statusFile] torrents}\
 ${lua add_offsets [=-1 * columnOffset] 0}\
-${lua configure_menu [=image.primaryColor] light [=speedColWidth] 3}\
-${lua_parse populate_menu_from_file [=activeTorrentsFile] [=torrentLines - 5]}\
+<@menu.columnsBottom x=0 y=-7 widths=[speedColWidth] gap=colGap fixed=false/>
 ${lua add_offsets [=columnOffset] 0}\
-${lua_parse draw_bottom_edges 0 [=speedColWidth] [=image.secondaryColor]}\
-${else}\
-${lua configure_menu [=image.secondaryColor] light [=speedColWidth] 3}\
-${lua_parse populate_menu_from_file [=activeTorrentsFile] [=torrentLines - 5]}\
 ${endif}\
-${lua_parse draw_bottom_edges [=speedColWidth+colGap] [=menuWidth] [=image.primaryColor]}${voffset [= 7 + gap]}
+<@menu.columnsBottom x=0 y=-7 widths=[speedColWidth, menuWidth] gap=colGap fixed=false highlight=[1]/>
 ${lua add_offsets 0 [=gap]}\
 # ::: no peers
 ${if_match ${lua get activeNum ${lines [=peersFile]}} == 0}\
@@ -221,28 +213,23 @@ ${if_match ${lua get activeNum ${lines [=peersFile]}} == 0}\
 ${voffset 2}${lua_parse add_x_offset offset 48}${color}no peers connected${voffset [= 8 + bigGap]}
 ${else}\
 # ::: peers connected
-# same as the active torrent table, the 'download' column is hidden unless data is being downloaded
+# the peers table is composed of 4 columns: down | up | ip | client
+# similar to the active torrent table above, the 'down' column is hidden unless data is being downloaded
 <#assign ipCol = 99, clientCol = 87>
 ${if_existing [=statusFile] peers}\
 ${lua add_offsets [=-1 * columnOffset] 0}\
-<@menu.menu x=0 y=0 width=speedColWidth bottomEdges=false fixed=false/>
+<@menu.columns x=0 y=0 widths=[speedColWidth] gap=colGap fixed=false/>
 ${lua add_offsets [=columnOffset] 0}\
 ${endif}\
-<@menu.menu x=0 y=0 width=speedColWidth  bottomEdges=false fixed=false color=image.secondaryColor/>
-<@menu.menu x=speedColWidth + colGap y=0 width=ipCol bottomEdges=false fixed=false/>
-<@menu.menu x=speedColWidth + colGap * 2 + ipCol y=0 width=menuWidth-ipCol-colGap bottomEdges=false fixed=false/>
-${lua add_offsets 0 [=gap]}\
+<@menu.columns x=0 y=0 widths=[speedColWidth,ipCol,menuWidth-ipCol-colGap] gap=colGap fixed=false highlight=[1]/>
+${lua_parse cat [=peersFile] [=torrentLines]}\
 ${if_existing [=statusFile] peers}\
 ${lua add_offsets [=-1 * columnOffset] 0}\
-${lua configure_menu [=image.primaryColor] light [=speedColWidth] 3}\
-${lua_parse populate_menu_from_file [=peersFile] [=torrentLines]}
+<@menu.columnsBottom x=0 y=-7 widths=[speedColWidth] gap=colGap fixed=false/>
 ${lua add_offsets [=columnOffset] 0}\
-${lua_parse draw_bottom_edges 0 [=speedColWidth] [=image.secondaryColor]}\
-${else}\
-${lua configure_menu [=image.secondaryColor] light [=speedColWidth] 3}\
-${lua_parse populate_menu_from_file [=peersFile] [=torrentLines]}\
 ${endif}\
-${lua_parse draw_bottom_edges [=speedColWidth + colGap] [=ipCol] [=image.primaryColor]}${lua_parse draw_bottom_edges [=speedColWidth + colGap * 2 + ipCol] [=menuWidth-ipCol-colGap] [=image.primaryColor]}
+<@menu.columnsBottom x=0 y=-7 widths=[speedColWidth,ipCol,menuWidth-ipCol-colGap] gap=colGap fixed=false highlight=[1]/>
+${lua add_offsets 0 [=gap]}\
 ${endif}\
 ${endif}\
 ${else}\

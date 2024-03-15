@@ -55,7 +55,7 @@ conky.text = [[
 # :::: no player available
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
 ${image ~/conky/monochrome/images/widgets-dock/yellow-rhythmbox.png -p 0,0}\
-# ----------- menu image ------------
+# -------- light menu top edge    -------
 ${image ~/conky/monochrome/images/common/yellow-menu-light.png -p 56,0}\
 ${image ~/conky/monochrome/images/common/yellow-menu-light-edge-top-left.png -p 56,0}\
 ${image ~/conky/monochrome/images/common/yellow-menu-light-edge-top-right.png -p 162,0}\
@@ -63,7 +63,7 @@ ${image ~/conky/monochrome/images/common/menu-blank.png -p 169,0}\
 ${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-left.png -p 56,46}\
 ${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png -p 162,46}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 56,53}\
-# -------- end of menu image ---------
+# -------- light menu bottom edge -------
 ${voffset 5}${offset 62}${color1}now playing
 ${voffset 2}${offset 62}${color}no player running
 ${voffset 0}${offset 62}${color}...
@@ -71,7 +71,7 @@ ${else}\
 # :::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
-# ----------- menu image ------------
+# -------- light menu top edge    -------
 ${image ~/conky/monochrome/images/common/green-menu-light.png -p 0,0}\
 ${image ~/conky/monochrome/images/common/green-menu-light-edge-top-left.png -p 0,0}\
 ${image ~/conky/monochrome/images/common/green-menu-light-edge-top-right.png -p 162,0}\
@@ -79,11 +79,11 @@ ${image ~/conky/monochrome/images/common/menu-blank.png -p 169,0}\
 ${image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-left.png -p 0,179}\
 ${image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-right.png -p 162,179}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 0,186}\
-# -------- end of menu image ---------
+# -------- light menu bottom edge -------
 ${voffset 2}${alignc}${color3}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} ${color4}: ${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
 ${image ~/conky/monochrome/images/common/green-menu-album-placeholder.png -p 2,19}\
 ${else}\
-# ----------- menu image ------------
+# -------- light menu top edge    -------
 ${image ~/conky/monochrome/images/common/yellow-menu-light.png -p 0,0}\
 ${image ~/conky/monochrome/images/common/yellow-menu-light-edge-top-left.png -p 0,0}\
 ${image ~/conky/monochrome/images/common/yellow-menu-light-edge-top-right.png -p 162,0}\
@@ -91,7 +91,7 @@ ${image ~/conky/monochrome/images/common/menu-blank.png -p 169,0}\
 ${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-left.png -p 0,179}\
 ${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png -p 162,179}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 0,186}\
-# -------- end of menu image ---------
+# -------- light menu bottom edge -------
 ${voffset 2}${alignc}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} ${color}: ${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
 ${image ~/conky/monochrome/images/common/yellow-menu-album-placeholder.png -p 2,19}\
 ${color}\

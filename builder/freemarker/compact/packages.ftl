@@ -1,6 +1,6 @@
 <#import "/lib/menu-round.ftl" as menu>
 conky.config = {
-  lua_load = '~/conky/monochrome/menu.lua',
+  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
   lua_draw_hook_pre = 'reset_state',
   
   update_interval = 3,  -- update interval in seconds

@@ -1,5 +1,24 @@
 -- :::::: common functions ::::::
 
+-- table to hold global variables
+vars = {}
+
+--[[
+parses the given conky expression and stores its value for future use
+if the 'expression' is not provided, the current value stored for the variable is returned
+
+arguments:
+    name          name of the variable
+    expression    conky variable to parse (optional argument)
+]]
+function conky_get(name, expression)
+  if expression ~= nil then vars[name] = conky_parse(expression) end
+  if vars[name] == nil then print("variable '" .. name .. "' does not exist") end
+
+  return vars[name]
+end
+
+
 function conky_pad(expression)
     local text = conky_parse(expression)
     return string.format('%3s', text)
