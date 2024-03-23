@@ -86,7 +86,7 @@ ${lua add_offsets 0 [=iconHeight + gap]}\
 <@menu.panels x=0 y=0 widths=[packageCol,versionCol] gap=colGap isFixed=false/>
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dnf.png [=packageCol-35-2] 5}\
-${color}${lua_parse head [=packagesFile] [=packageLines]}${voffset [= 7 + bigGap]}
+${color}${lua_parse head [=packagesFile] [=packageLines]}${lua increase_y_offset [=packagesFile]}${voffset [= 7 + bigGap]}
 <@menu.panelsBottom x=0 y=0 widths=[packageCol,versionCol] gap=colGap isFixed=false/>
 ${lua add_offsets 0 [=bigGap]}\
 ${else}\
@@ -201,7 +201,7 @@ ${endif}\
 <@menu.panels x=0 y=0 widths=[speedColWidth, menuWidth] gap=colGap isFixed=false highlight=[1]/>
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-peers.png [=speedColWidth + colGap + 17] 22}\
 ${if_match "${lua get isTorrentDownloading}" == "true"}${lua add_offsets [=-1 * columnOffset] 0}${endif}\
-${lua_parse head [=activeTorrentsFile] [=torrentLines - 5]}${voffset [= 7 + gap]}
+${lua_parse head [=activeTorrentsFile] [=torrentLines - 5]}${lua increase_y_offset [=activeTorrentsFile]}${voffset [= 7 + gap]}
 ${if_match "${lua get isTorrentDownloading}" == "true"}\
 <@menu.panelsBottom x=0 y=0 widths=[speedColWidth] gap=colGap isFixed=false/>
 ${lua add_offsets [=columnOffset] 0}\
@@ -225,7 +225,7 @@ ${endif}\
 <#assign ipCol = 99, clientCol = 87>
 <@menu.panels x=0 y=0 widths=[speedColWidth,ipCol,menuWidth-ipCol-colGap] gap=colGap isFixed=false highlight=[1]/>
 ${if_match "${lua get isTorrentDownloading}" == "true"}${lua add_offsets [=-1 * columnOffset] 0}${endif}\
-${lua_parse head [=peersFile] [=torrentLines]}
+${lua_parse head [=peersFile] [=torrentLines]}${lua increase_y_offset [=peersFile]}
 ${if_match "${lua get isPeerDownloading}" == "true"}\
 <@menu.panelsBottom x=0 y=0 widths=[speedColWidth] gap=colGap isFixed=false/>
 ${lua add_offsets [=columnOffset] 0}\

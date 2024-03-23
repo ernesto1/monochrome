@@ -63,7 +63,7 @@ ${voffset 3}${alignc}${color1}dnf package management
 ${voffset 5}${alignc}${color}${lines [=packagesFile]} package update(s) available
 ${voffset 6}${offset 5}${color1}package${alignr 4}version${voffset 1}
 <#assign maxLines = 25>
-${color}${lua_parse head [=packagesFile] [=maxLines]}${voffset 5}
+${color}${lua_parse head [=packagesFile] [=maxLines]}${lua increase_y_offset [=packagesFile]}${voffset 5}
 <@menu.panelBottomCorners x=0 y=0 width=width isFixed=false/>
 ${endif}\
 ]];

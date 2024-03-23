@@ -62,7 +62,7 @@ ${image ~/conky/monochrome/images/common/green-menu-dnf.png -p 121,56}\
 ${voffset 3}${alignc}${color1}dnf package management
 ${voffset 5}${alignc}${color}${lines /tmp/conky/dnf.packages.formatted} package update(s) available
 ${voffset 6}${offset 5}${color1}package${alignr 4}version${voffset 1}
-${color}${lua_parse head /tmp/conky/dnf.packages.formatted 25}${voffset 5}
+${color}${lua_parse head /tmp/conky/dnf.packages.formatted 25}${lua increase_y_offset /tmp/conky/dnf.packages.formatted}${voffset 5}
 ${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-left.png 0 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-right.png 193 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\

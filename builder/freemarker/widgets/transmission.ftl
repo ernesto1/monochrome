@@ -69,7 +69,7 @@ ${lua read_file [=activeTorrentsFile]}${lua calculate_voffset [=activeTorrentsFi
 ${lua_parse add_y_offset voffset 2}${offset 5}${color1}active torrents${goto 226}up${goto 254}down${voffset 6}
 ${lua add_offsets 0 [=header]}\
 <#assign y += header>
-${color}${lua_parse head [=activeTorrentsFile] [=max]}${voffset 4}
+${color}${lua_parse head [=activeTorrentsFile] [=max]}${lua increase_y_offset [=activeTorrentsFile]}${voffset 4}
 <@menu.panelsBottom x=0 y=0 widths=[width,speedCol,speedCol] gap=colGap isFixed=false color=image.secondaryColor/>
 <#assign x = width + colGap + speedCol + colGap + speedCol + gap>
 ${lua reset_state}${lua add_offsets [=x] 0}\
@@ -101,7 +101,7 @@ ${lua read_file [=peersFile]}${lua calculate_voffset [=peersFile] [=max]}\
 <@menu.table x=ipCol+colGap+clientCol+colGap+speedCol+colGap y=0 width=39 header=header isFixed=false color=image.secondaryColor/>
 ${lua_parse add_y_offset voffset 2}${lua_parse add_x_offset offset 5}${color1}ip address${offset 43}client${offset 69}up${offset 16}down${voffset 6}
 ${lua add_offsets 0 [=header]}\
-${color}${lua_parse head_mem [=peersFile] [=max]}
+${color}${lua_parse head_mem [=peersFile] [=max]}${lua increase_y_offset [=peersFile]}
 <@menu.panelsBottom x=0 y=0 widths=[ipCol,clientCol,speedCol,speedCol] gap=colGap isFixed=false color=image.secondaryColor/>
 ${else}\
 ${lua add_offsets 0 323}\

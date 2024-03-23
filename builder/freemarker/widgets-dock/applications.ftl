@@ -86,7 +86,7 @@ ${lua decrease_total_lines 1}\
 ${lua add_offsets 0 [=header]}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-peers.png [=((width-112)/2)?round] 22}\
 ${alignc}${color1}active torrents ${color}(${color}${lua get activeNum}${color})${color1}${voffset 6}
-${color}${lua_parse head [=activeTorrentsFile] [=totalLines-5]}${voffset [=7 + gap]}
+${color}${lua_parse head [=activeTorrentsFile] [=totalLines-5]}${lua increase_y_offset [=activeTorrentsFile]}${voffset [=7 + gap]}
 <@menu.panelBottomCorners x=0 y=0 width=width isFixed=false/>
 ${lua add_offsets 0 [=gap]}\
 ${else}\
@@ -112,7 +112,7 @@ ${lua add_offsets 0 [=header]}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dnf.png 111 2}\
 ${offset 5}${color1}package${alignr 4}version${voffset 6}
-${color}${lua_parse head [=packagesFile] [=totalLines]}${voffset 5}
+${color}${lua_parse head [=packagesFile] [=totalLines]}${lua increase_y_offset [=packagesFile]}${voffset 5}
 <@menu.panelBottomCorners x=0 y=0 width=width isFixed=false/>
 ${endif}\
 ]]

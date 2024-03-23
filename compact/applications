@@ -90,7 +90,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 189 0}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-dnf.png 97 5}\
-${color}${lua_parse head /tmp/conky/dnf.packages.formatted 25}${voffset 12}
+${color}${lua_parse head /tmp/conky/dnf.packages.formatted 25}${lua increase_y_offset /tmp/conky/dnf.packages.formatted}${voffset 12}
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-left.png 0 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-right.png 127 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-left.png 137 -7}\
@@ -273,7 +273,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 189 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-peers.png 59 22}\
 ${if_match "${lua get isTorrentDownloading}" == "true"}${lua add_offsets -42 0}${endif}\
-${lua_parse head /tmp/conky/transmission.active.flipped 57}${voffset 10}
+${lua_parse head /tmp/conky/transmission.active.flipped 57}${lua increase_y_offset /tmp/conky/transmission.active.flipped}${voffset 10}
 ${if_match "${lua get isTorrentDownloading}" == "true"}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-left.png 0 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-right.png 32 -7}\
@@ -328,7 +328,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-top-right.png 182 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 189 0}\
 ${if_match "${lua get isTorrentDownloading}" == "true"}${lua add_offsets -42 0}${endif}\
-${lua_parse head /tmp/conky/transmission.peers.flipped 62}
+${lua_parse head /tmp/conky/transmission.peers.flipped 62}${lua increase_y_offset /tmp/conky/transmission.peers.flipped}
 ${if_match "${lua get isPeerDownloading}" == "true"}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-left.png 0 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-right.png 32 -7}\

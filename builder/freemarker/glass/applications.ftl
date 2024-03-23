@@ -83,7 +83,7 @@ ${lua decrease_total_lines 1}\
 <@menu.table x=width+colGap+speedCol+colGap y=y width=speedCol header=header/>
 ${lua add_offsets 0 [=header]}\
 ${offset 5}${color1}active torrents${goto 184}${color3}up${offset 16}${color1}down${voffset 3}
-${color}${lua_parse head [=activeTorrentsFile] [=totalLines - 5]}${voffset [= 7 + gap]}
+${color}${lua_parse head [=activeTorrentsFile] [=totalLines - 5]}${lua increase_y_offset [=activeTorrentsFile]}${voffset [= 7 + gap]}
 ${lua add_offsets 0 -3}\<#-- hack: text is not 10px from its top edge, you must fix the spacing with the music player conky again :S -->
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png [=width+colGap] 0}\
 ${lua add_offsets 0 [=gap]}\
@@ -111,7 +111,7 @@ ${voffset [= 7 + gap]}\
 <@menu.table x=width+colGap y=0 width=versionCol header=header isFixed=false/>
 ${lua add_offsets 0 [=header]}\
 ${offset 5}${color1}package${goto 166}version${voffset 3}
-${color}${lua_parse head [=packagesFile] [=totalLines]}
+${color}${lua_parse head [=packagesFile] [=totalLines]}${lua increase_y_offset [=packagesFile]}
 ${lua add_offsets 0 -3}\<#-- hack: text is not 10px from its top edge, you must fix the spacing with the music player conky again :S -->
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\
 ${endif}\
