@@ -1,6 +1,6 @@
 <#import "/lib/menu-round.ftl" as menu>
 conky.config = {
-  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
+  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/panel.lua',
   lua_draw_hook_pre = 'reset_state',
   
   update_interval = 3,  -- update interval in seconds
@@ -62,7 +62,7 @@ ${voffset 2}${offset 5}${color1}dnf${goto 57}${color}${lines [=packagesFile]} pa
 ${lua configure_menu [=image.primaryColor] light [=packageCol] 3}\
 <@menu.table x=packageCol + colGap y=y width=versionCol header=header />
 <#assign y += header>
-${lua add_offsets 0 [=y]}\
+${lua increment_offsets 0 [=y]}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dnf.png -p [=packageCol-35-2],[=(y+2)?c]}\
 ${voffset 10}${offset 5}${color1}package${alignr 5}version${voffset 3}

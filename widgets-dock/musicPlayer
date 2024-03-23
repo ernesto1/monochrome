@@ -2,7 +2,7 @@
 --      it generates input files under /tmp/conky/musicplayer.* which this conky will read
 
 conky.config = {
-  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
+  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/panel.lua',
   lua_draw_hook_pre = 'reset_state',
   
   update_interval = 2,    -- update interval in seconds
@@ -97,7 +97,7 @@ ${image ~/conky/monochrome/images/common/yellow-menu-album-placeholder.png -p 2,
 ${color}\
 ${endif}\
 ${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 165x165 2 19}\
-${voffset 176}${lua add_offsets 0 191}\
+${voffset 176}${lua increment_offsets 0 191}\
 ${endif}\
 # :::: track details
 # menu expands based on the track metadata fields available
@@ -112,16 +112,16 @@ ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-sound-wave.png 109 0}\
 ${endif}\
 # --------- end of table image top ---------
-${lua add_offsets 0 14}\
+${lua increment_offsets 0 14}\
 ${voffset 3}${offset 5}${color1}title${goto 50}${color}${cat /tmp/conky/musicplayer.title}
 ${if_match "${lua get album ${cat /tmp/conky/musicplayer.album}}" != "unknown album"}\
-${voffset 3}${offset 5}${color1}album${goto 50}${color}${lua get album}${lua add_offsets 0 16}
+${voffset 3}${offset 5}${color1}album${goto 50}${color}${lua get album}${lua increment_offsets 0 16}
 ${endif}\
 ${if_match "${lua get artist ${cat /tmp/conky/musicplayer.artist}}" != "unknown artist"}\
-${voffset 3}${offset 5}${color1}artist${goto 50}${color}${lua get artist}${lua add_offsets 0 16}
+${voffset 3}${offset 5}${color1}artist${goto 50}${color}${lua get artist}${lua increment_offsets 0 16}
 ${endif}\
 ${if_match "${lua get genre ${cat /tmp/conky/musicplayer.genre}}" != "unknown genre"}\
-${voffset 3}${offset 5}${color1}genre${goto 50}${color}${lua get genre}${lua add_offsets 0 16}
+${voffset 3}${offset 5}${color1}genre${goto 50}${color}${lua get genre}${lua increment_offsets 0 16}
 ${endif}\
 ${voffset -7}\
 # ------  vertical table image bottom ------

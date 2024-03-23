@@ -19,7 +19,7 @@ Panels are expected to be populated with text with a 10px top border and a 7px b
 
 In order to align the text in the panel properly:
 
-  - the 'y' offset is expected to be at the start of the panel, see conky_add_offsets(..)
+  - the 'y' offset is expected to be at the start of the panel, see conky_increment_offsets(..)
   - lowercase text is expected to begin 10 pixels from the top of the panel
   - the 'y' offset is updated to the pixel where the bottom of the panel should be
     this will yield a 7 pixels border between the bottom of the text and the panel edge
@@ -38,7 +38,7 @@ function conky_increase_y_offset(filepath)
 
   -- TODO this math has only been tested for text using a ${voffset 3}, improve it to handle any text voffset
   local lineMultiplier = 16
-  conky_add_offsets(0, (vars[filepath .. ".lines"] * lineMultiplier) + 7)
+  conky_increment_offsets(0, (vars[filepath .. ".lines"] * lineMultiplier) + 7)
 
   return ''
 end
@@ -50,7 +50,7 @@ function conky_calculate_voffset(filepath, max)
   linesRead = (linesRead < max) and linesRead or max
   local emptyLines = max - linesRead
   local voffset = emptyLines * 16
-  conky_add_offsets(0, voffset)
+  conky_increment_offsets(0, voffset)
 
   return ''
 end

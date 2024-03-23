@@ -3,7 +3,7 @@
 --      it generates input files under /tmp/conky/musicplayer.* which this conky will read
 
 conky.config = {
-  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
+  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/panel.lua',
   lua_draw_hook_pre = 'reset_state',
   
   update_interval = 2,    -- update interval in seconds
@@ -80,7 +80,7 @@ ${color}\
 ${endif}\
 ${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4 [=(top)?c]}\
 <#assign y += y + top + body + gap>
-${lua add_offsets 0 [=y]}\
+${lua increment_offsets 0 [=y]}\
 ${voffset 193}\
 ${else}\
 # :::::::: no album art available
@@ -90,7 +90,7 @@ ${image ~/conky/monochrome/images/common/[=image.primaryColor]-rhythmbox.png -p 
 ${voffset 36}${offset 61}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}
 ${voffset 4}${offset 61}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
 <#assign y += 71 + gap>
-${lua add_offsets 0 [=y]}\
+${lua increment_offsets 0 [=y]}\
 ${voffset 9}\
 ${endif}\
 # :::::::: track details
@@ -104,16 +104,16 @@ ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-sound-wave.png [=width-53-7] 0}\
 ${endif}\
 # --------- end of table image top ---------
-${lua add_offsets 0 [=height - 7]}\<#-- edges are 7x7 px -->
+${lua increment_offsets 0 [=height - 7]}\<#-- edges are 7x7 px -->
 ${voffset 3}${offset 5}${color1}title${goto 50}${color}${cat /tmp/conky/musicplayer.title}
 ${if_match "${lua get album ${cat /tmp/conky/musicplayer.album}}" != "unknown album"}\
-${voffset 3}${offset 5}${color1}album${goto 50}${color}${lua get album}${lua add_offsets 0 16}
+${voffset 3}${offset 5}${color1}album${goto 50}${color}${lua get album}${lua increment_offsets 0 16}
 ${endif}\
 ${if_match "${lua get artist ${cat /tmp/conky/musicplayer.artist}}" != "unknown artist"}\
-${voffset 3}${offset 5}${color1}artist${goto 50}${color}${lua get artist}${lua add_offsets 0 16}
+${voffset 3}${offset 5}${color1}artist${goto 50}${color}${lua get artist}${lua increment_offsets 0 16}
 ${endif}\
 ${if_match "${lua get genre ${cat /tmp/conky/musicplayer.genre}}" != "unknown genre"}\
-${voffset 3}${offset 5}${color1}genre${goto 50}${color}${lua get genre}${lua add_offsets 0 16}
+${voffset 3}${offset 5}${color1}genre${goto 50}${color}${lua get genre}${lua increment_offsets 0 16}
 ${endif}\
 ${voffset -7}\
 # ------  vertical table image bottom ------

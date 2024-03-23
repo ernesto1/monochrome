@@ -1,5 +1,5 @@
 conky.config = {
-  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua ~/conky/monochrome/musicPlayer.lua',
+  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/panel.lua ~/conky/monochrome/musicPlayer.lua',
   lua_draw_hook_pre = 'reset_state',
   
   update_interval = 3,    -- update interval in seconds
@@ -56,7 +56,7 @@ ${image ~/conky/monochrome/images/common/blue-menu-light.png -p 75,0}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 159,0}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 0,87}\
 # --------- end of table image ---------
-${lua add_offsets 0 90}\
+${lua increment_offsets 0 90}\
 ${voffset 5}${offset 5}${color1}swarm${goto 81}${color}${if_existing /tmp/conky/transmission.peers}${lua pad ${lua get peers ${lines /tmp/conky/transmission.peers}}} peers${else}file missing${endif}
 ${voffset 3}${offset 5}${color1}active${goto 81}${color}${if_existing /tmp/conky/transmission.active}${lua pad ${lua get active ${lines /tmp/conky/transmission.active}}} torrents${else}file missing${endif}
 ${voffset 3}${offset 5}${color1}seeding${goto 81}${color}${if_existing /tmp/conky/transmission.seeding}${lua pad ${lines /tmp/conky/transmission.seeding}} torrents${else}file missing${endif}
@@ -82,12 +82,12 @@ ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 200,90}\
 ${image ~/conky/monochrome/images/common/blue-menu-light.png -p 200,109}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 239,90}\
 # ------- single column table | bottom edge -------
-${lua add_offsets 0 19}\
+${lua increment_offsets 0 19}\
 ${offset 5}${color1}active torrents${goto 184}${color3}up${offset 16}${color1}down${voffset 3}
 ${color}${lua_parse head /tmp/conky/transmission.active 56}${lua increase_y_offset /tmp/conky/transmission.active}${voffset 10}
-${lua add_offsets 0 -3}\
+${lua increment_offsets 0 -3}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 160 0}\
-${lua add_offsets 0 3}\
+${lua increment_offsets 0 3}\
 ${endif}\
 ${else}\
 ${lua decrease_total_lines 1}\
@@ -96,7 +96,7 @@ ${image ~/conky/monochrome/images/common/blue-menu-light.png -p 0,90}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 159,90}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 0,126}\
 # ------- light panel bottom edge -------
-${lua add_offsets 0 39}\
+${lua increment_offsets 0 39}\
 ${offset 5}${color}active torrents input
 ${voffset 3}${offset 5}file is missing
 ${voffset 10}\
@@ -109,7 +109,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-light.png 27 0
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 159 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 22}\
 # --------- end of table image ---------
-${lua add_offsets 0 25}\
+${lua increment_offsets 0 25}\
 ${voffset 2}${offset 5}${color1}dnf${goto 33}${color}${lines /tmp/conky/dnf.packages.formatted} package updates
 ${voffset 10}\
 # ------- single column table | top edge    -------
@@ -122,10 +122,10 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-dark.png 160 0
 ${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-light.png 160 19}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 211 0}\
 # ------- single column table | bottom edge -------
-${lua add_offsets 0 19}\
+${lua increment_offsets 0 19}\
 ${offset 5}${color1}package${goto 166}version${voffset 3}
 ${color}${lua_parse head /tmp/conky/dnf.packages.formatted 61}${lua increase_y_offset /tmp/conky/dnf.packages.formatted}
-${lua add_offsets 0 -3}\
+${lua increment_offsets 0 -3}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\
 ${endif}\
 ]]

@@ -1,6 +1,6 @@
 <#import "/lib/menu-round.ftl" as menu>
 conky.config = {
-  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua ~/conky/monochrome/musicPlayer.lua',
+  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/panel.lua ~/conky/monochrome/musicPlayer.lua',
   lua_draw_hook_pre = 'reset_state',
   
   update_interval = 3,    -- update interval in seconds
@@ -65,7 +65,7 @@ ${voffset 2}\
          gap = 5>     <#-- empty space between windows -->
 <@menu.verticalTable x=0 y=y header=header body=width-header height=body isFixed=true/>
 <#assign y += body + gap>
-${lua add_offsets 0 [=body + gap]}\
+${lua increment_offsets 0 [=body + gap]}\
 <#assign inputDir = "/tmp/conky"
          peersFile = inputDir + "/transmission.peers",
          seedingFile = inputDir + "/transmission.seeding"
@@ -83,22 +83,22 @@ ${if_match ${lua get activeNum ${lines [=activeTorrentsFile]}} > 0}\
 ${lua decrease_total_lines 1}\
 <#assign header = 19>
 <@menu.table x=0 y=0 width=width header=header isFixed=false/>
-${lua add_offsets 0 [=header]}\
+${lua increment_offsets 0 [=header]}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-peers.png [=((width-112)/2)?round] 22}\
 ${alignc}${color1}active torrents ${color}(${color}${lua get activeNum}${color})${color1}${voffset 6}
 ${color}${lua_parse head [=activeTorrentsFile] [=totalLines-5]}${lua increase_y_offset [=activeTorrentsFile]}${voffset [=7 + gap]}
 <@menu.panelBottomCorners x=0 y=0 width=width isFixed=false/>
-${lua add_offsets 0 [=gap]}\
+${lua increment_offsets 0 [=gap]}\
 ${else}\
 <#assign body = 20>
 <@menu.panel x=0 y=71 + gap width=width height=body color=image.secondaryColor/>
-${lua add_offsets 0 [=body + gap]}${lua decrease_total_lines 1}\
+${lua increment_offsets 0 [=body + gap]}${lua decrease_total_lines 1}\
 ${alignc}${color3}no active torrents${voffset [=7 + gap]}
 ${endif}\
 ${else}\
 <#assign body = 36>
 <@menu.panel x=0 y=0 width=width height=body isFixed=false color=image.secondaryColor/>
-${lua add_offsets 0 [=body + gap]}${lua decrease_total_lines 2}\
+${lua increment_offsets 0 [=body + gap]}${lua decrease_total_lines 2}\
 ${offset 5}${alignc}${color3}active torrents input file
 ${voffset 3}${alignc}is missing${voffset [= 7 + gap]}
 ${endif}\
@@ -108,7 +108,7 @@ ${endif}\
          header = 19>
 ${if_existing [=packagesFile]}\
 <@menu.table x=0 y=0 width=width header=header isFixed=false/>
-${lua add_offsets 0 [=header]}\
+${lua increment_offsets 0 [=header]}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dnf.png 111 2}\
 ${offset 5}${color1}package${alignr 4}version${voffset 6}

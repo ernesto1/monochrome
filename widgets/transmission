@@ -1,5 +1,5 @@
 conky.config = {
-  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
+  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/panel.lua',
   lua_draw_hook_pre = 'reset_state',
   
   update_interval = 3,    -- update interval in seconds
@@ -74,7 +74,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light.png 243
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 282 0}\
 # ------- single column table | bottom edge -------
 ${lua_parse add_y_offset voffset 2}${offset 5}${color1}active torrents${goto 226}up${goto 254}down${voffset 6}
-${lua add_offsets 0 19}\
+${lua increment_offsets 0 19}\
 ${color}${lua_parse head /tmp/conky/transmission.active 20}${lua increase_y_offset /tmp/conky/transmission.active}${voffset 4}
 ${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light-edge-bottom-left.png 0 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light-edge-bottom-right.png 195 -7}\
@@ -84,9 +84,9 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-light-edge-bo
 ${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-right.png 275 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\
 # ------- 3 column(s) panel | bottom edges -------
-${lua reset_state}${lua add_offsets 287 0}\
+${lua reset_state}${lua increment_offsets 287 0}\
 ${else}\
-${lua add_offsets 0 326}\
+${lua increment_offsets 0 326}\
 # ------- light panel top edge    -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light-edge-top-left.png 0 0}\
@@ -97,10 +97,10 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light-edge-bo
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 20}\
 # ------- light panel bottom edge -------
 ${lua_parse add_y_offset voffset 2}${goto 49}${color}no active torrents${voffset 4}
-${lua reset_state}${lua add_offsets 216 0}\
+${lua reset_state}${lua increment_offsets 216 0}\
 ${endif}\
 ${else}\
-${lua add_offsets 0 310}\
+${lua increment_offsets 0 310}\
 # ------- light panel top edge    -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light-edge-top-left.png 0 0}\
@@ -112,7 +112,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 36}\
 # ------- light panel bottom edge -------
 ${lua_parse add_y_offset voffset 2}${goto 24}${color}active torrents input file
 ${voffset 3}${goto 72}is missing${voffset 4}
-${lua reset_state}${lua add_offsets 216 0}\
+${lua reset_state}${lua increment_offsets 216 0}\
 ${endif}\
 # :::::::::::: peers
 # peers menu is displayed on the right side of the active torrents menu
@@ -149,7 +149,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light.png 230
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 269 0}\
 # ------- single column table | bottom edge -------
 ${lua_parse add_y_offset voffset 2}${lua_parse add_x_offset offset 5}${color1}ip address${offset 43}client${offset 69}up${offset 16}down${voffset 6}
-${lua add_offsets 0 19}\
+${lua increment_offsets 0 19}\
 ${color}${lua_parse head_mem /tmp/conky/transmission.peers 20}${lua increase_y_offset /tmp/conky/transmission.peers}
 ${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light-edge-bottom-left.png 0 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light-edge-bottom-right.png 94 -7}\
@@ -162,7 +162,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-light-edge-bo
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\
 # ------- 4 column(s) panel | bottom edges -------
 ${else}\
-${lua add_offsets 0 323}\
+${lua increment_offsets 0 323}\
 # ------- light panel top edge    -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light-edge-top-left.png 0 0}\
@@ -175,7 +175,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 20}\
 ${lua_parse add_y_offset voffset 2}${lua_parse add_x_offset offset 47}${color}no peers connected${voffset 4}
 ${endif}\
 ${else}\
-${lua add_offsets 0 307}\
+${lua increment_offsets 0 307}\
 # ------- light panel top edge    -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light-edge-top-left.png 0 0}\

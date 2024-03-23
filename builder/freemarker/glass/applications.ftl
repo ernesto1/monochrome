@@ -1,6 +1,6 @@
 <#import "/lib/menu-square.ftl" as menu>
 conky.config = {
-  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua ~/conky/monochrome/musicPlayer.lua',
+  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/panel.lua ~/conky/monochrome/musicPlayer.lua',
   lua_draw_hook_pre = 'reset_state',
   
   update_interval = 3,    -- update interval in seconds
@@ -60,7 +60,7 @@ ${lua decrease_music_player_lines 1 3 13}\
          gap = 3>     <#-- empty space between menus -->
 <@menu.verticalTable x=0 y=y header=header body=159-header height=height/>
 <#assign y += height + gap>
-${lua add_offsets 0 [= height + gap]}\
+${lua increment_offsets 0 [= height + gap]}\
 <#assign inputDir = "/tmp/conky"
          peersFile = inputDir + "/transmission.peers",
          seedingFile = inputDir + "/transmission.seeding"
@@ -81,18 +81,18 @@ ${lua decrease_total_lines 1}\
 <@menu.table x=0 y=y width=width header=header/>
 <@menu.table x=width+colGap y=y width=speedCol header=header color=image.secondaryColor/>
 <@menu.table x=width+colGap+speedCol+colGap y=y width=speedCol header=header/>
-${lua add_offsets 0 [=header]}\
+${lua increment_offsets 0 [=header]}\
 ${offset 5}${color1}active torrents${goto 184}${color3}up${offset 16}${color1}down${voffset 3}
 ${color}${lua_parse head [=activeTorrentsFile] [=totalLines - 5]}${lua increase_y_offset [=activeTorrentsFile]}${voffset [= 7 + gap]}
-${lua add_offsets 0 -3}\<#-- hack: text is not 10px from its top edge, you must fix the spacing with the music player conky again :S -->
+${lua increment_offsets 0 -3}\<#-- hack: text is not 10px from its top edge, you must fix the spacing with the music player conky again :S -->
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png [=width+colGap] 0}\
-${lua add_offsets 0 [=gap]}\
+${lua increment_offsets 0 [=gap]}\
 ${endif}\
 ${else}\
 <#assign body = 36>
 ${lua decrease_total_lines 1}\
 <@menu.panel x=0 y=y width=width height=body/>
-${lua add_offsets 0 [=body + gap]}\
+${lua increment_offsets 0 [=body + gap]}\
 ${offset 5}${color}active torrents input
 ${voffset 3}${offset 5}file is missing
 ${voffset [= 7 + gap]}\
@@ -103,16 +103,16 @@ ${if_existing /tmp/conky/dnf.packages.formatted}\
          header = 27,
          height = 22>
 <@menu.verticalTable x=0 y=0 header=header body=159-header height=height isFixed=false/>
-${lua add_offsets 0 [= height + gap]}\
+${lua increment_offsets 0 [= height + gap]}\
 ${voffset 2}${offset 5}${color1}dnf${goto 33}${color}${lines [=packagesFile]} package updates
 ${voffset [= 7 + gap]}\
 <#assign header = 19, versionCol = 51>
 <@menu.table x=0 y=0 width=width header=header isFixed=false/>
 <@menu.table x=width+colGap y=0 width=versionCol header=header isFixed=false/>
-${lua add_offsets 0 [=header]}\
+${lua increment_offsets 0 [=header]}\
 ${offset 5}${color1}package${goto 166}version${voffset 3}
 ${color}${lua_parse head [=packagesFile] [=totalLines]}${lua increase_y_offset [=packagesFile]}
-${lua add_offsets 0 -3}\<#-- hack: text is not 10px from its top edge, you must fix the spacing with the music player conky again :S -->
+${lua increment_offsets 0 -3}\<#-- hack: text is not 10px from its top edge, you must fix the spacing with the music player conky again :S -->
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\
 ${endif}\
 ]]

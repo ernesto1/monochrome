@@ -70,12 +70,12 @@ ${image ~/conky/monochrome/images/common/menu-blank.png -p 0,77}\
 # --------- end of table image ---------
 ${offset 5}${color1}zoom${goto 76}${color}${if_running zoom}running${else}off${endif}
 # :::::::::::: fans
-# ------- composite table image -------
+# ------- single column table | top edge    -------
 ${image ~/conky/monochrome/images/common/green-menu-dark.png -p 210,0}\
 ${image ~/conky/monochrome/images/common/green-menu-light.png -p 210,19}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 392,0}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 210,89}\
-# --------- end of table image --------
+# ------- single column table | bottom edge -------
 ${voffset -71}${goto 215}${color1}fan${alignr 4}revolutions${voffset 5}
 ${voffset 3}${goto 215}${color}chasis front intake${alignr 4}${template1 atk0110 fan 3 2400} rpm
 ${voffset 3}${goto 215}${color}cpu fan${alignr 4}${template1 atk0110 fan 1 2500} rpm
@@ -83,12 +83,12 @@ ${voffset 3}${goto 215}${color}case top exhaust${alignr 4}${template1 atk0110 fa
 ${voffset 3}${goto 215}${color}case back exhaust${alignr 4}${template1 atk0110 fan 4 2500} rpm
 ${voffset 12}\
 # :::::::::::: temperatures
-# ------- composite table image -------
+# ------- single column table | top edge    -------
 ${image ~/conky/monochrome/images/common/green-menu-dark.png -p 210,94}\
 ${image ~/conky/monochrome/images/common/green-menu-light.png -p 210,113}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 392,94}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 210,133}\
-# --------- end of table image --------
+# ------- single column table | bottom edge -------
 ${goto 215}${color1}device${alignr 4}temperature
 ${voffset 6}${goto 215}${color}AMD Radeon HD7570${alignr}${template1 radeon temp 1 75}°C
 ]];

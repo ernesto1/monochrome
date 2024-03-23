@@ -1,6 +1,6 @@
 <#import "/lib/menu-square.ftl" as menu>
 conky.config = {
-  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua ~/conky/monochrome/musicPlayer.lua',
+  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/panel.lua ~/conky/monochrome/musicPlayer.lua',
   lua_draw_hook_pre = 'reset_state',
   
   update_interval = 2,    -- update interval in seconds
@@ -66,13 +66,13 @@ ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-music-player-al
 ${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 147x147 6 6}\
 ${endif}\
 <#assign y = width + 2>
-${lua add_offsets 0 [=y]}\
+${lua increment_offsets 0 [=y]}\
 # ::: player header
 <#assign height = 19>
 <@menu.verticalTable x=0 y=0 header=90 body=width-90 height=height isFixed=false/>
 ${lua_parse conky_draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-music-player-separator.png 58 0}\
 <#assign y += height + 2>
-${lua add_offsets 0 [=y]}\
+${lua increment_offsets 0 [=y]}\
 ${voffset [=width+3+1]}${offset 5}${color1}\
 ${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}${alignr 3}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}${voffset 6}
 # ::: track details

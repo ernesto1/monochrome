@@ -13,7 +13,7 @@
      hence the pletora of conditional statements in this config -->
 conky.config = {
   <#if system == "laptop">
-  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
+  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/panel.lua',
   lua_draw_hook_pre = 'reset_state',
   </#if>
   update_interval = 2,  -- update interval in seconds
@@ -140,7 +140,7 @@ ${voffset [= 7 + gap]}\
 <@menu.verticalTable x=0 y=y header=header body=159-header height=height/>
 ${voffset 2}${offset 5}${color1}zoom${goto 81}${color}${if_running zoom}running${else}off${endif}
 <#else>
-${lua add_offsets 0 [=y]}\
+${lua increment_offsets 0 [=y]}\
 # ::::::::::::::::: wifi network
 <#-- TODO iterate through network devices and build the conditional tree for wifi devices -->
 ${if_up [=networkDevices[system]?first.name]}\
@@ -149,7 +149,7 @@ ${if_up [=networkDevices[system]?first.name]}\
 <#assign y += height + 2>
 ${voffset 3}${offset 5}${color1}network${goto 62}${color}${wireless_essid [=networkDevices[system]?first.name]}
 ${voffset 3}${offset 5}${color1}local ip${goto 62}${color}${addr [=networkDevices[system]?first.name]}${voffset 4}
-${voffset [=gap + 3]}${lua add_offsets 0 [=height+gap]}\
+${voffset [=gap + 3]}${lua increment_offsets 0 [=height+gap]}\
 ${endif}\
 # ::::::::::::::::: miscellaneous details
 <#assign height = 53>

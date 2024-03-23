@@ -3,7 +3,7 @@
 --      it generates input files under /tmp/conky/musicplayer.* which this conky will read
 
 conky.config = {
-  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
+  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/panel.lua',
   lua_draw_hook_pre = 'reset_state',
   
   update_interval = 2,    -- update interval in seconds
@@ -81,7 +81,7 @@ ${color}\
 ${endif}\
 ${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} [=width-innerBorder*2]x[=width-innerBorder*2] [=innerBorder] [=(header)?c]}\
 <#assign y += header + body + gap>
-${voffset [=body + 4 + gap]}${lua add_offsets 0 [=y]}\
+${voffset [=body + 4 + gap]}${lua increment_offsets 0 [=y]}\
 ${endif}\
 # :::: track details
 # menu expands based on the track metadata fields available
@@ -95,16 +95,16 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-so
 ${endif}\
 # --------- end of table image top ---------
 <#assign y = height - 7><#-- edges are 7x7 px -->
-${lua add_offsets 0 [=y]}\
+${lua increment_offsets 0 [=y]}\
 ${voffset 3}${offset 5}${color1}title${goto 50}${color}${cat /tmp/conky/musicplayer.title}
 ${if_match "${lua get album ${cat /tmp/conky/musicplayer.album}}" != "unknown album"}\
-${voffset 3}${offset 5}${color1}album${goto 50}${color}${lua get album}${lua add_offsets 0 16}
+${voffset 3}${offset 5}${color1}album${goto 50}${color}${lua get album}${lua increment_offsets 0 16}
 ${endif}\
 ${if_match "${lua get artist ${cat /tmp/conky/musicplayer.artist}}" != "unknown artist"}\
-${voffset 3}${offset 5}${color1}artist${goto 50}${color}${lua get artist}${lua add_offsets 0 16}
+${voffset 3}${offset 5}${color1}artist${goto 50}${color}${lua get artist}${lua increment_offsets 0 16}
 ${endif}\
 ${if_match "${lua get genre ${cat /tmp/conky/musicplayer.genre}}" != "unknown genre"}\
-${voffset 3}${offset 5}${color1}genre${goto 50}${color}${lua get genre}${lua add_offsets 0 16}
+${voffset 3}${offset 5}${color1}genre${goto 50}${color}${lua get genre}${lua increment_offsets 0 16}
 ${endif}\
 ${voffset -7}\
 # ------  vertical table image bottom ------

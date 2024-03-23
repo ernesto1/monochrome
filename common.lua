@@ -9,13 +9,13 @@
   1) dynamically change the position of an image by taking into account runtime x,y offsets to alter
      an image's original x,y coordinates
      
-     see conky_add_offsets()
+     see conky_increment_offsets()
          conky_draw_image()
 
   2) dynamically update ${goto x} or ${offset x} variables with an offset at runtime
                                      ${voffset y}
 
-     see conky_add_offsets()
+     see conky_increment_offsets()
          conky_add_x_offset()
          conky_add_y_offset()
 
@@ -62,17 +62,17 @@ function conky_set(name, value)
 end
 
 --[[
-adds an offset to the x & y coordinates
-the client can then call the following methods which will take these offsets into account:
+Increments the current offset for the x & y coordinates.
+The client can then call the following methods which will take these offsets into account:
 
   - conky_draw_image(..)
   - conky_add_x_offset(..)
   - conky_add_y_offset(..)
 
-on each conky session the offsets are reset to 0 (see the conky_reset_state() method)
-this method is cumulative, ie. the numbers are increased each times the method is called
+This method is cumulative, ie. the numbers are increased each times the method is called.
+On each conky session the offsets are meant to be reset to 0 (see the conky_reset_state() method).
 ]]
-function conky_add_offsets(xOffset, yOffset)
+function conky_increment_offsets(xOffset, yOffset)
   local x = vars["xOffset"] or 0
   x = x + tonumber(xOffset)
   vars["xOffset"] = x
@@ -109,14 +109,16 @@ ex. calling conky_draw_image(/directory/image.jpg, 0, 50)
     would yield the image variable: ${image /directory/image.jpg -p 10,100}
 
 arguments:
-    path  path to image file
-    x     image x coordinate
-    y     image y coordinate
+    path        path to image file
+    x           image x coordinate
+    y           image y coordinate
+    dimensions  [optional] image dimensions in WxH format, ex. 200x200
 
-@see the 'conky_add_offsets()' method
+@see the 'conky_increment_offsets(..)' method
 ]]
-function conky_draw_image(path, x, y)
-  return "${image " .. path .. " -p " .. tonumber(x) + vars["xOffset"] .. "," .. tonumber(y) + vars["yOffset"] .. "}"
+function conky_draw_image(path, x, y, dimensions)
+  dimensions = (dimensions ~= nil) and " -s " .. dimensions or ""
+  return "${image " .. path .. " -p " .. tonumber(x) + vars["xOffset"] .. "," .. tonumber(y) + vars["yOffset"] .. dimensions .. "}"
 end
 
 
@@ -181,12 +183,7 @@ returns:
 ]]
 function conky_album_art_image(expression, dimensions, x, y)
   local path = conky_parse(expression)
-  local xOffset = vars["xOffset"] or 0
-  local yOffset = vars["yOffset"] or 0
-  
-  local s = "${image " .. path .. " -s " .. dimensions .. " -p " .. tonumber(x) + xOffset .. "," .. tonumber(y)  + yOffset .."}"
-  
-  return s
+  return conky_draw_image(path, x, y, dimensions)
 end
 
 --[[ 

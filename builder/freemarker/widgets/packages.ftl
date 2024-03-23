@@ -1,6 +1,6 @@
 <#import "/lib/menu-round.ftl" as menu>
 conky.config = {
-  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/menu.lua',
+  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/panel.lua',
   lua_draw_hook_pre = 'reset_state',
   
   update_interval = 4,    -- update interval in seconds
@@ -56,7 +56,7 @@ ${if_existing [=packagesFile]}\
          header = 39>    <#-- menu header -->
 <@menu.table x=0 y=y width=width header=header/>
 <#assign y += header + 13><#-- head() function requires the file text to be at 10 px below its panel edge, so adding the remaining px due to package/version header -->
-${lua add_offsets 0 [=y]}\
+${lua increment_offsets 0 [=y]}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dnf.png -p 121,[=(y+4)?c]}\
 ${voffset 3}${alignc}${color1}dnf package management

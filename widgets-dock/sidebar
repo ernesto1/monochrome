@@ -120,7 +120,7 @@ ${image ~/conky/monochrome/images/widgets-dock/green-ethernet-disconnected.png -
 ${image ~/conky/monochrome/images/widgets-dock/green-internet-offline.png -p 0,245}\
 ${voffset 117}
 ${endif}\
-# :::::::::::::::::::: disk sda
+# :::::::::::::::::::: disk samsung SSD HD
 # main disk
 # disk io
 ${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/yellow-diskio-1.png -p 0,327}${endif}\
@@ -131,7 +131,7 @@ ${image ~/conky/monochrome/images/widgets-dock/yellow-disk-root.png -p 0,391}\
 ${template6 \  /}
 ${image ~/conky/monochrome/images/widgets-dock/yellow-disk-home.png -p 0,455}\
 ${template6 \  /home}
-# :::::::::::::::::::: disk sdb
+# :::::::::::::::::::: disk seagate HD
 ${if_existing /dev/sdb}\
 # disk io
 ${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/yellow-diskio-1.png -p 0,519}${endif}\
@@ -146,7 +146,7 @@ ${voffset 59}${goto 67}sdb not
 ${voffset 3}${goto 67}available
 ${voffset 27}
 ${endif}\
-# :::::::::::::::::::: disk sdd
+# :::::::::::::::::::: disk seagate HD
 ${if_existing /dev/sdd}\
 # disk io
 ${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/yellow-diskio-1.png -p 0,647}${endif}\
@@ -161,7 +161,7 @@ ${voffset 59}${goto 67}sdd not
 ${voffset 3}${goto 67}available
 ${voffset 27}
 ${endif}\
-# :::::::::::::::::::: disk maxtor
+# :::::::::::::::::::: disk sde
 ${if_existing /dev/sde}\
 # disk io
 ${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/yellow-diskio-1.png -p 0,775}${endif}\
