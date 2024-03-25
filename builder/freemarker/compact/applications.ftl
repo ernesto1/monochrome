@@ -79,8 +79,8 @@ ${lua_parse draw_image ~/conky/monochrome/images/compact/[=image.secondaryColor]
 ${if_existing [=packagesFile]}\
 # :::::: updates vailable
 <@menu.panel x=iconHeight+gap y=0 width=189-(iconHeight+3) height=iconHeight isFixed=false isDark=true/>
-${voffset 4}${lua_parse add_x_offset offset 48}${color1}dandified yum
-${voffset 2}${lua_parse add_x_offset offset 48}${color}${lines [=packagesFile]} package updates${voffset 11}
+${voffset 5}${lua_parse add_x_offset offset 48}${color1}dandified yum
+${voffset 2}${lua_parse add_x_offset offset 48}${color}${lines [=packagesFile]} package updates${voffset 10}
 ${lua increment_offsets 0 [=iconHeight + gap]}\
 <#assign packageCol = 134, colGap = gap, versionCol = width - packageCol - colGap>
 <@menu.panels x=0 y=0 widths=[packageCol,versionCol] gap=colGap isFixed=false/>
@@ -92,8 +92,8 @@ ${lua increment_offsets 0 [=bigGap]}\
 ${else}\
 # :::::: no package updates
 <@menu.panel x=iconHeight+3 y=0 width=189-(iconHeight+3) height=iconHeight isFixed=false/>
-${voffset 4}${lua_parse add_x_offset offset 48}${color1}dandified yum
-${voffset 2}${lua_parse add_x_offset offset 48}${color}no package updates${voffset [= 8 + bigGap]}
+${voffset 5}${lua_parse add_x_offset offset 48}${color1}dandified yum
+${voffset 2}${lua_parse add_x_offset offset 48}${color}no package updates${voffset [= 7 + bigGap]}
 ${lua increment_offsets 0 [=iconHeight + bigGap]}\
 ${endif}\
 #
@@ -106,7 +106,7 @@ ${endif}\
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
 ${lua_parse draw_image ~/conky/monochrome/images/compact/[=image.secondaryColor]-sound-wave.png 0 0}\
 <@menu.panel x=41 y=0 width=189-41 height=iconHeight isFixed=false/>
-${voffset 2}${lua_parse add_x_offset offset 48}${color1}now playing
+${voffset 3}${lua_parse add_x_offset offset 48}${color1}now playing
 ${voffset 2}${lua_parse add_x_offset offset 48}${color}no player running${voffset [= 8 + bigGap]}
 ${lua increment_offsets 0 [=iconHeight + bigGap]}\
 ${else}\
@@ -115,15 +115,15 @@ ${lua increment_offsets 0 [=gap]}${voffset [=gap]}\
 ${lua_parse draw_image ~/conky/monochrome/images/compact/[=image.secondaryColor]-sound-wave.png 0 0}\
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
 <@menu.panel x=41 y=0 width=189-41 height=iconHeight isFixed=false color=image.secondaryColor/>
-${voffset 2}${lua_parse add_x_offset offset 48}${color3}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}
+${voffset 3}${lua_parse add_x_offset offset 48}${color3}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}
 ${voffset 2}${lua_parse add_x_offset offset 48}${color4}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
 ${else}\
 <@menu.panel x=41 y=0 width=189-41 height=iconHeight isFixed=false/>
-${voffset 2}${lua_parse add_x_offset offset 48}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}
+${voffset 3}${lua_parse add_x_offset offset 48}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}
 ${voffset 2}${lua_parse add_x_offset offset 48}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
 ${endif}\
 ${lua increment_offsets 0 [=iconHeight + gap]}\
-${voffset [= 7 + gap]}\
+${voffset [= 6 + gap]}\
 # :::::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
 <#assign body = 189,    <#-- size of the current window without the header -->
@@ -237,7 +237,7 @@ ${endif}\
 ${else}\
 # :::::: error state: input file not available
 <@menu.panel x=iconHeight+3 y=0 width=189-(iconHeight+3) height=iconHeight isFixed=false color=image.secondaryColor/>
-${voffset 2}${lua_parse add_x_offset offset 48}${color3}transmission
+${voffset 3}${lua_parse add_x_offset offset 48}${color3}transmission
 ${voffset 2}${lua_parse add_x_offset offset 48}${color4}input files are missing${voffset [= 8 + bigGap]}
 ${lua increment_offsets 0 [=iconHeight + bigGap]}\
 ${endif}\

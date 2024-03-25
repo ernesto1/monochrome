@@ -76,8 +76,8 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-dark-edge-
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-dark-edge-bottom-right.png 182 31}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 41 38}\
 # ------- dark panel bottom edge -------
-${voffset 4}${lua_parse add_x_offset offset 48}${color1}dandified yum
-${voffset 2}${lua_parse add_x_offset offset 48}${color}${lines /tmp/conky/dnf.packages.formatted} package updates${voffset 11}
+${voffset 5}${lua_parse add_x_offset offset 48}${color1}dandified yum
+${voffset 2}${lua_parse add_x_offset offset 48}${color}${lines /tmp/conky/dnf.packages.formatted} package updates${voffset 10}
 ${lua increment_offsets 0 41}\
 # ------- 2 column(s) panel | top edges    -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light.png 0 0}\
@@ -109,8 +109,8 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-right.png 182 31}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 41 38}\
 # ------- light panel bottom edge -------
-${voffset 4}${lua_parse add_x_offset offset 48}${color1}dandified yum
-${voffset 2}${lua_parse add_x_offset offset 48}${color}no package updates${voffset 13}
+${voffset 5}${lua_parse add_x_offset offset 48}${color1}dandified yum
+${voffset 2}${lua_parse add_x_offset offset 48}${color}no package updates${voffset 12}
 ${lua increment_offsets 0 43}\
 ${endif}\
 #
@@ -131,7 +131,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-right.png 182 31}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 41 38}\
 # ------- light panel bottom edge -------
-${voffset 2}${lua_parse add_x_offset offset 48}${color1}now playing
+${voffset 3}${lua_parse add_x_offset offset 48}${color1}now playing
 ${voffset 2}${lua_parse add_x_offset offset 48}${color}no player running${voffset 13}
 ${lua increment_offsets 0 43}\
 ${else}\
@@ -148,7 +148,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/ochre-menu-light-edge-bo
 ${lua_parse draw_image ~/conky/monochrome/images/common/ochre-menu-light-edge-bottom-right.png 182 31}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 41 38}\
 # ------- light panel bottom edge -------
-${voffset 2}${lua_parse add_x_offset offset 48}${color3}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}
+${voffset 3}${lua_parse add_x_offset offset 48}${color3}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}
 ${voffset 2}${lua_parse add_x_offset offset 48}${color4}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
 ${else}\
 # ------- light panel top edge    -------
@@ -160,11 +160,11 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-right.png 182 31}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 41 38}\
 # ------- light panel bottom edge -------
-${voffset 2}${lua_parse add_x_offset offset 48}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}
+${voffset 3}${lua_parse add_x_offset offset 48}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}
 ${voffset 2}${lua_parse add_x_offset offset 48}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
 ${endif}\
 ${lua increment_offsets 0 41}\
-${voffset 10}\
+${voffset 9}\
 # :::::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
 # ------- light panel top edge    -------
@@ -358,7 +358,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/ochre-menu-light-edge-bo
 ${lua_parse draw_image ~/conky/monochrome/images/common/ochre-menu-light-edge-bottom-right.png 182 31}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 41 38}\
 # ------- light panel bottom edge -------
-${voffset 2}${lua_parse add_x_offset offset 48}${color3}transmission
+${voffset 3}${lua_parse add_x_offset offset 48}${color3}transmission
 ${voffset 2}${lua_parse add_x_offset offset 48}${color4}input files are missing${voffset 13}
 ${lua increment_offsets 0 43}\
 ${endif}\
