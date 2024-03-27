@@ -117,6 +117,7 @@ while [ true ]; do
         # - packages of interest are surrounded by a ${color} variable in order to have them highlighted
         highlightRegex='kernel\|firefox\|transmission'
         cat ${packagesFile} \
+          | sort --ignore-case \
           | awk "{ printf \"%-${packageWidth}.${packageWidth}s\${offset ${offset}}%${versionWidth}.${versionWidth}s\n\", \$1, \$2 }" \
           | sed "s:\($highlightRegex\):$\{color2\}\1$\{color\}:" > ${outputDir}/dnf.packages.formatted
     else
