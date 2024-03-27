@@ -3,7 +3,7 @@ A collection of graphical [conky](https://github.com/brndnmtthws/conky) interfac
 Keep tabs on your system's cpu, memory, disk, network, battery usage and device temperatures.
 
 ### Compact dock
-![compact dock](images/screenshots/compact.gif)
+![compact dock](images/screenshots/compact.jpg)
 
 ### Glass dock
 ![glass dock](images/screenshots/glass.jpg)
