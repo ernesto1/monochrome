@@ -106,63 +106,34 @@ enableTransmissionPoller=true
 
 while (( "$#" )); do
   case $1 in
-    --widgets)
-      shift
-      conkyDir=${monochromeHome}/widgets
-      numPackageCharacters=23
-      numTorrentCharacters=32
+    --interval)
+      interval=$2
+      shift 2
       ;;
-    --widgets-dock)
-      shift
-      conkyDir=${monochromeHome}/widgets-dock
-      offsetPackage=10
-      ;;
-    --glass)
-      shift
-      conkyDir=${monochromeHome}/glass
-      numPackageCharacters=25
-      offsetPackage=10
-      numTorrentCharacters=${numPackageCharacters}
-      ;;
-    --compact)
-      shift
-      conkyDir=${monochromeHome}/compact
-      offsetTorrent=12
+    --layout-override)
+      fileTag=$2      
+      [[ -z $fileTag ]] && { logError 'override file tag must be provided with the --layout-override flag'; exit 2;}
+      shift 2
       ;;
     --monitor)
       # TODO validate a proper number was provided to the monitor flag
       monitor=$2
       shift 2
       ;;
-    --layout-override)
-      fileTag=$2
-      
-      if [[ -z $fileTag ]]; then
-        echo 'override file tag must be provided with the --layout-override flag' >&2
-        echo -e '\n'
-        usage
-        exit 2
-      else
-        layoutFile="$(echo ${conkyDir}/layout.${fileTag}.cfg)"   # need to use echo in order for the variable
-                                                                 # to hold the actual pathname expansion        
-      fi
-      
-      shift 2
+    --shutdown)
+      killSession
+      exit
       ;;
     --silent)
       silent=true
       shift
       ;;
-    --interval)
-      interval=$2
-      shift 2
+    --*)
+      conkyDir=${monochromeHome}/${1#--}      # remove the '--' from the parameter
+      shift
       ;;
     -h)
       usage
-      exit
-      ;;
-    --shutdown)
-      killSession
       exit
       ;;
     *)
@@ -171,6 +142,9 @@ while (( "$#" )); do
       ;;
   esac
 done
+
+[[ -d ${conkyDir} ]] || { echo "conky directory '$(basename ${conkyDir})' does not exist"; exit 1;}
+[[ -f ${conkyDir}/settings.cfg ]] && source ${conkyDir}/settings.cfg
 
 printHeader "::: launching conky with the following settings\n"
 echo   "conky theme:          $(basename ${conkyDir})"
@@ -183,16 +157,13 @@ if [[ ${monitor} ]]; then
   echo "monitor:              ${monitor}"
 fi
 
-if [[ ! -z ${layoutFile} ]]; then
+if [[ -n ${fileTag} ]]; then
+  layoutFile="$(echo ${conkyDir}/layout.${fileTag}.cfg)"   # need to use echo in order for the variable
+                                                           # to hold the actual pathname expansion
   echo "layout override file: ${layoutFile}"
-  
-  if [[ ! -f ${layoutFile} ]]; then
-    logError "layout override file 'layout.${fileTag}.cfg' not found, please provide the proper override file name tag"
-    exit 2
-  fi
-  
+  [[ -f ${layoutFile} ]] || { logError "layout override file 'layout.${fileTag}.cfg' not present in the conky directory"; exit 2;}
   detectDuplicateEntries "${layoutFile}"
-  # TODO file integrity: ensure number of override elements is 2 or 3
+  # TODO file integrity: ensure number of elements per override is 2 or 3
 fi
 
 killSession
