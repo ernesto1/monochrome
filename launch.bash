@@ -221,7 +221,7 @@ do
   
   # patch | some conky's are overlayed on top of others, in order for this to render correctly
   #         these conkys have to be executed last.  We launch these conkys with a delay.
-  if [[ -n $(echo $conkyConfig | grep -E 'memory.+|temperature') ]]; then
+  if [[ -f ${conkyDir}/settings.cfg ]] && grep -qw "delay:${conkyConfig}" ${conkyDir}/settings.cfg; then
     echo '  delaying conky by 1 second'
     arguments+=('--pause' 1)
   fi
@@ -236,35 +236,18 @@ printHeader "\n::: starting support services\n"
 
 if ${enablePackageLookup}; then
   echo "- bash | dnf package updates service"
-
-  if [[ "${numPackageCharacters}" ]]; then
-    arguments=(--package-width ${numPackageCharacters})
-  fi
-  
-  if [[ "${offsetPackage}" ]]; then
-    arguments+=(--offset ${offsetPackage})
-  fi
-  
-  if [[ "${interval}" ]]; then
-    arguments+=(--interval ${interval})
-  fi
-
+  [[ "${numPackageCharacters}" ]] && arguments=(--package-width ${numPackageCharacters})
+  [[ "${offsetPackage}" ]] && arguments+=(--offset ${offsetPackage})
+  [[ "${interval}" ]] && arguments+=(--interval ${interval})
   ${monochromeHome}/dnfPackageLookup.bash ${arguments[@]} &
   unset arguments
 fi
 
 if ${enableTransmissionPoller}; then
   echo "- bash | transmission bittorrent service"
-  echo -e "         ${ORANGE}ensure${NOCOLOR} the ${ORANGE}remote control${NOCOLOR} option is enabled in transmission"
-  
-  if [[ "${numTorrentCharacters}" ]]; then
-    arguments=(--name-width ${numTorrentCharacters})
-  fi
-  
-  if [[ "${offsetTorrent}" ]]; then
-    arguments+=(--offset ${offsetTorrent})
-  fi
-  
+  echo -e "         ${ORANGE}ensure${NOCOLOR} the ${ORANGE}remote control${NOCOLOR} option is enabled in transmission"  
+  [[ "${numTorrentCharacters}" ]] && arguments=(--name-width ${numTorrentCharacters})
+  [[ "${offsetTorrent}" ]] && arguments+=(--offset ${offsetTorrent})
   ${monochromeHome}/transmission.bash "${arguments[@]}" &
   unset arguments
 fi
