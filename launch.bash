@@ -233,6 +233,8 @@ done
 printHeader "\n::: starting support services\n"
 
 # :: bash scripts
+echo "- bash | advanced system performance metrics service"
+${monochromeHome}/system.bash &
 
 if ${enablePackageLookup}; then
   echo "- bash | dnf package updates service"

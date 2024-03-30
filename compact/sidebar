@@ -11,7 +11,7 @@ conky.config = {
 
   -- window settings
   minimum_width = 241,
-  minimum_height = 1386,
+  minimum_height = 1401,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -105,7 +105,8 @@ ${else}\
 ${image ~/conky/monochrome/images/compact/burgundy-mem-high.png -p 0,202}\
 ${endif}\
 # memory graph and usage are displayed on a separate conky due to a bug with these memory variables computing bad data if other variables like ${top ...} and one of the network upload/download exists in the same conky
-${voffset 68}${offset 5}${color1}swap${goto 41}${voffset 1}${color2}${swapbar 3,97}${alignr 59}${voffset -1}${color}${swapperc}%
+${voffset 67}${offset 5}${color1}swap${goto 41}${voffset 1}${color2}${swapbar 3,97}${alignr 59}${voffset -1}${color}${swapperc}%
+${voffset 3}${offset 5}${color1}read${goto 41}${color}${cat /tmp/conky/system.swap.read}${alignr 59}${cat /tmp/conky/system.swap.write} ${color1}write
 ${voffset 8}${offset 5}${color1}process${alignr 59}memory   perc${voffset 3}
 ${template8 1}
 ${template8 2}
@@ -116,71 +117,71 @@ ${template8 6}
 ${template8 7}
 # -------------- network
 ${if_up enp0s25}\
-${image ~/conky/monochrome/images/compact/burgundy-network-desktop.png -p 0,417}\
+${image ~/conky/monochrome/images/compact/burgundy-network-desktop.png -p 0,432}\
 ${voffset 14}${goto 45}${color1}local ip${goto 99}${color}${addr enp0s25}
 ${voffset 3}${goto 45}${color1}speed${goto 99}${color}${template3 enp0s25}
 # :: upload/download speeds
 ${template4 enp0s25 3000 73000}
 ${else}\
-${image ~/conky/monochrome/images/compact/ochre-network-no-internet.png -p 0,417}\
+${image ~/conky/monochrome/images/compact/ochre-network-no-internet.png -p 0,432}\
 ${voffset 12}${offset 5}${color1}no network
 ${voffset 3}${offset 5}connection
 ${voffset 92}
 ${endif}\
 # -------------- disk(s)
 # :::: sda
-${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 0,565}\
+${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 0,580}\
 ${template5 sda 200000 280000}
 ${voffset 6}\
-${image ~/conky/monochrome/images/compact/burgundy-filesystem.png -p 0,637}\
+${image ~/conky/monochrome/images/compact/burgundy-filesystem.png -p 0,652}\
 ${template6 fedora /}
-${image ~/conky/monochrome/images/compact/burgundy-filesystem.png -p 0,668}\
+${image ~/conky/monochrome/images/compact/burgundy-filesystem.png -p 0,683}\
 ${template6 home /home}
 # :::: sdb
 ${if_existing /dev/sdb}\
-${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 0,699}\
+${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 0,714}\
 ${template5 sdb 6000 250000}
 ${voffset 6}\
-${image ~/conky/monochrome/images/compact/burgundy-filesystem.png -p 0,771}\
+${image ~/conky/monochrome/images/compact/burgundy-filesystem.png -p 0,786}\
 ${template6 veronica /media/veronica}
 ${else}\
-${image ~/conky/monochrome/images/compact/ochre-disk-disconnected.png -p 0,699}\
+${image ~/conky/monochrome/images/compact/ochre-disk-disconnected.png -p 0,714}\
 ${voffset 13}${offset 5}${color1}sdb device
 ${voffset 3}${offset 5}${color1}${font4}is not connected
 ${voffset 48}
 ${endif}\
 # :::: sdd
 ${if_existing /dev/sdd}\
-${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 0,802}\
+${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 0,817}\
 ${template5 sdd 6000 250000}
 ${voffset 6}\
-${image ~/conky/monochrome/images/compact/burgundy-filesystem.png -p 0,874}\
+${image ~/conky/monochrome/images/compact/burgundy-filesystem.png -p 0,889}\
 ${template6 betty /media/betty}
 ${else}\
-${image ~/conky/monochrome/images/compact/ochre-disk-disconnected.png -p 0,802}\
+${image ~/conky/monochrome/images/compact/ochre-disk-disconnected.png -p 0,817}\
 ${voffset 13}${offset 5}${color1}sdd device
 ${voffset 3}${offset 5}${color1}${font4}is not connected
 ${voffset 48}
 ${endif}\
 # :::: sde
 ${if_existing /dev/sde}\
-${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 0,905}\
+${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 0,920}\
 ${template5 sde 6000 60000}
 ${voffset 6}\
-${image ~/conky/monochrome/images/compact/burgundy-filesystem.png -p 0,977}\
+${image ~/conky/monochrome/images/compact/burgundy-filesystem.png -p 0,992}\
 ${template6 maxtor /run/media/ernesto/MAXTOR}
 ${else}\
-${image ~/conky/monochrome/images/compact/ochre-disk-disconnected.png -p 0,905}\
+${image ~/conky/monochrome/images/compact/ochre-disk-disconnected.png -p 0,920}\
 ${voffset 13}${offset 5}${color1}sde device
 ${voffset 3}${offset 5}${color1}${font4}is not connected
 ${voffset 48}
 ${endif}\
 # -------------- system
-${if_updatenr 1}${image ~/conky/monochrome/images/compact/burgundy-system-1.png -p 0,1008}${endif}\
-${if_updatenr 2}${image ~/conky/monochrome/images/compact/burgundy-system-2.png -p 0,1008}${endif}\
+${if_updatenr 1}${image ~/conky/monochrome/images/compact/burgundy-system-1.png -p 0,1023}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/compact/burgundy-system-2.png -p 0,1023}${endif}\
 ${voffset 15}${goto 47}${color1}uptime ${goto 113}${color}${uptime}
 ${voffset 3}${goto 47}${color1}compositor ${color}${execi 3600 echo $XDG_SESSION_TYPE}
 ${voffset 10}${offset 5}${color1}kernel ${color}${kernel}
 # due to a conky/lua bug the temperature items had to be moved to their own conky
-${image ~/conky/monochrome/images/compact/burgundy-edge-bottom.png -p 0,1327}
+${image ~/conky/monochrome/images/compact/burgundy-edge-bottom.png -p 0,1342}
 ]];
