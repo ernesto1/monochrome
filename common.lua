@@ -187,18 +187,19 @@ function conky_load_image(expression, dimensions, x, y)
 end
 
 --[[ 
-evaluates a conky variable (ex. ${cat someFile}) and prints its value
+evaluates a conky variable (ex. ${cat someFile}) and prints its value;
 if the character limit is breached, the string is truncated
 
 arguments:
   expression    conky variable to parse
   charLimit     [optional] maximun number of characters to print, use to truncate text if too long
+                default is 20 characters
 ]]
 function conky_truncate_string(expression, charLimit)  
   local text = conky_parse(expression)
   -- if the expression evaluates to nothing use a default error message
   text = (text ~= '') and text or "empty conky expression"
-  charLimit = tonumber(charLimit) or 1000
+  charLimit = tonumber(charLimit) or 20
   
   return string.sub(text,1,charLimit)
 end
