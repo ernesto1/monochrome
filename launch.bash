@@ -120,6 +120,10 @@ while (( "$#" )); do
       monitor=$2
       shift 2
       ;;
+    --no-torrent)
+      enableTransmissionPoller=false
+      shift
+      ;;
     --shutdown)
       killSession
       exit
@@ -143,9 +147,10 @@ while (( "$#" )); do
   esac
 done
 
-[[ -d ${conkyDir} ]] || { echo "conky directory '$(basename ${conkyDir})' does not exist"; exit 1;}
+[[ -d ${conkyDir} ]] || { echo "conky directory '$(basename ${conkyDir})' does not exist"; exit 1; }
 [[ -f ${conkyDir}/settings.cfg ]] && source ${conkyDir}/settings.cfg
 
+type -p figlet > /dev/null && echo -e "${GREEN}$(figlet -t 'monochrome conky')"
 printHeader "::: launching conky with the following settings\n"
 echo   "conky theme:          $(basename ${conkyDir})"
 echo   "dnf package service:  ${enablePackageLookup}"
@@ -255,7 +260,7 @@ if ${enableTransmissionPoller}; then
 fi
 
 # :: java applications
-msg="the java JDK is not installed on this system, unable to launch the java applications\n      some conkys will not work properly"
+msg="the java JDK is not installed on this system, unable to launch the java applications\n      the 'now playing' conky will not work properly"
 type java > /dev/null 2>&1 || { logError "$msg"; exit 1; }
 
 if ${enableMusicPlayerListener}; then
