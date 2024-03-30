@@ -96,7 +96,7 @@ ${voffset 2}${alignc}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.na
 ${image ~/conky/monochrome/images/common/yellow-menu-album-placeholder.png -p 2,19}\
 ${color}\
 ${endif}\
-${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 165x165 2 19}\
+${lua_parse load_image ${cat /tmp/conky/musicplayer.albumArtPath} 165x165 2 19}\
 ${voffset 176}${lua increment_offsets 0 191}\
 ${endif}\
 # :::: track details

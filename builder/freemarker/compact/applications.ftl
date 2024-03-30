@@ -131,7 +131,7 @@ ${if_existing /tmp/conky/musicplayer.albumArtPath}\
 <@menu.panel x=0 y=0 width=width height=body isFixed=false/>
 ${lua increment_offsets 0 [=border]}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-album-placeholder.png [=border+8] 8}\
-${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4 0}\
+${lua_parse load_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4 0}\
 ${lua increment_offsets 0 [=body-border + gap]}${lua decrease_total_lines 12}\
 ${voffset 192}\
 ${endif}\

@@ -79,7 +79,7 @@ ${voffset 2}${alignc}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.na
 ${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-album-placeholder.png -p [=innerBorder],[=header]}\
 ${color}\
 ${endif}\
-${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} [=width-innerBorder*2]x[=width-innerBorder*2] [=innerBorder] [=(header)?c]}\
+${lua_parse load_image ${cat /tmp/conky/musicplayer.albumArtPath} [=width-innerBorder*2]x[=width-innerBorder*2] [=innerBorder] [=(header)?c]}\
 <#assign y += header + body + gap>
 ${voffset [=body + 4 + gap]}${lua increment_offsets 0 [=y]}\
 ${endif}\

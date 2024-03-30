@@ -78,7 +78,7 @@ ${voffset 2}${alignc}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.na
 ${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-album-placeholder.png -p [=4+8],[=19+8]}\
 ${color}\
 ${endif}\
-${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4 [=(top)?c]}\
+${lua_parse load_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4 [=(top)?c]}\
 <#assign y += y + top + body + gap>
 ${lua increment_offsets 0 [=y]}\
 ${voffset 193}\

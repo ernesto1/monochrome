@@ -169,19 +169,19 @@ function conky_print_resource_usage(expression, threshold, colorVariable)
 end
 
 --[[ 
-generates an image conky variable from a conky expression which yields an image file path, 
+generates an image conky variable from a conky expression which yields an image file path in the filesystem, 
 ex. if the image path is in a file that must be read; you can use this method to extract said path
-by using the conky ${cat} variable
+by using the conky ${cat} variable on the file
 
 arguments:
-  expression    conky variable to parse, must yield an image file path
+  expression    conky variable to parse, must yield an image file path, ex. ${cat /dir/somefile.txt}
   dimensions    image dimensions in WxH format, ex. 200x200
   x             image x coordinate
   y             image y coordinate
 returns:
   ${image picture.jpg -s 100x100 -p 0,0}
 ]]
-function conky_album_art_image(expression, dimensions, x, y)
+function conky_load_image(expression, dimensions, x, y)
   local path = conky_parse(expression)
   return conky_draw_image(path, x, y, dimensions)
 end

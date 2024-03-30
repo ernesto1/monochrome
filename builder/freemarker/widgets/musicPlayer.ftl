@@ -66,7 +66,7 @@ ${image ~/conky/monochrome/images/[=conky]/album-shadow.png -p 0,0}\
 <#assign y = 22>
 ${image ~/conky/monochrome/images/widgets/[=image.secondaryColor]-album-cover.png -p 15,[=y]}\
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
-${lua_parse album_art_image ${cat /tmp/conky/musicplayer.albumArtPath} 110x110 15 [=y]}\
+${lua_parse load_image ${cat /tmp/conky/musicplayer.albumArtPath} 110x110 15 [=y]}\
 ${endif}\
 # ::::::::: track details
 # artist & genre are optional (not all tracks have it defined) so we don't display if it is not available
