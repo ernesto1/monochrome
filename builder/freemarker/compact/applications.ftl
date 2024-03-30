@@ -1,13 +1,13 @@
 <#import "/lib/menu-round.ftl" as menu>
---[[ 
-this conky requires the following supporting scritps running in the background:
+--[[
+this conky requires the following supporting scripts running in the background:
 
  - dnfPackageLookup.bash
  - the music-player java app
  - transmission.bash
    requires the 'remote control' feature enabled in the transmission bittorrent client: edit > preferences > remote
 
-input files from these supporting apps are read from /tmp/conky
+output files from these supporting apps are read from /tmp/conky
 ]]
 
 conky.config = {
