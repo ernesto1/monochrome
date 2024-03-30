@@ -12,6 +12,8 @@ trap "rm ${OUTDIR}/system.*; log 'shutting down'; exit 0" INT TERM
 log 'compiling system performance metrics'
 echo 'n/a' > ${SWAPREADFILE}
 echo 'n/a' > ${SWAPWRITEFILE}
+type -p vmstat > /dev/null || { logError "'vmstat' utility is not installed, swap metrics will be unavailable"; exit 1; }
+
 # swap io
 while true; do
   # ::::::::::: swap i/o
@@ -19,7 +21,7 @@ while true; do
   # procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
   # r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
   # 1  0 3314100 363380  30040 607636   4    0   132    48 2013 3409  3  1 96  0  0
-  vmstat --no-first | tail -1 > ${TMPFILE}
+  vmstat --no-first --unit K | tail -1 > ${TMPFILE}
   awk '{
         if ($7 < 1000)
           {VALUE = $7; UNIT = "KiB"; FORMAT = "%d%s"}

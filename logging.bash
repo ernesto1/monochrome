@@ -14,6 +14,9 @@ function log {
   printf "$(date +'%T.%3N') ${BLUE}INFO  ${ORANGE}$(basename $0)${NOCOLOR} - $1\n"
 }
 
+# prints an error message to standard error using logback compatible formatting
+# arguments:
+#    message  string to print
 function logError {
-  printf "${RED}ERROR${NOCOLOR} $1\n" >&2
+  printf "$(date +'%T.%3N') ${RED}ERROR ${ORANGE}$(basename $0)${NOCOLOR} - $1\n" >&2
 }
