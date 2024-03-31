@@ -21,16 +21,16 @@ conky.config = {
   -- window alignment
   alignment = 'top_right',  -- top|middle|bottom_left|right
   gap_x = 3,
-  gap_y = 36,
+  gap_y = 142,
 
   -- window settings
   <#assign width = 189, 
            gap = 3,             <#-- empty space between menus of the same context -->
            speedColWidth = 39,  <#-- width of upload/download columns -->
            columnOffset = speedColWidth + gap>   <#-- additional left handed empty width added by the transmission down/up columns -->
-  minimum_width = [=columnOffset + width],      -- conky will add an extra pixel to this  
+  minimum_width = [=columnOffset + width],      -- conky will add an extra pixel to this
   maximum_width = [=columnOffset + width],
-  minimum_height = 1560,
+  minimum_height = 1351,
   own_window = true,
   own_window_type = 'desktop',   -- values: desktop (background), panel (bar)
 
@@ -64,7 +64,7 @@ conky.config = {
 };
 
 conky.text = [[
-<#assign totalLines = 87,
+<#assign totalLines = 74,
          packageLines = 25>
 ${lua set_total_lines [=totalLines]}\
 ${lua increment_offsets [=columnOffset] 0}\
@@ -86,7 +86,7 @@ ${lua increment_offsets 0 [=iconHeight + gap]}\
 <@menu.panels x=0 y=0 widths=[packageCol,versionCol] gap=colGap isFixed=false/>
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dnf.png [=packageCol-35-2] 5}\
-${color}${lua_parse head [=packagesFile] [=packageLines]}${lua increase_y_offset [=packagesFile]}${voffset [= 7 + bigGap]}
+${color}${lua_parse paginate [=packagesFile] [=packageLines]}${lua increase_y_offset [=packagesFile]}${voffset [= 7 + bigGap]}
 <@menu.panelsBottom x=0 y=0 widths=[packageCol,versionCol] gap=colGap isFixed=false/>
 ${lua increment_offsets 0 [=bigGap]}\
 ${else}\

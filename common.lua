@@ -214,7 +214,7 @@ lua improved version of the conky ${head} variable, it provides:
 
 arguments:
     filepath  absolute path to the file
-    max       [optional] maximun number of lines to print
+    max       [optional] maximun number of lines to print, default is 25 lines
     x         [optional] ${offset}  to apply to every line of text, default is 5 pixels
     y         [optional] ${voffset} to apply to every line of text, default is 3 pixels
 ]]
@@ -229,44 +229,133 @@ function conky_read_file(filepath)
   return ''
 end
 
+--[[
+head method similar to the conky_head(..) function except that the file has already been read by a prior
+invocation of the conky_read_file(..) method
 
-function conky_head_mem(filepath, max, x, y)
-  -- apply sensible defaults
-  max = (max ~= nil) and tonumber(max) or 30
+meant for cases where the file needs to be read ahead of time in order to make ui decisions based
+on the number of lines in the file, the file text is then displayed later on in the conky
+
+arguments:
+    filepath  absolute path to the file which has already been read
+    max       [optional] maximun number of lines to print, default is 25 lines
+    x         [optional] ${offset}  to apply to every line of text, default is 5 pixels
+    y         [optional] ${voffset} to apply to every line of text, default is 3 pixels
+    startLine [optional] starting line to begin printing the 'max' amount of lines, default is 1 (the first line)
+]]
+function conky_head_mem(filepath, max, x, y, startLine)
+  x = (x ~= nil) and tonumber(x) or 5
+  y = (y ~= nil) and tonumber(y) or 3
+  max = (max ~= nil) and tonumber(max) or 25
   
-  if vars["totalLines"] ~= nil then     -- global variable use by the menu.lua library
+  -- adjust the 'max' if the global total conky lines is smaller
+  if vars["totalLines"] ~= nil then
     max = (max < vars["totalLines"]) and max or vars["totalLines"]
   end
   
-  x = (x ~= nil) and tonumber(x) or 5
-  y = (y ~= nil) and tonumber(y) or 3
+  local text, linesRead = cutText(vars[filepath], max, startLine)
+  vars[filepath .. ".lines"] = linesRead
+  conky_decrease_total_lines(linesRead)
+  x = x + vars["xOffset"]
+  text = '${voffset ' .. y .. '}' .. '${offset ' .. x .. '}' .. text
+  text = string.gsub(text, "\n", "\n" .. '${voffset ' .. y .. '}' .. '${offset ' .. x .. '}')
   
-  local text, lines = cutText(vars[filepath], max)
-  conky_decrease_total_lines(lines)
-  
-  if x ~=nil then
-    x = x + vars["xOffset"]
-    text = '${voffset ' .. y .. '}' .. '${offset ' .. x .. '}' .. text
-    text = string.gsub(text, "\n", "\n" .. '${voffset ' .. y .. '}' .. '${offset ' .. x .. '}')
-  end
-  
-  vars[filepath .. ".lines"] = lines
-  
-  return text
+  return text, linesRead
 end
 
--- trims the number of lines in the string up to the desired amount
-function cutText(text, max)
-  local linesRead, position = 0, 0, 0
+--[[
+trims the number of lines in the string up to the desired amount
+
+arguments:
+    text      string to parse
+    max       maximun number of lines to print
+    startLine [optional] line to begin printing the 'max' amount of lines from, default is 1 (the first line)
+]]
+function cutText(text, max, startLine)
+  startLine = startLine or 1
+  startLine = (startLine < 1) and 1 or startLine
+  local linesRead, i, startPosition, counter = 0, 0, 0, startLine
   
   while linesRead < max do
-    linesRead = linesRead + 1
-    position = string.find(text, "\n", position+1)
-    if position == nil then break end
+    if counter == 1 then 
+      startPosition = i + 1
+      --print("captured head at " .. startPosition) 
+    end
+    i = string.find(text, "\n", i+1)    -- first character is at index 1
+    counter = counter - 1
+    if counter < 1 then linesRead = linesRead + 1 end
+    --print("counter: " .. counter .. " start position: " .. startPosition .. " lines read: " .. linesRead)
+    if i == nil then break end
   end
-  
-  text = string.sub(text, 1, position)
+
+  text = string.sub(text, startPosition, i)
   text = string.gsub(text, '\n$', '')     -- remove last new line (if any)
   
   return text, linesRead
+end
+
+--[[
+Allows conky to display a long text file by printing a fixed amount of lines at a time (page).
+If the text file is longer than the 'max' size, pagination will be performed.
+Each page will consist of 'max' amount of lines.  This keeps the 'text block' consistent in size accross all pages.
+
+arguments:
+    filepath    absolute path to the file
+    max         [optional] maximun number of lines to print per page, default is 25 lines
+    iterations  [optional] number of conky iterations to loop through per page, default is 3
+    x           [optional] ${offset}  to apply to every line of text, default is 5 pixels
+    y           [optional] ${voffset} to apply to every line of text, default is 3 pixels
+]]
+function conky_paginate(filepath, max, iterations, x, y)
+  max = (max ~= nil) and tonumber(max) or 25
+  iterations = (iterations ~= nil) and tonumber(iterations) or 3
+  local fileTotalLines, startLine
+  local isPaginationComplete = (vars[filepath .. ".isPaginationComplete"] == nil) and true or vars[filepath .. ".isPaginationComplete"]
+  
+  -- do we need to read the file or are we currently paginating it (ie. recover the state)?
+  if isPaginationComplete then
+    conky_read_file(filepath)
+    fileTotalLines = tonumber(conky_parse("${lines " .. filepath .. "}"))
+    startLine = 1
+    vars[filepath .. ".isPaginationComplete"] = false
+    vars[filepath .. ".totalLines"] = fileTotalLines
+  else
+    startLine = vars[filepath .. ".startLine"]
+    fileTotalLines = vars[filepath .. ".totalLines"]
+  end
+
+  local text, linesRead
+  -- determine if you are reading new lines for the next page or loading the current page from memory
+  if vars[filepath .. ".text"] == nil then
+    text, linesRead = conky_head_mem(filepath, max, x, y, startLine)
+    vars[filepath .. ".text"] = text
+    vars[filepath .. ".linesRead"] = linesRead
+  else
+    text = vars[filepath .. ".text"]
+    linesRead = vars[filepath .. ".linesRead"]
+    conky_decrease_total_lines(linesRead)
+  end
+  
+  -- if we've completed all the iterations for the current page, determine your state for the next iteration
+  if conky_parse("${updates}") % iterations == 0 then
+    vars[filepath .. ".text"] = nil
+    vars[filepath .. ".linesRead"] = nil
+    startLine = startLine + linesRead   -- compute the start line for the next page
+    
+    -- the new start line determines if there are more pages to show or if we are done displaying the file
+    if startLine < fileTotalLines then
+      local linesLeft = fileTotalLines - startLine
+      -- if the last page does not have 'max' amount of lines, adjust the pointer so we can be consistent
+      -- and return 'max' number of lines for the last page as well
+      if linesLeft < max then
+        startLine = fileTotalLines - max + 1
+      end
+    else
+      -- file has been displayed in full
+      vars[filepath .. ".isPaginationComplete"] = true
+    end
+  end
+  
+  vars[filepath .. ".startLine"] = startLine
+  return text
 end

@@ -10,7 +10,7 @@
 ]]
 
 --[[
-Increases the y offset by the number of pixels that correspond to the number of lines read by the given file.
+Increases the y offset by the number of pixels that correspond to the number of lines read from the given file.
 This would allow a conky to draw a panel's bottom edges based on the number of lines read from a file.
 
 ::: table/panel implications
@@ -28,7 +28,7 @@ arguments:
   filepath   absolute path to the file
 
 requires:
-  the file should have previously been read with the conky_head(..) method
+  the file should have previously been read with the conky_head(..) or conky_paginate(..) method
 ]]
 function conky_increase_y_offset(filepath)
   if (vars[filepath .. ".lines"] == nil) then
