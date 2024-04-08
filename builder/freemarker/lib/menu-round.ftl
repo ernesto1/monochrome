@@ -22,7 +22,7 @@
 <@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x+width y=y isFixed=isFixed/>
 <#if body gt 0>
 <#local y += header + body>
-<@panelBottomCorners x=x y=y width=width/>
+<@panelBottomCorners x=x y=y width=width isFixed=isFixed color=color/>
 </#if>
 # ------- single column table | bottom edge -------
 </#macro>
