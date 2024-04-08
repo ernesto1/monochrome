@@ -1,22 +1,32 @@
 <#import "/lib/menu-round.ftl" as menu>
+--[[
+this conky requires the following supporting scripts running in the background:
+
+ - dnfPackageLookup.bash
+ - transmission.bash
+   requires the 'remote control' feature enabled in the transmission bittorrent client: edit > preferences > remote
+
+output files from these supporting scrips are read from /tmp/conky
+]]
+
 conky.config = {
-  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/panel.lua ~/conky/monochrome/musicPlayer.lua',
+  lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/panel.lua',
   lua_draw_hook_pre = 'reset_state',
   
-  update_interval = 3,    -- update interval in seconds
+  update_interval = 2,    -- update interval in seconds
   xinerama_head = 1,      -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'middle_left',  -- top|middle|bottom_left|right
-  gap_x = 142,
-  gap_y = -175,
+  alignment = 'top_right',  -- top|middle|bottom_left|right
+  gap_x = 5,
+  gap_y = 5,
 
   -- window settings
   <#assign width = 169>
   minimum_width = [=width],      -- conky will add an extra pixel to this  
   maximum_width = [=width],
-  <#if system == "desktop"><#assign windowHeight=1317><#else><#assign windowHeight=20></#if>
+  <#if system == "desktop"><#assign windowHeight=1317><#else><#assign windowHeight=500></#if>
   minimum_height = [=windowHeight?c],
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -45,74 +55,85 @@ conky.config = {
   default_color = '[=colors.menuText]', -- regular text
   color1 = '[=colors.labels]',
   color2 = '[=colors.highlight]',        -- highlight important packages
-  color3 = '[=colors.secondary.text]'         -- error text (secondary color menu)
+  color3 = '[=colors.secondary.labels]',         -- secondary menu labels
+  color4 = '[=colors.secondary.text]'         -- secondary menu text
 };
 
 conky.text = [[
-<#if system == "desktop"><#assign totalLines = 75><#else><#assign totalLines = 48></#if>
-${lua set_total_lines [=totalLines]}\
-# decrease the total number of lines depending on the window size of the music player conky placed below this conky
-${lua decrease_music_player_lines 3 4 16}\
-${voffset 2}\
+# :::::::::::: package updates
+<#if system == "desktop"><#assign packageLines = 25><#else><#assign packageLines = 20></#if>
+<#assign packagesFile = "/tmp/conky/dnf.packages.formatted",
+         titleHeight = 19,
+         y = 0,
+         gap = 3,               <#-- empty space across panels of the same application -->
+         sectionGap = 8>        <#-- empty space between application panels -->
+${if_existing [=packagesFile]}\
+<@menu.panel x=0 y=y width=width height=titleHeight color=image.secondaryColor/>
+${voffset 2}${alignc}${color3}dandified yum${voffset [= 6 + gap]}
+<#assign y += titleHeight + gap>
+<@menu.table x=0 y=y width=width header=titleHeight/>
+<#assign y += titleHeight>
+${lua increment_offsets 0 [=y]}\
+# optional dnf branding, can be removed or won't matter if the image does not exist
+${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dnf.png -p 111,[=y+2]}\
+${offset 5}${color1}package${alignr 4}version${voffset [=3+gap]}
+${color}${lua_parse paginate [=packagesFile] [=packageLines]}${lua increase_y_offset [=packagesFile]}${voffset [=5 + sectionGap]}
+<@menu.panelBottomCorners x=0 y=0 width=width isFixed=false/>
+${lua increment_offsets 0 [=sectionGap]}\
+${else}\
+# ::: error state
+<#assign body=19>
+<@menu.table x=0 y=0 width=width header=titleHeight body=body/>
+${lua increment_offsets 0 [=titleHeight + body + sectionGap]}${lua decrease_total_lines 2}\
+${voffset 2}${alignc}${color1}dandified yum${voffset [= 3 + gap]}
+${alignc}${color}no package updates${voffset [=4 + sectionGap]}
+${endif}\
 <#if system == "desktop">
 # :::::::::::: transmission bittorrent client
-# this panel requires:
-# - the 'remote control' feature enabled in the transmission bittorrent client: edit > preferences > remote
-# - the transmission.bash script running in the background
-<#assign y = 0,
-         header = 75, <#-- menu header -->
-         body = 71,   <#-- menu window without the header -->
-         gap = 5>     <#-- empty space between windows -->
-<@menu.verticalTable x=0 y=y header=header body=width-header height=body isFixed=true/>
-<#assign y += body + gap>
-${lua increment_offsets 0 [=body + gap]}\
 <#assign inputDir = "/tmp/conky"
          peersFile = inputDir + "/transmission.peers",
          seedingFile = inputDir + "/transmission.seeding"
          downloadingFile = inputDir + "/transmission.downloading",
          idleFile = inputDir + "/transmission.idle",
-         activeTorrentsFile = inputDir + "/transmission.active">
+         activeTorrentsFile = inputDir + "/transmission.active",
+         torrentLines = 25>
+${if_existing [=activeTorrentsFile]}\
+# ::: no active torrents
+${if_match ${lua get activeNum ${lines [=activeTorrentsFile]}} == 0}\
+<#assign body=19>
+<@menu.table x=0 y=0 width=width header=titleHeight body=body isFixed=false/>
+${voffset 2}${alignc}${color1}transmission${voffset [= 3 + gap]}
+${alignc}${color}no active torrents${voffset [=4 + sectionGap]}
+${lua increment_offsets 0 [=titleHeight + body + sectionGap]}${lua decrease_total_lines 2}\
+${else}\
+# ::: active torrents
+<@menu.panel x=0 y=0 width=width height=titleHeight color=image.secondaryColor isFixed=false/>
+${voffset 2}${alignc}${color3}transmission${voffset [= 6 + gap]}
+${lua increment_offsets 0 [=titleHeight + gap]}\
+<#assign header = 75, <#-- menu header -->
+         body = 71>   <#-- menu window without the header -->
+<@menu.verticalTable x=0 y=0 header=header body=width-header height=body isFixed=false/>
 ${voffset 3}${offset 5}${color1}swarm${goto 81}${color}${if_existing [=peersFile]}${lua pad ${lua get peers ${lines [=peersFile]}}} peers${else}file missing${endif}
 ${voffset 3}${offset 5}${color1}seeding${goto 81}${color}${if_existing [=seedingFile]}${lua pad ${lines [=seedingFile]}} torrents${else}file missing${endif}
 ${voffset 3}${offset 5}${color1}downloading${goto 81}${color}${if_existing [=downloadingFile]}${lua pad ${lines [=downloadingFile]}} torrents${else}file missing${endif}
-${voffset 3}${offset 5}${color1}idle${goto 81}${color}${if_existing [=idleFile]}${lua pad ${lines [=idleFile]}} torrents${else}file missing${endif}
-${voffset [= 7 + gap]}\
-# :::::::::::: active torrents
-${if_existing [=activeTorrentsFile]}\
-${if_match ${lua get activeNum ${lines [=activeTorrentsFile]}} > 0}\
-${lua decrease_total_lines 1}\
-<#assign header = 19>
-<@menu.table x=0 y=0 width=width header=header isFixed=false/>
-${lua increment_offsets 0 [=header]}\
+${voffset 3}${offset 5}${color1}idle${goto 81}${color}${if_existing [=idleFile]}${lua pad ${lines [=idleFile]}} torrents${else}file missing${endif}${voffset [= 7 + gap]}
+${lua increment_offsets 0 [=body + gap]}\
+<@menu.table x=0 y=0 width=width header=titleHeight isFixed=false/>
+${lua increment_offsets 0 [=titleHeight]}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-peers.png [=((width-112)/2)?round] 22}\
-${alignc}${color1}active torrents ${color}(${color}${lua get activeNum}${color})${color1}${voffset 6}
-${color}${lua_parse head [=activeTorrentsFile] [=totalLines-5]}${lua increase_y_offset [=activeTorrentsFile]}${voffset [=7 + gap]}
+${alignc}${color1}active torrents ${color}(${color}${lua get activeNum}${color})${color1}${voffset [=3+gap]}
+${color}${lua_parse head [=activeTorrentsFile] [=torrentLines]}${lua increase_y_offset [=activeTorrentsFile]}${voffset [=7 + gap]}
 <@menu.panelBottomCorners x=0 y=0 width=width isFixed=false/>
 ${lua increment_offsets 0 [=gap]}\
-${else}\
-<#assign body = 20>
-<@menu.panel x=0 y=71 + gap width=width height=body color=image.secondaryColor/>
-${lua increment_offsets 0 [=body + gap]}${lua decrease_total_lines 1}\
-${alignc}${color3}no active torrents${voffset [=7 + gap]}
 ${endif}\
 ${else}\
-<#assign body = 36>
-<@menu.panel x=0 y=0 width=width height=body isFixed=false color=image.secondaryColor/>
-${lua increment_offsets 0 [=body + gap]}${lua decrease_total_lines 2}\
-${offset 5}${alignc}${color3}active torrents input file
-${voffset 3}${alignc}is missing${voffset [= 7 + gap]}
+# ::: error state
+<#assign body=38>
+<@menu.table x=0 y=0 width=width header=titleHeight body=body color=image.secondaryColor isFixed=false/>
+${lua increment_offsets 0 [=titleHeight + body + sectionGap]}${lua decrease_total_lines 2}\
+${voffset 2}${alignc}${color1}transmission${voffset [= 3 + gap]}
+${voffset 2}${alignc}${color4}active torrents input file
+${voffset 3}${alignc}is missing${voffset [=7 + sectionGap]}
 ${endif}\
 </#if>
-# :::::::::::: package updates
-<#assign packagesFile = "/tmp/conky/dnf.packages.formatted",
-         header = 19>
-${if_existing [=packagesFile]}\
-<@menu.table x=0 y=0 width=width header=header isFixed=false/>
-${lua increment_offsets 0 [=header]}\
-# optional dnf branding, can be removed or won't matter if the image does not exist
-${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dnf.png 111 2}\
-${offset 5}${color1}package${alignr 4}version${voffset 6}
-${color}${lua_parse head [=packagesFile] [=totalLines]}${lua increase_y_offset [=packagesFile]}${voffset 5}
-<@menu.panelBottomCorners x=0 y=0 width=width isFixed=false/>
-${endif}\
 ]]
