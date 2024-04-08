@@ -19,7 +19,7 @@ conky.config = {
   <#assign width = 169>
   minimum_width = [=width],      -- conky will add an extra pixel to this
   maximum_width = [=width],
-  minimum_height = 53,      -- conky will add an extra pixel to this height
+  minimum_height = 38,      -- conky will add an extra pixel to this height
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -54,34 +54,36 @@ conky.text = [[
 # the UI of this conky has three states: no music player is running
 #                                        song with album art
 #                                        song with no album art
-# :::: no player available
+<#assign iconWidth = 38,       <#-- icon is a square -->
+         iconheight = 38,
+         gap = 3>              <#-- empty space between panels -->
+# :::: no music player available
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
-<#assign y = 0>
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-rhythmbox.png -p 0,[=y]}\
-<@menu.panel x=56 y=0 width=113 height=53/>
-${voffset 5}${offset 62}${color1}now playing
-${voffset 2}${offset 62}${color}no player running
-${voffset 0}${offset 62}${color}...
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-sound-wave-small.png -p 0,0}\
+<@menu.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconheight/>
+${voffset 5}${offset 45}${color1}now playing
+${voffset 2}${offset 45}${color}no player running
 ${else}\
+# :::: music player available
+${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
+${image ~/conky/monochrome/images/widgets-dock/[=image.secondaryColor]-sound-wave-small.png -p 0,0}\
+<@menu.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconheight color=image.secondaryColor/>
+${voffset 5}${goto 50}${color3}${cat /tmp/conky/musicplayer.name}
+${voffset 2}${goto 50}${color4}${cat /tmp/conky/musicplayer.playbackStatus}${voffset [= 5 + gap]}
+${else}\
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-sound-wave-small.png -p 0,0}\
+<@menu.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconheight/>
+${voffset 5}${goto 50}${color1}${cat /tmp/conky/musicplayer.name}
+${voffset 2}${goto 50}${color}${cat /tmp/conky/musicplayer.playbackStatus}${voffset [= 5 + gap]}
+${endif}\
+${lua increment_offsets 0 [=iconheight + gap]}\
 # :::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
-<#assign header = 19,                   <#-- menu header -->
-         innerBorder = 2,               <#-- border width between the window and the album art -->
-         body = width - innerBorder,    <#-- size of the album art window without the header and no top border -->
-         gap = 5>                       <#-- empty space between windows -->
-${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
-<@menu.panel x=0 y=y width=width height=header+body isDark=false color=image.secondaryColor/>
-${voffset 2}${alignc}${color3}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} ${color4}: ${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
-${image ~/conky/monochrome/images/common/[=image.secondaryColor]-menu-album-placeholder.png -p [=innerBorder],[=header]}\
-${else}\
-<@menu.panel x=0 y=y width=width height=header+body/>
-${voffset 2}${alignc}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} ${color}: ${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
-${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-album-placeholder.png -p [=innerBorder],[=header]}\
-${color}\
-${endif}\
-${lua_parse load_image ${cat /tmp/conky/musicplayer.albumArtPath} [=width-innerBorder*2]x[=width-innerBorder*2] [=innerBorder] [=(header)?c]}\
-<#assign y += header + body + gap>
-${voffset [=body + 4 + gap]}${lua increment_offsets 0 [=y]}\
+<#assign innerBorder = 2>   <#-- border width between the window and the album art -->
+<@menu.panel x=0 y=0 width=width height=width isFixed=false/>
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-album-placeholder.png [=innerBorder] 0}\
+${lua_parse load_image ${cat /tmp/conky/musicplayer.albumArtPath} [=width-innerBorder*2]x[=width-innerBorder*2] [=innerBorder] [=innerBorder]}\
+${voffset [=width + gap]}${lua increment_offsets 0 [=width + gap]}\
 ${endif}\
 # :::: track details
 # menu expands based on the track metadata fields available
@@ -94,8 +96,7 @@ ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-sound-wave.png [=width-53-7] 0}\
 ${endif}\
 # --------- end of table image top ---------
-<#assign y = height - 7><#-- edges are 7x7 px -->
-${lua increment_offsets 0 [=y]}\
+${lua increment_offsets 0 [=height - 7]}\<#-- edges are 7x7 px -->
 ${voffset 3}${offset 5}${color1}title${goto 50}${color}${cat /tmp/conky/musicplayer.title}
 ${if_match "${lua get album ${cat /tmp/conky/musicplayer.album}}" != "unknown album"}\
 ${voffset 3}${offset 5}${color1}album${goto 50}${color}${lua get album}${lua increment_offsets 0 16}

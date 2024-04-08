@@ -16,7 +16,7 @@
   color         color scheme to use, default is the conky's primary color scheme
  -->
 <#macro table x y width header body=0 isFixed=true color=image.primaryColor>
-# ------- single column table | top edge    -------
+# -------  table | [=color] 1 column | top edge    -------
 <@panelTopCorners x=x y=y width=width isFixed=isFixed color=color isEdge=false/>
 <@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-menu-light.png" x=x y=y+header isFixed=isFixed/>
 <@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x+width y=y isFixed=isFixed/>
@@ -24,7 +24,7 @@
 <#local y += header + body>
 <@panelBottomCorners x=x y=y width=width isFixed=isFixed color=color/>
 </#if>
-# ------- single column table | bottom edge -------
+# -------  table | [=color] 1 column | bottom edge -------
 </#macro>
 
 
@@ -94,13 +94,13 @@
   color         color scheme to use, default is the conky's primary color scheme
  -->
 <#macro panel x y width height=0 isDark=false isFixed=true color=image.primaryColor>
-# ------- [=cmn.getTheme(isDark)] panel top edge    -------
 <#local theme = cmn.getTheme(isDark)>
+# ------- [=theme] panel top edge    -------
 <@panelTopCorners x=x y=y width=width theme=theme isFixed=isFixed color=color/>
 <#if height gt 0>
 <#local y += height>
 <@panelBottomCorners x=x y=y width=width theme=theme isFixed=isFixed color=color/>
-# ------- [=cmn.getTheme(isDark)] panel bottom edge -------
+# ------- [=theme] panel bottom edge -------
 </#if>
 </#macro>
 
@@ -143,6 +143,19 @@
 <@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-light-edge-bottom-right.png" x=x+header+body-7 y=y isFixed=isFixed/>
 <@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x y=y+7 isFixed=isFixed/>
 </#macro>
+
+
+<#macro noLeftEdgePanel x y width height color=image.primaryColor isDark=false isFixed=true>
+<#local theme = cmn.getTheme(isDark)>
+# ------- panel | [=theme] [=color] no left round edges | top -------
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-menu-[=theme].png" x=x y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-menu-[=theme]-edge-top-right.png" x=x+width-7 y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x+width y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-menu-[=theme]-edge-bottom-right.png" x=x+width-7 y=y+height-7 isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x y=y+height isFixed=isFixed/>
+# ------- panel | [=theme] [=color] no left round edges | bottom -------
+</#macro>
+
 
 <#-- creates a table with multiple columns
 
