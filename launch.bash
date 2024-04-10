@@ -16,13 +16,11 @@ shopt -s extglob    # enable extended globs for filename pattern matching
 
 function usage() {
   cat <<-END
-	$(basename $0) --theme [--monitor n] [--layout-override <tag>] [--silent] [--interval x] [--shutdown]
+	$(basename $0) --conky theme [--monitor n] [--layout-override <tag>] [--silent] [--interval x] [--shutdown]
 	
-	Theme options
-	  --compact
-	  --glass
-	  --widgets
-	  --widgets-dock
+	Required flags
+	  --conky $(cd ${monochromeHome}; echo !(builder|images|java|*.*) | tr ' ' '|')
+	    select the theme to launch
 	
 	Optional flags
 	  --monitor 0|1|2|3|...
@@ -39,21 +37,22 @@ function usage() {
 	        /    \        /  \\
 
 	  --layout-override tag
-	    allows you to use a layout override file in order to modify the position of the conkys on the fly.
-	    conkys in the target directory can also be excluded from being loaded, ex. you have a conky that
-	    you would like to run on your laptop but not on your desktop
+	    applys any settings in a layout override file 
 
-	    override file follows the naming convention: layout.<tag>.cfg
+	      > changing the alignment of a conky
+	      > excludes a particular conky in the theme from being launched 
+
+	    the override file follows the naming convention: layout.<tag>.cfg
 
 	  --silent
 	    all conky output (STDOUT and STDERR) is suppressed
 
 	  --interval 10m,1h,6h
 	    wait time between package update queries, the default is 15 minutes
-	    use a time range compatible with the sleep command, ex. 1h
+	    use a time period compatible with the sleep command, ex. 1h
 
 	  --shutdown
-	    kills the current running monochrome conkys and any support jobs launched
+	    kills the current running monochrome conkys and any supporting jobs launched
 
 	Examples
 	  $(basename $0) --widgets-dock
@@ -82,30 +81,21 @@ function killSession {
 function detectDuplicateEntries {
   # remove comment lines '#', empty lines and 'ignore' entries from the file, then look for dupes
   duplicates=$(grep -vE '#|^$|ignore' $1 | cut -d: -f1 | sort | uniq -d)
-  
-  if [[ $duplicates ]]; then
-    echo 'invalid override file, duplicate entry found' >&2
-    exit 2
-  fi
+  [[ $duplicates ]] && { logError 'invalid override file, duplicate entry found'; exit 2; }
 }
 
 # ---------- script begins
-
-# ensure at least one parameter was provided
-if [[ $# < 1 ]]; then
-  usage
-  exit 1
-fi
-
 # define default variables
-monochromeHome=~/conky/monochrome
-# enable/disable supporting scripts/java apps
-enablePackageLookup=true
-enableMusicPlayerListener=true
-enableTransmissionPoller=true
+monochromeHome=${HOME}/conky/monochrome
+
+(( $# < 1 )) && { usage; exit 1; }      # ensure at least one parameter was provided
 
 while (( "$#" )); do
   case $1 in
+    --conky)
+      conkyDir=${monochromeHome}/${2}
+      shift 2
+      ;;
     --interval)
       interval=$2
       shift 2
@@ -121,7 +111,7 @@ while (( "$#" )); do
       shift 2
       ;;
     --no-torrent)
-      enableTransmissionPoller=false
+      isTransmissionPollerEnabled=false
       shift
       ;;
     --shutdown)
@@ -130,10 +120,6 @@ while (( "$#" )); do
       ;;
     --silent)
       silent=true
-      shift
-      ;;
-    --*)
-      conkyDir=${monochromeHome}/${1#--}      # remove the '--' from the parameter
       shift
       ;;
     -h)
@@ -147,15 +133,16 @@ while (( "$#" )); do
   esac
 done
 
-[[ -d ${conkyDir} ]] || { echo "conky directory '$(basename ${conkyDir})' does not exist"; exit 1; }
+[[ ${conkyDir} ]] || { logError 'a conky theme must be specified'; exit 1; }
+[[ -d ${conkyDir} ]] || { logError "conky directory '$(basename ${conkyDir})' does not exist"; exit 1; }
 [[ -f ${conkyDir}/settings.cfg ]] && source ${conkyDir}/settings.cfg
 
 type -p figlet > /dev/null && echo -e "${GREEN}$(figlet -t 'monochrome conky')"
 printHeader "::: launching conky with the following settings\n"
 echo   "conky theme:          $(basename ${conkyDir})"
-echo   "dnf package service:  ${enablePackageLookup}"
-echo   "music player service: ${enableMusicPlayerListener}"
-echo   "transmission service: ${enableTransmissionPoller}"
+echo   "dnf package service:  ${isPackageLookupEnabled:=true}"
+echo   "music player service: ${isMusicPlayerListenerEnabled:=true}"
+echo   "transmission service: ${isTransmissionPollerEnabled:=true}"
 
 if [[ ${monitor} ]]; then
   echo "window compositor:    $(echo $XDG_SESSION_TYPE)"
@@ -163,8 +150,7 @@ if [[ ${monitor} ]]; then
 fi
 
 if [[ -n ${fileTag} ]]; then
-  layoutFile="$(echo ${conkyDir}/layout.${fileTag}.cfg)"   # need to use echo in order for the variable
-                                                           # to hold the actual pathname expansion
+  layoutFile=${conkyDir}/layout.${fileTag}.cfg
   echo "layout override file: ${layoutFile}"
   [[ -f ${layoutFile} ]] || { logError "layout override file 'layout.${fileTag}.cfg' not present in the conky directory"; exit 2;}
   detectDuplicateEntries "${layoutFile}"
@@ -178,54 +164,43 @@ printHeader "\n::: launching conky configs\n"
 # config file names are expected to not have an extension, ie. cpu vs cpu.cfg
 for conkyConfigPath in ${conkyDir}/!(*.*)
 do
-  [ -f "${conkyConfigPath}" ] || continue
+  [ -f ${conkyConfigPath} ] || continue
   conkyConfig=${conkyConfigPath##*/}    # remove the path ${monochromeHome}/.. from the file name
   echo "- ${conkyConfig}"
-  # 1. conky exclusion override, ie. exclude a configuration from being loaded
+  
+  # 1. conky exclusion override: excludes a conky configuration from being loaded
   #    override is of the format: ignore:<conkyFilename>
   #                           ex. ignore:externalDevices
-  [[ -f ${layoutFile} ]] && ignore=$(grep -v \# "${layoutFile}" | grep ignore:"${conkyConfig}"$)
-  
-  if [[ ${ignore} ]]; then
+  if [[ -f ${layoutFile} ]] && grep -qw "ignore:${conkyConfig}" ${layoutFile}; then
     echo -e "  ${ORANGE}ignoring${NOCOLOR} this conky since it is in the exclusion list of the layout file"
     continue
   fi
   
-  # 2. layout override
+  # 2. alignment override
   #    override is of the format: conkyFilename:x:y:alignment
   #                               cpu:10:50:top_right
-  [[ -f ${layoutFile} ]] && override=$(grep -v \# "${layoutFile}" | grep ^"${conkyConfig}":)
+  [[ -f ${layoutFile} ]] && override=$(grep ^"${conkyConfig}"\: ${layoutFile})
 
   if [[ ${override} ]]; then
     IFS_bk=${IFS} IFS=:
-    layoutOverride=(${override})      # create an array out of the string in order to have it word split
+    layoutOverride=(${override})      # create an array out of the string in order to have it word split by bash
     IFS=${IFS_bk}
     # construct the position parameters for conky, ie. -x 10 -y 50 -a top_right
     alignment="${layoutOverride[3]}"  # optional field, may not exist
     layoutOverride=(-x "${layoutOverride[1]}" -y "${layoutOverride[2]}")
-    
-    # if alignment is provided, add -a flag
-    if [[ "${alignment}" ]]; then
-      layoutOverride=("${layoutOverride[@]:0:4}" -a "${alignment}")   # array index 0:4 is exclusive of the last element
-    fi
-    
+    # if alignment is provided, add the -a flag
+    [[ ${alignment} ]] && layoutOverride+=(-a "${alignment}")
     echo "  applying the position override: ${layoutOverride[@]}"
     arguments=(${layoutOverride[@]})
-    unset layoutOverride      # clear the array for the next iteration
   fi
 
   # 3. monitor/screen override
-  if [[ $monitor ]]; then
-    sed -i "s/xinerama_head *= *[[:digit:]]/xinerama_head = ${monitor}/" ${conkyConfigPath}
-  fi
-
+  [[ $monitor ]] && sed -i "s/xinerama_head *= *[[:digit:]]/xinerama_head = ${monitor}/" ${conkyConfigPath}
   # 4. silence conky output
-  if [[ $silent ]]; then
-    arguments+=(--quiet)
-  fi
+  [[ $silent ]] && arguments+=(--quiet)
   
-  # patch | some conky's are overlayed on top of others, in order for this to render correctly
-  #         these conkys have to be executed last.  We launch these conkys with a delay.
+  # some conky's are overlayed on top of others, in order to render them correctly
+  # these conkys have to be launched with a delay
   if [[ -f ${conkyDir}/settings.cfg ]] && grep -qw "delay:${conkyConfig}" ${conkyDir}/settings.cfg; then
     echo '  delaying conky by 1 second'
     arguments+=('--pause' 1)
@@ -241,7 +216,7 @@ printHeader "\n::: starting support services\n"
 echo "- bash | advanced system performance metrics service"
 ${monochromeHome}/system.bash &
 
-if ${enablePackageLookup}; then
+if ${isPackageLookupEnabled}; then
   echo "- bash | dnf package updates service"
   [[ "${numPackageCharacters}" ]] && arguments=(--package-width ${numPackageCharacters})
   [[ "${offsetPackage}" ]] && arguments+=(--offset ${offsetPackage})
@@ -250,7 +225,7 @@ if ${enablePackageLookup}; then
   unset arguments
 fi
 
-if ${enableTransmissionPoller}; then
+if ${isTransmissionPollerEnabled}; then
   echo "- bash | transmission bittorrent service"
   echo -e "         ${ORANGE}ensure${NOCOLOR} the ${ORANGE}remote control${NOCOLOR} option is enabled in transmission"  
   [[ "${numTorrentCharacters}" ]] && arguments=(--name-width ${numTorrentCharacters})
@@ -263,15 +238,15 @@ fi
 msg="the java JDK is not installed on this system, unable to launch the java applications\n      the 'now playing' conky will not work properly"
 type java > /dev/null 2>&1 || { logError "$msg"; exit 1; }
 
-if ${enableMusicPlayerListener}; then
+if ${isMusicPlayerListenerEnabled}; then
   echo "- java | now playing music service"
   musicJar=(${monochromeHome}/java/music-player-*.jar)
   
   if [[ -f "${musicJar[0]}" ]]; then
     java -jar ${musicJar[0]} &   # if multiple jars are available, one will be picked at random
   else
-    msg="the music player jar has not been compiled and deployed to the ${monochromeHome}/java directory\n"
-    msg="${msg}      the 'now playing' conky will not work properly"
-    logError $msg
+    msg="the music player jar has not been compiled and deployed to the ${monochromeHome}/java directory.  "
+    msg+="The 'now playing' conky will not work properly."
+    logError "$msg"
   fi
 fi

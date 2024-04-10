@@ -20,12 +20,12 @@ function usage {
 
 function onExitSignal {
   log 'received shutdown signal, deleting output file'
-  rm -f ${outputDir}/dnf.packages.formatted    # file read by conky
-  kill $(jobs -p)     # kill any child processes, ie. the sleep command
+  rm -f ${outputDir}/dnf.packages.formatted    # file read by conky, other files are left for debugging
+  [[ $pid ]] && kill $pid
   exit 0
 }
 
-trap onExitSignal SIGINT SIGTERM
+trap onExitSignal EXIT
 
 packageWidth=21   # number of characters to print for the package name
 versionWidth=7    # number of characters to print for the version number
@@ -35,18 +35,22 @@ interval=15m      # wait time between queries to the package repository
 while (( "$#" )); do
   case $1 in
     --offset)
+      [[ -z $2 ]] && { logError "provide a value for the $1 flag"; exit 1; }
       offset=$2
       shift 2
       ;;
     --package-width)
+      [[ -z $2 ]] && { logError "provide a value for the $1 flag"; exit 1; }
       packageWidth=$2
       shift 2
       ;;
     --version-width)
+      [[ -z $2 ]] && { logError "provide a value for the $1 flag"; exit 1; }
       versionWidth=$2
       shift 2
       ;;
     --interval)
+      [[ -z $2 ]] && { logError "provide a value for the $1 flag"; exit 1; }
       interval=$2
       shift 2
       ;;
@@ -57,20 +61,9 @@ while (( "$#" )); do
   esac
 done
 
-if [[ ${offset} -lt 1 ]]; then
-  echo 'offset should be greater than 0' >&2
-  exit 1
-fi
-
-if [[ ${packageWidth} -lt 1 ]]; then
-  echo 'package name width should greater than 0' >&2
-  exit 1
-fi
-
-if [[ ${versionWidth} -lt 1 ]]; then
-  echo 'version width (--version-width) should greater than 0' >&2
-  exit 1
-fi
+[[ ${offset} -lt 1 ]] && { logError 'offset should be greater than 0'; exit 1; }
+[[ ${packageWidth} -lt 1 ]] && { logError 'package name width should greater than 0'; exit 1; }
+[[ ${versionWidth} -lt 1 ]] && { logError 'version width (--version-width) should greater than 0'; exit 1; }
 
 log 'starting dnf repo package lookup'
 log "checking for package updates every ${interval}"
@@ -86,8 +79,8 @@ while [ true ]; do
   #                                                               1m    5m    15m
   #  within a day:    12:20:31 up 37 min,  1 user,  load average: 0.86, 0.73, 0.66
   #  more than a day: 22:54:03 up 2 days,  2:12,  1 user,  load average: 0.53, 1.16, 1.40
-  loadAvg=$(uptime)
-  loadAvg=$(echo ${loadAvg#*load average: } | cut -d, -f2 | tr -d ' ')
+  loadAvg=$(uptime)loa
+  loadAvg=$(cut -d, -f2 <<< "${loadAvg#*load average: }" | tr -d ' ')
   log "5 min load avg = $loadAvg"
   
   # perform dnf lookup if the system is iddle
@@ -105,15 +98,13 @@ while [ true ]; do
     regex='^(([[:alnum:]]|\.|_|:|-)+[[:blank:]]+){2}([[:alnum:]]|\.|_|-|[[:blank:]])+$'
     packages=$(grep -cE $regex ${packagesRawFile})
     
-    if [[ $packages > 0 ]]; then
+    if (( packages > 0 )); then
         log "$packages new package update(s)"
         packagesFile=${outputDir}/dnf.packages    # file to list the new packages
         # extract the actual packages from the raw dnf data
         grep -E $regex ${packagesRawFile} > ${packagesFile}
         # formatting done to the new package list for conky to display it nicely
         # - package name and version is converted into a tabular layout
-        # - a ${voffset} is added for the text to not appear "squished"
-        # - an ${offset} is added to each line in order for the package list to be printed with a left border
         # - packages of interest are surrounded by a ${color} variable in order to have them highlighted
         highlightRegex='kernel\|firefox\|transmission'
         cat ${packagesFile} \
@@ -129,6 +120,7 @@ while [ true ]; do
   fi
   
   log "checking for updates again in ${interval}"
-  sleep ${interval} &   # run sleep in the background so we can kill it if we get a termination signal
-  wait                  # wait for the sleep process to complete
+  sleep ${interval} & pid=$!
+  wait
+  unset pid
 done

@@ -85,12 +85,12 @@ Run the launch script with the theme you want.
 
 Theme| Command
 ---|---
-Compact|`~/conky/monochrome/launch.bash --compact`
-Glass|`~/conky/monochrome/launch.bash --glass`
-Widgets dock | `~/conky/monochrome/launch.bash --widgets-dock`
-Widgets | `~/conky/monochrome/launch.bash --widgets`
+Compact|`~/conky/monochrome/launch.bash --conky compact`
+Glass|`~/conky/monochrome/launch.bash --conky glass`
+Widgets dock | `~/conky/monochrome/launch.bash --conky widgets-dock`
+Widgets | `~/conky/monochrome/launch.bash --conky widgets`
 
-I recommend you take advantage of the launch script's `--silent` flag.  It suppresses conky logging which clutters the terminal (ex. `~/conky/monochrome/launch.bash --compact --silent)`.
+I recommend you take advantage of the launch script's `--silent` flag.  It suppresses conky logging which clutters the terminal (ex. `~/conky/monochrome/launch.bash --conky compact --silent)`.
 
 ### Shutting down
 To close all conkys and supporting jobs started by the launch script you can run the `shutdown` command

@@ -7,7 +7,7 @@ OUTDIR=/tmp/conky
 TMPFILE=${OUTDIR}/system.$$
 SWAPREADFILE=${OUTDIR}/system.swap.read
 SWAPWRITEFILE=${OUTDIR}/system.swap.write
-trap "rm ${OUTDIR}/system.*; log 'shutting down'; exit 0" INT TERM
+trap 'log "received shutdown signal, deleting output files"; rm ${OUTDIR}/system.*; exit 0' EXIT
 
 log 'compiling system performance metrics'
 echo 'n/a' > ${SWAPREADFILE}

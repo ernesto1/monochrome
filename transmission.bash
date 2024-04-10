@@ -13,11 +13,11 @@ function usage {
 function onExitSignal {
   log 'received shutdown signal, deleting output files'
   rm -f ${outputDir}/transmission.*
-  kill $(jobs -p)     # kill any child processes, ie. the sleep command
+  [[ $pid ]] && kill $pid
   exit 0
 }
 
-trap onExitSignal SIGINT SIGTERM
+trap onExitSignal EXIT
 
 if ! type transmission-remote > /dev/null 2>&1; then
   msg="the transmission bittorrent client is not installed on this system\n"
@@ -46,15 +46,8 @@ while (( "$#" )); do
   esac
 done
 
-if [[ $nameWidth -lt 1 ]]; then
-  echo 'name width should have at least 1 character' >&2
-  exit 1
-fi
-
-if [[ $offset -lt 1 ]]; then
-  echo 'offset should be at least 1 pixel' >&2
-  exit 1
-fi
+[[ $nameWidth -lt 15 ]] && { logError 'torrent name width should have at least 15 characters'; exit 1; }
+[[ $offset -lt 1 ]] && { logError 'offset should be at least 1 pixel'; exit 1; }
 
 log 'starting transmission torrent info service'
 log "torrent listing format will be ${nameWidth} | offset ${offset} | up | offset ${offset} | down"
@@ -142,6 +135,7 @@ while [ true ]; do
   mv ${peersFile}.$$ ${peersFile}
   mv ${peersFlippedFile}.$$ ${peersFlippedFile}  
   
-  sleep 3s &  # run sleep in the background so we can kill it if we get a termination signal
-  wait        # wait for the sleep process to complete
+  sleep 3s & pid=$!
+  wait
+  unset pid
 done
