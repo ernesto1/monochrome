@@ -171,7 +171,7 @@ do
   # 1. conky exclusion override: excludes a conky configuration from being loaded
   #    override is of the format: ignore:<conkyFilename>
   #                           ex. ignore:externalDevices
-  if [[ -f ${layoutFile} ]] && grep -qw "ignore:${conkyConfig}" ${layoutFile}; then
+  if [[ -f ${layoutFile} ]] && grep -q "^ignore:${conkyConfig}$" ${layoutFile}; then
     echo -e "  ${ORANGE}ignoring${NOCOLOR} this conky since it is in the exclusion list of the layout file"
     continue
   fi
