@@ -58,8 +58,11 @@ downloadingFile=${outputDir}/transmission.downloading
 idleFile=${outputDir}/transmission.idle
 status=${outputDir}/transmission.status
 active=${outputDir}/transmission.active.raw
+activeTorrents=${outputDir}/transmission.active.torrents
 activeFile=${outputDir}/transmission.active
 activeFlippedFile=${outputDir}/transmission.active.flipped
+speedUploadFile=${outputDir}/transmission.speed.upload
+speedDownloadFile=${outputDir}/transmission.speed.download
 peers=${outputDir}/transmission.peers.raw
 peersFile=${outputDir}/transmission.peers
 peersFlippedFile=${outputDir}/transmission.peers.flipped
@@ -82,23 +85,24 @@ while [ true ]; do
   #    320    35%   989.0 MB  8 min     1538.0  3620.0   0.14  Up & Down    photo gallery
   #    126*  100%   114.0 MB  Done      1189.0     0.0    107  Seeding      books
   #    127   100%   16.99 GB  230 days     0.0     0.0   97.7  Idle         magazines   << iddle entries are ignored
-  # Sum:            31.69 GB              12.0     0.0
-  transmission-remote -t active -l \
-    | grep -E '(Seeding|Downloading|Up & Down)' \
-    | sed 's/\.0  /  /g' \
-    | \sed 's/  \+/:/g' \
+  # Sum:            31.69 GB            2727.0  3620.0
+  transmission-remote -t active -l > ${active}
+  awk 'END{printf "%'\''d KiB", $4}' ${active} > ${speedUploadFile}.$$
+  awk 'END{printf "%'\''d KiB", $5}' ${active} > ${speedDownloadFile}.$$
+  grep -E '(Seeding|Downloading|Up & Down)' ${active} \
+    | sed 's/  \+/:/g' \
     | cut -d ':' -f 6,7,10 \
-    | sort -t ':' -k 3 > ${active}
-  awk -F ':' "{printf \"%-${nameWidth}.${nameWidth}s\${offset ${offset}}\${color4}%5.5s\${offset ${offset}}\${color}%5.5s\n\", \$3, \$1, \$2}" ${active} > ${activeFile}.$$
+    | sort -t ':' -k 3 > ${activeTorrents}
+  awk -F ':' "{printf \"%-${nameWidth}.${nameWidth}s\${offset ${offset}}\${color4}%5d\${offset ${offset}}\${color}%5d\n\", \$3, \$1, \$2}" ${activeTorrents} > ${activeFile}.$$
   # flipped version
   echo '# components currently downloading data' > ${status}.$$
-  numDownloads=$(cut -d ':' -f 2 ${active} | grep -cvE '^0$')
+  numDownloads=$(cut -d ':' -f 2 ${activeTorrents} | grep -cvE '^0.0$')
   
   if (( numDownloads == 0 )); then
-    awk -F ':' "{printf \"\${color4}%5.5s\${offset ${offset}}\${color}%-${nameWidth}.${nameWidth}s\n\", \$1, \$3}" ${active} > ${activeFlippedFile}.$$
+    awk -F ':' "{printf \"\${color4}%5d\${offset ${offset}}\${color}%-${nameWidth}.${nameWidth}s\n\", \$1, \$3}" ${activeTorrents} > ${activeFlippedFile}.$$
   else
     echo 'torrents' > ${status}.$$
-    awk -F ':' "{printf \"\${color}%5.5s\${offset ${offset}}\${color4}%5.5s\${offset ${offset}}\${color}%-${nameWidth}.${nameWidth}s\n\", \$2, \$1, \$3}" ${active} > ${activeFlippedFile}.$$
+    awk -F ':' "{printf \"\${color}%5d\${offset ${offset}}\${color4}%5d\${offset ${offset}}\${color}%-${nameWidth}.${nameWidth}s\n\", \$2, \$1, \$3}" ${activeTorrents} > ${activeFlippedFile}.$$
   fi
   
   # ::: connected peers
@@ -108,21 +112,20 @@ while [ true ]; do
   # 116.121.146.69                            UKEI          42.8     0.0     0.0  qBittorrent 4.4.2
   transmission-remote -t active -pi \
     | grep -e '^[0-9]' \
-    | sed -r 's/ ([0-9]+)\.0 /\1  /g' \
     | sed 's/  \+/:/g' \
     | sed 's/µ/u/' \
     | cut -d ':' -f 1,4,5,6 \
     | grep -vE ':0:0:' \
     | sort -t . -k 1n -k 2n -k 3n -k 4n > ${peers}
-  awk -F ':' "{printf \"%-15s\${offset 12}%-13.13s\${offset ${offset}}\${color4}%5.5s\${offset ${offset}}\${color}%5.5s\n\", \$1, \$4, \$3, \$2}" ${peers} > ${peersFile}.$$
+  awk -F ':' "{printf \"%-15s\${offset 12}%-13.13s\${offset ${offset}}\${color4}%5d\${offset ${offset}}\${color}%5d\n\", \$1, \$4, \$3, \$2}" ${peers} > ${peersFile}.$$
   # flipped version
-  numDownloads=$(cut -d ':' -f 2 ${peers} | grep -cvE '^0$')
+  numDownloads=$(cut -d ':' -f 2 ${peers} | grep -cvE '^0.0$')
   
   if (( numDownloads == 0 )); then
-    awk -F ':' "{printf \"\${color4}%5.5s\${offset ${offset}}\${color}%-15s\${offset ${offset}}%-13.13s\n\", \$3, \$1, \$4}" ${peers} > ${peersFlippedFile}.$$
+    awk -F ':' "{printf \"\${color4}%5d\${offset ${offset}}\${color}%-15s\${offset ${offset}}%-13.13s\n\", \$3, \$1, \$4}" ${peers} > ${peersFlippedFile}.$$
   else
     echo 'peers' >> ${status}.$$
-    awk -F ':' "{printf \"\${color}%5.5s\${offset ${offset}}\${color4}%5.5s\${offset ${offset}}\${color}%-15s\${offset ${offset}}%-13.13s\n\", \$2, \$3, \$1, \$4}" ${peers} > ${peersFlippedFile}.$$
+    awk -F ':' "{printf \"\${color}%5d\${offset ${offset}}\${color4}%5d\${offset ${offset}}\${color}%-15s\${offset ${offset}}%-13.13s\n\", \$2, \$3, \$1, \$4}" ${peers} > ${peersFlippedFile}.$$
   fi
   
   # rename temporary files into the official ones, this prevents race conditions from the conky reading these files
@@ -130,6 +133,8 @@ while [ true ]; do
   mv ${downloadingFile}.$$ ${downloadingFile}
   mv ${idleFile}.$$ ${idleFile}
   mv ${status}.$$ ${status}
+  mv ${speedUploadFile}.$$ ${speedUploadFile}
+  mv ${speedDownloadFile}.$$ ${speedDownloadFile}
   mv ${activeFile}.$$ ${activeFile}
   mv ${activeFlippedFile}.$$ ${activeFlippedFile}
   mv ${peersFile}.$$ ${peersFile}

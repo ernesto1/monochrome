@@ -133,10 +133,17 @@ function conky_decrease_total_lines(lines)
   return ''
 end
 
+--[[
+pads a string with spaces to the desired amount of characters
 
-function conky_pad(expression)
-    local text = conky_parse(expression)
-    return string.format('%3s', text)
+arguments:
+  expression  conky expression to evaluate which yields the string to pad, ex. ${cat valueInsideThisFile}
+  n           number of characters to pad to
+]]
+function conky_pad(expression, n)
+  n = (n ~= nil) and n or 3
+  local text = conky_parse(expression)
+  return string.format('%' .. n .. 's', text)
 end
 
 
