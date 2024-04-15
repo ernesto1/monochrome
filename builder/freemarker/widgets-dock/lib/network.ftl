@@ -55,14 +55,14 @@ ${voffset 48}
 <#assign device = devices?first>
 # :::: [=device.type]
 ${if_up [=device.name]}\
-<#local height = 71>
+<#local height = 70>
 <#if device.type == "wifi">
 <@menu.verticalTable x=0 y=y header=57 body=width-57 height=height/>
 ${lua add_offsets 0 [=height + gap]}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-menu-horizontal-data.png -p 57,[=y]}\
 <@wifiDetails device/>
 <#else>
-<@menu.verticalTable x=0 y=y header=75 body=width-75 height=height/>
+<@menu.verticalTable x=0 y=y header=71 body=width-71 height=height/>
 ${lua add_offsets 0 [=height + gap]}\
 <@ethernetDetails device/>
 </#if>
@@ -74,15 +74,15 @@ ${endif}\
 </#macro>
 
 <#macro wifiDetails device>
-${voffset 15}${offset 5}${color1}network${goto 63}${color}${wireless_essid [=device.name]}
+${offset 5}${color1}network${goto 63}${color}${wireless_essid [=device.name]}
 ${voffset 3}${offset 5}${color1}local ip${goto 63}${color}${addr [=device.name]}
 ${voffset 3}${offset 5}${color1}bitrate${goto 63}${color}${wireless_bitrate [=device.name]}
 ${voffset 3}${offset 5}${color1}channel${goto 63}${color}${wireless_channel [=device.name]}
 </#macro>
 
 <#macro ethernetDetails device>
-${voffset 15}${offset 5}${color1}local ip${goto 81}${color}${addr [=device.name]}
-${voffset 3}${offset 5}${color1}speed${goto 81}${color}${execi 180 ethtool [=device.name] 2>/dev/null | grep -i speed | cut -d ' ' -f 2}
-${voffset 3}${offset 5}${color1}total up${goto 81}${color}${totalup [=device.name]}
-${voffset 3}${offset 5}${color1}total down${goto 81}${color}${totaldown [=device.name]}
+${offset 5}${color1}local ip${goto 77}${color}${addr [=device.name]}
+${voffset 3}${offset 5}${color1}speed${goto 77}${color}${execi 180 ethtool [=device.name] 2>/dev/null | grep -i speed | cut -d ' ' -f 2}
+${voffset 3}${offset 5}${color1}total up${goto 77}${color}${totalup [=device.name]}
+${voffset 3}${offset 5}${color1}total down${goto 77}${color}${totaldown [=device.name]}
 </#macro>

@@ -8,13 +8,13 @@ conky.config = {
   -- window alignment
   alignment = 'middle_left',  -- top|middle|bottom_left|right
   gap_x = 142,
-  gap_y = 542,
+  gap_y = 467,
 
   -- window settings
   <#assign width = 169>
   minimum_width = [=width],      -- conky will add an extra pixel to this
   maximum_width = [=width],
-  minimum_height = 351,
+  minimum_height = 414,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -46,6 +46,8 @@ conky.config = {
   -- colors
   default_color = '[=colors.menuText]',  -- regular text
   color1 = '[=colors.labels]',
+  color3 = '[=colors.secondary.labels]',         -- secondary menu labels
+  color4 = '[=colors.secondary.text]',         -- secondary menu text
   
   -- templates
   -- top cpu process: ${template0 processNumber}
@@ -55,26 +57,47 @@ conky.config = {
 };
 
 conky.text = [[
-# :::::::::::: top cpu processes
-<#assign y = 0, 
-         header = 19, <#-- menu header -->
-         body = 116,  <#-- size of the current window without the header -->
-         gap = 5>     <#-- empty space between windows -->
-<@menu.table x=0 y=y width=width header=header body=body/>
-<#assign y += header + body + gap>
-${voffset 2}${offset 5}${color1}process${alignr 4}cpu${voffset 3}
-<#list 1..7 as x>
+# :::::::::::: cpu
+<#assign y = 0,
+         titleHeight = 19,
+         gap = 2,
+         sectionGap = 3>   <#-- empty space between panels -->
+<@menu.panel x=0 y=y width=width height=titleHeight color=image.secondaryColor/>
+${voffset 2}${alignc}${color3}cpu${voffset [=6+gap]}
+<#assign y += titleHeight + gap, body = 84>
+<@menu.table x=0 y=y width=width header=titleHeight body=body/>
+${offset 5}${color1}process${alignr 4}cpu${voffset 3}
+<#list 1..5 as x>
 ${template0 [=x]}
 </#list>
-# :::::::::::: top mem processes
-<@menu.table x=0 y=y width=width header=header body=body/>
-<#assign y += header + body + gap>
-${voffset 12}${offset 5}${color1}process${alignr 4}memory${voffset 3}
-<#list 1..7 as x>
+<#assign y += titleHeight + body + gap, header = 71, body = 19>
+<@menu.verticalTable x=0 y=y header=header body=width-header height=body/>
+${voffset [= 7 + gap]}${offset 5}${color1}load avg${goto 77}${color}${loadavg}${voffset [=6+sectionGap]}
+<#assign y += body + sectionGap>
+# :::::::::::: memory
+<@menu.panel x=0 y=y width=width height=titleHeight color=image.secondaryColor/>
+${alignc}${color3}memory${voffset [=6+gap]}
+<#assign y += titleHeight + gap, body = 84>
+<@menu.table x=0 y=y width=width header=titleHeight body=body/>
+${offset 5}${color1}process${alignr 4}memory${voffset 3}
+<#list 1..5 as x>
 ${template1 [=x]}
 </#list>
+<#assign y += titleHeight + body + gap,
+         header = 71,
+         body = 38,
+         inputDir = "/tmp/conky",
+         swapRead = inputDir + "/system.swap.read",
+         swapWrite = inputDir + "/system.swap.write">
+<@menu.verticalTable x=0 y=y header=header body=width-header height=body/>
+${voffset [= 7 + gap + 2]}${offset 5}${color1}swap read${goto 77}${color}${cat [=swapRead]}
+${voffset 3}${offset 5}${color1}swap write${goto 77}${color}${cat [=swapWrite]}${voffset [=7+sectionGap]}
+<#assign y += body + sectionGap>
 # :::::::::::: network
+<@menu.panel x=0 y=y width=width height=titleHeight color=image.secondaryColor/>
+${alignc}${color3}network${voffset [=8+gap]}
+<#assign y += titleHeight + gap>
 # assumption: only one network device will be connected to the internet at a time
-<@net.networkDetails devices=networkDevices[system] y=y width=width gap=gap/>
-<#assign y += 71 + gap>
+<@net.networkDetails devices=networkDevices[system] y=y width=width gap=sectionGap/>
+<#assign y += 71 + sectionGap>
 ]];
