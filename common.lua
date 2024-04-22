@@ -165,13 +165,28 @@ use this method when you want to higlight high usage of a resource
 arguments:
       expression      conky variable to parse, must yield a numeric value (no units)
       threshold       threshold to compare against
-      colorVariable   conky color variable to print the expression under if the threshold is exceeded, ex. ${color4}
+      colorVariable   conky color variable to use if the threshold is exceeded, ex. ${color4}
 ]]
 function conky_print_resource_usage(expression, threshold, colorVariable)
   local value = tonumber(conky_parse(expression))
   local threshold = tonumber(threshold)
   local s = (value < threshold) and value or colorVariable .. value
   
+  return s
+end
+
+function conky_print_max_resource_usage(threshold, colorVariable, ...)
+  local threshold = tonumber(threshold)
+  local max = 0
+  local arg = {...}
+
+  for i = 1, select("#",...) do
+    local value =  tonumber(conky_parse(arg[i]))
+    max = (value > max) and value or max
+  end
+  
+  local s = (max < threshold) and max or colorVariable .. max
+
   return s
 end
 

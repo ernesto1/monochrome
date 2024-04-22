@@ -2,7 +2,7 @@
 # the data model for the conky templates is composed of two sections:
 #
 # - hardware details (this file)
-# - conky theme color palette (found on each individual conky folder)
+# - conky theme color palette (colorPalette.yml found on each individual conky folder)
 #
 # when a configuration is buing built for a particular conky theme (ex. compact conky)
 # these two data models will be merged and used by the freemarker engine

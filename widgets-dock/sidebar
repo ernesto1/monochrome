@@ -13,7 +13,7 @@ conky.config = {
 
   -- window settings
   minimum_width = 146,
-  minimum_height = 1461,
+  minimum_height = 1333,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -187,21 +187,19 @@ ${voffset 8}${goto 67}${color}${hwmon coretemp temp 4}°C${offset 9}${hwmon core
 ${image ~/conky/monochrome/images/widgets-dock/yellow-temp-videocard.png -p 0,967}\
 # :::::::: hard disks
 ${image ~/conky/monochrome/images/widgets-dock/yellow-temp-disk.png -p 0,1031}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-temp-disk.png -p 0,1095}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-temp-disk.png -p 0,1159}\
 # :::::::: fans
-${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/yellow-fan-1.png -p 0,1223}${endif}\
-${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/yellow-fan-2.png -p 0,1223}${endif}\
-${voffset 274}${goto 67}${color}${hwmon atk0110 fan 3} rpm
+${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/yellow-fan-1.png -p 0,1095}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/yellow-fan-2.png -p 0,1095}${endif}\
+${voffset 146}${goto 67}${color}${hwmon atk0110 fan 3} rpm
 ${voffset 9}${goto 67}${color}${hwmon atk0110 fan 2} rpm
 ${voffset 9}${goto 67}${color}${hwmon atk0110 fan 4} rpm
 # :::::::::::::::::::: package updates 
 # placeholder, the logic is in the sidebar-time conky
-${image ~/conky/monochrome/images/widgets-dock/yellow-packages.png -p 0,1287}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-packages.png -p 0,1159}\
 # :::::::::::::::::::: time 
 # placeholder, the actual time logic is in the sidebar-time conky
-${image ~/conky/monochrome/images/widgets-dock/yellow-block-sidebar.png -p 0,1351}\
-${image ~/conky/monochrome/images/widgets-dock/yellow-block-sidebar.png -p 0,1367}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-block-sidebar.png -p 0,1223}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-block-sidebar.png -p 0,1239}\
 # :::::::::::::::::::: bar's bottom edge
-${image ~/conky/monochrome/images/widgets-dock/yellow-edge-bottom.png -p 0,1421}\
+${image ~/conky/monochrome/images/widgets-dock/yellow-edge-bottom.png -p 0,1293}\
 ${voffset -360}]];

@@ -61,11 +61,11 @@ conky.text = [[
 <#if system == "desktop" >
 ${voffset 8}${template7 ${lua_parse\ print_resource_usage\ ${hwmon\ atk0110\ temp\ 1}\ [=threshold.tempCPU]\ ${color3}}}
 ${template7 ${lua_parse\ print_resource_usage\ ${hwmon\ radeon\ temp\ 1}\ [=threshold.tempVideo]\ ${color3}}}
+<#assign disksTemp = "">
 <#list hardDisks[system] as hardDisk>
-<#if hardDisk.hwmonIndex??>
-${template7 ${lua_parse\ print_resource_usage\ ${hwmon\ [=hardDisk.hwmonIndex]\ temp\ 1}\ [=threshold.tempDisk]\ ${color3}}}
-</#if>
+<#if hardDisk.hwmonIndex??><#assign disksTemp += "${hwmon\\ " + hardDisk.hwmonIndex + "\\ temp\\ 1}\\ "></#if>
 </#list>
+${template7 ${lua_parse\ print_max_resource_usage\ [=threshold.tempDisk]\ ${color3}\ [=disksTemp?remove_ending("\\ ")]}}
 ${voffset 7}${offset 7}${font0}${color}${lua_parse print_resource_usage ${hwmon atk0110 fan 1} [=(threshold.fanSpeed)?c] ${color3}}${font}${color}${voffset 16}
 </#if>
 ${alignc}${font0}${color}${if_existing /tmp/conky/dnf.packages.formatted}${lines /tmp/conky/dnf.packages.formatted}${else}0${endif}${voffset 7}

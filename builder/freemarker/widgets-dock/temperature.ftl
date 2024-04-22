@@ -12,17 +12,14 @@ ${voffset 8}${goto 67}${color}${hwmon coretemp temp 4}°C${offset 9}${hwmon core
 # :::::::: ati video card
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-temp-videocard.png -p 0,64}\
 # :::::::: hard disks
-<#assign y = 128>
-<#list hardDisks[system] as hardDisk>
-<#if hardDisk.hwmonIndex??>
+<#assign y = 128><#-- TODO display a single hard disk image if at least one disk has an hwmon setting,
+the goal is to display the highest temperature of a set of hard disks -->
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-temp-disk.png -p 0,[=y]}\
 <#assign y += 64>
-</#if>
-</#list>
 # :::::::: fans
-${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-fan-1.png -p 0,320}${endif}\
-${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-fan-2.png -p 0,320}${endif}\
-${voffset 274}${goto 67}${color}${hwmon atk0110 fan 3} rpm
+${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-fan-1.png -p 0,[=y]}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-fan-2.png -p 0,[=y]}${endif}\
+${voffset 146}${goto 67}${color}${hwmon atk0110 fan 3} rpm
 ${voffset 9}${goto 67}${color}${hwmon atk0110 fan 2} rpm
 ${voffset 9}${goto 67}${color}${hwmon atk0110 fan 4} rpm
 </#if>
