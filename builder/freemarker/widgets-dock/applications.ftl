@@ -69,7 +69,7 @@ ${lua set_total_lines [=totalLines]}\
          titleHeight = 19,
          y = 0,
          gap = 3,               <#-- empty space across panels of the same application -->
-         sectionGap = 5>        <#-- empty space between application panels -->
+         sectionGap = 4>        <#-- empty space between application panels -->
 ${if_existing [=packagesFile]}\
 ${image ~/conky/monochrome/images/widgets-dock/[=image.secondaryColor]-packages-small.png -p 0,0}\
 <@menu.noLeftEdgePanel x=0+iconWidth y=y width=width-iconWidth height=iconheight color=image.secondaryColor/>
@@ -123,12 +123,22 @@ ${voffset 3}${offset 5}${color1}swarm${goto 67}${color}${if_existing [=peersFile
 ${voffset 3}${offset 5}${color1}upload${color}${if_existing [=uploadFile]}${alignr 43}${cat [=uploadFile]}${else}file missing${endif}
 ${voffset 3}${offset 5}${color1}download${color}${if_existing [=downloadFile]}${alignr 43}${cat [=downloadFile]}${else}file missing${endif}${voffset [= 7 + gap]}
 ${lua increment_offsets 0 [=height + gap]}\
-<@menu.table x=0 y=0 width=width header=titleHeight isFixed=false/>
+# -------  table | yellow 2 columns | top edge    -------
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dark.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dark-edge-top-left.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.secondaryColor]-menu-dark.png 139 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.secondaryColor]-menu-dark-edge-top-right.png 162 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-light.png 0 19}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.secondaryColor]-menu-light.png 139 19}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 169 0}\
 ${lua increment_offsets 0 [=titleHeight]}\
-${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-peers.png [=((width-112)/2)?round] 22}\
-${alignc}${color1}active torrents${voffset [=3+gap]}
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-peers.png [=((width-139)/2)?round] 22}\
+${offset 5}${color1}torrent${alignr 4}up${voffset [=3+gap]}
 ${color}${lua_parse head [=activeTorrentsFile] [=totalLines]}${lua increase_y_offset [=activeTorrentsFile]}
-<@menu.panelBottomCorners x=0 y=0 width=width isFixed=false/>
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-light-edge-bottom-left.png 0 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.secondaryColor]-menu-light-edge-bottom-right.png 162 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\
+# -------  table | yellow 2 columns | bottom edge -------
 ${lua increment_offsets 0 [=gap]}\
 ${endif}\
 ${else}\

@@ -47,7 +47,6 @@ while (( "$#" )); do
 done
 
 [[ $nameWidth -lt 15 ]] && { logError 'torrent name width should have at least 15 characters'; exit 1; }
-[[ $offset -lt 1 ]] && { logError 'offset should be at least 1 pixel'; exit 1; }
 
 log 'starting transmission torrent info service'
 log "torrent listing format will be ${nameWidth} | offset ${offset} | up | offset ${offset} | down"

@@ -182,9 +182,7 @@ do
   [[ -f ${layoutFile} ]] && override=$(grep ^"${conkyConfig}"\: ${layoutFile})
 
   if [[ ${override} ]]; then
-    IFS_bk=${IFS} IFS=:
-    layoutOverride=(${override})      # create an array out of the string in order to have it word split by bash
-    IFS=${IFS_bk}
+    IFS=: layoutOverride=(${override})      # create an array out of the string in order to have it word split by bash
     # construct the position parameters for conky, ie. -x 10 -y 50 -a top_right
     alignment="${layoutOverride[3]}"  # optional field, may not exist
     layoutOverride=(-x "${layoutOverride[1]}" -y "${layoutOverride[2]}")

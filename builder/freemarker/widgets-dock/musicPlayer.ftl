@@ -107,7 +107,7 @@ ${endif}\
 ${if_match "${lua get genre ${cat /tmp/conky/musicplayer.genre}}" != "unknown genre"}\
 ${voffset 3}${offset 5}${color1}genre${goto 50}${color}${lua get genre}${lua increment_offsets 0 16}
 ${endif}\
-${voffset -7}\
+${voffset -10}\
 # ------  vertical table image bottom ------
 <@menu.verticalMenuBottom x=0 y=0 header=header body=width-header isFixed=false/>
 # -------- end of table image bottom -------
