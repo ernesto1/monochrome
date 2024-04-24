@@ -226,7 +226,8 @@ fi
 if ${isTransmissionPollerEnabled}; then
   echo "- bash | transmission bittorrent service"
   echo -e "         ${ORANGE}ensure${NOCOLOR} the ${ORANGE}remote control${NOCOLOR} option is enabled in transmission"  
-  [[ "${numTorrentCharacters}" ]] && arguments=(--name-width ${numTorrentCharacters})
+  [[ "${format}" ]] && arguments=(--format ${format})
+  [[ "${numTorrentCharacters}" ]] && arguments+=(--name-width ${numTorrentCharacters})
   [[ "${offsetTorrent}" ]] && arguments+=(--offset ${offsetTorrent})
   ${monochromeHome}/transmission.bash "${arguments[@]}" &
   unset arguments

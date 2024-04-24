@@ -24,12 +24,9 @@ conky.config = {
   gap_y = 142,
 
   -- window settings
-  <#assign width = 189, 
-           gap = 3,             <#-- empty space between menus of the same context -->
-           speedColWidth = 39,  <#-- width of upload/download columns -->
-           columnOffset = speedColWidth + gap>   <#-- additional left handed empty width added by the transmission down/up columns -->
-  minimum_width = [=columnOffset + width],      -- conky will add an extra pixel to this
-  maximum_width = [=columnOffset + width],
+  <#assign width = 189>
+  minimum_width = [=width],      -- conky will add an extra pixel to this
+  maximum_width = [=width],
   minimum_height = 1351,
   own_window = true,
   own_window_type = 'desktop',   -- values: desktop (background), panel (bar)
@@ -48,7 +45,7 @@ conky.config = {
   
   -- images
   imlib_cache_flush_interval = 250,
-  max_user_text = 22000,    -- max size of user text buffer in bytes, i.e. text inside conky.text section 
+  max_user_text = 26000,    -- max size of user text buffer in bytes, i.e. text inside conky.text section 
                             -- default is 16,384 bytes
 
   -- font settings
@@ -65,9 +62,10 @@ conky.config = {
 
 conky.text = [[
 <#assign totalLines = 74,
-         packageLines = 25>
+         packageLines = 25
+         gap = 3>             <#-- empty space between menus of the same context -->
 ${lua set_total_lines [=totalLines]}\
-${lua increment_offsets [=columnOffset] 0}\
+${lua increment_offsets 0 0}\
 #
 # :::::::::::::::: package updates ::::::::::::::::
 #
@@ -169,69 +167,68 @@ ${endif}\
 # :::::::::::::::: torrents ::::::::::::::::
 #
 <#assign inputDir = "/tmp/conky/",
-         statusFile = inputDir + "transmission.status",
-         activeTorrentsFile = inputDir + "transmission.active.flipped",
-         peersFile = inputDir + "transmission.peers.flipped",
+         torrentsFile = inputDir + "transmission.torrents",
+         torrentsUpFile = inputDir + "transmission.torrents.up",
+         torrentsDownFile = inputDir + "transmission.torrents.down",
+         peersFile = inputDir + "transmission.peers.raw",
+         peersUpFile = inputDir + "transmission.peers.up",
+         peersDownFile = inputDir + "transmission.peers.down",
          torrentLines = totalLines - packageLines>
 ${lua_parse draw_image ~/conky/monochrome/images/compact/[=image.secondaryColor]-torrents.png 0 0}\
 # :::::: transmission script running
-${if_existing [=activeTorrentsFile]}\
+${if_existing [=torrentsFile]}\
 ${voffset 2}${lua_parse add_x_offset offset 48}${color1}transmission
 # ::: no active torrents
-${if_match ${lua get activeNum ${lines [=activeTorrentsFile]}} == 0}\
+${if_match ${lua get activeNum ${lines [=torrentsFile]}} == 0}\
 <@menu.panel x=iconHeight+3 y=0 width=189-(iconHeight+3) height=iconHeight isFixed=false/>
 ${voffset 2}${lua_parse add_x_offset offset 48}${color}no active torrents${voffset [= 8 + sectionGap]}
 ${lua increment_offsets 0 [=iconHeight + sectionGap]}\
 ${else}\
-# ::: torrenting files
-# the active torrent table is composed of 3 columns: down | up | torrent details
-# the 'down' column is hidden unless data is actually being downloaded
-# offsets are used to move things around accross the x axis
-<@menu.panel x=iconHeight+3 y=0 width=189-(iconHeight+3) height=iconHeight+15 isFixed=false isDark=true/>
-${voffset 2}${lua_parse add_x_offset offset 48}${color}${lines [=activeTorrentsFile]} active torrents
-${voffset 2}${lua_parse add_x_offset offset 48}${color}${lines [=peersFile]} peers in the swarm${voffset [= 7 + gap]}
-${lua increment_offsets 0 [=iconHeight + 15 + gap]}\
-${if_existing [=statusFile] torrents}${lua set isTorrentDownloading true}${else}${lua set isTorrentDownloading false}${endif}\
-${if_match "${lua get isTorrentDownloading}" == "true"}\
-${lua increment_offsets [=-1 * columnOffset] 0}\
-<@menu.panels x=0 y=0 widths=[speedColWidth] gap=colGap isFixed=false/>
-${lua increment_offsets [=columnOffset] 0}\
-${endif}\
-<#assign menuWidth = width - speedColWidth - colGap>
+# ::: torrents overview
+<@menu.panel x=iconHeight+3 y=0 width=189-(iconHeight+3) height=iconHeight isFixed=false isDark=true/>
+${voffset 2}${lua_parse add_x_offset offset 48}${color}${lines [=torrentsFile]} active torrents ${voffset [= 7 + gap]}
+${lua increment_offsets 0 [=iconHeight + gap]}\
+# ::: torrent uploads
+# the torrent uploads table is composed of 2 columns: upload | torrent name
+${if_match ${lines [=torrentsUpFile]} > 0}\
+<#assign speedColWidth = 39,                          <#-- width of upload/download columns -->
+         menuWidth = width - speedColWidth - colGap>
 <@menu.panels x=0 y=0 widths=[speedColWidth, menuWidth] gap=colGap isFixed=false highlight=[1]/>
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-peers.png [=speedColWidth + colGap + 17] 22}\
-${if_match "${lua get isTorrentDownloading}" == "true"}${lua increment_offsets [=-1 * columnOffset] 0}${endif}\
-${lua_parse head [=activeTorrentsFile] [=torrentLines - 5]}${lua increase_y_offset [=activeTorrentsFile]}${voffset [= 7 + gap]}
-${if_match "${lua get isTorrentDownloading}" == "true"}\
-<@menu.panelsBottom x=0 y=0 widths=[speedColWidth] gap=colGap isFixed=false/>
-${lua increment_offsets [=columnOffset] 0}\
-${endif}\
+${lua_parse head [=torrentsUpFile] [=torrentLines - 5]}${lua increase_y_offset [=torrentsUpFile]}${voffset [= 7 + gap]}
 <@menu.panelsBottom x=0 y=0 widths=[speedColWidth, menuWidth] gap=colGap isFixed=false highlight=[1]/>
 ${lua increment_offsets 0 [=gap]}\
+${endif}\
+# ::: torrent downloads
+${if_match ${lines [=torrentsDownFile]} > 0}\
+<@menu.panels x=0 y=0 widths=[speedColWidth, menuWidth] gap=colGap isFixed=false/>
+${lua_parse head [=torrentsDownFile] [=torrentLines - 5]}${lua increase_y_offset [=torrentsDownFile]}${voffset [= 7 + gap]}
+<@menu.panelsBottom x=0 y=0 widths=[speedColWidth, menuWidth] gap=colGap isFixed=false/>
+${lua increment_offsets 0 [=gap]}\
+${endif}\
 # ::: no peers
-${if_match ${lua get activeNum ${lines [=peersFile]}} == 0}\
+${if_match ${lines [=peersFile]} == 0}\
 <@menu.panel x=speedColWidth + colGap y=0 width=menuWidth height=22 isFixed=false/>
 ${voffset 2}${lua_parse add_x_offset offset 48}${color}no peers connected${voffset [= 8 + sectionGap]}
 ${else}\
-# ::: peers connected
-# the peers table is composed of 4 columns: down | up | ip | client
-# similar to the active torrent table above, the 'down' column is hidden unless data is being downloaded
-${if_existing [=statusFile] peers}${lua set isPeerDownloading true}${else}${lua set isPeerDownloading false}${endif}\
-${if_match "${lua get isPeerDownloading}" == "true"}\
-${lua increment_offsets [=-1 * columnOffset] 0}\
-<@menu.panels x=0 y=0 widths=[speedColWidth] gap=colGap isFixed=false/>
-${lua increment_offsets [=columnOffset] 0}\
-${endif}\
+<@menu.panel x=speedColWidth + colGap y=0 width=menuWidth height=22 isFixed=false/>
+${voffset 2}${lua_parse add_x_offset offset 48}${color}${lines [=peersFile]} peers in the swarm${voffset [= 7 + gap]}
+${lua increment_offsets 0 [=22 + gap]}\
+# ::: peers upload
+# the peers table is composed of 3 columns: upload | ip | client
+${if_match ${lines [=peersUpFile]} > 0}\
 <#assign ipCol = 99, clientCol = 87>
 <@menu.panels x=0 y=0 widths=[speedColWidth,ipCol,menuWidth-ipCol-colGap] gap=colGap isFixed=false highlight=[1]/>
-${if_match "${lua get isTorrentDownloading}" == "true"}${lua increment_offsets [=-1 * columnOffset] 0}${endif}\
-${lua_parse head [=peersFile] [=torrentLines]}${lua increase_y_offset [=peersFile]}
-${if_match "${lua get isPeerDownloading}" == "true"}\
-<@menu.panelsBottom x=0 y=0 widths=[speedColWidth] gap=colGap isFixed=false/>
-${lua increment_offsets [=columnOffset] 0}\
-${endif}\
+${lua_parse head [=peersUpFile] [=torrentLines]}${lua increase_y_offset [=peersUpFile]}${voffset [= 7 + gap]}
 <@menu.panelsBottom x=0 y=0 widths=[speedColWidth,ipCol,menuWidth-ipCol-colGap] gap=colGap isFixed=false highlight=[1]/>
 ${lua increment_offsets 0 [=gap]}\
+${endif}\
+${if_match ${lines [=peersDownFile]} > 0}\
+<@menu.panels x=0 y=0 widths=[speedColWidth,ipCol,menuWidth-ipCol-colGap] gap=colGap isFixed=false/>
+${lua_parse head [=peersDownFile] [=torrentLines]}${lua increase_y_offset [=peersDownFile]}${voffset [= 7 + gap]}
+<@menu.panelsBottom x=0 y=0 widths=[speedColWidth,ipCol,menuWidth-ipCol-colGap] gap=colGap isFixed=false/>
+${lua increment_offsets 0 [=gap]}\
+${endif}\
 ${endif}\
 ${endif}\
 ${else}\

@@ -95,15 +95,16 @@ ${lua increment_offsets 0 [=iconheight + sectionGap]}${lua decrease_total_lines 
 ${endif}\
 <#if system == "desktop">
 # :::::::::::: transmission bittorrent client
-<#assign inputDir = "/tmp/conky"
-         peersFile = inputDir + "/transmission.peers",
-         uploadFile = inputDir + "/transmission.speed.upload"
-         downloadFile = inputDir + "/transmission.speed.download",
-         idleFile = inputDir + "/transmission.idle",
-         activeTorrentsFile = inputDir + "/transmission.active">
-${if_existing [=activeTorrentsFile]}\
+<#assign inputDir = "/tmp/conky/"
+         peersFile = inputDir + "transmission.peers.raw",
+         uploadFile = inputDir + "transmission.speed.up"
+         downloadFile = inputDir + "transmission.speed.down",
+         torrentsFile = inputDir + "transmission.torrents",
+         torrentsUpFile = inputDir + "transmission.torrents.up",
+         torrentsDownFile = inputDir + "transmission.torrents.down">
+${if_existing [=torrentsFile]}\
 # ::: no active torrents
-${if_match ${lua get activeNum ${lines [=activeTorrentsFile]}} == 0}\
+${if_match ${lua get activeNum ${lines [=torrentsFile]}} == 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-torrents-small.png 0 0}\
 <@menu.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconheight isFixed=false/>
 ${voffset 5}${offset 45}${color1}transmission
@@ -123,7 +124,9 @@ ${voffset 3}${offset 5}${color1}swarm${goto 67}${color}${if_existing [=peersFile
 ${voffset 3}${offset 5}${color1}upload${color}${if_existing [=uploadFile]}${alignr 43}${cat [=uploadFile]}${else}file missing${endif}
 ${voffset 3}${offset 5}${color1}download${color}${if_existing [=downloadFile]}${alignr 43}${cat [=downloadFile]}${else}file missing${endif}${voffset [= 7 + gap]}
 ${lua increment_offsets 0 [=height + gap]}\
-# -------  table | yellow 2 columns | top edge    -------
+# ::: torrent uploads
+${if_match ${lines [=torrentsUpFile]} > 0}\
+# -------  table | [=image.primaryColor] 2 columns | top edge    -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dark.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dark-edge-top-left.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.secondaryColor]-menu-dark.png 139 0}\
@@ -134,12 +137,31 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 169 0}\
 ${lua increment_offsets 0 [=titleHeight]}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-peers.png [=((width-139)/2)?round] 22}\
 ${offset 5}${color1}torrent${alignr 4}up${voffset [=3+gap]}
-${color}${lua_parse head [=activeTorrentsFile] [=totalLines]}${lua increase_y_offset [=activeTorrentsFile]}
+${color}${lua_parse head [=torrentsUpFile] [=totalLines]}${voffset [= 7 + gap]}${lua increase_y_offset [=torrentsUpFile]}
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-light-edge-bottom-left.png 0 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.secondaryColor]-menu-light-edge-bottom-right.png 162 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\
-# -------  table | yellow 2 columns | bottom edge -------
+# -------  table | [=image.primaryColor] 2 columns | bottom edge -------
 ${lua increment_offsets 0 [=gap]}\
+${endif}\
+# ::: torrent downloads
+${if_match ${lines [=torrentsDownFile]} > 0}\
+# -------  table | [=image.primaryColor] 2 columns | top edge    -------
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dark.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dark-edge-top-left.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dark-edge-top-right.png 162 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-light.png 0 19}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dark.png 139 19}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 169 0}\
+${lua increment_offsets 0 [=titleHeight]}\
+${offset 5}${color1}torrent${alignr 4}down${voffset [=3+gap]}
+${color}${lua_parse head [=torrentsDownFile] [=totalLines]}${lua increase_y_offset [=torrentsDownFile]}
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-light-edge-bottom-left.png 0 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dark-edge-bottom-right.png 162 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\
+# -------  table | [=image.primaryColor] 2 columns | bottom edge -------
+${lua increment_offsets 0 [=sectionGap]}\
+${endif}\
 ${endif}\
 ${else}\
 # ::: error state

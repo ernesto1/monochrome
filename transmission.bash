@@ -5,8 +5,9 @@
 . ~/conky/monochrome/logging.bash
 
 function usage {
-  echo $(basename $0) [--name-width n] [--offset n]
-  echo "where 'name width' is the number of characters to print for the active torrent names"
+  echo $(basename $0) [--format type] [--name-width n] [--offset n]
+  echo "where 'format is default|flipped|vertical"
+  echo "      'name width' is the number of characters to print for the active torrent names"
   echo "      'offset' is the number of pixels between the columns"
 }
 
@@ -17,6 +18,25 @@ function onExitSignal {
   exit 0
 }
 
+function getUploadTorrents {
+  grep -E '(Seeding|Up & Down)' ${torrents}.$$ \
+    | cut -d ':' -f 1,4 \
+    | sort -t ':' -k 2
+}
+
+function getDownloadTorrents {
+  grep -E '(Downloading|Up & Down)' ${torrents}.$$ \
+      | cut -d ':' -f 2,4 \
+      | sort -t ':' -k 2
+}
+
+function renameTempFile {
+  for f in "$@"
+  do [[ -f ${f}.$$ ]] && mv ${f}.$$ ${f}
+  done
+}
+
+# ---------- script begins
 trap onExitSignal EXIT
 
 if ! type transmission-remote > /dev/null 2>&1; then
@@ -27,10 +47,15 @@ if ! type transmission-remote > /dev/null 2>&1; then
 fi
 
 offset=10
-nameWidth=30          # number of characters for the active torrent names
+nameWidth=30      # number of characters for the active torrent names
+format=default    # uploads and downloads on the same row
 
 while (( "$#" )); do
   case $1 in
+    --format)
+      format=$2
+      shift 2
+      ;;
     --offset)
       offset=$2
       shift 2
@@ -49,22 +74,29 @@ done
 [[ $nameWidth -lt 15 ]] && { logError 'torrent name width should have at least 15 characters'; exit 1; }
 
 log 'starting transmission torrent info service'
-log "torrent listing format will be ${nameWidth} | offset ${offset} | up | offset ${offset} | down"
+log "formatting style: ${format}"
+log "                  ${nameWidth} characters for torrent names"
+log "                  ${offset} px offset between columns"
 outputDir=/tmp/conky
 mkdir -p ${outputDir}
 seedingFile=${outputDir}/transmission.seeding
 downloadingFile=${outputDir}/transmission.downloading
 idleFile=${outputDir}/transmission.idle
-status=${outputDir}/transmission.status
-active=${outputDir}/transmission.active.raw
-activeTorrents=${outputDir}/transmission.active.torrents
+
+# torrents overview
+speedUploadFile=${outputDir}/transmission.speed.up
+speedDownloadFile=${outputDir}/transmission.speed.down
+# active torrents
+torrentsRaw=${outputDir}/transmission.torrents.raw
+torrents=${outputDir}/transmission.torrents
 activeFile=${outputDir}/transmission.active
-activeFlippedFile=${outputDir}/transmission.active.flipped
-speedUploadFile=${outputDir}/transmission.speed.upload
-speedDownloadFile=${outputDir}/transmission.speed.download
+torrentsUpFile=${outputDir}/transmission.torrents.up
+torrentsDownFile=${outputDir}/transmission.torrents.down
+# peers
 peers=${outputDir}/transmission.peers.raw
 peersFile=${outputDir}/transmission.peers
-peersFlippedFile=${outputDir}/transmission.peers.flipped
+peersUploadsFile=${outputDir}/transmission.peers.up
+peersDownloadsFile=${outputDir}/transmission.peers.down
 
 while [ true ]; do
   # ::: statistics
@@ -85,61 +117,68 @@ while [ true ]; do
   #    126*  100%   114.0 MB  Done      1189.0     0.0    107  Seeding      books
   #    127   100%   16.99 GB  230 days     0.0     0.0   97.7  Idle         magazines   << iddle entries are ignored
   # Sum:            31.69 GB            2727.0  3620.0
-  transmission-remote -t active -l > ${active}
-  awk 'END{printf "%'\''d KiB", $4}' ${active} > ${speedUploadFile}.$$
-  awk 'END{printf "%'\''d KiB", $5}' ${active} > ${speedDownloadFile}.$$
-  grep -E '(Seeding|Downloading|Up & Down)' ${active} \
+  transmission-remote -t active -l > ${torrentsRaw}
+  awk 'END{printf "%'\''d KiB", $4}' ${torrentsRaw} > ${speedUploadFile}.$$
+  awk 'END{printf "%'\''d KiB", $5}' ${torrentsRaw} > ${speedDownloadFile}.$$
+  grep -E '(Seeding|Downloading|Up & Down)' ${torrentsRaw} \
     | sed 's/  \+/:/g' \
-    | cut -d ':' -f 6,7,10 \
-    | sort -t ':' -k 3 > ${activeTorrents}
-  awk -F ':' "{printf \"%-${nameWidth}.${nameWidth}s\${offset ${offset}}\${color4}%5d\${offset ${offset}}\${color}%5d\n\", \$3, \$1, \$2}" ${activeTorrents} > ${activeFile}.$$
-  # flipped version
-  echo '# components currently downloading data' > ${status}.$$
-  numDownloads=$(cut -d ':' -f 2 ${activeTorrents} | grep -cvE '^0.0$')
-  
-  if (( numDownloads == 0 )); then
-    awk -F ':' "{printf \"\${color4}%5d\${offset ${offset}}\${color}%-${nameWidth}.${nameWidth}s\n\", \$1, \$3}" ${activeTorrents} > ${activeFlippedFile}.$$
-  else
-    echo 'torrents' > ${status}.$$
-    awk -F ':' "{printf \"\${color}%5d\${offset ${offset}}\${color4}%5d\${offset ${offset}}\${color}%-${nameWidth}.${nameWidth}s\n\", \$2, \$1, \$3}" ${activeTorrents} > ${activeFlippedFile}.$$
-  fi
+    | cut -d ':' -f 6,7,9,10 \
+    | sort -t ':' -k 3 > ${torrents}.$$
+    
+  case $format in
+    default)
+      awk -F ':' "{printf \"%-${nameWidth}.${nameWidth}s\${offset ${offset}}\${color4}%5d\${offset ${offset}}\${color}%5d\n\", \$4, \$1, \$2}" ${torrents}.$$ > ${activeFile}.$$
+      ;;
+    flipped)
+      getUploadTorrents | awk -F ':' "{printf \"\${color4}%5d\${offset ${offset}}\${color}%-${nameWidth}.${nameWidth}s\n\", \$1, \$2}" > ${torrentsUpFile}.$$
+      getDownloadTorrents | awk -F ':' "{printf \"\${color}%5d\${offset ${offset}}\${color}%-${nameWidth}.${nameWidth}s\n\", \$1, \$2}" > ${torrentsDownFile}.$$
+      ;;
+    vertical)
+      getUploadTorrents | awk -F ':' "{printf \"\${color}%-${nameWidth}.${nameWidth}s\${offset ${offset}}\${color4}%5d\n\", \$2, \$1}" > ${torrentsUpFile}.$$
+      getDownloadTorrents | awk -F ':' "{printf \"\${color}%-${nameWidth}.${nameWidth}s\${offset ${offset}}\${color}%5d\n\", \$2, \$1}" > ${torrentsDownFile}.$$
+      ;;
+  esac
   
   # ::: connected peers
-  # Address                                   Flags         Done  Down    Up      Client
-  # 72.178.162.10                             ?E            0.0      0.0     0.0  µTorrent 1.8.3
-  # 95.168.162.205                            DE            100.0 5349.0     0.0  libTorrent (Rakshasa) 0.13.8
-  # 116.121.146.69                            UKEI          42.8     0.0     0.0  qBittorrent 4.4.2
+  # Address                Flags         Done  Down    Up      Client
+  # 72.178.162.10          ?E            0.0      0.0     0.0  µTorrent 1.8.3
+  # 95.168.162.205         DE            100.0 5349.0     0.0  libTorrent (Rakshasa) 0.13.8
+  # 116.121.146.69         UKEI          42.8     0.0     0.0  qBittorrent 4.4.2
   transmission-remote -t active -pi \
     | grep -e '^[0-9]' \
     | sed 's/  \+/:/g' \
     | sed 's/µ/u/' \
-    | cut -d ':' -f 1,4,5,6 \
-    | grep -vE ':0:0:' \
-    | sort -t . -k 1n -k 2n -k 3n -k 4n > ${peers}
-  awk -F ':' "{printf \"%-15s\${offset 12}%-13.13s\${offset ${offset}}\${color4}%5d\${offset ${offset}}\${color}%5d\n\", \$1, \$4, \$3, \$2}" ${peers} > ${peersFile}.$$
-  # flipped version
-  numDownloads=$(cut -d ':' -f 2 ${peers} | grep -cvE '^0.0$')
+    | grep -vF ':0.0:0.0:' \
+    | sort -t . -k 1n -k 2n -k 3n -k 4n > ${peers}.$$
   
-  if (( numDownloads == 0 )); then
-    awk -F ':' "{printf \"\${color4}%5d\${offset ${offset}}\${color}%-15s\${offset ${offset}}%-13.13s\n\", \$3, \$1, \$4}" ${peers} > ${peersFlippedFile}.$$
-  else
-    echo 'peers' >> ${status}.$$
-    awk -F ':' "{printf \"\${color}%5d\${offset ${offset}}\${color4}%5d\${offset ${offset}}\${color}%-15s\${offset ${offset}}%-13.13s\n\", \$2, \$3, \$1, \$4}" ${peers} > ${peersFlippedFile}.$$
-  fi
+  case $format in
+    default)
+      # peers with no traffic (no up/down) are removed
+      cut -d ':' -f 1,4,5,6 ${peers}.$$ \
+        | awk -F ':' "{printf \"%-15s\${offset 12}%-13.13s\${offset ${offset}}\${color4}%5d\${offset ${offset}}\${color}%5d\n\", \$1, \$4, \$3, \$2}" > ${peersFile}.$$
+      ;;
+    flipped)
+      cut -d ':' -f 1,5,6 ${peers}.$$ \
+        | grep -vF ':0.0:' \
+        | awk -F ':' "{printf \"\${color4}%5d\${offset ${offset}}\${color}%-15s\${offset ${offset}}%-13.13s\n\", \$2, \$1, \$3}" > ${peersUploadsFile}.$$
+      cut -d ':' -f 1,4,6 ${peers}.$$ \
+        | grep -vF ':0.0:' \
+        | awk -F ':' "{printf \"%5d\${offset ${offset}}\${color}%-15s\${offset ${offset}}%-13.13s\n\", \$2, \$1, \$3}" > ${peersDownloadsFile}.$$
+      ;;
+  esac
   
-  # rename temporary files into the official ones, this prevents race conditions from the conky reading these files
+  # rename temporary files into the official ones, this prevents race conditions with conky reading these files  
   mv ${seedingFile}.$$ ${seedingFile}
   mv ${downloadingFile}.$$ ${downloadingFile}
   mv ${idleFile}.$$ ${idleFile}
-  mv ${status}.$$ ${status}
-  mv ${speedUploadFile}.$$ ${speedUploadFile}
-  mv ${speedDownloadFile}.$$ ${speedDownloadFile}
-  mv ${activeFile}.$$ ${activeFile}
-  mv ${activeFlippedFile}.$$ ${activeFlippedFile}
-  mv ${peersFile}.$$ ${peersFile}
-  mv ${peersFlippedFile}.$$ ${peersFlippedFile}  
+
+  renameTempFile ${torrents} ${speedUploadFile} ${speedDownloadFile} ${peers}
+  # default format
+  renameTempFile ${activeFile} ${peersFile}
+  # vertical/flipped format
+  renameTempFile ${torrentsUpFile} ${torrentsDownFile} ${peersUploadsFile} ${peersDownloadsFile}
   
-  sleep 3s & pid=$!
+  sleep 2s & pid=$!
   wait
   unset pid
 done
