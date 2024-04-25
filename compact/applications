@@ -59,7 +59,7 @@ conky.config = {
 };
 
 conky.text = [[
-${lua set_total_lines 74}\
+${lua set_total_lines 72}\
 ${lua increment_offsets 0 0}\
 #
 # :::::::::::::::: package updates ::::::::::::::::
@@ -261,7 +261,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-top-right.png 182 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 189 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-peers.png 59 22}\
-${lua_parse head /tmp/conky/transmission.torrents.up 44}${lua increase_y_offset /tmp/conky/transmission.torrents.up}${voffset 10}
+${lua_parse head /tmp/conky/transmission.torrents.up 42}${lua increase_y_offset /tmp/conky/transmission.torrents.up}${voffset 10}
 ${lua_parse draw_image ~/conky/monochrome/images/common/ochre-menu-light-edge-bottom-left.png 0 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/ochre-menu-light-edge-bottom-right.png 32 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-left.png 42 -7}\
@@ -281,7 +281,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light.png 
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-top-left.png 42 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-top-right.png 182 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 189 0}\
-${lua_parse head /tmp/conky/transmission.torrents.down 44}${lua increase_y_offset /tmp/conky/transmission.torrents.down}${voffset 10}
+${lua_parse head /tmp/conky/transmission.torrents.down 42}${lua increase_y_offset /tmp/conky/transmission.torrents.down}${voffset 10}
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-left.png 0 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-right.png 32 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-left.png 42 -7}\
@@ -330,7 +330,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light.png 
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-top-left.png 144 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-top-right.png 182 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 189 0}\
-${lua_parse head /tmp/conky/transmission.peers.up 49}${lua increase_y_offset /tmp/conky/transmission.peers.up}${voffset 10}
+${lua_parse head /tmp/conky/transmission.peers.up 47}${lua increase_y_offset /tmp/conky/transmission.peers.up}${voffset 10}
 ${lua_parse draw_image ~/conky/monochrome/images/common/ochre-menu-light-edge-bottom-left.png 0 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/ochre-menu-light-edge-bottom-right.png 32 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-left.png 42 -7}\
@@ -355,7 +355,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light.png 
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-top-left.png 144 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-top-right.png 182 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 189 0}\
-${lua_parse head /tmp/conky/transmission.peers.down 49}${lua increase_y_offset /tmp/conky/transmission.peers.down}${voffset 10}
+${lua_parse head /tmp/conky/transmission.peers.down 47}${lua increase_y_offset /tmp/conky/transmission.peers.down}
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-left.png 0 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-right.png 32 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-left.png 42 -7}\

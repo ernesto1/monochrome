@@ -61,7 +61,7 @@ conky.config = {
 };
 
 conky.text = [[
-<#assign totalLines = 74,
+<#assign totalLines = 72,
          packageLines = 25
          gap = 3>             <#-- empty space between menus of the same context -->
 ${lua set_total_lines [=totalLines]}\
@@ -225,7 +225,7 @@ ${lua increment_offsets 0 [=gap]}\
 ${endif}\
 ${if_match ${lines [=peersDownFile]} > 0}\
 <@menu.panels x=0 y=0 widths=[speedColWidth,ipCol,menuWidth-ipCol-colGap] gap=colGap isFixed=false/>
-${lua_parse head [=peersDownFile] [=torrentLines]}${lua increase_y_offset [=peersDownFile]}${voffset [= 7 + gap]}
+${lua_parse head [=peersDownFile] [=torrentLines]}${lua increase_y_offset [=peersDownFile]}
 <@menu.panelsBottom x=0 y=0 widths=[speedColWidth,ipCol,menuWidth-ipCol-colGap] gap=colGap isFixed=false/>
 ${lua increment_offsets 0 [=gap]}\
 ${endif}\

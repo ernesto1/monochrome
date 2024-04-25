@@ -140,20 +140,20 @@ while [ true ]; do
   esac
   
   # ::: connected peers
-  # Address                Flags         Done  Down    Up      Client
-  # 72.178.162.10          ?E            0.0      0.0     0.0  µTorrent 1.8.3
-  # 95.168.162.205         DE            100.0 5349.0     0.0  libTorrent (Rakshasa) 0.13.8
-  # 116.121.146.69         UKEI          42.8     0.0     0.0  qBittorrent 4.4.2
+  # Address          Flags     Done  Down    Up      Client
+  # 72.178.162.10    ?E        0.0      0.0     0.0  µTorrent 1.8.3
+  # 95.168.162.205   DE        100.0 5349.0     0.0  libTorrent (Rakshasa) 0.13.8  # spacing between done/down required
+  # 116.121.146.69   UKEI      42.8     0.0     0.0  qBittorrent 4.4.2
+  #
+  # peers with no traffic (0.0 up/down) are removed
   transmission-remote -t active -pi \
     | grep -e '^[0-9]' \
-    | sed 's/  \+/:/g' \
-    | sed 's/µ/u/' \
+    | sed -r -e 's/.0 ([0-9])/.0  \1/' -e 's/  +/:/g' -e 's/µ/u/' \
     | grep -vF ':0.0:0.0:' \
     | sort -t . -k 1n -k 2n -k 3n -k 4n > ${peers}.$$
   
   case $format in
     default)
-      # peers with no traffic (no up/down) are removed
       cut -d ':' -f 1,4,5,6 ${peers}.$$ \
         | awk -F ':' "{printf \"%-15s\${offset 12}%-13.13s\${offset ${offset}}\${color4}%5d\${offset ${offset}}\${color}%5d\n\", \$1, \$4, \$3, \$2}" > ${peersFile}.$$
       ;;
