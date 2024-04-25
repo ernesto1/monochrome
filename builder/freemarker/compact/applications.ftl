@@ -96,11 +96,12 @@ ${lua increment_offsets 0 [=iconHeight + sectionGap]}\
 ${endif}\
 #
 # :::::::::::::::: now playing ::::::::::::::::
-#
-# the UI of this conky has three states: no music player is running
-#                                        song with album art
-#                                        song with no album art
+# the UI of this conky has four states: song with album art
+#                                       song with no album art
+#                                       no music player is running
+#                                       dependent java dbus listener application is not running
 # :::::: no player available
+${if_existing /tmp/conky/musicplayer.name}\
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
 ${lua_parse draw_image ~/conky/monochrome/images/compact/[=image.secondaryColor]-sound-wave.png 0 0}\
 <@menu.panel x=41 y=0 width=189-41 height=iconHeight isFixed=false/>
@@ -162,6 +163,13 @@ ${endif}\
 ${lua increment_offsets 0 [=7 + sectionGap]}\<#-- edges are 7x7 px -->
 ${voffset [= 8 + sectionGap]}\
 ${lua increment_offsets 0 [=gap]}${voffset [=gap]}\
+${endif}\
+${else}\
+${lua_parse draw_image ~/conky/monochrome/images/compact/[=image.secondaryColor]-sound-wave.png 0 0}\
+<@menu.panel x=41 y=0 width=189-41 height=iconHeight isFixed=false color=image.secondaryColor/>
+${voffset 3}${lua_parse add_x_offset offset 48}${color3}now playing
+${voffset 2}${lua_parse add_x_offset offset 48}${color4}input files are missing${voffset [= 8 + sectionGap]}
+${lua increment_offsets 0 [=iconHeight + sectionGap]}\
 ${endif}\
 #
 # :::::::::::::::: torrents ::::::::::::::::

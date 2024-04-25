@@ -49,9 +49,11 @@ conky.config = {
 };
 
 conky.text = [[
-# the UI of this conky has three states: no music player is running
-#                                        song with album art
-#                                        song with no album art
+# the UI of this conky has four states: song with album art
+#                                       song with no album art
+#                                       no music player is running
+#                                       dependent java dbus listener application is not running
+${if_existing /tmp/conky/musicplayer.name}\
 # :::: no music player available
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
 ${image ~/conky/monochrome/images/widgets-dock/yellow-sound-wave-small.png -p 0,0}\
@@ -135,5 +137,17 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-dark-edge-bo
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png 162 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 7}\
 # -------- end of table image bottom -------
+${endif}\
+${else}\
+${image ~/conky/monochrome/images/widgets-dock/green-sound-wave-small.png -p 0,0}\
+# ------- panel | dark green no left round edges | top -------
+${image ~/conky/monochrome/images/common/green-menu-dark.png -p 38,0}\
+${image ~/conky/monochrome/images/common/green-menu-dark-edge-top-right.png -p 162,0}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 169,0}\
+${image ~/conky/monochrome/images/common/green-menu-dark-edge-bottom-right.png -p 162,31}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 38,38}\
+# ------- panel | dark green no left round edges | bottom -------
+${voffset 5}${offset 45}${color3}now playing
+${voffset 2}${offset 45}${color4}input files missing
 ${endif}\
 ]];

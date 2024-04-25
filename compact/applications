@@ -115,11 +115,12 @@ ${lua increment_offsets 0 43}\
 ${endif}\
 #
 # :::::::::::::::: now playing ::::::::::::::::
-#
-# the UI of this conky has three states: no music player is running
-#                                        song with album art
-#                                        song with no album art
+# the UI of this conky has four states: song with album art
+#                                       song with no album art
+#                                       no music player is running
+#                                       dependent java dbus listener application is not running
 # :::::: no player available
+${if_existing /tmp/conky/musicplayer.name}\
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
 ${lua_parse draw_image ~/conky/monochrome/images/compact/ochre-sound-wave.png 0 0}\
 # ------- light panel top edge    -------
@@ -214,6 +215,21 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 7}\
 ${lua increment_offsets 0 12}\
 ${voffset 13}\
 ${lua increment_offsets 0 3}${voffset 3}\
+${endif}\
+${else}\
+${lua_parse draw_image ~/conky/monochrome/images/compact/ochre-sound-wave.png 0 0}\
+# ------- light panel top edge    -------
+${lua_parse draw_image ~/conky/monochrome/images/common/ochre-menu-light.png 41 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/ochre-menu-light-edge-top-left.png 41 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/ochre-menu-light-edge-top-right.png 182 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 189 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/ochre-menu-light-edge-bottom-left.png 41 31}\
+${lua_parse draw_image ~/conky/monochrome/images/common/ochre-menu-light-edge-bottom-right.png 182 31}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 41 38}\
+# ------- light panel bottom edge -------
+${voffset 3}${lua_parse add_x_offset offset 48}${color3}now playing
+${voffset 2}${lua_parse add_x_offset offset 48}${color4}input files are missing${voffset 13}
+${lua increment_offsets 0 43}\
 ${endif}\
 #
 # :::::::::::::::: torrents ::::::::::::::::

@@ -51,12 +51,14 @@ conky.config = {
 };
 
 conky.text = [[
-# the UI of this conky has three states: no music player is running
-#                                        song with album art
-#                                        song with no album art
+# the UI of this conky has four states: song with album art
+#                                       song with no album art
+#                                       no music player is running
+#                                       dependent java dbus listener application is not running
 <#assign iconWidth = 38,       <#-- icon is a square -->
          iconheight = 38,
          gap = 3>              <#-- empty space between panels -->
+${if_existing /tmp/conky/musicplayer.name}\
 # :::: no music player available
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-sound-wave-small.png -p 0,0}\
@@ -111,5 +113,11 @@ ${voffset -10}\
 # ------  vertical table image bottom ------
 <@menu.verticalMenuBottom x=0 y=0 header=header body=width-header isFixed=false/>
 # -------- end of table image bottom -------
+${endif}\
+${else}\
+${image ~/conky/monochrome/images/widgets-dock/[=image.secondaryColor]-sound-wave-small.png -p 0,0}\
+<@menu.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconheight isDark=true color=image.secondaryColor/>
+${voffset 5}${offset 45}${color3}now playing
+${voffset 2}${offset 45}${color4}input files missing
 ${endif}\
 ]];
