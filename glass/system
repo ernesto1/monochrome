@@ -1,12 +1,12 @@
 conky.config = {
   update_interval = 2,  -- update interval in seconds
-  total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
+  total_run_times = 0,  -- number of times conky will update before quitting, set to 0 to run forever
   xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
   alignment = 'top_left',     -- top|middle|bottom_left|middle|right
-  gap_x = 123,                    -- same as passing -x at command line
+  gap_x = 123,                -- same as passing -x at command line
   gap_y = 36,
 
   -- window settings
@@ -55,35 +55,36 @@ conky.config = {
 
 conky.text = [[
 # ::::::::::::::::: system
-# --- composite vertical table image ---
+# ------- vertical table | top    -------
 ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 0,0}\
 ${image ~/conky/monochrome/images/common/blue-menu-light.png -p 69,0}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 205,0}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 0,53}\
-# --------- end of table image ---------
+# ------- vertical table | bottom -------
 ${voffset 3}${offset 29}${color1}kernel${goto 74}${color}${kernel}
 ${voffset 3}${offset 29}${color1}uptime${goto 74}${color}${uptime}
 ${voffset 3}${offset 5}${color1}compositor${goto 74}${color}${execi 3600 echo $XDG_SESSION_TYPE}
 ${voffset 8}\
 # ::::::::::::::::: top cpu
-# ------- single column table | top edge    -------
+# ------- table | 3 column(s) | top    -------
+# ------- header
 ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 0,56}\
-${image ~/conky/monochrome/images/common/blue-menu-light.png -p 0,75}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 159,56}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 0,208}\
-# ------- single column table | bottom edge -------
-# ------- single column table | top edge    -------
 ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 160,56}\
-${image ~/conky/monochrome/images/common/blue-menu-light.png -p 160,75}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 205,56}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 160,208}\
-# ------- single column table | bottom edge -------
-# ------- single column table | top edge    -------
 ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 206,56}\
-${image ~/conky/monochrome/images/common/blue-menu-light.png -p 206,75}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 251,56}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 206,208}\
-# ------- single column table | bottom edge -------
+# ------- body
+${image ~/conky/monochrome/images/common/blue-menu-light.png -p 0,75}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 159,75}\
+${image ~/conky/monochrome/images/common/blue-menu-light.png -p 160,75}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 205,75}\
+${image ~/conky/monochrome/images/common/blue-menu-light.png -p 206,75}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 251,75}\
+# ------- bottom blank image(s)
+${image ~/conky/monochrome/images/common/menu-blank.png -p 0,208}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 219,208}\
+# ------- table | 3 column(s) | bottom -------
 ${voffset 2}${offset 5}${color1}process${goto 183}cpu${goto 211}memory${voffset 4}
 ${template0 1}
 ${template0 2}
@@ -94,24 +95,25 @@ ${template0 6}
 ${template0 7}
 ${template0 8}
 # ::::::::::::::::: top memory
-# ------- single column table | top edge    -------
+# ------- table | 3 column(s) | top    -------
+# ------- header
 ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 0,211}\
-${image ~/conky/monochrome/images/common/blue-menu-light.png -p 0,230}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 159,211}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 0,363}\
-# ------- single column table | bottom edge -------
-# ------- single column table | top edge    -------
 ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 160,211}\
-${image ~/conky/monochrome/images/common/blue-menu-light.png -p 160,230}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 205,211}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 160,363}\
-# ------- single column table | bottom edge -------
-# ------- single column table | top edge    -------
 ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 206,211}\
-${image ~/conky/monochrome/images/common/blue-menu-light.png -p 206,230}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 251,211}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 206,363}\
-# ------- single column table | bottom edge -------
+# ------- body
+${image ~/conky/monochrome/images/common/blue-menu-light.png -p 0,230}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 159,230}\
+${image ~/conky/monochrome/images/common/blue-menu-light.png -p 160,230}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 205,230}\
+${image ~/conky/monochrome/images/common/blue-menu-light.png -p 206,230}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 251,230}\
+# ------- bottom blank image(s)
+${image ~/conky/monochrome/images/common/menu-blank.png -p 0,363}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 219,363}\
+# ------- table | 3 column(s) | bottom -------
 ${voffset 10}${offset 5}${color1}process${goto 165}memory${goto 223}perc${voffset 4}
 ${template1 1}
 ${template1 2}
@@ -122,11 +124,11 @@ ${template1 6}
 ${template1 7}
 ${template1 8}
 ${voffset 10}\
-# --- composite vertical table image ---
+# ------- vertical table | top    -------
 ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 0,366}\
 ${image ~/conky/monochrome/images/common/blue-menu-light.png -p 75,366}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 159,366}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 0,388}\
-# --------- end of table image ---------
+# ------- vertical table | bottom -------
 ${voffset 2}${offset 5}${color1}zoom${goto 81}${color}${if_running zoom}running${else}off${endif}
 ]];

@@ -9,3 +9,11 @@ ${lua_parse draw_image [=filePath] [=x?c] [=y?c]}\
 <#function getTheme isDark>
   <#return isDark?then("dark", "light")>
 </#function>
+
+<#function sum values>
+  <#local total = 0>
+  <#list values as v>
+    <#local total = total + v>
+  </#list>
+  <#return total>
+</#function>

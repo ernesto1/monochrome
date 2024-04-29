@@ -17,13 +17,13 @@ conky.config = {
   lua_draw_hook_pre = 'reset_state',
   </#if>
   update_interval = 2,  -- update interval in seconds
-  total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
+  total_run_times = 0,  -- number of times conky will update before quitting, set to 0 to run forever
   xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
   alignment = 'top_left',     -- top|middle|bottom_left|middle|right
-  gap_x = 123,                    -- same as passing -x at command line
+  gap_x = 123,                -- same as passing -x at command line
   gap_y = 36,
 
   -- window settings
@@ -104,10 +104,10 @@ ${voffset [=5 + gap]}\
 <#if system == "desktop"><#assign processes = 8, width = 159, smallCol = 45, colGap = 1>
 <#else><#assign processes = 6, width = windowWidth></#if>
 <#assign body = 5 + 16 * processes>
-<@menu.table x=0 y=y width=width header=header body=body/>
 <#if system == "desktop">
-<@menu.table x=width+colGap y=y width=smallCol header=header body=body/>
-<@menu.table x=width+colGap+smallCol+colGap y=y width=smallCol header=header body=body/>
+<@menu.table x=0 y=y widths=[width, smallCol, smallCol] gap=colGap header=header body=body/>
+<#else>
+<@menu.table x=0 y=y widths=[width] gap=colGap header=header body=body/>
 </#if>
 <#assign y += header + body + gap>
 <#if system == "desktop">
@@ -120,10 +120,10 @@ ${template0 [=i]}
 </#list>
 # ::::::::::::::::: top memory
 <#assign body = 5 + 16 * processes>
-<@menu.table x=0 y=y width=width header=header body=body/>
 <#if system == "desktop">
-<@menu.table x=width+colGap y=y width=smallCol header=header body=body/>
-<@menu.table x=width+colGap+smallCol+colGap y=y width=smallCol header=header body=body/>
+<@menu.table x=0 y=y widths=[width, smallCol, smallCol] gap=colGap header=header body=body/>
+<#else>
+<@menu.table x=0 y=y widths=[width] gap=colGap header=header body=body/>
 </#if>
 <#assign y += header + body + gap>
 <#if system == "desktop">

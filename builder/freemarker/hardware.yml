@@ -7,6 +7,7 @@
 # when a configuration is buing built for a particular conky theme (ex. compact conky)
 # these two data models will be merged and used by the freemarker engine
 
+blankImageWidth: 219    # blank panel image width in pixels
 system: desktop         # default value, overriden by freemarker java app
 
 networkDevices:

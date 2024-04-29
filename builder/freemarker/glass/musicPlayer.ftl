@@ -55,7 +55,7 @@ conky.text = [[
 # :::::::: no player available
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-sound-wave-small.png -p 0,0}\
-<@menu.table x=49 y=0 width=110 header=3 body=43/>
+<@menu.table x=49 y=0 widths=[110] header=3 body=43/>
 ${voffset 10}${goto 55}${color1}now playing
 ${voffset 4}${goto 55}${color}no player running${voffset 5}\
 ${else}\

@@ -175,7 +175,6 @@
 <#list widths as width>
   <#if highlight?seq_contains(width?counter)>
     <#local color=image.secondaryColor>
-  <#else>
   </#if>
   <@panelTopCorners x=x y=y width=width isFixed=isFixed theme=theme color=color/>
   <#local x = x + width + gap, color=image.primaryColor>

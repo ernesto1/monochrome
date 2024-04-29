@@ -50,52 +50,53 @@ conky.text = [[
 ${lua set_total_lines 61}\
 # decrease the total number of lines depending on the window size of the music player conky placed below this conky
 ${lua decrease_music_player_lines 1 3 13}\
-# --- composite vertical table image ---
+# ------- vertical table | top    -------
 ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 0,0}\
 ${image ~/conky/monochrome/images/common/blue-menu-light.png -p 75,0}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 159,0}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 0,87}\
-# --------- end of table image ---------
+# ------- vertical table | bottom -------
 ${lua increment_offsets 0 90}\
-${voffset 5}${offset 5}${color1}swarm${goto 81}${color}${if_existing /tmp/conky/transmission.peers}${lua pad ${lua get peers ${lines /tmp/conky/transmission.peers}}} peers${else}file missing${endif}
+${voffset 5}${offset 5}${color1}swarm${goto 81}${color}${if_existing /tmp/conky/transmission.peers.raw}${lua pad ${lua get peers ${lines /tmp/conky/transmission.peers.raw}}} peers${else}file missing${endif}
 ${voffset 3}${offset 5}${color1}active${goto 81}${color}${if_existing /tmp/conky/transmission.active}${lua pad ${lua get active ${lines /tmp/conky/transmission.active}}} torrents${else}file missing${endif}
-${voffset 3}${offset 5}${color1}seeding${goto 81}${color}${if_existing /tmp/conky/transmission.seeding}${lua pad ${lines /tmp/conky/transmission.seeding}} torrents${else}file missing${endif}
-${voffset 3}${offset 5}${color1}downloading${goto 81}${color}${if_existing /tmp/conky/transmission.downloading}${lua pad ${lines /tmp/conky/transmission.downloading}} torrents${else}file missing${endif}
+${voffset 3}${offset 5}${color1}seeding${goto 81}${color}${if_existing /tmp/conky/transmission.torrents.up}${lua pad ${lines /tmp/conky/transmission.torrents.up}} torrents${else}file missing${endif}
+${voffset 3}${offset 5}${color1}downloading${goto 81}${color}${if_existing /tmp/conky/transmission.torrents.down}${lua pad ${lines /tmp/conky/transmission.torrents.down}} torrents${else}file missing${endif}
 ${voffset 3}${offset 5}${color1}idle${goto 81}${color}${if_existing /tmp/conky/transmission.idle}${lua pad ${lines /tmp/conky/transmission.idle}} torrents${else}file missing${endif}
 ${voffset 10}\
 # :::::::::::: active torrents
 ${if_existing /tmp/conky/transmission.active}\
 ${if_match ${lua get active} > 0}\
 ${lua decrease_total_lines 1}\
-# ------- single column table | top edge    -------
+# ------- table | 3 column(s) | top    -------
+# ------- header
 ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 0,90}\
-${image ~/conky/monochrome/images/common/blue-menu-light.png -p 0,109}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 159,90}\
-# ------- single column table | bottom edge -------
-# ------- single column table | top edge    -------
 ${image ~/conky/monochrome/images/common/yellow-menu-dark.png -p 160,90}\
-${image ~/conky/monochrome/images/common/yellow-menu-light.png -p 160,109}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 199,90}\
-# ------- single column table | bottom edge -------
-# ------- single column table | top edge    -------
 ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 200,90}\
-${image ~/conky/monochrome/images/common/blue-menu-light.png -p 200,109}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 239,90}\
-# ------- single column table | bottom edge -------
+# ------- body
+${image ~/conky/monochrome/images/common/blue-menu-light.png -p 0,109}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 159,109}\
+${image ~/conky/monochrome/images/common/yellow-menu-light.png -p 160,109}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 199,109}\
+${image ~/conky/monochrome/images/common/blue-menu-light.png -p 200,109}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 239,109}\
 ${lua increment_offsets 0 19}\
 ${offset 5}${color1}active torrents${goto 184}${color3}up${offset 16}${color1}down${voffset 3}
 ${color}${lua_parse head /tmp/conky/transmission.active 56}${lua increase_y_offset /tmp/conky/transmission.active}${voffset 10}
 ${lua increment_offsets 0 -3}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 160 0}\
+# ------- table | 3 column(s) | bottom    -------
 ${lua increment_offsets 0 3}\
 ${endif}\
 ${else}\
 ${lua decrease_total_lines 1}\
-# ------- light panel top edge    -------
+# ------- panel | light | top     -------
 ${image ~/conky/monochrome/images/common/blue-menu-light.png -p 0,90}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 159,90}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 0,126}\
-# ------- light panel bottom edge -------
+# ------- panel | light | bottom  -------
 ${lua increment_offsets 0 39}\
 ${offset 5}${color}active torrents input
 ${voffset 3}${offset 5}file is missing
@@ -103,29 +104,31 @@ ${voffset 10}\
 ${endif}\
 # ::::::::::::::::: package updates :::::::::::::::::
 ${if_existing /tmp/conky/dnf.packages.formatted}\
-# --- composite vertical table image ---
+# ------- vertical table | top    -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-dark.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-light.png 27 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 159 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 22}\
-# --------- end of table image ---------
+# ------- vertical table | bottom -------
 ${lua increment_offsets 0 25}\
 ${voffset 2}${offset 5}${color1}dnf${goto 33}${color}${lines /tmp/conky/dnf.packages.formatted} package updates
 ${voffset 10}\
-# ------- single column table | top edge    -------
+# ------- table | 2 column(s) | top    -------
+# ------- header
 ${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-dark.png 0 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-light.png 0 19}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 159 0}\
-# ------- single column table | bottom edge -------
-# ------- single column table | top edge    -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-dark.png 160 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-light.png 160 19}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 211 0}\
-# ------- single column table | bottom edge -------
+# ------- body
+${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-light.png 0 19}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 159 19}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-light.png 160 19}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 211 19}\
 ${lua increment_offsets 0 19}\
 ${offset 5}${color1}package${goto 166}version${voffset 3}
 ${color}${lua_parse head /tmp/conky/dnf.packages.formatted 61}${lua increase_y_offset /tmp/conky/dnf.packages.formatted}
 ${lua increment_offsets 0 -3}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\
+# ------- table | 2 column(s) | bottom -------
 ${endif}\
 ]]

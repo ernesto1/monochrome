@@ -61,12 +61,12 @@ ${lua decrease_music_player_lines 1 3 13}\
 <@menu.verticalTable x=0 y=y header=header body=159-header height=height/>
 <#assign y += height + gap>
 ${lua increment_offsets 0 [= height + gap]}\
-<#assign inputDir = "/tmp/conky"
-         peersFile = inputDir + "/transmission.peers",
-         seedingFile = inputDir + "/transmission.seeding"
-         downloadingFile = inputDir + "/transmission.downloading",
-         idleFile = inputDir + "/transmission.idle",
-         activeTorrentsFile = inputDir + "/transmission.active">
+<#assign inputDir = "/tmp/conky/"
+         peersFile = inputDir + "transmission.peers.raw",
+         seedingFile = inputDir + "transmission.torrents.up"
+         downloadingFile = inputDir + "transmission.torrents.down",
+         idleFile = inputDir + "transmission.idle",
+         activeTorrentsFile = inputDir + "transmission.active">
 ${voffset [=2 + gap]}${offset 5}${color1}swarm${goto 81}${color}${if_existing [=peersFile]}${lua pad ${lua get peers ${lines [=peersFile]}}} peers${else}file missing${endif}
 ${voffset 3}${offset 5}${color1}active${goto 81}${color}${if_existing [=activeTorrentsFile]}${lua pad ${lua get active ${lines [=activeTorrentsFile]}}} torrents${else}file missing${endif}
 ${voffset 3}${offset 5}${color1}seeding${goto 81}${color}${if_existing [=seedingFile]}${lua pad ${lines [=seedingFile]}} torrents${else}file missing${endif}
@@ -78,14 +78,13 @@ ${if_existing [=activeTorrentsFile]}\
 ${if_match ${lua get active} > 0}\
 ${lua decrease_total_lines 1}\
 <#assign header = 19, width = 159, speedCol = 39, colGap = 1>
-<@menu.table x=0 y=y width=width header=header/>
-<@menu.table x=width+colGap y=y width=speedCol header=header color=image.secondaryColor/>
-<@menu.table x=width+colGap+speedCol+colGap y=y width=speedCol header=header/>
+<@menu.table x=0 y=y widths=[width, speedCol, speedCol] gap=colGap header=header highlight=[2]/>
 ${lua increment_offsets 0 [=header]}\
 ${offset 5}${color1}active torrents${goto 184}${color3}up${offset 16}${color1}down${voffset 3}
 ${color}${lua_parse head [=activeTorrentsFile] [=totalLines - 5]}${lua increase_y_offset [=activeTorrentsFile]}${voffset [= 7 + gap]}
 ${lua increment_offsets 0 -3}\<#-- hack: text is not 10px from its top edge, you must fix the spacing with the music player conky again :S -->
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png [=width+colGap] 0}\
+# ------- table | 3 column(s) | bottom    -------
 ${lua increment_offsets 0 [=gap]}\
 ${endif}\
 ${else}\
@@ -107,12 +106,12 @@ ${lua increment_offsets 0 [= height + gap]}\
 ${voffset 2}${offset 5}${color1}dnf${goto 33}${color}${lines [=packagesFile]} package updates
 ${voffset [= 7 + gap]}\
 <#assign header = 19, versionCol = 51>
-<@menu.table x=0 y=0 width=width header=header isFixed=false/>
-<@menu.table x=width+colGap y=0 width=versionCol header=header isFixed=false/>
+<@menu.table x=0 y=0 widths=[width, versionCol] gap=colGap header=header isFixed=false/>
 ${lua increment_offsets 0 [=header]}\
 ${offset 5}${color1}package${goto 166}version${voffset 3}
 ${color}${lua_parse head [=packagesFile] [=totalLines]}${lua increase_y_offset [=packagesFile]}
 ${lua increment_offsets 0 -3}\<#-- hack: text is not 10px from its top edge, you must fix the spacing with the music player conky again :S -->
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\
+# ------- table | 2 column(s) | bottom -------
 ${endif}\
 ]]

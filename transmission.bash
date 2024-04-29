@@ -79,10 +79,6 @@ log "                  ${nameWidth} characters for torrent names"
 log "                  ${offset} px offset between columns"
 outputDir=/tmp/conky
 mkdir -p ${outputDir}
-seedingFile=${outputDir}/transmission.seeding
-downloadingFile=${outputDir}/transmission.downloading
-idleFile=${outputDir}/transmission.idle
-
 # torrents overview
 speedUploadFile=${outputDir}/transmission.speed.up
 speedDownloadFile=${outputDir}/transmission.speed.down
@@ -98,17 +94,7 @@ peersFile=${outputDir}/transmission.peers
 peersUploadsFile=${outputDir}/transmission.peers.up
 peersDownloadsFile=${outputDir}/transmission.peers.down
 
-while [ true ]; do
-  # ::: statistics
-  # $ transmission-remote -F u -l
-  #     ID   Done       Have  ETA           Up    Down  Ratio  Status       Name
-  #     87   100%    2.96 GB  15 days      0.0     0.0   96.5  Seeding      fedora 37.iso
-  #    126   100%   16.99 GB  590 days     0.0     0.0   98.1  Seeding      1. Books
-  # Sum:            19.95 GB               0.0     0.0  
-  transmission-remote -F u -l | grep -E '^[[:space:]]+[[:digit:]]' > ${seedingFile}.$$
-  transmission-remote -F d -l | grep -E '^[[:space:]]+[[:digit:]]' > ${downloadingFile}.$$
-  transmission-remote -F i -l | grep -E '^[[:space:]]+[[:digit:]]' > ${idleFile}.$$
-  
+while [ true ]; do 
   # ::: active torrents
   # $ transmission-remote -t active -l
   #     ID   Done       Have  ETA           Up    Down  Ratio  Status       Name
@@ -167,11 +153,8 @@ while [ true ]; do
       ;;
   esac
   
-  # rename temporary files into the official ones, this prevents race conditions with conky reading these files  
-  mv ${seedingFile}.$$ ${seedingFile}
-  mv ${downloadingFile}.$$ ${downloadingFile}
-  mv ${idleFile}.$$ ${idleFile}
-
+  # rename temporary files into the official ones, this prevents race conditions with conky reading these files
+  # general details
   renameTempFile ${torrents} ${speedUploadFile} ${speedDownloadFile} ${peers}
   # default format
   renameTempFile ${activeFile} ${peersFile}

@@ -53,12 +53,16 @@ conky.text = [[
 # :::::::: no player available
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
 ${image ~/conky/monochrome/images/glass/blue-sound-wave-small.png -p 0,0}\
-# ------- single column table | top edge    -------
+# ------- table | 1 column(s) | top    -------
+# ------- header
 ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 49,0}\
-${image ~/conky/monochrome/images/common/blue-menu-light.png -p 49,3}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 159,0}\
+# ------- body
+${image ~/conky/monochrome/images/common/blue-menu-light.png -p 49,3}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 159,3}\
+# ------- bottom blank image(s)
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 49,46}\
-# ------- single column table | bottom edge -------
+# ------- table | 1 column(s) | bottom -------
 ${voffset 10}${goto 55}${color1}now playing
 ${voffset 4}${goto 55}${color}no player running${voffset 5}\
 ${else}\
@@ -70,22 +74,22 @@ ${lua_parse load_image ${cat /tmp/conky/musicplayer.albumArtPath} 147x147 6 6}\
 ${endif}\
 ${lua increment_offsets 0 161}\
 # ::: player header
-# --- composite vertical table image ---
+# ------- vertical table | top    -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-dark.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-light.png 90 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 159 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 19}\
-# --------- end of table image ---------
+# ------- vertical table | bottom -------
 ${lua_parse conky_draw_image ~/conky/monochrome/images/glass/blue-music-player-separator.png 58 0}\
 ${lua increment_offsets 0 182}\
 ${voffset 163}${offset 5}${color1}\
 ${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}${alignr 3}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}${voffset 6}
 # ::: track details
 # menu expands based on the track metadata fields available, only 'title' is considered mandatory
-# ------- light panel top edge    -------
+# ------- panel | light | top     -------
 ${image ~/conky/monochrome/images/common/blue-menu-light.png -p 0,182}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 159,182}\
-# ------- light panel bottom edge -------
+# ------- panel | light | bottom  -------
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
 ${image ~/conky/monochrome/images/glass/blue-sound-wave.png -p 90,182}\
 ${endif}\
