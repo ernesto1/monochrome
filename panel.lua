@@ -3,10 +3,6 @@
 
 > how to use
   requires the common.lua library to be imported by conky
-
-> library features
-
-  1) dynamically drawing a panel's bottom edges based on the number of lines read from a file
 ]]
 
 --[[

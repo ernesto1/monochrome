@@ -71,7 +71,7 @@ ${lua set_total_lines [=totalLines]}\
          gap = 3,               <#-- empty space across panels of the same application -->
          sectionGap = 4>        <#-- empty space between application panels -->
 ${if_existing [=packagesFile]}\
-${image ~/conky/monochrome/images/widgets-dock/[=image.secondaryColor]-packages-small.png -p 0,0}\
+${image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-packages-small.png -p 0,0}\
 <@menu.noLeftEdgePanel x=0+iconWidth y=y width=width-iconWidth height=iconheight color=image.secondaryColor/>
 ${voffset 5}${offset 45}${color3}dandified yum
 ${voffset 2}${offset 45}${color4}${lines [=packagesFile]} package updates${voffset [= 7 + gap]}
@@ -87,7 +87,7 @@ ${color}${lua_parse paginate [=packagesFile] [=packageLines]}${lua increase_y_of
 ${lua increment_offsets 0 [=sectionGap]}\
 ${else}\
 # ::: no updates available or dnf script not running
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-packages-small.png -p 0,0}\
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-packages-small.png -p 0,0}\
 <@menu.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconheight/>
 ${voffset 5}${offset 45}${color1}dandified yum
 ${voffset 2}${offset 45}${color}no package updates${voffset [= 5 + sectionGap]}
@@ -105,14 +105,14 @@ ${endif}\
 ${if_existing [=torrentsFile]}\
 # ::: no active torrents
 ${if_match ${lua get activeNum ${lines [=torrentsFile]}} == 0}\
-${lua_parse draw_image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-torrents-small.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-torrents-small.png 0 0}\
 <@menu.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconheight isFixed=false/>
 ${voffset 5}${offset 45}${color1}transmission
 ${voffset 2}${offset 45}${color}no active torrents${voffset [= 5 + sectionGap]}
 ${lua increment_offsets 0 [=iconheight + sectionGap]}${lua decrease_total_lines 2}\
 ${else}\
 # ::: active torrents
-${lua_parse draw_image ~/conky/monochrome/images/widgets-dock/[=image.secondaryColor]-torrents-small.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-torrents-small.png 0 0}\
 <@menu.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconheight color=image.secondaryColor isFixed=false/>
 ${voffset 5}${offset 45}${color3}transmission
 ${voffset 2}${offset 45}${color4}${lua get activeNum} active torrents${voffset [= 7 + gap]}
@@ -165,7 +165,7 @@ ${endif}\
 ${endif}\
 ${else}\
 # ::: error state
-${lua_parse draw_image ~/conky/monochrome/images/widgets-dock/[=image.secondaryColor]-torrents-small.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-torrents-small.png 0 0}\
 <@menu.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconheight color=image.secondaryColor isFixed=false isDark=true/>
 ${voffset 5}${offset 45}${color3}transmission
 ${voffset 2}${offset 45}${color4}input files missing${voffset [= 7 + gap]}

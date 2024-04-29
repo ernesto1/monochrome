@@ -76,7 +76,7 @@
 </#macro>
 
 
-<#-- creates a composite menu image with the given dimensions
+<#-- creates a composite panel image with the given dimensions
  (x,y)
     ╭─────────────╮      -+-
     │             │       |
@@ -84,15 +84,16 @@
     │             │     height (px)
     │             │       |
     │             │       |
-    ╰─────────────╯      -+-      TODO implement isDark & fixed functionalities
+    ╰─────────────╯      -+-
        width (px)
  -->
-<#macro panel x y width height=0 isDark=false isFixed=true>
-# ------- panel | [=cmn.getTheme(isDark)] | top     -------
-${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-light.png -p [=x?c],[=y?c]}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p [=(x+width)?c],[=y?c]}\
+<#macro panel x y width height=0 isDark=false isFixed=true color=image.primaryColor>
+<#local theme=cmn.getTheme(isDark)>
+# ------- panel | [=theme] [=color] | top     -------
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-menu-[=theme].png" x=x y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x+width y=y isFixed=isFixed/>
 <#if height gt 0>
-${image ~/conky/monochrome/images/common/menu-blank.png -p [=x?c],[=(y + height)?c]}\
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x y=y+height isFixed=isFixed/>
+# ------- panel | [=theme] [=color] | bottom  -------
 </#if>
-# ------- panel | [=cmn.getTheme(isDark)] | bottom  -------
 </#macro>

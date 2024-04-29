@@ -1,3 +1,6 @@
+  -- n.b. this conky requires the music-player java app to be running in the background
+  --      it generates input files under /tmp/conky/musicplayer.* which this conky will read
+  
 conky.config = {
   lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/panel.lua ~/conky/monochrome/musicPlayer.lua',
   lua_draw_hook_pre = 'reset_state',
@@ -7,17 +10,16 @@ conky.config = {
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 123,
-  gap_y = 5,
+  alignment = 'bottom_right',  -- top|middle|bottom_left|right
+  gap_x = 3,
+  gap_y = 127,
 
   -- window settings
-  minimum_width = 158,      -- conky will add an extra pixel to this width
-  maximum_width = 158,
-  minimum_height = 20,      -- conky will add an extra pixel to this height
+  minimum_width = 159,      -- conky will add an extra pixel to this width
+  maximum_width = 159,
+  minimum_height = 38,      -- conky will add an extra pixel to this height
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
-  own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
   -- window borders
   draw_borders = false,     -- draw borders around the conky window
@@ -41,57 +43,50 @@ conky.config = {
   -- colors
   default_color = 'e5e5e5',  -- regular text
   color1 = '839bc1',         -- text labels
-  
-  -- n.b. this conky requires the music-player java app to be running in the background
-  --      it generates input files under /tmp/conky/musicplayer.* which this conky will read
+  color3 = 'white',         -- secondary menu labels
+  color4 = '703d0a'         -- secondary menu text
 };
 
 conky.text = [[
-# the UI of this conky changes as per one of these states: no music player is running
-#                                                          song with album art
-#                                                          song with no album art
+# the UI of this conky has four states: song with album art
+#                                       song with no album art
+#                                       no music player is running
+#                                       dependent java dbus listener application is not running
+${if_existing /tmp/conky/musicplayer.name}\
 # :::::::: no player available
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
-${image ~/conky/monochrome/images/glass/blue-sound-wave-small.png -p 0,0}\
-# ------- table | 1 column(s) | top    -------
-# ------- header
-${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 49,0}\
+${image ~/conky/monochrome/images/glass/blue-sound-wave.png -p 0,0}\
+# ------- panel | light blue | top     -------
+${image ~/conky/monochrome/images/common/blue-menu-light.png -p 40,0}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 159,0}\
-# ------- body
-${image ~/conky/monochrome/images/common/blue-menu-light.png -p 49,3}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 159,3}\
-# ------- bottom blank image(s)
-${image ~/conky/monochrome/images/common/menu-blank.png -p 49,46}\
-# ------- table | 1 column(s) | bottom -------
-${voffset 10}${goto 55}${color1}now playing
-${voffset 4}${goto 55}${color}no player running${voffset 5}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 40,38}\
+# ------- panel | light blue | bottom  -------
+${voffset 5}${goto 48}${color1}now playing
+${voffset 2}${goto 48}${color}no player running${voffset 5}\
 ${else}\
+# :::::::: player available
 ${lua load_track_info}\
+# ::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
-# :::::::: album art
 ${image ~/conky/monochrome/images/glass/blue-music-player-album.png -p 0,0}\
 ${lua_parse load_image ${cat /tmp/conky/musicplayer.albumArtPath} 147x147 6 6}\
+${voffset 161}${lua increment_offsets 0 161}\
 ${endif}\
-${lua increment_offsets 0 161}\
-# ::: player header
-# ------- vertical table | top    -------
-${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-dark.png 0 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-light.png 90 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 159 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 19}\
-# ------- vertical table | bottom -------
-${lua_parse conky_draw_image ~/conky/monochrome/images/glass/blue-music-player-separator.png 58 0}\
-${lua increment_offsets 0 182}\
-${voffset 163}${offset 5}${color1}\
-${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}${alignr 3}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}${voffset 6}
+# ::: playback status
+${if_match "${lua get playbackStatus ${cat /tmp/conky/musicplayer.playbackStatus}}" == "Playing"}\
+${lua_parse conky_draw_image ~/conky/monochrome/images/glass/blue-music-player-bar-playing.png 0 0}${color4}\
+${else}\
+${lua_parse conky_draw_image ~/conky/monochrome/images/glass/blue-music-player-bar.png 0 0}${color1}\
+${endif}\
+${lua increment_offsets 0 21}\
+${voffset 2}${offset 5}${lua get playbackStatus}${alignr 3}${color}${cat /tmp/conky/musicplayer.name}${voffset 6}
 # ::: track details
 # menu expands based on the track metadata fields available, only 'title' is considered mandatory
-# ------- panel | light | top     -------
-${image ~/conky/monochrome/images/common/blue-menu-light.png -p 0,182}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 159,182}\
-# ------- panel | light | bottom  -------
-${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
-${image ~/conky/monochrome/images/glass/blue-sound-wave.png -p 90,182}\
+# ------- panel | light blue | top     -------
+${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-light.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 159 0}\
+${if_match "${lua get playbackStatus}" == "Playing"}\
+${lua_parse draw_image ~/conky/monochrome/images/glass/blue-panel-sound-wave.png 90 0}\
 ${endif}\
 ${voffset 3}${offset 5}${color}${lua_parse truncate_string ${lua get title} 25}\
 ${if_match "${lua get album}" != "unknown album"}\
@@ -104,5 +99,16 @@ ${if_match "${lua get genre}" != "unknown genre"}\
 ${voffset 16}${goto 5}${color}${lua_parse truncate_string ${lua get genre} 25}\
 ${endif}\
 ${voffset 3}\
+${endif}\
+${else}\
+# :::::::: error state | input files are missing
+${image ~/conky/monochrome/images/glass/yellow-sound-wave.png -p 0,0}\
+# ------- panel | dark yellow | top     -------
+${image ~/conky/monochrome/images/common/yellow-menu-dark.png -p 40,0}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 159,0}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 40,38}\
+# ------- panel | dark yellow | bottom  -------
+${voffset 5}${offset 48}${color3}now playing
+${voffset 2}${offset 48}${color4}missing files
 ${endif}\
 ]];

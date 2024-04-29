@@ -1,4 +1,7 @@
 conky.config = {
+  lua_load = '~/conky/monochrome/common.lua',
+  lua_draw_hook_pre = 'reset_state',
+
   update_interval = 2,  -- update interval in seconds
   total_run_times = 0,  -- number of times conky will update before quitting, set to 0 to run forever
   xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
@@ -7,15 +10,14 @@ conky.config = {
   -- window alignment
   alignment = 'top_left',     -- top|middle|bottom_left|middle|right
   gap_x = 123,                -- same as passing -x at command line
-  gap_y = 36,
+  gap_y = 158,
 
   -- window settings
-  minimum_width = 252,
-  maximum_width = 252,
+  minimum_width = 159,
+  maximum_width = 159,
   minimum_height = 397,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
-  own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
   -- transparency configuration
   draw_blended = false,
@@ -35,7 +37,10 @@ conky.config = {
 
   imlib_cache_flush_interval = 250,
   top_name_verbose = true,    -- show full command in ${top ...}
-  top_name_width = 24,        -- how many characters to print
+  top_name_width = 16,        -- how many characters to print
+  if_up_strictness = 'address', -- network device must be up, having link and an assigned IP address
+                                -- to be considered "up" by ${if_up}
+                                -- values are: up, link or address
 
   -- font settings
   draw_shades = false,    -- black shadow on text (not good if text is black)
@@ -48,87 +53,74 @@ conky.config = {
   
   -- templates
   -- top cpu process
-  template0 = [[${voffset 3}${offset 5}${color}${top name \1}${offset 4}${top cpu \1}%${offset 4}${top mem \1}%]],
+  template0 = [[${voffset 3}${offset 5}${color}${top name \1}${alignr 4}${top cpu \1}%]],
   -- top mem process
-  template1 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${offset 10}${top_mem mem_res \1}${offset 4}${top_mem mem \1}%]]
+  template1 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${alignr 4}${top_mem mem_res \1}]]
 };
 
 conky.text = [[
-# ::::::::::::::::: system
-# ------- vertical table | top    -------
-${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 0,0}\
-${image ~/conky/monochrome/images/common/blue-menu-light.png -p 69,0}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 205,0}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 0,53}\
-# ------- vertical table | bottom -------
-${voffset 3}${offset 29}${color1}kernel${goto 74}${color}${kernel}
-${voffset 3}${offset 29}${color1}uptime${goto 74}${color}${uptime}
-${voffset 3}${offset 5}${color1}compositor${goto 74}${color}${execi 3600 echo $XDG_SESSION_TYPE}
-${voffset 8}\
 # ::::::::::::::::: top cpu
-# ------- table | 3 column(s) | top    -------
+# ------- table | 2 column(s) | top    -------
 # ------- header
-${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 0,56}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 159,56}\
-${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 160,56}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 205,56}\
-${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 206,56}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 251,56}\
+${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 0,0}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 113,0}\
+${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 114,0}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 159,0}\
 # ------- body
-${image ~/conky/monochrome/images/common/blue-menu-light.png -p 0,75}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 159,75}\
-${image ~/conky/monochrome/images/common/blue-menu-light.png -p 160,75}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 205,75}\
-${image ~/conky/monochrome/images/common/blue-menu-light.png -p 206,75}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 251,75}\
+${image ~/conky/monochrome/images/common/blue-menu-light.png -p 0,19}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 113,19}\
+${image ~/conky/monochrome/images/common/blue-menu-light.png -p 114,19}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 159,19}\
 # ------- bottom blank image(s)
-${image ~/conky/monochrome/images/common/menu-blank.png -p 0,208}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 219,208}\
-# ------- table | 3 column(s) | bottom -------
-${voffset 2}${offset 5}${color1}process${goto 183}cpu${goto 211}memory${voffset 4}
+${image ~/conky/monochrome/images/common/menu-blank.png -p 0,120}\
+# ------- table | 2 column(s) | bottom -------
+${voffset 2}${offset 5}${color1}process${alignr 4}cpu${voffset 4}
 ${template0 1}
 ${template0 2}
 ${template0 3}
 ${template0 4}
 ${template0 5}
 ${template0 6}
-${template0 7}
-${template0 8}
+${voffset 10}\
 # ::::::::::::::::: top memory
-# ------- table | 3 column(s) | top    -------
+# ------- table | 2 column(s) | top    -------
 # ------- header
-${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 0,211}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 159,211}\
-${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 160,211}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 205,211}\
-${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 206,211}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 251,211}\
+${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 0,123}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 113,123}\
+${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 114,123}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 159,123}\
 # ------- body
-${image ~/conky/monochrome/images/common/blue-menu-light.png -p 0,230}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 159,230}\
-${image ~/conky/monochrome/images/common/blue-menu-light.png -p 160,230}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 205,230}\
-${image ~/conky/monochrome/images/common/blue-menu-light.png -p 206,230}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 251,230}\
+${image ~/conky/monochrome/images/common/blue-menu-light.png -p 0,142}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 113,142}\
+${image ~/conky/monochrome/images/common/blue-menu-light.png -p 114,142}\
+${image ~/conky/monochrome/images/common/menu-blank.png -p 159,142}\
 # ------- bottom blank image(s)
-${image ~/conky/monochrome/images/common/menu-blank.png -p 0,363}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 219,363}\
-# ------- table | 3 column(s) | bottom -------
-${voffset 10}${offset 5}${color1}process${goto 165}memory${goto 223}perc${voffset 4}
+${image ~/conky/monochrome/images/common/menu-blank.png -p 0,243}\
+# ------- table | 2 column(s) | bottom -------
+${offset 5}${color1}process${alignr 4}mem${voffset 4}
 ${template1 1}
 ${template1 2}
 ${template1 3}
 ${template1 4}
 ${template1 5}
 ${template1 6}
-${template1 7}
-${template1 8}
-${voffset 10}\
+${voffset 10}${lua increment_offsets 0 246}\
+# ::::::::::::::::: system
 # ------- vertical table | top    -------
-${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 0,366}\
-${image ~/conky/monochrome/images/common/blue-menu-light.png -p 75,366}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 159,366}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 0,388}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-dark.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-light.png 57 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 159 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 53}\
 # ------- vertical table | bottom -------
-${voffset 2}${offset 5}${color1}zoom${goto 81}${color}${if_running zoom}running${else}off${endif}
+${voffset 2}${offset 5}${color1}kernel${goto 62}${color}${kernel}
+${voffset 3}${offset 5}${color1}uptime${goto 62}${color}${uptime}
+${voffset 3}${offset 5}${color1}composit${goto 62}${color}${execi 3600 echo $XDG_SESSION_TYPE}${voffset 8}
+${lua increment_offsets 0 56}\
+# ------- vertical table | top    -------
+${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-dark.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-light.png 57 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 159 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 22}\
+# ------- vertical table | bottom -------
+${voffset 2}${offset 5}${color1}zoom${goto 62}${color}${if_running zoom}running${else}off${endif}
 ]];

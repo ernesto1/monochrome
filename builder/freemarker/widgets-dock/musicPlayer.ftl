@@ -61,19 +61,19 @@ conky.text = [[
 ${if_existing /tmp/conky/musicplayer.name}\
 # :::: no music player available
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-sound-wave-small.png -p 0,0}\
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-sound-wave-small.png -p 0,0}\
 <@menu.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconheight/>
 ${voffset 5}${offset 45}${color1}now playing
 ${voffset 2}${offset 45}${color}no player running
 ${else}\
 # :::: music player available
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
-${image ~/conky/monochrome/images/widgets-dock/[=image.secondaryColor]-sound-wave-small.png -p 0,0}\
+${image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-sound-wave-small.png -p 0,0}\
 <@menu.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconheight color=image.secondaryColor/>
 ${voffset 5}${goto 50}${color3}${cat /tmp/conky/musicplayer.name}
 ${voffset 2}${goto 50}${color4}${cat /tmp/conky/musicplayer.playbackStatus}${voffset [= 5 + gap]}
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-sound-wave-small.png -p 0,0}\
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-sound-wave-small.png -p 0,0}\
 <@menu.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconheight/>
 ${voffset 5}${goto 50}${color1}${cat /tmp/conky/musicplayer.name}
 ${voffset 2}${goto 50}${color}${cat /tmp/conky/musicplayer.playbackStatus}${voffset [= 5 + gap]}
@@ -115,7 +115,7 @@ ${voffset -10}\
 # -------- end of table image bottom -------
 ${endif}\
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/[=image.secondaryColor]-sound-wave-small.png -p 0,0}\
+${image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-sound-wave-small.png -p 0,0}\
 <@menu.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconheight isDark=true color=image.secondaryColor/>
 ${voffset 5}${offset 45}${color3}now playing
 ${voffset 2}${offset 45}${color4}input files missing

@@ -72,7 +72,7 @@ ${lua increment_offsets 0 0}\
 <#assign y = 0,
          iconHeight = 38, <#-- icon is a square -->
          sectionGap = 5>      <#-- empty space between menus of different applications -->
-${lua_parse draw_image ~/conky/monochrome/images/compact/[=image.secondaryColor]-packages.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-packages.png 0 0}\
 <#assign packagesFile = "/tmp/conky/dnf.packages.formatted">
 ${if_existing [=packagesFile]}\
 # :::::: updates vailable
@@ -103,7 +103,7 @@ ${endif}\
 # :::::: no player available
 ${if_existing /tmp/conky/musicplayer.name}\
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
-${lua_parse draw_image ~/conky/monochrome/images/compact/[=image.secondaryColor]-sound-wave.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-sound-wave.png 0 0}\
 <@menu.panel x=41 y=0 width=189-41 height=iconHeight isFixed=false/>
 ${voffset 3}${lua_parse add_x_offset offset 48}${color1}now playing
 ${voffset 2}${lua_parse add_x_offset offset 48}${color}no player running${voffset [= 8 + sectionGap]}
@@ -111,7 +111,7 @@ ${lua increment_offsets 0 [=iconHeight + sectionGap]}\
 ${else}\
 # :::::: player status
 ${lua increment_offsets 0 [=gap]}${voffset [=gap]}\
-${lua_parse draw_image ~/conky/monochrome/images/compact/[=image.secondaryColor]-sound-wave.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-sound-wave.png 0 0}\
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
 <@menu.panel x=41 y=0 width=189-41 height=iconHeight isFixed=false color=image.secondaryColor/>
 ${voffset 3}${lua_parse add_x_offset offset 48}${color3}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}
@@ -165,7 +165,7 @@ ${voffset [= 8 + sectionGap]}\
 ${lua increment_offsets 0 [=gap]}${voffset [=gap]}\
 ${endif}\
 ${else}\
-${lua_parse draw_image ~/conky/monochrome/images/compact/[=image.secondaryColor]-sound-wave.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-sound-wave.png 0 0}\
 <@menu.panel x=41 y=0 width=189-41 height=iconHeight isFixed=false color=image.secondaryColor/>
 ${voffset 3}${lua_parse add_x_offset offset 48}${color3}now playing
 ${voffset 2}${lua_parse add_x_offset offset 48}${color4}input files are missing${voffset [= 8 + sectionGap]}
@@ -182,7 +182,7 @@ ${endif}\
          peersUpFile = inputDir + "transmission.peers.up",
          peersDownFile = inputDir + "transmission.peers.down",
          torrentLines = totalLines - packageLines>
-${lua_parse draw_image ~/conky/monochrome/images/compact/[=image.secondaryColor]-torrents.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-torrents.png 0 0}\
 # :::::: transmission script running
 ${if_existing [=torrentsFile]}\
 ${voffset 2}${lua_parse add_x_offset offset 48}${color1}transmission

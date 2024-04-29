@@ -8,17 +8,17 @@ conky.config = {
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'top_left',  -- top|middle|bottom_left|right
-  gap_x = 123,
-  gap_y = 427,
+  alignment = 'top_right',  -- top|middle|bottom_left|right
+  gap_x = 3,
+  gap_y = 158,
 
   -- window settings
-  minimum_width = 245,      -- conky will add an extra pixel to this  
-  maximum_width = 245,
-  minimum_height = 1150,
+  <#assign width = 159>
+  minimum_width = [=width],      -- conky will add an extra pixel to this  
+  maximum_width = [=width],
+  minimum_height = 1016,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
-  own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
   -- window borders
   draw_borders = false,     -- draw borders around the conky window
@@ -48,70 +48,108 @@ conky.config = {
 };
 
 conky.text = [[
-<#assign totalLines = 61><#-- total lines is calculated for the scenario where no active torrents (0) are running,
-so the package update list will take all the space.  If torrents are running, each use case will start reducing
-the total lines available in order to account for the addtional menu space plus menu spacing -->
+<#assign packageLines = 25>
+<#assign totalLines = packageLines * 2>
 ${lua set_total_lines [=totalLines]}\
-# decrease the total number of lines depending on the window size of the music player conky placed below this conky
-${lua decrease_music_player_lines 1 3 13}\
-<#assign y = 0,
-         header = 75,
-         height = 87,
-         gap = 3>     <#-- empty space between menus -->
-<@menu.verticalTable x=0 y=y header=header body=159-header height=height/>
-<#assign y += height + gap>
-${lua increment_offsets 0 [= height + gap]}\
-<#assign inputDir = "/tmp/conky/"
-         peersFile = inputDir + "transmission.peers.raw",
-         seedingFile = inputDir + "transmission.torrents.up"
-         downloadingFile = inputDir + "transmission.torrents.down",
-         idleFile = inputDir + "transmission.idle",
-         activeTorrentsFile = inputDir + "transmission.active">
-${voffset [=2 + gap]}${offset 5}${color1}swarm${goto 81}${color}${if_existing [=peersFile]}${lua pad ${lua get peers ${lines [=peersFile]}}} peers${else}file missing${endif}
-${voffset 3}${offset 5}${color1}active${goto 81}${color}${if_existing [=activeTorrentsFile]}${lua pad ${lua get active ${lines [=activeTorrentsFile]}}} torrents${else}file missing${endif}
-${voffset 3}${offset 5}${color1}seeding${goto 81}${color}${if_existing [=seedingFile]}${lua pad ${lines [=seedingFile]}} torrents${else}file missing${endif}
-${voffset 3}${offset 5}${color1}downloading${goto 81}${color}${if_existing [=downloadingFile]}${lua pad ${lines [=downloadingFile]}} torrents${else}file missing${endif}
-${voffset 3}${offset 5}${color1}idle${goto 81}${color}${if_existing [=idleFile]}${lua pad ${lines [=idleFile]}} torrents${else}file missing${endif}
-${voffset [= 7 + gap]}\
-# :::::::::::: active torrents
-${if_existing [=activeTorrentsFile]}\
-${if_match ${lua get active} > 0}\
-${lua decrease_total_lines 1}\
-<#assign header = 19, width = 159, speedCol = 39, colGap = 1>
-<@menu.table x=0 y=y widths=[width, speedCol, speedCol] gap=colGap header=header highlight=[2]/>
-${lua increment_offsets 0 [=header]}\
-${offset 5}${color1}active torrents${goto 184}${color3}up${offset 16}${color1}down${voffset 3}
-${color}${lua_parse head [=activeTorrentsFile] [=totalLines - 5]}${lua increase_y_offset [=activeTorrentsFile]}${voffset [= 7 + gap]}
-${lua increment_offsets 0 -3}\<#-- hack: text is not 10px from its top edge, you must fix the spacing with the music player conky again :S -->
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png [=width+colGap] 0}\
-# ------- table | 3 column(s) | bottom    -------
-${lua increment_offsets 0 [=gap]}\
-${endif}\
-${else}\
-<#assign body = 36>
-${lua decrease_total_lines 1}\
-<@menu.panel x=0 y=y width=width height=body/>
-${lua increment_offsets 0 [=body + gap]}\
-${offset 5}${color}active torrents input
-${voffset 3}${offset 5}file is missing
-${voffset [= 7 + gap]}\
-${endif}\
-# ::::::::::::::::: package updates :::::::::::::::::
-${if_existing /tmp/conky/dnf.packages.formatted}\
-<#assign packagesFile = "/tmp/conky/dnf.packages.formatted", 
-         header = 27,
-         height = 22>
-<@menu.verticalTable x=0 y=0 header=header body=159-header height=height isFixed=false/>
-${lua increment_offsets 0 [= height + gap]}\
-${voffset 2}${offset 5}${color1}dnf${goto 33}${color}${lines [=packagesFile]} package updates
-${voffset [= 7 + gap]}\
+#
+# :::::::::::::::: package updates ::::::::::::::::
+#
+<#assign packagesFile = "/tmp/conky/dnf.packages.formatted",
+         iconWidth = 38,       <#-- icon is a square -->
+         iconheight = 38,
+         titleHeight = 19,
+         y = 0,
+         colGap = 1,
+         gap = 3,               <#-- empty space across panels of the same application -->
+         sectionGap = 4>        <#-- empty space between application panels -->
+# ::: updates vailable
+${if_existing [=packagesFile]}\
+${image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-packages.png -p 0,0}\
+<@menu.panel x=iconWidth+gap y=y width=width-iconWidth-gap height=iconheight color=image.secondaryColor/>
+${voffset 5}${offset 48}${color3}dandified yum
+${voffset 2}${offset 48}${color4}${lines [=packagesFile]} package updates${voffset [= 7 + gap]}
+<#assign y += iconheight + gap>
 <#assign header = 19, versionCol = 51>
-<@menu.table x=0 y=0 widths=[width, versionCol] gap=colGap header=header isFixed=false/>
-${lua increment_offsets 0 [=header]}\
-${offset 5}${color1}package${goto 166}version${voffset 3}
-${color}${lua_parse head [=packagesFile] [=totalLines]}${lua increase_y_offset [=packagesFile]}
-${lua increment_offsets 0 -3}\<#-- hack: text is not 10px from its top edge, you must fix the spacing with the music player conky again :S -->
+<@menu.table x=0 y=y widths=[width-versionCol-colGap, versionCol] gap=colGap header=header/>
+<#assign y += titleHeight>
+${lua increment_offsets 0 [=y]}\
+${offset 5}${color1}package${alignr 4}version${voffset [=3+gap]}
+${color}${lua_parse paginate [=packagesFile] [=packageLines]}${lua increase_y_offset [=packagesFile]}${voffset [=5 + sectionGap]}
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\
 # ------- table | 2 column(s) | bottom -------
+${lua increment_offsets 0 [=sectionGap]}\
+${else}\
+# ::: no updates available or dnf script not running
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-packages.png -p 0,0}\
+<@menu.panel x=iconWidth+gap y=0 width=width-iconWidth-gap height=iconheight/>
+${voffset 5}${offset 48}${color1}dandified yum
+${voffset 2}${offset 48}${color}no package updates${voffset [= 5 + sectionGap]}
+${lua increment_offsets 0 [=iconheight + sectionGap]}${lua decrease_total_lines 2}\
+${endif}\
+#
+# :::::::::::::::: torrents ::::::::::::::::
+#
+<#assign inputDir = "/tmp/conky/"
+         peersFile = inputDir + "transmission.peers.raw",
+         uploadFile = inputDir + "transmission.speed.up"
+         downloadFile = inputDir + "transmission.speed.down",
+         torrentsFile = inputDir + "transmission.torrents",
+         torrentsUpFile = inputDir + "transmission.torrents.up",
+         torrentsDownFile = inputDir + "transmission.torrents.down">
+${if_existing [=torrentsFile]}\
+# ::: no active torrents
+${if_match ${lua get activeNum ${lines [=torrentsFile]}} == 0}\
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-torrents.png 0 0}\
+<@menu.panel x=iconWidth+gap y=0 width=width-iconWidth-gap height=iconheight isFixed=false/>
+${voffset 5}${offset 48}${color1}transmission
+${voffset 2}${offset 48}${color}no active torrents${voffset [= 5 + sectionGap]}
+${lua increment_offsets 0 [=iconheight + sectionGap]}${lua decrease_total_lines 2}\
+${else}\
+# ::: active torrents
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-torrents.png 0 0}\
+<@menu.panel x=iconWidth+gap y=0 width=width-iconWidth-gap height=iconheight color=image.secondaryColor isFixed=false/>
+${voffset 5}${offset 48}${color3}transmission
+${voffset 2}${offset 48}${color4}${lua get activeNum} active torrents${voffset [= 7 + gap]}
+${lua increment_offsets 0 [=iconheight + gap]}\
+<#assign header = 59,   <#-- section for the labels -->
+         height = 55>
+<@menu.verticalTable x=0 y=0 header=header body=width-header height=height isFixed=false/>
+${voffset 3}${offset 5}${color1}swarm${alignr 21}${color}${if_existing [=peersFile]}${lines [=peersFile]} peers${else}file missing${endif}
+${voffset 3}${offset 5}${color1}upload${color}${if_existing [=uploadFile]}${alignr 33}${cat [=uploadFile]}${else}file missing${endif}
+${voffset 3}${offset 5}${color1}download${color}${if_existing [=downloadFile]}${alignr 33}${cat [=downloadFile]}${else}file missing${endif}${voffset [= 7 + gap]}
+${lua increment_offsets 0 [=height + gap]}\
+# ::: torrent uploads
+# the torrent uploads table is composed of 2 columns: torrent name | upload
+${if_match ${lines [=torrentsUpFile]} > 0}\
+<#assign speedColWidth = 39,                          <#-- width of upload/download columns -->
+         menuWidth = width - speedColWidth - colGap>
+<@menu.table x=0 y=0 widths=[menuWidth, speedColWidth] header=titleHeight gap=colGap isFixed=false highlight=[2]/>
+${lua increment_offsets 0 [=titleHeight]}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-peers.png [=((width-139)/2)?round] 22}\
+${offset 5}${color1}torrent${alignr 4}${color3}up${voffset [=3+gap]}
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-peers.png [=speedColWidth + colGap + 17] 22}\
+${lua_parse head [=torrentsUpFile] [=totalLines-5]}${lua increase_y_offset [=torrentsUpFile]}${voffset [= 7 + gap]}
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\
+# ------- table | 2 column(s) | bottom    -------
+${lua increment_offsets 0 [=gap]}\
+${endif}\
+# ::: torrent downloads
+${if_match ${lines [=torrentsDownFile]} > 0}\
+<@menu.table x=0 y=0 widths=[menuWidth, speedColWidth] header=titleHeight gap=colGap isFixed=false/>
+${lua increment_offsets 0 [=titleHeight]}\
+${offset 5}${color1}torrent${alignr 4}down${voffset [=3+gap]}
+${color}${lua_parse head [=torrentsDownFile] [=totalLines]}${lua increase_y_offset [=torrentsDownFile]}
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\
+# -------  table | [=image.primaryColor] 2 columns | bottom edge -------
+${endif}\
+${lua increment_offsets 0 [=sectionGap]}\
+${endif}\
+${else}\
+# ::: error state
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-torrents.png 0 0}\
+<@menu.panel x=iconWidth+gap y=0 width=width-iconWidth-gap height=iconheight color=image.secondaryColor isFixed=false isDark=true/>
+${voffset 5}${offset 48}${color3}transmission
+${voffset 2}${offset 48}${color4}missing files${voffset [= 7 + gap]}
+${lua increment_offsets 0 [=iconheight + sectionGap]}${lua decrease_total_lines 2}\
 ${endif}\
 ]]
