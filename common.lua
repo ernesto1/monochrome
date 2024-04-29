@@ -365,7 +365,7 @@ function conky_paginate(filepath, max, iterations, x, y)
     startLine = startLine + linesRead   -- compute the start line for the next page
     
     -- the new start line determines if there are more pages to show or if we are done displaying the file
-    if startLine < fileTotalLines then
+    if startLine <= fileTotalLines then
       local linesLeft = fileTotalLines - startLine
       -- if the last page does not have 'max' amount of lines, adjust the pointer so we can be consistent
       -- and return 'max' number of lines for the last page as well
