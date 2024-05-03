@@ -14,7 +14,7 @@ conky.config = {
   -- window settings
   minimum_width = 159,      -- conky will add an extra pixel to this  
   maximum_width = 159,
-  minimum_height = 1016,
+  minimum_height = 1316,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
 
@@ -30,7 +30,7 @@ conky.config = {
   own_window_argb_visual = true,  -- turn on transparency
   own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
   
-  -- images
+  -- special settings
   imlib_cache_flush_interval = 250,
   
   -- font settings
@@ -50,9 +50,9 @@ ${lua set_total_lines 50}\
 #
 # :::::::::::::::: package updates ::::::::::::::::
 #
+${image ~/conky/monochrome/images/glass/blue-packages.png -p 0,0}\
 # ::: updates vailable
 ${if_existing /tmp/conky/dnf.packages.formatted}\
-${image ~/conky/monochrome/images/glass/yellow-packages.png -p 0,0}\
 # ------- panel | light yellow | top     -------
 ${image ~/conky/monochrome/images/common/yellow-menu-light.png -p 41,0}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 159,0}\
@@ -79,7 +79,6 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\
 ${lua increment_offsets 0 4}\
 ${else}\
 # ::: no updates available or dnf script not running
-${image ~/conky/monochrome/images/glass/blue-packages.png -p 0,0}\
 # ------- panel | light blue | top     -------
 ${image ~/conky/monochrome/images/common/blue-menu-light.png -p 41,0}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 159,0}\
@@ -90,12 +89,98 @@ ${voffset 2}${offset 48}${color}no package updates${voffset 9}
 ${lua increment_offsets 0 42}${lua decrease_total_lines 2}\
 ${endif}\
 #
+# :::::::::::::: now playing :::::::::::::::
+# the music player has four states: song with album art
+#                                   song with no album art
+#                                   no music player is running
+#                                   dependent java dbus listener application is not running
+${if_existing /tmp/conky/musicplayer.name}\
+# :::::::: no player available
+${if_existing /tmp/conky/musicplayer.name Nameless}\
+${lua_parse draw_image ~/conky/monochrome/images/glass/blue-sound-wave.png 0 0}\
+# ------- panel | light blue | top     -------
+${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-light.png 41 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 159 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 41 38}\
+# ------- panel | light blue | bottom  -------
+${voffset 5}${offset 48}${color1}now playing
+${voffset 2}${offset 48}${color}no player running${voffset 9}
+${lua increment_offsets 0 42}\
+${else}\
+# :::::::: player available
+${lua increment_offsets 0 3}${voffset 3}${lua load_track_info}\
+${lua_parse draw_image ~/conky/monochrome/images/glass/blue-sound-wave.png 0 0}\
+${if_match "${lua get playbackStatus ${cat /tmp/conky/musicplayer.playbackStatus}}" == "Playing"}\
+# ------- panel | light yellow | top     -------
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light.png 41 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 189 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 41 38}\
+# ------- panel | light yellow | bottom  -------
+${voffset 5}${lua_parse add_x_offset offset 48}${color3}${cat /tmp/conky/musicplayer.name}
+${voffset 2}${lua_parse add_x_offset offset 48}${color4}${lua get playbackStatus}
+${else}\
+# ------- panel | light blue | top     -------
+${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-light.png 41 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 189 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 41 38}\
+# ------- panel | light blue | bottom  -------
+${voffset 5}${lua_parse add_x_offset offset 48}${color1}${cat /tmp/conky/musicplayer.name}
+${voffset 2}${lua_parse add_x_offset offset 48}${color}${lua get playbackStatus}
+${endif}\
+${lua increment_offsets 0 41}\
+${voffset 10}\
+# ::: album art
+${if_existing /tmp/conky/musicplayer.albumArtPath}\
+# ------- panel | light blue | top     -------
+${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-light.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 159 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 159}\
+# ------- panel | light blue | bottom  -------
+${lua_parse load_image ${cat /tmp/conky/musicplayer.albumArtPath} 155x155 2 2}\
+${voffset 162}${lua increment_offsets 0 162}\
+${endif}\
+# ::: track details
+# menu expands based on the track metadata fields available, only 'title' is considered mandatory
+# ------- panel | light blue | top     -------
+${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-light.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 159 0}\
+${if_match "${lua get playbackStatus}" == "Playing"}\
+${lua_parse draw_image ~/conky/monochrome/images/glass/blue-panel-sound-wave.png 90 0}\
+${endif}\
+${lua increment_offsets 0 23}\
+${voffset 3}${offset 5}${color}${lua_parse truncate_string ${lua get title} 25}
+${if_match "${lua get album}" != "unknown album"}\
+${voffset 3}${offset 5}${color}${lua_parse truncate_string ${lua get album} 25}${lua increment_offsets 0 16}
+${endif}\
+${if_match "${lua get artist}" != "unknown artist"}\
+${voffset 3}${offset 5}${color}${lua_parse truncate_string ${lua get artist} 25}${lua increment_offsets 0 16}
+${endif}\
+${if_match "${lua get genre}" != "unknown genre"}\
+${voffset 3}${offset 5}${color}${lua_parse truncate_string ${lua get genre} 25}${lua increment_offsets 0 16}
+${endif}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\
+# ------- panel | light blue | bottom  -------
+${lua increment_offsets 0 6}${voffset 11}\
+${endif}\
+${else}\
+# :::::::: error state | input files are missing
+${lua_parse draw_image ~/conky/monochrome/images/glass/yellow-sound-wave.png 0 0}\
+# ------- panel | dark yellow | top     -------
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-dark.png 41 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 159 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 41 38}\
+# ------- panel | dark yellow | bottom  -------
+${voffset 5}${offset 48}${color3}now playing
+${voffset 2}${offset 48}${color4}missing files${voffset 9}
+${lua increment_offsets 0 42}\
+${endif}\
+#
 # :::::::::::::::: torrents ::::::::::::::::
 #
+${lua_parse draw_image ~/conky/monochrome/images/glass/blue-torrents.png 0 0}\
 ${if_existing /tmp/conky/transmission.torrents}\
 # ::: no active torrents
 ${if_match ${lua get activeNum ${lines /tmp/conky/transmission.torrents}} == 0}\
-${lua_parse draw_image ~/conky/monochrome/images/glass/blue-torrents.png 0 0}\
 # ------- panel | light blue | top     -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-light.png 41 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 159 0}\
@@ -106,7 +191,6 @@ ${voffset 2}${offset 48}${color}no active torrents${voffset 9}
 ${lua increment_offsets 0 42}${lua decrease_total_lines 2}\
 ${else}\
 # ::: active torrents
-${lua_parse draw_image ~/conky/monochrome/images/glass/yellow-torrents.png 0 0}\
 # ------- panel | light yellow | top     -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light.png 41 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 159 0}\
@@ -140,9 +224,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 119 19}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light.png 120 19}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 159 19}\
 ${lua increment_offsets 0 19}\
-${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-peers.png 10 22}\
 ${offset 5}${color1}torrent${alignr 4}${color3}up${voffset 6}
-${lua_parse draw_image ~/conky/monochrome/images/common/blue-menu-peers.png 57 22}\
 ${lua_parse head /tmp/conky/transmission.torrents.up 45}${lua increase_y_offset /tmp/conky/transmission.torrents.up}${voffset 10}
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\
 # ------- table | 2 column(s) | bottom    -------

@@ -16,7 +16,7 @@ conky.config = {
   <#assign width = 159>
   minimum_width = [=width],      -- conky will add an extra pixel to this  
   maximum_width = [=width],
-  minimum_height = 1016,
+  minimum_height = 1316,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
 
@@ -32,7 +32,7 @@ conky.config = {
   own_window_argb_visual = true,  -- turn on transparency
   own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
   
-  -- images
+  -- special settings
   imlib_cache_flush_interval = 250,
   
   -- font settings
@@ -62,9 +62,9 @@ ${lua set_total_lines [=totalLines]}\
          colGap = 1,
          gap = 3,               <#-- empty space across panels of the same application -->
          sectionGap = 4>        <#-- empty space between application panels -->
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-packages.png -p 0,0}\
 # ::: updates vailable
 ${if_existing [=packagesFile]}\
-${image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-packages.png -p 0,0}\
 <@menu.panel x=iconWidth+gap y=y width=width-iconWidth-gap height=iconheight color=image.secondaryColor/>
 ${voffset 5}${offset 48}${color3}dandified yum
 ${voffset 2}${offset 48}${color4}${lines [=packagesFile]} package updates${voffset [= 7 + gap]}
@@ -80,11 +80,78 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\
 ${lua increment_offsets 0 [=sectionGap]}\
 ${else}\
 # ::: no updates available or dnf script not running
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-packages.png -p 0,0}\
 <@menu.panel x=iconWidth+gap y=0 width=width-iconWidth-gap height=iconheight/>
 ${voffset 5}${offset 48}${color1}dandified yum
 ${voffset 2}${offset 48}${color}no package updates${voffset [= 5 + sectionGap]}
 ${lua increment_offsets 0 [=iconheight + sectionGap]}${lua decrease_total_lines 2}\
+${endif}\
+#
+# :::::::::::::: now playing :::::::::::::::
+# the music player has four states: song with album art
+#                                   song with no album art
+#                                   no music player is running
+#                                   dependent java dbus listener application is not running
+<#assign  playerNameFile="/tmp/conky/musicplayer.name",
+          iconHeight = 38>
+${if_existing [=playerNameFile]}\
+# :::::::: no player available
+${if_existing [=playerNameFile] Nameless}\
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-sound-wave.png 0 0}\
+<@menu.panel x=iconWidth+gap y=0 width=width-iconWidth-gap height=iconHeight isFixed=false/>
+${voffset 5}${offset 48}${color1}now playing
+${voffset 2}${offset 48}${color}no player running${voffset [= 5 + sectionGap]}
+${lua increment_offsets 0 [=iconheight + sectionGap]}\
+${else}\
+# :::::::: player available
+${lua increment_offsets 0 [=gap]}${voffset [=gap]}${lua load_track_info}\
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-sound-wave.png 0 0}\
+${if_match "${lua get playbackStatus ${cat /tmp/conky/musicplayer.playbackStatus}}" == "Playing"}\
+<@menu.panel x=41 y=0 width=189-41 height=iconHeight isFixed=false color=image.secondaryColor/>
+${voffset 5}${lua_parse add_x_offset offset 48}${color3}${cat /tmp/conky/musicplayer.name}
+${voffset 2}${lua_parse add_x_offset offset 48}${color4}${lua get playbackStatus}
+${else}\
+<@menu.panel x=41 y=0 width=189-41 height=iconHeight isFixed=false/>
+${voffset 5}${lua_parse add_x_offset offset 48}${color1}${cat /tmp/conky/musicplayer.name}
+${voffset 2}${lua_parse add_x_offset offset 48}${color}${lua get playbackStatus}
+${endif}\
+${lua increment_offsets 0 [=iconHeight + gap]}\
+${voffset [= 7 + gap]}\
+# ::: album art
+${if_existing /tmp/conky/musicplayer.albumArtPath}\
+<@menu.panel x=0 y=0 width=width height=width isFixed=false/>
+${lua_parse load_image ${cat /tmp/conky/musicplayer.albumArtPath} 155x155 2 2}\
+${voffset [=width + gap]}${lua increment_offsets 0 [=width + gap]}\
+${endif}\
+# ::: track details
+# menu expands based on the track metadata fields available, only 'title' is considered mandatory
+<@menu.panel x=0 y=0 width=width isFixed=false/>
+${if_match "${lua get playbackStatus}" == "Playing"}\
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-panel-sound-wave.png [=width-69] 0}\
+${endif}\
+${lua increment_offsets 0 [=23]}\
+${voffset 3}${offset 5}${color}${lua_parse truncate_string ${lua get title} 25}
+${if_match "${lua get album}" != "unknown album"}\
+<#-- vertical offset would normally be 3px between fields but in order to support optional fields and not introduce
+     blank new lines, each field does have a line break.  Hence the use of 16px in order to compensate for this -->
+${voffset 3}${offset 5}${color}${lua_parse truncate_string ${lua get album} 25}${lua increment_offsets 0 16}
+${endif}\
+${if_match "${lua get artist}" != "unknown artist"}\
+${voffset 3}${offset 5}${color}${lua_parse truncate_string ${lua get artist} 25}${lua increment_offsets 0 16}
+${endif}\
+${if_match "${lua get genre}" != "unknown genre"}\
+${voffset 3}${offset 5}${color}${lua_parse truncate_string ${lua get genre} 25}${lua increment_offsets 0 16}
+${endif}\
+${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\
+# ------- panel | light blue | bottom  -------
+${lua increment_offsets 0 [=gap * 2]}${voffset [= 4 + gap + sectionGap]}\
+${endif}\
+${else}\
+# :::::::: error state | input files are missing
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-sound-wave.png 0 0}\
+<@menu.panel x=iconWidth+gap y=0 width=width-iconWidth-gap height=iconHeight isDark=true color=image.secondaryColor  isFixed=false/>
+${voffset 5}${offset 48}${color3}now playing
+${voffset 2}${offset 48}${color4}missing files${voffset [= 5 + sectionGap]}
+${lua increment_offsets 0 [=iconheight + sectionGap]}\
 ${endif}\
 #
 # :::::::::::::::: torrents ::::::::::::::::
@@ -96,17 +163,16 @@ ${endif}\
          torrentsFile = inputDir + "transmission.torrents",
          torrentsUpFile = inputDir + "transmission.torrents.up",
          torrentsDownFile = inputDir + "transmission.torrents.down">
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-torrents.png 0 0}\
 ${if_existing [=torrentsFile]}\
 # ::: no active torrents
 ${if_match ${lua get activeNum ${lines [=torrentsFile]}} == 0}\
-${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-torrents.png 0 0}\
 <@menu.panel x=iconWidth+gap y=0 width=width-iconWidth-gap height=iconheight isFixed=false/>
 ${voffset 5}${offset 48}${color1}transmission
 ${voffset 2}${offset 48}${color}no active torrents${voffset [= 5 + sectionGap]}
 ${lua increment_offsets 0 [=iconheight + sectionGap]}${lua decrease_total_lines 2}\
 ${else}\
 # ::: active torrents
-${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-torrents.png 0 0}\
 <@menu.panel x=iconWidth+gap y=0 width=width-iconWidth-gap height=iconheight color=image.secondaryColor isFixed=false/>
 ${voffset 5}${offset 48}${color3}transmission
 ${voffset 2}${offset 48}${color4}${lua get activeNum} active torrents${voffset [= 7 + gap]}
@@ -125,9 +191,7 @@ ${if_match ${lines [=torrentsUpFile]} > 0}\
          menuWidth = width - speedColWidth - colGap>
 <@menu.table x=0 y=0 widths=[menuWidth, speedColWidth] header=titleHeight gap=colGap isFixed=false highlight=[2]/>
 ${lua increment_offsets 0 [=titleHeight]}\
-${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-peers.png [=((width-139)/2)?round] 22}\
 ${offset 5}${color1}torrent${alignr 4}${color3}up${voffset [=3+gap]}
-${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-peers.png [=speedColWidth + colGap + 17] 22}\
 ${lua_parse head [=torrentsUpFile] [=totalLines-5]}${lua increase_y_offset [=torrentsUpFile]}${voffset [= 7 + gap]}
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\
 # ------- table | 2 column(s) | bottom    -------
