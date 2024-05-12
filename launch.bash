@@ -166,14 +166,16 @@ for conkyConfigPath in ${conkyDir}/!(*.*)
 do
   [ -f ${conkyConfigPath} ] || continue
   conkyConfig=${conkyConfigPath##*/}    # remove the path ${monochromeHome}/.. from the file name
-  echo "- ${conkyConfig}"
+  echo -n "- ${conkyConfig}"
   
   # 1. conky exclusion override: excludes a conky configuration from being loaded
   #    override is of the format: ignore:<conkyFilename>
   #                           ex. ignore:externalDevices
   if [[ -f ${layoutFile} ]] && grep -q "^ignore:${conkyConfig}$" ${layoutFile}; then
-    echo -e "  ${ORANGE}ignoring${NOCOLOR} this conky since it is in the exclusion list of the layout file"
+    echo ' [excluded]'
     continue
+  else
+    echo
   fi
   
   # 2. alignment override
