@@ -65,9 +65,9 @@ ${lua set_total_lines [=totalLines]}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-packages.png -p 0,0}\
 # ::: updates vailable
 ${if_existing [=packagesFile]}\
-<@menu.panel x=iconWidth+gap y=y width=width-iconWidth-gap height=iconheight color=image.secondaryColor/>
-${voffset 5}${offset 48}${color3}dandified yum
-${voffset 2}${offset 48}${color4}${lines [=packagesFile]} package updates${voffset [= 7 + gap]}
+<@menu.panel x=iconWidth+gap y=y width=width-iconWidth-gap height=iconheight/>
+${voffset 5}${offset 48}${color1}dandified yum
+${voffset 2}${offset 48}${color}${lines [=packagesFile]} package updates${voffset [= 7 + gap]}
 <#assign y += iconheight + gap>
 <#assign header = 19, versionCol = 51>
 <@menu.table x=0 y=y widths=[width-versionCol-colGap, versionCol] gap=colGap header=header/>
@@ -118,7 +118,7 @@ ${lua increment_offsets 0 [=iconHeight + gap]}\
 ${voffset [= 7 + gap]}\
 # ::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
-<@menu.panel x=0 y=0 width=width height=width isFixed=false/>
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-music-player-album.png 0 0}\
 ${lua_parse load_image ${cat /tmp/conky/musicplayer.albumArtPath} 155x155 2 2}\
 ${voffset [=width + gap]}${lua increment_offsets 0 [=width + gap]}\
 ${endif}\
@@ -173,9 +173,9 @@ ${voffset 2}${offset 48}${color}no active torrents${voffset [= 5 + sectionGap]}
 ${lua increment_offsets 0 [=iconheight + sectionGap]}${lua decrease_total_lines 2}\
 ${else}\
 # ::: active torrents
-<@menu.panel x=iconWidth+gap y=0 width=width-iconWidth-gap height=iconheight color=image.secondaryColor isFixed=false/>
-${voffset 5}${offset 48}${color3}transmission
-${voffset 2}${offset 48}${color4}${lua get activeNum} active torrents${voffset [= 7 + gap]}
+<@menu.panel x=iconWidth+gap y=0 width=width-iconWidth-gap height=iconheight isFixed=false/>
+${voffset 5}${offset 48}${color1}transmission
+${voffset 2}${offset 48}${color}${lua get activeNum} active torrents${voffset [= 7 + gap]}
 ${lua increment_offsets 0 [=iconheight + gap]}\
 <#assign header = 59,   <#-- section for the labels -->
          height = 55>
