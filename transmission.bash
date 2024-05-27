@@ -107,7 +107,7 @@ while [ true ]; do
   awk 'END{printf "%'\''d KiB", $4}' ${torrentsRaw} > ${speedUploadFile}.$$
   awk 'END{printf "%'\''d KiB", $5}' ${torrentsRaw} > ${speedDownloadFile}.$$
   grep -E '(Seeding|Downloading|Up & Down)' ${torrentsRaw} \
-    | sed 's/  \+/:/g' \
+    | sed -e 's/  \+/:/g' -e 's/#//g' \
     | cut -d ':' -f 6,7,9,10 \
     | sort -t ':' -k 3 > ${torrents}.$$
     
