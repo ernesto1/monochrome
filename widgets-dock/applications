@@ -19,7 +19,7 @@ conky.config = {
   -- window alignment
   alignment = 'top_right',  -- top|middle|bottom_left|right
   gap_x = 3,
-  gap_y = 35,
+  gap_y = 165,
 
   -- window settings
   minimum_width = 169,      -- conky will add an extra pixel to this  
@@ -57,7 +57,7 @@ conky.config = {
 };
 
 conky.text = [[
-${lua set_total_lines 50}\
+${lua set_total_lines 44}\
 # :::::::::::: package updates
 ${if_existing /tmp/conky/dnf.packages.formatted}\
 ${image ~/conky/monochrome/images/widgets-dock/green-packages-small.png -p 0,0}\
@@ -81,7 +81,7 @@ ${lua increment_offsets 0 60}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${image ~/conky/monochrome/images/common/yellow-menu-dnf.png -p 95,62}\
 ${offset 5}${color1}package${alignr 4}version${voffset 6}
-${color}${lua_parse paginate /tmp/conky/dnf.packages.formatted 25}${lua increase_y_offset /tmp/conky/dnf.packages.formatted}${voffset 9}
+${color}${lua_parse paginate /tmp/conky/dnf.packages.formatted 22}${lua increase_y_offset /tmp/conky/dnf.packages.formatted}${voffset 9}
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-left.png 0 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png 162 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\
@@ -155,7 +155,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 169 0}\
 ${lua increment_offsets 0 19}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-peers.png 15 22}\
 ${offset 5}${color1}torrent${alignr 4}up${voffset 6}
-${color}${lua_parse head /tmp/conky/transmission.torrents.up 50}${voffset 10}${lua increase_y_offset /tmp/conky/transmission.torrents.up}
+${color}${lua_parse head /tmp/conky/transmission.torrents.up 44}${voffset 10}${lua increase_y_offset /tmp/conky/transmission.torrents.up}
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-left.png 0 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-right.png 162 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\
@@ -173,7 +173,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-dark.png 139
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 169 0}\
 ${lua increment_offsets 0 19}\
 ${offset 5}${color1}torrent${alignr 4}down${voffset 6}
-${color}${lua_parse head /tmp/conky/transmission.torrents.down 50}${lua increase_y_offset /tmp/conky/transmission.torrents.down}
+${color}${lua_parse head /tmp/conky/transmission.torrents.down 44}${lua increase_y_offset /tmp/conky/transmission.torrents.down}
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-left.png 0 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-dark-edge-bottom-right.png 162 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\

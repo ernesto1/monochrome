@@ -20,7 +20,8 @@ conky.config = {
   -- window alignment
   alignment = 'top_right',  -- top|middle|bottom_left|right
   gap_x = 3,
-  gap_y = [=32+3],
+  <#if system == "desktop"><#assign yOffset = 130><#else><#assign yOffset = 0></#if>
+  gap_y = [=32+3+yOffset],
 
   -- window settings
   <#assign width = 169>
@@ -59,7 +60,7 @@ conky.config = {
 };
 
 conky.text = [[
-<#if system == "desktop"><#assign packageLines = 25><#else><#assign packageLines = 15></#if>
+<#if system == "desktop"><#assign packageLines = 22><#else><#assign packageLines = 15></#if>
 <#assign totalLines = packageLines * 2>
 ${lua set_total_lines [=totalLines]}\
 # :::::::::::: package updates
