@@ -67,7 +67,7 @@ ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-packages.png -p
 ${if_existing [=packagesFile]}\
 <@menu.panel x=iconWidth+gap y=y width=width-iconWidth-gap height=iconheight/>
 ${voffset 5}${offset 48}${color1}dandified yum
-${voffset 2}${offset 48}${color}${lines [=packagesFile]} package updates${voffset [= 7 + gap]}
+${voffset 2}${offset 48}${color}${lua get numUpdates ${lines [=packagesFile]}} ${if_match ${lua get numUpdates} < 100}package${else}new${endif} updates${voffset [= 7 + gap]}
 <#assign y += iconheight + gap>
 <#assign header = 19, versionCol = 51>
 <@menu.table x=0 y=y widths=[width-versionCol-colGap, versionCol] gap=colGap header=header/>
@@ -106,7 +106,7 @@ ${else}\
 ${lua increment_offsets 0 [=gap]}${voffset [=gap]}${lua load_track_info}\
 ${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-sound-wave.png 0 0}\
 ${if_match "${lua get playbackStatus ${cat /tmp/conky/musicplayer.playbackStatus}}" == "Playing"}\
-<@menu.panel x=41 y=0 width=189-41 height=iconHeight isFixed=false color=image.secondaryColor/>
+<@menu.panel x=41 y=0 width=189-41 height=iconHeight isFixed=false color=image.secondaryColor isDark=true/>
 ${voffset 5}${lua_parse add_x_offset offset 48}${color3}${cat /tmp/conky/musicplayer.name}
 ${voffset 2}${lua_parse add_x_offset offset 48}${color4}${lua get playbackStatus}
 ${else}\

@@ -59,7 +59,7 @@ ${image ~/conky/monochrome/images/common/menu-blank.png -p 159,0}\
 ${image ~/conky/monochrome/images/common/menu-blank.png -p 41,38}\
 # ------- panel | light blue | bottom  -------
 ${voffset 5}${offset 48}${color1}dandified yum
-${voffset 2}${offset 48}${color}${lines /tmp/conky/dnf.packages.formatted} package updates${voffset 10}
+${voffset 2}${offset 48}${color}${lua get numUpdates ${lines /tmp/conky/dnf.packages.formatted}} ${if_match ${lua get numUpdates} < 100}package${else}new${endif} updates${voffset 10}
 # ------- table | 2 column(s) | top    -------
 # ------- header
 ${image ~/conky/monochrome/images/common/blue-menu-dark.png -p 0,41}\
@@ -111,11 +111,11 @@ ${else}\
 ${lua increment_offsets 0 3}${voffset 3}${lua load_track_info}\
 ${lua_parse draw_image ~/conky/monochrome/images/glass/blue-sound-wave.png 0 0}\
 ${if_match "${lua get playbackStatus ${cat /tmp/conky/musicplayer.playbackStatus}}" == "Playing"}\
-# ------- panel | light yellow | top     -------
-${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light.png 41 0}\
+# ------- panel | dark yellow | top     -------
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-dark.png 41 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 189 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 41 38}\
-# ------- panel | light yellow | bottom  -------
+# ------- panel | dark yellow | bottom  -------
 ${voffset 5}${lua_parse add_x_offset offset 48}${color3}${cat /tmp/conky/musicplayer.name}
 ${voffset 2}${lua_parse add_x_offset offset 48}${color4}${lua get playbackStatus}
 ${else}\
