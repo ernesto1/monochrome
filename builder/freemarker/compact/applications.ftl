@@ -219,7 +219,7 @@ ${if_match ${lines [=peersFile]} == 0}\
 <@menu.panel x=speedColWidth + colGap y=0 width=menuWidth height=22 isFixed=false/>
 ${voffset 2}${lua_parse add_x_offset offset 48}${color}no peers connected${voffset [= 8 + sectionGap]}
 ${else}\
-<@menu.panel x=speedColWidth + colGap y=0 width=menuWidth height=22 isFixed=false/>
+<@menu.panel x=speedColWidth + colGap y=0 width=menuWidth height=22 isFixed=false isDark=true/>
 ${voffset 2}${lua_parse add_x_offset offset 48}${color}${lines [=peersFile]} peers in the swarm${voffset [= 7 + gap]}
 ${lua increment_offsets 0 [=22 + gap]}\
 # ::: peers upload

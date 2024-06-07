@@ -319,15 +319,15 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 42 22}\
 # ------- light panel bottom edge -------
 ${voffset 2}${lua_parse add_x_offset offset 48}${color}no peers connected${voffset 13}
 ${else}\
-# ------- light panel top edge    -------
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light.png 42 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-top-left.png 42 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-top-right.png 182 0}\
+# ------- dark panel top edge    -------
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-dark.png 42 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-dark-edge-top-left.png 42 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-dark-edge-top-right.png 182 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 189 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-left.png 42 15}\
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-light-edge-bottom-right.png 182 15}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-dark-edge-bottom-left.png 42 15}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-menu-dark-edge-bottom-right.png 182 15}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 42 22}\
-# ------- light panel bottom edge -------
+# ------- dark panel bottom edge -------
 ${voffset 2}${lua_parse add_x_offset offset 48}${color}${lines /tmp/conky/transmission.peers.raw} peers in the swarm${voffset 10}
 ${lua increment_offsets 0 25}\
 # ::: peers upload
