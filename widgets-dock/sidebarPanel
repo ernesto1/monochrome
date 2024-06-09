@@ -58,7 +58,7 @@ conky.config = {
 
 conky.text = [[
 ${voffset 8}${template7 ${lua_parse\ print_resource_usage\ ${hwmon\ atk0110\ temp\ 1}\ 78\ ${color3}}}
-${template7 ${lua_parse\ print_resource_usage\ ${hwmon\ radeon\ temp\ 1}\ 75\ ${color3}}}
+${template7 ${lua_parse\ print_resource_usage\ ${hwmon\ radeon\ temp\ 1}\ 90\ ${color3}}}
 ${template7 ${lua_parse\ print_max_resource_usage\ 42\ ${color3}\ ${hwmon\ 0\ temp\ 1}\ ${hwmon\ 1\ temp\ 1}\ ${hwmon\ 2\ temp\ 1}}}
 ${voffset 7}${offset 7}${font0}${color}${lua_parse print_resource_usage ${hwmon atk0110 fan 1} 2300 ${color3}}${font}${color}${voffset 16}
 ${alignc}${font0}${color}${if_existing /tmp/conky/dnf.packages.formatted}${lines /tmp/conky/dnf.packages.formatted}${else}0${endif}${voffset 7}

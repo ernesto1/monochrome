@@ -141,7 +141,7 @@ ${voffset 7}${offset 10}${color}${font0}network${font}
 ${voffset 142}${offset 32}no ethernet
 ${offset 34}connection${voffset 3}
 ${endif}\
-# ::::::::::::::::: disk sda
+# ::::::::::::::::: disk samsung SSD HD
 ${image ~/conky/monochrome/images/glass/blue-disk.png -p 5,451}\
 ${template5 sda 200000 280000}
 # :::::: partitions
@@ -149,19 +149,19 @@ ${image ~/conky/monochrome/images/glass/blue-block-small.png -p 5,550}\
 ${template6 fedora /}
 ${image ~/conky/monochrome/images/glass/blue-block-small.png -p 5,606}\
 ${template6 home /home}
-# ::::::::::::::::: disk sdb
+# ::::::::::::::::: disk seagate HD
 ${image ~/conky/monochrome/images/glass/blue-disk.png -p 5,662}\
 ${template5 sdb 6000 250000}
 # :::::: partitions
 ${image ~/conky/monochrome/images/glass/blue-block-small.png -p 5,761}\
 ${template6 veronica /media/veronica}
-# ::::::::::::::::: disk sdd
+# ::::::::::::::::: disk seagate HD
 ${image ~/conky/monochrome/images/glass/blue-disk.png -p 5,817}\
 ${template5 sdd 6000 250000}
 # :::::: partitions
 ${image ~/conky/monochrome/images/glass/blue-block-small.png -p 5,916}\
 ${template6 betty /media/betty}
-# ::::::::::::::::: disk maxtor
+# ::::::::::::::::: disk sde
 ${image ~/conky/monochrome/images/glass/blue-disk.png -p 5,972}\
 ${template5 sde 6000 60000}
 # :::::: partitions
@@ -176,10 +176,10 @@ ${voffset -13}${alignr 38}${color}${font2}${template8 atk0110 temp 1 78}°C${fon
 ${alignr 38}${color}${font}cores ${template8 coretemp temp 5 85}°C
 # :::: video card
 ${voffset 6}${offset 10}${color1}${font0}video card${font}
-${voffset -13}${alignr 38}${color}${font2}${template8 radeon temp 1 75}°C${font}
+${voffset -13}${alignr 38}${color}${font2}${template8 radeon temp 1 90}°C${font}
 # :::: hard disks
 ${voffset 6}${offset 10}${color1}${font0}hard disks${font}
-${voffset -13}${alignr 38}${color}${font2}${template8 1 temp 1 42}°C${font}
+${voffset -13}${alignr 38}${color}${font2}${template8 0 temp 1 42}°C${font}
 # :::: fans
 ${voffset 7}${offset 10}${color1}${font0}fans${font}
 ${voffset -8}${alignr 38}${color}${font2}${template8 atk0110 fan 1 2300}${font}
