@@ -1,4 +1,4 @@
-<#import "/lib/menu-square.ftl" as menu>
+<#import "/lib/panel-square.ftl" as panel>
 <#-- the system conky is substantially different between the 'desktop' and 'laptop' editions
      the laptop version was designed to occupy a smaller footprint (width x height) than its desktop counterpart
 
@@ -80,7 +80,7 @@ conky.text = [[
 # ::::::::::::::::: top cpu
 <#assign processes = 6, width = width>
 <#assign body = 5 + 16 * processes, smallCol = 45, colGap = 1>
-<@menu.table x=0 y=y widths=[width-smallCol-colGap, smallCol] gap=colGap header=header body=body/>
+<@panel.table x=0 y=y widths=[width-smallCol-colGap, smallCol] gap=colGap header=header body=body/>
 <#assign y += header + body + gap>
 ${voffset 2}${offset 5}${color1}process${alignr 4}cpu${voffset 4}
 <#list 1..processes as i>
@@ -89,7 +89,7 @@ ${template0 [=i]}
 ${voffset [= 7 + gap]}\
 # ::::::::::::::::: top memory
 <#assign body = 5 + 16 * processes>
-<@menu.table x=0 y=y widths=[width-smallCol-colGap, smallCol] gap=colGap header=header body=body/>
+<@panel.table x=0 y=y widths=[width-smallCol-colGap, smallCol] gap=colGap header=header body=body/>
 ${offset 5}${color1}process${alignr 4}mem${voffset 4}
 <#list 1..processes as i>
 ${template1 [=i]}
@@ -100,7 +100,7 @@ ${voffset [= 7 + gap]}${lua increment_offsets 0 [=y + header + body + gap]}\
 <#-- TODO iterate through network devices and build the conditional tree for wifi devices -->
 ${if_up [=networkDevices[system]?first.name]}\
 <#assign header = 57, height = 39>
-<@menu.verticalTable x=0 y=0 header=header body=width-header height=height isFixed=false/>
+<@panel.verticalTable x=0 y=0 header=header body=width-header height=height isFixed=false/>
 <#assign y += height + 2>
 ${voffset 3}${offset 5}${color1}network${goto 62}${color}${wireless_essid [=networkDevices[system]?first.name]}
 ${voffset 3}${offset 5}${color1}local ip${goto 62}${color}${addr [=networkDevices[system]?first.name]}${voffset [=5 + gap]}
@@ -109,12 +109,12 @@ ${endif}\
 </#if>
 # ::::::::::::::::: system
 <#assign header = 57, height = 53>
-<@menu.verticalTable x=0 y=0 header=header body=width-header height=height isFixed=false/>
+<@panel.verticalTable x=0 y=0 header=header body=width-header height=height isFixed=false/>
 ${voffset 2}${offset 5}${color1}kernel${goto 62}${color}${kernel}
 ${voffset 3}${offset 5}${color1}uptime${goto 62}${color}${uptime}
 ${voffset 3}${offset 5}${color1}composit${goto 62}${color}${execi 3600 echo $XDG_SESSION_TYPE}${voffset [=5 + gap]}
 ${lua increment_offsets 0 [=height+gap]}\
 <#assign height = 22>
-<@menu.verticalTable x=0 y=0 header=header body=width-header height=height isFixed=false/>
+<@panel.verticalTable x=0 y=0 header=header body=width-header height=height isFixed=false/>
 ${voffset 2}${offset 5}${color1}zoom${goto 62}${color}${if_running zoom}running${else}off${endif}
 ]];

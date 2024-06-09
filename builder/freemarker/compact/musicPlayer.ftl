@@ -1,4 +1,4 @@
-<#import "/lib/menu-round.ftl" as menu>
+<#import "/lib/panel-round.ftl" as panel>
 -- n.b. this conky requires the music-player java app to be running in the background
 --      it generates input files under /tmp/conky/musicplayer.* which this conky will read
 
@@ -45,10 +45,10 @@ conky.config = {
   draw_shades = false,      -- black shadow on text (not good if text is black)
   draw_outline = false,     -- black outline around text (not good if text is black)
   -- colors
-  default_color = '[=colors.menuText]',  -- regular text
+  default_color = '[=colors.panelText]',  -- regular text
   color1 = '[=colors.labels]',
-  color3 = '[=colors.secondary.labels]',         -- secondary menu labels
-  color4 = '[=colors.secondary.text]'         -- secondary menu text
+  color3 = '[=colors.secondary.labels]',         -- secondary panel labels
+  color4 = '[=colors.secondary.text]'         -- secondary panel text
 };
 
 conky.text = [[
@@ -59,23 +59,23 @@ conky.text = [[
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
 <#assign y = 0>
 ${image ~/conky/monochrome/images/compact/[=image.secondaryColor]-sound-wave.png -p 0,[=y]}\
-<@menu.panel x=41 y=0 width=189-41 height=38/>
+<@panel.panel x=41 y=0 width=189-41 height=38/>
 ${voffset 4}${offset 48}${color1}now playing
 ${voffset 2}${offset 48}${color}no player running${voffset 5}
 ${else}\
 # :::::::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
-<#assign top = 19,    <#-- menu header -->
+<#assign top = 19,    <#-- panel header -->
          body = 185,  <#-- size of the current window without the header -->
          gap = 3>     <#-- empty space between windows -->
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
-<@menu.panel x=0 y=y width=width height=top+body isDark=false color=image.secondaryColor/>
+<@panel.panel x=0 y=y width=width height=top+body isDark=false color=image.secondaryColor/>
 ${voffset 2}${alignc}${color3}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} ${color4}: ${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
-${image ~/conky/monochrome/images/common/[=image.secondaryColor]-menu-album-placeholder.png -p [=4+8],[=19+8]}\
+${image ~/conky/monochrome/images/common/[=image.secondaryColor]-panel-album-placeholder.png -p [=4+8],[=19+8]}\
 ${else}\
-<@menu.panel x=0 y=y width=width height=top+body/>
+<@panel.panel x=0 y=y width=width height=top+body/>
 ${voffset 2}${alignc}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}} ${color}: ${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
-${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-album-placeholder.png -p [=4+8],[=19+8]}\
+${image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-album-placeholder.png -p [=4+8],[=19+8]}\
 ${color}\
 ${endif}\
 ${lua_parse load_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4 [=(top)?c]}\
@@ -86,7 +86,7 @@ ${else}\
 # :::::::: no album art available
 <#assign y = 0>
 ${image ~/conky/monochrome/images/common/[=image.primaryColor]-rhythmbox.png -p 0,[=y]}\
-<@menu.panel x=55 y=33 width=width-55 height=38 isDark=true/>
+<@panel.panel x=55 y=33 width=width-55 height=38 isDark=true/>
 ${voffset 36}${offset 61}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}
 ${voffset 4}${offset 61}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
 <#assign y += 71 + gap>
@@ -94,12 +94,12 @@ ${lua increment_offsets 0 [=y]}\
 ${voffset 9}\
 ${endif}\
 # :::::::: track details
-# menu expands based on the track metadata fields available
+# panel expands based on the track metadata fields available
 # the position of the bottom edge images is shifted down 16px for each field
 <#-- 3 px top border | 16 px text | 3 px bottom border -->
 # -------  vertical table image top -------
 <#assign header = 45, height = 22>
-<@menu.verticalMenuHeader x=0 y=0 header=header body=width-header isFixed=false/>
+<@panel.verticalMenuHeader x=0 y=0 header=header body=width-header isFixed=false/>
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-sound-wave.png [=width-53-7] 0}\
 ${endif}\
@@ -117,7 +117,7 @@ ${voffset 3}${offset 5}${color1}genre${goto 50}${color}${lua get genre}${lua inc
 ${endif}\
 ${voffset -7}\
 # ------  vertical table image bottom ------
-<@menu.verticalMenuBottom x=0 y=0 header=header body=width-header isFixed=false/>
+<@panel.verticalMenuBottom x=0 y=0 header=header body=width-header isFixed=false/>
 # -------- end of table image bottom -------
 ${endif}\
 ]];

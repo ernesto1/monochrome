@@ -51,31 +51,35 @@ conky.config = {
 
 conky.text = [[
 # :::::::::::: o/s
-# --- composite vertical table image ---
-${image ~/conky/monochrome/images/common/green-menu-dark.png -p 0,0}\
-${image ~/conky/monochrome/images/common/green-menu-light.png -p 69,0}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 205,0}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 0,53}\
-# --------- end of table image ---------
+# ------- vertical table | top    -------
+${image ~/conky/monochrome/images/common/green-panel-dark.png -p 0,0}\
+${image ~/conky/monochrome/images/common/green-panel-light.png -p 69,0}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 205,0}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 0,53}\
+# ------- vertical table | bottom -------
 ${voffset 3}${offset 5}${color1}kernel${goto 76}${color}${kernel}
 ${voffset 3}${offset 5}${color1}uptime${goto 76}${color}${uptime}
 ${voffset 3}${offset 5}${color1}compositor${goto 76}${color}${execi 3600 echo $XDG_SESSION_TYPE}
 ${voffset 12}\
 # :::::::::::: applications
-# --- composite vertical table image ---
-${image ~/conky/monochrome/images/common/green-menu-dark.png -p 0,58}\
-${image ~/conky/monochrome/images/common/green-menu-light.png -p 69,58}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 121,58}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 0,77}\
-# --------- end of table image ---------
+# ------- vertical table | top    -------
+${image ~/conky/monochrome/images/common/green-panel-dark.png -p 0,58}\
+${image ~/conky/monochrome/images/common/green-panel-light.png -p 69,58}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 121,58}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 0,77}\
+# ------- vertical table | bottom -------
 ${offset 5}${color1}zoom${goto 76}${color}${if_running zoom}running${else}off${endif}
 # :::::::::::: fans
-# ------- single column table | top edge    -------
-${image ~/conky/monochrome/images/common/green-menu-dark.png -p 210,0}\
-${image ~/conky/monochrome/images/common/green-menu-light.png -p 210,19}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 392,0}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 210,89}\
-# ------- single column table | bottom edge -------
+# ------- table | 1 column(s) | top    -------
+# ------- header
+${image ~/conky/monochrome/images/common/green-panel-dark.png -p 210,0}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 392,0}\
+# ------- body
+${image ~/conky/monochrome/images/common/green-panel-light.png -p 210,19}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 392,19}\
+# ------- bottom blank image(s)
+${image ~/conky/monochrome/images/common/blank-panel.png -p 210,89}\
+# ------- table | 1 column(s) | bottom -------
 ${voffset -71}${goto 215}${color1}fan${alignr 4}revolutions${voffset 5}
 ${voffset 3}${goto 215}${color}chasis front intake${alignr 4}${template1 atk0110 fan 3 2400} rpm
 ${voffset 3}${goto 215}${color}cpu fan${alignr 4}${template1 atk0110 fan 1 2500} rpm
@@ -83,12 +87,16 @@ ${voffset 3}${goto 215}${color}case top exhaust${alignr 4}${template1 atk0110 fa
 ${voffset 3}${goto 215}${color}case back exhaust${alignr 4}${template1 atk0110 fan 4 2500} rpm
 ${voffset 12}\
 # :::::::::::: temperatures
-# ------- single column table | top edge    -------
-${image ~/conky/monochrome/images/common/green-menu-dark.png -p 210,94}\
-${image ~/conky/monochrome/images/common/green-menu-light.png -p 210,113}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 392,94}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 210,133}\
-# ------- single column table | bottom edge -------
+# ------- table | 1 column(s) | top    -------
+# ------- header
+${image ~/conky/monochrome/images/common/green-panel-dark.png -p 210,94}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 392,94}\
+# ------- body
+${image ~/conky/monochrome/images/common/green-panel-light.png -p 210,113}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 392,113}\
+# ------- bottom blank image(s)
+${image ~/conky/monochrome/images/common/blank-panel.png -p 210,133}\
+# ------- table | 1 column(s) | bottom -------
 ${goto 215}${color1}device${alignr 4}temperature
 ${voffset 6}${goto 215}${color}AMD Radeon HD7570${alignr}${template1 radeon temp 1 75}°C
 ]];

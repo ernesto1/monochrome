@@ -12,6 +12,6 @@ green:
     writeGraph: 4c6e3b 9fc14a
     readGraph: 6c3a55 a67fba
     windowColor: 2f2d1e # background color for plain conkys with no images
-    # secondary/alternate menu colors
+    # secondary/alternate panel colors
     secondary:
       text: c596c7

@@ -1,4 +1,4 @@
-<#import "/lib/menu-square.ftl" as menu>
+<#import "/lib/panel-square.ftl" as panel>
   -- n.b. this conky requires the music-player java app to be running in the background
   --      it generates input files under /tmp/conky/musicplayer.* which this conky will read
   
@@ -45,8 +45,8 @@ conky.config = {
   -- colors
   default_color = '[=colors.systemText]',  -- regular text
   color1 = '[=colors.systemLabels]',         -- text labels
-  color3 = '[=colors.secondary.labels]',         -- secondary menu labels
-  color4 = '[=colors.secondary.text]'         -- secondary menu text
+  color3 = '[=colors.secondary.labels]',         -- secondary panel labels
+  color4 = '[=colors.secondary.text]'         -- secondary panel text
 };
 
 conky.text = [[
@@ -60,7 +60,7 @@ ${if_existing /tmp/conky/musicplayer.name Nameless}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-sound-wave.png -p 0,0}\
 <#assign iconWidth = 38,       <#-- icon is a square -->
          gap = 2>
-<@menu.panel x=iconWidth+gap y=0 width=width-iconWidth-gap height=iconHeight/>
+<@panel.panel x=iconWidth+gap y=0 width=width-iconWidth-gap height=iconHeight/>
 ${voffset 5}${goto 48}${color1}now playing
 ${voffset 2}${goto 48}${color}no player running${voffset 5}\
 ${else}\
@@ -82,8 +82,8 @@ ${endif}\
 ${lua increment_offsets 0 [=height + gap]}\
 ${voffset 2}${offset 5}${lua get playbackStatus}${alignr 3}${color}${cat /tmp/conky/musicplayer.name}${voffset 6}
 # ::: track details
-# menu expands based on the track metadata fields available, only 'title' is considered mandatory
-<@menu.panel x=0 y=0 width=width isFixed=false/>
+# panel expands based on the track metadata fields available, only 'title' is considered mandatory
+<@panel.panel x=0 y=0 width=width isFixed=false/>
 ${if_match "${lua get playbackStatus}" == "Playing"}\
 ${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-panel-sound-wave.png [=width-69] 0}\
 ${endif}\
@@ -104,7 +104,7 @@ ${endif}\
 ${else}\
 # :::::::: error state | input files are missing
 ${image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-sound-wave.png -p 0,0}\
-<@menu.panel x=iconWidth+gap y=0 width=width-iconWidth-gap height=iconHeight isDark=true color=image.secondaryColor/>
+<@panel.panel x=iconWidth+gap y=0 width=width-iconWidth-gap height=iconHeight isDark=true color=image.secondaryColor/>
 ${voffset 5}${offset 48}${color3}now playing
 ${voffset 2}${offset 48}${color4}missing files
 ${endif}\

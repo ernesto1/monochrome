@@ -52,8 +52,8 @@ conky.config = {
   default_color = '703d0a', -- regular text
   color1 = 'white',
   color2 = '68a315',        -- highlight important packages
-  color3 = 'white',         -- secondary menu labels
-  color4 = 'a7aa71'         -- secondary menu text
+  color3 = 'white',         -- secondary panel labels
+  color4 = 'a7aa71'         -- secondary panel text
 };
 
 conky.text = [[
@@ -62,39 +62,39 @@ ${lua set_total_lines 44}\
 ${if_existing /tmp/conky/dnf.packages.formatted}\
 ${image ~/conky/monochrome/images/widgets-dock/green-packages-small.png -p 0,0}\
 # ------- panel | light green no left round edges | top -------
-${image ~/conky/monochrome/images/common/green-menu-light.png -p 38,0}\
-${image ~/conky/monochrome/images/common/green-menu-light-edge-top-right.png -p 162,0}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 169,0}\
-${image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-right.png -p 162,31}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 38,38}\
+${image ~/conky/monochrome/images/common/green-panel-light.png -p 38,0}\
+${image ~/conky/monochrome/images/common/green-panel-light-edge-top-right.png -p 162,0}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 169,0}\
+${image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-right.png -p 162,31}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 38,38}\
 # ------- panel | light green no left round edges | bottom -------
 ${voffset 5}${offset 45}${color3}dandified yum
 ${voffset 2}${offset 45}${color4}${lines /tmp/conky/dnf.packages.formatted} package updates${voffset 10}
 # -------  table | yellow 1 column | top edge    -------
-${image ~/conky/monochrome/images/common/yellow-menu-dark.png -p 0,41}\
-${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-top-left.png -p 0,41}\
-${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-top-right.png -p 162,41}\
-${image ~/conky/monochrome/images/common/yellow-menu-light.png -p 0,60}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 169,41}\
+${image ~/conky/monochrome/images/common/yellow-panel-dark.png -p 0,41}\
+${image ~/conky/monochrome/images/common/yellow-panel-dark-edge-top-left.png -p 0,41}\
+${image ~/conky/monochrome/images/common/yellow-panel-dark-edge-top-right.png -p 162,41}\
+${image ~/conky/monochrome/images/common/yellow-panel-light.png -p 0,60}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 169,41}\
 # -------  table | yellow 1 column | bottom edge -------
 ${lua increment_offsets 0 60}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
-${image ~/conky/monochrome/images/common/yellow-menu-dnf.png -p 95,62}\
+${image ~/conky/monochrome/images/common/yellow-panel-dnf.png -p 95,62}\
 ${offset 5}${color1}package${alignr 4}version${voffset 6}
 ${color}${lua_parse paginate /tmp/conky/dnf.packages.formatted 22}${lua increase_y_offset /tmp/conky/dnf.packages.formatted}${voffset 9}
-${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-left.png 0 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png 162 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light-edge-bottom-left.png 0 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light-edge-bottom-right.png 162 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 0}\
 ${lua increment_offsets 0 4}\
 ${else}\
 # ::: no updates available or dnf script not running
 ${image ~/conky/monochrome/images/widgets-dock/yellow-packages-small.png -p 0,0}\
 # ------- panel | light yellow no left round edges | top -------
-${image ~/conky/monochrome/images/common/yellow-menu-light.png -p 38,0}\
-${image ~/conky/monochrome/images/common/yellow-menu-light-edge-top-right.png -p 162,0}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 169,0}\
-${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png -p 162,31}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 38,38}\
+${image ~/conky/monochrome/images/common/yellow-panel-light.png -p 38,0}\
+${image ~/conky/monochrome/images/common/yellow-panel-light-edge-top-right.png -p 162,0}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 169,0}\
+${image ~/conky/monochrome/images/common/yellow-panel-light-edge-bottom-right.png -p 162,31}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 38,38}\
 # ------- panel | light yellow no left round edges | bottom -------
 ${voffset 5}${offset 45}${color1}dandified yum
 ${voffset 2}${offset 45}${color}no package updates${voffset 9}
@@ -106,11 +106,11 @@ ${if_existing /tmp/conky/transmission.torrents}\
 ${if_match ${lua get activeNum ${lines /tmp/conky/transmission.torrents}} == 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/widgets-dock/yellow-torrents-small.png 0 0}\
 # ------- panel | light yellow no left round edges | top -------
-${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light.png 38 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light-edge-top-right.png 162 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 169 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png 162 31}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 38 38}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light.png 38 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light-edge-top-right.png 162 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 169 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light-edge-bottom-right.png 162 31}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 38 38}\
 # ------- panel | light yellow no left round edges | bottom -------
 ${voffset 5}${offset 45}${color1}transmission
 ${voffset 2}${offset 45}${color}no active torrents${voffset 9}
@@ -119,24 +119,24 @@ ${else}\
 # ::: active torrents
 ${lua_parse draw_image ~/conky/monochrome/images/widgets-dock/green-torrents-small.png 0 0}\
 # ------- panel | light green no left round edges | top -------
-${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-light.png 38 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-light-edge-top-right.png 162 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 169 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-right.png 162 31}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 38 38}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light.png 38 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-top-right.png 162 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 169 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-right.png 162 31}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 38 38}\
 # ------- panel | light green no left round edges | bottom -------
 ${voffset 5}${offset 45}${color3}transmission
 ${voffset 2}${offset 45}${color4}${lua get activeNum} active torrents${voffset 10}
 ${lua increment_offsets 0 41}\
 # -------  vertical table image -------
-${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-dark.png 0 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-dark-edge-top-left.png 0 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light.png 59 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light-edge-top-right.png 162 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 169 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-dark-edge-bottom-left.png 0 48}\
-${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png 162 48}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 55}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-dark.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-dark-edge-top-left.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light.png 59 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light-edge-top-right.png 162 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 169 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-dark-edge-bottom-left.png 0 48}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light-edge-bottom-right.png 162 48}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 55}\
 # --------- end of table image ---------
 ${voffset 3}${offset 5}${color1}swarm${goto 67}${color}${if_existing /tmp/conky/transmission.peers.raw}${lua pad ${lines /tmp/conky/transmission.peers.raw} 6} peers${else}file missing${endif}
 ${voffset 3}${offset 5}${color1}upload${color}${if_existing /tmp/conky/transmission.speed.up}${alignr 43}${cat /tmp/conky/transmission.speed.up}${else}file missing${endif}
@@ -145,38 +145,38 @@ ${lua increment_offsets 0 58}\
 # ::: torrent uploads
 ${if_match ${lines /tmp/conky/transmission.torrents.up} > 0}\
 # -------  table | yellow 2 columns | top edge    -------
-${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-dark.png 0 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-dark-edge-top-left.png 0 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-dark.png 139 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-dark-edge-top-right.png 162 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light.png 0 19}\
-${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-light.png 139 19}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 169 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-dark.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-dark-edge-top-left.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-dark.png 139 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-dark-edge-top-right.png 162 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light.png 0 19}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light.png 139 19}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 169 0}\
 ${lua increment_offsets 0 19}\
-${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-peers.png 15 22}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-peers.png 15 22}\
 ${offset 5}${color1}torrent${alignr 4}up${voffset 6}
 ${color}${lua_parse head /tmp/conky/transmission.torrents.up 44}${voffset 10}${lua increase_y_offset /tmp/conky/transmission.torrents.up}
-${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-left.png 0 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-right.png 162 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light-edge-bottom-left.png 0 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-right.png 162 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 0}\
 # -------  table | yellow 2 columns | bottom edge -------
 ${lua increment_offsets 0 3}\
 ${endif}\
 # ::: torrent downloads
 ${if_match ${lines /tmp/conky/transmission.torrents.down} > 0}\
 # -------  table | yellow 2 columns | top edge    -------
-${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-dark.png 0 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-dark-edge-top-left.png 0 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-dark-edge-top-right.png 162 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light.png 0 19}\
-${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-dark.png 139 19}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 169 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-dark.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-dark-edge-top-left.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-dark-edge-top-right.png 162 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light.png 0 19}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-dark.png 139 19}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 169 0}\
 ${lua increment_offsets 0 19}\
 ${offset 5}${color1}torrent${alignr 4}down${voffset 6}
 ${color}${lua_parse head /tmp/conky/transmission.torrents.down 44}${lua increase_y_offset /tmp/conky/transmission.torrents.down}
-${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-left.png 0 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/yellow-menu-dark-edge-bottom-right.png 162 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light-edge-bottom-left.png 0 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-dark-edge-bottom-right.png 162 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 0}\
 # -------  table | yellow 2 columns | bottom edge -------
 ${lua increment_offsets 0 4}\
 ${endif}\
@@ -185,11 +185,11 @@ ${else}\
 # ::: error state
 ${lua_parse draw_image ~/conky/monochrome/images/widgets-dock/green-torrents-small.png 0 0}\
 # ------- panel | dark green no left round edges | top -------
-${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-dark.png 38 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-dark-edge-top-right.png 162 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 169 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-dark-edge-bottom-right.png 162 31}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 38 38}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-dark.png 38 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-dark-edge-top-right.png 162 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 169 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-dark-edge-bottom-right.png 162 31}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 38 38}\
 # ------- panel | dark green no left round edges | bottom -------
 ${voffset 5}${offset 45}${color3}transmission
 ${voffset 2}${offset 45}${color4}input files missing${voffset 10}

@@ -14,7 +14,7 @@ blue:
     systemLabels: 839bc1
     highlight: dfa22f       # flag important package updates
     ownWindow: 2f3757
-    # secondary/alternate menu colors
+    # secondary/alternate panel colors
     secondary:
       labels: white
       text: 703d0a

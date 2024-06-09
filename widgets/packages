@@ -49,22 +49,22 @@ conky.config = {
 conky.text = [[
 # :::::::::::: package updates
 ${if_existing /tmp/conky/dnf.packages.formatted}\
-# ------- single column table | top edge    -------
-${image ~/conky/monochrome/images/common/green-menu-dark.png -p 0,0}\
-${image ~/conky/monochrome/images/common/green-menu-dark-edge-top-left.png -p 0,0}\
-${image ~/conky/monochrome/images/common/green-menu-dark-edge-top-right.png -p 193,0}\
-${image ~/conky/monochrome/images/common/green-menu-light.png -p 0,39}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 200,0}\
-# ------- single column table | bottom edge -------
+# -------  table | green 1 column | top edge    -------
+${image ~/conky/monochrome/images/common/green-panel-dark.png -p 0,0}\
+${image ~/conky/monochrome/images/common/green-panel-dark-edge-top-left.png -p 0,0}\
+${image ~/conky/monochrome/images/common/green-panel-dark-edge-top-right.png -p 193,0}\
+${image ~/conky/monochrome/images/common/green-panel-light.png -p 0,39}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 200,0}\
+# -------  table | green 1 column | bottom edge -------
 ${lua increment_offsets 0 52}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
-${image ~/conky/monochrome/images/common/green-menu-dnf.png -p 121,56}\
+${image ~/conky/monochrome/images/common/green-panel-dnf.png -p 121,56}\
 ${voffset 3}${alignc}${color1}dnf package management
 ${voffset 5}${alignc}${color}${lines /tmp/conky/dnf.packages.formatted} package update(s) available
 ${voffset 6}${offset 5}${color1}package${alignr 4}version${voffset 1}
 ${color}${lua_parse head /tmp/conky/dnf.packages.formatted 25}${lua increase_y_offset /tmp/conky/dnf.packages.formatted}${voffset 5}
-${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-left.png 0 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-right.png 193 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-left.png 0 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-right.png 193 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 0}\
 ${endif}\
 ]];

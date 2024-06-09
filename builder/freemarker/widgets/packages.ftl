@@ -1,4 +1,4 @@
-<#import "/lib/menu-round.ftl" as menu>
+<#import "/lib/panel-round.ftl" as panel>
 conky.config = {
   lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/panel.lua',
   lua_draw_hook_pre = 'reset_state',
@@ -53,17 +53,17 @@ conky.text = [[
 <#assign packagesFile = "/tmp/conky/dnf.packages.formatted">
 ${if_existing [=packagesFile]}\
 <#assign y = 0, 
-         header = 39>    <#-- menu header -->
-<@menu.table x=0 y=y width=width header=header/>
+         header = 39>    <#-- panel header -->
+<@panel.table x=0 y=y width=width header=header/>
 <#assign y += header + 13><#-- head() function requires the file text to be at 10 px below its panel edge, so adding the remaining px due to package/version header -->
 ${lua increment_offsets 0 [=y]}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
-${image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-dnf.png -p 121,[=(y+4)?c]}\
+${image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-dnf.png -p 121,[=(y+4)?c]}\
 ${voffset 3}${alignc}${color1}dnf package management
 ${voffset 5}${alignc}${color}${lines [=packagesFile]} package update(s) available
 ${voffset 6}${offset 5}${color1}package${alignr 4}version${voffset 1}
 <#assign maxLines = 25>
 ${color}${lua_parse head [=packagesFile] [=maxLines]}${lua increase_y_offset [=packagesFile]}${voffset 5}
-<@menu.panelBottomCorners x=0 y=0 width=width isFixed=false/>
+<@panel.panelBottomCorners x=0 y=0 width=width isFixed=false/>
 ${endif}\
 ]];

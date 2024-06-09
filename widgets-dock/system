@@ -43,8 +43,8 @@ conky.config = {
   -- colors
   default_color = '703d0a',  -- regular text
   color1 = 'white',
-  color3 = 'white',         -- secondary menu labels
-  color4 = 'a7aa71',         -- secondary menu text
+  color3 = 'white',         -- secondary panel labels
+  color4 = 'a7aa71',         -- secondary panel text
   
   -- templates
   -- top cpu process: ${template0 processNumber}
@@ -56,24 +56,24 @@ conky.config = {
 conky.text = [[
 # :::::::::::: cpu
 # ------- light panel top edge    -------
-${image ~/conky/monochrome/images/common/green-menu-light.png -p 0,0}\
-${image ~/conky/monochrome/images/common/green-menu-light-edge-top-left.png -p 0,0}\
-${image ~/conky/monochrome/images/common/green-menu-light-edge-top-right.png -p 162,0}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 169,0}\
-${image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-left.png -p 0,12}\
-${image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-right.png -p 162,12}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 0,19}\
+${image ~/conky/monochrome/images/common/green-panel-light.png -p 0,0}\
+${image ~/conky/monochrome/images/common/green-panel-light-edge-top-left.png -p 0,0}\
+${image ~/conky/monochrome/images/common/green-panel-light-edge-top-right.png -p 162,0}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 169,0}\
+${image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-left.png -p 0,12}\
+${image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-right.png -p 162,12}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 0,19}\
 # ------- light panel bottom edge -------
 ${voffset 2}${alignc}${color3}cpu${voffset 8}
 # -------  table | yellow 1 column | top edge    -------
-${image ~/conky/monochrome/images/common/yellow-menu-dark.png -p 0,21}\
-${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-top-left.png -p 0,21}\
-${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-top-right.png -p 162,21}\
-${image ~/conky/monochrome/images/common/yellow-menu-light.png -p 0,40}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 169,21}\
-${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-left.png -p 0,117}\
-${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png -p 162,117}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 0,124}\
+${image ~/conky/monochrome/images/common/yellow-panel-dark.png -p 0,21}\
+${image ~/conky/monochrome/images/common/yellow-panel-dark-edge-top-left.png -p 0,21}\
+${image ~/conky/monochrome/images/common/yellow-panel-dark-edge-top-right.png -p 162,21}\
+${image ~/conky/monochrome/images/common/yellow-panel-light.png -p 0,40}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 169,21}\
+${image ~/conky/monochrome/images/common/yellow-panel-light-edge-bottom-left.png -p 0,117}\
+${image ~/conky/monochrome/images/common/yellow-panel-light-edge-bottom-right.png -p 162,117}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 0,124}\
 # -------  table | yellow 1 column | bottom edge -------
 ${offset 5}${color1}process${alignr 4}cpu${voffset 3}
 ${template0 1}
@@ -82,36 +82,36 @@ ${template0 3}
 ${template0 4}
 ${template0 5}
 # -------  vertical table image -------
-${image ~/conky/monochrome/images/common/yellow-menu-dark.png -p 0,126}\
-${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-top-left.png -p 0,126}\
-${image ~/conky/monochrome/images/common/yellow-menu-light.png -p 71,126}\
-${image ~/conky/monochrome/images/common/yellow-menu-light-edge-top-right.png -p 162,126}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 169,126}\
-${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-bottom-left.png -p 0,138}\
-${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png -p 162,138}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 0,145}\
+${image ~/conky/monochrome/images/common/yellow-panel-dark.png -p 0,126}\
+${image ~/conky/monochrome/images/common/yellow-panel-dark-edge-top-left.png -p 0,126}\
+${image ~/conky/monochrome/images/common/yellow-panel-light.png -p 71,126}\
+${image ~/conky/monochrome/images/common/yellow-panel-light-edge-top-right.png -p 162,126}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 169,126}\
+${image ~/conky/monochrome/images/common/yellow-panel-dark-edge-bottom-left.png -p 0,138}\
+${image ~/conky/monochrome/images/common/yellow-panel-light-edge-bottom-right.png -p 162,138}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 0,145}\
 # --------- end of table image ---------
 ${voffset 9}${offset 5}${color1}load avg${goto 77}${color}${loadavg}${voffset 9}
 # :::::::::::: memory
 # ------- light panel top edge    -------
-${image ~/conky/monochrome/images/common/green-menu-light.png -p 0,148}\
-${image ~/conky/monochrome/images/common/green-menu-light-edge-top-left.png -p 0,148}\
-${image ~/conky/monochrome/images/common/green-menu-light-edge-top-right.png -p 162,148}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 169,148}\
-${image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-left.png -p 0,160}\
-${image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-right.png -p 162,160}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 0,167}\
+${image ~/conky/monochrome/images/common/green-panel-light.png -p 0,148}\
+${image ~/conky/monochrome/images/common/green-panel-light-edge-top-left.png -p 0,148}\
+${image ~/conky/monochrome/images/common/green-panel-light-edge-top-right.png -p 162,148}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 169,148}\
+${image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-left.png -p 0,160}\
+${image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-right.png -p 162,160}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 0,167}\
 # ------- light panel bottom edge -------
 ${alignc}${color3}memory${voffset 8}
 # -------  table | yellow 1 column | top edge    -------
-${image ~/conky/monochrome/images/common/yellow-menu-dark.png -p 0,169}\
-${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-top-left.png -p 0,169}\
-${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-top-right.png -p 162,169}\
-${image ~/conky/monochrome/images/common/yellow-menu-light.png -p 0,188}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 169,169}\
-${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-left.png -p 0,265}\
-${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png -p 162,265}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 0,272}\
+${image ~/conky/monochrome/images/common/yellow-panel-dark.png -p 0,169}\
+${image ~/conky/monochrome/images/common/yellow-panel-dark-edge-top-left.png -p 0,169}\
+${image ~/conky/monochrome/images/common/yellow-panel-dark-edge-top-right.png -p 162,169}\
+${image ~/conky/monochrome/images/common/yellow-panel-light.png -p 0,188}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 169,169}\
+${image ~/conky/monochrome/images/common/yellow-panel-light-edge-bottom-left.png -p 0,265}\
+${image ~/conky/monochrome/images/common/yellow-panel-light-edge-bottom-right.png -p 162,265}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 0,272}\
 # -------  table | yellow 1 column | bottom edge -------
 ${offset 5}${color1}process${alignr 4}memory${voffset 3}
 ${template1 1}
@@ -120,40 +120,40 @@ ${template1 3}
 ${template1 4}
 ${template1 5}
 # -------  vertical table image -------
-${image ~/conky/monochrome/images/common/yellow-menu-dark.png -p 0,274}\
-${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-top-left.png -p 0,274}\
-${image ~/conky/monochrome/images/common/yellow-menu-light.png -p 71,274}\
-${image ~/conky/monochrome/images/common/yellow-menu-light-edge-top-right.png -p 162,274}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 169,274}\
-${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-bottom-left.png -p 0,305}\
-${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png -p 162,305}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 0,312}\
+${image ~/conky/monochrome/images/common/yellow-panel-dark.png -p 0,274}\
+${image ~/conky/monochrome/images/common/yellow-panel-dark-edge-top-left.png -p 0,274}\
+${image ~/conky/monochrome/images/common/yellow-panel-light.png -p 71,274}\
+${image ~/conky/monochrome/images/common/yellow-panel-light-edge-top-right.png -p 162,274}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 169,274}\
+${image ~/conky/monochrome/images/common/yellow-panel-dark-edge-bottom-left.png -p 0,305}\
+${image ~/conky/monochrome/images/common/yellow-panel-light-edge-bottom-right.png -p 162,305}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 0,312}\
 # --------- end of table image ---------
 ${voffset 11}${offset 5}${color1}swap read${goto 77}${color}${cat /tmp/conky/system.swap.read}
 ${voffset 3}${offset 5}${color1}swap write${goto 77}${color}${cat /tmp/conky/system.swap.write}${voffset 10}
 # :::::::::::: network
 # ------- light panel top edge    -------
-${image ~/conky/monochrome/images/common/green-menu-light.png -p 0,315}\
-${image ~/conky/monochrome/images/common/green-menu-light-edge-top-left.png -p 0,315}\
-${image ~/conky/monochrome/images/common/green-menu-light-edge-top-right.png -p 162,315}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 169,315}\
-${image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-left.png -p 0,327}\
-${image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-right.png -p 162,327}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 0,334}\
+${image ~/conky/monochrome/images/common/green-panel-light.png -p 0,315}\
+${image ~/conky/monochrome/images/common/green-panel-light-edge-top-left.png -p 0,315}\
+${image ~/conky/monochrome/images/common/green-panel-light-edge-top-right.png -p 162,315}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 169,315}\
+${image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-left.png -p 0,327}\
+${image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-right.png -p 162,327}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 0,334}\
 # ------- light panel bottom edge -------
 ${alignc}${color3}network${voffset 10}
 # assumption: only one network device will be connected to the internet at a time
 # :::: ethernet
 ${if_up enp0s25}\
 # -------  vertical table image -------
-${image ~/conky/monochrome/images/common/yellow-menu-dark.png -p 0,336}\
-${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-top-left.png -p 0,336}\
-${image ~/conky/monochrome/images/common/yellow-menu-light.png -p 71,336}\
-${image ~/conky/monochrome/images/common/yellow-menu-light-edge-top-right.png -p 162,336}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 169,336}\
-${image ~/conky/monochrome/images/common/yellow-menu-dark-edge-bottom-left.png -p 0,399}\
-${image ~/conky/monochrome/images/common/yellow-menu-light-edge-bottom-right.png -p 162,399}\
-${image ~/conky/monochrome/images/common/menu-blank.png -p 0,406}\
+${image ~/conky/monochrome/images/common/yellow-panel-dark.png -p 0,336}\
+${image ~/conky/monochrome/images/common/yellow-panel-dark-edge-top-left.png -p 0,336}\
+${image ~/conky/monochrome/images/common/yellow-panel-light.png -p 71,336}\
+${image ~/conky/monochrome/images/common/yellow-panel-light-edge-top-right.png -p 162,336}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 169,336}\
+${image ~/conky/monochrome/images/common/yellow-panel-dark-edge-bottom-left.png -p 0,399}\
+${image ~/conky/monochrome/images/common/yellow-panel-light-edge-bottom-right.png -p 162,399}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 0,406}\
 # --------- end of table image ---------
 ${lua add_offsets 0 73}\
 ${offset 5}${color1}local ip${goto 77}${color}${addr enp0s25}

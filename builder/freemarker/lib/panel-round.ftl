@@ -1,4 +1,4 @@
-<#import "/lib/menu-common.ftl" as cmn>
+<#import "/lib/panel-common.ftl" as cmn>
 
 <#-- creates a composite table image with the given dimensions
  (x,y)
@@ -18,8 +18,8 @@
 <#macro table x y width header body=0 isFixed=true color=image.primaryColor>
 # -------  table | [=color] 1 column | top edge    -------
 <@panelTopCorners x=x y=y width=width isFixed=isFixed color=color isEdge=false/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-menu-light.png" x=x y=y+header isFixed=isFixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x+width y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-panel-light.png" x=x y=y+header isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/blank-panel.png" x=x+width y=y isFixed=isFixed/>
 <#if body gt 0>
 <#local y += header + body>
 <@panelBottomCorners x=x y=y width=width isFixed=isFixed color=color/>
@@ -44,11 +44,11 @@
 -->
 <#macro panelTopCorners x y width theme="dark" isFixed=true color=image.primaryColor isEdge=true>
 <#-- edge images are 7x7px -->
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-menu-[=theme].png" x=x y=y isFixed=isFixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-menu-[=theme]-edge-top-left.png" x=x y=y isFixed=isFixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-menu-[=theme]-edge-top-right.png" x=x+width-7 y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-panel-[=theme].png" x=x y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-panel-[=theme]-edge-top-left.png" x=x y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-panel-[=theme]-edge-top-right.png" x=x+width-7 y=y isFixed=isFixed/>
 <#if isEdge>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x+width y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/blank-panel.png" x=x+width y=y isFixed=isFixed/>
 </#if>
 </#macro>
 
@@ -70,15 +70,15 @@
 -->
 <#macro panelBottomCorners x y width isFixed=true color=image.primaryColor theme="light" isEdge=true>
 <#local y -= 7><#-- edge images are 7x7px -->
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-menu-[=theme]-edge-bottom-left.png" x=x y=y isFixed=isFixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-menu-[=theme]-edge-bottom-right.png" x=x+width-7 y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-panel-[=theme]-edge-bottom-left.png" x=x y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-panel-[=theme]-edge-bottom-right.png" x=x+width-7 y=y isFixed=isFixed/>
 <#if isEdge>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x y=y+7 isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/blank-panel.png" x=x y=y+7 isFixed=isFixed/>
 </#if>
 </#macro>
 
 
-<#-- creates a composite menu image with the given dimensions
+<#-- creates a composite panel image with the given dimensions
  (x,y)
     ╭─────────────╮      -+-
     │             │       |
@@ -131,28 +131,28 @@
 
 <#macro verticalMenuHeader x y header body isFixed=true>
 <#-- edge images are 7x7px -->
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-dark.png" x=x y=y isFixed=isFixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-dark-edge-top-left.png" x=x y=y isFixed=isFixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-light.png" x=x+header y=y isFixed=isFixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-light-edge-top-right.png" x=x+header+body-7 y=y isFixed=isFixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x+header+body y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-panel-dark.png" x=x y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-panel-dark-edge-top-left.png" x=x y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-panel-light.png" x=x+header y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-panel-light-edge-top-right.png" x=x+header+body-7 y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/blank-panel.png" x=x+header+body y=y isFixed=isFixed/>
 </#macro>
 
 <#macro verticalMenuBottom x y header body isFixed=true>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-dark-edge-bottom-left.png" x=x y=y isFixed=isFixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-light-edge-bottom-right.png" x=x+header+body-7 y=y isFixed=isFixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x y=y+7 isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-panel-dark-edge-bottom-left.png" x=x y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-panel-light-edge-bottom-right.png" x=x+header+body-7 y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/blank-panel.png" x=x y=y+7 isFixed=isFixed/>
 </#macro>
 
 
 <#macro noLeftEdgePanel x y width height color=image.primaryColor isDark=false isFixed=true>
 <#local theme = cmn.getTheme(isDark)>
 # ------- panel | [=theme] [=color] no left round edges | top -------
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-menu-[=theme].png" x=x y=y isFixed=isFixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-menu-[=theme]-edge-top-right.png" x=x+width-7 y=y isFixed=isFixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x+width y=y isFixed=isFixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-menu-[=theme]-edge-bottom-right.png" x=x+width-7 y=y+height-7 isFixed=isFixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x y=y+height isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-panel-[=theme].png" x=x y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-panel-[=theme]-edge-top-right.png" x=x+width-7 y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/blank-panel.png" x=x+width y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-panel-[=theme]-edge-bottom-right.png" x=x+width-7 y=y+height-7 isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/blank-panel.png" x=x y=y+height isFixed=isFixed/>
 # ------- panel | [=theme] [=color] no left round edges | bottom -------
 </#macro>
 
@@ -194,6 +194,6 @@
   <@panelBottomCorners x=xCoordinate y=y width=width isFixed=false isEdge=false color=color/>
   <#local xCoordinate = xCoordinate + width + gap, color=image.primaryColor>
 </#list>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x y=y isFixed=false/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/blank-panel.png" x=x y=y isFixed=false/>
 # ------- [=widths?size] column(s) panel | bottom edges -------
 </#macro>

@@ -1,4 +1,4 @@
-<#import "/lib/menu-round.ftl" as menu>
+<#import "/lib/panel-round.ftl" as panel>
 conky.config = {
   lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/panel.lua',
   lua_draw_hook_pre = 'reset_state',
@@ -63,54 +63,54 @@ conky.text = [[
 ${if_existing [=activeTorrentsFile]}\
 ${if_match ${lines [=activeTorrentsFile]} > 0}\
 ${lua read_file [=activeTorrentsFile]}${lua calculate_voffset [=activeTorrentsFile] [=max]}\
-<@menu.table x=0 y=y width=width header=header color=image.secondaryColor isFixed=false/>
-<@menu.table x=width+colGap y=y width=speedCol header=header color=image.secondaryColor isFixed=false/>
-<@menu.table x=width+colGap+speedCol+colGap y=y width=speedCol header=header color=image.secondaryColor isFixed=false/>
+<@panel.table x=0 y=y width=width header=header color=image.secondaryColor isFixed=false/>
+<@panel.table x=width+colGap y=y width=speedCol header=header color=image.secondaryColor isFixed=false/>
+<@panel.table x=width+colGap+speedCol+colGap y=y width=speedCol header=header color=image.secondaryColor isFixed=false/>
 ${lua_parse add_y_offset voffset 2}${offset 5}${color1}active torrents${goto 226}up${goto 254}down${voffset 6}
 ${lua increment_offsets 0 [=header]}\
 <#assign y += header>
 ${color}${lua_parse head [=activeTorrentsFile] [=max]}${lua increase_y_offset [=activeTorrentsFile]}${voffset 4}
-<@menu.panelsBottom x=0 y=0 widths=[width,speedCol,speedCol] gap=colGap isFixed=false color=image.secondaryColor/>
+<@panel.panelsBottom x=0 y=0 widths=[width,speedCol,speedCol] gap=colGap isFixed=false color=image.secondaryColor/>
 <#assign x = width + colGap + speedCol + colGap + speedCol + gap>
 ${lua reset_state}${lua increment_offsets [=x] 0}\
 ${else}\
 ${lua increment_offsets 0 326}\
-<@menu.panel x=0 y=0 width=width height=3+16+1 color=image.secondaryColor isFixed=false/>
+<@panel.panel x=0 y=0 width=width height=3+16+1 color=image.secondaryColor isFixed=false/>
 ${lua_parse add_y_offset voffset 2}${goto 49}${color}no active torrents${voffset 4}
 ${lua reset_state}${lua increment_offsets [=width + 14] 0}\
 ${endif}\
 ${else}\
 <#assign body = 36>
 ${lua increment_offsets 0 310}\
-<@menu.panel x=0 y=0 width=width height=body color=image.secondaryColor isFixed=false/>
+<@panel.panel x=0 y=0 width=width height=body color=image.secondaryColor isFixed=false/>
 ${lua_parse add_y_offset voffset 2}${goto 24}${color}active torrents input file
 ${voffset 3}${goto 72}is missing${voffset 4}
 ${lua reset_state}${lua increment_offsets [=width + 14] 0}\
 ${endif}\
 # :::::::::::: peers
-# peers menu is displayed on the right side of the active torrents menu
+# peers panel is displayed on the right side of the active torrents panel
 ${voffset -345}\
 <#assign peersFile = inputDir + "/transmission.peers">
 ${if_existing [=peersFile]}\
 ${if_match ${lines [=peersFile]} > 0}\
 ${lua read_file [=peersFile]}${lua calculate_voffset [=peersFile] [=max]}\
 <#assign ipCol = 101, clientCol = 87>
-<@menu.table x=0 y=0 width=ipCol header=header isFixed=false color=image.secondaryColor/>
-<@menu.table x=ipCol+colGap y=0 width=clientCol header=header isFixed=false color=image.secondaryColor/>
-<@menu.table x=ipCol+colGap+clientCol+colGap y=0 width=39 header=header isFixed=false color=image.secondaryColor/>
-<@menu.table x=ipCol+colGap+clientCol+colGap+speedCol+colGap y=0 width=39 header=header isFixed=false color=image.secondaryColor/>
+<@panel.table x=0 y=0 width=ipCol header=header isFixed=false color=image.secondaryColor/>
+<@panel.table x=ipCol+colGap y=0 width=clientCol header=header isFixed=false color=image.secondaryColor/>
+<@panel.table x=ipCol+colGap+clientCol+colGap y=0 width=39 header=header isFixed=false color=image.secondaryColor/>
+<@panel.table x=ipCol+colGap+clientCol+colGap+speedCol+colGap y=0 width=39 header=header isFixed=false color=image.secondaryColor/>
 ${lua_parse add_y_offset voffset 2}${lua_parse add_x_offset offset 5}${color1}ip address${offset 43}client${offset 69}up${offset 16}down${voffset 6}
 ${lua increment_offsets 0 [=header]}\
 ${color}${lua_parse head_mem [=peersFile] [=max]}${lua increase_y_offset [=peersFile]}
-<@menu.panelsBottom x=0 y=0 widths=[ipCol,clientCol,speedCol,speedCol] gap=colGap isFixed=false color=image.secondaryColor/>
+<@panel.panelsBottom x=0 y=0 widths=[ipCol,clientCol,speedCol,speedCol] gap=colGap isFixed=false color=image.secondaryColor/>
 ${else}\
 ${lua increment_offsets 0 323}\
-<@menu.panel x=0 y=0 width=width height=3+16+1 color=image.secondaryColor isFixed=false/>
+<@panel.panel x=0 y=0 width=width height=3+16+1 color=image.secondaryColor isFixed=false/>
 ${lua_parse add_y_offset voffset 2}${lua_parse add_x_offset offset 47}${color}no peers connected${voffset 4}
 ${endif}\
 ${else}\
 ${lua increment_offsets 0 307}\
-<@menu.panel x=0 y=0 width=width height=body color=image.secondaryColor isFixed=false/>
+<@panel.panel x=0 y=0 width=width height=body color=image.secondaryColor isFixed=false/>
 ${lua_parse add_y_offset voffset 2}${lua_parse add_x_offset offset 27}${color}torrent peers input file
 ${voffset 3}${lua_parse add_x_offset offset 72}is missing
 ${endif}\

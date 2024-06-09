@@ -52,49 +52,49 @@ conky.text = [[
 ${if_existing /tmp/conky/transmission.active}\
 ${if_match ${lines /tmp/conky/transmission.active} > 0}\
 ${lua read_file /tmp/conky/transmission.active}${lua calculate_voffset /tmp/conky/transmission.active 20}\
-# ------- single column table | top edge    -------
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark.png 0 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-left.png 0 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-right.png 195 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light.png 0 19}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 202 0}\
-# ------- single column table | bottom edge -------
-# ------- single column table | top edge    -------
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark.png 203 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-left.png 203 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-right.png 235 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light.png 203 19}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 242 0}\
-# ------- single column table | bottom edge -------
-# ------- single column table | top edge    -------
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark.png 243 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-left.png 243 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-right.png 275 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light.png 243 19}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 282 0}\
-# ------- single column table | bottom edge -------
+# -------  table | grape 1 column | top edge    -------
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-dark.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-dark-edge-top-left.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-dark-edge-top-right.png 195 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light.png 0 19}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 202 0}\
+# -------  table | grape 1 column | bottom edge -------
+# -------  table | grape 1 column | top edge    -------
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-dark.png 203 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-dark-edge-top-left.png 203 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-dark-edge-top-right.png 235 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light.png 203 19}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 242 0}\
+# -------  table | grape 1 column | bottom edge -------
+# -------  table | grape 1 column | top edge    -------
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-dark.png 243 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-dark-edge-top-left.png 243 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-dark-edge-top-right.png 275 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light.png 243 19}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 282 0}\
+# -------  table | grape 1 column | bottom edge -------
 ${lua_parse add_y_offset voffset 2}${offset 5}${color1}active torrents${goto 226}up${goto 254}down${voffset 6}
 ${lua increment_offsets 0 19}\
 ${color}${lua_parse head /tmp/conky/transmission.active 20}${lua increase_y_offset /tmp/conky/transmission.active}${voffset 4}
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light-edge-bottom-left.png 0 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light-edge-bottom-right.png 195 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-left.png 203 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-right.png 235 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-left.png 243 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-right.png 275 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light-edge-bottom-left.png 0 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light-edge-bottom-right.png 195 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-left.png 203 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-right.png 235 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-left.png 243 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-right.png 275 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 0}\
 # ------- 3 column(s) panel | bottom edges -------
 ${lua reset_state}${lua increment_offsets 287 0}\
 ${else}\
 ${lua increment_offsets 0 326}\
 # ------- light panel top edge    -------
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light.png 0 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light-edge-top-left.png 0 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light-edge-top-right.png 195 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 202 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light-edge-bottom-left.png 0 13}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light-edge-bottom-right.png 195 13}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 20}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light-edge-top-left.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light-edge-top-right.png 195 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 202 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light-edge-bottom-left.png 0 13}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light-edge-bottom-right.png 195 13}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 20}\
 # ------- light panel bottom edge -------
 ${lua_parse add_y_offset voffset 2}${goto 49}${color}no active torrents${voffset 4}
 ${lua reset_state}${lua increment_offsets 216 0}\
@@ -102,88 +102,88 @@ ${endif}\
 ${else}\
 ${lua increment_offsets 0 310}\
 # ------- light panel top edge    -------
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light.png 0 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light-edge-top-left.png 0 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light-edge-top-right.png 195 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 202 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light-edge-bottom-left.png 0 29}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light-edge-bottom-right.png 195 29}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 36}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light-edge-top-left.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light-edge-top-right.png 195 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 202 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light-edge-bottom-left.png 0 29}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light-edge-bottom-right.png 195 29}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 36}\
 # ------- light panel bottom edge -------
 ${lua_parse add_y_offset voffset 2}${goto 24}${color}active torrents input file
 ${voffset 3}${goto 72}is missing${voffset 4}
 ${lua reset_state}${lua increment_offsets 216 0}\
 ${endif}\
 # :::::::::::: peers
-# peers menu is displayed on the right side of the active torrents menu
+# peers panel is displayed on the right side of the active torrents panel
 ${voffset -345}\
 ${if_existing /tmp/conky/transmission.peers}\
 ${if_match ${lines /tmp/conky/transmission.peers} > 0}\
 ${lua read_file /tmp/conky/transmission.peers}${lua calculate_voffset /tmp/conky/transmission.peers 20}\
-# ------- single column table | top edge    -------
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark.png 0 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-left.png 0 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-right.png 94 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light.png 0 19}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 101 0}\
-# ------- single column table | bottom edge -------
-# ------- single column table | top edge    -------
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark.png 102 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-left.png 102 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-right.png 182 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light.png 102 19}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 189 0}\
-# ------- single column table | bottom edge -------
-# ------- single column table | top edge    -------
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark.png 190 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-left.png 190 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-right.png 222 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light.png 190 19}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 229 0}\
-# ------- single column table | bottom edge -------
-# ------- single column table | top edge    -------
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark.png 230 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-left.png 230 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-dark-edge-top-right.png 262 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light.png 230 19}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 269 0}\
-# ------- single column table | bottom edge -------
+# -------  table | grape 1 column | top edge    -------
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-dark.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-dark-edge-top-left.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-dark-edge-top-right.png 94 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light.png 0 19}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 101 0}\
+# -------  table | grape 1 column | bottom edge -------
+# -------  table | grape 1 column | top edge    -------
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-dark.png 102 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-dark-edge-top-left.png 102 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-dark-edge-top-right.png 182 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light.png 102 19}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 189 0}\
+# -------  table | grape 1 column | bottom edge -------
+# -------  table | grape 1 column | top edge    -------
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-dark.png 190 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-dark-edge-top-left.png 190 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-dark-edge-top-right.png 222 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light.png 190 19}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 229 0}\
+# -------  table | grape 1 column | bottom edge -------
+# -------  table | grape 1 column | top edge    -------
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-dark.png 230 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-dark-edge-top-left.png 230 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-dark-edge-top-right.png 262 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light.png 230 19}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 269 0}\
+# -------  table | grape 1 column | bottom edge -------
 ${lua_parse add_y_offset voffset 2}${lua_parse add_x_offset offset 5}${color1}ip address${offset 43}client${offset 69}up${offset 16}down${voffset 6}
 ${lua increment_offsets 0 19}\
 ${color}${lua_parse head_mem /tmp/conky/transmission.peers 20}${lua increase_y_offset /tmp/conky/transmission.peers}
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light-edge-bottom-left.png 0 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light-edge-bottom-right.png 94 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-left.png 102 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-right.png 182 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-left.png 190 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-right.png 222 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-left.png 230 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/green-menu-light-edge-bottom-right.png 262 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light-edge-bottom-left.png 0 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light-edge-bottom-right.png 94 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-left.png 102 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-right.png 182 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-left.png 190 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-right.png 222 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-left.png 230 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-right.png 262 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 0}\
 # ------- 4 column(s) panel | bottom edges -------
 ${else}\
 ${lua increment_offsets 0 323}\
 # ------- light panel top edge    -------
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light.png 0 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light-edge-top-left.png 0 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light-edge-top-right.png 195 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 202 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light-edge-bottom-left.png 0 13}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light-edge-bottom-right.png 195 13}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 20}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light-edge-top-left.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light-edge-top-right.png 195 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 202 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light-edge-bottom-left.png 0 13}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light-edge-bottom-right.png 195 13}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 20}\
 # ------- light panel bottom edge -------
 ${lua_parse add_y_offset voffset 2}${lua_parse add_x_offset offset 47}${color}no peers connected${voffset 4}
 ${endif}\
 ${else}\
 ${lua increment_offsets 0 307}\
 # ------- light panel top edge    -------
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light.png 0 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light-edge-top-left.png 0 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light-edge-top-right.png 195 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 202 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light-edge-bottom-left.png 0 29}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-menu-light-edge-bottom-right.png 195 29}\
-${lua_parse draw_image ~/conky/monochrome/images/common/menu-blank.png 0 36}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light-edge-top-left.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light-edge-top-right.png 195 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 202 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light-edge-bottom-left.png 0 29}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light-edge-bottom-right.png 195 29}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 36}\
 # ------- light panel bottom edge -------
 ${lua_parse add_y_offset voffset 2}${lua_parse add_x_offset offset 27}${color}torrent peers input file
 ${voffset 3}${lua_parse add_x_offset offset 72}is missing

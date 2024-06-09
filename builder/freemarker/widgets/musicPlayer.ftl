@@ -1,4 +1,4 @@
-<#import "/lib/menu-round.ftl" as menu>
+<#import "/lib/panel-round.ftl" as panel>
 conky.config = {
   lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/panel.lua',
   lua_draw_hook_pre = 'reset_state',

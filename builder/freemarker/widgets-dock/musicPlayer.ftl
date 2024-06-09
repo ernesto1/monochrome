@@ -1,4 +1,4 @@
-<#import "/lib/menu-round.ftl" as menu>
+<#import "/lib/panel-round.ftl" as panel>
 -- n.b. this conky requires the music-player java app to be running in the background
 --      it generates input files under /tmp/conky/musicplayer.* which this conky will read
 
@@ -45,10 +45,10 @@ conky.config = {
   draw_shades = false,      -- black shadow on text (not good if text is black)
   draw_outline = false,     -- black outline around text (not good if text is black)
   -- colors
-  default_color = '[=colors.menuText]',  -- regular text
+  default_color = '[=colors.panelText]',  -- regular text
   color1 = '[=colors.labels]',
-  color3 = '[=colors.secondary.labels]',         -- secondary menu labels
-  color4 = '[=colors.secondary.text]'         -- secondary menu text
+  color3 = '[=colors.secondary.labels]',         -- secondary panel labels
+  color4 = '[=colors.secondary.text]'         -- secondary panel text
 };
 
 conky.text = [[
@@ -63,19 +63,19 @@ ${if_existing /tmp/conky/musicplayer.name}\
 # :::: no music player available
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-sound-wave-small.png -p 0,0}\
-<@menu.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconheight/>
+<@panel.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconheight/>
 ${voffset 5}${offset 45}${color1}now playing
 ${voffset 2}${offset 45}${color}no player running
 ${else}\
 # :::: music player available
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-sound-wave-small.png -p 0,0}\
-<@menu.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconheight color=image.secondaryColor/>
+<@panel.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconheight color=image.secondaryColor/>
 ${voffset 5}${goto 50}${color3}${cat /tmp/conky/musicplayer.name}
 ${voffset 2}${goto 50}${color4}${cat /tmp/conky/musicplayer.playbackStatus}${voffset [= 5 + gap]}
 ${else}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-sound-wave-small.png -p 0,0}\
-<@menu.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconheight/>
+<@panel.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconheight/>
 ${voffset 5}${goto 50}${color1}${cat /tmp/conky/musicplayer.name}
 ${voffset 2}${goto 50}${color}${cat /tmp/conky/musicplayer.playbackStatus}${voffset [= 5 + gap]}
 ${endif}\
@@ -83,18 +83,18 @@ ${lua increment_offsets 0 [=iconheight + gap]}\
 # :::: album art
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
 <#assign innerBorder = 2>   <#-- border width between the window and the album art -->
-<@menu.panel x=0 y=0 width=width height=width isFixed=false/>
-${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-menu-album-placeholder.png [=innerBorder] 0}\
+<@panel.panel x=0 y=0 width=width height=width isFixed=false/>
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-album-placeholder.png [=innerBorder] 0}\
 ${lua_parse load_image ${cat /tmp/conky/musicplayer.albumArtPath} [=width-innerBorder*2]x[=width-innerBorder*2] [=innerBorder] [=innerBorder]}\
 ${voffset [=width + gap]}${lua increment_offsets 0 [=width + gap]}\
 ${endif}\
 # :::: track details
-# menu expands based on the track metadata fields available
+# panel expands based on the track metadata fields available
 # the position of the bottom edge images is shifted down 16px for each field
 <#-- 3 px top border | 16 px text | 2 px bottom border -->
 # -------  vertical table image top -------
 <#assign header = 45, height = 21>
-<@menu.verticalMenuHeader x=0 y=0 header=header body=width-header isFixed=false/>
+<@panel.verticalMenuHeader x=0 y=0 header=header body=width-header isFixed=false/>
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-sound-wave.png [=width-53-7] 0}\
 ${endif}\
@@ -112,12 +112,12 @@ ${voffset 3}${offset 5}${color1}genre${goto 50}${color}${lua get genre}${lua inc
 ${endif}\
 ${voffset -9}\
 # ------  vertical table image bottom ------
-<@menu.verticalMenuBottom x=0 y=0 header=header body=width-header isFixed=false/>
+<@panel.verticalMenuBottom x=0 y=0 header=header body=width-header isFixed=false/>
 # -------- end of table image bottom -------
 ${endif}\
 ${else}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-sound-wave-small.png -p 0,0}\
-<@menu.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconheight isDark=true color=image.secondaryColor/>
+<@panel.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconheight isDark=true color=image.secondaryColor/>
 ${voffset 5}${offset 45}${color3}now playing
 ${voffset 2}${offset 45}${color4}input files missing
 ${endif}\

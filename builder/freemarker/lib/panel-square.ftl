@@ -1,4 +1,4 @@
-<#import "/lib/menu-common.ftl" as cmn>
+<#import "/lib/panel-common.ftl" as cmn>
 
 <#-- creates a composite table image with the given dimensions
  (x,y)
@@ -23,8 +23,8 @@
   <#if highlight?seq_contains(width?counter)>
     <#local color=image.secondaryColor>
   </#if>
-  <@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-menu-dark.png" x=xCoordinate y=y isFixed=isFixed/>
-  <@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=xCoordinate+width y=y isFixed=isFixed/>
+  <@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-panel-dark.png" x=xCoordinate y=y isFixed=isFixed/>
+  <@cmn.drawImage filePath="~/conky/monochrome/images/common/blank-panel.png" x=xCoordinate+width y=y isFixed=isFixed/>
   <#local xCoordinate = xCoordinate + width + gap, color=image.primaryColor>
 </#list>
 # ------- body
@@ -33,8 +33,8 @@
   <#if highlight?seq_contains(width?counter)>
     <#local color=image.secondaryColor>
   </#if>
-  <@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-menu-light.png" x=xCoordinate y=y isFixed=isFixed/>
-  <@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=xCoordinate+width y=y isFixed=isFixed/>
+  <@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-panel-light.png" x=xCoordinate y=y isFixed=isFixed/>
+  <@cmn.drawImage filePath="~/conky/monochrome/images/common/blank-panel.png" x=xCoordinate+width y=y isFixed=isFixed/>
   <#local xCoordinate = xCoordinate + width + gap, color=image.primaryColor>
 </#list>
 <#if body gt 0>
@@ -43,7 +43,7 @@
 <#-- the blank image is repeated as many times as necessary in order to cover the table's width -->
 <#list 0..widths?size as widths>
 <#if widthToCover gt 0>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=xCoordinate y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/blank-panel.png" x=xCoordinate y=y isFixed=isFixed/>
 <#local xCoordinate = xCoordinate + blankImageWidth, widthToCover = widthToCover - blankImageWidth>
 <#else>
 <#break>
@@ -68,10 +68,10 @@
  -->
 <#macro verticalTable x y header body height isFixed=true>
 # ------- vertical table | top    -------
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-dark.png" x=x y=y isFixed=isFixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-menu-light.png" x=x+header y=y isFixed=isFixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x+header+body y=y isFixed=isFixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x y=y+height isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-panel-dark.png" x=x y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-panel-light.png" x=x+header y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/blank-panel.png" x=x+header+body y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/blank-panel.png" x=x y=y+height isFixed=isFixed/>
 # ------- vertical table | bottom -------
 </#macro>
 
@@ -90,10 +90,10 @@
 <#macro panel x y width height=0 isDark=false isFixed=true color=image.primaryColor>
 <#local theme=cmn.getTheme(isDark)>
 # ------- panel | [=theme] [=color] | top     -------
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-menu-[=theme].png" x=x y=y isFixed=isFixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x+width y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-panel-[=theme].png" x=x y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/blank-panel.png" x=x+width y=y isFixed=isFixed/>
 <#if height gt 0>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/menu-blank.png" x=x y=y+height isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/blank-panel.png" x=x y=y+height isFixed=isFixed/>
 # ------- panel | [=theme] [=color] | bottom  -------
 </#if>
 </#macro>
