@@ -19,7 +19,7 @@ java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar glass blue lapt
 pushd /tmp/monochrome && \
 buildSidebar.bash config cpu-mem network disk power && \
 echo '${voffset -900}]];' >> sidebar && \
-mv sidebar system musicPlayer ~/conky/monochrome/glass && \
+mv sidebar system applications ~/conky/monochrome/glass && \
 popd
 
 
