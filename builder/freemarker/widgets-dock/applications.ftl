@@ -20,7 +20,7 @@ conky.config = {
   -- window alignment
   alignment = 'top_right',  -- top|middle|bottom_left|right
   gap_x = 3,
-  <#if system == "desktop"><#assign yOffset = 130><#else><#assign yOffset = 0></#if>
+  <#if system == "desktop"><#assign yOffset = 130><#else><#assign yOffset = 25></#if>
   gap_y = [=32+3+yOffset],
 
   -- window settings
@@ -60,7 +60,7 @@ conky.config = {
 };
 
 conky.text = [[
-<#if system == "desktop"><#assign packageLines = 22><#else><#assign packageLines = 15></#if>
+<#if system == "desktop"><#assign packageLines = 22><#else><#assign packageLines = 18></#if>
 <#assign totalLines = packageLines * 2>
 ${lua set_total_lines [=totalLines]}\
 # :::::::::::: package updates
@@ -94,7 +94,6 @@ ${voffset 5}${offset 45}${color1}dandified yum
 ${voffset 2}${offset 45}${color}no package updates${voffset [= 5 + sectionGap]}
 ${lua increment_offsets 0 [=iconheight + sectionGap]}${lua decrease_total_lines 2}\
 ${endif}\
-<#if system == "desktop">
 # :::::::::::: transmission bittorrent client
 <#assign inputDir = "/tmp/conky/"
          peersFile = inputDir + "transmission.peers.raw",
@@ -172,5 +171,4 @@ ${voffset 5}${offset 45}${color3}transmission
 ${voffset 2}${offset 45}${color4}input files missing${voffset [= 7 + gap]}
 ${lua increment_offsets 0 [=iconheight + sectionGap]}${lua decrease_total_lines 2}\
 ${endif}\
-</#if>
 ]]
