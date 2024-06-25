@@ -26,8 +26,8 @@ function getUploadTorrents {
 
 function getDownloadTorrents {
   grep -E '(Downloading|Up & Down)' ${torrents}.$$ \
-      | cut -d ':' -f 2,4 \
-      | sort -t ':' -k 2
+    | cut -d ':' -f 2,4 \
+    | sort -t ':' -k 2
 }
 
 function renameTempFile {
@@ -97,6 +97,7 @@ peersDownloadsFile=${outputDir}/transmission.peers.down
 while [ true ]; do 
   # ::: active torrents
   # $ transmission-remote -t active -l
+  # 1   2    3          4     5             6     7     8      9            10
   #     ID   Done       Have  ETA           Up    Down  Ratio  Status       Name
   #    168   100%   11.74 GB  17 days      0.0     0.0   2.47  Seeding      fedora 37.iso
   #    320    35%   989.0 MB  8 min     1538.0  3620.0   0.14  Up & Down    photo gallery
@@ -106,8 +107,14 @@ while [ true ]; do
   transmission-remote -t active -l > ${torrentsRaw}
   awk 'END{printf "%'\''d KiB", $4}' ${torrentsRaw} > ${speedUploadFile}.$$
   awk 'END{printf "%'\''d KiB", $5}' ${torrentsRaw} > ${speedDownloadFile}.$$
+  # text manipulations done to the active torrents file:
+  #   - replace the space separator with colon ':'
+  #   - remove the '#' character, it messes up how conky prints a file (it gets interpreted as a comment)
+  #   - UTF characters replaced with a dot, the default conky font only supports ascii
+  #     japanese characters would yield multiple giberish characters
+  #     utf characters get replaced with 3 dots, then the 3 dots get replaced with a single dot
   grep -E '(Seeding|Downloading|Up & Down)' ${torrentsRaw} \
-    | sed -e 's/  \+/:/g' -e 's/#//g' \
+    | LANG=C sed -e 's/  \+/:/g' -e 's/#//g' -e 's/[\x80-\xFF]/./g' -e 's/\.\.\././g' \
     | cut -d ':' -f 6,7,9,10 \
     | sort -t ':' -k 3 > ${torrents}.$$
     
@@ -144,12 +151,12 @@ while [ true ]; do
         | awk -F ':' "{printf \"%-15s\${offset 12}%-13.13s\${offset ${offset}}\${color4}%5d\${offset ${offset}}\${color}%5d\n\", \$1, \$4, \$3, \$2}" > ${peersFile}.$$
       ;;
     flipped)
-      cut -d ':' -f 1,5,6 ${peers}.$$ \
+      cut -d ':' -f 1,3,5 ${peers}.$$ \
         | grep -vF ':0.0:' \
-        | awk -F ':' "{printf \"\${color4}%5d\${offset ${offset}}\${color}%-15s\${offset ${offset}}%-13.13s\n\", \$2, \$1, \$3}" > ${peersUploadsFile}.$$
-      cut -d ':' -f 1,4,6 ${peers}.$$ \
-        | grep -vF ':0.0:' \
-        | awk -F ':' "{printf \"%5d\${offset ${offset}}\${color}%-15s\${offset ${offset}}%-13.13s\n\", \$2, \$1, \$3}" > ${peersDownloadsFile}.$$
+        | awk -F ':' "{printf \"\${color4}%5d\${offset ${offset}}\${color}%-15s\${offset ${offset}}%5.1f%%\n\", \$3, \$1, \$2}" > ${peersUploadsFile}.$$
+      cut -d ':' -f 1,3,4 ${peers}.$$ \
+        | grep -vF ':0.0' \
+        | awk -F ':' "{printf \"%5d\${offset ${offset}}\${color}%-15s\${offset ${offset}}%5.1f%%\n\", \$3, \$1, \$2}" > ${peersDownloadsFile}.$$
       ;;
   esac
   
