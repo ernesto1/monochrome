@@ -12,7 +12,7 @@ java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar widgets-dock ye
 pushd /tmp/monochrome && \
 buildSidebar.bash config cpu-mem network disk temperature packages-icon time bottom-edge && \
 echo '${voffset -360}]];' >> sidebar && \
-mv sidebar system musicPlayer applications ~/conky/monochrome/widgets-dock && \
+mv sidebar system applications ~/conky/monochrome/widgets-dock && \
 sleep 2 && \
 mv sidebarPanel ~/conky/monochrome/widgets-dock && \
 popd
@@ -22,7 +22,7 @@ java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar widgets-dock ye
 pushd /tmp/monochrome && \
 buildSidebar.bash config cpu-mem network disk power temperature packages-icon bottom-edge && \
 echo '${voffset -360}]];' >> sidebar && \
-mv sidebar system musicPlayer applications ~/conky/monochrome/widgets-dock && \
+mv sidebar system applications ~/conky/monochrome/widgets-dock && \
 sleep 2 && \
 mv sidebarPanel ~/conky/monochrome/widgets-dock && \
 popd

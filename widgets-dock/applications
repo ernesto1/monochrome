@@ -24,7 +24,7 @@ conky.config = {
   -- window settings
   minimum_width = 169,      -- conky will add an extra pixel to this  
   maximum_width = 169,
-  minimum_height = 1016,
+  minimum_height = 1351,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -43,6 +43,8 @@ conky.config = {
   
   -- miscellanous settings
   imlib_cache_flush_interval = 250,
+  max_user_text = 20000,    -- max size of user text buffer in bytes, i.e. text inside conky.text section 
+                            -- default is 16,384 bytes
   
   -- font settings
   use_xft = false,
@@ -57,7 +59,7 @@ conky.config = {
 };
 
 conky.text = [[
-${lua set_total_lines 44}\
+${lua set_total_lines 72}\
 # :::::::::::: package updates
 ${if_existing /tmp/conky/dnf.packages.formatted}\
 ${image ~/conky/monochrome/images/widgets-dock/green-packages-small.png -p 0,0}\
@@ -99,6 +101,113 @@ ${image ~/conky/monochrome/images/common/blank-panel.png -p 38,38}\
 ${voffset 5}${offset 45}${color1}dandified yum
 ${voffset 2}${offset 45}${color}no package updates${voffset 9}
 ${lua increment_offsets 0 42}${lua decrease_total_lines 2}\
+${endif}\
+# :::::::::::::::: now playing
+# the UI of this conky has four states: song with album art
+#                                       song with no album art
+#                                       no music player is running
+#                                       dependent java dbus listener application is not running
+# ::: no player available
+${if_existing /tmp/conky/musicplayer.name}\
+${if_existing /tmp/conky/musicplayer.name Nameless}\
+${lua_parse draw_image ~/conky/monochrome/images/widgets-dock/yellow-sound-wave-small.png 0 0}\
+# ------- panel | light yellow no left round edges | top -------
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light.png 38 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light-edge-top-right.png 162 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 169 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light-edge-bottom-right.png 162 31}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 38 38}\
+# ------- panel | light yellow no left round edges | bottom -------
+${voffset 5}${lua_parse add_x_offset offset 45}${color1}now playing
+${voffset 2}${lua_parse add_x_offset offset 45}${color}no player running${voffset 9}
+${lua increment_offsets 0 42}\
+${else}\
+# ::: player status
+${lua increment_offsets 0 3}${voffset 3}\
+${lua_parse draw_image ~/conky/monochrome/images/widgets-dock/green-sound-wave-small.png 0 0}\
+${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
+# ------- panel | light green no left round edges | top -------
+${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light.png 38 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-top-right.png 162 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 169 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-right.png 162 31}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 38 38}\
+# ------- panel | light green no left round edges | bottom -------
+${voffset 5}${lua_parse add_x_offset offset 45}${color3}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}
+${voffset 2}${lua_parse add_x_offset offset 45}${color4}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
+${else}\
+${lua_parse draw_image ~/conky/monochrome/images/widgets-dock/yellow-sound-wave-small.png 0 0}\
+# ------- panel | light yellow no left round edges | top -------
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light.png 38 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light-edge-top-right.png 162 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 169 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light-edge-bottom-right.png 162 31}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 38 38}\
+# ------- panel | light yellow no left round edges | bottom -------
+${voffset 5}${lua_parse add_x_offset offset 45}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}
+${voffset 2}${lua_parse add_x_offset offset 45}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
+${endif}\
+${lua increment_offsets 0 41}\
+${voffset 9}\
+# ::: album art
+${if_existing /tmp/conky/musicplayer.albumArtPath}\
+# ------- light panel top edge    -------
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light-edge-top-left.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light-edge-top-right.png 162 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 169 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light-edge-bottom-left.png 0 162}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light-edge-bottom-right.png 162 162}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 169}\
+# ------- light panel bottom edge -------
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-album-placeholder.png 2 2}\
+${lua_parse load_image ${cat /tmp/conky/musicplayer.albumArtPath} 165x165 2 2}\
+${voffset 172}${lua increment_offsets 0 172}${lua decrease_total_lines 12}\
+${endif}\
+# ::: track details
+# panel expands based on the track metadata fields available
+# the position of the bottom edge images is shifted down 16px for each field
+# -------  vertical table image top -------
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-dark.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-dark-edge-top-left.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light.png 45 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light-edge-top-right.png 162 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 169 0}\
+${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-sound-wave.png 109 0}\
+${endif}\
+# --------- end of table image top ---------
+${lua increment_offsets 0 15}\
+${voffset 3}${lua_parse add_x_offset offset 5}${color1}title${lua_parse add_x_offset goto 50}${color}${cat /tmp/conky/musicplayer.title}${lua decrease_total_lines 2}
+${if_match "${lua get album ${cat /tmp/conky/musicplayer.album}}" != "unknown album"}\
+${voffset 3}${lua_parse add_x_offset offset 5}${color1}album${lua_parse add_x_offset goto 50}${color}${lua get album}${lua increment_offsets 0 16}${lua decrease_total_lines 1}
+${endif}\
+${if_match "${lua get artist ${cat /tmp/conky/musicplayer.artist}}" != "unknown artist"}\
+${voffset 3}${lua_parse add_x_offset offset 5}${color1}artist${lua_parse add_x_offset goto 50}${color}${lua get artist}${lua increment_offsets 0 16}${lua decrease_total_lines 1}
+${endif}\
+${if_match "${lua get genre ${cat /tmp/conky/musicplayer.genre}}" != "unknown genre"}\
+${voffset 3}${lua_parse add_x_offset offset 5}${color1}genre${lua_parse add_x_offset goto 50}${color}${lua get genre}${lua increment_offsets 0 16}${lua decrease_total_lines 1}
+${endif}\
+# ------  vertical table image bottom ------
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-dark-edge-bottom-left.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light-edge-bottom-right.png 162 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 7}\
+# -------- end of table image bottom -------
+${lua increment_offsets 0 14}\
+${voffset 12}\
+${endif}\
+${else}\
+${lua_parse draw_image ~/conky/monochrome/images/widgets-dock/green-sound-wave-small.png 0 0}\
+# ------- panel | dark green no left round edges | top -------
+${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-dark.png 38 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-dark-edge-top-right.png 162 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 169 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-dark-edge-bottom-right.png 162 31}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 38 38}\
+# ------- panel | dark green no left round edges | bottom -------
+${voffset 5}${lua_parse add_x_offset offset 45}${color3}now playing
+${voffset 2}${lua_parse add_x_offset offset 45}${color4}input files missing${voffset 9}
+${lua increment_offsets 0 42}\
 ${endif}\
 # :::::::::::: transmission bittorrent client
 ${if_existing /tmp/conky/transmission.torrents}\
@@ -155,7 +264,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 169 0}\
 ${lua increment_offsets 0 19}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-peers.png 15 22}\
 ${offset 5}${color1}torrent${alignr 4}up${voffset 6}
-${color}${lua_parse head /tmp/conky/transmission.torrents.up 44}${voffset 10}${lua increase_y_offset /tmp/conky/transmission.torrents.up}
+${color}${lua_parse head /tmp/conky/transmission.torrents.up 72}${voffset 10}${lua increase_y_offset /tmp/conky/transmission.torrents.up}
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light-edge-bottom-left.png 0 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-right.png 162 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 0}\
@@ -173,7 +282,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-dark.png 13
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 169 0}\
 ${lua increment_offsets 0 19}\
 ${offset 5}${color1}torrent${alignr 4}down${voffset 6}
-${color}${lua_parse head /tmp/conky/transmission.torrents.down 44}${lua increase_y_offset /tmp/conky/transmission.torrents.down}
+${color}${lua_parse head /tmp/conky/transmission.torrents.down 72}${lua increase_y_offset /tmp/conky/transmission.torrents.down}
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light-edge-bottom-left.png 0 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-dark-edge-bottom-right.png 162 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 0}\

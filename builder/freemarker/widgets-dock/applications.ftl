@@ -27,7 +27,7 @@ conky.config = {
   <#assign width = 169>
   minimum_width = [=width],      -- conky will add an extra pixel to this  
   maximum_width = [=width],
-  minimum_height = <#if system == "desktop">1016<#else>340</#if>,
+  minimum_height = <#if system == "desktop">1351<#else>600</#if>,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -46,6 +46,8 @@ conky.config = {
   
   -- miscellanous settings
   imlib_cache_flush_interval = 250,
+  max_user_text = 20000,    -- max size of user text buffer in bytes, i.e. text inside conky.text section 
+                            -- default is 16,384 bytes
   
   -- font settings
   use_xft = false,
@@ -61,22 +63,22 @@ conky.config = {
 
 conky.text = [[
 <#if system == "desktop"><#assign packageLines = 22><#else><#assign packageLines = 18></#if>
-<#assign totalLines = packageLines * 2>
+<#assign totalLines = 72>
 ${lua set_total_lines [=totalLines]}\
 # :::::::::::: package updates
 <#assign packagesFile = "/tmp/conky/dnf.packages.formatted",
          iconWidth = 38,       <#-- icon is a square -->
-         iconheight = 38,
+         iconHeight = 38,
          titleHeight = 19,
          y = 0,
          gap = 3,               <#-- empty space across panels of the same application -->
          sectionGap = 4>        <#-- empty space between application panels -->
 ${if_existing [=packagesFile]}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-packages-small.png -p 0,0}\
-<@panel.noLeftEdgePanel x=0+iconWidth y=y width=width-iconWidth height=iconheight color=image.secondaryColor/>
+<@panel.noLeftEdgePanel x=0+iconWidth y=y width=width-iconWidth height=iconHeight color=image.secondaryColor/>
 ${voffset 5}${offset 45}${color3}dandified yum
 ${voffset 2}${offset 45}${color4}${lines [=packagesFile]} package updates${voffset [= 7 + gap]}
-<#assign y += iconheight + gap>
+<#assign y += iconHeight + gap>
 <@panel.table x=0 y=y width=width header=titleHeight/>
 <#assign y += titleHeight>
 ${lua increment_offsets 0 [=y]}\
@@ -89,10 +91,83 @@ ${lua increment_offsets 0 [=sectionGap]}\
 ${else}\
 # ::: no updates available or dnf script not running
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-packages-small.png -p 0,0}\
-<@panel.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconheight/>
+<@panel.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconHeight/>
 ${voffset 5}${offset 45}${color1}dandified yum
 ${voffset 2}${offset 45}${color}no package updates${voffset [= 5 + sectionGap]}
-${lua increment_offsets 0 [=iconheight + sectionGap]}${lua decrease_total_lines 2}\
+${lua increment_offsets 0 [=iconHeight + sectionGap]}${lua decrease_total_lines 2}\
+${endif}\
+# :::::::::::::::: now playing
+# the UI of this conky has four states: song with album art
+#                                       song with no album art
+#                                       no music player is running
+#                                       dependent java dbus listener application is not running
+# ::: no player available
+${if_existing /tmp/conky/musicplayer.name}\
+${if_existing /tmp/conky/musicplayer.name Nameless}\
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-sound-wave-small.png 0 0}\
+<@panel.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconHeight isFixed=false/>
+${voffset 5}${lua_parse add_x_offset offset 45}${color1}now playing
+${voffset 2}${lua_parse add_x_offset offset 45}${color}no player running${voffset [=5 + sectionGap]}
+${lua increment_offsets 0 [=iconHeight + sectionGap]}\
+${else}\
+# ::: player status
+${lua increment_offsets 0 [=gap]}${voffset [=gap]}\
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-sound-wave-small.png 0 0}\
+${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
+<@panel.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconHeight isFixed=false color=image.secondaryColor/>
+${voffset 5}${lua_parse add_x_offset offset 45}${color3}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}
+${voffset 2}${lua_parse add_x_offset offset 45}${color4}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
+${else}\
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-sound-wave-small.png 0 0}\
+<@panel.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconHeight isFixed=false/>
+${voffset 5}${lua_parse add_x_offset offset 45}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}
+${voffset 2}${lua_parse add_x_offset offset 45}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
+${endif}\
+${lua increment_offsets 0 [=iconHeight + gap]}\
+${voffset [= 6 + gap]}\
+# ::: album art
+${if_existing /tmp/conky/musicplayer.albumArtPath}\
+<#assign border = 2>
+<@panel.panel x=0 y=0 width=width height=width isFixed=false/>
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-album-placeholder.png [=border] [=border]}\
+${lua_parse load_image ${cat /tmp/conky/musicplayer.albumArtPath} [=width-border*2]x[=width-border*2] [=border] [=border]}\
+${voffset [=width + gap]}${lua increment_offsets 0 [=width + gap]}${lua decrease_total_lines 12}\
+${endif}\
+# ::: track details
+# panel expands based on the track metadata fields available
+# the position of the bottom edge images is shifted down 16px for each field
+<#-- 3 px top border | 16 px text | 3 px bottom border -->
+# -------  vertical table image top -------
+<#assign header = 45, height = 22>
+<@panel.verticalMenuHeader x=0 y=0 header=header body=width-header isFixed=false/>
+${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-sound-wave.png [=width-53-7] 0}\
+${endif}\
+# --------- end of table image top ---------
+${lua increment_offsets 0 [=height - 7]}\<#-- edges are 7x7 px, therefore reduce the height of the bottom edges from the panel -->
+${voffset 3}${lua_parse add_x_offset offset 5}${color1}title${lua_parse add_x_offset goto 50}${color}${cat /tmp/conky/musicplayer.title}${lua decrease_total_lines 2}
+${if_match "${lua get album ${cat /tmp/conky/musicplayer.album}}" != "unknown album"}\
+${voffset 3}${lua_parse add_x_offset offset 5}${color1}album${lua_parse add_x_offset goto 50}${color}${lua get album}${lua increment_offsets 0 16}${lua decrease_total_lines 1}
+${endif}\
+${if_match "${lua get artist ${cat /tmp/conky/musicplayer.artist}}" != "unknown artist"}\
+${voffset 3}${lua_parse add_x_offset offset 5}${color1}artist${lua_parse add_x_offset goto 50}${color}${lua get artist}${lua increment_offsets 0 16}${lua decrease_total_lines 1}
+${endif}\
+${if_match "${lua get genre ${cat /tmp/conky/musicplayer.genre}}" != "unknown genre"}\
+${voffset 3}${lua_parse add_x_offset offset 5}${color1}genre${lua_parse add_x_offset goto 50}${color}${lua get genre}${lua increment_offsets 0 16}${lua decrease_total_lines 1}
+${endif}\
+# ------  vertical table image bottom ------
+<#-- draw the bottom edges at the final calculated location -->
+<@panel.verticalMenuBottom x=0 y=0 header=header body=width-header isFixed=false/>
+# -------- end of table image bottom -------
+${lua increment_offsets 0 [=7 + sectionGap + gap]}\<#-- edges are 7x7 px -->
+${voffset [= 8 + sectionGap]}\
+${endif}\
+${else}\
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-sound-wave-small.png 0 0}\
+<@panel.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconHeight isFixed=false isDark=true color=image.secondaryColor/>
+${voffset 5}${lua_parse add_x_offset offset 45}${color3}now playing
+${voffset 2}${lua_parse add_x_offset offset 45}${color4}input files missing${voffset [=5 + sectionGap]}
+${lua increment_offsets 0 [=iconHeight + sectionGap]}\
 ${endif}\
 # :::::::::::: transmission bittorrent client
 <#assign inputDir = "/tmp/conky/"
@@ -106,17 +181,17 @@ ${if_existing [=torrentsFile]}\
 # ::: no active torrents
 ${if_match ${lua get activeNum ${lines [=torrentsFile]}} == 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-torrents-small.png 0 0}\
-<@panel.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconheight isFixed=false/>
+<@panel.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconHeight isFixed=false/>
 ${voffset 5}${offset 45}${color1}transmission
 ${voffset 2}${offset 45}${color}no active torrents${voffset [= 5 + sectionGap]}
-${lua increment_offsets 0 [=iconheight + sectionGap]}${lua decrease_total_lines 2}\
+${lua increment_offsets 0 [=iconHeight + sectionGap]}${lua decrease_total_lines 2}\
 ${else}\
 # ::: active torrents
 ${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-torrents-small.png 0 0}\
-<@panel.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconheight color=image.secondaryColor isFixed=false/>
+<@panel.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconHeight color=image.secondaryColor isFixed=false/>
 ${voffset 5}${offset 45}${color3}transmission
 ${voffset 2}${offset 45}${color4}${lua get activeNum} active torrents${voffset [= 7 + gap]}
-${lua increment_offsets 0 [=iconheight + gap]}\
+${lua increment_offsets 0 [=iconHeight + gap]}\
 <#assign header = 59,   <#-- section for the labels -->
          height = 55>
 <@panel.verticalTable x=0 y=0 header=header body=width-header height=height isFixed=false/>
@@ -166,9 +241,9 @@ ${endif}\
 ${else}\
 # ::: error state
 ${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-torrents-small.png 0 0}\
-<@panel.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconheight color=image.secondaryColor isFixed=false isDark=true/>
+<@panel.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconHeight color=image.secondaryColor isFixed=false isDark=true/>
 ${voffset 5}${offset 45}${color3}transmission
 ${voffset 2}${offset 45}${color4}input files missing${voffset [= 7 + gap]}
-${lua increment_offsets 0 [=iconheight + sectionGap]}${lua decrease_total_lines 2}\
+${lua increment_offsets 0 [=iconHeight + sectionGap]}${lua decrease_total_lines 2}\
 ${endif}\
 ]]
