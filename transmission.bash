@@ -152,7 +152,7 @@ while [ true ]; do
       ;;
     flipped)
       cut -d ':' -f 1,3,5 ${peers}.$$ \
-        | grep -vF ':0.0:' \
+        | grep -vF ':0.0' \
         | awk -F ':' "{printf \"\${color4}%5d\${offset ${offset}}\${color}%-15s\${offset ${offset}}%5.1f%%\n\", \$3, \$1, \$2}" > ${peersUploadsFile}.$$
       cut -d ':' -f 1,3,4 ${peers}.$$ \
         | grep -vF ':0.0' \
