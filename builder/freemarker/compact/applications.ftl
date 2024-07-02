@@ -45,7 +45,7 @@ conky.config = {
   
   -- images
   imlib_cache_flush_interval = 250,
-  max_user_text = 26000,    -- max size of user text buffer in bytes, i.e. text inside conky.text section 
+  max_user_text = 26000,    -- max size of user text buffer in bytes, i.e. text inside conky.text section
                             -- default is 16,384 bytes
 
   -- font settings
@@ -106,7 +106,7 @@ ${if_existing /tmp/conky/musicplayer.name Nameless}\
 ${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-sound-wave.png 0 0}\
 <@panel.panel x=41 y=0 width=189-41 height=iconHeight isFixed=false/>
 ${voffset 3}${lua_parse add_x_offset offset 48}${color1}now playing
-${voffset 2}${lua_parse add_x_offset offset 48}${color}no player running${voffset [= 8 + sectionGap]}
+${voffset 2}${lua_parse add_x_offset offset 48}${color}no music player running${voffset [= 8 + sectionGap]}
 ${lua increment_offsets 0 [=iconHeight + sectionGap]}\
 ${else}\
 # :::::: player status
@@ -231,11 +231,14 @@ ${lua_parse head [=peersUpFile] [=torrentLines]}${lua increase_y_offset [=peersU
 <@panel.panelsBottom x=0 y=0 widths=[speedColWidth,ipCol,panelWidth-ipCol-colGap] gap=colGap isFixed=false highlight=[1]/>
 ${lua increment_offsets 0 [=gap]}\
 ${endif}\
+# download peers are only displayed if we have enough total lines left
+${if_match ${lua get totalLines} > 0}\
 ${if_match ${lines [=peersDownFile]} > 0}\
 <@panel.panels x=0 y=0 widths=[speedColWidth,ipCol,panelWidth-ipCol-colGap] gap=colGap isFixed=false/>
 ${lua_parse head [=peersDownFile] [=torrentLines]}${lua increase_y_offset [=peersDownFile]}
 <@panel.panelsBottom x=0 y=0 widths=[speedColWidth,ipCol,panelWidth-ipCol-colGap] gap=colGap isFixed=false/>
 ${lua increment_offsets 0 [=gap]}\
+${endif}\
 ${endif}\
 ${endif}\
 ${endif}\

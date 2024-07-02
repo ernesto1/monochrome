@@ -43,7 +43,7 @@ conky.config = {
   
   -- images
   imlib_cache_flush_interval = 250,
-  max_user_text = 26000,    -- max size of user text buffer in bytes, i.e. text inside conky.text section 
+  max_user_text = 26000,    -- max size of user text buffer in bytes, i.e. text inside conky.text section
                             -- default is 16,384 bytes
 
   -- font settings
@@ -133,7 +133,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edg
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 41 38}\
 # ------- light panel bottom edge -------
 ${voffset 3}${lua_parse add_x_offset offset 48}${color1}now playing
-${voffset 2}${lua_parse add_x_offset offset 48}${color}no player running${voffset 13}
+${voffset 2}${lua_parse add_x_offset offset 48}${color}no music player running${voffset 13}
 ${lua increment_offsets 0 43}\
 ${else}\
 # :::::: player status
@@ -357,6 +357,8 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 0}\
 # ------- 3 column(s) panel | bottom edges -------
 ${lua increment_offsets 0 3}\
 ${endif}\
+# download peers are only displayed if we have enough total lines left
+${if_match ${lua get totalLines} > 0}\
 ${if_match ${lines /tmp/conky/transmission.peers.down} > 0}\
 # ------- 3 column(s) panel | top edges    -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light.png 0 0}\
@@ -381,6 +383,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edg
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 0}\
 # ------- 3 column(s) panel | bottom edges -------
 ${lua increment_offsets 0 3}\
+${endif}\
 ${endif}\
 ${endif}\
 ${endif}\
