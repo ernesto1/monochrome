@@ -3,7 +3,7 @@ conky.config = {
   lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/panel.lua',
   lua_draw_hook_pre = 'reset_state',
   
-  update_interval = 4,    -- update interval in seconds
+  update_interval = 2,    -- update interval in seconds
   xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
@@ -63,7 +63,7 @@ ${voffset 3}${alignc}${color1}dnf package management
 ${voffset 5}${alignc}${color}${lines [=packagesFile]} package update(s) available
 ${voffset 6}${offset 5}${color1}package${alignr 4}version${voffset 1}
 <#assign maxLines = 25>
-${color}${lua_parse head [=packagesFile] [=maxLines]}${lua increase_y_offset [=packagesFile]}${voffset 5}
+${color}${lua_parse paginate [=packagesFile] [=maxLines]}${lua increase_y_offset [=packagesFile]}${voffset 5}
 <@panel.panelBottomCorners x=0 y=0 width=width isFixed=false/>
 ${endif}\
 ]];
