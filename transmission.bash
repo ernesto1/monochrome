@@ -120,7 +120,7 @@ while [ true ]; do
     
   case $format in
     default)
-      awk -F ':' "{printf \"%-${nameWidth}.${nameWidth}s\${offset ${offset}}\${color4}%5d\${offset ${offset}}\${color}%5d\n\", \$4, \$1, \$2}" ${torrents}.$$ > ${activeFile}.$$
+      awk -F ':' "{printf \"%-${nameWidth}.${nameWidth}s\${offset ${offset}}%5d\${offset ${offset}}\${color}%5d\n\", \$4, \$1, \$2}" ${torrents}.$$ > ${activeFile}.$$
       ;;
     flipped)
       getUploadTorrents | awk -F ':' "{printf \"\${color4}%5d\${offset ${offset}}\${color}%-${nameWidth}.${nameWidth}s\n\", \$1, \$2}" > ${torrentsUpFile}.$$
@@ -148,7 +148,7 @@ while [ true ]; do
   case $format in
     default)
       cut -d ':' -f 1,4,5,6 ${peers}.$$ \
-        | awk -F ':' "{printf \"%-15s\${offset 12}%-13.13s\${offset ${offset}}\${color4}%5d\${offset ${offset}}\${color}%5d\n\", \$1, \$4, \$3, \$2}" > ${peersFile}.$$
+        | awk -F ':' "{printf \"%-15s\${offset 12}%-13.13s\${offset ${offset}}%5d\${offset ${offset}}\${color}%5d\n\", \$1, \$4, \$3, \$2}" > ${peersFile}.$$
       ;;
     flipped)
       cut -d ':' -f 1,3,5 ${peers}.$$ \
