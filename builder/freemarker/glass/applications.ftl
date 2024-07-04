@@ -126,7 +126,7 @@ ${endif}\
 # panel expands based on the track metadata fields available, only 'title' is considered mandatory
 <@panel.panel x=0 y=0 width=width isFixed=false/>
 ${if_match "${lua get playbackStatus}" == "Playing"}\
-${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-panel-sound-wave.png [=width-69] 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-sound-wave.png [=width-69] 0}\
 ${endif}\
 ${lua increment_offsets 0 [=23]}\
 ${voffset 3}${offset 5}${color}${lua_parse truncate_string ${lua get title} 25}

@@ -9,11 +9,11 @@ conky.config = {
 
   -- window alignment
   alignment = 'middle_right',
-  gap_x = 5,
+  gap_x = 3,
   gap_y = 53,
 
   -- window settings
-  <#assign width = 200>
+  <#assign width = 188>
   minimum_width = [=width],      -- conky will add an extra pixel to this  
   maximum_width = [=width],
   own_window = true,
@@ -52,16 +52,19 @@ conky.text = [[
 # :::::::::::: package updates
 <#assign packagesFile = "/tmp/conky/dnf.packages.formatted">
 ${if_existing [=packagesFile]}\
-<#assign y = 0, 
-         header = 39>    <#-- panel header -->
-<@panel.table x=0 y=y width=width header=header/>
-<#assign y += header + 13><#-- head() function requires the file text to be at 10 px below its panel edge, so adding the remaining px due to package/version header -->
+<#assign y = 0,
+         iconHeight = 38,
+         gap = 3>
+${image ~/conky/monochrome/images/common/[=image.primaryColor]-packages.png -p 0,0}\
+<@panel.noLeftEdgePanel x=iconHeight y=0 width=width-iconHeight height=iconHeight isDark=true/>
+${voffset 5}${offset 45}${color1}dandified yum
+${voffset 2}${offset 45}${color}${lines [=packagesFile]} package updates${voffset [= 7 + gap]}
+<#assign y += iconHeight + gap, header = 19>
+<@panel.table x=0 y=y header=header width=width/>
+<#assign y += header>
 ${lua increment_offsets 0 [=y]}\
-# optional dnf branding, can be removed or won't matter if the image does not exist
-${image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-dnf.png -p 121,[=(y+4)?c]}\
-${voffset 3}${alignc}${color1}dnf package management
-${voffset 5}${alignc}${color}${lines [=packagesFile]} package update(s) available
-${voffset 6}${offset 5}${color1}package${alignr 4}version${voffset 1}
+${offset 5}${color1}package${alignr 4}version${voffset [=3+gap]}
+${image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-dnf.png -p 118,[=(y+4)?c]}\
 <#assign maxLines = 25>
 ${color}${lua_parse paginate [=packagesFile] [=maxLines]}${lua increase_y_offset [=packagesFile]}${voffset 5}
 <@panel.panelBottomCorners x=0 y=0 width=width isFixed=false/>

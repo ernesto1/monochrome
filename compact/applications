@@ -193,7 +193,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light.png
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-top-right.png 182 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 189 0}\
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-sound-wave.png 129 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-sound-wave.png 129 0}\
 ${endif}\
 # --------- end of table image top ---------
 ${lua increment_offsets 0 15}\

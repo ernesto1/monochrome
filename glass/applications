@@ -141,7 +141,7 @@ ${endif}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blue-panel-light.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 159 0}\
 ${if_match "${lua get playbackStatus}" == "Playing"}\
-${lua_parse draw_image ~/conky/monochrome/images/glass/blue-panel-sound-wave.png 90 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blue-panel-sound-wave.png 90 0}\
 ${endif}\
 ${lua increment_offsets 0 23}\
 ${voffset 3}${offset 5}${color}${lua_parse truncate_string ${lua get title} 25}

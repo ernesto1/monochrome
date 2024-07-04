@@ -62,7 +62,7 @@ conky.text = [[
 ${lua set_total_lines 72}\
 # :::::::::::: package updates
 ${if_existing /tmp/conky/dnf.packages.formatted}\
-${image ~/conky/monochrome/images/widgets-dock/green-packages-small.png -p 0,0}\
+${image ~/conky/monochrome/images/common/green-packages.png -p 0,0}\
 # ------- panel | light green no left round edges | top -------
 ${image ~/conky/monochrome/images/common/green-panel-light.png -p 38,0}\
 ${image ~/conky/monochrome/images/common/green-panel-light-edge-top-right.png -p 162,0}\
@@ -90,7 +90,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 0}\
 ${lua increment_offsets 0 4}\
 ${else}\
 # ::: no updates available or dnf script not running
-${image ~/conky/monochrome/images/widgets-dock/yellow-packages-small.png -p 0,0}\
+${image ~/conky/monochrome/images/common/yellow-packages.png -p 0,0}\
 # ------- panel | light yellow no left round edges | top -------
 ${image ~/conky/monochrome/images/common/yellow-panel-light.png -p 38,0}\
 ${image ~/conky/monochrome/images/common/yellow-panel-light-edge-top-right.png -p 162,0}\
@@ -110,7 +110,7 @@ ${endif}\
 # ::: no player available
 ${if_existing /tmp/conky/musicplayer.name}\
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
-${lua_parse draw_image ~/conky/monochrome/images/widgets-dock/yellow-sound-wave-small.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-sound-wave.png 0 0}\
 # ------- panel | light yellow no left round edges | top -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light.png 38 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light-edge-top-right.png 162 0}\
@@ -124,7 +124,7 @@ ${lua increment_offsets 0 42}\
 ${else}\
 # ::: player status
 ${lua increment_offsets 0 3}${voffset 3}\
-${lua_parse draw_image ~/conky/monochrome/images/widgets-dock/green-sound-wave-small.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-sound-wave.png 0 0}\
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
 # ------- panel | light green no left round edges | top -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light.png 38 0}\
@@ -136,7 +136,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 38 38}\
 ${voffset 5}${lua_parse add_x_offset offset 45}${color3}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}
 ${voffset 2}${lua_parse add_x_offset offset 45}${color4}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
 ${else}\
-${lua_parse draw_image ~/conky/monochrome/images/widgets-dock/yellow-sound-wave-small.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-sound-wave.png 0 0}\
 # ------- panel | light yellow no left round edges | top -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light.png 38 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light-edge-top-right.png 162 0}\
@@ -174,7 +174,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light.png 4
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light-edge-top-right.png 162 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 169 0}\
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
-${lua_parse draw_image ~/conky/monochrome/images/common/yellow-sound-wave.png 109 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-sound-wave.png 109 0}\
 ${endif}\
 # --------- end of table image top ---------
 ${lua increment_offsets 0 15}\
@@ -197,7 +197,7 @@ ${lua increment_offsets 0 14}\
 ${voffset 12}\
 ${endif}\
 ${else}\
-${lua_parse draw_image ~/conky/monochrome/images/widgets-dock/green-sound-wave-small.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-sound-wave.png 0 0}\
 # ------- panel | dark green no left round edges | top -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-dark.png 38 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-dark-edge-top-right.png 162 0}\
@@ -213,7 +213,7 @@ ${endif}\
 ${if_existing /tmp/conky/transmission.torrents}\
 # ::: no active torrents
 ${if_match ${lua get activeNum ${lines /tmp/conky/transmission.torrents}} == 0}\
-${lua_parse draw_image ~/conky/monochrome/images/widgets-dock/yellow-torrents-small.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/yellow-torrents.png 0 0}\
 # ------- panel | light yellow no left round edges | top -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light.png 38 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/yellow-panel-light-edge-top-right.png 162 0}\
@@ -226,7 +226,7 @@ ${voffset 2}${offset 45}${color}no active torrents${voffset 9}
 ${lua increment_offsets 0 42}${lua decrease_total_lines 2}\
 ${else}\
 # ::: active torrents
-${lua_parse draw_image ~/conky/monochrome/images/widgets-dock/green-torrents-small.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-torrents.png 0 0}\
 # ------- panel | light green no left round edges | top -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light.png 38 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-top-right.png 162 0}\
@@ -292,7 +292,7 @@ ${endif}\
 ${endif}\
 ${else}\
 # ::: error state
-${lua_parse draw_image ~/conky/monochrome/images/widgets-dock/green-torrents-small.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/green-torrents.png 0 0}\
 # ------- panel | dark green no left round edges | top -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-dark.png 38 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-dark-edge-top-right.png 162 0}\
