@@ -88,7 +88,7 @@ public class MusicPlayerWriter {
             logger.error("incorrect album art URL given by the music player", e);
         }
 
-        logger.info("wrote track info to disk");
+        logger.debug("wrote track info to disk");
     }
 
     private void writeFile(String filename, String data) {

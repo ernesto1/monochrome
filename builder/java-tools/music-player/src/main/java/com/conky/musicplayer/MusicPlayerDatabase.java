@@ -95,7 +95,7 @@ public class MusicPlayerDatabase {
 
         if (!activePlayer.isSameState(newPlayerState)) {
             activePlayer = new MusicPlayer(newPlayerState);
-            logger.info("new state for the active player '{}', writing to disk", activePlayer.getPlayerName());
+            logger.debug("new state for the active player '{}', writing to disk", activePlayer.getPlayerName());
             writer.writePlayerState(activePlayer);
         }
     }
