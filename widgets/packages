@@ -7,13 +7,14 @@ conky.config = {
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'middle_right',
+  alignment = 'top_right',
   gap_x = 3,
-  gap_y = 53,
+  gap_y = 35,
 
   -- window settings
   minimum_width = 188,      -- conky will add an extra pixel to this  
   maximum_width = 188,
+  minimum_height = 387,
   own_window = true,
   own_window_type = 'desktop',              -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -69,9 +70,20 @@ ${image ~/conky/monochrome/images/common/blank-panel.png -p 188,41}\
 ${lua increment_offsets 0 60}\
 ${offset 5}${color1}package${alignr 4}version${voffset 6}
 ${image ~/conky/monochrome/images/common/green-panel-dnf.png -p 118,64}\
-${color}${lua_parse paginate /tmp/conky/dnf.packages.formatted 25}${lua increase_y_offset /tmp/conky/dnf.packages.formatted}${voffset 5}
+${color}${lua_parse paginate /tmp/conky/dnf.packages.formatted 20}${lua increase_y_offset /tmp/conky/dnf.packages.formatted}${voffset 5}
 ${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-left.png 0 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-right.png 181 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 0}\
+${else}\
+${image ~/conky/monochrome/images/common/green-packages.png -p 17,0}\
+# ------- panel | light green no left round edges | top -------
+${image ~/conky/monochrome/images/common/green-panel-light.png -p 55,0}\
+${image ~/conky/monochrome/images/common/green-panel-light-edge-top-right.png -p 181,0}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 188,0}\
+${image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-right.png -p 181,31}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 55,38}\
+# ------- panel | light green no left round edges | bottom -------
+${voffset 5}${offset 62}${color1}package updates
+${voffset 2}${offset 62}${color}no updates available${voffset 5}
 ${endif}\
 ]];

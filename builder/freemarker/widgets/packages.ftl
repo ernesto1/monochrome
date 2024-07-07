@@ -8,14 +8,15 @@ conky.config = {
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'middle_right',
+  alignment = 'top_right',
   gap_x = 3,
-  gap_y = 53,
+  gap_y = 35,
 
   -- window settings
   <#assign width = 188>
   minimum_width = [=width],      -- conky will add an extra pixel to this  
   maximum_width = [=width],
+  minimum_height = 387,
   own_window = true,
   own_window_type = 'desktop',              -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -65,8 +66,13 @@ ${voffset 2}${offset 45}${color}${lines [=packagesFile]} package updates${voffse
 ${lua increment_offsets 0 [=y]}\
 ${offset 5}${color1}package${alignr 4}version${voffset [=3+gap]}
 ${image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-dnf.png -p 118,[=(y+4)?c]}\
-<#assign maxLines = 25>
+<#assign maxLines = 20>
 ${color}${lua_parse paginate [=packagesFile] [=maxLines]}${lua increase_y_offset [=packagesFile]}${voffset 5}
 <@panel.panelBottomCorners x=0 y=0 width=width isFixed=false/>
+${else}\
+${image ~/conky/monochrome/images/common/[=image.primaryColor]-packages.png -p 17,0}\
+<@panel.noLeftEdgePanel x=iconHeight+17 y=0 width=width-iconHeight-17 height=iconHeight/>
+${voffset 5}${offset [=45+17]}${color1}package updates
+${voffset 2}${offset [=45+17]}${color}no updates available${voffset 5}
 ${endif}\
 ]];
