@@ -110,12 +110,12 @@ ${voffset 10}${lua increment_offsets 0 246}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blue-panel-dark.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blue-panel-light.png 57 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 159 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 53}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 54}\
 # ------- vertical table | bottom -------
 ${voffset 2}${offset 5}${color1}kernel${goto 62}${color}${kernel}
 ${voffset 3}${offset 5}${color1}uptime${goto 62}${color}${uptime}
-${voffset 3}${offset 5}${color1}composit${goto 62}${color}${execi 3600 echo $XDG_SESSION_TYPE}${voffset 8}
-${lua increment_offsets 0 56}\
+${voffset 3}${offset 5}${color1}composit${goto 62}${color}${execi 3600 echo $XDG_SESSION_TYPE}${voffset 10}
+${lua increment_offsets 0 57}\
 # ------- vertical table | top    -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/blue-panel-dark.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blue-panel-light.png 57 0}\

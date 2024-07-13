@@ -108,11 +108,11 @@ ${lua increment_offsets 0 [=height+gap]}\
 ${endif}\
 </#if>
 # ::::::::::::::::: system
-<#assign header = 57, height = 53>
+<#assign header = 57, height = 54>
 <@panel.verticalTable x=0 y=0 header=header body=width-header height=height isFixed=false/>
 ${voffset 2}${offset 5}${color1}kernel${goto 62}${color}${kernel}
 ${voffset 3}${offset 5}${color1}uptime${goto 62}${color}${uptime}
-${voffset 3}${offset 5}${color1}composit${goto 62}${color}${execi 3600 echo $XDG_SESSION_TYPE}${voffset [=5 + gap]}
+${voffset 3}${offset 5}${color1}composit${goto 62}${color}${execi 3600 echo $XDG_SESSION_TYPE}${voffset [=7 + gap]}
 ${lua increment_offsets 0 [=height+gap]}\
 <#assign height = 22>
 <@panel.verticalTable x=0 y=0 header=header body=width-header height=height isFixed=false/>
