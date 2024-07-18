@@ -14,7 +14,7 @@ conky.config = {
   <#assign width = 169>
   minimum_width = [=width],      -- conky will add an extra pixel to this
   maximum_width = [=width],
-  minimum_height = 414,
+  minimum_height = 422,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -59,45 +59,50 @@ conky.config = {
 conky.text = [[
 # :::::::::::: cpu
 <#assign y = 0,
-         titleHeight = 19,
+         iconWidth = 38,          <#-- keeping variables consistent with the applications conky -->
+         singleLineHeight = 23,   <#-- for panels with only one line of text -->
          gap = 2,
          sectionGap = 3>   <#-- empty space between panels -->
-<@panel.panel x=0 y=y width=width height=titleHeight color=image.secondaryColor/>
-${voffset 2}${alignc}${color3}cpu${voffset [=6+gap]}
-<#assign y += titleHeight + gap, body = 84>
-<@panel.table x=0 y=y width=width header=titleHeight body=body/>
-${offset 5}${color1}process${alignr 4}cpu${voffset 3}
+<@panel.verticalTable x=0 y=y header=iconWidth body=width-iconWidth height=singleLineHeight color=image.secondaryColor/>
+${voffset 5}${offset 5}${color3}cpu${goto 45}${color4}${running_processes} process${if_match ${running_processes} > 1}es${endif} running${voffset [=5+gap]}
+<#assign y += singleLineHeight + gap, body = 87>
+<@panel.table x=0 y=y width=width header=singleLineHeight body=body/>
+${voffset 5}${offset 5}${color1}process${alignr 4}cpu${voffset 7}
 <#list 1..5 as x>
 ${template0 [=x]}
 </#list>
-<#assign y += titleHeight + body + gap, header = 71, body = 19>
-<@panel.verticalTable x=0 y=y header=header body=width-header height=body/>
-${voffset [= 7 + gap]}${offset 5}${color1}load avg${goto 77}${color}${loadavg}${voffset [=6+sectionGap]}
-<#assign y += body + sectionGap>
+${voffset [=5+gap]}\
+<#assign y += singleLineHeight + body + gap, header = 71>
+<@panel.verticalTable x=0 y=y header=header body=width-header height=singleLineHeight/>
+${voffset 5}${offset 5}${color1}load avg${goto 77}${color}${loadavg}${voffset [=5+sectionGap]}
+<#assign y += singleLineHeight + sectionGap>
 # :::::::::::: memory
-<@panel.panel x=0 y=y width=width height=titleHeight color=image.secondaryColor/>
-${alignc}${color3}memory${voffset [=6+gap]}
-<#assign y += titleHeight + gap, body = 84>
-<@panel.table x=0 y=y width=width header=titleHeight body=body/>
-${offset 5}${color1}process${alignr 4}memory${voffset 3}
+<@panel.verticalTable x=0 y=y header=iconWidth body=width-iconWidth height=singleLineHeight color=image.secondaryColor/>
+${voffset 5}${offset 5}${color3}mem${goto 45}${color4}${mem} / ${memmax}${voffset [=5+gap]}
+<#assign y += singleLineHeight + gap, body = 87>
+<@panel.table x=0 y=y width=width header=singleLineHeight body=body/>
+${voffset 5}${offset 5}${color1}process${alignr 4}memory${voffset 7}
 <#list 1..5 as x>
 ${template1 [=x]}
 </#list>
-<#assign y += titleHeight + body + gap,
+${voffset [=5+gap]}\
+<#assign y += singleLineHeight + body + gap,
          header = 71,
-         body = 38,
+         body = 39,
          inputDir = "/tmp/conky",
          swapRead = inputDir + "/system.swap.read",
          swapWrite = inputDir + "/system.swap.write">
 <@panel.verticalTable x=0 y=y header=header body=width-header height=body/>
-${voffset [= 7 + gap + 2]}${offset 5}${color1}swap read${goto 77}${color}${cat [=swapRead]}
-${voffset 3}${offset 5}${color1}swap write${goto 77}${color}${cat [=swapWrite]}${voffset [=7+sectionGap]}
+${voffset 5}${offset 5}${color1}swap read${goto 77}${color}${cat [=swapRead]}
+${voffset 3}${offset 5}${color1}swap write${goto 77}${color}${cat [=swapWrite]}${voffset [=5+sectionGap]}
 <#assign y += body + sectionGap>
 # :::::::::::: network
-<@panel.panel x=0 y=y width=width height=titleHeight color=image.secondaryColor/>
-${alignc}${color3}network${voffset [=8+gap]}
-<#assign y += titleHeight + gap>
+${if_gw}\
+<@panel.verticalTable x=0 y=y header=iconWidth body=width-iconWidth height=singleLineHeight color=image.secondaryColor/>
+<#-- TODO remove the below section title hard coding: wifi will populate wifi + network name; eth will populate the text below -->
+<#assign y += singleLineHeight + gap>
 # assumption: only one network device will be connected to the internet at a time
-<@net.networkDetails devices=networkDevices[system] y=y width=width gap=sectionGap/>
-<#assign y += 71 + sectionGap>
+<@net.networkDetails devices=networkDevices[system] y=y width=width gap=gap/>
+${lua add_offsets 0 [=sectionGap]} <#-- 'y' is now a runtime variable since the network panel will not appear if disconnected -->
+${endif}\
 ]];

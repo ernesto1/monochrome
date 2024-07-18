@@ -120,27 +120,27 @@
   fixed         'true' if the given x,y coordinates are final, 'false' if you want to consider the current x,y offsets
                 default is 'true'
  -->
-<#macro verticalTable x y header body height isFixed=true>
+<#macro verticalTable x y header body height isFixed=true color=image.primaryColor>
 # -------  vertical table image -------
-<@verticalMenuHeader x=x y=y header=header body=body isFixed=isFixed/>
+<@verticalMenuHeader x=x y=y header=header body=body isFixed=isFixed color=color/>
 <#local y += height - 7>
-<@verticalMenuBottom x=x y=y header=header body=body isFixed=isFixed/>
+<@verticalMenuBottom x=x y=y header=header body=body isFixed=isFixed color=color/>
 # --------- end of table image ---------
 </#macro>
 
 
-<#macro verticalMenuHeader x y header body isFixed=true>
+<#macro verticalMenuHeader x y header body isFixed=true color=image.primaryColor>
 <#-- edge images are 7x7px -->
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-panel-dark.png" x=x y=y isFixed=isFixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-panel-dark-edge-top-left.png" x=x y=y isFixed=isFixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-panel-light.png" x=x+header y=y isFixed=isFixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-panel-light-edge-top-right.png" x=x+header+body-7 y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-panel-dark.png" x=x y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-panel-dark-edge-top-left.png" x=x y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-panel-light.png" x=x+header y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-panel-light-edge-top-right.png" x=x+header+body-7 y=y isFixed=isFixed/>
 <@cmn.drawImage filePath="~/conky/monochrome/images/common/blank-panel.png" x=x+header+body y=y isFixed=isFixed/>
 </#macro>
 
-<#macro verticalMenuBottom x y header body isFixed=true>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-panel-dark-edge-bottom-left.png" x=x y=y isFixed=isFixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-panel-light-edge-bottom-right.png" x=x+header+body-7 y=y isFixed=isFixed/>
+<#macro verticalMenuBottom x y header body isFixed=true color=image.primaryColor>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-panel-dark-edge-bottom-left.png" x=x y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-panel-light-edge-bottom-right.png" x=x+header+body-7 y=y isFixed=isFixed/>
 <@cmn.drawImage filePath="~/conky/monochrome/images/common/blank-panel.png" x=x y=y+7 isFixed=isFixed/>
 </#macro>
 

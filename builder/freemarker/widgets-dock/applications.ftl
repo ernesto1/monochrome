@@ -18,18 +18,19 @@ conky.config = {
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'top_right',  -- top|middle|bottom_left|right
+  <#if system == "desktop"><#assign alignment = "middle_right"><#else><#assign alignment = "top_right"></#if>
+  alignment = 'middle_right',   -- top|middle|bottom_left|right
   gap_x = 3,
-  <#if system == "desktop"><#assign yOffset = 130><#else><#assign yOffset = 25></#if>
-  gap_y = [=32+3+yOffset],
+  <#if system == "desktop"><#assign yOffset = -42><#else><#assign yOffset = 32+3+25></#if>
+  gap_y = [=yOffset],
 
   -- window settings
   <#assign width = 169>
-  minimum_width = [=width],      -- conky will add an extra pixel to this  
+  minimum_width = [=width],     -- conky will add an extra pixel to this
   maximum_width = [=width],
-  minimum_height = <#if system == "desktop">1351<#else>600</#if>,
+  minimum_height = <#if system == "desktop">1354<#else>600</#if>,
   own_window = true,
-  own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
+  own_window_type = 'desktop',  -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
   -- window borders
@@ -69,7 +70,7 @@ ${lua set_total_lines [=totalLines]}\
 <#assign packagesFile = "/tmp/conky/dnf.packages.formatted",
          iconWidth = 38,       <#-- icon is a square -->
          iconHeight = 38,
-         titleHeight = 19,
+         singleLineHeight = 23,
          y = 0,
          gap = 3,               <#-- empty space across panels of the same application -->
          sectionGap = 4>        <#-- empty space between application panels -->
@@ -77,14 +78,14 @@ ${if_existing [=packagesFile]}\
 ${image ~/conky/monochrome/images/common/[=image.secondaryColor]-packages.png -p 0,0}\
 <@panel.noLeftEdgePanel x=0+iconWidth y=y width=width-iconWidth height=iconHeight color=image.secondaryColor/>
 ${voffset 5}${offset 45}${color3}dandified yum
-${voffset 2}${offset 45}${color4}${lines [=packagesFile]} package updates${voffset [= 7 + gap]}
+${voffset 2}${offset 45}${color4}${lines [=packagesFile]} package updates${voffset [=5+gap]}
 <#assign y += iconHeight + gap>
-<@panel.table x=0 y=y width=width header=titleHeight/>
-<#assign y += titleHeight>
+<@panel.table x=0 y=y width=width header=singleLineHeight/>
+<#assign y += singleLineHeight>
 ${lua increment_offsets 0 [=y]}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-dnf.png -p 95,[=y+2]}\
-${offset 5}${color1}package${alignr 4}version${voffset [=3+gap]}
+${voffset 5}${offset 5}${color1}package${alignr 4}version${voffset [=4+gap]}
 ${color}${lua_parse paginate [=packagesFile] [=packageLines]}${lua increase_y_offset [=packagesFile]}${voffset [=5 + sectionGap]}
 <@panel.panelBottomCorners x=0 y=0 width=width isFixed=false/>
 ${lua increment_offsets 0 [=sectionGap]}\
@@ -138,14 +139,14 @@ ${endif}\
 # the position of the bottom edge images is shifted down 16px for each field
 <#-- 3 px top border | 16 px text | 3 px bottom border -->
 # -------  vertical table image top -------
-<#assign header = 45, height = 22>
+<#assign header = 45, height = 23>
 <@panel.verticalMenuHeader x=0 y=0 header=header body=width-header isFixed=false/>
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
-${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-sound-wave.png [=width-53-7] 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-sound-wave.png [=width-53-7] 1}\
 ${endif}\
 # --------- end of table image top ---------
 ${lua increment_offsets 0 [=height - 7]}\<#-- edges are 7x7 px, therefore reduce the height of the bottom edges from the panel -->
-${voffset 3}${lua_parse add_x_offset offset 5}${color1}title${lua_parse add_x_offset goto 50}${color}${cat /tmp/conky/musicplayer.title}${lua decrease_total_lines 2}
+${voffset 4}${lua_parse add_x_offset offset 5}${color1}title${lua_parse add_x_offset goto 50}${color}${cat /tmp/conky/musicplayer.title}${lua decrease_total_lines 2}
 ${if_match "${lua get album ${cat /tmp/conky/musicplayer.album}}" != "unknown album"}\
 ${voffset 3}${lua_parse add_x_offset offset 5}${color1}album${lua_parse add_x_offset goto 50}${color}${lua get album}${lua increment_offsets 0 16}${lua decrease_total_lines 1}
 ${endif}\
@@ -197,7 +198,7 @@ ${lua increment_offsets 0 [=iconHeight + gap]}\
 <@panel.verticalTable x=0 y=0 header=header body=width-header height=height isFixed=false/>
 ${voffset 3}${offset 5}${color1}swarm${goto 67}${color}${if_existing [=peersFile]}${lua pad ${lines [=peersFile]} 6} peers${else}file missing${endif}
 ${voffset 3}${offset 5}${color1}upload${color}${if_existing [=uploadFile]}${alignr 43}${cat [=uploadFile]}${else}file missing${endif}
-${voffset 3}${offset 5}${color1}download${color}${if_existing [=downloadFile]}${alignr 43}${cat [=downloadFile]}${else}file missing${endif}${voffset [= 7 + gap]}
+${voffset 3}${offset 5}${color1}download${color}${if_existing [=downloadFile]}${alignr 43}${cat [=downloadFile]}${else}file missing${endif}${voffset [=5 + gap]}
 ${lua increment_offsets 0 [=height + gap]}\
 # ::: torrent uploads
 ${if_match ${lines [=torrentsUpFile]} > 0}\
@@ -206,13 +207,13 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-pa
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-dark-edge-top-left.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.secondaryColor]-panel-dark.png 139 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.secondaryColor]-panel-dark-edge-top-right.png 162 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-light.png 0 19}\
-${lua_parse draw_image ~/conky/monochrome/images/common/[=image.secondaryColor]-panel-light.png 139 19}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-light.png 0 [=singleLineHeight]}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.secondaryColor]-panel-light.png 139 [=singleLineHeight]}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 169 0}\
-${lua increment_offsets 0 [=titleHeight]}\
+${lua increment_offsets 0 [=singleLineHeight]}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-peers.png [=((width-139)/2)?round] 22}\
-${offset 5}${color1}torrent${alignr 4}up${voffset [=3+gap]}
-${color}${lua_parse head [=torrentsUpFile] [=totalLines]}${voffset [= 7 + gap]}${lua increase_y_offset [=torrentsUpFile]}
+${voffset 5}${offset 5}${color1}torrent${alignr 4}up${voffset [=4+gap]}
+${color}${lua_parse head [=torrentsUpFile] [=totalLines]}${voffset [= 5 + gap]}${lua increase_y_offset [=torrentsUpFile]}
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-light-edge-bottom-left.png 0 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.secondaryColor]-panel-light-edge-bottom-right.png 162 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 0}\
@@ -225,11 +226,11 @@ ${if_match ${lines [=torrentsDownFile]} > 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-dark.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-dark-edge-top-left.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-dark-edge-top-right.png 162 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-light.png 0 19}\
-${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-dark.png 139 19}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-light.png 0 [=singleLineHeight]}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-dark.png 139 [=singleLineHeight]}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 169 0}\
-${lua increment_offsets 0 [=titleHeight]}\
-${offset 5}${color1}torrent${alignr 4}down${voffset [=3+gap]}
+${lua increment_offsets 0 [=singleLineHeight]}\
+${voffset 5}${offset 5}${color1}torrent${alignr 4}down${voffset [=4+gap]}
 ${color}${lua_parse head [=torrentsDownFile] [=totalLines]}${lua increase_y_offset [=torrentsDownFile]}
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-light-edge-bottom-left.png 0 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-dark-edge-bottom-right.png 162 -7}\
