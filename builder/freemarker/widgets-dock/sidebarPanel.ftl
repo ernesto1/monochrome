@@ -8,7 +8,8 @@ conky.config = {
   -- window alignment
   alignment = 'middle_left',  -- top|middle|bottom_left|right
   gap_x = 2,               -- same as passing -x at command line
-  gap_y = -430,
+  <#if system == "desktop"><#assign yOffset = -430><#else><#assign yOffset = -330></#if>
+  gap_y = [=yOffset],
 
   -- window settings
   <#if border!true><#assign borderWidth = 1><#else><#assign borderWidth = 0></#if>

@@ -59,8 +59,7 @@ ${if_up [=device.name]}\
 <#if device.type == "wifi">
 <@panel.verticalTable x=0 y=y header=57 body=width-57 height=height/>
 ${lua add_offsets 0 [=height]}\
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-panel-horizontal-data.png -p 57,[=y]}\
-<@wifiDetails device/>
+<@wifiDetails device gap/>
 <#else>
 <@panel.verticalTable x=0 y=y header=71 body=width-71 height=height/>
 ${lua add_offsets 0 [=height]}\

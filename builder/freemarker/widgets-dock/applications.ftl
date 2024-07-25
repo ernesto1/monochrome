@@ -18,17 +18,16 @@ conky.config = {
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  <#if system == "desktop"><#assign alignment = "middle_right"><#else><#assign alignment = "top_right"></#if>
   alignment = 'middle_right',   -- top|middle|bottom_left|right
   gap_x = 3,
-  <#if system == "desktop"><#assign yOffset = -42><#else><#assign yOffset = 32+3+25></#if>
+  <#if system == "desktop"><#assign yOffset = -42><#else><#assign yOffset = -26></#if>
   gap_y = [=yOffset],
 
   -- window settings
   <#assign width = 169>
   minimum_width = [=width],     -- conky will add an extra pixel to this
   maximum_width = [=width],
-  minimum_height = <#if system == "desktop">1354<#else>600</#if>,
+  minimum_height = <#if system == "desktop">1354<#else>695</#if>,
   own_window = true,
   own_window_type = 'desktop',  -- values: desktop (background), panel (bar)
   own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
