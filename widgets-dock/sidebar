@@ -9,14 +9,13 @@ conky.config = {
   -- window alignment
   alignment = 'middle_left',     -- top|middle|bottom_left|middle|right
   gap_x = 0,                     -- same as passing -x at command line
-  gap_y = 0,
+    gap_y = 0,
 
   -- window settings
   minimum_width = 146,
   minimum_height = 1333,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
-  own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
   -- transparency configuration
   draw_blended = false,

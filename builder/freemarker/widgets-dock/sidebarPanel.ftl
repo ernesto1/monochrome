@@ -17,7 +17,6 @@ conky.config = {
   minimum_height = 10,
   own_window = true,
   own_window_type = 'panel',    -- values: desktop (background), panel (bar)
-  own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
   -- window borders
   draw_borders = false,     -- draw borders around the conky window

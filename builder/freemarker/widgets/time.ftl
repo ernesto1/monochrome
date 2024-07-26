@@ -12,7 +12,6 @@ conky.config = {
   minimum_width = 37,
   own_window = true,
   own_window_type = 'desktop',  -- values: desktop (background), panel (bar)
-  own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
   -- transparency configuration
   own_window_transparent = false,

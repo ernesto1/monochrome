@@ -18,7 +18,6 @@ conky.config = {
   minimum_height = 158,     -- conky will add an extra pixel to this height
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
-  own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
   -- window borders
   draw_borders = false,     -- draw borders around the conky window
