@@ -87,7 +87,7 @@ threshold:
   swap: 70
   tempCPU: 78     # temperatures in degrees celsius
   tempCPUCore: 85
-  tempVideo: 90
+  tempVideo: 75
   tempDisk: 42
   fanSpeed: 2300  # revolutions per minute (rpm)
   
