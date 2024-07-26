@@ -21,9 +21,9 @@ conky.config = {
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'top_left',     -- top|middle|bottom_left|middle|right
+  alignment = 'middle_left',     -- top|middle|bottom_left|middle|right
   gap_x = 123,                -- same as passing -x at command line
-  gap_y = 158,
+  gap_y = 444,
 
   -- window settings
   <#assign width = 159>
