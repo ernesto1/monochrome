@@ -17,7 +17,7 @@ In order to align the text in the panel properly:
 
   - the 'y' offset is expected to be at the start of the panel, see conky_increment_offsets(..)
   - lowercase text is expected to begin 10 pixels from the top of the panel
-  - the 'y' offset is updated to the pixel where the bottom of the panel should be
+  - the method will update the 'y' offset to the pixel where the bottom of the panel should be,
     this will yield a 7 pixels border between the bottom of the text and the panel edge
 
 arguments:
@@ -39,7 +39,9 @@ function conky_increase_y_offset(filepath)
   return ''
 end
 
-
+--[[
+TODO write doc, this is for the widgets transmission conky, ie. dynamically fill the top space when not enough text
+]]
 function conky_calculate_voffset(filepath, max)
   local linesRead = lines(vars[filepath])
   max = tonumber(max)

@@ -8,21 +8,15 @@
 # ::::::: desktop sidebar
 java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar compact burgundy desktop && \
 pushd /tmp/monochrome && \
-buildSidebar.bash config cpu memory network disk system bottom-edge && \
-echo ']];' >> /tmp/monochrome/sidebar && \
 mv sidebar applications ~/conky/monochrome/compact && \
 sleep 2 && \
 mv memoryGraph temperature ~/conky/monochrome/compact && \
 popd
 
 
-# :::::::  laptop sidebar
-# TODO code laptop configuration: system cpu memory network disk power bottom-edge
-
-
 # design notes
 - images should have a top/bottom border of 7px
-- left border for text is 5px
+- left border for text is 6px
 - each row of text adds 16 pixels (lines with a 3px voffset)
 - each row of text adds 13 pixels (no voffset like a cat or exec command)
 - measure up to the bottom of the dot, 1px below the words
