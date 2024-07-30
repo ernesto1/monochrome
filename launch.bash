@@ -137,9 +137,11 @@ done
 [[ -d ${conkyDir} ]] || { logError "conky directory '$(basename ${conkyDir})' does not exist"; exit 1; }
 [[ -f ${conkyDir}/settings.cfg ]] && source ${conkyDir}/settings.cfg
 
-type -p figlet > /dev/null && echo -e "${GREEN}$(figlet -t 'monochrome conky')"
+theme=$(basename ${conkyDir})
+theme=${theme/-/ }
+type -p figlet > /dev/null && echo -e "${GREEN}$(figlet -t ${theme} conky)\n"
 printHeader "::: launching conky with the following settings\n"
-echo   "conky theme:          $(basename ${conkyDir})"
+echo   "conky theme:          ${theme}"
 echo   "dnf package service:  ${isPackageLookupEnabled:=true}"
 echo   "music player service: ${isMusicPlayerListenerEnabled:=true}"
 echo   "transmission service: ${isTransmissionPollerEnabled:=true}"
