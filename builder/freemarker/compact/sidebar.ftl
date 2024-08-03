@@ -70,11 +70,11 @@ conky.config = {
   -- ethernet speed: ${template5 ethernetDevice}
   template5 = [[${execi 180 ethtool \1 2>/dev/null | grep -i speed | cut -d ' ' -f 2}]],
   -- network bandwith: ${template4 device uploadSpeed downloadSpeed}
-  template6 = [[${voffset 8}${offset [=lso + 43]}${color}${upspeedgraph \1 35,68 ${template2} \2}${offset 3}${downspeedgraph \1 35,68 ${template1} \3}
+  template6 = [[${voffset 8}${offset [=lso + 44]}${color}${upspeedgraph \1 35,68 ${template2} \2}${offset 3}${downspeedgraph \1 35,68 ${template1} \3}
 ${voffset -2}${offset [=lso + iborder]}${color1}up    ${color}${upspeed \1}${alignr [=rso + iborder]}${color}${downspeed \1}  ${color1}down
 ${voffset 3}${offset [=lso + iborder]}${color1}total ${color}${totalup \1}${alignr [=rso + iborder]}${color}${totaldown \1} ${color1}total]],
   -- hard disk: ${template7 device readSpeed writeSpeed}
-  template7 = [[${voffset 7}${offset [=lso + 43]}${color}${diskiograph_read /dev/\1 35,68 ${template2} \2}${offset 3}${diskiograph_write /dev/\1 35,68 ${template1} \3}
+  template7 = [[${voffset 7}${offset [=lso + 44]}${color}${diskiograph_read /dev/\1 35,68 ${template2} \2}${offset 3}${diskiograph_write /dev/\1 35,68 ${template1} \3}
 ${voffset -2}${offset [=lso + iborder]}${color1}read  ${color}${diskio_read /dev/\1}${alignr [=rso + iborder]}${color}${diskio_write /dev/\1} ${color1}write]],
   -- filesystem: ${template8 filesystemName fileSystemPath}
   template8 = [[${voffset 2}${offset [=lso + iborder]}${color}\1${alignr [=rso + iborder]}${voffset 1}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3,97 \2}
@@ -87,13 +87,13 @@ ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-sidebar.png -p 0
 # -------------- cpu
 <#assign y += tso + 7>
 ${if_match ${cpu cpu0} < [=threshold.cpu]}\
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-cpu.png -p [=lso + 4],[=y]}\
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-cpu.png -p [=lso + 5],[=y]}\
 ${else}\
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-cpu-high.png -p [=lso + 4],[=y]}\
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-cpu-high.png -p [=lso + 5],[=y]}\
 ${endif}\
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph.png -p [=lso + 43],[=y]}\
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph.png -p [=lso + 44],[=y]}\
 <#assign y += 36 + 23>
-${voffset [=tso + 2]}${offset [=lso + 43]}${cpugraph cpu0 35,139 ${template1}}
+${voffset [=tso + 2]}${offset [=lso + 44]}${cpugraph cpu0 35,139 ${template1}}
 ${voffset -2}${offset [=lso + iborder]}${color1}load ${color}${loadavg}${alignr [=rso + iborder]}${color}${cpu cpu0}%
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png -p [=lso + 3],[=y]}\
 <#assign y += 18>
@@ -103,11 +103,11 @@ ${template3 [=x]}
 </#list>
 <#assign y += 125>
 # -------------- memory
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-mem.png -p [=lso + 4],[=y]}\
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-mem.png -p [=lso + 5],[=y]}\
 ${if_match ${memperc} > [=threshold.mem]}\
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-mem-high.png -p [=lso + 4],[=y]}\
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-mem-high.png -p [=lso + 5],[=y]}\
 ${endif}\
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph.png -p [=lso + 43],[=y]}\
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph.png -p [=lso + 44],[=y]}\
 <#assign y += 36 + 55>
 # memory graph and usage are displayed on a separate conky due to a bug with these memory variables computing bad data if other variables like ${top ...} and one of the network upload/download exists in the same conky
 ${voffset 69}${offset [=lso + iborder]}${color1}swap${goto [=lso + iborder + 36]}${voffset 1}${color2}${swapbar 3,97}${alignr [=rso + iborder]}${voffset -1}${color}${swapperc}%
@@ -125,14 +125,14 @@ ${template4 [=x]}
 # -------------- network
 <#assign device = networkDevices[system]?first>
 ${if_up [=device.name]}\
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-ethernet.png -p [=lso + 4],[=y]}\
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-ethernet.png -p [=lso + 5],[=y]}\
 <#assign y += 36>
 ${voffset 15}${goto [=lso + 45]}${color1}local ip${goto [=lso + 99]}${color}${addr [=device.name]}
 ${voffset 3}${goto [=lso + 45]}${color1}speed${goto [=lso + 99]}${color}${template5 [=device.name]}
 # :: upload/download speeds
 <#assign y += 9>
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-internet.png -p [=lso + 4],[=y]}\
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph-io.png -p [=lso + 43],[=y]}\
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-internet.png -p [=lso + 5],[=y]}\
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph-io.png -p [=lso + 44],[=y]}\
 <#assign y += 36 + 46>
 ${template6 [=device.name] [=device.maxUp?c] [=device.maxDown?c]}
 ${else}\
@@ -148,8 +148,8 @@ ${endif}\
 <#if disk.partitions?size == 1><#-- for disk with single partition add connected/disconnected state -->
 ${if_existing /dev/[=disk.device]}\
 </#if>
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-disk.png -p [=lso + 4],[=y]}\
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph-io.png -p [=lso + 43],[=y]}\
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-disk.png -p [=lso + 5],[=y]}\
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph-io.png -p [=lso + 44],[=y]}\
 <#assign y += 36 + 36>
 ${template7 [=disk.device] [=disk.readSpeed?c] [=disk.writeSpeed?c]}
 <#list disk.partitions>
@@ -169,7 +169,7 @@ ${endif}\
 </#if>
 </#list>
 # -------------- system
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-system.png -p [=lso + 4],[=y?c]}\
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-system.png -p [=lso + 5],[=y?c]}\
 <#assign y += 36>
 ${voffset 15}${goto [=lso + 45]}${color1}uptime ${goto [=lso + 113]}${color}${uptime}
 ${voffset 3}${goto [=lso + 45]}${color1}compositor ${color}${execi 3600 echo $XDG_SESSION_TYPE}

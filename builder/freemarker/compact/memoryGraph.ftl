@@ -55,7 +55,7 @@ conky.config = {
 
 conky.text = [[
 #  memory graph and usage are displayed on a separate conky due to a bug with these memory variables computing bad data if other variables like ${top ...} and one of the network upload/download ones exists in the same conky
-${offset 43}${memgraph 35,139 ${template1}}
+${offset 44}${memgraph 35,139 ${template1}}
 <#assign iborder = 6> <#-- inner horizontal border -->
 ${voffset -2}${offset [=iborder]}${color1}used  ${color}${mem} / ${memmax}${alignr [=iborder]}${color}${memperc}%
 ]]
