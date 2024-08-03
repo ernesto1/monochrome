@@ -62,7 +62,7 @@ conky.config = {
 
 conky.text = [[
 <#assign totalLines = 72,
-         packageLines = 25
+         packageLines = 16,
          gap = 3>             <#-- empty space between panels of the same context -->
 ${lua set_total_lines [=totalLines]}\
 ${lua increment_offsets 0 0}\
