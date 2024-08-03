@@ -61,8 +61,8 @@ conky.config = {
 };
 
 conky.text = [[
-<#if system == "desktop"><#assign packageLines = 22><#else><#assign packageLines = 18></#if>
 <#assign totalLines = 72>
+<#if system == "desktop"><#assign packageLines = 16><#else><#assign packageLines = 6></#if>
 ${lua set_total_lines [=totalLines]}\
 # :::::::::::: package updates
 <#assign packagesFile = "/tmp/conky/dnf.packages.formatted",
@@ -211,7 +211,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 169 0}\
 ${lua increment_offsets 0 [=singleLineHeight]}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-peers.png [=((width-139)/2)?round] 22}\
 ${voffset 5}${offset 5}${color1}torrent${alignr 4}up${voffset [=4+gap]}
-${color}${lua_parse head [=torrentsUpFile] [=totalLines]}${voffset [= 5 + gap]}${lua increase_y_offset [=torrentsUpFile]}
+${color}${lua_parse head [=torrentsUpFile] [=totalLines - 5]}${voffset [= 5 + gap]}${lua increase_y_offset [=torrentsUpFile]}
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-light-edge-bottom-left.png 0 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.secondaryColor]-panel-light-edge-bottom-right.png 162 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 0}\

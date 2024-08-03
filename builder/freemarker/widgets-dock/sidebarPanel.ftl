@@ -16,7 +16,7 @@ conky.config = {
   minimum_width = [=55 + borderWidth],      -- conky will add an extra pixel to this
   minimum_height = 10,
   own_window = true,
-  own_window_type = 'panel',    -- values: desktop (background), panel (bar)
+  own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
 
   -- window borders
   draw_borders = false,     -- draw borders around the conky window
