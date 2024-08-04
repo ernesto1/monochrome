@@ -3,24 +3,17 @@
 # if too many changes take place in a small time window, conky will stop reloading the file
 # hence why we generate the file in a temp folder and replace the target file only once
 
-TODO disk-usb usb-devices
 
 # desktop sidebar
 java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar glass blue desktop && \
-pushd /tmp/monochrome && \
-buildSidebar.bash config cpu-mem network disk temperature-desktop time && \
-echo '${voffset -900}]]' >> sidebar && \
-mv sidebar system applications ~/conky/monochrome/glass && \
-popd
+mv /tmp/monochrome/*  ~/conky/monochrome/glass
 
 
-# TODO update laptop sidebar
+# laptop: cpu-mem network disk power
+# TODO wifi power
 java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar glass blue laptop && \
-pushd /tmp/monochrome && \
-buildSidebar.bash config cpu-mem network disk power && \
-echo '${voffset -900}]];' >> sidebar && \
-mv sidebar system applications ~/conky/monochrome/glass && \
-popd
+mv /tmp/monochrome/*  ~/conky/monochrome/glass
+
 
 
 # design notes
