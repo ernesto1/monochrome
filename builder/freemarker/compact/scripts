@@ -7,11 +7,9 @@
 
 # ::::::: desktop sidebar
 java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar compact burgundy desktop && \
-pushd /tmp/monochrome && \
-mv sidebar applications ~/conky/monochrome/compact && \
+mv /tmp/monochrome/{sidebar,applications} ~/conky/monochrome/compact && \
 sleep 2 && \
-mv memoryGraph temperature ~/conky/monochrome/compact && \
-popd
+mv /tmp/monochrome/{memoryGraph,temperature} ~/conky/monochrome/compact
 
 
 # design notes

@@ -14,7 +14,7 @@ conky.config = {
   gap_y = 0,
 
   -- window settings
-  minimum_width = 231,
+  minimum_width = 236,
   minimum_height = 1398,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -60,7 +60,7 @@ conky.config = {
   -- upload/disk read graph
   template2 = [[[=colors.readGraph]]],
   <#assign tso = 32,    <#-- vertical offset to account for background sidebar image's top shadow -->
-           lso = 10,    <#-- horizontal offset to account for background sidebar image's left shadow -->
+           lso = 15,    <#-- horizontal offset to account for background sidebar image's left shadow -->
            iborder = 6, <#-- inner horizontal border -->
            rso = 32>    <#-- horizontal offset to account for background sidebar image's right shadow -->
   -- top cpu process: ${template3 processNumber}
