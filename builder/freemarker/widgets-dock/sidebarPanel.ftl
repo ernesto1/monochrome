@@ -7,20 +7,19 @@ conky.config = {
 
   -- window alignment
   alignment = 'middle_left',  -- top|middle|bottom_left|right
-  gap_x = 2,               -- same as passing -x at command line
-  <#if system == "desktop"><#assign yOffset = -430><#else><#assign yOffset = -330></#if>
+  gap_x = 27,               -- same as passing -x at command line
+  <#if system == "desktop"><#assign yOffset = -341><#else><#assign yOffset = -230></#if>
   gap_y = [=yOffset],
 
   -- window settings
   <#if border!true><#assign borderWidth = 1><#else><#assign borderWidth = 0></#if>
-  minimum_width = [=55 + borderWidth],      -- conky will add an extra pixel to this
-  minimum_height = 10,
+  minimum_width = [=58 + borderWidth],      -- conky will add an extra pixel to this
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
 
   -- window borders
   draw_borders = false,     -- draw borders around the conky window
-  border_width = 0,         -- width of border window in pixels
+  border_width = 1,         -- width of border window in pixels
   border_inner_margin = 0,  -- margin between the border and text in pixels
   border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
   
@@ -48,7 +47,7 @@ conky.config = {
   color3 = '[=colors.warning]',
   
   -- device temperature: ${template8 (value|conky expression}}
-  template7 = [[${voffset 7}${offset 12}${font0}${color}\1${voffset -28}${font3}°${offset 4}${voffset -4}${font0}C${font}${color}${voffset 9}]]
+  template1 = [[${voffset 8}${offset 12}${font0}${color}\1${voffset -28}${font3}°${offset 4}${voffset -4}${font0}C${font}${color}${voffset 8}]]
   
   -- :::: overview
   -- this conky uses the 'panel' window type in order to create a sidebar panel effect on the monitor
@@ -59,18 +58,15 @@ conky.config = {
 
 conky.text = [[
 <#if system == "desktop" >
-${voffset 8}${template7 ${lua_parse\ print_resource_usage\ ${hwmon\ atk0110\ temp\ 1}\ [=threshold.tempCPU]\ ${color3}}}
-${template7 ${lua_parse\ print_resource_usage\ ${hwmon\ radeon\ temp\ 1}\ [=threshold.tempVideo]\ ${color3}}}
+${template1 ${lua_parse\ print_resource_usage\ ${hwmon\ atk0110\ temp\ 1}\ [=threshold.tempCPU]\ ${color3}}}
+${template1 ${lua_parse\ print_resource_usage\ ${hwmon\ radeon\ temp\ 1}\ [=threshold.tempVideo]\ ${color3}}}
 <#assign disksTemp = "">
 <#list hardDisks[system] as hardDisk>
 <#if hardDisk.hwmonIndex??><#assign disksTemp += "${hwmon\\ " + hardDisk.hwmonIndex + "\\ temp\\ 1}\\ "></#if>
 </#list>
-${template7 ${lua_parse\ print_max_resource_usage\ [=threshold.tempDisk]\ ${color3}\ [=disksTemp?remove_ending("\\ ")]}}
-${voffset 7}${offset 7}${font0}${color}${lua_parse print_resource_usage ${hwmon atk0110 fan 1} [=(threshold.fanSpeed)?c] ${color3}}${font}${color}${voffset 16}
-</#if>
-${alignc}${font0}${color}${if_existing /tmp/conky/dnf.packages.formatted}${lines /tmp/conky/dnf.packages.formatted}${else}0${endif}${voffset 7}
-<#if system == "desktop" >
+${template1 ${lua_parse\ print_max_resource_usage\ [=threshold.tempDisk]\ ${color3}\ [=disksTemp?remove_ending("\\ ")]}}
+${voffset 8}${offset 7}${font0}${color}${lua_parse print_resource_usage ${hwmon atk0110 fan 1} [=(threshold.fanSpeed)?c] ${color3}}${font}${color}${voffset 8}
 ${alignc}${font0}${color}${time %I}${font1}:${time %M}
-${voffset -29}${alignc}${color1}${font2}${time %a}${voffset 6}
+${voffset -29}${alignc}${color1}${font2}${time %a}
 </#if>
 ]];

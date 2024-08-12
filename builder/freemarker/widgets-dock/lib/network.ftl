@@ -2,13 +2,6 @@
 
 <#macro network devices mainDeviceType>
 <#assign device = devices?first>
-# :::: [=device.type]
-${if_up [=device.name]}\
-<#if device.type == "wifi">
-<@wifi device/>
-<#else>
-<@ethernet/>
-</#if>
 # :: upload/download speeds
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-internet.png -p 0,64}\
 ${template4 [=device.name] [=device.maxUp?c] [=device.maxDown?c]}
@@ -29,12 +22,6 @@ ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-wifi.png -p
 ${voffset 49}${offset 6}${color2}${if_match ${wireless_link_qual_perc [=device.name]} < 30}${color3}${endif}${wireless_link_bar 3,45 [=device.name]}
 ${if_match ${wireless_link_qual_perc [=device.name]} == 100}${image ~/conky/monochrome/images/widgets-dock/text-box-100.png -p 114,24}${endif}\
 ${voffset -29}${goto 67}${color}${font1}${wireless_link_qual_perc [=device.name]}${font0}%${font}${voffset 1}
-</#macro>
-
-<#macro ethernet>
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-ethernet.png -p 0,0}\
-# ethernet details are printed on the system conky
-${voffset 48}
 </#macro>
 
 <#--

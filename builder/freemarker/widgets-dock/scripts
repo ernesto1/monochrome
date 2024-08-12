@@ -8,24 +8,17 @@
 # the java freemarker template app will output the conky blocks in the /tmp/monochrome folder
 
 # ::::::: desktop sidebar
-java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar widgets-dock yellow desktop && \
-pushd /tmp/monochrome && \
-buildSidebar.bash config cpu-mem network disk temperature packages-icon time bottom-edge && \
-echo '${voffset -360}]];' >> sidebar && \
-mv sidebar system applications ~/conky/monochrome/widgets-dock && \
+java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar widgets-dock grape desktop && \
+mv /tmp/monochrome/{sidebar,applications} ~/conky/monochrome/widgets-dock
 sleep 2 && \
-mv sidebarPanel ~/conky/monochrome/widgets-dock && \
-popd
+mv /tmp/monochrome/sidebarPanel ~/conky/monochrome/widgets-dock
+
+
+mv /tmp/monochrome/sidebar ~/conky/monochrome/widgets-dock && \
 
 # ::::::: laptop sidebar
-java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar widgets-dock yellow laptop && \
-pushd /tmp/monochrome && \
-buildSidebar.bash config cpu-mem network disk power temperature packages-icon bottom-edge && \
-echo '${voffset -360}]];' >> sidebar && \
-mv sidebar system applications ~/conky/monochrome/widgets-dock && \
-sleep 2 && \
-mv sidebarPanel ~/conky/monochrome/widgets-dock && \
-popd
+# widgets: config cpu-mem network disk power temperature packages-icon bottom-edge
+
 
 # design notes
 - images should have a top/bottom border of 9px
@@ -41,15 +34,3 @@ top cpu window
   bottom  7     1px below the text's main body
   
   each row of text adds 16 pixels (lines with a 3px voffset)
-
-# ::::: image update due to new templating
-git mv burgundy-menu-bittorrent.png burgundy-menu-peers.png;
-git mv burgundy-menu.png burgundy-menu-light.png
-git mv burgundy-menu-rhythmbox.png burgundy-rhythmbox.png;
-git rm burgundy-menu-!(peers*|dnf*|light*);
-
-
-mkdir -p /tmp/images;
-cp ../widgets-dock/grape-menu-*edge* /tmp/images;
-prename 's/grape/burgundy/' /tmp/images/*;
-mv /tmp/images/* .;

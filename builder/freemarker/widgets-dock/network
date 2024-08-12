@@ -1,0 +1,21 @@
+<#import "lib/network.ftl" as net>
+# :::::::::::::::::::: network
+<@net.network networkDevices[system] networkDevices[system][0].type/>
+
+
+
+
+<#if system == "laptop"><#-- this conditional statement is hardcoded to a wifi/eth configuration -->
+<#assign device = devices?first>
+# :::: [=device.type]
+${if_up [=device.name]}\
+<#if device.type == "wifi">
+<@net.wifi device/>
+<#else>
+# :::: ethernet
+# ethernet details are printed on the system conky
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-ethernet.png -p [=lso + 5],[=y]}\
+${voffset 48}
+</#if>
+</#if>
+<@net.network networkDevices[system] networkDevices[system][0].type/>
