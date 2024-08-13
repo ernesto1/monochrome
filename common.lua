@@ -61,6 +61,12 @@ function conky_set(name, value)
   return ''
 end
 
+function conky_compute(name, expression)
+  if expression ~= nil then vars[name] = conky_parse(expression) end
+  if vars[name] == nil then print("variable '" .. name .. "' does not exist") end
+  return ''
+end
+
 --[[
 Increments the current offset for the x & y coordinates.
 The client can then call the following methods which will take these offsets into account:
@@ -189,6 +195,29 @@ function conky_print_max_resource_usage(threshold, colorVariable, ...)
 
   return s
 end
+
+function conky_get_max_resource_usage(...)
+  local max = 0
+  local arg = {...}
+
+  for i = 1, select("#",...) do
+    local value =  tonumber(conky_parse(arg[i]))
+    max = (value > max) and value or max
+  end
+  
+  return max
+end
+
+function conky_get_usage_percentage(max, var)
+  if vars[var] > max then
+    print("get_usage_percentage: max value of " .. max .. " is lower than actual " .. vars[var])
+    return 100
+  end
+  
+  perc = math.floor(((vars[var] / max) * 100) + 0.5)    -- lua does not provide a rounding function
+  return perc
+end
+
 
 --[[ 
 generates an image conky variable from a conky expression which yields an image file path in the filesystem, 

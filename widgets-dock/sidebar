@@ -9,11 +9,11 @@ conky.config = {
   -- window alignment
   alignment = 'middle_left',     -- top|middle|bottom_left|middle|right
   gap_x = 0,                     -- same as passing -x at command line
-  gap_y = 0,
+  gap_y = 100,
 
   -- window settings
   minimum_width = 170,
-  minimum_height = 1335,
+  minimum_height = 1135,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
 
@@ -92,7 +92,7 @@ ${image ~/conky/monochrome/images/widgets-dock/grape-cpu.png -p 32,41}\
 ${image ~/conky/monochrome/images/widgets-dock/text-box-99p.png -p 95,54}\
 ${if_match ${cpu cpu0} > 90}\
 ${image ~/conky/monochrome/images/widgets-dock/grape-cpu-high.png -p 32,41}\
-${if_match ${cpu cpu0} == 100}${image ~/conky/monochrome/images/widgets-dock/text-box-100p.png -p 120,54}${endif}\
+${if_match ${cpu cpu0} == 100}${image ~/conky/monochrome/images/widgets-dock/text-box-100p.png -p 137,54}${endif}\
 ${endif}\
 ${voffset 44}${offset 39}${cpugraph cpu0 33,33 ${template1}}
 ${voffset -31}${goto 99}${color}${font1}${cpu cpu0}${font0}%
@@ -113,8 +113,8 @@ ${image ~/conky/monochrome/images/widgets-dock/text-box.png -p 95,201}\
 ${image ~/conky/monochrome/images/widgets-dock/text-box.png -p 95,235}\
 ${template3 enp0s25 3000 73000}
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/pink-internet-offline.png -p 27,181}\
-${voffset 117}
+${image ~/conky/monochrome/images/widgets-dock/pink-no-internet.png -p 27,181}\
+${voffset 86}\
 ${endif}\
 # :::::::::::::::::::: disk samsung SSD HD
 # main disk
@@ -144,10 +144,8 @@ ${image ~/conky/monochrome/images/widgets-dock/grape-disk-partition.png -p 32,53
 ${image ~/conky/monochrome/images/widgets-dock/text-box-partition.png -p 95,530}\
 ${template6 veronica /media/veronica}
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/pink-disk-disconnected.png -p 27,466}\
-${voffset 59}${goto 94}sdb not
-${voffset 3}${goto 94}available
-${voffset 27}
+${image ~/conky/monochrome/images/widgets-dock/pink-no-disk.png -p 29,457}\
+${voffset 9}${offset 35}sdb${voffset 108}
 ${endif}\
 # :::::::::::::::::::: disk seagate HD
 ${if_existing /dev/sdd}\
@@ -162,10 +160,8 @@ ${image ~/conky/monochrome/images/widgets-dock/grape-disk-partition.png -p 32,66
 ${image ~/conky/monochrome/images/widgets-dock/text-box-partition.png -p 95,660}\
 ${template6 betty /media/betty}
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/pink-disk-disconnected.png -p 27,596}\
-${voffset 59}${goto 94}sdd not
-${voffset 3}${goto 94}available
-${voffset 27}
+${image ~/conky/monochrome/images/widgets-dock/pink-no-disk.png -p 29,587}\
+${voffset 9}${offset 35}sdd${voffset 108}
 ${endif}\
 # :::::::::::::::::::: disk sde
 ${if_existing /dev/sde}\
@@ -180,19 +176,26 @@ ${image ~/conky/monochrome/images/widgets-dock/grape-disk-usbdrive.png -p 32,792
 ${image ~/conky/monochrome/images/widgets-dock/text-box-partition.png -p 95,790}\
 ${template6 maxtor /run/media/ernesto/MAXTOR}
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/pink-disk-disconnected.png -p 27,726}\
-${voffset 59}${goto 94}sde not
-${voffset 3}${goto 94}available
-${voffset 27}
+${image ~/conky/monochrome/images/widgets-dock/pink-no-disk.png -p 29,717}\
+${voffset 9}${offset 35}sde${voffset 108}
 ${endif}\
 # :::::::::::::::::::: temperatures
+# use of lua variables corrupt the values for the network up/down variables, hence temp details shown in the separate 'temperature' conky
 # :::::::: cpu
 ${image ~/conky/monochrome/images/widgets-dock/grape-temp-cpu.png -p 32,856}\
+${image ~/conky/monochrome/images/widgets-dock/text-box-99p.png -p 95,871}\
+${image ~/conky/monochrome/images/widgets-dock/text-box-100p.png -p 126,871}\
 # :::::::: ati video card
 ${image ~/conky/monochrome/images/widgets-dock/grape-temp-videocard.png -p 32,920}\
+${image ~/conky/monochrome/images/widgets-dock/text-box-99p.png -p 95,935}\
+${image ~/conky/monochrome/images/widgets-dock/text-box-100p.png -p 126,935}\
 # :::::::: hard disks
 ${image ~/conky/monochrome/images/widgets-dock/grape-temp-disk.png -p 32,984}\
+${image ~/conky/monochrome/images/widgets-dock/text-box-99p.png -p 95,999}\
+${image ~/conky/monochrome/images/widgets-dock/text-box-100p.png -p 126,999}\
 # :::::::: fans
-${image ~/conky/monochrome/images/widgets-dock/grape-fan-1.png -p 27,1048}\
-${voffset -360}\
+${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/grape-fan-1.png -p 32,1048}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/grape-fan-2.png -p 32,1048}${endif}\
+${image ~/conky/monochrome/images/widgets-dock/text-box-fan.png -p 95,1077}\
+${voffset -420}\
 ]]
