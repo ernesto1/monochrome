@@ -55,9 +55,9 @@ function usage() {
 	    kills the current running monochrome conkys and any supporting jobs launched
 
 	Examples
-	  $(basename $0) --widgets-dock
-	  $(basename $0) --compact --monitor 2
-	  $(basename $0) --glass --monitor 1 --layout-override desktop --silent
+	  $(basename $0) --conky compact
+	  $(basename $0) --conky glass --silent
+	  $(basename $0) --conky widgets-dock --monitor 1 --layout-override desktop --silent
 	END
 }
 
