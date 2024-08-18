@@ -81,20 +81,24 @@ cp -r */target/{lib,*.jar,*.yaml,*.xml} ~/conky/monochrome/java
 If you don't want to build this manually, you can download the latest `monochrome.zip` file from the [releases page](https://github.com/ernesto1/monochrome/releases).
 
 # How to run
-Run the launch script with the theme you want.
+Go into the conky monochrome folder
+
+```cd ~/conky/monochrome```
+
+Run the launch script with the theme you want:
 
 Theme| Command
 ---|---
-Compact|`~/conky/monochrome/launch.bash --conky compact`
-Glass|`~/conky/monochrome/launch.bash --conky glass`
-Widgets dock | `~/conky/monochrome/launch.bash --conky widgets-dock`
-Widgets | `~/conky/monochrome/launch.bash --conky widgets`
+Compact|`./launch.bash --conky compact`
+Glass|`./launch.bash --conky glass`
+Widgets dock | `./launch.bash --conky widgets-dock`
+Widgets | `./launch.bash --conky widgets`
 
-I recommend you take advantage of the launch script's `--silent` flag.  It suppresses conky logging which clutters the terminal (ex. `~/conky/monochrome/launch.bash --conky compact --silent)`.
+I recommend you take advantage of the launch script's `--silent` flag.  It suppresses conky logging which clutters the terminal (ex. `./launch.bash --conky compact --silent)`.
 
 ### Shutting down
 To close all conkys and supporting jobs started by the launch script you can run the `shutdown` command
 
 ```shell
-~/conky/monochrome/launch.bash --shutdown
+./launch.bash --shutdown
 ```
