@@ -27,6 +27,14 @@ function onExitSignal {
 
 trap onExitSignal EXIT
 
+if ! type dnf > /dev/null 2>&1; then
+  msg="your linux distro does not use the 'dnf' package manager\n"
+  msg="${msg}the package updates conky will not be operational\n"
+  msg="${msg}you will have to update this script to work with your distro's package manager"
+  logError "$msg"
+  exit 1
+fi
+
 packageWidth=21   # number of characters to print for the package name
 versionWidth=7    # number of characters to print for the version number
 offset=11         # number of pixels between the package name and its version number

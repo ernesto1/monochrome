@@ -41,7 +41,7 @@ trap onExitSignal EXIT
 
 if ! type transmission-remote > /dev/null 2>&1; then
   msg="the transmission bittorrent client is not installed on this system\n"
-  msg="${msg}      the transmission conky will not be operational"
+  msg="${msg}the transmission conky will not be operational"
   logError "$msg"
   exit 1
 fi
