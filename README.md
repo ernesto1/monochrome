@@ -39,11 +39,9 @@ more recent versions may have regressions/bugs ([issue 1](https://github.com/brn
 Run the command `dnf downgrade conky` until you arrive at this version or download the RPM [from the web](https://rpm.pbone.net/info_idpl_70128821_distro_fedora32_com_conky-1.11.5-3.fc32.x86_64.rpm.html).
 
 ### Fonts
-Most fonts used should come by default in your distro:
+Fonts used should come by default in your distro:
 
-- [Promenade de la Croisette](https://www.fontspace.com/promenade-de-la-croisette-font-f23769)
 - Nimbus Mono PS Regular
-- Noto Sans CJK JP Thin
 - URW Gothic
 - URW Gothic Demi
 
