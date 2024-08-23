@@ -73,10 +73,10 @@ ${lua set_total_lines [=totalLines]}\
          gap = 3,               <#-- empty space across panels of the same application -->
          sectionGap = 4>        <#-- empty space between application panels -->
 ${if_existing [=packagesFile]}\
-${image ~/conky/monochrome/images/common/[=image.secondaryColor]-packages.png -p 0,0}\
-<@panel.noLeftEdgePanel x=0+iconWidth y=y width=width-iconWidth height=iconHeight color=image.secondaryColor/>
-${voffset 5}${offset 45}${color3}dandified yum
-${voffset 2}${offset 45}${color4}${lines [=packagesFile]} package updates${voffset [=5+gap]}
+${image ~/conky/monochrome/images/common/[=image.primaryColor]-packages.png -p 0,0}\
+<@panel.noLeftEdgePanel x=0+iconWidth y=y width=width-iconWidth height=iconHeight isDark=true/>
+${voffset 5}${offset 45}${color1}dandified yum
+${voffset 2}${offset 45}${color}${lines [=packagesFile]} package updates${voffset [=5+gap]}
 <#assign y += iconHeight + gap>
 <@panel.table x=0 y=y width=width header=singleLineHeight/>
 <#assign y += singleLineHeight>
@@ -186,10 +186,10 @@ ${voffset 2}${offset 45}${color}no active torrents${voffset [= 5 + sectionGap]}
 ${lua increment_offsets 0 [=iconHeight + sectionGap]}${lua decrease_total_lines 2}\
 ${else}\
 # ::: active torrents
-${lua_parse draw_image ~/conky/monochrome/images/common/[=image.secondaryColor]-torrents.png 0 0}\
-<@panel.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconHeight color=image.secondaryColor isFixed=false/>
-${voffset 5}${offset 45}${color3}transmission
-${voffset 2}${offset 45}${color4}${lua get activeNum} active torrents${voffset [= 7 + gap]}
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-torrents.png 0 0}\
+<@panel.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconHeight isFixed=false isDark=true/>
+${voffset 5}${offset 45}${color1}transmission
+${voffset 2}${offset 45}${color}${lua get activeNum} active torrents${voffset [= 7 + gap]}
 ${lua increment_offsets 0 [=iconHeight + gap]}\
 <#assign header = 59,   <#-- section for the labels -->
          height = 55>

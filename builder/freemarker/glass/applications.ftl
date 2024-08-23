@@ -9,7 +9,7 @@ conky.config = {
 
   -- window alignment
   alignment = 'middle_right',  -- top|middle|bottom_left|right
-  gap_x = 10,
+  gap_x = 6,
   gap_y = -16,
 
   -- window settings
@@ -65,9 +65,9 @@ ${lua set_total_lines [=totalLines]}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-packages.png -p 0,0}\
 # ::: updates vailable
 ${if_existing [=packagesFile]}\
-<@panel.panel x=iconWidth+gap y=y width=width-iconWidth-gap height=iconheight/>
+<@panel.panel x=iconWidth+gap y=y width=width-iconWidth-gap height=iconheight isDark=true/>
 ${voffset 5}${offset 48}${color1}dandified yum
-${voffset 2}${offset 48}${color}${lua get numUpdates ${lines [=packagesFile]}} ${if_match ${lua get numUpdates} < 100}package${else}new${endif} updates${voffset [= 7 + gap]}
+${voffset 2}${offset 48}${color}${lua get numUpdates ${lines [=packagesFile]}} ${if_match ${lua get numUpdates} < 100}package update${else}new updates${endif}${voffset [= 7 + gap]}
 <#assign y += iconheight + gap>
 <#assign header = 19, versionCol = 51>
 <@panel.table x=0 y=y widths=[width-versionCol-colGap, versionCol] gap=colGap header=header/>
@@ -173,7 +173,7 @@ ${voffset 2}${offset 48}${color}no active torrents${voffset [= 5 + sectionGap]}
 ${lua increment_offsets 0 [=iconheight + sectionGap]}${lua decrease_total_lines 2}\
 ${else}\
 # ::: active torrents
-<@panel.panel x=iconWidth+gap y=0 width=width-iconWidth-gap height=iconheight isFixed=false/>
+<@panel.panel x=iconWidth+gap y=0 width=width-iconWidth-gap height=iconheight isFixed=false isDark=true/>
 ${voffset 5}${offset 48}${color1}transmission
 ${voffset 2}${offset 48}${color}${lua get activeNum} active torrents${voffset [= 7 + gap]}
 ${lua increment_offsets 0 [=iconheight + gap]}\
