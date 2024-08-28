@@ -14,15 +14,14 @@ Keep tabs on your system's cpu, memory, disk, network, battery usage and device 
 ### Widgets
 ![widgets](images/screenshots/widgets.jpg)
 
-# Supporting applications
-These command line jobs were written to support this conky setup:
+## Additional monitoring features
 
-- A bash script for launching multiple conky configs and supporting applications
-- A bash script to monitor for new dnf package updates
-- A bash script to retrieve torrent activity from the transmission bittorrent client
-- A java program that listens to the dbus for music player activity
+- A paginated list of new package updates for the Fedora **dnf** package manager
+- Torrent uploads and downloads for the **transmission** bittorrent client
+- Music player support for **Rhythmbox** and **Spotify**
+- Read/write io usage for swap disk space
 
-For details on these applications [see this wiki](https://github.com/ernesto1/monochrome/wiki/Scripts).
+These details are retrieved with the use of [small scripts](https://github.com/ernesto1/monochrome/wiki/Scripts).
 
 # How to install
 ## Dependencies
