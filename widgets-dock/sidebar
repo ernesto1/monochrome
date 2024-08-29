@@ -62,7 +62,7 @@ conky.config = {
   -- cpu/mem/download/disk write graph color
   template1 = [[51295e a36dec]],
   -- upload/disk read graph
-  template2 = [[6c1c1b d7511c]],  
+  template2 = [[6c1c1b d7511c]],
   -- network bandwith: ${template3 device uploadSpeed downloadSpeed}
   template3 = [[
 ${voffset 9}${offset 32}${upspeedgraph \1 29,47 ${template2} \2}
@@ -145,7 +145,7 @@ ${image ~/conky/monochrome/images/widgets-dock/text-box-partition.png -p 95,530}
 ${template6 veronica /media/veronica}
 ${else}\
 ${image ~/conky/monochrome/images/widgets-dock/pink-no-disk.png -p 29,457}\
-${voffset 9}${offset 35}sdb${voffset 108}
+${voffset 9}${offset 45}${color1}sdb${voffset 108}
 ${endif}\
 # :::::::::::::::::::: disk seagate HD
 ${if_existing /dev/sdd}\
@@ -161,7 +161,7 @@ ${image ~/conky/monochrome/images/widgets-dock/text-box-partition.png -p 95,660}
 ${template6 betty /media/betty}
 ${else}\
 ${image ~/conky/monochrome/images/widgets-dock/pink-no-disk.png -p 29,587}\
-${voffset 9}${offset 35}sdd${voffset 108}
+${voffset 9}${offset 45}${color1}sdd${voffset 108}
 ${endif}\
 # :::::::::::::::::::: disk sde
 ${if_existing /dev/sde}\
@@ -177,7 +177,7 @@ ${image ~/conky/monochrome/images/widgets-dock/text-box-partition.png -p 95,790}
 ${template6 maxtor /run/media/ernesto/MAXTOR}
 ${else}\
 ${image ~/conky/monochrome/images/widgets-dock/pink-no-disk.png -p 29,717}\
-${voffset 9}${offset 35}sde${voffset 108}
+${voffset 9}${offset 45}${color1}sde${voffset 108}
 ${endif}\
 # :::::::::::::::::::: temperatures
 # use of lua variables corrupt the values for the network up/down variables, hence temp details shown in the separate 'temperature' conky

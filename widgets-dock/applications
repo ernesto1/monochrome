@@ -277,7 +277,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-dark.png 0 0
 ${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-dark-edge-top-left.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-dark-edge-top-right.png 162 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light.png 0 23}\
-${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-dark.png 139 23}\
+${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-dark.png 136 23}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 169 0}\
 ${lua increment_offsets 0 23}\
 ${voffset 5}${offset 5}${color1}torrent${alignr 4}down${voffset 7}

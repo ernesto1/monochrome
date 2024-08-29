@@ -22,7 +22,7 @@ public class ConkyTemplate {
 
     /**
      * Parses the conky freemarker template file based on the given configuration
-     * @param args <tt>conkyTheme</tt> <tt>color</tt> <tt>device</tt>
+     * @param args arguments to the java application
      * @throws IOException if an input file is not available
      * @throws TemplateException if a freemarker error occurs while processing the templates
      */
@@ -41,8 +41,12 @@ public class ConkyTemplate {
         InputStream globalSettingsStream = new FileInputStream(new File(TEMPLATE_ROOT_DIR, "hardware.yml"));
         Yaml yaml = new Yaml();
         Map<String, Object> root = yaml.load(globalSettingsStream);
-        root.put("conky", conky);                 // conky theme being configured
+        root.put("conky", conky);                   // conky theme being configured
         root.put("system", args[2].toLowerCase());  // desktop or laptop
+        if (args.length > 3) {
+            root.put("isElaborate", Boolean.valueOf(args[3]));
+        }
+
         // load conky theme data model
         File conkyTemplateDir = new File(TEMPLATE_ROOT_DIR, conky);
         InputStream colorPaletteStream = new FileInputStream(new File(conkyTemplateDir, "colorPalette.yml"));

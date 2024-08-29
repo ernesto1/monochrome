@@ -225,7 +225,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-pa
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-dark-edge-top-left.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-dark-edge-top-right.png 162 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-light.png 0 [=singleLineHeight]}\
-${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-dark.png 139 [=singleLineHeight]}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-dark.png 136 [=singleLineHeight]}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 169 0}\
 ${lua increment_offsets 0 [=singleLineHeight]}\
 ${voffset 5}${offset 5}${color1}torrent${alignr 4}down${voffset [=4+gap]}

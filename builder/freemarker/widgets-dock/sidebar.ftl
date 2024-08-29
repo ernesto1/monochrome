@@ -14,11 +14,14 @@ conky.config = {
   gap_y = [=yOffset],
 
   -- window settings
-  <#assign tso = 32,    <#-- vertical offset to account for background sidebar image's top shadow -->
-           lso = 27,    <#-- horizontal offset to account for background sidebar image's left shadow -->
-           iborder = 6, <#-- inner horizontal border -->
-           rso = 32>    <#-- horizontal offset to account for background sidebar image's right shadow -->
-  minimum_width = [=lso + 143],
+  <#-- offsets are used to account for the image's shadows on the left, top and right side -->
+  <#assign tso = 32,    <#-- top shadow offset -->
+           lso = 27,    <#-- left shadow offset -->
+           iborder = 6, <#-- inner sidebar horizontal border -->
+           rso = 32,    <#-- right shadow offset -->
+           width = lso + 90>  <#-- width of the sidebar image -->
+  <#if isElaborate><#assign width += 53></#if>
+  minimum_width = [=width],
   minimum_height = 1135,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -68,26 +71,41 @@ conky.config = {
   -- cpu/mem/download/disk write graph color
   template1 = [[[=colors.writeGraph]]],
   -- upload/disk read graph
-  template2 = [[[=colors.readGraph]]],  
+  template2 = [[[=colors.readGraph]]],
   -- network bandwith: ${template3 device uploadSpeed downloadSpeed}
   template3 = [[
 ${voffset 9}${offset [=lso + 5]}${upspeedgraph \1 29,47 ${template2} \2}
 ${voffset -8}${offset [=lso + 5]}${downspeedgraph \1 29,47 ${template1} \3}
+<#if isElaborate>
 ${voffset -56}${goto [=lso + 72]}${color}${font}${upspeed \1}
-${voffset 21}${goto [=lso + 72]}${color}${font}${downspeed \1}${voffset 10}]],
+${voffset 21}${goto [=lso + 72]}${color}${font}${downspeed \1}${voffset 10}<#rt>
+<#else>
+${font}${voffset -12}\<#rt>
+</#if>
+]],
 
   -- hard disk io: ${template4 device readSpeed writeSpeed}
   template4 = [[
 ${voffset 5}${offset [=lso + 5]}${color}${diskiograph_read /dev/\1 21,47 ${template2} \2}
 ${voffset -8}${offset [=lso + 5]}${diskiograph_write /dev/\1 21,47 ${template1} \3}
+<#if isElaborate>
 ${voffset -48}${goto [=lso + 72]}${color}${font}${diskio_read /dev/\1}
-${voffset 13}${goto [=lso + 72]}${color}${font}${diskio_write /dev/\1}${voffset 10}]],
+${voffset 13}${goto [=lso + 72]}${color}${font}${diskio_write /dev/\1}${voffset 10}<#rt>
+<#else>
+${font}${voffset -12}\<#rt>
+</#if>
+]],
 
   -- filesystem: ${template6 filesystemName fileSystemPath}
   template6 = [[
 ${voffset 45}${offset [=lso + 6]}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3, 45 \2}
+<#if isElaborate>
 ${voffset -46}${goto [=lso + 72]}${color}${font}\1
-${voffset 4}${goto [=lso + 72]}${color}${font1}${fs_used_perc \2}${font0}%${font}${voffset 8}]],
+${voffset 4}${goto [=lso + 72]}${color}${font1}${fs_used_perc \2}${font0}%${font}${voffset 8}<#rt>
+<#else>
+${font}${voffset -7}\<#rt>
+</#if>
+]],
 
 <#if system == "laptop" >
   -- color coded hwmon entry: index/device type index threshold
@@ -105,32 +123,48 @@ ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-sidebar.png -p 
 # :::::::::::::::::::: cpu
 <#assign y += 9>
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-cpu.png -p [=lso + 5],[=y]}\
+<#if isElaborate>
 ${image ~/conky/monochrome/images/[=conky]/text-box-99p.png -p [=lso + 68],[=y + 13]}\
+</#if>
 ${if_match ${cpu cpu0} > [=threshold.cpu]}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-cpu-high.png -p [=lso + 5],[=y]}\
+<#if isElaborate>
 ${if_match ${cpu cpu0} == 100}${image ~/conky/monochrome/images/[=conky]/text-box-100p.png -p [=lso + 110],[=y + 13]}${endif}\
+</#if>
 ${endif}\
 <#assign y += 48 + 9>
 ${voffset [=tso + 12]}${offset [=lso + 12]}${cpugraph cpu0 33,33 ${template1}}
+<#if isElaborate>
 ${voffset -31}${goto [=lso + 72]}${color}${font1}${cpu cpu0}${font0}%
+<#else>
+${font0}${voffset -3}\
+</#if>
 # :::::::::::::::::::: memory
 <#assign y += 9>
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-mem.png -p [=lso + 5],[=y]}\
+<#if isElaborate>
 ${image ~/conky/monochrome/images/[=conky]/text-box-mem.png -p [=lso + 68],[=y + 19]}\
+</#if>
 ${if_match ${memperc} > [=threshold.mem]}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-mem-high.png -p [=lso + 5],[=y]}\
 ${endif}\
 <#assign y += 48 + 26>
 ${voffset 17}${offset [=lso + 18]}${memgraph 43,21 ${template1}}
+<#if isElaborate>
 ${voffset -33}${goto [=lso + 72]}${color}${font1}${memperc}${font0}%
-${voffset 4}${offset [=lso + 6]}${color2}${if_match ${swapperc} >= [=threshold.swap]}${color3}${endif}${swapbar 3, 45}${voffset -2}${goto [=lso + 72]}${font}${color}${swapperc}%
+<#else>
+${font0}${voffset -5}\
+</#if>
+${voffset 4}${offset [=lso + 6]}${color2}${if_match ${swapperc} >= [=threshold.swap]}${color3}${endif}${swapbar 3, 45}<#if isElaborate>${voffset -2}${goto [=lso + 72]}${font}${color}${swapperc}%<#else>${font}${voffset -2}</#if>
 # :::::::::::::::::::: network
 <#assign device = networkDevices[system]?first>
 ${if_up [=device.name]}\
 # :: upload/download speeds
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-internet.png -p [=lso],[=y]}\
+<#if isElaborate>
 ${image ~/conky/monochrome/images/[=conky]/text-box.png -p [=lso + 68],[=y + 20]}\
 ${image ~/conky/monochrome/images/[=conky]/text-box.png -p [=lso + 68],[=y + 54]}\
+</#if>
 <#assign device = networkDevices[system]?first>
 ${template3 [=device.name] [=device.maxUp?c] [=device.maxDown?c]}
 ${else}\
@@ -149,8 +183,10 @@ ${endif}\
          y += 9>
 ${if_updatenr 1}${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-diskio-1.png -p [=lso + 5],[=y]}${endif}\
 ${if_updatenr 2}${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-diskio-2.png -p [=lso + 5],[=y]}${endif}\
+<#if isElaborate>
 ${image ~/conky/monochrome/images/[=conky]/text-box.png -p [=lso + 68],[=y + 3]}\
 ${image ~/conky/monochrome/images/[=conky]/text-box.png -p [=lso + 68],[=y + 29]}\
+</#if>
 <#assign y += 48 + 9>
 ${template4 [=hardDisk.device] [=hardDisk.readSpeed?c] [=hardDisk.writeSpeed?c]}
 # partitions
@@ -158,10 +194,14 @@ ${template4 [=hardDisk.device] [=hardDisk.readSpeed?c] [=hardDisk.writeSpeed?c]}
 <#assign y += 9>
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-disk-[=partition.icon].png -p [=lso + 5],[=y]}\
 <#if hardDisk.device == "sda">
+<#if isElaborate>
 ${image ~/conky/monochrome/images/[=conky]/text-box-99p.png -p [=lso + 68],[=y + 15]}\
+</#if>
 ${template6 \  [=partition.path]}
 <#else>
+<#if isElaborate>
 ${image ~/conky/monochrome/images/[=conky]/text-box-partition.png -p [=lso + 68],[=y - 2]}\
+</#if>
 ${template6 [=partition.name] [=partition.path]}
 </#if>
 <#assign y += 46 + 9>
@@ -169,7 +209,7 @@ ${template6 [=partition.name] [=partition.path]}
 <#if hardDisk.device != "sda">
 ${else}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-no-disk.png -p [=lso + 2],[=ySection]}\
-${voffset 9}${offset [=lso + 8]}[=hardDisk.device]${voffset 108}
+${voffset 9}${offset [=lso + 8 + 10]}${color1}[=hardDisk.device]${voffset 108}
 ${endif}\
 </#if>
 </#list>
@@ -178,27 +218,35 @@ ${endif}\
 <#assign y += 9>
 # :::::::: cpu
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-temp-cpu.png -p [=lso + 5],[=y]}\
+<#if isElaborate>
 ${image ~/conky/monochrome/images/[=conky]/text-box-99p.png -p [=lso + 68],[=y + 15]}\
 ${image ~/conky/monochrome/images/[=conky]/text-box-100p.png -p [=lso + 68 + 31],[=y + 15]}\
+</#if>
 <#if system == "desktop" >
 <#assign y += 46 + 9>
 # :::::::: ati video card
 <#assign y += 9>
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-temp-videocard.png -p [=lso + 5],[=y]}\
+<#if isElaborate>
 ${image ~/conky/monochrome/images/[=conky]/text-box-99p.png -p [=lso + 68],[=y + 15]}\
 ${image ~/conky/monochrome/images/[=conky]/text-box-100p.png -p [=lso + 68 + 31],[=y + 15]}\
+</#if>
 <#assign y += 46 + 9>
 # :::::::: hard disks
 <#assign y += 9>
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-temp-disk.png -p [=lso + 5],[=y]}\
+<#if isElaborate>
 ${image ~/conky/monochrome/images/[=conky]/text-box-99p.png -p [=lso + 68],[=y + 15]}\
 ${image ~/conky/monochrome/images/[=conky]/text-box-100p.png -p [=lso + 68 + 31],[=y + 15]}\
+</#if>
 <#assign y += 46 + 9>
 # :::::::: fans
 <#assign y += 9>
 ${if_updatenr 1}${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-fan-1.png -p [=lso+5],[=y?c]}${endif}\
 ${if_updatenr 2}${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-fan-2.png -p [=lso+5],[=y?c]}${endif}\
+<#if isElaborate>
 ${image ~/conky/monochrome/images/[=conky]/text-box-fan.png -p [=lso + 68],[=(y + 29)?c]}\
+</#if>
 <#assign y += 46 + 9>
 </#if>
 ${voffset -420}\

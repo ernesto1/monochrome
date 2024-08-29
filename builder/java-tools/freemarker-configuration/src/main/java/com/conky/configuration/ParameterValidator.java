@@ -27,8 +27,8 @@ public class ParameterValidator {
         return validators.stream().allMatch(p -> p.test(args));
     }
     private boolean isCorrectNumberOfArguments(String[] args) {
-        if (args.length !=3) {
-            logger.error("usage: conkyTemplate <conky theme> <color> <device>");
+        if (args.length < 3) {
+            logger.error("usage: conkyTemplate <conky theme> <color> <device> [<isElaborate>]");
             logger.error("where device can be 'desktop' or 'laptop'");
             return false;
         }

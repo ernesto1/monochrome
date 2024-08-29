@@ -8,7 +8,7 @@ conky.config = {
   -- window alignment
   alignment = 'middle_left',  -- top|middle|bottom_left|right
   gap_x = 0,               -- same as passing -x at command line
-  <#if system == "desktop"><#assign yOffset = -374><#else><#assign yOffset = -230></#if>
+  <#if system == "desktop"><#assign yOffset = -305><#else><#assign yOffset = -230></#if><#lt>
   gap_y = [=yOffset],
 
   -- window settings | conky width matches the sidebar conky
@@ -49,18 +49,33 @@ conky.text = [[
 # :::::::: cpu
 <#if system == "desktop" >
 ${voffset 45}${offset [=lso + 6]}${color2}${if_match ${lua get cpuTemp ${hwmon atk0110 temp 1}} > [=threshold.tempCPU]}${color3}${endif}${lua_bar 3,45 get cpuTemp}
+<#if isElaborate>
 ${voffset -29}${goto [=lso + 72]}${color}${font1}${lua get cpuTemp}${font0}°C${font}${voffset 8}
+<#else>
+${font}${voffset 6}\
+</#if>
 # :::::::: ati video card
 ${voffset 45}${offset [=lso + 6]}${color2}${if_match ${lua get videoTemp ${hwmon radeon temp 1}} > [=threshold.tempVideo]}${color3}${endif}${lua_bar 3,45 get videoTemp}
+<#if isElaborate>
 ${voffset -29}${goto [=lso + 72]}${color}${font1}${lua get videoTemp}${font0}°C${font}${voffset 8}
+<#else>
+${font}${voffset 6}\
+</#if>
 # :::::::: hard disks
 ${lua compute diskTemp ${lua get_max_resource_usage ${hwmon 0 temp 1} ${hwmon 1 temp 1} ${hwmon 2 temp 1}}}\
 ${voffset 45}${offset [=lso + 6]}${color2}${if_match ${lua get diskTemp} > [=threshold.tempDisk]}${color3}${endif}${lua_bar 3,45 get diskTemp}
+<#if isElaborate>
 ${voffset -29}${goto [=lso + 72]}${color}${font1}${lua get diskTemp}${font0}°C${font}${voffset 8}
+<#else>
+${font}${voffset 6}\
+</#if>
 # :::::::: fans
 ${lua compute fanSpeed ${lua get_max_resource_usage ${hwmon atk0110 fan 3} ${hwmon atk0110 fan 1} ${hwmon atk0110 fan 2} ${hwmon atk0110 fan 4}}}\
 ${voffset 45}${offset [=lso + 6]}${color2}${if_match ${lua get fanSpeed} > [=threshold.fanSpeed?c]}${color3}${endif}${lua_bar 3,45 conky_get_usage_percentage 2600 fanSpeed}
+<#if isElaborate>
 ${voffset -29}${goto [=lso + 72]}${color}${font1}${font}${lua get fanSpeed} rpm${voffset 8}
+${voffset -150}
+</#if>
 <#else>
 # laptop only reports cpu core temperatures, displaying the hottest of the two cores
 ${voffset 15}${if_match ${hwmon coretemp temp 2} > ${hwmon coretemp temp 3}}${template8 coretemp temp 2 [=threshold.tempCPUCore]}${else}${template8 coretemp temp 3 [=threshold.tempCPUCore]}${endif}

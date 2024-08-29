@@ -8,7 +8,7 @@ conky.config = {
   -- window alignment
   alignment = 'middle_left',  -- top|middle|bottom_left|right
   gap_x = 0,               -- same as passing -x at command line
-    gap_y = -374,
+  gap_y = -305,
 
   -- window settings | conky width matches the sidebar conky
   minimum_width = 170,
@@ -58,4 +58,5 @@ ${voffset -29}${goto 99}${color}${font1}${lua get diskTemp}${font0}°C${font}${v
 ${lua compute fanSpeed ${lua get_max_resource_usage ${hwmon atk0110 fan 3} ${hwmon atk0110 fan 1} ${hwmon atk0110 fan 2} ${hwmon atk0110 fan 4}}}\
 ${voffset 45}${offset 33}${color2}${if_match ${lua get fanSpeed} > 2300}${color3}${endif}${lua_bar 3,45 conky_get_usage_percentage 2600 fanSpeed}
 ${voffset -29}${goto 99}${color}${font1}${font}${lua get fanSpeed} rpm${voffset 8}
+${voffset -150}
 ]];
