@@ -1,0 +1,62 @@
+# settings
+blankImageWidth: 219  # blank panel image width in pixels
+
+networkDevices:
+  - name: enp0s25
+    type: ethernet
+    maxUp: 3000       # speed in KiB
+    maxDown: 73000
+        
+hardDisks:
+  - device: sda
+    name: samsung SSD HD
+    readSpeed: 200000
+    writeSpeed: 280000
+    hwmonIndex: 0     # optional | linux hardware monitor index, ex. hwmon3
+    partitions:
+      - name: fedora
+        path: /
+        icon: root
+      - name: home
+        path: /home
+        icon: home
+  - device: sdb
+    name: seagate HD
+    readSpeed: 6000
+    writeSpeed: 250000
+    hwmonIndex: 1
+    partitions:
+      - name: veronica
+        path: /media/veronica
+        icon: partition
+  - device: sdd
+    name: seagate HD
+    readSpeed: 6000
+    writeSpeed: 250000
+    hwmonIndex: 2
+    partitions:
+      - name: betty
+        path: /media/betty
+        icon: partition
+  - device: sde
+    readSpeed: 6000
+    writeSpeed: 60000
+    fileSuffix: maxtor  # optional | name to append to the output file name, ex. disk-maxtor
+    partitions:
+      - name: maxtor
+        path: /run/media/ernesto/MAXTOR
+        icon: usbdrive
+
+# thresholds for the different conky meters
+# when these limits are passed, the conky will change colors
+threshold:
+  cpu: 90         # percentages
+  mem: 90
+  swap: 70
+  tempCPU: 78     # temperatures in degrees celsius
+  tempCPUCore: 85
+  tempVideo: 75
+  tempDisk: 42
+  fanSpeed: 2300  # revolutions per minute (rpm)
+                  # n.b. for values over 1000 you need to parse them individually in freemarker
+                  #      with the '?c' built in or freemarker will parse it as 1,000 instead

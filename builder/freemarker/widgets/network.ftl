@@ -48,7 +48,7 @@ conky.config = {
 };
 
 conky.text = [[
-<#assign device = networkDevices[system]?first>
+<#assign device = networkDevices?first>
 ${if_up [=device.name]}\
 ${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-network.png -p 0,0}\
 ${voffset 3}${offset 22}${color1}local ip${goto 80}${color}${addr [=device.name]}

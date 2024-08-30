@@ -123,7 +123,7 @@ ${template4 [=x]}
 </#list>
 <#assign y += 125, ySection = y>
 # -------------- network
-<#assign device = networkDevices[system]?first>
+<#assign device = networkDevices?first>
 ${if_up [=device.name]}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-ethernet.png -p [=lso + 5],[=y]}\
 <#assign y += 36>
@@ -142,7 +142,7 @@ ${voffset 3}${offset [=lso + iborder + 2]}connection
 ${voffset 73}
 ${endif}\
 # -------------- disks
-<#list hardDisks[system] as disk>
+<#list hardDisks as disk>
 # :::: [=disk.device]
 <#assign ySection = y>
 <#if disk.partitions?size == 1><#-- for disk with single partition add connected/disconnected state -->

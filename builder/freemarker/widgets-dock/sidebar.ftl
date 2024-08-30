@@ -157,7 +157,7 @@ ${font0}${voffset -5}\
 </#if>
 ${voffset 4}${offset [=lso + 6]}${color2}${if_match ${swapperc} >= [=threshold.swap]}${color3}${endif}${swapbar 3, 45}<#if isElaborate>${voffset -2}${goto [=lso + 72]}${font}${color}${swapperc}%<#else>${font}${voffset -2}</#if>
 # :::::::::::::::::::: network
-<#assign device = networkDevices[system]?first>
+<#assign device = networkDevices?first>
 ${if_up [=device.name]}\
 # :: upload/download speeds
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-internet.png -p [=lso],[=y]}\
@@ -165,14 +165,14 @@ ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-internet.png -p
 ${image ~/conky/monochrome/images/[=conky]/text-box.png -p [=lso + 68],[=y + 20]}\
 ${image ~/conky/monochrome/images/[=conky]/text-box.png -p [=lso + 68],[=y + 54]}\
 </#if>
-<#assign device = networkDevices[system]?first>
+<#assign device = networkDevices?first>
 ${template3 [=device.name] [=device.maxUp?c] [=device.maxDown?c]}
 ${else}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-no-internet.png -p [=lso],[=y]}\
 ${voffset 86}\
 ${endif}\
 <#assign y += 9 + 64 + 9><#-- internet image contains the top and bottom border -->
-<#list hardDisks[system] as hardDisk>
+<#list hardDisks as hardDisk>
 # :::::::::::::::::::: disk [=hardDisk.name!hardDisk.device]
 <#-- special handling for the main 'sda' disk
      > partitions do not print their name since their icons are self explanatory

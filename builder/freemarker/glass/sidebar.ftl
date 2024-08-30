@@ -143,7 +143,7 @@ ${voffset -5}${alignr [=rso + 6]}${color}${font}${swap} / ${swapmax}
 # ::::::::::::::::: network
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-divider.png -p [=lso],[=y]}\
 <#assign y += 1, ySection = y>
-<#list networkDevices[system] as device>
+<#list networkDevices as device>
 ${if_up [=device.name]}\
 <#if device.type == "wifi">
 # :::::: wifi
@@ -170,17 +170,17 @@ ${else}\
 <#else>
 ${else}\
 # :::::: no network/internet
-<#assign type = networkDevices[system]?first.type>
+<#assign type = networkDevices?first.type>
 ${image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-no-[=type].png -p [=lso + 2],[=ySection + 2]}\
 ${voffset 7}${offset [=lso + iborder + 2]}${color}${font0}network${font}
 ${voffset 142}<#if device.type == "wifi">${offset [=lso + 39]}<#else>${offset [=lso + 27]}</#if>no [=type]
 ${offset [=lso + 29]}connection${voffset 3}
 </#if>
 </#list>
-<#list 1..networkDevices[system]?size as x>
+<#list 1..networkDevices?size as x>
 ${endif}\
 </#list>
-<#list hardDisks[system] as disk>
+<#list hardDisks as disk>
 <#assign ySection = y>
 # ::::::::::::::::: disk [=disk.name!disk.device]
 <#if disk.partitions?size == 1><#-- for disk with single partition add connected/disconnected state -->
@@ -220,7 +220,7 @@ ${voffset 2}${alignr [=rso + 6]}${color}${font}cores ${template8 coretemp temp 5
 ${voffset 6}${offset [=lso + iborder]}${color1}${font0}video card${font}
 ${voffset -13}${alignr [=rso + 6]}${color}${font2}${template8 radeon temp 1 [=threshold.tempVideo]}°C${font}
 # :::: hard disks
-<#assign disk = hardDisks[system]?first>
+<#assign disk = hardDisks?first>
 ${voffset 6}${offset [=lso + iborder]}${color1}${font0}hard disks${font}
 ${voffset -13}${alignr [=rso + 6]}${color}${font2}${template8 [=disk.hwmonIndex] temp 1 [=threshold.tempDisk]}°C${font}
 # :::: fans

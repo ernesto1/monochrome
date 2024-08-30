@@ -36,13 +36,16 @@ public class ConkyTemplate {
 
         String conky = args[0];
         logger.info("creating configuration files for the '{}' conky", conky);
-        // 2. freemarker data model creation
-        // load global data model
-        InputStream globalSettingsStream = new FileInputStream(new File(TEMPLATE_ROOT_DIR, "hardware.yml"));
+        // 2. create the freemarker data model
+        // load hardware data model
+        String system = args[2].toLowerCase();     // desktop or laptop
+        InputStream globalSettingsStream = new FileInputStream(new File(TEMPLATE_ROOT_DIR, "hardware-" + system + ".yml"));
         Yaml yaml = new Yaml();
         Map<String, Object> root = yaml.load(globalSettingsStream);
-        root.put("conky", conky);                   // conky theme being configured
-        root.put("system", args[2].toLowerCase());  // desktop or laptop
+        root.put("conky", conky);               // conky theme being configured
+        root.put("system", system);
+        root.put("isElaborate", true);       // default is elaborate conky
+
         if (args.length > 3) {
             root.put("isElaborate", Boolean.valueOf(args[3]));
         }

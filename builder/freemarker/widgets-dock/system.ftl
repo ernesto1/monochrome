@@ -102,7 +102,7 @@ ${if_gw}\
 <#-- TODO remove the below section title hard coding: wifi will populate wifi + network name; eth will populate the text below -->
 <#assign y += singleLineHeight + gap>
 # assumption: only one network device will be connected to the internet at a time
-<@net.networkDetails devices=networkDevices[system] y=y width=width gap=gap/>
+<@net.networkDetails devices=networkDevices y=y width=width gap=gap/>
 ${lua add_offsets 0 [=sectionGap]} <#-- 'y' is now a runtime variable since the network panel will not appear if disconnected -->
 ${endif}\
 ]];

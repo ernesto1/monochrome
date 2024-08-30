@@ -59,7 +59,7 @@ ${voffset 3}${offset [=iborder]}${color}cpu core 2${alignr}${lua_parse print_res
 ${voffset 3}${offset [=iborder]}${color}cpu core 3${alignr}${lua_parse print_resource_usage ${hwmon coretemp temp 4} [=threshold.tempCPUCore] ${color3}}°C
 ${voffset 3}${offset [=iborder]}${color}cpu core 4${alignr}${lua_parse print_resource_usage ${hwmon coretemp temp 5} [=threshold.tempCPUCore] ${color3}}°C
 ${voffset 3}${offset [=iborder]}${color}AMD Radeon HD7570${alignr}${lua_parse print_resource_usage ${hwmon radeon temp 1} [=threshold.tempVideo] ${color3}}°C
-<#list hardDisks[system] as disk>
+<#list hardDisks as disk>
 <#if disk.hwmonIndex??>
 ${voffset 3}${offset [=iborder]}${color}[=disk.name]${alignr}${lua_parse print_resource_usage ${hwmon [=disk.hwmonIndex] temp 1} [=threshold.tempDisk] ${color3}}°C
 </#if>
