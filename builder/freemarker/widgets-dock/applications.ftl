@@ -62,7 +62,7 @@ conky.config = {
 
 conky.text = [[
 <#assign totalLines = 72>
-<#if system == "desktop"><#assign packageLines = 16><#else><#assign packageLines = 6></#if>
+<#if system == "desktop"><#assign packageLines = 13><#else><#assign packageLines = 6></#if>
 ${lua set_total_lines [=totalLines]}\
 # :::::::::::: package updates
 <#assign packagesFile = "/tmp/conky/dnf.packages.formatted",

@@ -82,7 +82,7 @@ ${lua increment_offsets 0 64}\
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${image ~/conky/monochrome/images/common/grape-panel-dnf.png -p 95,66}\
 ${voffset 5}${offset 5}${color1}package${alignr 4}version${voffset 7}
-${color}${lua_parse paginate /tmp/conky/dnf.packages.formatted 16}${lua increase_y_offset /tmp/conky/dnf.packages.formatted}${voffset 9}
+${color}${lua_parse paginate /tmp/conky/dnf.packages.formatted 13}${lua increase_y_offset /tmp/conky/dnf.packages.formatted}${voffset 9}
 ${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light-edge-bottom-left.png 0 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/grape-panel-light-edge-bottom-right.png 162 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 0}\

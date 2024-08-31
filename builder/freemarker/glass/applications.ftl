@@ -49,7 +49,7 @@ conky.config = {
 
 conky.text = [[
 <#assign totalLines = 50,
-         packageLines = 16>
+         packageLines = 13>
 ${lua set_total_lines [=totalLines]}\
 #
 # :::::::::::::::: package updates ::::::::::::::::

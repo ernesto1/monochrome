@@ -73,7 +73,7 @@ ${image ~/conky/monochrome/images/common/blue-panel-light.png -p 108,60}\
 ${image ~/conky/monochrome/images/common/blank-panel.png -p 159,60}\
 ${lua increment_offsets 0 60}\
 ${offset 5}${color1}package${alignr 4}version${voffset 6}
-${color}${lua_parse paginate /tmp/conky/dnf.packages.formatted 16}${lua increase_y_offset /tmp/conky/dnf.packages.formatted}${voffset 9}
+${color}${lua_parse paginate /tmp/conky/dnf.packages.formatted 13}${lua increase_y_offset /tmp/conky/dnf.packages.formatted}${voffset 9}
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 0}\
 # ------- table | 2 column(s) | bottom -------
 ${lua increment_offsets 0 4}\

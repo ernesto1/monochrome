@@ -18,4 +18,24 @@ blue:
     secondary:
       labels: white
       text: 703d0a
+baltimore:
+  image:
+    primaryColor: blue
+    secondaryColor: green
+  colors:
+    text: white
+    labels: d6ff67
+    bar: 4a71bc
+    warning: d43207
+    writeGraph: 6b91e5 546fb2
+    readGraph: a2b238 7da028
+    # colors for detail conkys
+    systemText: e5e5e5
+    systemLabels: 839bc1
+    highlight: d6ff67       # flag important package updates
+    ownWindow: 2f3757
+    # secondary/alternate panel colors
+    secondary:
+      labels: d6ff67
+      text: a7aa71
     
