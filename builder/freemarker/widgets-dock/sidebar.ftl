@@ -22,7 +22,8 @@ conky.config = {
            width = lso + 90>  <#-- width of the sidebar image -->
   <#if isElaborate><#assign width += 53></#if>
   minimum_width = [=width],
-  minimum_height = 1135,
+  <#if system == "desktop"><#assign height = 1135><#else><#assign height = 681></#if>
+  minimum_height = [=height?c],
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
 
@@ -118,7 +119,7 @@ ${font}${voffset -7}\<#rt>
 
 conky.text = [[
 <#assign y = 0>
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-sidebar.png -p 0,[=y]}\
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-sidebar-[=system].png -p 0,[=y]}\
 <#assign y += tso>
 # :::::::::::::::::::: cpu
 <#assign y += 9>
@@ -153,14 +154,36 @@ ${voffset 17}${offset [=lso + 18]}${memgraph 43,21 ${template1}}
 <#if isElaborate>
 ${voffset -33}${goto [=lso + 72]}${color}${font1}${memperc}${font0}%
 <#else>
-${font0}${voffset -5}\
+${font}${voffset -5}\
 </#if>
 ${voffset 4}${offset [=lso + 6]}${color2}${if_match ${swapperc} >= [=threshold.swap]}${color3}${endif}${swapbar 3, 45}<#if isElaborate>${voffset -2}${goto [=lso + 72]}${font}${color}${swapperc}%<#else>${font}${voffset -2}</#if>
 # :::::::::::::::::::: network
+<#-- TODO handle multiple network devices, for now only the main device (wifi) in a laptop is used -->
 <#assign device = networkDevices?first>
+<#if system == "laptop">
+${if_up [=device.name]}\
+<#assign ySection = y,
+         y += 9>
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-[=device.type].png -p [=lso + 5],[=y]}\
+${voffset 49}${offset [=lso + 6]}${color2}${if_match ${wireless_link_qual_perc [=device.name]} < 30}${color3}${endif}${wireless_link_bar 3,45 [=device.name]}
+<#if isElaborate>
+${image ~/conky/monochrome/images/[=conky]/text-box-99p.png -p [=lso + 68],[=y + 15]}\
+${if_match ${wireless_link_qual_perc [=device.name]} == 100}${image ~/conky/monochrome/images/[=conky]/text-box-100p.png -p [=lso + 110],[=y + 13]}${endif}\
+${voffset -29}${goto [=lso + 72]}${color}${font1}${wireless_link_qual_perc [=device.name]}${font0}%${font}${voffset 4}
+<#else>
+${font}${voffset 2}\
+</#if>
+${else}\
+${image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-no-[=device.type].png -p [=lso + 2],[=ySection + 1]}\
+${font}${voffset 64}\
+${endif}\
+<#assign y += 46 + 9>
+</#if>
 ${if_up [=device.name]}\
 # :: upload/download speeds
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-internet.png -p [=lso],[=y]}\
+<#assign ySection = y,
+         y += 9>
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-internet.png -p [=lso + 5],[=y]}\
 <#if isElaborate>
 ${image ~/conky/monochrome/images/[=conky]/text-box.png -p [=lso + 68],[=y + 20]}\
 ${image ~/conky/monochrome/images/[=conky]/text-box.png -p [=lso + 68],[=y + 54]}\
@@ -168,10 +191,10 @@ ${image ~/conky/monochrome/images/[=conky]/text-box.png -p [=lso + 68],[=y + 54]
 <#assign device = networkDevices?first>
 ${template3 [=device.name] [=device.maxUp?c] [=device.maxDown?c]}
 ${else}\
-${image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-no-internet.png -p [=lso],[=y]}\
+${image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-no-internet.png -p [=lso + 2],[=ySection + 1]}\
 ${voffset 86}\
 ${endif}\
-<#assign y += 9 + 64 + 9><#-- internet image contains the top and bottom border -->
+<#assign y += 64 + 9>
 <#list hardDisks as hardDisk>
 # :::::::::::::::::::: disk [=hardDisk.name!hardDisk.device]
 <#-- special handling for the main 'sda' disk
@@ -222,8 +245,8 @@ ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-temp-cpu.png -p
 ${image ~/conky/monochrome/images/[=conky]/text-box-99p.png -p [=lso + 68],[=y + 15]}\
 ${image ~/conky/monochrome/images/[=conky]/text-box-100p.png -p [=lso + 68 + 31],[=y + 15]}\
 </#if>
-<#if system == "desktop" >
 <#assign y += 46 + 9>
+<#if system == "desktop" >
 # :::::::: ati video card
 <#assign y += 9>
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-temp-videocard.png -p [=lso + 5],[=y]}\
@@ -247,6 +270,34 @@ ${if_updatenr 2}${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]
 <#if isElaborate>
 ${image ~/conky/monochrome/images/[=conky]/text-box-fan.png -p [=lso + 68],[=(y + 29)?c]}\
 </#if>
+<#assign y += 46 + 9>
+</#if>
+<#if system == "laptop" >
+# :::::::::::::::::::: power
+<#assign y += 9>
+${voffset 64}\<#-- account for the cpu temperature widget being empty, its temp bar is printed by another conky -->
+${if_match "${acpiacadapter}"=="on-line"}\
+${if_match ${battery_percent BAT0} == 100}\
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-power-plugged-in.png -p [=lso + 5],[=y]}\
+${else}\
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-power-charging.png -p [=lso + 5],[=y]}\
+${voffset 45}${offset [=lso + 6]}${color2}${if_match ${battery_percent BAT0} < 20}${color3}${endif}${battery_bar 3, 45 BAT0}
+<#if isElaborate>
+${image ~/conky/monochrome/images/[=conky]/text-box-99p.png -p [=lso + 68],[=y + 15]}\
+${voffset -46}${goto 67}${color}${font}
+${voffset 4}${goto 67}${color}${font1}${battery_percent BAT0}${font0}%${font}${voffset -6}
+</#if>
+${endif}\
+${else}\
+${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-power-battery.png -p [=lso + 5],[=y]}\
+${voffset 45}${offset [=lso + 6]}${color2}${if_match ${battery_percent BAT0} < 20}${color3}${endif}${battery_bar 3, 45 BAT0}
+<#if isElaborate>
+${image ~/conky/monochrome/images/[=conky]/text-box-99p.png -p [=lso + 68],[=y + 15]}\
+${if_match ${battery_percent BAT0} == 100}${image ~/conky/monochrome/images/[=conky]/text-box-100p.png -p [=lso + 110],[=y + 13]}${endif}\
+${voffset -46}${goto 67}${color}${font}
+${voffset 4}${goto 67}${color}${font1}${battery_percent BAT0}${font0}%${font}${voffset -6}
+</#if>
+${endif}\
 <#assign y += 46 + 9>
 </#if>
 ${voffset -420}\

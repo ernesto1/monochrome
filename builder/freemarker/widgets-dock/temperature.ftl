@@ -8,12 +8,14 @@ conky.config = {
   -- window alignment
   alignment = 'middle_left',  -- top|middle|bottom_left|right
   gap_x = 0,               -- same as passing -x at command line
-  <#if system == "desktop"><#assign yOffset = -305><#else><#assign yOffset = -230></#if><#lt>
+  <#if system == "desktop"><#assign yOffset = -305><#else><#assign yOffset = -225></#if><#lt>
   gap_y = [=yOffset],
 
   -- window settings | conky width matches the sidebar conky
-  <#assign lso = 27>       <#-- horizontal offset to account for sidebar image's left shadow -->
-  minimum_width = [=lso + 143],
+  <#assign lso = 27,          <#-- horizontal offset to account for sidebar image's left shadow -->
+           width = lso + 90>  <#-- width of the sidebar image -->
+  <#if isElaborate><#assign width += 53></#if>
+  minimum_width = [=width],
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
 
@@ -78,6 +80,7 @@ ${voffset -150}
 </#if>
 <#else>
 # laptop only reports cpu core temperatures, displaying the hottest of the two cores
-${voffset 15}${if_match ${hwmon coretemp temp 2} > ${hwmon coretemp temp 3}}${template8 coretemp temp 2 [=threshold.tempCPUCore]}${else}${template8 coretemp temp 3 [=threshold.tempCPUCore]}${endif}
+${lua compute cpuTemp ${lua get_max_resource_usage ${hwmon coretemp temp 2} ${hwmon coretemp temp 3}}}\
+${voffset 45}${offset [=lso + 6]}${color2}${if_match ${lua get cpuTemp} > [=threshold.tempCPUCore]}${color3}${endif}${lua_bar 3,45 get cpuTemp}
 </#if>
 ]];
