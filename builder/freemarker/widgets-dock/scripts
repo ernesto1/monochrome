@@ -8,7 +8,7 @@
 # the java freemarker template app will output the conky blocks in the /tmp/monochrome folder
 
 # ::::::: desktop sidebar
-java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar widgets-dock yellow desktop true && \
+java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar widgets-dock grape desktop true && \
 mv /tmp/monochrome/!(temperature) ~/conky/monochrome/widgets-dock && \
 sleep 2 && \
 mv /tmp/monochrome/temperature ~/conky/monochrome/widgets-dock
@@ -16,7 +16,10 @@ mv /tmp/monochrome/temperature ~/conky/monochrome/widgets-dock
 
 # ::::::: laptop sidebar
 # widgets: network power temperature
-
+java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar widgets-dock grape laptop true && \
+mv /tmp/monochrome/!(temperature) ~/conky/monochrome/widgets-dock && \
+sleep 2 && \
+mv /tmp/monochrome/temperature ~/conky/monochrome/widgets-dock
 
 # ::::::: design notes
 - images should have a top/bottom border of 9px
