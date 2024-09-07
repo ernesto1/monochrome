@@ -65,7 +65,7 @@ ${voffset 2}${offset 45}${color}${lines [=packagesFile]} package updates${voffse
 ${lua increment_offsets 0 [=y]}\
 ${offset 5}${color1}package${alignr 4}version${voffset [=3+gap]}
 ${image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-dnf.png -p 118,[=(y+4)?c]}\
-<#assign maxLines = 20>
+<#assign maxLines = 13>
 ${color}${lua_parse paginate [=packagesFile] [=maxLines]}${lua increase_y_offset [=packagesFile]}${voffset 5}
 <@panel.panelBottomCorners x=0 y=0 width=width isFixed=false/>
 ${else}\

@@ -69,7 +69,7 @@ ${image ~/conky/monochrome/images/common/blank-panel.png -p 188,41}\
 ${lua increment_offsets 0 60}\
 ${offset 5}${color1}package${alignr 4}version${voffset 6}
 ${image ~/conky/monochrome/images/common/green-panel-dnf.png -p 118,64}\
-${color}${lua_parse paginate /tmp/conky/dnf.packages.formatted 20}${lua increase_y_offset /tmp/conky/dnf.packages.formatted}${voffset 5}
+${color}${lua_parse paginate /tmp/conky/dnf.packages.formatted 13}${lua increase_y_offset /tmp/conky/dnf.packages.formatted}${voffset 5}
 ${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-left.png 0 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-right.png 181 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 0}\

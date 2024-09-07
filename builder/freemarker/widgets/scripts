@@ -6,8 +6,6 @@ TODO
 # ::::::: desktop
 rm -fr /tmp/monochrome && \
 java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar widgets green desktop && \
-pushd /tmp/monochrome && \
-mv !(disk|memoryProcesses|usbDevices) ~/conky/monochrome/widgets && \
+mv /tmp/monochrome/!(disk|memoryProcesses|usbDevices) ~/conky/monochrome/widgets && \
 sleep 1 && \
-mv memoryProcesses ~/conky/monochrome/widgets && \
-popd
+mv /tmp/monochrome/memoryProcesses ~/conky/monochrome/widgets
