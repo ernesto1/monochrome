@@ -66,8 +66,9 @@ ${voffset 3}${offset 5}${color1}uptime${goto 75}${color}${uptime}
 ${voffset 3}${offset 5}${color1}compositor${goto 75}${color}${execi 3600 echo $XDG_SESSION_TYPE}
 ${voffset [= 7 + gap]}\
 # :::::::::::: applications
-<@panel.verticalTable x=0 y=y header=header body=52 height=19/>
-${offset 5}${color1}zoom${goto 75}${color}${if_running zoom}running${else}off${endif}
+<@panel.verticalTable x=0 y=y header=header body=width height=21/>
+<#assign packagesFile = "/tmp/conky/dnf.packages.formatted">
+${voffset 2}${offset 5}${color1}dnf${goto 75}${color}${if_existing [=packagesFile]}${lines [=packagesFile]} new${else}no${endif} updates
 <#assign x = header + width + gap,
          y = 0,
          header = 19,
@@ -76,7 +77,7 @@ ${offset 5}${color1}zoom${goto 75}${color}${if_running zoom}running${else}off${e
 # :::::::::::: fans
 <@panel.table x=x y=0 widths=[width] header=header body=body/>
 <#assign y += header + body + gap>
-${voffset -71}${goto [=x+6]}${color1}fan${alignr 4}revolutions${voffset 5}
+${voffset -72}${goto [=x+6]}${color1}fan${alignr 4}revolutions${voffset 5}
 ${voffset 3}${goto [=x+6]}${color}chasis front intake${alignr 4}${template1 atk0110 fan 3 2400} rpm
 ${voffset 3}${goto [=x+6]}${color}cpu fan${alignr 4}${template1 atk0110 fan 1 2500} rpm
 ${voffset 3}${goto [=x+6]}${color}case top exhaust${alignr 4}${template1 atk0110 fan 2 2500} rpm

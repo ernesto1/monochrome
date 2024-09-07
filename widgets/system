@@ -67,10 +67,10 @@ ${voffset 12}\
 # ------- vertical table | top    -------
 ${image ~/conky/monochrome/images/common/green-panel-dark.png -p 0,58}\
 ${image ~/conky/monochrome/images/common/green-panel-light.png -p 69,58}\
-${image ~/conky/monochrome/images/common/blank-panel.png -p 121,58}\
-${image ~/conky/monochrome/images/common/blank-panel.png -p 0,77}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 180,58}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 0,79}\
 # ------- vertical table | bottom -------
-${offset 5}${color1}zoom${goto 75}${color}${if_running zoom}running${else}off${endif}
+${voffset 2}${offset 5}${color1}dnf${goto 75}${color}${lines /tmp/conky/dnf.packages.formatted} new updates
 # :::::::::::: fans
 # ------- table | 1 column(s) | top    -------
 # ------- header
@@ -82,7 +82,7 @@ ${image ~/conky/monochrome/images/common/blank-panel.png -p 368,19}\
 # ------- bottom blank image(s)
 ${image ~/conky/monochrome/images/common/blank-panel.png -p 185,89}\
 # ------- table | 1 column(s) | bottom -------
-${voffset -71}${goto 191}${color1}fan${alignr 4}revolutions${voffset 5}
+${voffset -72}${goto 191}${color1}fan${alignr 4}revolutions${voffset 5}
 ${voffset 3}${goto 191}${color}chasis front intake${alignr 4}${template1 atk0110 fan 3 2400} rpm
 ${voffset 3}${goto 191}${color}cpu fan${alignr 4}${template1 atk0110 fan 1 2500} rpm
 ${voffset 3}${goto 191}${color}case top exhaust${alignr 4}${template1 atk0110 fan 2 2500} rpm
