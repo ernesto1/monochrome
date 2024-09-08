@@ -1,17 +1,34 @@
-green:
+hulk:
   image:
     primaryColor: green
     secondaryColor: grape
   colors:
     text: a7aa71
-    labels: d2b8f2  # light gold eac9a7
+    labels: d2b8f2      # light gold eac9a7
     bar: 9fc14a
-    cpuBar: 7c7a13  # cpu bars require a different hue that does not stand out too much
+    cpuBar: 7c7a13      # cpu bars require a different hue that does not stand out too much
     warning: ad2724
-    offlineText: d2b8f2 # text for conkys in an offline state, ex. disk not connected
     writeGraph: 4c6e3b 9fc14a
     readGraph: 6c3a55 a67fba
-    windowColor: 2f2d1e # background color for plain conkys with no images
+    windowColor: 2f2d1e # background color for plain conkys with no images, should match the primary dark color
     # secondary/alternate panel colors
     secondary:
       text: c596c7
+      labels: d2b8f2
+green:
+  image:
+    primaryColor: green
+    secondaryColor: burgundy
+  colors:
+    text: a7aa71
+    labels: white
+    bar: 9fc14a
+    cpuBar: 7c7a13
+    warning: ad2724
+    writeGraph: 4c6e3b 9fc14a
+    readGraph: 5c111f c01e20
+    windowColor: 2f2d1e
+    # secondary/alternate panel colors
+    secondary:
+      text: a98162
+      labels: white

@@ -40,7 +40,7 @@ conky.config = {
   draw_outline = false,     -- black outline around text (not good if text is black)
   -- colors
   default_color = '[=colors.secondary.text]', -- regular text
-  color1 = '[=colors.labels]',        -- text labels
+  color1 = '[=colors.secondary.labels]',        -- text labels
 };
 
 conky.text = [[
@@ -103,12 +103,12 @@ ${lua increment_offsets 0 [=header]}\
 ${color}${lua_parse head_mem [=peersFile] [=max]}${lua increase_y_offset [=peersFile]}
 <@panel.panelsBottom x=0 y=0 widths=[ipCol,clientCol,speedCol,speedCol] gap=colGap isFixed=false color=image.secondaryColor/>
 ${else}\
-${lua increment_offsets 0 323}\
+${lua increment_offsets 0 326}\
 <@panel.panel x=0 y=0 width=width height=3+16+1 color=image.secondaryColor isFixed=false/>
 ${lua_parse add_y_offset voffset 2}${lua_parse add_x_offset offset 47}${color}no peers connected${voffset 4}
 ${endif}\
 ${else}\
-${lua increment_offsets 0 307}\
+${lua increment_offsets 0 310}\
 <@panel.panel x=0 y=0 width=width height=body color=image.secondaryColor isFixed=false/>
 ${lua_parse add_y_offset voffset 2}${lua_parse add_x_offset offset 27}${color}torrent peers input file
 ${voffset 3}${lua_parse add_x_offset offset 72}is missing

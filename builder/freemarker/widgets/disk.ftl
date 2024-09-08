@@ -45,7 +45,7 @@ conky.config = {
   color1 = '[=colors.labels]',        -- text labels
   color2 = '[=colors.bar]',        -- bar
   color3 = '[=colors.warning]',        -- bar critical
-  color4  ='[=colors.offlineText]',        -- text for disconnected device
+  color4  ='[=colors.secondary.labels]',        -- text for disconnected device
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   -- disk partition: ${template1 partition name}
@@ -78,8 +78,8 @@ ${voffset -126}${goto [=offset+97]}${color1}[=hardDisk.device] partitions${voffs
 ${template1 [=partition.path] [=partition.name]}
 </#list>
 ${else}\
-${image ~/conky/monochrome/images/widgets/[=image.secondaryColor]-disk-disconnected.png -p 0,0}\
-${voffset 113}${alignr 125}${color4}[=hardDisk.device]
+${image ~/conky/monochrome/images/widgets/[=image.secondaryColor]-disk-disconnected.png -p 14,14}\
+${voffset 127}${alignr 125}${color4}[=hardDisk.device]
 ${endif}\
 ]];
 </@outputFileDirective>

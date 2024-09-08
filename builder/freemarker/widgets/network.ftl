@@ -52,8 +52,12 @@ conky.text = [[
 ${if_up [=device.name]}\
 ${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-network.png -p 0,0}\
 ${voffset 3}${offset 22}${color1}local ip${goto 80}${color}${addr [=device.name]}
-${voffset 3}${offset 22}${color1}torrents${goto 80}${color}${lines /tmp/conky/transmission.active} active
-${voffset 3}${offset 22}${color1}swarm${goto 80}${color}${lines /tmp/conky/transmission.peers} peers
+<#assign packagesFile = "/tmp/conky/dnf.packages.formatted">
+<#assign inputDir = "/tmp/conky/",
+         torrentsActiveFile = inputDir + "transmission.active",
+         torrentsPeersFile = inputDir + "transmission.peers">
+${voffset 3}${offset 22}${color1}torrents${goto 80}${color}${if_existing [=torrentsActiveFile]}${lines [=torrentsActiveFile]} active${else}none active${endif}
+${voffset 3}${offset 22}${color1}swarm${goto 80}${color}${if_existing [=torrentsPeersFile]}${lines [=torrentsPeersFile]} peers${else}no connections${endif}
 ${voffset 6}${offset 79}${upspeedgraph [=device.name] 37,97 [=colors.readGraph] [=device.maxUp?c]}
 ${voffset -7}${offset 79}${downspeedgraph [=device.name] 37,97 [=colors.writeGraph] [=device.maxDown?c]}
 ${voffset 6}${offset 18}${color1}up${alignr 128}${color}${upspeed [=device.name]}

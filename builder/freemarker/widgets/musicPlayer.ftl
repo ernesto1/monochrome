@@ -53,26 +53,25 @@ conky.text = [[
 # the UI of this conky changes as per one of these states: no music player is running
 #                                                          song with album art
 #                                                          song with no album art
+${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-album-cover.png -p 0,0}\
 # :::::::: no player available
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
-<#assign y = 8><#-- top 0 | middle 8 | bottom 62 -->
-${image ~/conky/monochrome/images/common/[=image.secondaryColor]-rhythmbox.png -p 15,[=y+22]}\
-${voffset [=y+44]}${offset 76}${font0}now playing
-${voffset 0}${offset 76}${font}no music player running
+<#-- top 0 | middle 8 | bottom 62 -->
+${voffset 74}${offset 139}${font0}now playing
+${voffset 0}${offset 139}${font}no music player running
 ${else}\
 # :::::::: album art
-${image ~/conky/monochrome/images/[=conky]/album-shadow.png -p 0,0}\
-<#assign y = 22>
-${image ~/conky/monochrome/images/widgets/[=image.secondaryColor]-album-cover.png -p 15,[=y]}\
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
-${lua_parse load_image ${cat /tmp/conky/musicplayer.albumArtPath} 110x110 15 [=y]}\
+${image ~/conky/monochrome/images/[=conky]/album-shadow.png -p 0,0}\
+${lua_parse load_image ${cat /tmp/conky/musicplayer.albumArtPath} 110x110 15 22}\
+${voffset 9}\
 ${endif}\
 # ::::::::: track details
 # artist & genre are optional (not all tracks have it defined) so we don't display if it is not available
 # hence we shift the text when the data point is missing
 ${if_match "${lua get artist ${cat /tmp/conky/musicplayer.artist}}" == "unknown artist"}${voffset 22}${endif}\
 ${if_match "${lua get genre ${cat /tmp/conky/musicplayer.genre}}" == "unknown genre"}${voffset 22}${endif}\
-${voffset 40}${offset 139}${font0}${color}${cat /tmp/conky/musicplayer.title}
+${voffset 31}${offset 139}${font0}${color}${cat /tmp/conky/musicplayer.title}
 ${offset 139}${font}${color}${cat /tmp/conky/musicplayer.album}
 ${if_match "${lua get artist}" != "unknown artist"}${voffset 4}${offset 139}${font}${color}${lua get artist}${endif}
 ${if_match "${lua get genre}" != "unknown genre"}${voffset 4}${offset 139}${font}${color}${lua get genre}${endif}

@@ -42,7 +42,7 @@ conky.config = {
   
   -- colors
   default_color = 'a7aa71', -- regular text
-  color1 = 'd2b8f2',        -- text labels
+  color1 = 'white',        -- text labels
   color2 = '9fc14a',        -- bar
   color3 = 'ad2724',        -- bar critical
   
@@ -70,7 +70,7 @@ ${image ~/conky/monochrome/images/common/green-panel-light.png -p 69,58}\
 ${image ~/conky/monochrome/images/common/blank-panel.png -p 180,58}\
 ${image ~/conky/monochrome/images/common/blank-panel.png -p 0,79}\
 # ------- vertical table | bottom -------
-${voffset 2}${offset 5}${color1}dnf${goto 75}${color}${lines /tmp/conky/dnf.packages.formatted} new updates
+${voffset 2}${offset 5}${color1}dnf${goto 75}${color}${if_existing /tmp/conky/dnf.packages.formatted}${lines /tmp/conky/dnf.packages.formatted} new${else}no${endif} updates
 # :::::::::::: fans
 # ------- table | 1 column(s) | top    -------
 # ------- header
