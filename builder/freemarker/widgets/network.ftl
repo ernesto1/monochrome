@@ -6,12 +6,12 @@ conky.config = {
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
   gap_x = 1104,               -- same as passing -x at command line
-  gap_y = 3,
+  gap_y = 4,
 
   -- window settings
   minimum_width = 220,
   maximum_width = 220,
-  minimum_height = 188,
+  minimum_height = 151,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
 
@@ -51,14 +51,7 @@ conky.text = [[
 <#assign device = networkDevices?first>
 ${if_up [=device.name]}\
 ${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-network.png -p 0,0}\
-${voffset 3}${offset 22}${color1}local ip${goto 80}${color}${addr [=device.name]}
-<#assign packagesFile = "/tmp/conky/dnf.packages.formatted">
-<#assign inputDir = "/tmp/conky/",
-         torrentsActiveFile = inputDir + "transmission.active",
-         torrentsPeersFile = inputDir + "transmission.peers">
-${voffset 3}${offset 22}${color1}torrents${goto 80}${color}${if_existing [=torrentsActiveFile]}${lines [=torrentsActiveFile]} active${else}none active${endif}
-${voffset 3}${offset 22}${color1}swarm${goto 80}${color}${if_existing [=torrentsPeersFile]}${lines [=torrentsPeersFile]} peers${else}no connections${endif}
-${voffset 6}${offset 79}${upspeedgraph [=device.name] 37,97 [=colors.readGraph] [=device.maxUp?c]}
+${voffset 18}${offset 79}${upspeedgraph [=device.name] 37,97 [=colors.readGraph] [=device.maxUp?c]}
 ${voffset -7}${offset 79}${downspeedgraph [=device.name] 37,97 [=colors.writeGraph] [=device.maxDown?c]}
 ${voffset 6}${offset 18}${color1}up${alignr 128}${color}${upspeed [=device.name]}
 ${voffset 4}${offset 18}${color1}down${alignr 128}${color}${downspeed [=device.name]}
@@ -67,6 +60,6 @@ ${voffset 4}${goto 101}${color1}total${alignr 43}${color}${totaldown [=device.na
 # we need to remove the trailing spacing added the moment we voffset'ed the upload graph 
 ${voffset -20}
 ${else}\
-${image ~/conky/monochrome/images/widgets/[=image.secondaryColor]-ethernet-offline.png -p 11,30}
+${image ~/conky/monochrome/images/widgets/[=image.secondaryColor]-ethernet-disconnected.png -p 11,30}
 ${endif}\
 ]];
