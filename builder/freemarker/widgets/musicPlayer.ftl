@@ -44,6 +44,7 @@ conky.config = {
   
   -- colors
   default_color = 'white',  -- regular text
+  color1 = '[=colors.warning]',        -- error
   
   -- n.b. this conky requires the music-player java app to be running in the background
   --      it generates the input files under /tmp/conky/musicplayer.* which this conky reads
@@ -53,7 +54,9 @@ conky.text = [[
 # the UI of this conky changes as per one of these states: no music player is running
 #                                                          song with album art
 #                                                          song with no album art
+#                                                          dependent java dbus listener application is not running
 ${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-album-cover.png -p 0,0}\
+${if_existing /tmp/conky/musicplayer.name}\
 # :::::::: no player available
 ${if_existing /tmp/conky/musicplayer.name Nameless}\
 <#-- top 0 | middle 8 | bottom 62 -->
@@ -75,6 +78,10 @@ ${voffset 31}${offset 139}${font0}${color}${cat /tmp/conky/musicplayer.title}
 ${offset 139}${font}${color}${cat /tmp/conky/musicplayer.album}
 ${if_match "${lua get artist}" != "unknown artist"}${voffset 4}${offset 139}${font}${color}${lua get artist}${endif}
 ${if_match "${lua get genre}" != "unknown genre"}${voffset 4}${offset 139}${font}${color}${lua get genre}${endif}
-${voffset -100}
 ${endif}\
+${else}\
+${voffset 74}${offset 139}${font0}now playing
+${voffset 0}${offset 139}${font}${color1}missing input files
+${endif}\
+${voffset -100}\
 ]];
