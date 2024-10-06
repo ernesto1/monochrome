@@ -29,7 +29,7 @@ You only require to have `conky` installed on your system.
 On **Fedora** install it by running:
 
 ```
-$ sudo dnf install conky
+$ sudo dnf install conky figlet
 ```
 
 **n.b.** I recommend using the conky package version `1.11.5_pre`  
@@ -38,11 +38,10 @@ more recent versions may have regressions/bugs ([issue 1](https://github.com/brn
 Run the command `dnf downgrade conky` until you arrive at this version or download the RPM [from the web](https://rpm.pbone.net/info_idpl_70128821_distro_fedora32_com_conky-1.11.5-3.fc32.x86_64.rpm.html).
 
 ### Fonts
-Fonts used should come by default in your distro:
+Download these fonts:
 
-- Nimbus Mono PS Regular
-- URW Gothic
-- URW Gothic Demi
+- [Promenade de la Croisette](https://www.fontspace.com/promenade-de-la-croisette-font-f23769)
+- [Typo Round](https://www.dafont.com/typo-round.font)
 
 ## Download the code for these conky scripts
 Create the `~/conky` directory and clone this repository
