@@ -40,7 +40,19 @@ function conky_increase_y_offset(filepath)
 end
 
 --[[
-TODO write doc, this is for the widgets transmission conky, ie. dynamically fill the top space when not enough text
+SPECIAL USE CASE for panels that are filled from bottom to top using a file as content, ie. the opposite of conky's 
+top to bottom approach.
+If the panel is meant to contain 20 lines and the file only has 13; this method will increase the 'dynamic voffset' 
+in order for the top portion of the panel to be empty while the bottom is populated.
+
+arguments:
+  filepath    absolute path to the file
+  max         maximun numbers of lines the panel is meant to display
+
+how to use:
+  read the file into memory with the lua read_file(..) method
+  run this method to calculate the voffset
+  print the file contents with the lua head(..) method
 ]]
 function conky_calculate_voffset(filepath, max)
   local linesRead = lines(vars[filepath])
