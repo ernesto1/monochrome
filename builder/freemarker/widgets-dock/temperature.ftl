@@ -76,11 +76,15 @@ ${lua compute fanSpeed ${lua get_max_resource_usage ${hwmon atk0110 fan 3} ${hwm
 ${voffset 45}${offset [=lso + 6]}${color2}${if_match ${lua get fanSpeed} > [=threshold.fanSpeed?c]}${color3}${endif}${lua_bar 3,45 conky_get_usage_percentage 2600 fanSpeed}
 <#if isElaborate>
 ${voffset -29}${goto [=lso + 72]}${color}${font1}${font}${lua get fanSpeed} rpm${voffset 8}
-${voffset -150}
+${voffset -150}\
 </#if>
 <#else>
 # laptop only reports cpu core temperatures, displaying the hottest of the two cores
 ${lua compute cpuTemp ${lua get_max_resource_usage ${hwmon coretemp temp 2} ${hwmon coretemp temp 3}}}\
 ${voffset 45}${offset [=lso + 6]}${color2}${if_match ${lua get cpuTemp} > [=threshold.tempCPUCore]}${color3}${endif}${lua_bar 3,45 get cpuTemp}
+<#if isElaborate>
+${voffset -29}${goto [=lso + 72]}${color}${font1}${lua get cpuTemp}${font0}°C${font}${voffset 8}
+${voffset -58}\
+</#if>
 </#if>
 ]];

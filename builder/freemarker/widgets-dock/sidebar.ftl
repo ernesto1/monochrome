@@ -284,7 +284,7 @@ ${endif}\
 ${voffset 45}${offset [=lso + 6]}${color2}${if_match ${battery_percent BAT0} < 20}${color3}${endif}${battery_bar 3, 45 BAT0}
 <#if isElaborate>
 ${image ~/conky/monochrome/images/[=conky]/text-box-99p.png -p [=lso + 68],[=y + 15]}\
-${if_match ${battery_percent BAT0} == 100}${image ~/conky/monochrome/images/[=conky]/text-box-100p.png -p [=lso + 110],[=y + 13]}${endif}\
+${if_match ${battery_percent BAT0} == 100}${image ~/conky/monochrome/images/[=conky]/text-box-100p.png -p [=lso + 110],[=y + 15]}${endif}\
 ${voffset -29}${goto [=lso + 72]}${color}${font1}${battery_percent BAT0}${font0}%${font}${voffset -6}
 </#if>
 <#assign y += 46 + 9>
