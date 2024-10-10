@@ -277,27 +277,16 @@ ${image ~/conky/monochrome/images/[=conky]/text-box-fan.png -p [=lso + 68],[=(y 
 <#assign y += 9>
 ${voffset 64}\<#-- account for the cpu temperature widget being empty, its temp bar is printed by another conky -->
 ${if_match "${acpiacadapter}"=="on-line"}\
-${if_match ${battery_percent BAT0} == 100}\
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-power-plugged-in.png -p [=lso + 5],[=y]}\
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-power-charging.png -p [=lso + 5],[=y]}\
-${voffset 45}${offset [=lso + 6]}${color2}${if_match ${battery_percent BAT0} < 20}${color3}${endif}${battery_bar 3, 45 BAT0}
-<#if isElaborate>
-${image ~/conky/monochrome/images/[=conky]/text-box-99p.png -p [=lso + 68],[=y + 15]}\
-${voffset -46}${goto 67}${color}${font}
-${voffset 4}${goto 67}${color}${font1}${battery_percent BAT0}${font0}%${font}${voffset -6}
-</#if>
-${endif}\
-${else}\
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-power-battery.png -p [=lso + 5],[=y]}\
+${endif}\
 ${voffset 45}${offset [=lso + 6]}${color2}${if_match ${battery_percent BAT0} < 20}${color3}${endif}${battery_bar 3, 45 BAT0}
 <#if isElaborate>
 ${image ~/conky/monochrome/images/[=conky]/text-box-99p.png -p [=lso + 68],[=y + 15]}\
 ${if_match ${battery_percent BAT0} == 100}${image ~/conky/monochrome/images/[=conky]/text-box-100p.png -p [=lso + 110],[=y + 13]}${endif}\
-${voffset -46}${goto 67}${color}${font}
-${voffset 4}${goto 67}${color}${font1}${battery_percent BAT0}${font0}%${font}${voffset -6}
+${voffset -29}${goto [=lso + 72]}${color}${font1}${battery_percent BAT0}${font0}%${font}${voffset -6}
 </#if>
-${endif}\
 <#assign y += 46 + 9>
 </#if>
 ${voffset -420}\
