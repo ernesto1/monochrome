@@ -10,7 +10,7 @@ conky.config = {
   gap_y = 5,
 
   -- window settings
-  <#assign width = 410>
+  <#assign width = 518>
   minimum_width = [=width],      -- conky will add an extra pixel to this
   maximum_width = [=width],
   minimum_height = 23,
@@ -46,14 +46,26 @@ conky.text = [[
 <#-- char width is 6px, use single space for borders -->
 <#assign x = 5, charWidth = 6>
 ${voffset 5}${goto [=x?c]}${color1}load ${color}${loadavg}\
-<#assign inputDir = "/tmp/conky",
-         swapRead = inputDir + "/system.swap.read">
-<#assign x += 4 * charWidth + charWidth + 16 * charWidth + charWidth>
-${goto [=x?c]}${color1}read ${color}${cat [=swapRead]}\
-<#assign x += 4 * charWidth + charWidth + 8 * charWidth + charWidth,
-         swapWrite = inputDir + "/system.swap.write">
-${goto [=x?c]}${color1}write ${color}${cat [=swapWrite]}\
-<#assign x += 5 * charWidth + charWidth + 8 * charWidth + charWidth,
+<#assign x += 4 * charWidth + charWidth + 16 * charWidth + charWidth,
+         inputDir = "/tmp/conky",
+         file = inputDir + "/system.cpu.us">
+${goto [=x?c]}${color1}us ${color}${cat [=file]}\
+<#assign x += 2 * charWidth + charWidth + 2 * charWidth + charWidth,
+         file = inputDir + "/system.cpu.sy">
+${goto [=x?c]}${color1}sy ${color}${cat [=file]}\
+<#assign x += 2 * charWidth + charWidth + 2 * charWidth + charWidth,
+         file = inputDir + "/system.cpu.id">
+${goto [=x?c]}${color1}id ${color}${cat [=file]}\
+<#assign x += 2 * charWidth + charWidth + 2 * charWidth + charWidth,
+         file = inputDir + "/system.cpu.wa">
+${goto [=x?c]}${color1}wa ${color}${cat [=file]}\
+<#assign x += 2 * charWidth + charWidth + 2 * charWidth + charWidth,
+         file = inputDir + "/system.swap.read">
+${goto [=x?c]}${color1}si ${color}${cat [=file]}\
+<#assign x += 2 * charWidth + charWidth + 8 * charWidth + charWidth,
+         file = inputDir + "/system.swap.write">
+${goto [=x?c]}${color1}so ${color}${cat [=file]}\
+<#assign x += 2 * charWidth + charWidth + 8 * charWidth + charWidth,
          packagesFile = inputDir + "/dnf.packages.formatted">
 ${goto [=x?c]}${color1}dnf ${color}${if_existing [=packagesFile]}${lines [=packagesFile]}${else}0${endif} updates\
 ]];

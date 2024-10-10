@@ -1,12 +1,23 @@
 #!/bin/bash
-# script to retrieve relevant system performance details for conky to easily read
+# script to retrieve relevant system performance details not available in the conky api
+# data is placed in files for conky to read
 
 . ~/conky/monochrome/logging.bash
+
+function renameTempFile {
+  for f in "$@"
+  do [[ -f ${f}.$$ ]] && mv ${f}.$$ ${f}
+  done
+}
 
 OUTDIR=/tmp/conky
 TMPFILE=${OUTDIR}/system.$$
 SWAPREADFILE=${OUTDIR}/system.swap.read
 SWAPWRITEFILE=${OUTDIR}/system.swap.write
+CPUUSFILE=${OUTDIR}/system.cpu.us
+CPUSYFILE=${OUTDIR}/system.cpu.sy
+CPUIDFILE=${OUTDIR}/system.cpu.id
+CPUWAFILE=${OUTDIR}/system.cpu.wa
 trap 'log "received shutdown signal, deleting output files"; rm ${OUTDIR}/system.*; exit 0' EXIT
 
 log 'compiling system performance metrics'
@@ -14,7 +25,6 @@ echo 'n/a' > ${SWAPREADFILE}
 echo 'n/a' > ${SWAPWRITEFILE}
 type -p vmstat > /dev/null || { logError "'vmstat' utility is not installed, swap metrics will be unavailable"; exit 1; }
 
-# swap io
 while true; do
   # ::::::::::: swap i/o
   # $ vmstat --no-first
@@ -36,8 +46,13 @@ while true; do
           {VALUE = $8/1024; UNIT = "MiB"; FORMAT = "%3.1f%s"}
        } 
        END {printf FORMAT, VALUE, UNIT}' ${TMPFILE} > ${SWAPWRITEFILE}.$$
-  mv ${SWAPREADFILE}.$$ ${SWAPREADFILE}
-  mv ${SWAPWRITEFILE}.$$ ${SWAPWRITEFILE}
+  # ::::::::::: cpu
+  awk '{print $13}' ${TMPFILE} > ${CPUUSFILE}.$$
+  awk '{print $14}' ${TMPFILE} > ${CPUSYFILE}.$$
+  awk '{print $15}' ${TMPFILE} > ${CPUIDFILE}.$$
+  awk '{print $16}' ${TMPFILE} > ${CPUWAFILE}.$$
+  
+  renameTempFile ${SWAPREADFILE} ${SWAPWRITEFILE} ${CPUUSFILE} ${CPUSYFILE} ${CPUIDFILE} ${CPUWAFILE}
   sleep 1 &
   wait
 done
