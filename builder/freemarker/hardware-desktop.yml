@@ -1,5 +1,5 @@
 # settings
-blankImageWidth: 219  # blank panel image width in pixels
+panelWidth: 219       # panel image width in pixels
 
 networkDevices:
   - name: enp0s25
@@ -48,7 +48,7 @@ hardDisks:
         icon: usbdrive
 
 # thresholds for the different conky meters
-# when these limits are passed, the conky will change colors
+# when these limits are breached, the conky will change colors
 threshold:
   cpu: 90         # percentages
   mem: 90

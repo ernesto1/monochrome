@@ -44,7 +44,7 @@
 <#list 0..widths?size as widths>
 <#if widthToCover gt 0>
 <@cmn.drawImage filePath="~/conky/monochrome/images/common/blank-panel.png" x=xCoordinate y=y isFixed=isFixed/>
-<#local xCoordinate = xCoordinate + blankImageWidth, widthToCover = widthToCover - blankImageWidth>
+<#local xCoordinate = xCoordinate + panelWidth, widthToCover = widthToCover - panelWidth>
 <#else>
 <#break>
 </#if>

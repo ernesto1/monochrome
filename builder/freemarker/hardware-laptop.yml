@@ -1,5 +1,5 @@
 # settings
-blankImageWidth: 219  # blank panel image width in pixels
+panelWidth: 219       # panel image width in pixels
 
 networkDevices:
   - name: wlp4s0
@@ -24,7 +24,7 @@ hardDisks:
         icon: home
 
 # thresholds for the different conky meters
-# when these limits are passed, the conky will change colors
+# when these limits are breached, the conky will change colors
 # n.b. for values over 1000 you need to parse them individually in freemarker with the '?c' built in
 #      or freemarker will parse it as 1,000 instead
 threshold:

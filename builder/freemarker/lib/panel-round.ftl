@@ -38,13 +38,13 @@
   fixed         'true' if the given x,y coordinates are final, 'false' if you want to consider the current x,y offsets
                 default is 'true'
   color         color scheme to use, default is the conky's primary color scheme
-  isEdge        if 'true' a transparent image will be placed right after the right corner
-                enable when creating multiples panels horizontally
-                default is 'true'
+  isEdge        if 'true' a transparent image will be placed right after the right corner.
+                enable when creating multiples panels horizontally.
+                default is 'true'.
 -->
 <#macro panelTopCorners x y width theme="dark" isFixed=true color=image.primaryColor isEdge=true>
 <#-- edge images are 7x7px -->
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-panel-[=theme].png" x=x y=y isFixed=isFixed/>
+<@cmn.drawContinuosPanel x=x y=y width=width color=color theme=theme isFixed=isFixed/>
 <@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-panel-[=theme]-edge-top-left.png" x=x y=y isFixed=isFixed/>
 <@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-panel-[=theme]-edge-top-right.png" x=x+width-7 y=y isFixed=isFixed/>
 <#if isEdge>
@@ -73,7 +73,7 @@
 <@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-panel-[=theme]-edge-bottom-left.png" x=x y=y isFixed=isFixed/>
 <@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-panel-[=theme]-edge-bottom-right.png" x=x+width-7 y=y isFixed=isFixed/>
 <#if isEdge>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/blank-panel.png" x=x y=y+7 isFixed=isFixed/>
+<@cmn.drawContinuosPanel x=x y=y+7 width=width color="blank" isFixed=isFixed/>
 </#if>
 </#macro>
 
