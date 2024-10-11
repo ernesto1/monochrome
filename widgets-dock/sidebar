@@ -86,7 +86,7 @@ ${voffset 4}${goto 99}${color}${font1}${fs_used_perc \2}${font0}%${font}${voffse
 };
 
 conky.text = [[
-${image ~/conky/monochrome/images/widgets-dock/grape-sidebar.png -p 0,0}\
+${image ~/conky/monochrome/images/widgets-dock/grape-sidebar-desktop.png -p 0,0}\
 # :::::::::::::::::::: cpu
 ${image ~/conky/monochrome/images/widgets-dock/grape-cpu.png -p 32,41}\
 ${image ~/conky/monochrome/images/widgets-dock/text-box-99p.png -p 95,54}\
@@ -107,13 +107,13 @@ ${voffset -33}${goto 99}${color}${font1}${memperc}${font0}%
 ${voffset 4}${offset 33}${color2}${if_match ${swapperc} >= 70}${color3}${endif}${swapbar 3, 45}${voffset -2}${goto 99}${font}${color}${swapperc}%
 # :::::::::::::::::::: network
 ${if_up enp0s25}\
-# :: upload/download speeds
-${image ~/conky/monochrome/images/widgets-dock/grape-internet.png -p 27,181}\
+# :: upload/download bandwith
+${image ~/conky/monochrome/images/widgets-dock/grape-internet.png -p 32,190}\
 ${image ~/conky/monochrome/images/widgets-dock/text-box.png -p 95,201}\
 ${image ~/conky/monochrome/images/widgets-dock/text-box.png -p 95,235}\
 ${template3 enp0s25 3000 73000}
 ${else}\
-${image ~/conky/monochrome/images/widgets-dock/pink-no-internet.png -p 27,181}\
+${image ~/conky/monochrome/images/widgets-dock/pink-no-internet.png -p 29,182}\
 ${voffset 86}\
 ${endif}\
 # :::::::::::::::::::: disk samsung SSD HD
