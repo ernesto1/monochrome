@@ -180,13 +180,13 @@ ${endif}\
 <#assign y += 46 + 9>
 </#if>
 ${if_up [=device.name]}\
-# :: upload/download speeds
+# :: upload/download bandwith
 <#assign ySection = y,
          y += 9>
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-internet.png -p [=lso + 5],[=y]}\
 <#if isElaborate>
-${image ~/conky/monochrome/images/[=conky]/text-box.png -p [=lso + 68],[=y + 20]}\
-${image ~/conky/monochrome/images/[=conky]/text-box.png -p [=lso + 68],[=y + 54]}\
+${image ~/conky/monochrome/images/[=conky]/text-box.png -p [=lso + 68],[=y + 11]}\
+${image ~/conky/monochrome/images/[=conky]/text-box.png -p [=lso + 68],[=y + 45]}\
 </#if>
 <#assign device = networkDevices?first>
 ${template3 [=device.name] [=device.maxUp?c] [=device.maxDown?c]}

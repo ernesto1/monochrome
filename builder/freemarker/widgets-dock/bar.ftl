@@ -10,7 +10,7 @@ conky.config = {
   gap_y = 5,
 
   -- window settings
-  <#assign width = 518>
+  <#if system == "desktop"><#assign width = 425><#else><#assign width = 518></#if>
   minimum_width = [=width],      -- conky will add an extra pixel to this
   maximum_width = [=width],
   minimum_height = 23,
@@ -65,7 +65,9 @@ ${goto [=x?c]}${color1}si ${color}${cat [=file]}\
 <#assign x += 2 * charWidth + charWidth + 8 * charWidth + charWidth,
          file = inputDir + "/system.swap.write">
 ${goto [=x?c]}${color1}so ${color}${cat [=file]}\
+<#if system == "laptop" >
 <#assign x += 2 * charWidth + charWidth + 8 * charWidth + charWidth,
          packagesFile = inputDir + "/dnf.packages.formatted">
 ${goto [=x?c]}${color1}dnf ${color}${if_existing [=packagesFile]}${lines [=packagesFile]}${else}0${endif} updates\
+</#if>
 ]];
