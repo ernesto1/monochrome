@@ -88,14 +88,14 @@ ${voffset 3}${alignr 38}${color}${font2}${diskio_write /dev/\1}${font}${voffset 
   template6 = [[
 ${voffset 3}${offset 20}${color1}${font0}\1${font}
 ${voffset -14}${alignr 38}${color}${font2}${fs_used_perc \2}${font3}%${font}
-${voffset -2}${offset 29}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3,94 \2}
+${voffset -2}${offset 34}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3,89 \2}
 ${voffset -4}${alignr 38}${color}${font}${fs_used \2} / ${fs_size \2}${voffset 3}]],
 
   -- filesystem usb device: ${template7 filesystemName fileSystemPath}
   template7 = [[
 ${voffset 7}${offset 20}${color1}${font0}\1
 ${if_mounted \2}${voffset -13}${alignr 38}${font2}${fs_used_perc \2}${font3}%
-${voffset -2}${offset 13}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3,94 \2}
+${voffset -2}${offset 13}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3,89 \2}
 ${voffset -4}${alignr 38}${color}${font}${fs_used \2} / ${fs_size \2}${voffset -8}
 ${else}${voffset 4}${alignr 38}${color}${font}device is not
 ${alignr 38}${color}connected${voffset 4}${endif}]],
@@ -122,7 +122,7 @@ ${voffset 9}${alignr 38}${color}${font}${mem} / ${memmax}
 # ::::::::::::::::: swap
 ${voffset 5}${offset 20}${color1}${font0}swap${font}
 ${voffset -6}${alignr 38}${color}${font1}${swapperc}${font2}%${font}
-${voffset -3}${offset 29}${color2}${if_match ${swapperc} > 75}${color3}${endif}${swapbar 3,94}
+${voffset -3}${offset 34}${color2}${if_match ${swapperc} > 75}${color3}${endif}${swapbar 3,89}
 ${voffset -5}${alignr 38}${color}${font}${swap} / ${swapmax}
 # ::::::::::::::::: network
 ${image ~/conky/monochrome/images/glass/blue-divider.png -p 15,254}\

@@ -1,21 +1,17 @@
 conky.config = {
-  lua_load = '~/conky/monochrome/common.lua',
-  lua_draw_hook_pre = 'reset_state',
-
   update_interval = 2,  -- update interval in seconds
-  total_run_times = 0,  -- number of times conky will update before quitting, set to 0 to run forever
   xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
   alignment = 'middle_left',     -- top|middle|bottom_left|middle|right
-  gap_x = 148,                -- same as passing -x at command line
-  gap_y = 444,
+  gap_x = 139,                -- same as passing -x at command line
+  gap_y = 530,
 
   -- window settings
-  minimum_width = 159,
-  maximum_width = 159,
-  minimum_height = 397,
+  minimum_width = 94,
+  maximum_width = 94,  
+  minimum_height = 222,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
 
@@ -36,91 +32,46 @@ conky.config = {
                               -- does not include bars, ie. wifi strength bar, cpu bar
 
   imlib_cache_flush_interval = 250,
-  top_name_verbose = true,    -- show full command in ${top ...}
-  top_name_width = 16,        -- how many characters to print
-  if_up_strictness = 'address', -- network device must be up, having link and an assigned IP address
-                                -- to be considered "up" by ${if_up}
-                                -- values are: up, link or address
-
+  
   -- font settings
   draw_shades = false,    -- black shadow on text (not good if text is black)
   draw_outline = false,   -- black outline around text (not good if text is black)
   
   -- colors
   default_color = 'e5e5e5',  -- regular text
-  color1 = '839bc1',         -- text labels
-  color2 = 'dfa22f',         -- highlight important packages
-  
-  -- templates
-  -- top cpu process
-  template0 = [[${voffset 3}${offset 5}${color}${top name \1}${alignr 4}${top cpu \1}%]],
-  -- top mem process
-  template1 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${alignr 4}${top_mem mem_res \1}]]
+  color1 = '94b0ee',         -- text labels
+  color2 = '4a71bc',        -- bar
 };
 
 conky.text = [[
-# ::::::::::::::::: top cpu
-# ------- table | 2 column(s) | top    -------
-# ------- header
-${image ~/conky/monochrome/images/common/blue-panel-dark.png -p 0,0}\
-${image ~/conky/monochrome/images/common/blank-panel.png -p 113,0}\
-${image ~/conky/monochrome/images/common/blue-panel-dark.png -p 114,0}\
-${image ~/conky/monochrome/images/common/blank-panel.png -p 159,0}\
-# ------- body
-${image ~/conky/monochrome/images/common/blue-panel-light.png -p 0,19}\
-${image ~/conky/monochrome/images/common/blank-panel.png -p 113,19}\
-${image ~/conky/monochrome/images/common/blue-panel-light.png -p 114,19}\
-${image ~/conky/monochrome/images/common/blank-panel.png -p 159,19}\
-# ------- bottom blank image(s)
-${image ~/conky/monochrome/images/common/blank-panel.png -p 0,120}\
-# ------- table | 2 column(s) | bottom -------
-${voffset 2}${offset 5}${color1}process${alignr 4}cpu${voffset 4}
-${template0 1}
-${template0 2}
-${template0 3}
-${template0 4}
-${template0 5}
-${template0 6}
-${voffset 10}\
-# ::::::::::::::::: top memory
-# ------- table | 2 column(s) | top    -------
-# ------- header
-${image ~/conky/monochrome/images/common/blue-panel-dark.png -p 0,123}\
-${image ~/conky/monochrome/images/common/blank-panel.png -p 113,123}\
-${image ~/conky/monochrome/images/common/blue-panel-dark.png -p 114,123}\
-${image ~/conky/monochrome/images/common/blank-panel.png -p 159,123}\
-# ------- body
-${image ~/conky/monochrome/images/common/blue-panel-light.png -p 0,142}\
-${image ~/conky/monochrome/images/common/blank-panel.png -p 113,142}\
-${image ~/conky/monochrome/images/common/blue-panel-light.png -p 114,142}\
-${image ~/conky/monochrome/images/common/blank-panel.png -p 159,142}\
-# ------- bottom blank image(s)
-${image ~/conky/monochrome/images/common/blank-panel.png -p 0,243}\
-# ------- table | 2 column(s) | bottom -------
-${offset 5}${color1}process${alignr 4}mem${voffset 4}
-${template1 1}
-${template1 2}
-${template1 3}
-${template1 4}
-${template1 5}
-${template1 6}
-${voffset 10}${lua increment_offsets 0 246}\
-# ::::::::::::::::: system
-# ------- vertical table | top    -------
-${lua_parse draw_image ~/conky/monochrome/images/common/blue-panel-dark.png 0 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/blue-panel-light.png 57 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 159 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 54}\
-# ------- vertical table | bottom -------
-${voffset 2}${offset 5}${color1}kernel${goto 62}${color}${kernel}
-${voffset 3}${offset 5}${color1}uptime${goto 62}${color}${uptime}
-${voffset 3}${offset 5}${color1}composit${goto 62}${color}${execi 3600 echo $XDG_SESSION_TYPE}${voffset 10}
-${lua increment_offsets 0 57}\
-# ------- vertical table | top    -------
-${lua_parse draw_image ~/conky/monochrome/images/common/blue-panel-dark.png 0 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/blue-panel-light.png 57 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 159 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 22}\
-# ------- vertical table | bottom -------
-${voffset 2}${offset 5}${color1}zoom${goto 62}${color}${if_running zoom}running${else}off${endif}
+# ::::::::::::::::: cpu
+# ------- light panel top edge    -------
+${image ~/conky/monochrome/images/common/blue-panel-light.png -p 0,3}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-top-left.png -p 0,3}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-top-right.png -p 87,3}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 94,3}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-bottom-left.png -p 0,67}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-bottom-right.png -p 87,67}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 0,74}\
+# ------- light panel bottom edge -------
+${voffset 8}${offset 7}${color1}1 ${color}${cpu cpu1}%${goto 52}${color1}2 ${color}${cpu cpu2}%
+${voffset 3}${offset 7}${color1}3 ${color}${cpu cpu3}%${goto 52}${color1}4 ${color}${cpu cpu4}%
+${voffset 3}${offset 7}${color1}5 ${color}${cpu cpu5}%${goto 52}${color1}6 ${color}${cpu cpu6}%
+${voffset 3}${offset 7}${color1}7 ${color}${cpu cpu7}%${goto 52}${color1}8 ${color}${cpu cpu8}%
+${voffset 27}\
+# ::::::::::::::::: memory
+# ------- light panel top edge    -------
+${image ~/conky/monochrome/images/common/blue-panel-light.png -p 0,94}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-top-left.png -p 0,94}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-top-right.png -p 87,94}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 94,94}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-bottom-left.png -p 0,174}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-bottom-right.png -p 87,174}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 0,181}\
+# ------- light panel bottom edge -------
+${voffset 3}${offset 7}${color1}free${alignr 6}${color}${memfree}
+${voffset 3}${offset 7}${color1}buff${alignr 6}${color}${buffers}
+${voffset 3}${offset 7}${color1}cache${alignr 6}${color}${cached}
+${voffset 3}${offset 7}${color1}si${alignr 6}${color}${cat /tmp/conky/system.swap.read}
+${voffset 3}${offset 7}${color1}so${alignr 6}${color}${cat /tmp/conky/system.swap.write}
 ]];

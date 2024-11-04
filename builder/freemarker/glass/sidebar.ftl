@@ -92,14 +92,14 @@ ${voffset 3}${alignr [=rso + 6]}${color}${font2}${diskio_write /dev/\1}${font}${
   template6 = [[
 ${voffset 3}${offset [=lso + iborder]}${color1}${font0}\1${font}
 ${voffset -14}${alignr [=rso + 6]}${color}${font2}${fs_used_perc \2}${font3}%${font}
-${voffset -2}${offset [=lso + 14]}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3,94 \2}
+${voffset -2}${offset [=lso + 19]}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3,89 \2}
 ${voffset -4}${alignr [=rso + 6]}${color}${font}${fs_used \2} / ${fs_size \2}${voffset 3}]],
 
   -- filesystem usb device: ${template7 filesystemName fileSystemPath}
   template7 = [[
 ${voffset 7}${offset [=lso + iborder]}${color1}${font0}\1
 ${if_mounted \2}${voffset -13}${alignr [=rso + 6]}${font2}${fs_used_perc \2}${font3}%
-${voffset -2}${offset 13}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3,94 \2}
+${voffset -2}${offset 13}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3,89 \2}
 ${voffset -4}${alignr [=rso + 6]}${color}${font}${fs_used \2} / ${fs_size \2}${voffset -8}
 ${else}${voffset 4}${alignr [=rso + 6]}${color}${font}device is not
 ${alignr [=rso + 6]}${color}connected${voffset 4}${endif}]],
@@ -138,7 +138,7 @@ ${voffset 9}${alignr [=rso + 6]}${color}${font}${mem} / ${memmax}
 # ::::::::::::::::: swap
 ${voffset 5}${offset [=lso + iborder]}${color1}${font0}swap${font}
 ${voffset -6}${alignr [=rso + 6]}${color}${font1}${swapperc}${font2}%${font}
-${voffset -3}${offset [=lso + 14]}${color2}${if_match ${swapperc} > 75}${color3}${endif}${swapbar 3,94}
+${voffset -3}${offset [=lso + 19]}${color2}${if_match ${swapperc} > 75}${color3}${endif}${swapbar 3,89}
 ${voffset -5}${alignr [=rso + 6]}${color}${font}${swap} / ${swapmax}
 # ::::::::::::::::: network
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-divider.png -p [=lso],[=y]}\
@@ -151,7 +151,7 @@ ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-wifi.png -p [=l
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-internet.png -p [=lso + 18],[=y]}\
 ${voffset 7}${offset [=lso + iborder]}${color1}${font0}wifi${font}
 ${voffset -14}${alignr [=rso + 6]}${color}${font2}${wireless_link_qual_perc [=device.name]}${font3}%${font}
-${voffset -2}${offset [=lso + 14]}${color2}${if_match ${wireless_link_qual_perc [=device.name]} < 30}${color3}${endif}${wireless_link_bar 3,94 [=device.name]}${font}
+${voffset -2}${offset [=lso + 19]}${color2}${if_match ${wireless_link_qual_perc [=device.name]} < 30}${color3}${endif}${wireless_link_bar 3,89 [=device.name]}${font}
 ${voffset -4}${offset [=lso + iborder]}${color}${font}ch. ${wireless_channel [=device.name]}${alignr [=rso + 6]}${wireless_bitrate [=device.name]}${font}${voffset -1}
 <#else>
 # :::::: ethernet

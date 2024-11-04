@@ -39,7 +39,7 @@ conky.config = {
   draw_outline = false,     -- black outline around text (not good if text is black)
   -- colors
   default_color = 'e5e5e5', -- regular text
-  color1 = '839bc1',
+  color1 = '94b0ee',
   color2 = 'dfa22f',        -- highlight important packages
   color3 = 'white',         -- secondary panel labels
   color4 = '703d0a'         -- secondary panel text

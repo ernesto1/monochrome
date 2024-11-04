@@ -9,11 +9,10 @@ blue:
     warning: d43207
     writeGraph: 6b91e5 546fb2
     readGraph: dd9a2f bc701c
-    # colors for detail conkys
+    # colors for supporting conkys
     systemText: e5e5e5
-    systemLabels: 839bc1
+    systemLabels: 94b0ee
     highlight: dfa22f       # flag important package updates
-    ownWindow: 2f3757
     # secondary/alternate panel colors
     secondary:
       labels: white
@@ -25,17 +24,13 @@ baltimore:
   colors:
     text: white
     labels: d6ff67
-    bar: 4a71bc
+    bar: 73a2b0
     warning: d43207
-    writeGraph: 6b91e5 546fb2
+    writeGraph: 73a2b0 33597c
     readGraph: a2b238 7da028
-    # colors for detail conkys
     systemText: e5e5e5
-    systemLabels: 839bc1
-    highlight: d6ff67       # flag important package updates
-    ownWindow: 2f3757
-    # secondary/alternate panel colors
+    systemLabels: 73a2b0
+    highlight: d6ff67
     secondary:
       labels: d6ff67
       text: a7aa71
-    

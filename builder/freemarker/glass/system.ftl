@@ -1,16 +1,4 @@
-<#import "/lib/panel-square.ftl" as panel>
-<#-- the system conky is substantially different between the 'desktop' and 'laptop' editions
-     the laptop version was designed to occupy a smaller footprint (width x height) than its desktop counterpart
-
-      desktop             laptop
-      ----------          -------
-      o/s
-      top cpu             top cpu
-      top mem             top mem
-      zoom                wifi
-                          dnf
-
-     hence the pletora of conditional statements in this config -->
+<#import "/lib/panel-round.ftl" as panel>
 conky.config = {
   lua_load = '~/conky/monochrome/common.lua',
   lua_draw_hook_pre = 'reset_state',
@@ -22,15 +10,14 @@ conky.config = {
 
   -- window alignment
   alignment = 'middle_left',     -- top|middle|bottom_left|middle|right
-  gap_x = 148,                -- same as passing -x at command line
-  gap_y = 444,
+  gap_x = 139,                -- same as passing -x at command line
+  gap_y = 530,
 
   -- window settings
-  <#assign width = 159>
+  <#assign width = 94>
   minimum_width = [=width],
-  maximum_width = [=width],
-  <#if system == "desktop"><#assign windowHeight=397><#else><#assign windowHeight=342></#if>
-  minimum_height = [=windowHeight?c],
+  maximum_width = [=width],  
+  minimum_height = 222,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
 
@@ -51,11 +38,6 @@ conky.config = {
                               -- does not include bars, ie. wifi strength bar, cpu bar
 
   imlib_cache_flush_interval = 250,
-  top_name_verbose = true,    -- show full command in ${top ...}
-  top_name_width = 16,        -- how many characters to print
-  if_up_strictness = 'address', -- network device must be up, having link and an assigned IP address
-                                -- to be considered "up" by ${if_up}
-                                -- values are: up, link or address
 
   -- font settings
   draw_shades = false,    -- black shadow on text (not good if text is black)
@@ -64,57 +46,26 @@ conky.config = {
   -- colors
   default_color = '[=colors.systemText]',  -- regular text
   color1 = '[=colors.systemLabels]',         -- text labels
-  color2 = '[=colors.highlight]',         -- highlight important packages
-  
-  -- templates
-  -- top cpu process
-  template0 = [[${voffset 3}${offset 5}${color}${top name \1}${alignr 4}${top cpu \1}%]],
-  -- top mem process
-  template1 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${alignr 4}${top_mem mem_res \1}]]
+  color2 = '[=colors.bar]',        -- bar
 };
 
 conky.text = [[
-<#assign y = 0,
-         header = 19, <#-- table header height -->
-         gap = 3>     <#-- empty space between windows -->
-# ::::::::::::::::: top cpu
-<#assign processes = 6, width = width>
-<#assign body = 5 + 16 * processes, smallCol = 45, colGap = 1>
-<@panel.table x=0 y=y widths=[width-smallCol-colGap, smallCol] gap=colGap header=header body=body/>
-<#assign y += header + body + gap>
-${voffset 2}${offset 5}${color1}process${alignr 4}cpu${voffset 4}
-<#list 1..processes as i>
-${template0 [=i]}
-</#list>
-${voffset [= 7 + gap]}\
-# ::::::::::::::::: top memory
-<#assign body = 5 + 16 * processes>
-<@panel.table x=0 y=y widths=[width-smallCol-colGap, smallCol] gap=colGap header=header body=body/>
-${offset 5}${color1}process${alignr 4}mem${voffset 4}
-<#list 1..processes as i>
-${template1 [=i]}
-</#list>
-${voffset [= 7 + gap]}${lua increment_offsets 0 [=y + header + body + gap]}\
-<#if system == "laptop">
-# ::::::::::::::::: wifi network
-<#-- TODO iterate through network devices and build the conditional tree for wifi devices -->
-${if_up [=networkDevices[system]?first.name]}\
-<#assign header = 57, height = 39>
-<@panel.verticalTable x=0 y=0 header=header body=width-header height=height isFixed=false/>
-<#assign y += height + 2>
-${voffset 3}${offset 5}${color1}network${goto 62}${color}${wireless_essid [=networkDevices[system]?first.name]}
-${voffset 3}${offset 5}${color1}local ip${goto 62}${color}${addr [=networkDevices[system]?first.name]}${voffset [=5 + gap]}
-${lua increment_offsets 0 [=height+gap]}\
-${endif}\
-</#if>
-# ::::::::::::::::: system
-<#assign header = 57, height = 54>
-<@panel.verticalTable x=0 y=0 header=header body=width-header height=height isFixed=false/>
-${voffset 2}${offset 5}${color1}kernel${goto 62}${color}${kernel}
-${voffset 3}${offset 5}${color1}uptime${goto 62}${color}${uptime}
-${voffset 3}${offset 5}${color1}composit${goto 62}${color}${execi 3600 echo $XDG_SESSION_TYPE}${voffset [=7 + gap]}
-${lua increment_offsets 0 [=height+gap]}\
-<#assign height = 22>
-<@panel.verticalTable x=0 y=0 header=header body=width-header height=height isFixed=false/>
-${voffset 2}${offset 5}${color1}zoom${goto 62}${color}${if_running zoom}running${else}off${endif}
+<#assign y = 12>
+# ::::::::::::::::: cpu
+<@panel.panel x=0 y=y width=width height=57/>
+<#assign y += 57 + 9 + 1>
+${voffset [=12+2]}${offset 7}${color2}${cpubar cpu1 3,37}${offset 5}${cpubar cpu2 3,37}
+${offset 7}${color2}${cpubar cpu3 3,37}${offset 5}${cpubar cpu4 3,37}
+${offset 7}${color2}${cpubar cpu5 3,37}${offset 5}${cpubar cpu6 3,37}
+${offset 7}${color2}${cpubar cpu7 3,37}${offset 5}${cpubar cpu8 3,37}
+${voffset [=27-12]}\
+# ::::::::::::::::: memory
+${voffset 15}\
+<#assign y += 15>
+<@panel.panel x=0 y=y width=width height=87/>
+${voffset 3}${offset 7}${color1}free${alignr 6}${color}${memfree}
+${voffset 3}${offset 7}${color1}buff${alignr 6}${color}${buffers}
+${voffset 3}${offset 7}${color1}cache${alignr 6}${color}${cached}
+${voffset 3}${offset 7}${color1}si${alignr 6}${color}${cat /tmp/conky/system.swap.read}
+${voffset 3}${offset 7}${color1}so${alignr 6}${color}${cat /tmp/conky/system.swap.write}
 ]];
