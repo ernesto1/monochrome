@@ -1,10 +1,6 @@
 <#import "/lib/panel-round.ftl" as panel>
 conky.config = {
-  lua_load = '~/conky/monochrome/common.lua',
-  lua_draw_hook_pre = 'reset_state',
-
   update_interval = 2,  -- update interval in seconds
-  total_run_times = 0,  -- number of times conky will update before quitting, set to 0 to run forever
   xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
@@ -38,7 +34,7 @@ conky.config = {
                               -- does not include bars, ie. wifi strength bar, cpu bar
 
   imlib_cache_flush_interval = 250,
-
+  
   -- font settings
   draw_shades = false,    -- black shadow on text (not good if text is black)
   draw_outline = false,   -- black outline around text (not good if text is black)
@@ -50,18 +46,18 @@ conky.config = {
 };
 
 conky.text = [[
-<#assign y = 12>
+<#assign y = 3, height = 71>
 # ::::::::::::::::: cpu
-<@panel.panel x=0 y=y width=width height=57/>
-<#assign y += 57 + 9 + 1>
-${voffset [=12+2]}${offset 7}${color2}${cpubar cpu1 3,37}${offset 5}${cpubar cpu2 3,37}
-${offset 7}${color2}${cpubar cpu3 3,37}${offset 5}${cpubar cpu4 3,37}
-${offset 7}${color2}${cpubar cpu5 3,37}${offset 5}${cpubar cpu6 3,37}
-${offset 7}${color2}${cpubar cpu7 3,37}${offset 5}${cpubar cpu8 3,37}
-${voffset [=27-12]}\
+<@panel.panel x=0 y=y width=width height=height/>
+<#-- cpu sidebar panel is 78px high, line border is 1px -->
+<#assign y += height + (78 - height) + 1>
+${voffset 8}${offset 7}${color1}1 ${color}${cpu cpu1}%${goto 52}${color1}2 ${color}${cpu cpu2}%
+${voffset 3}${offset 7}${color1}3 ${color}${cpu cpu3}%${goto 52}${color1}4 ${color}${cpu cpu4}%
+${voffset 3}${offset 7}${color1}5 ${color}${cpu cpu5}%${goto 52}${color1}6 ${color}${cpu cpu6}%
+${voffset 3}${offset 7}${color1}7 ${color}${cpu cpu7}%${goto 52}${color1}8 ${color}${cpu cpu8}%
+${voffset 27}\
 # ::::::::::::::::: memory
-${voffset 15}\
-<#assign y += 15>
+<#assign y += 12>
 <@panel.panel x=0 y=y width=width height=87/>
 ${voffset 3}${offset 7}${color1}free${alignr 6}${color}${memfree}
 ${voffset 3}${offset 7}${color1}buff${alignr 6}${color}${buffers}
