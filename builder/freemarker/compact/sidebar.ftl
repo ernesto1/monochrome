@@ -15,7 +15,7 @@ conky.config = {
 
   -- window settings
   minimum_width = 236,
-  minimum_height = 1398,
+  minimum_height = 1382,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
 
@@ -98,30 +98,32 @@ ${voffset -2}${offset [=lso + iborder]}${color1}load ${color}${loadavg}${alignr 
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png -p [=lso + 3],[=y]}\
 <#assign y += 18>
 ${voffset 6}${color1}${offset [=lso + iborder]}process${alignr [=rso + iborder]}cpu    mem${voffset 5}
-<#list 1..7 as x>
+<#list 1..6 as x>
 ${template3 [=x]}
 </#list>
-<#assign y += 125>
+<#assign y += 109>
 # -------------- memory
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-mem.png -p [=lso + 5],[=y]}\
 ${if_match ${memperc} > [=threshold.mem]}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-mem-high.png -p [=lso + 5],[=y]}\
 ${endif}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph.png -p [=lso + 44],[=y]}\
-<#assign y += 36 + 55>
+<#assign y += 36>
 # memory graph and usage are displayed on a separate conky due to a bug with these memory variables computing bad data if other variables like ${top ...} and one of the network upload/download exists in the same conky
-${voffset 69}${offset [=lso + iborder]}${color1}swap${goto [=lso + iborder + 36]}${voffset 1}${color2}${swapbar 3,97}${alignr [=rso + iborder]}${voffset -1}${color}${swapperc}%
+${voffset 69}${offset [=lso + iborder]}${color1}buff${goto [=lso + iborder + 36]}${color}${buffers}${alignr [=rso + iborder]}${color}${cached} ${color1}cache
+${voffset 3}${offset [=lso + iborder]}${color1}swap${goto [=lso + iborder + 36]}${voffset 1}${color2}${swapbar 3,97}${alignr [=rso + iborder]}${voffset -1}${color}${swapperc}%
 <#assign inputDir = "/tmp/conky",
          swapRead = inputDir + "/system.swap.read",
          swapWrite = inputDir + "/system.swap.write">
 ${voffset 3}${offset [=lso + iborder]}${color1}read${goto [=lso + iborder + 36]}${color}${cat [=swapRead]}${alignr [=rso + iborder]}${cat [=swapWrite]} ${color1}write
+<#assign y += 71>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png -p [=lso + 3],[=y]}\
 <#assign y += 18>
 ${voffset 6}${offset [=lso + iborder]}${color1}process${alignr [=rso + iborder]}memory   perc${voffset 5}
-<#list 1..7 as x>
+<#list 1..6 as x>
 ${template4 [=x]}
 </#list>
-<#assign y += 125, ySection = y>
+<#assign y += 109, ySection = y>
 # -------------- network
 <#assign device = networkDevices?first>
 ${if_up [=device.name]}\

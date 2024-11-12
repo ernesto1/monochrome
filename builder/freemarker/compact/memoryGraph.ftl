@@ -7,7 +7,7 @@ conky.config = {
   -- window alignment
   alignment = 'middle_left',      -- top|middle|bottom_left|middle|right
   gap_x = 15,                     -- same as passing -x at command line
-  gap_y = 433,
+  gap_y = 441,
 
   -- window settings
   minimum_width = 189,
@@ -57,5 +57,5 @@ conky.text = [[
 #  memory graph and usage are displayed on a separate conky due to a bug with these memory variables computing bad data if other variables like ${top ...} and one of the network upload/download ones exists in the same conky
 ${offset 44}${memgraph 35,139 ${template1}}
 <#assign iborder = 6> <#-- inner horizontal border -->
-${voffset -2}${offset [=iborder]}${color1}used  ${color}${mem} / ${memmax}${alignr [=iborder]}${color}${memperc}%
+${voffset -2}${offset [=iborder]}${color1}used  ${color}${mem}${alignr [=iborder]}/ ${memmax}   ${memperc}%
 ]]

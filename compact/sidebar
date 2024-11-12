@@ -15,7 +15,7 @@ conky.config = {
 
   -- window settings
   minimum_width = 236,
-  minimum_height = 1398,
+  minimum_height = 1382,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
 
@@ -96,15 +96,15 @@ ${template3 3}
 ${template3 4}
 ${template3 5}
 ${template3 6}
-${template3 7}
 # -------------- memory
-${image ~/conky/monochrome/images/compact/burgundy-mem.png -p 20,241}\
+${image ~/conky/monochrome/images/compact/burgundy-mem.png -p 20,225}\
 ${if_match ${memperc} > 90}\
-${image ~/conky/monochrome/images/compact/burgundy-mem-high.png -p 20,241}\
+${image ~/conky/monochrome/images/compact/burgundy-mem-high.png -p 20,225}\
 ${endif}\
-${image ~/conky/monochrome/images/compact/burgundy-graph.png -p 59,241}\
+${image ~/conky/monochrome/images/compact/burgundy-graph.png -p 59,225}\
 # memory graph and usage are displayed on a separate conky due to a bug with these memory variables computing bad data if other variables like ${top ...} and one of the network upload/download exists in the same conky
-${voffset 69}${offset 21}${color1}swap${goto 57}${voffset 1}${color2}${swapbar 3,97}${alignr 38}${voffset -1}${color}${swapperc}%
+${voffset 69}${offset 21}${color1}buff${goto 57}${color}${buffers}${alignr 38}${color}${cached} ${color1}cache
+${voffset 3}${offset 21}${color1}swap${goto 57}${voffset 1}${color2}${swapbar 3,97}${alignr 38}${voffset -1}${color}${swapperc}%
 ${voffset 3}${offset 21}${color1}read${goto 57}${color}${cat /tmp/conky/system.swap.read}${alignr 38}${cat /tmp/conky/system.swap.write} ${color1}write
 ${image ~/conky/monochrome/images/compact/burgundy-table-fields.png -p 18,332}\
 ${voffset 6}${offset 21}${color1}process${alignr 38}memory   perc${voffset 5}
@@ -114,79 +114,78 @@ ${template4 3}
 ${template4 4}
 ${template4 5}
 ${template4 6}
-${template4 7}
 # -------------- network
 ${if_up enp0s25}\
-${image ~/conky/monochrome/images/compact/burgundy-ethernet.png -p 20,475}\
+${image ~/conky/monochrome/images/compact/burgundy-ethernet.png -p 20,459}\
 ${voffset 15}${goto 60}${color1}local ip${goto 114}${color}${addr enp0s25}
 ${voffset 3}${goto 60}${color1}speed${goto 114}${color}${template5 enp0s25}
 # :: upload/download speeds
-${image ~/conky/monochrome/images/compact/burgundy-internet.png -p 20,520}\
-${image ~/conky/monochrome/images/compact/burgundy-graph-io.png -p 59,520}\
+${image ~/conky/monochrome/images/compact/burgundy-internet.png -p 20,504}\
+${image ~/conky/monochrome/images/compact/burgundy-graph-io.png -p 59,504}\
 ${template6 enp0s25 3000 73000}
 ${else}\
-${image ~/conky/monochrome/images/compact/ochre-no-network.png -p 15,468}\
+${image ~/conky/monochrome/images/compact/ochre-no-network.png -p 15,452}\
 ${voffset 12}${offset 23}${color1}no network
 ${voffset 3}${offset 23}connection
 ${voffset 73}
 ${endif}\
 # -------------- disks
 # :::: sda
-${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 20,602}\
-${image ~/conky/monochrome/images/compact/burgundy-graph-io.png -p 59,602}\
+${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 20,586}\
+${image ~/conky/monochrome/images/compact/burgundy-graph-io.png -p 59,586}\
 ${template7 sda 200000 280000}
 ${voffset 6}\
 ${template8 fedora /}
 ${template8 home /home}
 # :::: sdb
 ${if_existing /dev/sdb}\
-${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 20,736}\
-${image ~/conky/monochrome/images/compact/burgundy-graph-io.png -p 59,736}\
+${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 20,720}\
+${image ~/conky/monochrome/images/compact/burgundy-graph-io.png -p 59,720}\
 ${template7 sdb 6000 250000}
 ${voffset 6}\
 ${template8 veronica /media/veronica}
 ${else}\
-${image ~/conky/monochrome/images/compact/ochre-no-disk.png -p 15,730}\
+${image ~/conky/monochrome/images/compact/ochre-no-disk.png -p 15,714}\
 ${voffset 13}${offset 23}${color1}sdb device
 ${voffset 3}${offset 23}${color1}${font4}is not connected
 ${voffset 48}
 ${endif}\
 # :::: sdd
 ${if_existing /dev/sdd}\
-${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 20,839}\
-${image ~/conky/monochrome/images/compact/burgundy-graph-io.png -p 59,839}\
+${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 20,823}\
+${image ~/conky/monochrome/images/compact/burgundy-graph-io.png -p 59,823}\
 ${template7 sdd 6000 250000}
 ${voffset 6}\
 ${template8 betty /media/betty}
 ${else}\
-${image ~/conky/monochrome/images/compact/ochre-no-disk.png -p 15,833}\
+${image ~/conky/monochrome/images/compact/ochre-no-disk.png -p 15,817}\
 ${voffset 13}${offset 23}${color1}sdd device
 ${voffset 3}${offset 23}${color1}${font4}is not connected
 ${voffset 48}
 ${endif}\
 # :::: sde
 ${if_existing /dev/sde}\
-${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 20,942}\
-${image ~/conky/monochrome/images/compact/burgundy-graph-io.png -p 59,942}\
+${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 20,926}\
+${image ~/conky/monochrome/images/compact/burgundy-graph-io.png -p 59,926}\
 ${template7 sde 6000 60000}
 ${voffset 6}\
 ${template8 maxtor /run/media/ernesto/MAXTOR}
 ${else}\
-${image ~/conky/monochrome/images/compact/ochre-no-disk.png -p 15,936}\
+${image ~/conky/monochrome/images/compact/ochre-no-disk.png -p 15,920}\
 ${voffset 13}${offset 23}${color1}sde device
 ${voffset 3}${offset 23}${color1}${font4}is not connected
 ${voffset 48}
 ${endif}\
 # -------------- system
-${image ~/conky/monochrome/images/compact/burgundy-system.png -p 20,1045}\
+${image ~/conky/monochrome/images/compact/burgundy-system.png -p 20,1029}\
 ${voffset 15}${goto 60}${color1}uptime ${goto 128}${color}${uptime}
 ${voffset 3}${goto 60}${color1}compositor ${color}${execi 3600 echo $XDG_SESSION_TYPE}
 ${voffset 9}${offset 21}${color1}kernel${goto 60}${color}${kernel}
 # due to a conky/lua bug the temperature items had to be moved to their own conky
-${image ~/conky/monochrome/images/compact/burgundy-table-fields.png -p 18,1104}\
-${if_updatenr 1}${image ~/conky/monochrome/images/compact/burgundy-thermometer1.png -p 130,1154}${endif}\
-${if_updatenr 2}${image ~/conky/monochrome/images/compact/burgundy-thermometer2.png -p 130,1154}${endif}\
-${image ~/conky/monochrome/images/compact/burgundy-table-fields.png -p 18,1275}\
-${if_updatenr 1}${image ~/conky/monochrome/images/compact/burgundy-fan1.png -p 79,1297}${endif}\
-${if_updatenr 2}${image ~/conky/monochrome/images/compact/burgundy-fan2.png -p 79,1297}${endif}\
+${image ~/conky/monochrome/images/compact/burgundy-table-fields.png -p 18,1088}\
+${if_updatenr 1}${image ~/conky/monochrome/images/compact/burgundy-thermometer1.png -p 130,1138}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/compact/burgundy-thermometer2.png -p 130,1138}${endif}\
+${image ~/conky/monochrome/images/compact/burgundy-table-fields.png -p 18,1259}\
+${if_updatenr 1}${image ~/conky/monochrome/images/compact/burgundy-fan1.png -p 79,1281}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/compact/burgundy-fan2.png -p 79,1281}${endif}\
 ]]
