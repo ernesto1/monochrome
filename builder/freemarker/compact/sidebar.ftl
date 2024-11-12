@@ -14,7 +14,7 @@ conky.config = {
   gap_y = 0,
 
   -- window settings
-  minimum_width = 236,
+  minimum_width = 238,
   minimum_height = 1382,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -70,14 +70,14 @@ conky.config = {
   -- ethernet speed: ${template5 ethernetDevice}
   template5 = [[${execi 180 ethtool \1 2>/dev/null | grep -i speed | cut -d ' ' -f 2}]],
   -- network bandwith: ${template4 device uploadSpeed downloadSpeed}
-  template6 = [[${voffset 8}${offset [=lso + 44]}${color}${upspeedgraph \1 35,68 ${template2} \2}${offset 3}${downspeedgraph \1 35,68 ${template1} \3}
+  template6 = [[${voffset 8}${offset [=lso + 45]}${color}${upspeedgraph \1 35,68 ${template2} \2}${offset 3}${downspeedgraph \1 35,68 ${template1} \3}
 ${voffset -2}${offset [=lso + iborder]}${color1}up    ${color}${upspeed \1}${alignr [=rso + iborder]}${color}${downspeed \1}  ${color1}down
 ${voffset 3}${offset [=lso + iborder]}${color1}total ${color}${totalup \1}${alignr [=rso + iborder]}${color}${totaldown \1} ${color1}total]],
   -- hard disk: ${template7 device readSpeed writeSpeed}
-  template7 = [[${voffset 7}${offset [=lso + 44]}${color}${diskiograph_read /dev/\1 35,68 ${template2} \2}${offset 3}${diskiograph_write /dev/\1 35,68 ${template1} \3}
+  template7 = [[${voffset 7}${offset [=lso + 45]}${color}${diskiograph_read /dev/\1 35,68 ${template2} \2}${offset 3}${diskiograph_write /dev/\1 35,68 ${template1} \3}
 ${voffset -2}${offset [=lso + iborder]}${color1}read  ${color}${diskio_read /dev/\1}${alignr [=rso + iborder]}${color}${diskio_write /dev/\1} ${color1}write]],
   -- filesystem: ${template8 filesystemName fileSystemPath}
-  template8 = [[${voffset 2}${offset [=lso + iborder]}${color}\1${alignr [=rso + iborder]}${voffset 1}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3,97 \2}
+  template8 = [[${voffset 2}${offset [=lso + iborder]}${color}\1${alignr [=rso + iborder + 2]}${voffset 1}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3,97 \2}
 ${voffset 2}${alignr [=rso + iborder]}${color}${fs_used \2} / ${fs_size \2}]]
 };
 
@@ -91,9 +91,9 @@ ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-cpu.png -p [=lso
 ${else}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-cpu-high.png -p [=lso + 5],[=y]}\
 ${endif}\
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph.png -p [=lso + 44],[=y]}\
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph.png -p [=lso + 45],[=y]}\
 <#assign y += 36 + 23>
-${voffset [=tso + 2]}${offset [=lso + 44]}${cpugraph cpu0 35,139 ${template1}}
+${voffset [=tso + 2]}${offset [=lso + 45]}${cpugraph cpu0 35,139 ${template1}}
 ${voffset -2}${offset [=lso + iborder]}${color1}load${goto [=lso + iborder + 6 * 6]}${color}${loadavg}${alignr [=rso + iborder]}${color}${cpu cpu0}%
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png -p [=lso + 3],[=y]}\
 <#assign y += 18>
@@ -107,7 +107,7 @@ ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-mem.png -p [=lso
 ${if_match ${memperc} > [=threshold.mem]}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-mem-high.png -p [=lso + 5],[=y]}\
 ${endif}\
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph.png -p [=lso + 44],[=y]}\
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph.png -p [=lso + 45],[=y]}\
 <#assign y += 36>
 # memory graph and usage are displayed on a separate conky due to a bug with these memory variables computing bad data if other variables like ${top ...} and one of the network upload/download exists in the same conky
 ${voffset 69}${offset [=lso + iborder]}${color1}buff${goto [=lso + iborder + 6 * 6]}${color}${buffers}${alignr [=rso + iborder]}${color}${cached}${color1} cache
@@ -134,7 +134,7 @@ ${voffset 3}${goto [=lso + iborder + 7 * 6]}${color1}speed    ${color}${template
 # :: upload/download speeds
 <#assign y += 9>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-internet.png -p [=lso + 5],[=y]}\
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph-io.png -p [=lso + 44],[=y]}\
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph-io.png -p [=lso + 45],[=y]}\
 <#assign y += 36 + 46>
 ${template6 [=device.name] [=device.maxUp?c] [=device.maxDown?c]}
 ${else}\
@@ -151,7 +151,7 @@ ${endif}\
 ${if_existing /dev/[=disk.device]}\
 </#if>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-disk.png -p [=lso + 5],[=y]}\
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph-io.png -p [=lso + 44],[=y]}\
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph-io.png -p [=lso + 45],[=y]}\
 <#assign y += 36 + 36>
 ${template7 [=disk.device] [=disk.readSpeed?c] [=disk.writeSpeed?c]}
 <#list disk.partitions>

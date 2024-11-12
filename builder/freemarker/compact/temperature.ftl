@@ -12,7 +12,8 @@ conky.config = {
   gap_y = -524,
 
   -- window settings
-  minimum_width = 189,
+  <#assign celsiousOffset = 1><#-- using the celsius ° symbol adds additional offset to the right of the text, so we have to counter it -->
+  minimum_width = [=191 + celsiousOffset],
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
 
@@ -52,7 +53,7 @@ conky.config = {
 
 conky.text = [[
 <#assign iborder = 6> <#-- inner horizontal border -->
-${offset [=iborder]}${color1}device${alignr [=iborder]}temperature
+${offset [=iborder]}${color1}device${alignr [=iborder + celsiousOffset]}temperature
 ${voffset 8}${offset [=iborder]}${color}cpu${alignr}${lua_parse print_resource_usage ${hwmon atk0110 temp 1} [=threshold.tempCPU] ${color3}}°C
 ${voffset 4}${offset [=iborder]}${color}cpu core 1${alignr}${lua_parse print_resource_usage ${hwmon coretemp temp 2} [=threshold.tempCPUCore] ${color3}}°C
 ${voffset 3}${offset [=iborder]}${color}cpu core 2${alignr}${lua_parse print_resource_usage ${hwmon coretemp temp 3} [=threshold.tempCPUCore] ${color3}}°C
@@ -64,9 +65,9 @@ ${voffset 3}${offset [=iborder]}${color}AMD Radeon HD7570${alignr}${lua_parse pr
 ${voffset 3}${offset [=iborder]}${color}[=disk.name]${alignr}${lua_parse print_resource_usage ${hwmon [=disk.hwmonIndex] temp 1} [=threshold.tempDisk] ${color3}}°C
 </#if>
 </#list>
-${voffset 8}${offset [=iborder]}${color1}fan${alignr [=iborder]}revolutions
-${voffset 8}${offset [=iborder]}${color}chasis front intake${alignr [=iborder]}${lua_parse print_resource_usage ${hwmon atk0110 fan 3} [=(threshold.fanSpeed)?c] ${color3}} rpm
-${voffset 3}${offset [=iborder]}${color}cpu fan${alignr [=iborder]}${lua_parse print_resource_usage ${hwmon atk0110 fan 1} [=(threshold.fanSpeed)?c] ${color3}} rpm
-${voffset 3}${offset [=iborder]}${color}chasis top exhaust${alignr [=iborder]}${lua_parse print_resource_usage ${hwmon atk0110 fan 2} [=(threshold.fanSpeed)?c] ${color3}} rpm
-${voffset 3}${offset [=iborder]}${color}chasis back exhaust${alignr [=iborder]}${lua_parse print_resource_usage ${hwmon atk0110 fan 4} [=(threshold.fanSpeed)?c] ${color3}} rpm
+${voffset 8}${offset [=iborder]}${color1}fan${alignr [=iborder + celsiousOffset]}revolutions
+${voffset 8}${offset [=iborder]}${color}chasis front intake${alignr [=iborder + celsiousOffset]}${lua_parse print_resource_usage ${hwmon atk0110 fan 3} [=(threshold.fanSpeed)?c] ${color3}} rpm
+${voffset 3}${offset [=iborder]}${color}cpu fan${alignr [=iborder + celsiousOffset]}${lua_parse print_resource_usage ${hwmon atk0110 fan 1} [=(threshold.fanSpeed)?c] ${color3}} rpm
+${voffset 3}${offset [=iborder]}${color}chasis top exhaust${alignr [=iborder + celsiousOffset]}${lua_parse print_resource_usage ${hwmon atk0110 fan 2} [=(threshold.fanSpeed)?c] ${color3}} rpm
+${voffset 3}${offset [=iborder]}${color}chasis back exhaust${alignr [=iborder + celsiousOffset]}${lua_parse print_resource_usage ${hwmon atk0110 fan 4} [=(threshold.fanSpeed)?c] ${color3}} rpm
 ]]

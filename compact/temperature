@@ -12,7 +12,7 @@ conky.config = {
   gap_y = -524,
 
   -- window settings
-  minimum_width = 189,
+    minimum_width = 192,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
 
@@ -51,7 +51,7 @@ conky.config = {
 };
 
 conky.text = [[
-${offset 6}${color1}device${alignr 6}temperature
+${offset 6}${color1}device${alignr 7}temperature
 ${voffset 8}${offset 6}${color}cpu${alignr}${lua_parse print_resource_usage ${hwmon atk0110 temp 1} 78 ${color3}}°C
 ${voffset 4}${offset 6}${color}cpu core 1${alignr}${lua_parse print_resource_usage ${hwmon coretemp temp 2} 85 ${color3}}°C
 ${voffset 3}${offset 6}${color}cpu core 2${alignr}${lua_parse print_resource_usage ${hwmon coretemp temp 3} 85 ${color3}}°C
@@ -61,9 +61,9 @@ ${voffset 3}${offset 6}${color}AMD Radeon HD7570${alignr}${lua_parse print_resou
 ${voffset 3}${offset 6}${color}samsung SSD HD${alignr}${lua_parse print_resource_usage ${hwmon 0 temp 1} 42 ${color3}}°C
 ${voffset 3}${offset 6}${color}seagate HD${alignr}${lua_parse print_resource_usage ${hwmon 1 temp 1} 42 ${color3}}°C
 ${voffset 3}${offset 6}${color}seagate HD${alignr}${lua_parse print_resource_usage ${hwmon 2 temp 1} 42 ${color3}}°C
-${voffset 8}${offset 6}${color1}fan${alignr 6}revolutions
-${voffset 8}${offset 6}${color}chasis front intake${alignr 6}${lua_parse print_resource_usage ${hwmon atk0110 fan 3} 2300 ${color3}} rpm
-${voffset 3}${offset 6}${color}cpu fan${alignr 6}${lua_parse print_resource_usage ${hwmon atk0110 fan 1} 2300 ${color3}} rpm
-${voffset 3}${offset 6}${color}chasis top exhaust${alignr 6}${lua_parse print_resource_usage ${hwmon atk0110 fan 2} 2300 ${color3}} rpm
-${voffset 3}${offset 6}${color}chasis back exhaust${alignr 6}${lua_parse print_resource_usage ${hwmon atk0110 fan 4} 2300 ${color3}} rpm
+${voffset 8}${offset 6}${color1}fan${alignr 7}revolutions
+${voffset 8}${offset 6}${color}chasis front intake${alignr 7}${lua_parse print_resource_usage ${hwmon atk0110 fan 3} 2300 ${color3}} rpm
+${voffset 3}${offset 6}${color}cpu fan${alignr 7}${lua_parse print_resource_usage ${hwmon atk0110 fan 1} 2300 ${color3}} rpm
+${voffset 3}${offset 6}${color}chasis top exhaust${alignr 7}${lua_parse print_resource_usage ${hwmon atk0110 fan 2} 2300 ${color3}} rpm
+${voffset 3}${offset 6}${color}chasis back exhaust${alignr 7}${lua_parse print_resource_usage ${hwmon atk0110 fan 4} 2300 ${color3}} rpm
 ]]
