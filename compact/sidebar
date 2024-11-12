@@ -87,7 +87,7 @@ ${image ~/conky/monochrome/images/compact/burgundy-cpu-high.png -p 20,39}\
 ${endif}\
 ${image ~/conky/monochrome/images/compact/burgundy-graph.png -p 59,39}\
 ${voffset 34}${offset 59}${cpugraph cpu0 35,139 ${template1}}
-${voffset -2}${offset 21}${color1}load ${color}${loadavg}${alignr 38}${color}${cpu cpu0}%
+${voffset -2}${offset 21}${color1}load${goto 57}${color}${loadavg}${alignr 38}${color}${cpu cpu0}%
 ${image ~/conky/monochrome/images/compact/burgundy-table-fields.png -p 18,98}\
 ${voffset 6}${color1}${offset 21}process${alignr 38}cpu    mem${voffset 5}
 ${template3 1}
@@ -103,9 +103,9 @@ ${image ~/conky/monochrome/images/compact/burgundy-mem-high.png -p 20,225}\
 ${endif}\
 ${image ~/conky/monochrome/images/compact/burgundy-graph.png -p 59,225}\
 # memory graph and usage are displayed on a separate conky due to a bug with these memory variables computing bad data if other variables like ${top ...} and one of the network upload/download exists in the same conky
-${voffset 69}${offset 21}${color1}buff${goto 57}${color}${buffers}${alignr 38}${color}${cached} ${color1}cache
-${voffset 3}${offset 21}${color1}swap${goto 57}${voffset 1}${color2}${swapbar 3,97}${alignr 38}${voffset -1}${color}${swapperc}%
-${voffset 3}${offset 21}${color1}read${goto 57}${color}${cat /tmp/conky/system.swap.read}${alignr 38}${cat /tmp/conky/system.swap.write} ${color1}write
+${voffset 69}${offset 21}${color1}buff${goto 57}${color}${buffers}${alignr 38}${color}${cached}${color1} cache
+${voffset 3}${offset 21}${color1}free${goto 57}${color}${memfree}${alignr 38}${color}${swap}${color1}  swap
+${voffset 3}${offset 21}${color1}si${goto 57}${color}${cat /tmp/conky/system.swap.read}${alignr 38}${cat /tmp/conky/system.swap.write}${color1}    so
 ${image ~/conky/monochrome/images/compact/burgundy-table-fields.png -p 18,332}\
 ${voffset 6}${offset 21}${color1}process${alignr 38}memory   perc${voffset 5}
 ${template4 1}
@@ -117,8 +117,8 @@ ${template4 6}
 # -------------- network
 ${if_up enp0s25}\
 ${image ~/conky/monochrome/images/compact/burgundy-ethernet.png -p 20,459}\
-${voffset 15}${goto 60}${color1}local ip${goto 114}${color}${addr enp0s25}
-${voffset 3}${goto 60}${color1}speed${goto 114}${color}${template5 enp0s25}
+${voffset 15}${goto 63}${color1}local ip ${color}${addr enp0s25}
+${voffset 3}${goto 63}${color1}speed    ${color}${template5 enp0s25}
 # :: upload/download speeds
 ${image ~/conky/monochrome/images/compact/burgundy-internet.png -p 20,504}\
 ${image ~/conky/monochrome/images/compact/burgundy-graph-io.png -p 59,504}\
@@ -178,9 +178,9 @@ ${voffset 48}
 ${endif}\
 # -------------- system
 ${image ~/conky/monochrome/images/compact/burgundy-system.png -p 20,1029}\
-${voffset 15}${goto 60}${color1}uptime ${goto 128}${color}${uptime}
-${voffset 3}${goto 60}${color1}compositor ${color}${execi 3600 echo $XDG_SESSION_TYPE}
-${voffset 9}${offset 21}${color1}kernel${goto 60}${color}${kernel}
+${voffset 15}${goto 63}${color1}uptime     ${color}${uptime}
+${voffset 3}${goto 63}${color1}compositor ${color}${execi 3600 echo $XDG_SESSION_TYPE}
+${voffset 9}${offset 21}${color1}kernel ${color}${kernel}
 # due to a conky/lua bug the temperature items had to be moved to their own conky
 ${image ~/conky/monochrome/images/compact/burgundy-table-fields.png -p 18,1088}\
 ${if_updatenr 1}${image ~/conky/monochrome/images/compact/burgundy-thermometer1.png -p 130,1138}${endif}\

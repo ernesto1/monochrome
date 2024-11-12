@@ -94,7 +94,7 @@ ${endif}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph.png -p [=lso + 44],[=y]}\
 <#assign y += 36 + 23>
 ${voffset [=tso + 2]}${offset [=lso + 44]}${cpugraph cpu0 35,139 ${template1}}
-${voffset -2}${offset [=lso + iborder]}${color1}load ${color}${loadavg}${alignr [=rso + iborder]}${color}${cpu cpu0}%
+${voffset -2}${offset [=lso + iborder]}${color1}load${goto [=lso + iborder + 6 * 6]}${color}${loadavg}${alignr [=rso + iborder]}${color}${cpu cpu0}%
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png -p [=lso + 3],[=y]}\
 <#assign y += 18>
 ${voffset 6}${color1}${offset [=lso + iborder]}process${alignr [=rso + iborder]}cpu    mem${voffset 5}
@@ -110,12 +110,12 @@ ${endif}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph.png -p [=lso + 44],[=y]}\
 <#assign y += 36>
 # memory graph and usage are displayed on a separate conky due to a bug with these memory variables computing bad data if other variables like ${top ...} and one of the network upload/download exists in the same conky
-${voffset 69}${offset [=lso + iborder]}${color1}buff${goto [=lso + iborder + 36]}${color}${buffers}${alignr [=rso + iborder]}${color}${cached} ${color1}cache
-${voffset 3}${offset [=lso + iborder]}${color1}swap${goto [=lso + iborder + 36]}${voffset 1}${color2}${swapbar 3,97}${alignr [=rso + iborder]}${voffset -1}${color}${swapperc}%
+${voffset 69}${offset [=lso + iborder]}${color1}buff${goto [=lso + iborder + 6 * 6]}${color}${buffers}${alignr [=rso + iborder]}${color}${cached}${color1} cache
+${voffset 3}${offset [=lso + iborder]}${color1}free${goto [=lso + iborder + 6 * 6]}${color}${memfree}${alignr [=rso + iborder]}${color}${swap}${color1}  swap
 <#assign inputDir = "/tmp/conky",
          swapRead = inputDir + "/system.swap.read",
          swapWrite = inputDir + "/system.swap.write">
-${voffset 3}${offset [=lso + iborder]}${color1}read${goto [=lso + iborder + 36]}${color}${cat [=swapRead]}${alignr [=rso + iborder]}${cat [=swapWrite]} ${color1}write
+${voffset 3}${offset [=lso + iborder]}${color1}si${goto [=lso + iborder + 6 * 6]}${color}${cat [=swapRead]}${alignr [=rso + iborder]}${cat [=swapWrite]}${color1}    so
 <#assign y += 71>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png -p [=lso + 3],[=y]}\
 <#assign y += 18>
@@ -129,8 +129,8 @@ ${template4 [=x]}
 ${if_up [=device.name]}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-ethernet.png -p [=lso + 5],[=y]}\
 <#assign y += 36>
-${voffset 15}${goto [=lso + 45]}${color1}local ip${goto [=lso + 99]}${color}${addr [=device.name]}
-${voffset 3}${goto [=lso + 45]}${color1}speed${goto [=lso + 99]}${color}${template5 [=device.name]}
+${voffset 15}${goto [=lso + iborder + 7 * 6]}${color1}local ip ${color}${addr [=device.name]}
+${voffset 3}${goto [=lso + iborder + 7 * 6]}${color1}speed    ${color}${template5 [=device.name]}
 # :: upload/download speeds
 <#assign y += 9>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-internet.png -p [=lso + 5],[=y]}\
@@ -173,9 +173,9 @@ ${endif}\
 # -------------- system
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-system.png -p [=lso + 5],[=y?c]}\
 <#assign y += 36>
-${voffset 15}${goto [=lso + 45]}${color1}uptime ${goto [=lso + 113]}${color}${uptime}
-${voffset 3}${goto [=lso + 45]}${color1}compositor ${color}${execi 3600 echo $XDG_SESSION_TYPE}
-${voffset 9}${offset [=lso + iborder]}${color1}kernel${goto [=lso + 45]}${color}${kernel}
+${voffset 15}${goto [=lso + iborder + 7 * 6]}${color1}uptime     ${color}${uptime}
+${voffset 3}${goto [=lso + iborder + 7 * 6]}${color1}compositor ${color}${execi 3600 echo $XDG_SESSION_TYPE}
+${voffset 9}${offset [=lso + iborder]}${color1}kernel ${color}${kernel}
 # due to a conky/lua bug the temperature items had to be moved to their own conky
 <#assign y += 23>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png -p [=lso + 3],[=y?c]}\
