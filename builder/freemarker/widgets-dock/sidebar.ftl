@@ -127,7 +127,7 @@ ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-cpu.png -p [=ls
 <#if isElaborate>
 ${image ~/conky/monochrome/images/[=conky]/text-box-99p.png -p [=lso + 68],[=y + 13]}\
 </#if>
-${if_match ${cpu cpu0} > [=threshold.cpu]}\
+${if_match ${cpu cpu0} >= [=threshold.cpu]}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-cpu-high.png -p [=lso + 5],[=y]}\
 <#if isElaborate>
 ${if_match ${cpu cpu0} == 100}${image ~/conky/monochrome/images/[=conky]/text-box-100p.png -p [=lso + 110],[=y + 13]}${endif}\
@@ -146,7 +146,7 @@ ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-mem.png -p [=ls
 <#if isElaborate>
 ${image ~/conky/monochrome/images/[=conky]/text-box-mem.png -p [=lso + 68],[=y + 19]}\
 </#if>
-${if_match ${memperc} > [=threshold.mem]}\
+${if_match ${memperc} >= [=threshold.mem]}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-mem-high.png -p [=lso + 5],[=y]}\
 ${endif}\
 <#assign y += 48 + 26>
@@ -168,7 +168,7 @@ ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-[=device.type].
 ${voffset 49}${offset [=lso + 6]}${color2}${if_match ${wireless_link_qual_perc [=device.name]} < 30}${color3}${endif}${wireless_link_bar 3,45 [=device.name]}
 <#if isElaborate>
 ${image ~/conky/monochrome/images/[=conky]/text-box-99p.png -p [=lso + 68],[=y + 15]}\
-${if_match ${wireless_link_qual_perc [=device.name]} == 100}${image ~/conky/monochrome/images/[=conky]/text-box-100p.png -p [=lso + 110],[=y + 13]}${endif}\
+${if_match ${wireless_link_qual_perc [=device.name]} == 100}${image ~/conky/monochrome/images/[=conky]/text-box-100p.png -p [=lso + 110],[=y + 15]}${endif}\
 ${voffset -29}${goto [=lso + 72]}${color}${font1}${wireless_link_qual_perc [=device.name]}${font0}%${font}${voffset 4}
 <#else>
 ${font}${voffset 2}\

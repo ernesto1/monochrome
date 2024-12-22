@@ -90,7 +90,7 @@ ${image ~/conky/monochrome/images/widgets-dock/grape-sidebar-desktop.png -p 0,0}
 # :::::::::::::::::::: cpu
 ${image ~/conky/monochrome/images/widgets-dock/grape-cpu.png -p 32,41}\
 ${image ~/conky/monochrome/images/widgets-dock/text-box-99p.png -p 95,54}\
-${if_match ${cpu cpu0} > 90}\
+${if_match ${cpu cpu0} >= 90}\
 ${image ~/conky/monochrome/images/widgets-dock/grape-cpu-high.png -p 32,41}\
 ${if_match ${cpu cpu0} == 100}${image ~/conky/monochrome/images/widgets-dock/text-box-100p.png -p 137,54}${endif}\
 ${endif}\
@@ -99,7 +99,7 @@ ${voffset -31}${goto 99}${color}${font1}${cpu cpu0}${font0}%
 # :::::::::::::::::::: memory
 ${image ~/conky/monochrome/images/widgets-dock/grape-mem.png -p 32,107}\
 ${image ~/conky/monochrome/images/widgets-dock/text-box-mem.png -p 95,126}\
-${if_match ${memperc} > 90}\
+${if_match ${memperc} >= 90}\
 ${image ~/conky/monochrome/images/widgets-dock/grape-mem-high.png -p 32,107}\
 ${endif}\
 ${voffset 17}${offset 45}${memgraph 43,21 ${template1}}
