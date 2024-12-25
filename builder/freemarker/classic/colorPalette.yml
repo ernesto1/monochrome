@@ -1,0 +1,32 @@
+grape:
+  image:
+    primaryColor: grape
+    secondaryColor: pink
+  colors:
+    panelColor: 200d21
+    category: a36dec
+    text: c596c7
+    labels: white
+    warning: c33855
+
+yellow:
+  image:
+    primaryColor: yellow
+    secondaryColor: green
+  colors:
+    panelColor: f9aa5c
+    category: c12504
+    text: 703d0a
+    labels: white
+    warning: 1a5c00
+
+burgundy:
+  image:
+    primaryColor: burgundy
+    secondaryColor: ochre
+  colors:
+    panelColor: 37010f
+    category: bf241f
+    text: a98162
+    labels: white
+    warning: c01e20
