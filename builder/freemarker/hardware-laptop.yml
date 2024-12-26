@@ -31,5 +31,8 @@ threshold:
   cpu: 90         # percentages
   mem: 90
   swap: 70
+  bat: 20
+  filesystem: 90
   tempCPU: 78     # temperatures in degrees celsius
   tempCPUCore: 85
+  wifi: 50        # wifi signal strength

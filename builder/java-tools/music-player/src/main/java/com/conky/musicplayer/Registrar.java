@@ -46,16 +46,18 @@ public class Registrar {
      * signal handlers from the dbus.
      */
     private final Map<String, AutoCloseable> handlerMap;
+    private final TrackUpdatesHandler trackUpdatesHandler;
 
     public Registrar(DBusConnection conn,
                      MetadataRetriever metadataRetriever,
                      MusicPlayerDatabase playerDatabase,
-                     List<String> supportedPlayers) {
+                     List<String> supportedPlayers, TrackUpdatesHandler trackUpdatesHandler) {
         this.conn = conn;
         this.metadataRetriever = metadataRetriever;
         this.playerDatabase = playerDatabase;
         this.supportedPlayers = supportedPlayers;
         handlerMap = new HashMap<>();
+        this.trackUpdatesHandler = trackUpdatesHandler;
     }
 
     /**
@@ -88,7 +90,7 @@ public class Registrar {
         try {
             AutoCloseable unregisterHandler = conn.addSigHandler(Properties.PropertiesChanged.class,
                                                                  busName,
-                                                                 new TrackUpdatesHandler(metadataRetriever, playerDatabase));
+                                                                 trackUpdatesHandler);
             handlerMap.put(busName, unregisterHandler);
         } catch (DBusException e) {
             logger.error("unable to subscribe to dbus signals from the '{}' music player", playerName);

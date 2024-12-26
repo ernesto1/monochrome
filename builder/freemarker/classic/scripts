@@ -1,23 +1,10 @@
 # ::::::: create the conky configs
 # devices: desktop laptop
-device=laptop &&
-color=grape &&
+{ device=laptop; color=grape;
 java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar classic $color $device && \
 mkdir -p ~/conky/monochrome/classic && \
-mv /tmp/monochrome/* ~/conky/monochrome/classic
+mv /tmp/monochrome/* ~/conky/monochrome/classic; }
 
 
 # ::::::: design notes
-images should have a top/bottom border of 9px
-
-:: alignment
-
-- for titles or single line panels
-
-  height  23
-  use a voffset of 5px
-  it will give you a top/bottom border of 7px
-  
-- each row of text adds 16 pixels (lines with a 3px voffset)
-- a character has a width of 6 px
-  this includes 1px of a right border, ie. two letters will be separated by 1 px
+border is 7 px

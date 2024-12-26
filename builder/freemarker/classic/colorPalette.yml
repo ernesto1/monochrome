@@ -4,9 +4,9 @@ grape:
     secondaryColor: pink
   colors:
     panelColor: 200d21
-    category: a36dec
+    category: white
     text: c596c7
-    labels: white
+    labels: a36dec
     warning: c33855
 
 yellow:
@@ -15,10 +15,21 @@ yellow:
     secondaryColor: green
   colors:
     panelColor: f9aa5c
-    category: c12504
+    category: 65734b
     text: 703d0a
-    labels: white
+    labels: c12504
     warning: 1a5c00
+
+ticonderoga:
+  image:
+    primaryColor: blue
+    secondaryColor: green
+  colors:
+    panelColor: 313d65
+    category: cbee45
+    text: f3e1de
+    labels: a3b2ec
+    warning: f3af5a
 
 burgundy:
   image:
@@ -30,3 +41,14 @@ burgundy:
     text: a98162
     labels: white
     warning: c01e20
+
+zara:
+  image:
+    primaryColor: orange
+    secondaryColor: green
+  colors:
+    panelColor: d23f37
+    category: white
+    text: 37020a
+    labels: f5bdb0
+    warning: ffda9b

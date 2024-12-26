@@ -9,6 +9,7 @@ import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.file.*;
+import java.util.Random;
 
 import static com.conky.musicplayer.MusicPlayerWriter.ALBUM_ART;
 
@@ -19,6 +20,7 @@ public class ImageDownloadTask implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(ImageDownloadTask.class);
     private URL url;
     private Path imagePath;
+    private Random random;
 
     /**
      * Create a new instance of this image download task
@@ -29,6 +31,7 @@ public class ImageDownloadTask implements Runnable {
     public ImageDownloadTask(URL url, Path albumArtPath) {
         this.url = url;
         imagePath = albumArtPath;
+        random = new Random();
     }
 
     @Override
@@ -38,11 +41,13 @@ public class ImageDownloadTask implements Runnable {
             return;
         }
 
+        logger.debug("downloading album art at {}", url);
+
         try {
             // album art is downloaded to a temporary file and then renamed to the actual file name
             // this is to prevent conky from loading an incomplete image
             ReadableByteChannel readableByteChannel = Channels.newChannel(url.openStream());
-            Path tempFile = Path.of(imagePath.getParent().toString(), ALBUM_ART + ".temp");
+            Path tempFile = Path.of(imagePath.getParent().toString(), ALBUM_ART + ".temp." + random.nextLong());
             FileOutputStream fileOutputStream = new FileOutputStream(tempFile.toFile());
             fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
             fileOutputStream.close();

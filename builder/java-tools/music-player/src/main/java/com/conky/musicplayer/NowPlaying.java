@@ -50,7 +50,7 @@ public class NowPlaying {
         try (DBusConnection conn = DBusConnectionBuilder.forSessionBus().build()) {
             // initialize data objects
             /*
-             the thread pool for downloading album art has a queue size of only one item
+             the thread pool for downloading album art has a queue size of only one item.
              if a barrage of download tasks are submitted, only the last one will be performed
 
              this is to decrease the wait time experienced by the user to see album art in the conky
@@ -68,7 +68,14 @@ public class NowPlaying {
             playerDatabase.init();
             ApplicationInquirer inquirer = new ApplicationInquirer(conn);
             MetadataRetriever metadataRetriever = new MetadataRetriever(inquirer);
-            Registrar registrar = new Registrar(conn, metadataRetriever, playerDatabase, SUPPORTED_PLAYERS);
+            ThreadPoolExecutor signalExecutor = new ThreadPoolExecutor(1,
+                                                                       1,
+                                                                       0L,
+                                                                       TimeUnit.MILLISECONDS,
+                                                                       new ArrayBlockingQueue<>(1),
+                                                                       new ThreadPoolExecutor.DiscardOldestPolicy());
+            TrackUpdatesHandler trackUpdatesHandler = new TrackUpdatesHandler(metadataRetriever, playerDatabase, signalExecutor);
+            Registrar registrar = new Registrar(conn, metadataRetriever, playerDatabase, SUPPORTED_PLAYERS, trackUpdatesHandler);
             // listen for dbus signals of interest
             // signal handlers run under a single thread, ie. signals are processed in the order they are received
             AvailabilityHandler availabilityHandler = new AvailabilityHandler(conn, registrar, playerDatabase);

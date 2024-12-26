@@ -1,6 +1,5 @@
 package com.conky.musicplayer;
 
-import org.freedesktop.dbus.DBusMap;
 import org.freedesktop.dbus.handlers.AbstractPropertiesChangedHandler;
 import org.freedesktop.dbus.interfaces.Properties;
 import org.freedesktop.dbus.types.Variant;
@@ -8,7 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
-import java.util.Optional;
+import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Handler for analyzing media player property change signals, ie. <tt>org.freedesktop.DBus.Properties.PropertiesChanged</tt>.<br>
@@ -20,6 +20,7 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
 
     private MetadataRetriever metadataRetriever;
     private final MusicPlayerDatabase playerDatabase;
+    private final ThreadPoolExecutor signalExecutor;
 
     /**
      * Creates a new instance of this property change handler
@@ -27,42 +28,25 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
      * @param retriever      music player dbus metadata retriever
      * @param database       music player database to store running player details
      */
-    public TrackUpdatesHandler(MetadataRetriever retriever, MusicPlayerDatabase database) {
+    public TrackUpdatesHandler(MetadataRetriever retriever, MusicPlayerDatabase database, ThreadPoolExecutor signalExecutor) {
         this.metadataRetriever = retriever;
         playerDatabase = database;
+        this.signalExecutor = signalExecutor;
     }
 
     @Override
     public void handle(Properties.PropertiesChanged signal) {
         logger.debug("signal: {} {}", signal.getSource(), signal.getPropertiesChanged());
-        String uniqueName = signal.getSource();
+        String playerName = signal.getSource();
+        Map<String, Variant<?>> properties = signal.getPropertiesChanged();
 
         // is this signal for a registered player?
-        if (playerDatabase.contains(uniqueName)) {
-            MusicPlayer musicPlayer = playerDatabase.getPlayer(uniqueName);
-            // retrieve available details from the signal
-            Map<String, Variant<?>> properties = signal.getPropertiesChanged();
-            boolean isPlayerStatusChanged = false;
-
-            Variant<String> status = (Variant<String>) properties.get("PlaybackStatus");
-            if (status != null) {
-                musicPlayer.setPlaybackStatus(status.getValue());
-                isPlayerStatusChanged = true;
-            }
-
-            Variant<DBusMap> metadata = (Variant<DBusMap>) properties.get("Metadata");
-            if (metadata != null) {
-                musicPlayer.setTrackInfo(metadataRetriever.getTrackInfo(metadata.getValue()));
-                isPlayerStatusChanged = true;
-            }
-
-            if (isPlayerStatusChanged) {
-                logger.info("{}", musicPlayer);
-                playerDatabase.save(musicPlayer);
-            }
+        if (playerDatabase.contains(playerName) && (properties.containsKey("PlaybackStatus") || properties.containsKey("Metadata"))) {
+            // tread executor only has capacity for a single task, if we get a message burst
+            // only the latest message (track update) will be kept
+            signalExecutor.execute(new UpdateMusicPlayerTask(playerDatabase, metadataRetriever, signal));
         } else {
-            logger.warn("got a signal for an unregistered player: {} {}", signal.getSource(), signal.getPropertiesChanged());
-            logger.warn("this should not have happened, check the 'Registrar' class");
+            logger.debug("signal was ignored");
         }
     }
 }
