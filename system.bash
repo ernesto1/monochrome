@@ -1,6 +1,6 @@
 #!/bin/bash
-# script to retrieve relevant system performance details not available in the conky api
-# data is placed in files for conky to read
+# script to retrieve system performance metrics not available in the conky variables
+# data is placed in temporary files for conky to read
 
 . ~/conky/monochrome/logging.bash
 
@@ -18,12 +18,13 @@ CPUUSFILE=${OUTDIR}/system.cpu.us
 CPUSYFILE=${OUTDIR}/system.cpu.sy
 CPUIDFILE=${OUTDIR}/system.cpu.id
 CPUWAFILE=${OUTDIR}/system.cpu.wa
-trap 'log "received shutdown signal, deleting output files"; rm ${OUTDIR}/system.*; exit 0' EXIT
+trap 'log "advanced metrics will not be available for conky to display"; log "received shutdown signal, deleting output files"; rm ${OUTDIR}/system.*; exit 0' EXIT
+set -o pipefail   # the return value of a pipeline is the value of the last (rightmost) command to exit with a non-zero status
 
-log 'compiling system performance metrics'
 echo 'n/a' > ${SWAPREADFILE}
 echo 'n/a' > ${SWAPWRITEFILE}
-type -p vmstat > /dev/null || { logError "'vmstat' utility is not installed, swap metrics will be unavailable"; exit 1; }
+type -p vmstat > /dev/null || { logError "'vmstat' utility is not installed"; exit 1; }
+log 'compiling system performance metrics'
 
 while true; do
   # ::::::::::: swap i/o
@@ -31,7 +32,7 @@ while true; do
   # procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
   # r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
   # 1  0 3314100 363380  30040 607636   4    0   132    48 2013 3409  3  1 96  0  0
-  vmstat --no-first --unit K | tail -1 > ${TMPFILE}
+  vmstat --no-first --unit K | tail -1 > ${TMPFILE} || { logError "unable to launch the 'vmstat' utility, flags used may not be compatible with your system"; exit 1; }
   awk '{
         if ($7 < 1000)
           {VALUE = $7; UNIT = "KiB"; FORMAT = "%d%s"}
