@@ -21,6 +21,7 @@ CPUWAFILE=${OUTDIR}/system.cpu.wa
 trap 'log "advanced metrics will not be available for conky to display"; log "received shutdown signal, deleting output files"; rm ${OUTDIR}/system.*; exit 0' EXIT
 set -o pipefail   # the return value of a pipeline is the value of the last (rightmost) command to exit with a non-zero status
 
+mkdir -p ${OUTDIR}
 echo 'n/a' > ${SWAPREADFILE}
 echo 'n/a' > ${SWAPWRITEFILE}
 type -p vmstat > /dev/null || { logError "'vmstat' utility is not installed"; exit 1; }
