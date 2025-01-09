@@ -11,10 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
 
 public class MusicPlayerWriter {
     private static final Logger logger = LoggerFactory.getLogger(MusicPlayerWriter.class);
@@ -24,7 +21,7 @@ public class MusicPlayerWriter {
      * Name of the file that contains the location on disk of the track's cover art
      */
     public static final String ALBUM_ART_PATH_FILENAME = "albumArtPath";
-    public static final String ALBUM_ART_SYMLINK_FILENAME = "albumArt";
+    public static final String ALBUM_ART_SYMLINK_FILENAME = "nowPlaying";
 
     /**
      * Directory to write all music player track info files to

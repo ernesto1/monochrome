@@ -1,7 +1,6 @@
 grape:
   image:
     primaryColor: grape
-    secondaryColor: pink
   colors:
     panelColor: 200d21
     category: white
@@ -12,7 +11,6 @@ grape:
 yellow:
   image:
     primaryColor: yellow
-    secondaryColor: green
   colors:
     panelColor: f9aa5c
     category: 65734b
@@ -23,7 +21,7 @@ yellow:
 ticonderoga:
   image:
     primaryColor: blue
-    secondaryColor: green
+    highlight: pastelblue
   colors:
     panelColor: 313d65
     category: cbee45
@@ -34,7 +32,6 @@ ticonderoga:
 burgundy:
   image:
     primaryColor: burgundy
-    secondaryColor: ochre
   colors:
     panelColor: 37010f
     category: bf241f
@@ -45,7 +42,7 @@ burgundy:
 zara:
   image:
     primaryColor: orange
-    secondaryColor: green
+    highlight: pink
   colors:
     panelColor: d23f37
     category: white

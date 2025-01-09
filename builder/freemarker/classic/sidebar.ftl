@@ -89,7 +89,11 @@ ${voffset 3}${offset [=border]}${color1}[=partition.name]${alignr [=lborder]}${c
 # ::::::::::::::::: media
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
 ${voffset 5}${offset [=border]}${color3}${cat /tmp/conky/musicplayer.name}
-${image ~/conky/monochrome/java/albumArt/albumArt -p [=border],[=357+border] -s [=width-border*2]x[=width-border*2]}\
+${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
+<#assign y = 357 + border><#-- position of the album art -->
+${image ~/conky/monochrome/images/classic/[=image.highlight]-highlight.png -p 0,[=y-4] -s [=width]x[=width-border*2+8]}\
+${endif}\
+${image ~/conky/monochrome/java/albumArt/nowPlaying -p [=border],[=y] -s [=width-border*2]x[=width-border*2] -n}\
 ${voffset 87}\
 ${voffset 6}${offset [=border]}${color}${scroll wait 14 3 1 ${cat /tmp/conky/musicplayer.title}}
 ${voffset 3}${offset [=border]}${color}${scroll wait 14 3 1 ${cat /tmp/conky/musicplayer.artist}}
