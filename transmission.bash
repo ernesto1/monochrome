@@ -19,7 +19,7 @@ function onExitSignal {
 }
 
 function getUploadTorrents {
-  grep -E '(Seeding|Up & Down)' ${torrents}.$$ \
+  grep -E '(Seeding|Uploading|Up & Down)' ${torrents}.$$ \
     | cut -d ':' -f 1,4 \
     | sort -t ':' -k 2
 }
@@ -113,7 +113,7 @@ while [ true ]; do
   #   - UTF characters replaced with a dot, the default conky font only supports ascii
   #     japanese characters would yield multiple giberish characters
   #     utf characters get replaced with 3 dots, then the 3 dots get replaced with a single dot
-  grep -E '(Seeding|Downloading|Up & Down)' ${torrentsRaw} \
+  grep -E '(Seeding|Downloading|Uploading|Up & Down)' ${torrentsRaw} \
     | LANG=C sed -e 's/  \+/:/g' -e 's/#//g' -e 's/[\x80-\xFF]/./g' -e 's/\.\.\././g' \
     | cut -d ':' -f 6,7,9,10 \
     | sort -t ':' -k 3 > ${torrents}.$$
