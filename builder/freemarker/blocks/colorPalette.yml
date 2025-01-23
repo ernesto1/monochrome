@@ -1,0 +1,39 @@
+grape:
+  image:
+    primaryColor: grape
+  colors:
+    text: c596c7
+    labels: white
+    warning: c33855
+
+green:
+  image:
+    primaryColor: green
+  colors:
+    text: a7aa71
+    labels: white
+    warning: red
+
+yellow:
+  image:
+    primaryColor: yellow
+  colors:
+    text: 703d0a
+    labels: c12504
+    warning: 1a5c00
+
+ticonderoga:
+  image:
+    primaryColor: blue
+  colors:
+    text: f3e1de
+    labels: a3b2ec
+    warning: f3af5a
+
+burgundy:
+  image:
+    primaryColor: burgundy
+  colors:
+    text: a98162
+    labels: white
+    warning: c01e20

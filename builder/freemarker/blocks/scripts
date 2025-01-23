@@ -1,0 +1,11 @@
+# ::::::: create the conky configs
+# devices: desktop
+{ device=desktop; color=grape;
+java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar blocks $color $device && \
+mkdir -p ~/conky/monochrome/blocks && \
+mv /tmp/monochrome/* ~/conky/monochrome/blocks; }
+
+
+# ::::::: design notes
+a character has a width of 6 px
+opt to use a horizontal border of a single character
