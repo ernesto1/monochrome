@@ -1,7 +1,7 @@
 <#import "/lib/panel-round.ftl" as panel>
 conky.config = {  
   update_interval = 2,    -- update interval in seconds
-  xinerama_head = 1,      -- for multi monitor setups, select monitor to run on: 0,1,2
+  xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
@@ -40,9 +40,14 @@ conky.config = {
   draw_shades = false,      -- black shadow on text (not good if text is black)
   draw_outline = false,     -- black outline around text (not good if text is black)
   -- colors
-  default_color = '[=colors.text]',  -- regular text
+  default_color = '[=colors.text]', -- regular text
   color1 = '[=colors.labels]',
-  color2 = '[=colors.warning]'
+  color2 = '[=colors.warning]',
+  color3 = '[=colors.secondary.labels]',        -- secondary panel labels
+  color4 = '[=colors.secondary.text]',        -- secondary panel text
+  
+  -- templates
+  template1 = [[${color}${if_existing /tmp/conky/musicplayer.playbackStatus Playing}${color4}${endif}]]
 };
 
 conky.text = [[
@@ -83,14 +88,14 @@ ${voffset 3}${offset [=border]}${color1}si${alignr [=lborder]}${color}${cat /tmp
 ${voffset 3}${offset [=border]}${color1}so${alignr [=lborder]}${color}${cat /tmp/conky/system.swap.write}
 # :::::::::::: device read
 <#assign height = 5*16+6>
-<@panel.panel x=0 y=y height=height width=width color=image.primaryColor/>
+<@panel.panel x=0 y=y height=height width=width color=image.secondaryColor/>
 <#assign y += height + gap>
 ${voffset [=6 + gap]}\
 <#list networkDevices as device>
-${voffset 3}${offset [=border]}${color1}[=device.name[0..4]]${alignr [=lborder]}${color}${upspeed [=device.name]}
+${voffset 3}${offset [=border]}${color3}[=device.name[0..4]]${alignr [=lborder]}${color4}${upspeed [=device.name]}
 </#list>
 <#list hardDisks as disk>
-${voffset 3}${offset [=border]}${color1}[=disk.device]${alignr [=lborder]}${color}${diskio_read /dev/[=disk.device]}
+${voffset 3}${offset [=border]}${color3}[=disk.device]${alignr [=lborder]}${color4}${diskio_read /dev/[=disk.device]}
 </#list>
 # :::::::::::: device write
 <#assign height = 5*16+6>
@@ -135,18 +140,22 @@ ${voffset 3}${offset [=border]}${color1}[=disk.name[0..8]]${alignr}${color}${hwm
 <#assign y += height + gap>
 ${voffset [=6 + gap]}\
 ${voffset 3}${offset [=border]}${color1}front${alignr [=lborder]}${color}${hwmon atk0110 fan 3} rpm
-${voffset 3}${offset [=border]}${color1}cpu${alignr [=lborder]}${color}${if_match ${to_bytes ${hwmon atk0110 fan 1}} <= 400}${color2}${endif}${hwmon atk0110 fan 1} rpm
+${voffset 3}${offset [=border]}${color1}cpu${alignr [=lborder]}${color}${if_match ${hwmon atk0110 fan 1} <= 400}${color2}${endif}${hwmon atk0110 fan 1} rpm
 ${voffset 3}${offset [=border]}${color1}top${alignr [=lborder]}${color}${hwmon atk0110 fan 2} rpm
 ${voffset 3}${offset [=border]}${color1}back${alignr [=lborder]}${color}${hwmon atk0110 fan 4} rpm
 # :::::::::::: now playing
 <#assign height = 3 + width-border + 3*16 + 6>
+${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
+<@panel.panel x=0 y=y height=height width=width color=image.secondaryColor/>
+${else}\
 <@panel.panel x=0 y=y height=height width=width color=image.primaryColor/>
+${endif}\
 ${image ~/conky/monochrome/java/albumArt/nowPlaying -p [=3],[=y+3] -s [=width-border]x[=width-border] -n}\
 <#assign y += height + gap>
 ${voffset [=gap + 3 + width]}\
-${voffset 3}${offset [=border]}${color}${scroll wait 14 2 1 ${cat /tmp/conky/musicplayer.title}}
-${voffset 3}${offset [=border]}${color}${scroll wait 14 2 1 ${cat /tmp/conky/musicplayer.album}}
-${voffset 3}${offset [=border]}${color}${scroll wait 14 2 1 ${cat /tmp/conky/musicplayer.artist}}
+${voffset 3}${offset [=border]}${template1}${scroll wait 14 2 1 ${cat /tmp/conky/musicplayer.title}}
+${voffset 3}${offset [=border]}${template1}${scroll wait 14 2 1 ${cat /tmp/conky/musicplayer.album}}
+${voffset 3}${offset [=border]}${template1}${scroll wait 14 2 1 ${cat /tmp/conky/musicplayer.artist}}
 # :::::::::::: transmission
 <#assign height = 4*16+6>
 <@panel.panel x=0 y=y height=height width=width color=image.primaryColor/>
@@ -161,5 +170,5 @@ ${voffset [=6 + gap]}\
 ${voffset 3}${offset [=border]}${color1}torrents${alignr}${color}${lines [=activeFile]} 
 ${voffset 3}${offset [=border]}${color1}peers${alignr}${color}${lines [=peersFile]} 
 ${voffset 3}${offset [=border]}${color1}up${alignr [=lborder]}${color}${cat [=uploadFile]}
-${voffset 3}${offset [=border]}${color1}down${alignr [=lborder]}${color}${cat [=downloadFile]}
+${voffset 3}${offset [=border]}${color1}dwn${alignr [=lborder]}${color}${cat [=downloadFile]}
 ]];

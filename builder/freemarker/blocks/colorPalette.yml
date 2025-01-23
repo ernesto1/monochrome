@@ -1,39 +1,95 @@
+baltimore:
+  image:
+    primaryColor: blue
+    secondaryColor: green
+  colors:
+    labels: cfebf6
+    text: white
+    warning: f29559
+    secondary:
+      labels: d0ea4b
+      text: f6fdd3
+
+nelson:
+  image:
+    primaryColor: burgundy
+    secondaryColor: ochre
+  colors:
+    labels: white
+    text: d9ad8a
+    warning: e32828
+    secondary:
+      labels: 621a00
+      text: 3d180b
+
 grape:
   image:
     primaryColor: grape
+    secondaryColor: pink
   colors:
-    text: c596c7
     labels: white
+    text: c596c7
     warning: c33855
+    secondary:
+      labels: 59260b
+      text: 3a405a
 
 green:
   image:
     primaryColor: green
+    secondaryColor: grape
   colors:
-    text: a7aa71
     labels: white
+    text: a7aa71
     warning: red
+    secondary:
+      labels: white
+      text: c596c7
 
-yellow:
+hulk:
   image:
-    primaryColor: yellow
+    primaryColor: grape
+    secondaryColor: green
   colors:
-    text: 703d0a
-    labels: c12504
-    warning: 1a5c00
+    labels: white
+    text: c596c7
+    warning: c33855
+    secondary:
+      labels: d6ff67
+      text: a7aa71
 
 ticonderoga:
   image:
     primaryColor: blue
+    secondaryColor: yellow
   colors:
-    text: f3e1de
     labels: a3b2ec
+    text: f3e1de
     warning: f3af5a
+    secondary:
+      labels: a93323
+      text: 703d0a
 
-burgundy:
+yellow:
   image:
-    primaryColor: burgundy
+    primaryColor: yellow
+    secondaryColor: blue
   colors:
-    text: a98162
-    labels: white
-    warning: c01e20
+    labels: a93323
+    text: 703d0a
+    warning: blue
+    secondary:
+      labels: cfebf6
+      text: white
+
+yotsuba:
+  image:
+    primaryColor: yellow
+    secondaryColor: green
+  colors:
+    labels: ae1000
+    text: 703d0a
+    warning: 1a5c00
+    secondary:
+      labels: white
+      text: a7aa71
