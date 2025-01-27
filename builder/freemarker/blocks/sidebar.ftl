@@ -57,26 +57,26 @@ conky.text = [[
          height = 3*16+6,
          inputDir = "/tmp/conky",
          packagesFile = inputDir + "/dnf.packages.formatted">
-<@panel.panel x=0 y=y height=height width=width color=image.primaryColor/>
+<@panel.panel x=0 y=y height=height width=width/>
 <#assign y = height + gap>
 ${voffset 4}${offset [=border]}${color}${scroll wait 14 1 1 ${kernel}}
 ${voffset 3}${offset [=border]}${color1}uptime${alignr [=lborder]}${color}${uptime_short}
-${voffset 3}${offset [=border]}${color1}dnf${alignr [=lborder]}${color}${if_existing [=packagesFile]}${lines [=packagesFile]}${else}none${endif}
+${voffset 3}${offset [=border]}${color1}updates${alignr [=lborder]}${color}${if_existing [=packagesFile]}${lines [=packagesFile]}${else}none${endif}
 # :::::::::::: cpu
 <#assign height = 3*16+6>
-<@panel.panel x=0 y=y height=height width=width color=image.primaryColor/>
+<@panel.panel x=0 y=y height=height width=width/>
 <#assign y += height + gap>
 <#assign us = inputDir + "/system.cpu.us",
          sy = inputDir + "/system.cpu.sy">
 ${voffset [=6 + gap]}\
-${voffset 3}${offset [=border]}${color1}us ${color}${cat [=us]}%${goto 55}${color1}sy${alignr [=lborder]}${color}${cat [=sy]}%
+${voffset 3}${offset [=border]}${color1}us ${color}${if_match ${cat [=us]} >= 50}${color2}${endif}${cat [=us]}%${goto 55}${color1}sy${alignr [=lborder]}${color}${cat [=sy]}%
 <#assign id = inputDir + "/system.cpu.id",
          wa = inputDir + "/system.cpu.wa">
-${voffset 3}${offset [=border]}${color1}id ${color}${cat [=id]}%${goto 55}${color1}wa${alignr [=lborder]}${color}${cat [=wa]}%
+${voffset 3}${offset [=border]}${color1}id ${color}${cat [=id]}%${goto 55}${color1}wa${alignr [=lborder]}${color}${if_match ${cat [=wa]} >= 20}${color2}${endif}${cat [=wa]}%
 ${voffset 3}${offset [=border]}${color1}load${alignr [=lborder]}${color}${loadavg 1} ${loadavg 2}
 # :::::::::::: memory
 <#assign height = 7*16+6>
-<@panel.panel x=0 y=y height=height width=width color=image.primaryColor/>
+<@panel.panel x=0 y=y height=height width=width/>
 <#assign y += height + gap>
 ${voffset [=6 + gap]}\
 ${voffset 3}${offset [=border]}${color1}used${alignr [=lborder]}${color}${if_match ${memperc} >= [=threshold.mem]}${color2}${endif}${mem}
@@ -99,7 +99,7 @@ ${voffset 3}${offset [=border]}${color3}[=disk.device]${alignr [=lborder]}${colo
 </#list>
 # :::::::::::: device write
 <#assign height = 5*16+6>
-<@panel.panel x=0 y=y height=height width=width color=image.primaryColor/>
+<@panel.panel x=0 y=y height=height width=width/>
 <#assign y += height + gap>
 ${voffset [=6 + gap]}\
 <#list networkDevices as device>
@@ -110,7 +110,7 @@ ${voffset 3}${offset [=border]}${color1}[=disk.device]${alignr [=lborder]}${colo
 </#list>
 # :::::::::::: filesystems
 <#assign height = 5*16+6>
-<@panel.panel x=0 y=y height=height width=width color=image.primaryColor/>
+<@panel.panel x=0 y=y height=height width=width/>
 <#assign y += height + gap>
 ${voffset [=6 + gap]}\
 <#list hardDisks as hardDisk>
@@ -120,7 +120,7 @@ ${voffset 3}${offset [=border]}${color1}[=partition.name]${alignr [=lborder]}${c
 </#list>
 # :::::::::::: temperatures
 <#assign height = 9*16+6>
-<@panel.panel x=0 y=y height=height width=width color=image.primaryColor/>
+<@panel.panel x=0 y=y height=height width=width/>
 <#assign y += height + gap>
 ${voffset [=6 + gap]}\
 ${voffset 3}${offset [=border]}${color1}cpu${alignr}${color}${hwmon atk0110 temp 1}°
@@ -136,7 +136,7 @@ ${voffset 3}${offset [=border]}${color1}[=disk.name[0..8]]${alignr}${color}${hwm
 </#list>
 # :::::::::::: fans
 <#assign height = 4*16+6>
-<@panel.panel x=0 y=y height=height width=width color=image.primaryColor/>
+<@panel.panel x=0 y=y height=height width=width/>
 <#assign y += height + gap>
 ${voffset [=6 + gap]}\
 ${voffset 3}${offset [=border]}${color1}front${alignr [=lborder]}${color}${hwmon atk0110 fan 3} rpm
@@ -148,7 +148,7 @@ ${voffset 3}${offset [=border]}${color1}back${alignr [=lborder]}${color}${hwmon 
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
 <@panel.panel x=0 y=y height=height width=width color=image.secondaryColor/>
 ${else}\
-<@panel.panel x=0 y=y height=height width=width color=image.primaryColor/>
+<@panel.panel x=0 y=y height=height width=width/>
 ${endif}\
 ${image ~/conky/monochrome/java/albumArt/nowPlaying -p [=3],[=y+3] -s [=width-border]x[=width-border] -n}\
 <#assign y += height + gap>
@@ -158,7 +158,7 @@ ${voffset 3}${offset [=border]}${template1}${scroll wait 14 2 1 ${cat /tmp/conky
 ${voffset 3}${offset [=border]}${template1}${scroll wait 14 2 1 ${cat /tmp/conky/musicplayer.artist}}
 # :::::::::::: transmission
 <#assign height = 4*16+6>
-<@panel.panel x=0 y=y height=height width=width color=image.primaryColor/>
+<@panel.panel x=0 y=y height=height width=width/>
 <#assign y += height + gap>
 ${voffset [=6 + gap]}\
 <#assign inputDir = "/tmp/conky/",
