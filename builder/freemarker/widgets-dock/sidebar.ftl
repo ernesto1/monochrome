@@ -20,7 +20,7 @@ conky.config = {
            iborder = 6, <#-- inner sidebar horizontal border -->
            rso = 32,    <#-- right shadow offset -->
            width = lso + 90>  <#-- width of the sidebar image -->
-  <#if isElaborate><#assign width += 53></#if>
+  <#if isVerbose><#assign width += 53></#if>
   minimum_width = [=width],
   <#if system == "desktop"><#assign height = 1135><#else><#assign height = 681></#if>
   minimum_height = [=height?c],
@@ -77,7 +77,7 @@ conky.config = {
   template3 = [[
 ${voffset 9}${offset [=lso + 5]}${upspeedgraph \1 29,47 ${template2} \2}
 ${voffset -8}${offset [=lso + 5]}${downspeedgraph \1 29,47 ${template1} \3}
-<#if isElaborate>
+<#if isVerbose>
 ${voffset -56}${goto [=lso + 72]}${color}${font}${upspeed \1}
 ${voffset 21}${goto [=lso + 72]}${color}${font}${downspeed \1}${voffset 10}<#rt>
 <#else>
@@ -89,7 +89,7 @@ ${font}${voffset -12}\<#rt>
   template4 = [[
 ${voffset 5}${offset [=lso + 5]}${color}${diskiograph_read /dev/\1 21,47 ${template2} \2}
 ${voffset -8}${offset [=lso + 5]}${diskiograph_write /dev/\1 21,47 ${template1} \3}
-<#if isElaborate>
+<#if isVerbose>
 ${voffset -48}${goto [=lso + 72]}${color}${font}${diskio_read /dev/\1}
 ${voffset 13}${goto [=lso + 72]}${color}${font}${diskio_write /dev/\1}${voffset 10}<#rt>
 <#else>
@@ -100,7 +100,7 @@ ${font}${voffset -12}\<#rt>
   -- filesystem: ${template6 filesystemName fileSystemPath}
   template6 = [[
 ${voffset 45}${offset [=lso + 6]}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3, 45 \2}
-<#if isElaborate>
+<#if isVerbose>
 ${voffset -46}${goto [=lso + 72]}${color}${font}\1
 ${voffset 4}${goto [=lso + 72]}${color}${font1}${fs_used_perc \2}${font0}%${font}${voffset 8}<#rt>
 <#else>
@@ -124,18 +124,18 @@ ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-sidebar-[=syste
 # :::::::::::::::::::: cpu
 <#assign y += 9>
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-cpu.png -p [=lso + 5],[=y]}\
-<#if isElaborate>
+<#if isVerbose>
 ${image ~/conky/monochrome/images/[=conky]/text-box-99p.png -p [=lso + 68],[=y + 13]}\
 </#if>
 ${if_match ${cpu cpu0} >= [=threshold.cpu]}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-cpu-high.png -p [=lso + 5],[=y]}\
-<#if isElaborate>
+<#if isVerbose>
 ${if_match ${cpu cpu0} == 100}${image ~/conky/monochrome/images/[=conky]/text-box-100p.png -p [=lso + 110],[=y + 13]}${endif}\
 </#if>
 ${endif}\
 <#assign y += 48 + 9>
 ${voffset [=tso + 12]}${offset [=lso + 12]}${cpugraph cpu0 33,33 ${template1}}
-<#if isElaborate>
+<#if isVerbose>
 ${voffset -31}${goto [=lso + 72]}${color}${font1}${cpu cpu0}${font0}%
 <#else>
 ${font0}${voffset -3}\
@@ -143,7 +143,7 @@ ${font0}${voffset -3}\
 # :::::::::::::::::::: memory
 <#assign y += 9>
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-mem.png -p [=lso + 5],[=y]}\
-<#if isElaborate>
+<#if isVerbose>
 ${image ~/conky/monochrome/images/[=conky]/text-box-mem.png -p [=lso + 68],[=y + 19]}\
 </#if>
 ${if_match ${memperc} >= [=threshold.mem]}\
@@ -151,12 +151,12 @@ ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-mem-high.png -p
 ${endif}\
 <#assign y += 48 + 26>
 ${voffset 17}${offset [=lso + 18]}${memgraph 43,21 ${template1}}
-<#if isElaborate>
+<#if isVerbose>
 ${voffset -33}${goto [=lso + 72]}${color}${font1}${memperc}${font0}%
 <#else>
 ${font}${voffset -5}\
 </#if>
-${voffset 4}${offset [=lso + 6]}${color2}${if_match ${swapperc} >= [=threshold.swap]}${color3}${endif}${swapbar 3, 45}<#if isElaborate>${voffset -2}${goto [=lso + 72]}${font}${color}${swapperc}%<#else>${font}${voffset -2}</#if>
+${voffset 4}${offset [=lso + 6]}${color2}${if_match ${swapperc} >= [=threshold.swap]}${color3}${endif}${swapbar 3, 45}<#if isVerbose>${voffset -2}${goto [=lso + 72]}${font}${color}${swapperc}%<#else>${font}${voffset -2}</#if>
 # :::::::::::::::::::: network
 <#-- TODO handle multiple network devices, for now only the main device (wifi) in a laptop is used -->
 <#assign device = networkDevices?first>
@@ -166,7 +166,7 @@ ${if_up [=device.name]}\
          y += 9>
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-[=device.type].png -p [=lso + 5],[=y]}\
 ${voffset 49}${offset [=lso + 6]}${color2}${if_match ${wireless_link_qual_perc [=device.name]} < 30}${color3}${endif}${wireless_link_bar 3,45 [=device.name]}
-<#if isElaborate>
+<#if isVerbose>
 ${image ~/conky/monochrome/images/[=conky]/text-box-99p.png -p [=lso + 68],[=y + 15]}\
 ${if_match ${wireless_link_qual_perc [=device.name]} == 100}${image ~/conky/monochrome/images/[=conky]/text-box-100p.png -p [=lso + 110],[=y + 15]}${endif}\
 ${voffset -29}${goto [=lso + 72]}${color}${font1}${wireless_link_qual_perc [=device.name]}${font0}%${font}${voffset 4}
@@ -184,7 +184,7 @@ ${if_up [=device.name]}\
 <#assign ySection = y,
          y += 9>
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-internet.png -p [=lso + 5],[=y]}\
-<#if isElaborate>
+<#if isVerbose>
 ${image ~/conky/monochrome/images/[=conky]/text-box.png -p [=lso + 68],[=y + 11]}\
 ${image ~/conky/monochrome/images/[=conky]/text-box.png -p [=lso + 68],[=y + 45]}\
 </#if>
@@ -206,7 +206,7 @@ ${endif}\
          y += 9>
 ${if_updatenr 1}${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-diskio-1.png -p [=lso + 5],[=y]}${endif}\
 ${if_updatenr 2}${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-diskio-2.png -p [=lso + 5],[=y]}${endif}\
-<#if isElaborate>
+<#if isVerbose>
 ${image ~/conky/monochrome/images/[=conky]/text-box.png -p [=lso + 68],[=y + 3]}\
 ${image ~/conky/monochrome/images/[=conky]/text-box.png -p [=lso + 68],[=y + 29]}\
 </#if>
@@ -217,12 +217,12 @@ ${template4 [=hardDisk.device] [=hardDisk.readSpeed?c] [=hardDisk.writeSpeed?c]}
 <#assign y += 9>
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-disk-[=partition.icon].png -p [=lso + 5],[=y]}\
 <#if hardDisk.device == "sda">
-<#if isElaborate>
+<#if isVerbose>
 ${image ~/conky/monochrome/images/[=conky]/text-box-99p.png -p [=lso + 68],[=y + 15]}\
 </#if>
 ${template6 \  [=partition.path]}
 <#else>
-<#if isElaborate>
+<#if isVerbose>
 ${image ~/conky/monochrome/images/[=conky]/text-box-partition.png -p [=lso + 68],[=y - 2]}\
 </#if>
 ${template6 [=partition.name] [=partition.path]}
@@ -241,7 +241,7 @@ ${endif}\
 <#assign y += 9>
 # :::::::: cpu
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-temp-cpu.png -p [=lso + 5],[=y]}\
-<#if isElaborate>
+<#if isVerbose>
 ${image ~/conky/monochrome/images/[=conky]/text-box-99p.png -p [=lso + 68],[=y + 15]}\
 ${image ~/conky/monochrome/images/[=conky]/text-box-100p.png -p [=lso + 68 + 31],[=y + 15]}\
 </#if>
@@ -250,7 +250,7 @@ ${image ~/conky/monochrome/images/[=conky]/text-box-100p.png -p [=lso + 68 + 31]
 # :::::::: ati video card
 <#assign y += 9>
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-temp-videocard.png -p [=lso + 5],[=y]}\
-<#if isElaborate>
+<#if isVerbose>
 ${image ~/conky/monochrome/images/[=conky]/text-box-99p.png -p [=lso + 68],[=y + 15]}\
 ${image ~/conky/monochrome/images/[=conky]/text-box-100p.png -p [=lso + 68 + 31],[=y + 15]}\
 </#if>
@@ -258,7 +258,7 @@ ${image ~/conky/monochrome/images/[=conky]/text-box-100p.png -p [=lso + 68 + 31]
 # :::::::: hard disks
 <#assign y += 9>
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-temp-disk.png -p [=lso + 5],[=y]}\
-<#if isElaborate>
+<#if isVerbose>
 ${image ~/conky/monochrome/images/[=conky]/text-box-99p.png -p [=lso + 68],[=y + 15]}\
 ${image ~/conky/monochrome/images/[=conky]/text-box-100p.png -p [=lso + 68 + 31],[=y + 15]}\
 </#if>
@@ -267,7 +267,7 @@ ${image ~/conky/monochrome/images/[=conky]/text-box-100p.png -p [=lso + 68 + 31]
 <#assign y += 9>
 ${if_updatenr 1}${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-fan-1.png -p [=lso+5],[=y?c]}${endif}\
 ${if_updatenr 2}${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-fan-2.png -p [=lso+5],[=y?c]}${endif}\
-<#if isElaborate>
+<#if isVerbose>
 ${image ~/conky/monochrome/images/[=conky]/text-box-fan.png -p [=lso + 68],[=(y + 29)?c]}\
 </#if>
 <#assign y += 46 + 9>
@@ -282,7 +282,7 @@ ${else}\
 ${image ~/conky/monochrome/images/widgets-dock/[=image.primaryColor]-power-battery.png -p [=lso + 5],[=y]}\
 ${endif}\
 ${voffset 45}${offset [=lso + 6]}${color2}${if_match ${battery_percent BAT0} < 20}${color3}${endif}${battery_bar 3, 45 BAT0}
-<#if isElaborate>
+<#if isVerbose>
 ${image ~/conky/monochrome/images/[=conky]/text-box-99p.png -p [=lso + 68],[=y + 15]}\
 ${if_match ${battery_percent BAT0} == 100}${image ~/conky/monochrome/images/[=conky]/text-box-100p.png -p [=lso + 110],[=y + 15]}${endif}\
 ${voffset -29}${goto [=lso + 72]}${color}${font1}${battery_percent BAT0}${font0}%${font}${voffset -6}

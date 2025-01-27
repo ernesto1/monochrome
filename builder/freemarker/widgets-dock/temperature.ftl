@@ -14,7 +14,7 @@ conky.config = {
   -- window settings | conky width matches the sidebar conky
   <#assign lso = 27,          <#-- horizontal offset to account for sidebar image's left shadow -->
            width = lso + 90>  <#-- width of the sidebar image -->
-  <#if isElaborate><#assign width += 53></#if>
+  <#if isVerbose><#assign width += 53></#if>
   minimum_width = [=width],
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -51,14 +51,14 @@ conky.text = [[
 # :::::::: cpu
 <#if system == "desktop" >
 ${voffset 45}${offset [=lso + 6]}${color2}${if_match ${lua get cpuTemp ${hwmon atk0110 temp 1}} > [=threshold.tempCPU]}${color3}${endif}${lua_bar 3,45 get cpuTemp}
-<#if isElaborate>
+<#if isVerbose>
 ${voffset -29}${goto [=lso + 72]}${color}${font1}${lua get cpuTemp}${font0}°C${font}${voffset 8}
 <#else>
 ${font}${voffset 6}\
 </#if>
 # :::::::: ati video card
 ${voffset 45}${offset [=lso + 6]}${color2}${if_match ${lua get videoTemp ${hwmon radeon temp 1}} > [=threshold.tempVideo]}${color3}${endif}${lua_bar 3,45 get videoTemp}
-<#if isElaborate>
+<#if isVerbose>
 ${voffset -29}${goto [=lso + 72]}${color}${font1}${lua get videoTemp}${font0}°C${font}${voffset 8}
 <#else>
 ${font}${voffset 6}\
@@ -66,7 +66,7 @@ ${font}${voffset 6}\
 # :::::::: hard disks
 ${lua compute diskTemp ${lua get_max_resource_usage ${hwmon 0 temp 1} ${hwmon 1 temp 1} ${hwmon 2 temp 1}}}\
 ${voffset 45}${offset [=lso + 6]}${color2}${if_match ${lua get diskTemp} > [=threshold.tempDisk]}${color3}${endif}${lua_bar 3,45 get diskTemp}
-<#if isElaborate>
+<#if isVerbose>
 ${voffset -29}${goto [=lso + 72]}${color}${font1}${lua get diskTemp}${font0}°C${font}${voffset 8}
 <#else>
 ${font}${voffset 6}\
@@ -74,7 +74,7 @@ ${font}${voffset 6}\
 # :::::::: fans
 ${lua compute fanSpeed ${lua get_max_resource_usage ${hwmon atk0110 fan 3} ${hwmon atk0110 fan 1} ${hwmon atk0110 fan 2} ${hwmon atk0110 fan 4}}}\
 ${voffset 45}${offset [=lso + 6]}${color2}${if_match ${lua get fanSpeed} > [=threshold.fanSpeed?c]}${color3}${endif}${lua_bar 3,45 conky_get_usage_percentage 2600 fanSpeed}
-<#if isElaborate>
+<#if isVerbose>
 ${voffset -29}${goto [=lso + 72]}${color}${font1}${font}${lua get fanSpeed} rpm${voffset 8}
 ${voffset -150}\
 </#if>
@@ -82,7 +82,7 @@ ${voffset -150}\
 # laptop only reports cpu core temperatures, displaying the hottest of the two cores
 ${lua compute cpuTemp ${lua get_max_resource_usage ${hwmon coretemp temp 2} ${hwmon coretemp temp 3}}}\
 ${voffset 45}${offset [=lso + 6]}${color2}${if_match ${lua get cpuTemp} > [=threshold.tempCPUCore]}${color3}${endif}${lua_bar 3,45 get cpuTemp}
-<#if isElaborate>
+<#if isVerbose>
 ${voffset -29}${goto [=lso + 72]}${color}${font1}${lua get cpuTemp}${font0}°C${font}${voffset 8}
 ${voffset -58}\
 </#if>

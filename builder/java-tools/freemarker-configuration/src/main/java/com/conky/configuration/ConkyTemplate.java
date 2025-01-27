@@ -44,7 +44,7 @@ public class ConkyTemplate {
         Map<String, Object> root = yaml.load(globalSettingsStream);
         root.put("conky", conky);               // conky theme being configured
         root.put("system", system);
-        root.put("isElaborate", ! namespace.getBoolean("nonverbose"));  // TODO change flag in freemarker to isVerbose
+        root.put("isVerbose", ! namespace.getBoolean("nonverbose"));
 
         // load conky theme data model
         File conkyTemplateDir = new File(TEMPLATE_ROOT_DIR, conky);
@@ -70,8 +70,7 @@ public class ConkyTemplate {
             java.lang.System.exit(1);
         }
 
-        // :::  freemarker setup
-        // create the output directory
+        // :::  create the output directory
         File outputDirectory = new File(OUTPUT_DIR);
         outputDirectory.mkdirs();   // will not throw an exception if the directory already exists
 
@@ -81,6 +80,8 @@ public class ConkyTemplate {
         }
 
         emptyDirectory(outputDirectory);
+
+        // :::  freemarker setup
         // configure freemarker engine
         Configuration cfg = createFreemarkerConfiguration(TEMPLATE_ROOT_DIR);
         // add user defined directives
