@@ -35,7 +35,7 @@ public class TrackUpdatesHandler extends AbstractPropertiesChangedHandler {
 
     @Override
     public void handle(Properties.PropertiesChanged signal) {
-        logger.debug("signal: {} {}", signal.getSource(), signal.getPropertiesChanged());
+        logger.debug("signal: {} | {}", signal.getSource(), signal.getPropertiesChanged());
         String playerName = signal.getSource();
         Map<String, Variant<?>> properties = signal.getPropertiesChanged();
 

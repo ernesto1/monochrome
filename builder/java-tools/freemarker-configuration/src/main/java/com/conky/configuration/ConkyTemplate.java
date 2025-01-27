@@ -4,6 +4,11 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
+import net.sourceforge.argparse4j.ArgumentParsers;
+import net.sourceforge.argparse4j.impl.Arguments;
+import net.sourceforge.argparse4j.inf.ArgumentParser;
+import net.sourceforge.argparse4j.inf.MutuallyExclusiveGroup;
+import net.sourceforge.argparse4j.inf.Namespace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
@@ -13,7 +18,7 @@ import java.util.Map;
 
 public class ConkyTemplate {
     private static final Logger logger = LoggerFactory.getLogger(ConkyTemplate.class);
-    private static final File MONOCHROME_ROOT_DIR = new File(System.getProperty("user.home"), "conky/monochrome");
+    private static final File MONOCHROME_ROOT_DIR = new File(java.lang.System.getProperty("user.home"), "conky/monochrome");
     /**
      * Root directory with the configuration files for all themes
      */
@@ -21,68 +26,68 @@ public class ConkyTemplate {
     private static final String OUTPUT_DIR = "/tmp/monochrome";
 
     /**
-     * Parses the conky freemarker template file based on the given configuration
+     * Parses the conky freemarker template files based on the given user inputs
      * @param args arguments to the java application
      * @throws IOException if an input file is not available
      * @throws TemplateException if a freemarker error occurs while processing the templates
      */
     public static void main(String[] args) throws IOException, TemplateException {
-        // 1. validate user input
-        ParameterValidator validator = new ParameterValidator(TEMPLATE_ROOT_DIR.getAbsolutePath());
+        Namespace namespace = processArguments(args);
+        String conky = namespace.getString("conky");
+        validateArguments(conky);
 
-        if (!validator.isUserInputProper(args)) {
-            System.exit(1);
-        }
-
-        String conky = args[0];
-        logger.info("creating configuration files for the '{}' conky", conky);
-        // 2. create the freemarker data model
+        // ::: create the freemarker data model
         // load hardware data model
-        String system = args[2].toLowerCase();     // desktop or laptop
+        String system = namespace.get("system").toString().toLowerCase();
         InputStream globalSettingsStream = new FileInputStream(new File(TEMPLATE_ROOT_DIR, "hardware-" + system + ".yml"));
         Yaml yaml = new Yaml();
         Map<String, Object> root = yaml.load(globalSettingsStream);
         root.put("conky", conky);               // conky theme being configured
         root.put("system", system);
-        root.put("isElaborate", true);       // default is elaborate conky
-
-        if (args.length > 3) {
-            root.put("isElaborate", Boolean.valueOf(args[3]));
-        }
+        root.put("isElaborate", ! namespace.getBoolean("nonverbose"));  // TODO change flag in freemarker to isVerbose
 
         // load conky theme data model
         File conkyTemplateDir = new File(TEMPLATE_ROOT_DIR, conky);
         InputStream colorPaletteStream = new FileInputStream(new File(conkyTemplateDir, "colorPalette.yml"));
-        Map<String, Object> themes = yaml.load(colorPaletteStream);
-        // select desired color
-        String color = args[1];
+        Map<String, Object> colorPalettes = yaml.load(colorPaletteStream);
 
-        if (themes.containsKey(color)) {
-            logger.info("applying the '{}' color scheme", color);
-            root.putAll((Map<String, Object>) themes.get(color));
-            logger.debug("global + theme data model: {}", root);
-        } else {
-            logger.error("'{}' color scheme is not configured for this conky, available colors are: {}", color, themes.keySet());
-            System.exit(1);
+        // print available colors if the option was requested by the user and exit
+        if (namespace.getBoolean("colors")) {
+            logger.info("available color schemes: {}", colorPalettes.keySet());
+            java.lang.System.exit(0);
         }
 
-        // 3. freemarker setup
-        // add user defined directives
-        root.put("outputFileDirective", new OutputFileDirective(OUTPUT_DIR));
+        // select desired color
+        logger.info("creating configuration files for the '{}' conky", conky);
+        String color = namespace.getString("color");
+
+        if (colorPalettes.containsKey(color)) {
+            logger.info("applying the '{}' color scheme", color);
+            root.putAll((Map<String, Object>) colorPalettes.get(color));
+            logger.debug("global + theme data model: {}", root);
+        } else {
+            logger.error("'{}' color scheme is not configured for this conky, available colors are: {}", color, colorPalettes.keySet());
+            java.lang.System.exit(1);
+        }
+
+        // :::  freemarker setup
         // create the output directory
         File outputDirectory = new File(OUTPUT_DIR);
         outputDirectory.mkdirs();   // will not throw an exception if the directory already exists
 
         if (!outputDirectory.exists()) {
             logger.error("unable to create the output directory '{}'", OUTPUT_DIR);
-            System.exit(1);
+            java.lang.System.exit(1);
         }
 
+        emptyDirectory(outputDirectory);
         // configure freemarker engine
         Configuration cfg = createFreemarkerConfiguration(TEMPLATE_ROOT_DIR);
+        // add user defined directives
+        root.put("outputFileDirective", new OutputFileDirective(OUTPUT_DIR));
         logger.info("processing template files:");
 
-        // 4. merge freemarker templates and the data model to create the output files
+        // ::: merge freemarker templates and the data model to create the conky configuration files
         for (String templateFile : conkyTemplateDir.list((d, f) -> f.endsWith(".ftl"))) {
             logger.info("> {}", templateFile);
             Template template = cfg.getTemplate(conky + "/" + templateFile);
@@ -90,6 +95,46 @@ public class ConkyTemplate {
             Writer out = new FileWriter(new File(outputDirectory, templateFile.substring(0, dotPosition)));
             template.process(root, out);
             out.close();
+        }
+    }
+
+    private static void emptyDirectory(File outputDirectory) {
+        for(File f : outputDirectory.listFiles()) {
+            f.delete();
+        }
+    }
+
+    /**
+     * Parse the command line arguments into an arguments namespace for the application to query
+     * @param args command line arguments as a <tt>String</tt> array
+     * @return a <tt>Namespace</tt> object
+     */
+    private static Namespace processArguments(String[] args) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("creates conky configuration files based on freemarker templates\n")
+          .append("config files will be written to the ").append(OUTPUT_DIR).append(" directory");
+        ArgumentParser parser = ArgumentParsers.newFor("ConkyTemplate").build()
+                                               .description(sb.toString());
+        parser.addArgument("--conky").required(true).help("conky theme to create the configuration for");
+        MutuallyExclusiveGroup colorParameters = parser.addMutuallyExclusiveGroup();
+        colorParameters.addArgument("--color").help("color scheme to apply to the config");
+        colorParameters.addArgument("--colors").action(Arguments.storeTrue()).setDefault(false)
+                       .help("list available color schemes for the chosen conky theme");
+        parser.addArgument("--nonverbose").action(Arguments.storeTrue()).setDefault(false)
+              .help("create a minimal version of the conky (if the theme supports it)");
+        parser.addArgument("--system").type(Arguments.caseInsensitiveEnumType(System.class))
+                                                   .setDefault(System.DESKTOP)
+                                                   .help("target system (if available)");
+        Namespace namespace = parser.parseArgsOrFail(args);
+
+        return namespace;
+    }
+
+    private static void validateArguments(String conky) {
+        ParameterValidator validator = new ParameterValidator(TEMPLATE_ROOT_DIR.getAbsolutePath());
+
+        if (!validator.isTemplateFolderAvailable(conky)) {
+            java.lang.System.exit(1);
         }
     }
 

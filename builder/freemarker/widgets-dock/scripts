@@ -1,8 +1,8 @@
 # ::::::: create the conky configs
 # devices: desktop laptop
-device=laptop &&
 color=grape &&
-java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar widgets-dock $color $device false && \
+device=desktop &&
+java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar --conky widgets-dock --color $color --system $device && \
 mv /tmp/monochrome/!(temperature) ~/conky/monochrome/widgets-dock && \
 sleep 2 && \
 mv /tmp/monochrome/temperature ~/conky/monochrome/widgets-dock

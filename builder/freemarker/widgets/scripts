@@ -4,8 +4,7 @@ TODO
   to deal with...
 
 # ::::::: desktop
-rm -fr /tmp/monochrome && \
-java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar widgets green desktop && \
-mv /tmp/monochrome/!(disk|memoryProcesses) ~/conky/monochrome/widgets && \
-sleep 1 && \
+java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar --conky widgets --color green &&
+mv /tmp/monochrome/!(disk|memoryProcesses) ~/conky/monochrome/widgets &&
+sleep 1 &&
 mv /tmp/monochrome/memoryProcesses ~/conky/monochrome/widgets

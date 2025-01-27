@@ -1,14 +1,14 @@
 # notes
-# by default conky will reload its configuration if it detects a change on the file
+# by default conky will reload its configuration if it detects a change on the file.
 # 
-# the new conky configuration is created in a temporary folder and then the target file is overriden
+# the new conky configuration is created in a temporary folder and then the target file is overriden.
 # it turns out that if too many sequential file changes happen to the conky file, conky stops reloading the file
-# hence why we use the temp folder in order to replace the file only once
+# hence why we use the temp folder in order to replace the file only once.
 
 # ::::::: desktop sidebar
-java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar compact burgundy desktop && \
-mv /tmp/monochrome/{sidebar,applications} ~/conky/monochrome/compact && \
-sleep 2 && \
+java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar --conky compact --color burgundy &&
+mv /tmp/monochrome/{sidebar,applications} ~/conky/monochrome/compact &&
+sleep 2 &&
 mv /tmp/monochrome/{memoryGraph,temperature} ~/conky/monochrome/compact
 
 

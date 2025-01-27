@@ -1,17 +1,11 @@
-# notes
-# by default conky will reload its configuration if it detects a change on the file
-# if too many changes take place in a small time window, conky will stop reloading the file
-# hence why we generate the file in a temp folder and replace the target file only once
-
-
 # desktop sidebar
-java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar glass blue desktop && \
+java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar --conky glass --color blue &&
 mv /tmp/monochrome/*  ~/conky/monochrome/glass
 
 
-# laptop: cpu-mem network disk power
+# laptop sidebar
 # TODO wifi power
-java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar glass blue laptop && \
+java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar --conky glass --color blue --system laptop &&
 mv /tmp/monochrome/*  ~/conky/monochrome/glass
 
 
