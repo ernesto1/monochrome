@@ -63,7 +63,7 @@ ticonderoga:
     primaryColor: blue
     secondaryColor: yellow
   colors:
-    labels: a3b2ec
+    labels: cfebf6
     text: f3e1de
     warning: f3af5a
     secondary:

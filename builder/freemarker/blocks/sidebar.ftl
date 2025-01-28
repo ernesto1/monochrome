@@ -88,14 +88,14 @@ ${voffset 3}${offset [=border]}${color1}si${alignr [=lborder]}${color}${cat /tmp
 ${voffset 3}${offset [=border]}${color1}so${alignr [=lborder]}${color}${cat /tmp/conky/system.swap.write}
 # :::::::::::: device read
 <#assign height = 5*16+6>
-<@panel.panel x=0 y=y height=height width=width color=image.secondaryColor/>
+<@panel.panel x=0 y=y height=height width=width isDark=true/>
 <#assign y += height + gap>
 ${voffset [=6 + gap]}\
 <#list networkDevices as device>
-${voffset 3}${offset [=border]}${color3}[=device.name[0..4]]${alignr [=lborder]}${color4}${upspeed [=device.name]}
+${voffset 3}${offset [=border]}${color1}[=device.name[0..4]]${alignr [=lborder]}${color}${upspeed [=device.name]}
 </#list>
 <#list hardDisks as disk>
-${voffset 3}${offset [=border]}${color3}[=disk.device]${alignr [=lborder]}${color4}${diskio_read /dev/[=disk.device]}
+${voffset 3}${offset [=border]}${color1}[=disk.device]${alignr [=lborder]}${color}${diskio_read /dev/[=disk.device]}
 </#list>
 # :::::::::::: device write
 <#assign height = 5*16+6>

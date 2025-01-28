@@ -186,14 +186,14 @@
   widths      list of column widths in pixels
 -->
 <#macro panelsBottom x y widths gap=3 isFixed=true theme="light" highlight=[], color=image.primaryColor>
-<#local xCoordinate = x>
+<#local xCoordinate = x, totalWidth = 0>
 <#list widths as width>
   <#if highlight?seq_contains(width?counter)>
     <#local color=image.secondaryColor>
   </#if>
-  <@panelBottomCorners x=xCoordinate y=y width=width isFixed=false isEdge=false color=color/>
-  <#local xCoordinate = xCoordinate + width + gap, color=image.primaryColor>
+  <@panelBottomCorners x=xCoordinate y=y width=width isFixed=isFixed isEdge=false color=color/>
+  <#local xCoordinate = xCoordinate + width + gap, color=image.primaryColor, totalWidth += totalWidth + width>
 </#list>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/blank-panel.png" x=x y=y isFixed=false/>
+<@cmn.drawContinuosPanel x=x y=y width=totalWidth color="blank" isFixed=isFixed/>
 # ------- [=widths?size] column(s) panel | bottom edges -------
 </#macro>
