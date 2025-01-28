@@ -1,10 +1,12 @@
 grape:
+  image:
+    highlight: purple
   colors:
     panelColor: 200d21
     category: white
     text: c596c7
     labels: a36dec
-    warning: c33855
+    warning: f3af5a
 
 yellow:
   colors:
@@ -24,20 +26,22 @@ ticonderoga:
     labels: a3b2ec
     warning: f3af5a
 
-burgundy:
+nelson:
+  image:
+    highlight: ochre
   colors:
     panelColor: 37010f
-    category: bf241f
-    text: a98162
+    category: db443f
+    text: d9ad8a
     labels: white
-    warning: c01e20
+    warning: red
 
 zara:
   image:
     highlight: pink
   colors:
     panelColor: d23f37
-    category: white
-    text: 37020a
-    labels: f5bdb0
-    warning: ffda9b
+    category: ecfeac
+    text: white
+    labels: ffd1c7
+    warning: green
