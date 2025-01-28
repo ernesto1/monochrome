@@ -1,7 +1,7 @@
 # ::::::: create the conky configs
 # devices: desktop laptop
-{ device=laptop; color=grape;
-java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar classic $color $device && \
+{ color=ticonderoga; device=laptop;
+java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar --conky classic --color $color --system $device && \
 mkdir -p ~/conky/monochrome/classic && \
 mv /tmp/monochrome/* ~/conky/monochrome/classic; }
 

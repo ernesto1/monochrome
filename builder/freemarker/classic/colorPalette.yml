@@ -1,6 +1,4 @@
 grape:
-  image:
-    primaryColor: grape
   colors:
     panelColor: 200d21
     category: white
@@ -9,8 +7,6 @@ grape:
     warning: c33855
 
 yellow:
-  image:
-    primaryColor: yellow
   colors:
     panelColor: f9aa5c
     category: 65734b
@@ -20,7 +16,6 @@ yellow:
 
 ticonderoga:
   image:
-    primaryColor: blue
     highlight: pastelblue
   colors:
     panelColor: 313d65
@@ -30,8 +25,6 @@ ticonderoga:
     warning: f3af5a
 
 burgundy:
-  image:
-    primaryColor: burgundy
   colors:
     panelColor: 37010f
     category: bf241f
@@ -41,7 +34,6 @@ burgundy:
 
 zara:
   image:
-    primaryColor: orange
     highlight: pink
   colors:
     panelColor: d23f37
