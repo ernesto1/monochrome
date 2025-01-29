@@ -2,6 +2,9 @@
 A collection of graphical [conky](https://github.com/brndnmtthws/conky) interfaces to monitor your system.  
 Keep tabs on your system's cpu, memory, disk, network, battery usage and device temperatures.
 
+### Blocks
+![blocks](images/screenshots/blocks.png)
+
 ### Compact dock
 ![compact dock](images/screenshots/compact.jpg)
 
@@ -19,7 +22,7 @@ Keep tabs on your system's cpu, memory, disk, network, battery usage and device 
 - A paginated list of new package updates for the Fedora **dnf** package manager
 - Torrent uploads and downloads for the **transmission** bittorrent client
 - Music player support for **Rhythmbox** and **Spotify**
-- Read/write io usage for swap disk space
+- CPU (user/system/iddle/waiting on io) usage breakdown, read/write io usage for swap disk space
 
 These details are retrieved with the use of [small scripts](https://github.com/ernesto1/monochrome/wiki/Scripts).
 
@@ -85,6 +88,7 @@ Run the launch script with the theme you want:
 
 Theme| Command
 ---|---
+Blocks |`./launch.bash --conky blocks` 
 Compact|`./launch.bash --conky compact`
 Glass|`./launch.bash --conky glass`
 Widgets dock | `./launch.bash --conky widgets-dock`

@@ -2,5 +2,5 @@ supportedPlayers:
   - rhythmbox
   - spotify
 outputDir: /tmp/conky
-albumArtDir: /tmp/conky/albumArt
+albumArtDir: ~/conky/monochrome/java/albumArt
 albumCacheSize: 1000000   # size in kb, once breached album art images will be deleted

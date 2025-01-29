@@ -37,14 +37,14 @@ grape:
 green:
   image:
     primaryColor: green
-    secondaryColor: grape
+    secondaryColor: burgundy
   colors:
     labels: white
     text: a7aa71
     warning: red
     secondary:
       labels: white
-      text: c596c7
+      text: d9ad8a
 
 hulk:
   image:

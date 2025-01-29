@@ -1,0 +1,223 @@
+conky.config = {  
+  update_interval = 2,    -- update interval in seconds
+  xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
+  double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
+
+  -- window alignment
+  alignment = 'middle_left',  -- top|middle|bottom_left|right
+  gap_x = 6,
+  gap_y = 0,
+
+  -- window settings
+  minimum_width = 95,      -- conky will add an extra pixel to this
+  maximum_width = 95,
+  minimum_height = 982,
+  own_window = true,
+  own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
+
+  -- window borders
+  draw_borders = false,     -- draw borders around the conky window
+  border_width = 1,         -- width of border window in pixels
+  border_inner_margin = 0,  -- margin between the border and text in pixels
+  border_outer_margin = 0,  -- margin between the border and the edge of the window in pixels
+  
+  -- transparency configuration
+  draw_blended = false,
+  own_window_transparent = true,
+  own_window_argb_visual = true,    -- turn on transparency
+  
+  -- miscellanous settings
+  imlib_cache_flush_interval = 250,
+
+  -- font settings
+  use_xft = false,
+  draw_shades = false,      -- black shadow on text (not good if text is black)
+  draw_outline = false,     -- black outline around text (not good if text is black)
+  -- colors
+  default_color = 'f3e1de', -- regular text
+  color1 = 'cfebf6',
+  color2 = 'f3af5a',
+  color3 = 'a93323',        -- secondary panel labels
+  color4 = '703d0a',        -- secondary panel text
+  
+  -- ::: templates
+  -- highlight value if resource usage is high
+  template1 = [[${if_match ${\1} >= \2}${color2}${endif}]],
+  -- highlight value if resource usage is low or high
+  template2 = [[${if_match ${\1} <= \2}${color2}${endif}${if_match ${\1} >= \3}${color2}${endif}]],
+  -- use secondary color if music is playing
+  template3 = [[${color}${if_existing /tmp/conky/musicplayer.playbackStatus Playing}${color4}${endif}]]
+};
+
+conky.text = [[
+# :::::::::::: system
+# ------- light panel top edge    -------
+${image ~/conky/monochrome/images/common/blue-panel-light.png -p 0,0}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-top-left.png -p 0,0}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-top-right.png -p 88,0}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 95,0}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-bottom-left.png -p 0,48}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-bottom-right.png -p 88,48}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 0,55}\
+# ------- light panel bottom edge -------
+${voffset 5}${offset 6}${color}${scroll wait 14 1 1 ${kernel}}
+${voffset 3}${offset 6}${color1}uptime${alignr 5}${color}${uptime_short}
+${voffset 3}${offset 6}${color1}updates${alignr 5}${color}${if_existing /tmp/conky/dnf.packages.formatted}${lines /tmp/conky/dnf.packages.formatted}${else}none${endif}
+# :::::::::::: cpu
+# ------- light panel top edge    -------
+${image ~/conky/monochrome/images/common/blue-panel-light.png -p 0,61}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-top-left.png -p 0,61}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-top-right.png -p 88,61}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 95,61}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-bottom-left.png -p 0,109}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-bottom-right.png -p 88,109}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 0,116}\
+# ------- light panel bottom edge -------
+${voffset 13}\
+${voffset 3}${offset 6}${color1}us ${color}${template1 cat\ /tmp/conky/system.cpu.us 50}${cat /tmp/conky/system.cpu.us}%${goto 55}${color1}sy${alignr 5}${color}${cat /tmp/conky/system.cpu.sy}%
+${voffset 3}${offset 6}${color1}id ${color}${cat /tmp/conky/system.cpu.id}%${goto 55}${color1}wa${alignr 5}${color}${template1 cat\ /tmp/conky/system.cpu.wa 20}${cat /tmp/conky/system.cpu.wa}%
+${voffset 3}${offset 6}${color1}load${alignr 5}${color}${loadavg 1} ${loadavg 2}
+# :::::::::::: memory
+# ------- light panel top edge    -------
+${image ~/conky/monochrome/images/common/blue-panel-light.png -p 0,122}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-top-left.png -p 0,122}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-top-right.png -p 88,122}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 95,122}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-bottom-left.png -p 0,234}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-bottom-right.png -p 88,234}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 0,241}\
+# ------- light panel bottom edge -------
+${voffset 13}\
+${voffset 3}${offset 6}${color1}used${alignr 5}${color}${template1 memperc 90}${mem}
+${voffset 3}${offset 6}${color1}free${alignr 5}${color}${memfree}
+${voffset 3}${offset 6}${color1}buff${alignr 5}${color}${buffers}
+${voffset 3}${offset 6}${color1}cache${alignr 5}${color}${cached}
+${voffset 3}${offset 6}${color1}swap${alignr 5}${color}${template1 swapperc 70}${swap}
+${voffset 3}${offset 6}${color1}si${alignr 5}${color}${cat /tmp/conky/system.swap.read}
+${voffset 3}${offset 6}${color1}so${alignr 5}${color}${cat /tmp/conky/system.swap.write}
+# :::::::::::: device read
+# ------- dark panel top edge    -------
+${image ~/conky/monochrome/images/common/blue-panel-dark.png -p 0,247}\
+${image ~/conky/monochrome/images/common/blue-panel-dark-edge-top-left.png -p 0,247}\
+${image ~/conky/monochrome/images/common/blue-panel-dark-edge-top-right.png -p 88,247}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 95,247}\
+${image ~/conky/monochrome/images/common/blue-panel-dark-edge-bottom-left.png -p 0,327}\
+${image ~/conky/monochrome/images/common/blue-panel-dark-edge-bottom-right.png -p 88,327}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 0,334}\
+# ------- dark panel bottom edge -------
+${voffset 13}\
+${voffset 3}${offset 6}${color1}enp0s${alignr 5}${color}${template1 to_bytes\ ${upspeed\ enp0s25} 2621440}${upspeed enp0s25}
+${voffset 3}${offset 6}${color1}sda${alignr 5}${color}${diskio_read /dev/sda}
+${voffset 3}${offset 6}${color1}sdb${alignr 5}${color}${diskio_read /dev/sdb}
+${voffset 3}${offset 6}${color1}sdd${alignr 5}${color}${diskio_read /dev/sdd}
+${voffset 3}${offset 6}${color1}sde${alignr 5}${color}${diskio_read /dev/sde}
+# :::::::::::: device write
+# ------- light panel top edge    -------
+${image ~/conky/monochrome/images/common/blue-panel-light.png -p 0,340}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-top-left.png -p 0,340}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-top-right.png -p 88,340}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 95,340}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-bottom-left.png -p 0,420}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-bottom-right.png -p 88,420}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 0,427}\
+# ------- light panel bottom edge -------
+${voffset 13}\
+${voffset 3}${offset 6}${color1}enp0s${alignr 5}${color}${template1 to_bytes\ ${downspeed\ enp0s25} 62914560}${downspeed enp0s25}
+${voffset 3}${offset 6}${color1}sda${alignr 5}${color}${diskio_write /dev/sda}
+${voffset 3}${offset 6}${color1}sdb${alignr 5}${color}${diskio_write /dev/sdb}
+${voffset 3}${offset 6}${color1}sdd${alignr 5}${color}${diskio_write /dev/sdd}
+${voffset 3}${offset 6}${color1}sde${alignr 5}${color}${diskio_write /dev/sde}
+# :::::::::::: filesystems
+# ------- light panel top edge    -------
+${image ~/conky/monochrome/images/common/blue-panel-light.png -p 0,433}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-top-left.png -p 0,433}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-top-right.png -p 88,433}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 95,433}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-bottom-left.png -p 0,513}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-bottom-right.png -p 88,513}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 0,520}\
+# ------- light panel bottom edge -------
+${voffset 13}\
+${voffset 3}${offset 6}${color1}fedora${alignr 5}${color}${template1 fs_used_perc\ / 90}${fs_used_perc /}%
+${voffset 3}${offset 6}${color1}home${alignr 5}${color}${template1 fs_used_perc\ /home 90}${fs_used_perc /home}%
+${voffset 3}${offset 6}${color1}veronica${alignr 5}${color}${template1 fs_used_perc\ /media/veronica 90}${fs_used_perc /media/veronica}%
+${voffset 3}${offset 6}${color1}betty${alignr 5}${color}${template1 fs_used_perc\ /media/betty 90}${fs_used_perc /media/betty}%
+${voffset 3}${offset 6}${color1}maxtor${alignr 5}${color}${template1 fs_used_perc\ /run/media/ernesto/MAXTOR 90}${fs_used_perc /run/media/ernesto/MAXTOR}%
+# :::::::::::: temperatures
+# ------- light panel top edge    -------
+${image ~/conky/monochrome/images/common/blue-panel-light.png -p 0,526}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-top-left.png -p 0,526}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-top-right.png -p 88,526}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 95,526}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-bottom-left.png -p 0,670}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-bottom-right.png -p 88,670}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 0,677}\
+# ------- light panel bottom edge -------
+${voffset 13}\
+${voffset 3}${offset 6}${color1}cpu${alignr}${color}${template1 hwmon\ atk0110\ temp\ 1 78}${hwmon atk0110 temp 1}°
+${voffset 3}${offset 6}${color1}core 1${alignr}${color}${template1 hwmon\ coretemp\ temp\ 2 85}${hwmon coretemp temp 2}°
+${voffset 3}${offset 6}${color1}core 2${alignr}${color}${template1 hwmon\ coretemp\ temp\ 3 85}${hwmon coretemp temp 3}°
+${voffset 3}${offset 6}${color1}core 3${alignr}${color}${template1 hwmon\ coretemp\ temp\ 4 85}${hwmon coretemp temp 4}°
+${voffset 3}${offset 6}${color1}core 4${alignr}${color}${template1 hwmon\ coretemp\ temp\ 5 85}${hwmon coretemp temp 5}°
+${voffset 3}${offset 6}${color1}radeon${alignr}${color}${template1 hwmon\ radeon\ temp\ 1 75}${hwmon radeon temp 1}°
+${voffset 3}${offset 6}${color1}samsung S${alignr}${color}${template1 hwmon\ 0\ temp\ 1 42}${hwmon 0 temp 1}°
+${voffset 3}${offset 6}${color1}seagate H${alignr}${color}${template1 hwmon\ 1\ temp\ 1 42}${hwmon 1 temp 1}°
+${voffset 3}${offset 6}${color1}seagate H${alignr}${color}${template1 hwmon\ 2\ temp\ 1 42}${hwmon 2 temp 1}°
+# :::::::::::: fans
+# ------- light panel top edge    -------
+${image ~/conky/monochrome/images/common/blue-panel-light.png -p 0,683}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-top-left.png -p 0,683}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-top-right.png -p 88,683}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 95,683}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-bottom-left.png -p 0,747}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-bottom-right.png -p 88,747}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 0,754}\
+# ------- light panel bottom edge -------
+${voffset 13}\
+${voffset 3}${offset 6}${color1}front${alignr 5}${color}${template2 hwmon\ atk0110\ fan\ 3 400 2300}${hwmon atk0110 fan 3} rpm
+${voffset 3}${offset 6}${color1}cpu${alignr 5}${color}${template2 hwmon\ atk0110\ fan\ 1 400 2300}${hwmon atk0110 fan 1} rpm
+${voffset 3}${offset 6}${color1}top${alignr 5}${color}${template2 hwmon\ atk0110\ fan\ 2 400 2300}${hwmon atk0110 fan 2} rpm
+${voffset 3}${offset 6}${color1}back${alignr 5}${color}${template2 hwmon\ atk0110\ fan\ 4 400 2300}${hwmon atk0110 fan 4} rpm
+# :::::::::::: now playing
+${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
+# ------- light panel top edge    -------
+${image ~/conky/monochrome/images/common/yellow-panel-light.png -p 0,760}\
+${image ~/conky/monochrome/images/common/yellow-panel-light-edge-top-left.png -p 0,760}\
+${image ~/conky/monochrome/images/common/yellow-panel-light-edge-top-right.png -p 88,760}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 95,760}\
+${image ~/conky/monochrome/images/common/yellow-panel-light-edge-bottom-left.png -p 0,899}\
+${image ~/conky/monochrome/images/common/yellow-panel-light-edge-bottom-right.png -p 88,899}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 0,906}\
+# ------- light panel bottom edge -------
+${else}\
+# ------- light panel top edge    -------
+${image ~/conky/monochrome/images/common/blue-panel-light.png -p 0,760}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-top-left.png -p 0,760}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-top-right.png -p 88,760}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 95,760}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-bottom-left.png -p 0,899}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-bottom-right.png -p 88,899}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 0,906}\
+# ------- light panel bottom edge -------
+${endif}\
+${image ~/conky/monochrome/java/albumArt/nowPlaying -p 3,763 -s 89x89 -n}\
+${voffset 104}\
+${voffset 3}${offset 6}${template3}${scroll wait 14 2 1 ${cat /tmp/conky/musicplayer.title}}
+${voffset 3}${offset 6}${template3}${scroll wait 14 2 1 ${cat /tmp/conky/musicplayer.album}}
+${voffset 3}${offset 6}${template3}${scroll wait 14 2 1 ${cat /tmp/conky/musicplayer.artist}}
+# :::::::::::: transmission
+# ------- light panel top edge    -------
+${image ~/conky/monochrome/images/common/blue-panel-light.png -p 0,912}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-top-left.png -p 0,912}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-top-right.png -p 88,912}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 95,912}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-bottom-left.png -p 0,976}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-bottom-right.png -p 88,976}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 0,983}\
+# ------- light panel bottom edge -------
+${voffset 13}\
+${voffset 3}${offset 6}${color1}torrents${alignr}${color}${lines /tmp/conky/transmission.active} 
+${voffset 3}${offset 6}${color1}peers${alignr}${color}${lines /tmp/conky/transmission.peers} 
+${voffset 3}${offset 6}${color1}up${alignr 5}${color}${cat /tmp/conky/transmission.speed.up}
+${voffset 3}${offset 6}${color1}dwn${alignr 5}${color}${cat /tmp/conky/transmission.speed.down}
+]];

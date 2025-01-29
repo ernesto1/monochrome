@@ -3,20 +3,21 @@ conky.config = {
   lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/panel.lua',
   lua_draw_hook_pre = 'reset_state',
   
-  update_interval = 3,    -- update interval in seconds
+  update_interval = 2,    -- update interval in seconds
   xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'middle_left',  -- header|middle|bottom_left|right
-  gap_x = 107,
-  gap_y = -618,
+  alignment = 'bottom_middle',  -- top|middle|bottom_left|right|middle
+  gap_x = 0,
+  gap_y = 10,
 
   -- window settings
-  <#assign width = 271>
+  <#assign width = 251>
   minimum_width = [=width],      -- conky will add an extra pixel to this
   maximum_width = [=width],
-  minimum_height = 400,
+  <#assign conkyHeight = 359>
+  minimum_height = [=conkyHeight],
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
 
@@ -30,10 +31,8 @@ conky.config = {
   draw_blended = false,
   own_window_transparent = true,
   own_window_argb_visual = true,  -- turn on transparency
-  own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
   
   imlib_cache_flush_interval = 250,
-  text_buffer_size=2096,
 
   -- font settings
   use_xft = false,
@@ -42,6 +41,7 @@ conky.config = {
   -- colors
   default_color = '[=colors.text]', -- regular text
   color1 = '[=colors.labels]',        -- text labels
+  color4 = '[=colors.secondary.text]',        -- secondary panel text
 };
 
 conky.text = [[
@@ -49,16 +49,29 @@ conky.text = [[
 # - the 'remote control' feature enabled in the transmission bittorrent client: edit > preferences > remote
 # - the transmission.bash script running in the background
 # :::::::::::: torrents overview
-<#assign y = 0,
+<#assign border = 6,
          inputDir = "/tmp/conky",
          activeTorrentsFile = inputDir + "/transmission.active",
-         max = 40>
+         max = 22>
 # :::::::::::: active torrents
 ${if_existing [=activeTorrentsFile]}\
 ${if_match ${lines [=activeTorrentsFile]} > 0}\
-<@panel.panel x=0 y=y width=width isFixed=false/>
-${color}${voffset 2}${lua_parse head [=activeTorrentsFile] [=max] 6}${lua increase_y_offset [=activeTorrentsFile]}
+${lua read_file [=activeTorrentsFile]}${lua calculate_voffset [=activeTorrentsFile] [=max]}\
+# ------- light panel top edge    -------
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-light.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-light-edge-top-left.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-dark.png 180 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-light.png 215 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-light-edge-top-right.png 244 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 251 0}\
+${color}${lua_parse add_y_offset voffset 2}${lua_parse head [=activeTorrentsFile] [=max] [=border]}${lua increase_y_offset [=activeTorrentsFile]}
 <@panel.panelsBottom x=0 y=0 widths=[width] gap=colGap isFixed=false/>
+${else}\
+<@panel.panel x=0 y=conkyHeight-23 height=23 width=width/>
+${voffset [=5+(max-1)*16]}${alignc}${color}no active torrents running
 ${endif}\
+${else}\
+<@panel.panel x=0 y=conkyHeight-23 height=23 width=width color=image.secondaryColor/>
+${voffset [=5+(max-1)*16]}${alignc}${color4}active torrents input file is missing
 ${endif}\
 ]];

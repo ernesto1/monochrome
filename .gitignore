@@ -6,7 +6,6 @@ builder/freemarker-configuration.jar
 
 # only .jpg images will be used for screenshots
 images/screenshots/*.xcf
-images/screenshots/*.png
 
 # layout overrides are not fully documented yet
 layout.*.cfg

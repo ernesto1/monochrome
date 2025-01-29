@@ -112,9 +112,24 @@ public class NowPlaying {
 
         logger.info("configuration: {}", config);
         OUTPUT_DIR = (String) config.getOrDefault("outputDir", OUTPUT_DIR);
+        OUTPUT_DIR = replaceTilde(OUTPUT_DIR);
         ALBUM_ART_DIR = (String) config.getOrDefault("albumArtDir", ALBUM_ART_DIR);
+        ALBUM_ART_DIR = replaceTilde(ALBUM_ART_DIR);
         ALBUM_CACHE_SIZE = (Integer) config.getOrDefault("albumCacheSize", ALBUM_CACHE_SIZE);
         SUPPORTED_PLAYERS = (List<String>) config.getOrDefault("supportedPlayers", SUPPORTED_PLAYERS);
+    }
+
+    /**
+     * Replaces the tilde (if it exists) in the directory path with the user's home directory,
+     * ex. <tt>~/conky</tt> becomes <tt>/home/ernesto/conky</tt>
+     * @param albumArtDir directory path
+     * @return the translated directory path as a <tt>String</tt>
+     */
+    private static String replaceTilde(String albumArtDir) {
+        String homeDir = System.getProperty("user.home");
+        albumArtDir = albumArtDir.replaceFirst("^~", homeDir);
+
+        return albumArtDir;
     }
 
     /**

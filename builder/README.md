@@ -6,7 +6,7 @@ Conkys are built using the [java freemarker engine](https://freemarker.apache.or
 
 - [Dynamically build conky sidebars](dynamicSidebar.md) based on the target device: desktop or laptop
 - Change the conky color scheme
-- See `java-tools/freemarker-configuration`, `buildSidebar.bash` and the `freemarker` directory
+- See `java-tools/freemarker-configuration` and the `freemarker` directory
 
 ### Java applications
 Supporting java applications will be under the `java-tools` maven project.
