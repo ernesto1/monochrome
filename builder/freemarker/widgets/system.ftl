@@ -87,5 +87,5 @@ ${voffset [= 7 + gap]}\
 <#assign body = 20>
 <@panel.table x=x y=y widths=[width] header=header body=body/>
 ${goto [=x+6]}${color1}device${alignr 4}temperature
-${voffset 6}${goto [=x+6]}${color}AMD Radeon HD7570${alignr}${template1 radeon temp 1 75}°C
+${voffset 6}${goto [=x+6]}${color}AMD Radeon HD7570${alignr}${template1 radeon temp 1 [=threshold.tempVideo]}°C
 ]];

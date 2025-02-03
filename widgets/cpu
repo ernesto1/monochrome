@@ -41,7 +41,7 @@ conky.config = {
   draw_shades = false,    -- black shadow on text (not good if text is black)
   
   -- colors
-  default_color = 'a7aa71', -- regular text
+  default_color = 'd1d58e', -- regular text
   color1 = 'white',        -- text labels
   color2 = '7c7a13',        -- bar
   color3 = 'ad2724',        -- bar critical
@@ -73,6 +73,6 @@ ${template1 1}
 ${template1 2}
 ${template1 3}
 ${template1 4}
-${voffset 14}${goto 124}${color1}cpu${goto 154}${color}${cpu cpu0}%${alignr 4}${template2 atk0110 temp 1 78}°C ${color1}cpu temp
-${voffset 4}${goto 124}${color1}load${goto 154}${color}${loadavg}${alignr 4}${template2 coretemp temp 2 85}°C${color1}core temp
+${voffset 14}${goto 124}${color1}cpu${goto 154}${color}${cpu cpu0}%${alignr 4}${template2 atk0110 temp 1 80}°C ${color1}cpu temp
+${voffset 4}${goto 124}${color1}load${goto 154}${color}${loadavg}${alignr 4}${template2 coretemp temp 2 90}°C${color1}core temp
 ]];

@@ -40,7 +40,7 @@ conky.config = {
   draw_shades = false,      -- black shadow on text (not good if text is black)
   draw_outline = false,     -- black outline around text (not good if text is black)
   -- colors
-  default_color = 'c596c7',  -- regular text
+  default_color = 'edcaef',  -- regular text
   color1 = 'white',
   color3 = 'white',         -- secondary panel labels
   color4 = 'f6ced1',         -- secondary panel text

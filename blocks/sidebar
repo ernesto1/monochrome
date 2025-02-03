@@ -37,8 +37,7 @@ conky.config = {
   default_color = 'f3e1de', -- regular text
   color1 = 'cfebf6',
   color2 = 'f3af5a',
-  color3 = 'a93323',        -- secondary panel labels
-  color4 = '703d0a',        -- secondary panel text
+  color3 = '703d0a',        -- secondary panel text
   
   -- ::: templates
   -- highlight value if resource usage is high
@@ -46,7 +45,7 @@ conky.config = {
   -- highlight value if resource usage is low or high
   template2 = [[${if_match ${\1} <= \2}${color2}${endif}${if_match ${\1} >= \3}${color2}${endif}]],
   -- use secondary color if music is playing
-  template3 = [[${color}${if_existing /tmp/conky/musicplayer.playbackStatus Playing}${color4}${endif}]]
+  template3 = [[${color}${if_existing /tmp/conky/musicplayer.playbackStatus Playing}${color3}${endif}]]
 };
 
 conky.text = [[
@@ -74,8 +73,8 @@ ${image ~/conky/monochrome/images/common/blue-panel-light-edge-bottom-right.png 
 ${image ~/conky/monochrome/images/common/blank-panel.png -p 0,116}\
 # ------- light panel bottom edge -------
 ${voffset 13}\
-${voffset 3}${offset 6}${color1}us ${color}${template1 cat\ /tmp/conky/system.cpu.us 50}${cat /tmp/conky/system.cpu.us}%${goto 55}${color1}sy${alignr 5}${color}${cat /tmp/conky/system.cpu.sy}%
-${voffset 3}${offset 6}${color1}id ${color}${cat /tmp/conky/system.cpu.id}%${goto 55}${color1}wa${alignr 5}${color}${template1 cat\ /tmp/conky/system.cpu.wa 20}${cat /tmp/conky/system.cpu.wa}%
+${voffset 3}${offset 6}${color1}us ${color}${template1 cat\ /tmp/conky/system.cpu.us 50}${cat /tmp/conky/system.cpu.us}%${goto 55}${color1}id${alignr 5}${color}${cat /tmp/conky/system.cpu.id}%
+${voffset 3}${offset 6}${color1}sy ${color}${cat /tmp/conky/system.cpu.sy}%${goto 55}${color1}wa${alignr 5}${color}${template1 cat\ /tmp/conky/system.cpu.wa 20}${cat /tmp/conky/system.cpu.wa}%
 ${voffset 3}${offset 6}${color1}load${alignr 5}${color}${loadavg 1} ${loadavg 2}
 # :::::::::::: memory
 # ------- light panel top edge    -------
@@ -92,9 +91,9 @@ ${voffset 3}${offset 6}${color1}used${alignr 5}${color}${template1 memperc 90}${
 ${voffset 3}${offset 6}${color1}free${alignr 5}${color}${memfree}
 ${voffset 3}${offset 6}${color1}buff${alignr 5}${color}${buffers}
 ${voffset 3}${offset 6}${color1}cache${alignr 5}${color}${cached}
-${voffset 3}${offset 6}${color1}swap${alignr 5}${color}${template1 swapperc 70}${swap}
 ${voffset 3}${offset 6}${color1}si${alignr 5}${color}${cat /tmp/conky/system.swap.read}
 ${voffset 3}${offset 6}${color1}so${alignr 5}${color}${cat /tmp/conky/system.swap.write}
+${voffset 3}${offset 6}${color1}swap${alignr 5}${color}${template1 swapperc 70}${swap}
 # :::::::::::: device read
 # ------- dark panel top edge    -------
 ${image ~/conky/monochrome/images/common/blue-panel-dark.png -p 0,247}\
@@ -106,7 +105,7 @@ ${image ~/conky/monochrome/images/common/blue-panel-dark-edge-bottom-right.png -
 ${image ~/conky/monochrome/images/common/blank-panel.png -p 0,334}\
 # ------- dark panel bottom edge -------
 ${voffset 13}\
-${voffset 3}${offset 6}${color1}enp0s${alignr 5}${color}${template1 to_bytes\ ${upspeed\ enp0s25} 2621440}${upspeed enp0s25}
+${voffset 3}${offset 6}${color1}enp0s${alignr 5}${color}${template1 to_bytes\ ${upspeed\ enp0s25} 2726297}${upspeed enp0s25}
 ${voffset 3}${offset 6}${color1}sda${alignr 5}${color}${diskio_read /dev/sda}
 ${voffset 3}${offset 6}${color1}sdb${alignr 5}${color}${diskio_read /dev/sdb}
 ${voffset 3}${offset 6}${color1}sdd${alignr 5}${color}${diskio_read /dev/sdd}
@@ -154,11 +153,11 @@ ${image ~/conky/monochrome/images/common/blue-panel-light-edge-bottom-right.png 
 ${image ~/conky/monochrome/images/common/blank-panel.png -p 0,677}\
 # ------- light panel bottom edge -------
 ${voffset 13}\
-${voffset 3}${offset 6}${color1}cpu${alignr}${color}${template1 hwmon\ atk0110\ temp\ 1 78}${hwmon atk0110 temp 1}°
-${voffset 3}${offset 6}${color1}core 1${alignr}${color}${template1 hwmon\ coretemp\ temp\ 2 85}${hwmon coretemp temp 2}°
-${voffset 3}${offset 6}${color1}core 2${alignr}${color}${template1 hwmon\ coretemp\ temp\ 3 85}${hwmon coretemp temp 3}°
-${voffset 3}${offset 6}${color1}core 3${alignr}${color}${template1 hwmon\ coretemp\ temp\ 4 85}${hwmon coretemp temp 4}°
-${voffset 3}${offset 6}${color1}core 4${alignr}${color}${template1 hwmon\ coretemp\ temp\ 5 85}${hwmon coretemp temp 5}°
+${voffset 3}${offset 6}${color1}cpu${alignr}${color}${template1 hwmon\ atk0110\ temp\ 1 80}${hwmon atk0110 temp 1}°
+${voffset 3}${offset 6}${color1}core 1${alignr}${color}${template1 hwmon\ coretemp\ temp\ 2 90}${hwmon coretemp temp 2}°
+${voffset 3}${offset 6}${color1}core 2${alignr}${color}${template1 hwmon\ coretemp\ temp\ 3 90}${hwmon coretemp temp 3}°
+${voffset 3}${offset 6}${color1}core 3${alignr}${color}${template1 hwmon\ coretemp\ temp\ 4 90}${hwmon coretemp temp 4}°
+${voffset 3}${offset 6}${color1}core 4${alignr}${color}${template1 hwmon\ coretemp\ temp\ 5 90}${hwmon coretemp temp 5}°
 ${voffset 3}${offset 6}${color1}radeon${alignr}${color}${template1 hwmon\ radeon\ temp\ 1 75}${hwmon radeon temp 1}°
 ${voffset 3}${offset 6}${color1}samsung S${alignr}${color}${template1 hwmon\ 0\ temp\ 1 42}${hwmon 0 temp 1}°
 ${voffset 3}${offset 6}${color1}seagate H${alignr}${color}${template1 hwmon\ 1\ temp\ 1 42}${hwmon 1 temp 1}°

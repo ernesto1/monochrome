@@ -192,8 +192,8 @@ ${image ~/conky/monochrome/images/glass/blue-divider.png -p 15,1127}\
 ${image ~/conky/monochrome/images/glass/blue-thermometer.png -p 19,1138}\
 # :::: cpu
 ${voffset 4}${offset 20}${color1}${font0}cpu${font}
-${voffset -13}${alignr 38}${color}${font2}${template8 atk0110 temp 1 78}°C${font}
-${voffset 2}${alignr 38}${color}${font}cores ${template8 coretemp temp 5 85}°C${voffset -2}
+${voffset -13}${alignr 38}${color}${font2}${template8 atk0110 temp 1 80}°C${font}
+${voffset 2}${alignr 38}${color}${font}cores ${template8 coretemp temp 5 90}°C${voffset -2}
 # :::: video card
 ${voffset 6}${offset 20}${color1}${font0}video card${font}
 ${voffset -13}${alignr 38}${color}${font2}${template8 radeon temp 1 75}°C${font}

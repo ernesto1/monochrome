@@ -20,7 +20,7 @@ green:
     primaryColor: green
     secondaryColor: burgundy
   colors:
-    text: a7aa71
+    text: d1d58e
     labels: white
     bar: 9fc14a
     cpuBar: 7c7a13
@@ -28,7 +28,6 @@ green:
     writeGraph: 4c6e3b 9fc14a
     readGraph: 5c111f c01e20
     windowColor: 2f2d1e
-    # secondary/alternate panel colors
     secondary:
-      text: a98162
+      text: d9ad8a
       labels: white

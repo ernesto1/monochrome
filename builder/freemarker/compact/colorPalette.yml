@@ -3,15 +3,14 @@ burgundy:
     primaryColor: burgundy
     secondaryColor: ochre
   colors:
-    text: a98162
+    text: d9ad8a
     labels: white
     bar: 94131f
     warning: c01e20
     writeGraph: 5c111f c01e20
     readGraph: a98162 d3b699
-    panelText: cf9c7b  # d19f77
     highlight: bf241f
     # secondary/alternate panel colors
     secondary:
       labels: white
-      text: 623f28
+      text: 3d180b

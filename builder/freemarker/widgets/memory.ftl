@@ -52,5 +52,5 @@ ${endif}\
 <#assign voffset = 20><#-- offset to account for border added by the background image -->
 ${voffset [=voffset]]}${color}${offset 29}${memgraph 78, 42 [=colors.writeGraph]}
 ${voffset 7}${goto 98}${color1}mem${goto 131}${color}${memperc}%${goto 163}${mem} / ${memmax}
-${voffset 4}${goto 98}${color1}swap${goto 131}${color}${swapperc}%${goto 163}${color2}${if_match ${swapperc} >= 70}${color3}${endif}${swapbar 3, 100}
+${voffset 4}${goto 98}${color1}swap${goto 131}${color}${swapperc}%${goto 163}${color2}${if_match ${swapperc} >= [=threshold.swap]}${color3}${endif}${swapbar 3, 100}
 ]];

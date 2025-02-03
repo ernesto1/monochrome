@@ -42,8 +42,7 @@ conky.config = {
   default_color = '[=colors.text]', -- regular text
   color1 = '[=colors.labels]',
   color2 = '[=colors.warning]',
-  color3 = '[=colors.secondary.labels]',        -- secondary panel labels
-  color4 = '[=colors.secondary.text]',        -- secondary panel text
+  color3 = '[=colors.secondary.text]',        -- secondary panel text
   
   -- ::: templates
   -- highlight value if resource usage is high
@@ -51,7 +50,7 @@ conky.config = {
   -- highlight value if resource usage is low or high
   template2 = [[${if_match ${\1} <= \2}${color2}${endif}${if_match ${\1} >= \3}${color2}${endif}]],
   -- use secondary color if music is playing
-  template3 = [[${color}${if_existing /tmp/conky/musicplayer.playbackStatus Playing}${color4}${endif}]]
+  template3 = [[${color}${if_existing /tmp/conky/musicplayer.playbackStatus Playing}${color3}${endif}]]
 };
 
 conky.text = [[
@@ -71,12 +70,12 @@ ${voffset 3}${offset [=border]}${color1}updates${alignr [=lborder]}${color}${if_
 <@panel.panel x=0 y=y height=height width=width/>
 <#assign y += height + gap>
 <#assign us = inputDir + "/system.cpu.us",
-         sy = inputDir + "/system.cpu.sy">
+         id = inputDir + "/system.cpu.id">
 ${voffset [=7 + gap]}\
-${voffset 3}${offset [=border]}${color1}us ${color}${template1 cat\ [=us] 50}${cat [=us]}%${goto 55}${color1}sy${alignr [=lborder]}${color}${cat [=sy]}%
-<#assign id = inputDir + "/system.cpu.id",
+${voffset 3}${offset [=border]}${color1}us ${color}${template1 cat\ [=us] 50}${cat [=us]}%${goto 55}${color1}id${alignr [=lborder]}${color}${cat [=id]}%
+<#assign sy = inputDir + "/system.cpu.sy",
          wa = inputDir + "/system.cpu.wa">
-${voffset 3}${offset [=border]}${color1}id ${color}${cat [=id]}%${goto 55}${color1}wa${alignr [=lborder]}${color}${template1 cat\ [=wa] 20}${cat [=wa]}%
+${voffset 3}${offset [=border]}${color1}sy ${color}${cat [=sy]}%${goto 55}${color1}wa${alignr [=lborder]}${color}${template1 cat\ [=wa] 20}${cat [=wa]}%
 ${voffset 3}${offset [=border]}${color1}load${alignr [=lborder]}${color}${loadavg 1} ${loadavg 2}
 # :::::::::::: memory
 <#assign height = 7*16+7>
@@ -87,16 +86,16 @@ ${voffset 3}${offset [=border]}${color1}used${alignr [=lborder]}${color}${templa
 ${voffset 3}${offset [=border]}${color1}free${alignr [=lborder]}${color}${memfree}
 ${voffset 3}${offset [=border]}${color1}buff${alignr [=lborder]}${color}${buffers}
 ${voffset 3}${offset [=border]}${color1}cache${alignr [=lborder]}${color}${cached}
-${voffset 3}${offset [=border]}${color1}swap${alignr [=lborder]}${color}${template1 swapperc [=threshold.swap]}${swap}
 ${voffset 3}${offset [=border]}${color1}si${alignr [=lborder]}${color}${cat /tmp/conky/system.swap.read}
 ${voffset 3}${offset [=border]}${color1}so${alignr [=lborder]}${color}${cat /tmp/conky/system.swap.write}
+${voffset 3}${offset [=border]}${color1}swap${alignr [=lborder]}${color}${template1 swapperc [=threshold.swap]}${swap}
 # :::::::::::: device read
 <#assign height = 5*16+7>
 <@panel.panel x=0 y=y height=height width=width isDark=true/>
 <#assign y += height + gap>
 ${voffset [=7 + gap]}\
 <#list networkDevices as device><#-- higlight if upload speed is greater than 2.5MiB -->
-${voffset 3}${offset [=border]}${color1}[=device.name[0..4]]${alignr [=lborder]}${color}${template1 to_bytes\ ${upspeed\ [=device.name]} 2621440}${upspeed [=device.name]}
+${voffset 3}${offset [=border]}${color1}[=device.name[0..4]]${alignr [=lborder]}${color}${template1 to_bytes\ ${upspeed\ [=device.name]} 2726297}${upspeed [=device.name]}
 </#list>
 <#list hardDisks as disk>
 ${voffset 3}${offset [=border]}${color1}[=disk.device]${alignr [=lborder]}${color}${diskio_read /dev/[=disk.device]}

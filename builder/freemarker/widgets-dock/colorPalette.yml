@@ -8,9 +8,9 @@ grape:
     bar: a36dec
     warning: c33855
     widgetText: 906c9c
-    widgetTextSmall: f2c7ff # small thin text requires darker shade to be readable
-    panelText: c596c7        # system bar default text
-    highlight: d7511c       # flag important package updates
+    widgetTextSmall: f2c7ff   # small thin text requires darker shade to be readable
+    panelText: edcaef         # system bar default text
+    highlight: d7511c         # flag important package updates
     readGraph: 6c1c1b d7511c
     writeGraph: 51295e a36dec
     secondary:

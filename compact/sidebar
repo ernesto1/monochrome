@@ -47,7 +47,7 @@ conky.config = {
   draw_outline = false,   -- black outline around text (not good if text is black)
   
   -- colors
-  default_color = 'a98162',  -- regular text
+  default_color = 'd9ad8a',  -- regular text
   color1 = 'white',         -- text labels
   color2 = '94131f',        -- bar
   color3 = 'c01e20',        -- bar critical

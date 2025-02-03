@@ -45,7 +45,7 @@ conky.config = {
 
 conky.text = [[
 # :::::::: cpu
-${voffset 45}${offset 33}${color2}${if_match ${lua get cpuTemp ${hwmon atk0110 temp 1}} > 78}${color3}${endif}${lua_bar 3,45 get cpuTemp}
+${voffset 45}${offset 33}${color2}${if_match ${lua get cpuTemp ${hwmon atk0110 temp 1}} > 80}${color3}${endif}${lua_bar 3,45 get cpuTemp}
 ${voffset -29}${goto 99}${color}${font1}${lua get cpuTemp}${font0}°C${font}${voffset 8}
 # :::::::: ati video card
 ${voffset 45}${offset 33}${color2}${if_match ${lua get videoTemp ${hwmon radeon temp 1}} > 75}${color3}${endif}${lua_bar 3,45 get videoTemp}

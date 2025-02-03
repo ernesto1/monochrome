@@ -28,10 +28,9 @@ grape:
     secondaryColor: pink
   colors:
     labels: white
-    text: c596c7
-    warning: c33855
+    text: edcaef
+    warning: f3af5a
     secondary:
-      labels: 59260b
       text: 3a405a
 
 green:
@@ -40,10 +39,9 @@ green:
     secondaryColor: burgundy
   colors:
     labels: white
-    text: a7aa71
+    text: d1d58e
     warning: red
     secondary:
-      labels: white
       text: d9ad8a
 
 hulk:
@@ -53,7 +51,7 @@ hulk:
   colors:
     labels: white
     text: c596c7
-    warning: c33855
+    warning: f3af5a
     secondary:
       labels: d6ff67
       text: a7aa71
@@ -91,5 +89,4 @@ yotsuba:
     text: 703d0a
     warning: 1a5c00
     secondary:
-      labels: white
       text: a7aa71

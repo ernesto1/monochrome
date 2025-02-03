@@ -52,7 +52,7 @@ conky.config = {
   <#assign offset = 14><#-- offset to account for border added by the background image -->
   template1 = [[${voffset 4}${goto [=offset+97]}${color}\2${alignr 4}${fs_type \1}
 ${voffset 4}${goto [=offset+97]}${color}${fs_used \1} /${alignr 4}${color}${fs_size \1}
-${voffset 1}${goto [=offset+97]}${color2}${if_match ${fs_used_perc \1} > 90}${color3}${endif}${fs_bar 3, 100 \1}]],
+${voffset 1}${goto [=offset+97]}${color2}${if_match ${fs_used_perc \1} > [=threshold.filesystem]}${color3}${endif}${fs_bar 3, 100 \1}]],
   
   -- hwmon entry: index/device type index threshold
   template2 = [[${if_match ${hwmon \1 \2 \3} > \4}${color3}${else}${color}${endif}${hwmon \1 \2 \3}]]

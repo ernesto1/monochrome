@@ -38,7 +38,7 @@ conky.config = {
   draw_shades = false,      -- black shadow on text (not good if text is black)
   draw_outline = false,     -- black outline around text (not good if text is black)
   -- colors
-  default_color = 'a98162', -- regular text
+  default_color = 'd9ad8a', -- regular text
   color1 = 'white',        -- text labels
 };
 
@@ -82,6 +82,10 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-b
 ${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-left.png 243 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-right.png 275 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 219 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 438 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 657 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 876 0}\
 # ------- 3 column(s) panel | bottom edges -------
 ${lua reset_state}${lua increment_offsets 287 0}\
 ${else}\
@@ -159,6 +163,11 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-b
 ${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-left.png 230 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-right.png 262 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 219 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 438 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 657 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 876 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 1095 0}\
 # ------- 4 column(s) panel | bottom edges -------
 ${else}\
 ${lua increment_offsets 0 326}\

@@ -77,7 +77,7 @@ ${voffset 3}${offset [=lso + iborder]}${color1}total ${color}${totalup \1}${alig
   template7 = [[${voffset 7}${offset [=lso + 45]}${color}${diskiograph_read /dev/\1 35,68 ${template2} \2}${offset 3}${diskiograph_write /dev/\1 35,68 ${template1} \3}
 ${voffset -2}${offset [=lso + iborder]}${color1}read  ${color}${diskio_read /dev/\1}${alignr [=rso + iborder]}${color}${diskio_write /dev/\1} ${color1}write]],
   -- filesystem: ${template8 filesystemName fileSystemPath}
-  template8 = [[${voffset 2}${offset [=lso + iborder]}${color}\1${alignr [=rso + iborder + 2]}${voffset 1}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3,97 \2}
+  template8 = [[${voffset 2}${offset [=lso + iborder]}${color}\1${alignr [=rso + iborder + 2]}${voffset 1}${color2}${if_match ${fs_used_perc \2} > [=threshold.filesystem]}${color3}${endif}${fs_bar 3,97 \2}
 ${voffset 2}${alignr [=rso + iborder]}${color}${fs_used \2} / ${fs_size \2}]]
 };
 
