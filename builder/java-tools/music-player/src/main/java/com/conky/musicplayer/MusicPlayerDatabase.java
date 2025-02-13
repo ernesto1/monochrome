@@ -24,7 +24,7 @@ public class MusicPlayerDatabase {
      */
     private MusicPlayer activePlayer;
     /**
-     * Map of available music players: <tt>unique dbus name (ex. :1.23)-> music player</tt>
+     * Map of available music players: <code>unique dbus name (ex. :1.23)-> music player</code>
      */
     private Map<String, MusicPlayer> musicPlayers;
     private MusicPlayerWriter writer;
@@ -41,7 +41,7 @@ public class MusicPlayerDatabase {
     /**
      * Determine if the given application is registered as a music player in this database
      * @param uniqueName application's unique dbus name (ex. :1.23)
-     * @return <tt>true</tt> if the application is registered, <tt>false</tt> otherwise
+     * @return <code>true</code> if the application is registered, <code>false</code> otherwise
      */
     public boolean contains(String uniqueName) {
         return musicPlayers.containsKey(uniqueName);
@@ -143,7 +143,7 @@ public class MusicPlayerDatabase {
 
     /**
      * Returns a set of the paths to the album art images in use by the players available in this database
-     * @return a <tt>Set</tt> containing the file path to the current album art in use
+     * @return a <code>Set</code> containing the file path to the current album art in use
      */
     public Set<String> getAlbumArtPaths() {
         Set<String> images = musicPlayers.values()

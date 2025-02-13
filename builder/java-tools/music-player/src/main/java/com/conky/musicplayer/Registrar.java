@@ -12,14 +12,11 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * <h2>Overview</h2>
- * Allows clients to register and unregister music players for this application to track.<br>
- * For each registered player, the application will subscribe to messages from it through the dbus.<br>
+ * Allows clients to register and unregister music players to subscribe to.<br>
+ * For each registered player, the application will subscribe to dbus messages from it.<br>
  * <br>
- * <h2>Supported players</h2>
- * Music players implement the MPRIS specification differently.  Therefore, only those players that
- * have been tested for will be allowed by this application.  The registrar performs this
- * {@link #supportedPlayers gate keeping role}.
+ * Since music players implement the MPRIS specification differently, only those players that
+ * have been tested will be supported by this application.  The registrar performs this gate keeping role.
  *
  * @see <a href="https://specifications.freedesktop.org/mpris-spec/latest/">Media Player Remote Interfacing Specification (MPRIS)</a>
  */
@@ -42,7 +39,7 @@ public class Registrar {
      */
     private List<String> supportedPlayers;
     /**
-     * Map of <tt>bus unique name</tt> to <tt>signal handler closeable</tt>.  Allows the registrar to unregister
+     * Map of <code>bus unique name</code> to <code>signal handler closeable</code>.  Allows the registrar to unregister
      * signal handlers from the dbus.
      */
     private final Map<String, AutoCloseable> handlerMap;
@@ -101,7 +98,7 @@ public class Registrar {
      * Determines if the given player is a compatible/tested music player.<br>
      * This would allow a client to filter out other media players on the dbus like a firefox youtube window for example.
      * @param playerName the player's name
-     * @return <tt>true</tt> if the player is supported
+     * @return <code>true</code> if the player is supported
      */
     public boolean isSupported(String playerName) {
         return supportedPlayers.contains(playerName.toLowerCase());

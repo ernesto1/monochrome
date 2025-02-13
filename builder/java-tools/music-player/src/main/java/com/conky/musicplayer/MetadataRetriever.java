@@ -38,7 +38,7 @@ public class MetadataRetriever {
      * </ul>
      *
      * @param player music player to query
-     * @return the player's state as a <tt>Music Player</tt> object
+     * @return the player's state as a <code>Music Player</code> object
      */
     public MusicPlayer getPlayerState(MusicPlayer player) {
         Optional<String> playback = inquirer.getApplicationProperty(player.getDBusUniqueName(),
@@ -56,8 +56,8 @@ public class MetadataRetriever {
     }
 
     /**
-     * Extracts song track information <i>if it exists</i> from the metadata property of the <tt>MediaPlayer2.Player</tt> interface.<br>
-     * Song details are defined using <tt>xesam</tt> ontology.
+     * Extracts song track information <i>if it exists</i> from the metadata property of the <code>MediaPlayer2.Player</code> interface.<br>
+     * Song details are defined using <code>xesam</code> ontology.
      *
      * @param metadata the signal's metadata property as a map of key/value pairs
      * @see <a href="https://specifications.freedesktop.org/mpris-spec/latest/Track_List_Interface.html#Mapping:Metadata_Map">Metadata map documentation</a>

@@ -63,7 +63,7 @@ public class TrackInfo {
     /**
      * Determines if the string actually has a value, ie. not empty or null
      * @param s string to analyze
-     * @return <tt>true</tt> if the string has a value
+     * @return <code>true</code> if the string has a value
      */
     private boolean isNotEmpty(String s) {
         return s != null && !s.isEmpty();
@@ -73,7 +73,7 @@ public class TrackInfo {
      * Determines if the track metadata string contains an actual value and not a filler value
      * for missing details like <i>Unknown</i>
      * @param s string to analyze
-     * @return <tt>true</tt> if the metadata is not some verbiage of 'unknown', <tt>false</tt> otherwise
+     * @return <code>true</code> if the metadata is not some verbiage of 'unknown', <code>false</code> otherwise
      */
     private boolean isNotUnknown(String s) {
         return !s.toLowerCase().contains("unknown");

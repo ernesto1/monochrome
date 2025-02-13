@@ -17,12 +17,11 @@ import java.util.Map;
 import java.util.concurrent.*;
 
 /**
- * Support application for the conky music player.<br>
+ * Support application for the music player conky.<br>
  * Once launched, the application will run continuously listening for any music player signals in the dbus.<br>
  * <br>
  * It uses the Media Player Remote Interfacing Specification (MPRIS) in order to detect song playback changes
  * and retrieve said song metadata for conky to display.<br>
- * <br>
  * Song information is stored in separate {@link MusicPlayerWriter#FILE_PREFIX prefixed} files
  * in the {@link #OUTPUT_DIR output directory}.
  * @see <a href="https://github.com/hypfvieh/dbus-java">Java DBus library</a>
@@ -121,9 +120,9 @@ public class NowPlaying {
 
     /**
      * Replaces the tilde (if it exists) in the directory path with the user's home directory,
-     * ex. <tt>~/conky</tt> becomes <tt>/home/ernesto/conky</tt>
+     * ex. <code>~/conky</code> becomes <code>/home/ernesto/conky</code>
      * @param albumArtDir directory path
-     * @return the translated directory path as a <tt>String</tt>
+     * @return the translated directory path as a <code>String</code>
      */
     private static String replaceTilde(String albumArtDir) {
         String homeDir = System.getProperty("user.home");

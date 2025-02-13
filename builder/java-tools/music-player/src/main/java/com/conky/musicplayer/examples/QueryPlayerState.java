@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 
 /**
- * Sample code to connect to the dbus and retrieve information from the <b>Rhythmbox</b> player:
+ * Connects to the dbus and retrieves the following details from the <b>Rhythmbox</b> player:
  * <ul>
  *     <li>media player name</li>
  *     <li>playback status</li>

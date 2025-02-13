@@ -1,4 +1,6 @@
 #!/bin/bash
+# builds and deployes the supporting java applications to the monochrome/java folder
+
 set -e
 shopt -s extglob
 

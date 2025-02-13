@@ -1,0 +1,13 @@
+<project xmlns="http://maven.apache.org/DECORATION/1.6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/DECORATION/1.6.0 http://maven.apache.org/xsd/decoration-1.6.0.xsd" name="Project with Documentation">
+    <bannerLeft>
+        <name>Left Banner</name>
+        <src>images/logo.png</src>
+    </bannerLeft>
+    <body>
+        <menu name="Quickstart">
+            <item name="Overview" href="index.html"/>
+            <item name="Configuration" href="configuration.html"/>
+        </menu>
+        <menu ref="reports"/>
+    </body>
+</project>

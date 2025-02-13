@@ -7,7 +7,8 @@ import org.freedesktop.dbus.interfaces.Properties;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Sample app to register for the <tt>properties changed</tt> signal of a specific application
+ * Registers for the <code>properties changed</code> signal of a specific application
+ * @see ListenToDBus
  */
 public class ListenToSingleApp {
     public static void main(String[] args) {

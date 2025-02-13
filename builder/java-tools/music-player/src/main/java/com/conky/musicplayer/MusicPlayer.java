@@ -127,7 +127,7 @@ public class MusicPlayer {
      *     <li>track id</li>
      * </ul>
      * @param otherPlayer the other player to compare this player to
-     * @return <tt>true</tt> if the state is the same, <tt>false</tt> otherwise
+     * @return <code>true</code> if the state is the same, <code>false</code> otherwise
      */
     public boolean isSameState(MusicPlayer otherPlayer) {
         if (otherPlayer == null) return false;

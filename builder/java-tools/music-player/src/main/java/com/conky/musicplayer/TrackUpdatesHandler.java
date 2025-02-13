@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
- * Handler for analyzing media player property change signals, ie. <tt>org.freedesktop.DBus.Properties.PropertiesChanged</tt>.<br>
+ * Handler for analyzing media player property change signals, ie. <code>org.freedesktop.DBus.Properties.PropertiesChanged</code>.<br>
  * Updates related to a music player's state (ex. song change, pausing, playing music) will be saved on the {@link MusicPlayerDatabase database}.
  * @see <a href="https://specifications.freedesktop.org/mpris-spec/latest/Player_Interface.html">MPRIS Player Inteface</a>
  */

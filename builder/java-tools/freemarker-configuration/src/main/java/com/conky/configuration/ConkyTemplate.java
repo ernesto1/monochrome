@@ -107,8 +107,8 @@ public class ConkyTemplate {
 
     /**
      * Parse the command line arguments into an arguments namespace for the application to query
-     * @param args command line arguments as a <tt>String</tt> array
-     * @return a <tt>Namespace</tt> object
+     * @param args command line arguments as a <code>String</code> array
+     * @return a <code>Namespace</code> object
      */
     private static Namespace processArguments(String[] args) {
         StringBuilder sb = new StringBuilder();

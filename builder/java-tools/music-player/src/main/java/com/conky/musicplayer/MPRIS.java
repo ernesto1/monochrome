@@ -1,5 +1,8 @@
 package com.conky.musicplayer;
 
+/**
+ * Set of constants for the different MPRIS related objects
+ */
 public class MPRIS {
     public static class Objects {
         public static final String MEDIAPLAYER2 = "/org/mpris/MediaPlayer2";

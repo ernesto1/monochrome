@@ -15,6 +15,9 @@ import java.util.concurrent.ExecutorService;
 
 public class MusicPlayerWriter {
     private static final Logger logger = LoggerFactory.getLogger(MusicPlayerWriter.class);
+    /**
+     * File prefix to use for the output files: {@value}
+     */
     public static final String FILE_PREFIX = "musicplayer";
     public static final String ALBUM_ART = FILE_PREFIX + ".albumArt";
     /**
@@ -26,13 +29,13 @@ public class MusicPlayerWriter {
     /**
      * Directory to write all music player track info files to
      */
-    private final String outputDirectory;
-    private final String albumArtDirectory;
+    private final Path outputDir;
+    private final Path albumArtDir;
     private final ExecutorService webArtExecutor;
 
-    public MusicPlayerWriter(String outputDirectory, String albumArtDir, ExecutorService webArtExecutor) {
-        this.outputDirectory = outputDirectory;
-        this.albumArtDirectory = albumArtDir;
+    public MusicPlayerWriter(String outputDirectory, String albumArtDirectory, ExecutorService webArtExecutor) {
+        outputDir = Path.of(outputDirectory);
+        albumArtDir = Path.of(albumArtDirectory);
         this.webArtExecutor = webArtExecutor;
     }
 
@@ -41,9 +44,7 @@ public class MusicPlayerWriter {
      * @throws IOException if a failure occurs while creating the directories
      */
     public void init() throws IOException {
-        Path outputDir = Path.of(outputDirectory);
         Files.createDirectories(outputDir);
-        Path albumArtDir = Path.of(albumArtDirectory);
         Files.createDirectories(albumArtDir);
     }
 
@@ -68,7 +69,7 @@ public class MusicPlayerWriter {
                     // ex. https://i.scdn.co/image/ab67616d0000b273bbf0146981704a073405b6c2
                     String resourceLocation = coverArtURL.getFile();
                     String id = resourceLocation.substring(resourceLocation.lastIndexOf('/') + 1);    // get the resource name
-                    Path imagePath = Path.of(albumArtDirectory, ALBUM_ART + "." + id);
+                    Path imagePath = albumArtDir.resolve(ALBUM_ART + "." + id);
                     webArtExecutor.submit(new ImageDownloadTask(coverArtURL, imagePath));
                     albumArtFilePath = imagePath.toString();
                 }
@@ -78,9 +79,9 @@ public class MusicPlayerWriter {
                 // if no album art is available, delete the conky album art files
                 try {
                     logger.debug("track has no album art, deleting cover art related files");
-                    Path file = Path.of(outputDirectory, FILE_PREFIX + "." + ALBUM_ART_PATH_FILENAME);
+                    Path file = outputDir.resolve(FILE_PREFIX + "." + ALBUM_ART_PATH_FILENAME);
                     Files.deleteIfExists(file);
-                    file = Paths.get(albumArtDirectory, ALBUM_ART_SYMLINK_FILENAME);
+                    file = albumArtDir.resolve(ALBUM_ART_SYMLINK_FILENAME);
                     Files.deleteIfExists(file);
                 } catch (IOException e) {
                     logger.error("unable to delete the album art file", e);
@@ -111,7 +112,7 @@ public class MusicPlayerWriter {
      */
     private void createSymbolicLink(String albumArtFilePath) {
         logger.debug("updating image symbolic link to {}", albumArtFilePath);
-        Path slCoverArt = Paths.get(albumArtDirectory, ALBUM_ART_SYMLINK_FILENAME);
+        Path slCoverArt = albumArtDir.resolve(ALBUM_ART_SYMLINK_FILENAME);
 
         try {
             Files.deleteIfExists(slCoverArt);
@@ -128,14 +129,12 @@ public class MusicPlayerWriter {
             return;
         }
 
-        try {
-            Path filePath = Path.of(outputDirectory, FILE_PREFIX + "." + filename);
-            BufferedWriter writer = Files.newBufferedWriter(filePath,
-                    StandardOpenOption.CREATE,
-                    StandardOpenOption.WRITE,
-                    StandardOpenOption.TRUNCATE_EXISTING);
+        Path filePath = outputDir.resolve(FILE_PREFIX + "." + filename);
+        try (BufferedWriter writer = Files.newBufferedWriter(filePath,
+                                                             StandardOpenOption.CREATE,
+                                                             StandardOpenOption.WRITE,
+                                                             StandardOpenOption.TRUNCATE_EXISTING)) {
             writer.write(data);
-            writer.close();
         } catch (IOException e) {
             logger.error("unable to write to the '{}' file", filename, e);
         }

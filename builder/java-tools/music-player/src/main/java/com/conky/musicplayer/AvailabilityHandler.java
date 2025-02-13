@@ -41,7 +41,7 @@ public class AvailabilityHandler extends AbstractSignalHandlerBase<DBus.NameOwne
 
     /**
      * Detects when a music player is launched or closed by the user by listening
-     * to the <tt>dbus name owner changed</tt> signal.<br>
+     * to the <code>dbus name owner changed</code> signal.<br>
      * <br>
      * The signal contains three attributes:
      * <pre>
@@ -87,7 +87,7 @@ public class AvailabilityHandler extends AbstractSignalHandlerBase<DBus.NameOwne
 
     /**
      * Scans the list of available application <i>well known names</i> in the dbus for entries
-     * belonging to the <tt>org.mpris.MediaPlayer2</tt> family.  Any {@link Registrar#isSupported(String) supported}
+     * belonging to the <code>org.mpris.MediaPlayer2</code> family.  Any {@link Registrar#isSupported(String) supported}
      * media players are registered in the database.
      */
     public void registerAvailablePlayers() {

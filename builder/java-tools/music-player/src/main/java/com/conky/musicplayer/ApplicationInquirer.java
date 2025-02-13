@@ -28,7 +28,7 @@ public class ApplicationInquirer {
      * @param object dbus object path
      * @param dbusInterface interface within the dbus object
      * @param property name of the property to query
-     * @return the property as a <tt>String</tt>
+     * @return the property as a <code>String</code>
      */
     public <T> Optional<T> getApplicationProperty(String uniqueName, String object, String dbusInterface, String property) {
         T value = null;

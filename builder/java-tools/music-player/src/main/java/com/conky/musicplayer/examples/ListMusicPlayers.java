@@ -11,8 +11,7 @@ import java.util.Arrays;
 
 /**
  * Connect to the dbus and list the current available music players
- */
-public class ListMusicPlayers {
+ */public class ListMusicPlayers {
     private static Logger logger = LoggerFactory.getLogger(ListMusicPlayers.class);
 
     public static void main(String[] args) {

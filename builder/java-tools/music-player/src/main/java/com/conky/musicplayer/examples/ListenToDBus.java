@@ -13,8 +13,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Sample code to listen to the dbus for any signals related to media player activity.<br>
- * <br>
+ * Listens to the dbus for any signals related to media player activity.<br>
  * The program runs indefinitely, use a kill signal to terminate it.
  */
 public class ListenToDBus {
@@ -48,6 +47,10 @@ public class ListenToDBus {
         Runtime.getRuntime().addShutdownHook(closeDbusConnectionHook);
     }
 
+    /**
+     * Handler for <code>PropertiesChanged</code> signals.  Prints any signals/messages related
+     * to media player applications.
+     */
     public static class PropertiesChangedHandler extends AbstractPropertiesChangedHandler {
         @Override
         public void handle(Properties.PropertiesChanged signal) {
