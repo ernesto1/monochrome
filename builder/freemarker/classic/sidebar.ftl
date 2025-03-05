@@ -92,13 +92,10 @@ ${voffset 3}${offset [=border]}${color1}[=partition.name]${alignr [=lborder]}${c
 </#list>
 # ::::::::::::::::: media
 ${if_existing /tmp/conky/musicplayer.albumArtPath}\
-${voffset 6}${offset [=border]}${color3}${cat /tmp/conky/musicplayer.name}
-${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
-<#assign y = 360 + border><#-- position of the album art -->
-${image ~/conky/monochrome/images/classic/[=image.highlight]-highlight.png -p [=3],[=y] -s 3x[=width-border*2]}\
-${endif}\
+${voffset 6}${offset [=border]}${color3}${cat /tmp/conky/musicplayer.name}${if_existing /tmp/conky/musicplayer.playbackStatus Playing}${alignr}${color}»${endif}
+<#assign y = 362 + border><#-- position of the album art -->
 ${image ~/conky/monochrome/java/albumArt/nowPlaying -p [=border],[=y] -s [=width-border*2]x[=width-border*2] -n}\
-${voffset 85}\
+${voffset 89}\
 ${voffset 6}${offset [=border]}${color}${scroll wait 14 3 1 ${cat /tmp/conky/musicplayer.title}}
 ${voffset 3}${offset [=border]}${color}${scroll wait 14 3 1 ${cat /tmp/conky/musicplayer.artist}}
 ${endif}\
@@ -118,15 +115,15 @@ ${endif}\
 ${voffset 6}${offset [=border]}${color3}system
 ${voffset 3}${offset [=border]}${color1}uptime${alignr [=lborder]}${color}${uptime_short}
 <#if system == "laptop">
-${voffset 3}${offset [=border]}${color1}${if_match "${acpiacadapter}"=="on-line"}power${else}battery${endif}${alignr [=lborder]}${color}${if_match ${battery_percent BAT0} <= [=threshold.bat]}${color2}${endif}${battery_percent BAT0}%
+${voffset 3}${offset [=border]}${color1}${if_match "${acpiacadapter}"=="on-line"}power${else}battery${endif}${alignr [=lborder]}${color}${template2 battery_percent\ BAT0 [=threshold.bat]}${battery_percent BAT0}%
 </#if>
 <#assign packagesFile = inputDir + "/dnf.packages.formatted">
 ${voffset 3}${offset [=border]}${color1}updates${alignr [=lborder]}${color}${if_existing [=packagesFile]}${lines [=packagesFile]}${else}none${endif}
 # ::::::::::::::::: temperature
 ${voffset 6}${offset [=border]}${color3}temperature
 <#if system == "laptop">
-${voffset 3}${offset [=border]}${color1}core 1${alignr}${color}${hwmon coretemp temp 2}°
-${voffset 3}${offset [=border]}${color1}core 2${alignr}${color}${hwmon coretemp temp 3}°
+${voffset 3}${offset [=border]}${color1}core 1${alignr}${color}${template1 hwmon\ coretemp\ temp\ 2 [=threshold.tempCPUCore]}${hwmon coretemp temp 2}°
+${voffset 3}${offset [=border]}${color1}core 2${alignr}${color}${template1 hwmon\ coretemp\ temp\ 3 [=threshold.tempCPUCore]}${hwmon coretemp temp 3}°
 </#if>
 ${voffset [=-15+border]}\
 ]];
