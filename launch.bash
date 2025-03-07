@@ -61,7 +61,7 @@ function usage() {
 	END
 }
 
-# prints the line with color
+# prints the given line with a green color
 # see https://opensource.com/article/19/9/linux-terminal-colors for more colors
 function printHeader {
   printf "${GREEN}$1${NOCOLOR}\n"
@@ -70,9 +70,9 @@ function printHeader {
 # kills any currently running monochrome conkys and support jobs
 function killSession {
   printHeader '\n::: killing the currently running processes of this conky suite\n'
-  pgrep -f 'conky/monochrome' -l -a | sed 's/ /:/' | column -s ':' -t -N PID,process
+  pgrep -f 'conky/monochrome/[^l]' -a | sed 's/ /:/' | column -s ':' -t -N PID,process
   printHeader "\nclosing remarks"
-  pkill -f 'conky/monochrome'
+  pkill -f 'conky/monochrome/[^l]'
   sleep 1s  # wait a bit in order to capture the STDOUT of the 'dnfPackageLookup.bash' script
             # it tends to print right below the 'launching conky' banner below  
 }
