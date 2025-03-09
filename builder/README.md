@@ -1,15 +1,10 @@
 # Build assets
-This directory contains the source code to build the different conky themes and the supporting applications.
+This directory contains the source code to build the supporting java applications for this project:
 
-### Conky configuration templates
-Conkys are built using the [java freemarker engine](https://freemarker.apache.org/).  This allows me to:
+- Conky configurations generator using freemarker templates
+- D-Bus music player listener
 
-- [Dynamically build conky sidebars](dynamicSidebar.md) based on the target device: desktop or laptop
-- Change the conky color scheme
-- See `java-tools/freemarker-configuration` and the `freemarker` directory
-
-### Java applications
-Supporting java applications will be under the `java-tools` maven project.
+Java applications are built using maven.  The maven project is under the `java-tools` directory.
 
 ### Bug tracking
 Any conky issues I've had to compensate for are tracking in this [log](bugLog.md).  
