@@ -146,6 +146,13 @@
     </plugins>
   </build>
 
+  <distributionManagement>
+    <site>
+        <id>local</id>
+        <url>file:///home/${user.name}/conky/monochrome/builder/java-tools/target/docs</url>
+    </site>
+  </distributionManagement>
+
   <!-- reports to run for maven site -->
   <reporting>
     <plugins>
@@ -154,23 +161,14 @@
         <artifactId>maven-project-info-reports-plugin</artifactId>
         <reportSets>  <!-- generate only a subset of the reports, remove this section to produce all reports -->
           <reportSet>
+            <inherited>false</inherited>
             <reports> <!-- the order given here drives how the reports are listed -->
               <report>index</report>
-              <report>summary</report>
-              <report>dependencies</report>
               <report>project-team</report>
               <report>issue-tracking</report>
             </reports>
           </reportSet>
         </reportSets>
-      </plugin>
-      <plugin>
-        <!-- create javadoc api reports -->
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <configuration> <!-- suppress javadoc warnings, these are useful if YOU WANT to see ALL the items that are missing documentation -->
-          <doclint>all,-missing</doclint>
-        </configuration>
       </plugin>
     </plugins>
   </reporting>

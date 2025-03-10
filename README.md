@@ -54,6 +54,7 @@ $ mkdir ~/conky
 $ cd ~/conky
 $ git clone https://github.com/ernesto1/monochrome.git
 ```
+This will place all the code under the `~/conky/monochrome` directory.
 
 Alternatively if you only want the conky configurations and their images, you can download the latest `monochrome.zip` file from the [releases page](https://github.com/ernesto1/monochrome/releases).  This way you don't get any of the build assets.
 
@@ -72,10 +73,12 @@ dnf install maven
 
 # ::: building the music app from source
 cd ~/conky/monochrome/builder/java-tools
-mvn clean package
+mvn clean package site
+mvn site:deploy
 mkdir -p ~/conky/monochrome/java
 rm -rf ~/conky/monochrome/java/*
-cp -r */target/{lib,*.jar,*.yaml,*.xml} ~/conky/monochrome/java
+cp -r */target/{lib,*.jar,*.properties,*.xml} ~/conky/monochrome/java
+cp -r target/docs ~/conky/monochrome/java
 ```
 If you don't want to build this manually, you can download the latest `monochrome.zip` file from the [releases page](https://github.com/ernesto1/monochrome/releases).
 

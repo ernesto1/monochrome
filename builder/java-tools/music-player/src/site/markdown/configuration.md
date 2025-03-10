@@ -1,5 +1,5 @@
 ## Changing the default properties
-Available settings to configure can be seen in the `config.yaml` file.  
+Available settings to configure can be seen in the `application.properties` file.  
 The file can be found under `~/conky/monochrome/java`.
 
 ### Supported Players

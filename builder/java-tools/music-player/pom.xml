@@ -24,8 +24,9 @@
       <version>4.3.0</version>
     </dependency>
     <dependency>
-      <groupId>org.yaml</groupId>
-      <artifactId>snakeyaml</artifactId>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>5.3.22</version>
     </dependency>
   </dependencies>
 
@@ -71,4 +72,30 @@
       </plugin>
     </plugins>
   </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <!-- project information section -->
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <reportSets>  <!-- generate only a subset of the reports, remove this section to produce all reports -->
+          <reportSet>
+            <reports> <!-- the order given here drives how the reports are listed -->
+              <report>index</report>
+              <report>summary</report>
+              <report>dependencies</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+      <plugin>
+        <!-- create javadoc api reports -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration> <!-- suppress javadoc warnings, these are useful if YOU WANT to see ALL the items that are missing documentation -->
+          <doclint>all,-missing</doclint>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
 </project>

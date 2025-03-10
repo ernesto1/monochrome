@@ -8,14 +8,16 @@ shopt -s extglob
 ORANGE='\033[0;33m'; NOCOLOR='\033[0m'
 printf "${ORANGE}:::::: building java applications${NOCOLOR}\n"
 pushd ~/conky/monochrome/builder/java-tools
-mvn clean package
+mvn clean package site
+mvn site:deploy
 popd
 printf "\n${ORANGE}:::::: deploying java apps${NOCOLOR}\n"
 mkdir -p ~/conky/monochrome/java
 echo 'currently deployed jars:'
 ls ~/conky/monochrome/java
 rm -rf ~/conky/monochrome/java/!(albumArt)
-cp -r ~/conky/monochrome/builder/java-tools/*/target/{lib,*.jar,*.yaml,*.xml} ~/conky/monochrome/java
+cp -r ~/conky/monochrome/builder/java-tools/*/target/{lib,*.jar,*.properties,*.xml} ~/conky/monochrome/java
+cp -r ~/conky/monochrome/builder/java-tools/target/docs ~/conky/monochrome/java
 echo -e '\nnewly deployed jars:'
 ls ~/conky/monochrome/java
 printf "\n${ORANGE}:::::: launching latest version of the music player app${NOCOLOR}\n"

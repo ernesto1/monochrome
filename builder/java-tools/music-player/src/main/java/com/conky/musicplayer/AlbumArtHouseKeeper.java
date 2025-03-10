@@ -16,40 +16,43 @@ import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 import static java.nio.file.StandardWatchEventKinds.OVERFLOW;
 
 /**
- * Periodically deletes any downloaded album art that has not been loaded
- * by the media player conky in a given amount of time.
+ * Runnable task that monitors the album art directory in order to keep the album art cache size below
+ * the configured limit
  */
 public class AlbumArtHouseKeeper implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(AlbumArtHouseKeeper.class);
-    private String directory;
+    private Path albumArtDir;
     private int sizeLimit;
     private MusicPlayerDatabase db;
     private Pattern pattern;
 
     /**
-     * Creates a new instance of this album housekeeper thread
+     * Creates a new runnable instance of the album housekeeper
      *
-     * @param directory      directory where album art is stored
-     * @param albumCacheSize
+     * @param albumArtDir    directory where album art is stored
+     * @param albumCacheSize maximum size of the album art cache in kb
      * @param playerDatabase database of available music players
      */
-    public AlbumArtHouseKeeper(String directory, int albumCacheSize, MusicPlayerDatabase playerDatabase) {
-        this.directory = directory;
+    public AlbumArtHouseKeeper(String albumArtDir, int albumCacheSize, MusicPlayerDatabase playerDatabase) {
+        this.albumArtDir = Path.of(albumArtDir);
         sizeLimit = albumCacheSize;
         this.db = playerDatabase;
         pattern = Pattern.compile(FILE_PREFIX + "\\.albumArt"+ "\\.(?:(?!temp))");
     }
 
+    /**
+     * For each new image file downloaded to disk, the cache size is checked.  If the max cache size is breached,
+     * image files will be deleted until the space usage is below the limit.
+     */
     @Override
     public void run() {
-        logger.debug("watching the image cache directory: {}", directory);
+        logger.debug("watching the image cache directory: {}", albumArtDir);
         FileSystem fs = FileSystems.getDefault();
         WatchService ws;
-        Path dir = fs.getPath(directory);
 
         try {
             ws = fs.newWatchService();
-            dir.register(ws, ENTRY_CREATE);
+            albumArtDir.register(ws, ENTRY_CREATE);
         } catch (IOException e) {
             logger.error("unable to start the directory watch service for the album art cache", e);
             return;
@@ -84,12 +87,12 @@ public class AlbumArtHouseKeeper implements Runnable {
                 logger.debug("{}: {}", event.kind(), filename);
 
                 try {
-                    long size = getDirectorySize(dir);
+                    long size = getDirectorySize(albumArtDir);
                     logger.info("image cache size: {}kb | max allowed size: {}kb", String.format("%,d", size), String.format("%,d", sizeLimit));
 
                     if (size > sizeLimit) {
                         logger.info("album art cache maximum size of {}kb has been breached, deleting some images to free up space", String.format("%,d", sizeLimit));
-                        deleteImages(dir, size - sizeLimit);
+                        deleteImages(albumArtDir, size - sizeLimit);
                     }
                 } catch (IOException e) {
                     logger.error("unable to perform cache size enforcement, cache size may be greater than the user configured limit", e);

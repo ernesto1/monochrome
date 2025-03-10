@@ -48,4 +48,23 @@
       </plugin>
     </plugins>
   </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <!-- project information section -->
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <reportSets>  <!-- generate only a subset of the reports, remove this section to produce all reports -->
+          <reportSet>
+            <reports> <!-- the order given here drives how the reports are listed -->
+              <report>index</report>
+              <report>summary</report>
+              <report>dependencies</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+    </plugins>
+  </reporting>
+
 </project>

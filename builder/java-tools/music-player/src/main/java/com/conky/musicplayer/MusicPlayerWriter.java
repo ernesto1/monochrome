@@ -9,7 +9,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.concurrent.ExecutorService;
 
@@ -37,15 +36,6 @@ public class MusicPlayerWriter {
         outputDir = Path.of(outputDirectory);
         albumArtDir = Path.of(albumArtDirectory);
         this.webArtExecutor = webArtExecutor;
-    }
-
-    /**
-     * Creates the output directories if they do not exist
-     * @throws IOException if a failure occurs while creating the directories
-     */
-    public void init() throws IOException {
-        Files.createDirectories(outputDir);
-        Files.createDirectories(albumArtDir);
     }
 
     /**

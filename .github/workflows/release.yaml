@@ -20,7 +20,7 @@ jobs:
           mvn clean package
           mkdir -p ${GITHUB_WORKSPACE}/java
           echo ":::::::: deploy apps to the project's java folder"
-          cp -vrn */target/{lib,*.jar,*.yaml,*.xml} ${GITHUB_WORKSPACE}/java
+          cp -vrn */target/{lib,*.jar,*.properties,*.xml} ${GITHUB_WORKSPACE}/java
       - name: Create archive
         run: |
           shopt -s extglob

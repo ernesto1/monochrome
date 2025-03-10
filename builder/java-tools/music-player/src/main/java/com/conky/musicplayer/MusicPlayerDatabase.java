@@ -2,6 +2,7 @@ package com.conky.musicplayer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
  * For each update performed on this music player catalog, the database will determine <i>what music player should be
  * considered {@link #activePlayer in focus}</i>, ie. what music player details should conky be displaying.
  */
-public class MusicPlayerDatabase {
+public class MusicPlayerDatabase implements InitializingBean {
     private static final Logger logger = LoggerFactory.getLogger(MusicPlayerDatabase.class);
 
     /**
@@ -34,7 +35,8 @@ public class MusicPlayerDatabase {
         musicPlayers = new HashMap<>(5);
     }
 
-    public void init() {
+    @Override
+    public void afterPropertiesSet() throws Exception {
         determineActivePlayer();
     }
 
