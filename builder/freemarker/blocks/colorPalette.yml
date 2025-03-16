@@ -7,7 +7,6 @@ baltimore:
     text: white
     warning: f29559
     secondary:
-      labels: d0ea4b
       text: f6fdd3
 
 nelson:
@@ -19,7 +18,6 @@ nelson:
     text: d9ad8a
     warning: e32828
     secondary:
-      labels: 621a00
       text: 3d180b
 
 grape:
@@ -53,7 +51,6 @@ hulk:
     text: c596c7
     warning: f3af5a
     secondary:
-      labels: d6ff67
       text: a7aa71
 
 ticonderoga:
@@ -65,20 +62,18 @@ ticonderoga:
     text: f3e1de
     warning: f3af5a
     secondary:
-      labels: a93323
       text: 703d0a
 
 yellow:
   image:
     primaryColor: yellow
-    secondaryColor: blue
+    secondaryColor: burgundy
   colors:
-    labels: a93323
+    labels: 4d6129
     text: 703d0a
-    warning: blue
+    warning: 3d4968
     secondary:
-      labels: cfebf6
-      text: white
+      text: d9ad8a
 
 yotsuba:
   image:
