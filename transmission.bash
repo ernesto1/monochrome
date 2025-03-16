@@ -134,7 +134,7 @@ while [ true ]; do
   
   # ::: connected peers
   # Address          Flags     Done  Down    Up      Client
-  # 72.178.162.10    ?E        0.0      0.0     0.0  µTorrent 1.8.3
+  # 72.178.162.10    ?E        0.0      0.0   450.0  µTorrent 1.8.3
   # 95.168.162.205   DE        100.0 5349.0     0.0  libTorrent (Rakshasa) 0.13.8  # spacing between done/down required
   # 116.121.146.69   UKEI      42.8     0.0     0.0  qBittorrent 4.4.2
   #
@@ -142,7 +142,7 @@ while [ true ]; do
   transmission-remote -t active -pi \
     | grep -e '^[0-9]' \
     | sed -r -e 's/.0 ([0-9])/.0  \1/' -e 's/  +/:/g' -e 's/µ/u/' \
-    | grep -vF ':0.0:0.0:' \
+    | grep -v '[0-9]:0.0:0.0:' \
     | sort -t . -k 1n -k 2n -k 3n -k 4n > ${peers}.$$
   
   case $format in
