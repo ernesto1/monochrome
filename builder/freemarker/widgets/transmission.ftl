@@ -13,8 +13,8 @@ conky.config = {
   gap_y = 141,
 
   -- window settings
-  minimum_width = 555,      -- conky will add an extra pixel to this
-  maximum_width = 555,
+  minimum_width = 589,      -- conky will add an extra pixel to this
+  maximum_width = 589,
   minimum_height = 345,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -48,10 +48,11 @@ conky.text = [[
 # - the 'remote control' feature enabled in the transmission bittorrent client: edit > preferences > remote
 # - the transmission.bash script running in the background
 # :::::::::::: torrents overview
-<#assign y = 0,
+<#assign x = 0,
+         y = 0,
          header = 19,     <#-- panel header -->
          body = 70,       <#-- panel area without the header -->
-         width = 202,     <#-- activity torrents column width -->
+         width = 201,     <#-- activity torrents column width -->
          gap = 5,         <#-- empty space between windows -->
          inputDir = "/tmp/conky",
          activeTorrentsFile = inputDir + "/transmission.active",
@@ -63,14 +64,18 @@ ${if_existing [=activeTorrentsFile]}\
 ${if_match ${lines [=activeTorrentsFile]} > 0}\
 ${lua read_file [=activeTorrentsFile]}${lua calculate_voffset [=activeTorrentsFile] [=max]}\
 <@panel.table x=0 y=y width=width header=header color=image.secondaryColor isFixed=false/>
-<@panel.table x=width+colGap y=y width=speedCol header=header color=image.secondaryColor isFixed=false/>
-<@panel.table x=width+colGap+speedCol+colGap y=y width=speedCol header=header color=image.secondaryColor isFixed=false/>
-${lua_parse add_y_offset voffset 2}${offset 5}${color1}active torrents${goto 226}up${goto 254}down${voffset 6}
+<#assign x += width + colGap>
+<@panel.table x=x y=y width=speedCol header=header color=image.secondaryColor isFixed=false/>
+<#assign x += speedCol+colGap>
+<@panel.table x=x y=y width=speedCol header=header color=image.secondaryColor isFixed=false/>
+<#assign x += speedCol+colGap>
+<@panel.table x=x y=y width=speedCol-6 header=header color=image.secondaryColor isFixed=false/>
+${lua_parse add_y_offset voffset 2}${offset 5}${color1}active torrents${goto 226}up${goto 254}down${goto 306}%${voffset 6}
 ${lua increment_offsets 0 [=header]}\
 <#assign y += header>
 ${color}${lua_parse head [=activeTorrentsFile] [=max]}${lua increase_y_offset [=activeTorrentsFile]}${voffset 4}
-<@panel.panelsBottom x=0 y=0 widths=[width,speedCol,speedCol] gap=colGap isFixed=false color=image.secondaryColor/>
-<#assign x = width + colGap + speedCol + colGap + speedCol + gap>
+<@panel.panelsBottom x=0 y=0 widths=[width,speedCol,speedCol,speedCol-6] gap=colGap isFixed=false color=image.secondaryColor/>
+<#assign x += speedCol-6+5>
 ${lua reset_state}${lua increment_offsets [=x] 0}\
 ${else}\
 ${lua increment_offsets 0 326}\

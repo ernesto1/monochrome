@@ -13,7 +13,7 @@ conky.config = {
   gap_y = 6,
 
   -- window settings
-  <#assign width = 251>
+  <#assign width = 299>
   minimum_width = [=width],      -- conky will add an extra pixel to this
   maximum_width = [=width],
   <#assign conkyHeight = 359>
@@ -61,9 +61,9 @@ ${lua read_file [=activeTorrentsFile]}${lua calculate_voffset [=activeTorrentsFi
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-light.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-light-edge-top-left.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-dark.png 180 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-light.png 215 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-light-edge-top-right.png 244 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 251 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-light.png 221 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-light-edge-top-right.png 292 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 299 0}\
 ${color}${lua_parse add_y_offset voffset 2}${lua_parse head [=activeTorrentsFile] [=max] [=border]}${lua increase_y_offset [=activeTorrentsFile]}
 <@panel.panelsBottom x=0 y=0 widths=[width] gap=colGap isFixed=false/>
 ${else}\

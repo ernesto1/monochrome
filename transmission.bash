@@ -20,13 +20,13 @@ function onExitSignal {
 
 function getUploadTorrents {
   grep -E '(Seeding|Uploading|Up & Down)' ${torrents}.$$ \
-    | cut -d ':' -f 1,4 \
+    | cut -d ':' -f 2,6 \
     | sort -t ':' -k 2
 }
 
 function getDownloadTorrents {
   grep -E '(Downloading|Up & Down)' ${torrents}.$$ \
-    | cut -d ':' -f 2,4 \
+    | cut -d ':' -f 3,6 \
     | sort -t ':' -k 2
 }
 
@@ -115,12 +115,15 @@ while [ true ]; do
   #     utf characters get replaced with 3 dots, then the 3 dots get replaced with a single dot
   grep -E '(Seeding|Downloading|Uploading|Up & Down)' ${torrentsRaw} \
     | LANG=C sed -e 's/  \+/:/g' -e 's/#//g' -e 's/[\x80-\xFF]/./g' -e 's/\.\.\././g' \
-    | cut -d ':' -f 6,7,9,10 \
-    | sort -t ':' -k 3 > ${torrents}.$$
+    | cut -d ':' -f 3,6,7,8,9,10 \
+    | sort -t ':' -k 6 > ${torrents}.$$
     
   case $format in
     default)
-      awk -F ':' "{printf \"%-${nameWidth}.${nameWidth}s\${offset ${offset}}%5d\${offset ${offset}}\${color}%5d\n\", \$4, \$1, \$2}" ${torrents}.$$ > ${activeFile}.$$
+      # torrents currently being downloaded will show their up/down speeds
+      # torrents being seeded will show up/- as their speeds, this unclutters the table with down speeds of 0 kb/s
+      # the down speed column is now treated as a string, hence we have to remove the trailing '.0' characters from it
+      awk -F ':' "{if (\$1 != \"100%\") {RATIO=\$1; DL=substr(\$3,1,length(\$3)-2)} else {RATIO=\$4; DL=\"-\"}; printf \"%-${nameWidth}.${nameWidth}s\${offset ${offset}}%5d\${offset ${offset}}%5s\${offset ${offset}}%4s\n\", \$6, \$2, DL, RATIO}" ${torrents}.$$ > ${activeFile}.$$
       ;;
     flipped)
       getUploadTorrents | awk -F ':' "{printf \"\${color4}%5d\${offset ${offset}}\${color}%-${nameWidth}.${nameWidth}s\n\", \$1, \$2}" > ${torrentsUpFile}.$$

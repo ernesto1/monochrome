@@ -192,7 +192,7 @@
     <#local color=image.secondaryColor>
   </#if>
   <@panelBottomCorners x=xCoordinate y=y width=width isFixed=isFixed isEdge=false color=color/>
-  <#local xCoordinate = xCoordinate + width + gap, color=image.primaryColor, totalWidth += totalWidth + width>
+  <#local xCoordinate = xCoordinate + width + gap, color=color, totalWidth += totalWidth + width>
 </#list>
 <@cmn.drawContinuosPanel x=x y=y width=totalWidth color="blank" isFixed=isFixed/>
 # ------- [=widths?size] column(s) panel | bottom edges -------

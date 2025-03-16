@@ -12,8 +12,8 @@ conky.config = {
   gap_y = 141,
 
   -- window settings
-  minimum_width = 555,      -- conky will add an extra pixel to this
-  maximum_width = 555,
+  minimum_width = 589,      -- conky will add an extra pixel to this
+  maximum_width = 589,
   minimum_height = 345,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -54,68 +54,81 @@ ${lua read_file /tmp/conky/transmission.active}${lua calculate_voffset /tmp/conk
 # -------  table | burgundy 1 column | top edge    -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-dark.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-dark-edge-top-left.png 0 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-dark-edge-top-right.png 195 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-dark-edge-top-right.png 194 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light.png 0 19}\
-${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 202 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 201 0}\
 # -------  table | burgundy 1 column | bottom edge -------
 # -------  table | burgundy 1 column | top edge    -------
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-dark.png 203 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-dark-edge-top-left.png 203 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-dark-edge-top-right.png 235 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light.png 203 19}\
-${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 242 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-dark.png 202 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-dark-edge-top-left.png 202 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-dark-edge-top-right.png 234 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light.png 202 19}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 241 0}\
 # -------  table | burgundy 1 column | bottom edge -------
 # -------  table | burgundy 1 column | top edge    -------
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-dark.png 243 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-dark-edge-top-left.png 243 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-dark-edge-top-right.png 275 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light.png 243 19}\
-${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 282 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-dark.png 242 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-dark-edge-top-left.png 242 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-dark-edge-top-right.png 274 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light.png 242 19}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 281 0}\
 # -------  table | burgundy 1 column | bottom edge -------
-${lua_parse add_y_offset voffset 2}${offset 5}${color1}active torrents${goto 226}up${goto 254}down${voffset 6}
+# -------  table | burgundy 1 column | top edge    -------
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-dark.png 282 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-dark-edge-top-left.png 282 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-dark-edge-top-right.png 308 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light.png 282 19}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 315 0}\
+# -------  table | burgundy 1 column | bottom edge -------
+${lua_parse add_y_offset voffset 2}${offset 5}${color1}active torrents${goto 226}up${goto 254}down${goto 306}%${voffset 6}
 ${lua increment_offsets 0 19}\
 ${color}${lua_parse head /tmp/conky/transmission.active 20}${lua increase_y_offset /tmp/conky/transmission.active}${voffset 4}
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-left.png 0 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-right.png 195 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-left.png 203 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-right.png 235 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-left.png 243 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-right.png 275 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-right.png 194 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-left.png 202 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-right.png 234 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-left.png 242 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-right.png 274 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-left.png 282 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-right.png 308 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 219 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 438 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 657 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 876 0}\
-# ------- 3 column(s) panel | bottom edges -------
-${lua reset_state}${lua increment_offsets 287 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 1095 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 1314 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 1533 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 1752 0}\
+# ------- 4 column(s) panel | bottom edges -------
+${lua reset_state}${lua increment_offsets 320 0}\
 ${else}\
 ${lua increment_offsets 0 326}\
 # ------- light panel top edge    -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-top-left.png 0 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-top-right.png 195 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 202 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-top-right.png 194 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 201 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-left.png 0 13}\
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-right.png 195 13}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-right.png 194 13}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 20}\
 # ------- light panel bottom edge -------
 ${lua_parse add_y_offset voffset 2}${goto 49}${color}no active torrents${voffset 4}
-${lua reset_state}${lua increment_offsets 216 0}\
+${lua reset_state}${lua increment_offsets 215 0}\
 ${endif}\
 ${else}\
 ${lua increment_offsets 0 310}\
 # ------- light panel top edge    -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-top-left.png 0 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-top-right.png 195 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 202 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-top-right.png 194 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 201 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-left.png 0 29}\
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-right.png 195 29}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-right.png 194 29}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 36}\
 # ------- light panel bottom edge -------
 ${lua_parse add_y_offset voffset 2}${goto 24}${color}active torrents input file
 ${voffset 3}${goto 72}is missing${voffset 4}
-${lua reset_state}${lua increment_offsets 216 0}\
+${lua reset_state}${lua increment_offsets 215 0}\
 ${endif}\
 # :::::::::::: peers
 # peers panel is displayed on the right side of the active torrents panel
@@ -156,12 +169,12 @@ ${lua increment_offsets 0 19}\
 ${color}${lua_parse head_mem /tmp/conky/transmission.peers 20}${lua increase_y_offset /tmp/conky/transmission.peers}
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-left.png 0 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-right.png 94 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-left.png 102 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-right.png 182 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-left.png 190 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-right.png 222 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-left.png 230 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-right.png 262 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-left.png 102 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-right.png 182 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-left.png 190 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-right.png 222 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-left.png 230 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-right.png 262 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 219 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 438 0}\
@@ -174,10 +187,10 @@ ${lua increment_offsets 0 326}\
 # ------- light panel top edge    -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-top-left.png 0 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-top-right.png 195 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 202 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-top-right.png 194 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 201 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-left.png 0 13}\
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-right.png 195 13}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-right.png 194 13}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 20}\
 # ------- light panel bottom edge -------
 ${lua_parse add_y_offset voffset 2}${lua_parse add_x_offset offset 47}${color}no peers connected${voffset 4}
@@ -187,10 +200,10 @@ ${lua increment_offsets 0 310}\
 # ------- light panel top edge    -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-top-left.png 0 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-top-right.png 195 0}\
-${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 202 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-top-right.png 194 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 201 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-left.png 0 29}\
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-right.png 195 29}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-right.png 194 29}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 36}\
 # ------- light panel bottom edge -------
 ${lua_parse add_y_offset voffset 2}${lua_parse add_x_offset offset 27}${color}torrent peers input file
