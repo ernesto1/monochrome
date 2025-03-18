@@ -1,11 +1,17 @@
-<project xmlns="http://maven.apache.org/DECORATION/1.6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/DECORATION/1.6.0 http://maven.apache.org/xsd/decoration-1.6.0.xsd" name="Project with Documentation">
+<project name="Music Player DBus Listener" xmlns="http://maven.apache.org/DECORATION/1.6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/DECORATION/1.6.0 http://maven.apache.org/xsd/decoration-1.6.0.xsd">
     <bannerLeft>
-        <name>Left Banner</name>
+        <name>Music Player DBus Listener Banner</name>
         <src>images/logo.png</src>
     </bannerLeft>
+    <bannerRight>
+        <src>images/monochromeLogo.png</src>
+    </bannerRight>
     <body>
+        <menu ref="parent"/>
         <menu name="Quickstart">
             <item name="Overview" href="index.html"/>
+            <item name="Album art" href="albumArt.html"/>
+            <item name="File interface" href="interface.html"/>
             <item name="Configuration" href="configuration.html"/>
         </menu>
         <menu ref="reports"/>

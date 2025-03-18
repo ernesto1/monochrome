@@ -19,4 +19,7 @@ musicplayer.album  musicplayer.albumArtPath    musicplayer.artist  musicplayer.g
 musicplayer.name   musicplayer.playbackStatus  musicplayer.title
 ```
 You can change the output directory by modifying the `outputDir` property.  Do note that the now playing **conky configuration** 
-will have to be **updated** to reflect the directory change as well. 
+will have to be **updated** to reflect the directory change as well.
+
+### Image cache
+See [album art](albumArt.html) for more context.
