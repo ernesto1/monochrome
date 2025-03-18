@@ -17,8 +17,9 @@ public class MusicPlayerWriter {
     /**
      * File prefix to use for the output files: {@value}
      */
-    public static final String FILE_PREFIX = "musicplayer";
-    public static final String ALBUM_ART = FILE_PREFIX + ".albumArt";
+    public static final String FILE_PREFIX = "musicplayer.";
+    public static final String TRACK_PREFIX = "track.";
+    public static final String ALBUM_ART = "albumArt";
     /**
      * Name of the file that contains the location on disk of the track's cover art
      */
@@ -44,8 +45,9 @@ public class MusicPlayerWriter {
      * @param player music player metadata
      */
     public void writePlayerState(MusicPlayer player) {
-        String albumArtFilePath = null;    // the album art file path has to be figured out
         // is the album art in the local file system or on the web?
+        String albumArtFilePath = null;
+
         try {
             if (player.getAlbumArtURL() != null) {
                 URL coverArtURL = new URL(player.getAlbumArtURL());
@@ -69,7 +71,7 @@ public class MusicPlayerWriter {
                 // if no album art is available, delete the conky album art files
                 try {
                     logger.debug("track has no album art, deleting cover art related files");
-                    Path file = outputDir.resolve(FILE_PREFIX + "." + ALBUM_ART_PATH_FILENAME);
+                    Path file = outputDir.resolve(FILE_PREFIX + TRACK_PREFIX + ALBUM_ART_PATH_FILENAME);
                     Files.deleteIfExists(file);
                     file = albumArtDir.resolve(ALBUM_ART_SYMLINK_FILENAME);
                     Files.deleteIfExists(file);
@@ -82,17 +84,24 @@ public class MusicPlayerWriter {
         }
 
         logger.debug("writing track details for {}", player.getTitle());
-        writeFile("name", player.getPlayerName());
-        // convert playback status enum to 'Title Case'
-        String playbackStatus = player.getPlaybackStatus().toString().toLowerCase();
-        playbackStatus = playbackStatus.substring(0,1).toUpperCase() + playbackStatus.substring(1);
-        writeFile("playbackStatus", playbackStatus);
-        writeFile("status", player.getPlayerStatus().toString().toLowerCase());
-        writeFile("artist", player.getArtist());
-        writeFile("title", player.getTitle());
-        writeFile("album", player.getAlbum());
-        writeFile("genre", player.getGenre());
-        writeFile(ALBUM_ART_PATH_FILENAME, albumArtFilePath);
+
+        if (player.getStatus().equals(MusicPlayer.Status.OFF)) {
+            deleteMusicFiles(outputDir);
+            writeFile("status", player.getStatus().toString().toLowerCase());
+        } else {
+            writeFile("name", player.getPlayerName());
+            // convert playback status enum to 'Title Case'
+            String playbackStatus = player.getPlaybackStatus().toString().toLowerCase();
+            playbackStatus = playbackStatus.substring(0,1).toUpperCase() + playbackStatus.substring(1);
+            writeFile("playbackStatus", playbackStatus);
+            writeFile("status", player.getStatus().toString().toLowerCase());
+            writeFile(TRACK_PREFIX + "artist", player.getArtist());
+            writeFile(TRACK_PREFIX + "title", player.getTitle());
+            writeFile(TRACK_PREFIX + "album", player.getAlbum());
+            writeFile(TRACK_PREFIX + "genre", player.getGenre());
+            writeFile(TRACK_PREFIX + ALBUM_ART_PATH_FILENAME, albumArtFilePath);
+        }
+
         logger.debug("wrote track info to disk");
     }
 
@@ -120,7 +129,7 @@ public class MusicPlayerWriter {
             return;
         }
 
-        Path filePath = outputDir.resolve(FILE_PREFIX + "." + filename);
+        Path filePath = outputDir.resolve(FILE_PREFIX + filename);
         try (BufferedWriter writer = Files.newBufferedWriter(filePath,
                                                              StandardOpenOption.CREATE,
                                                              StandardOpenOption.WRITE,
@@ -128,6 +137,27 @@ public class MusicPlayerWriter {
             writer.write(data);
         } catch (IOException e) {
             logger.error("unable to write to the '{}' file", filename, e);
+        }
+    }
+
+    /**
+     * Deletes all the metadata music player files in the given directory
+     * @param dir directory to delete files from
+     */
+    public static void deleteMusicFiles(Path dir) {
+        try {
+            Files.list(dir)
+                 .filter(p -> p.getFileName().toString().startsWith(MusicPlayerWriter.FILE_PREFIX))
+                 .forEach(file -> {
+                    try {
+                        logger.debug("deleting the output file: {}", file);
+                        Files.deleteIfExists(file);
+                    } catch (IOException e) {
+                        logger.error("unable to delete file", e);
+                    }
+                 });
+        } catch (IOException e) {
+            logger.error("unable to list the output directory {} contents", dir, e);
         }
     }
 }

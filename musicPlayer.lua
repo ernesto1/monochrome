@@ -9,7 +9,7 @@ trackinfo[4] = "genre"
 -- loads all the music player track info metadata into memory
 function conky_load_track_info()
   for i, metadata in ipairs(trackinfo) do
-    vars[metadata] = conky_parse("${cat /tmp/conky/musicplayer.".. metadata .."}")
+    vars[metadata] = conky_parse("${cat /tmp/conky/musicplayer.track.".. metadata .."}")
   end
   
   return ''

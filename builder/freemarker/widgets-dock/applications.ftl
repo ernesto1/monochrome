@@ -125,11 +125,11 @@ ${endif}\
 ${lua increment_offsets 0 [=iconHeight + gap]}\
 ${voffset [= 6 + gap]}\
 # ::: album art
-${if_existing /tmp/conky/musicplayer.albumArtPath}\
+${if_existing /tmp/conky/musicplayer.track.albumArtPath}\
 <#assign border = 2>
 <@panel.panel x=0 y=0 width=width height=width isFixed=false/>
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-album-placeholder.png [=border] [=border]}\
-${lua_parse load_image ${cat /tmp/conky/musicplayer.albumArtPath} [=width-border*2]x[=width-border*2] [=border] [=border]}\
+${lua_parse load_image ${cat /tmp/conky/musicplayer.track.albumArtPath} [=width-border*2]x[=width-border*2] [=border] [=border]}\
 ${voffset [=width + gap]}${lua increment_offsets 0 [=width + gap]}${lua decrease_total_lines 12}\
 ${endif}\
 # ::: track details
@@ -144,14 +144,14 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-pa
 ${endif}\
 # --------- end of table image top ---------
 ${lua increment_offsets 0 [=height - 7]}\<#-- edges are 7x7 px, therefore reduce the height of the bottom edges from the panel -->
-${voffset 4}${lua_parse add_x_offset offset 5}${color1}title${lua_parse add_x_offset goto 50}${color}${cat /tmp/conky/musicplayer.title}${lua decrease_total_lines 2}
-${if_match "${lua get album ${cat /tmp/conky/musicplayer.album}}" != "unknown album"}\
+${voffset 4}${lua_parse add_x_offset offset 5}${color1}title${lua_parse add_x_offset goto 50}${color}${cat /tmp/conky/musicplayer.track.title}${lua decrease_total_lines 2}
+${if_match "${lua get album ${cat /tmp/conky/musicplayer.track.album}}" != "unknown album"}\
 ${voffset 3}${lua_parse add_x_offset offset 5}${color1}album${lua_parse add_x_offset goto 50}${color}${lua get album}${lua increment_offsets 0 16}${lua decrease_total_lines 1}
 ${endif}\
-${if_match "${lua get artist ${cat /tmp/conky/musicplayer.artist}}" != "unknown artist"}\
+${if_match "${lua get artist ${cat /tmp/conky/musicplayer.track.artist}}" != "unknown artist"}\
 ${voffset 3}${lua_parse add_x_offset offset 5}${color1}artist${lua_parse add_x_offset goto 50}${color}${lua get artist}${lua increment_offsets 0 16}${lua decrease_total_lines 1}
 ${endif}\
-${if_match "${lua get genre ${cat /tmp/conky/musicplayer.genre}}" != "unknown genre"}\
+${if_match "${lua get genre ${cat /tmp/conky/musicplayer.track.genre}}" != "unknown genre"}\
 ${voffset 3}${lua_parse add_x_offset offset 5}${color1}genre${lua_parse add_x_offset goto 50}${color}${lua get genre}${lua increment_offsets 0 16}${lua decrease_total_lines 1}
 ${endif}\
 # ------  vertical table image bottom ------

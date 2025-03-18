@@ -147,30 +147,35 @@ ${voffset 3}${offset [=border]}${color1}cpu${alignr [=lborder]}${color}${templat
 ${voffset 3}${offset [=border]}${color1}top${alignr [=lborder]}${color}${template2 hwmon\ atk0110\ fan\ 2 400 2300}${hwmon atk0110 fan 2} rpm
 ${voffset 3}${offset [=border]}${color1}back${alignr [=lborder]}${color}${template2 hwmon\ atk0110\ fan\ 4 400 2300}${hwmon atk0110 fan 4} rpm
 # :::::::::::: now playing
-<#assign height = 3 + width-border + 3*16 + 6>
+<#assign  height = 3 + width-border + 3*16 + 6,
+          inputDir = "/tmp/conky/">
 <@panel.panel x=0 y=y height=height width=width/>
-${if_existing /tmp/conky/musicplayer.status off}\
+${if_existing [=inputDir + "musicplayer.status"] off}\
 ${voffset [=gap + 3 + width + 16]}\
 ${voffset 3}${offset [=border]}${color1}now playing
 ${voffset 3}${offset [=border]}${color}${scroll wait 14 2 1 no player running}
 ${else}\
-${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
+${if_existing [=inputDir + "musicplayer.playbackStatus"] Playing}\
 <@panel.panel x=0 y=y height=height width=width color=image.secondaryColor/>
 ${endif}\
+${if_existing [=inputDir + "musicplayer.track.albumArtPath"]}\
 ${image ~/conky/monochrome/java/albumArt/nowPlaying -p [=3],[=y+3] -s [=width-border]x[=width-border] -n}\
 <#assign y += height + gap>
 ${voffset [=gap + 3 + width]}\
-${voffset 3}${offset [=border]}${template3}${scroll wait 14 2 1 ${cat /tmp/conky/musicplayer.title}}
-${voffset 3}${offset [=border]}${template3}${scroll wait 14 2 1 ${cat /tmp/conky/musicplayer.album}}
-${voffset 3}${offset [=border]}${template3}${scroll wait 14 2 1 ${cat /tmp/conky/musicplayer.artist}}
+${else}\
+${voffset [=gap + 3 + width - 16]}\
+${voffset 3}${offset [=border]}${template3}${scroll wait 14 2 1 ${cat [=inputDir + "musicplayer.name"]}}
+${endif}\
+${voffset 3}${offset [=border]}${template3}${scroll wait 14 2 1 ${cat [=inputDir + "musicplayer.track.title"]}}
+${voffset 3}${offset [=border]}${template3}${scroll wait 14 2 1 ${cat [=inputDir + "musicplayer.track.album"]}}
+${voffset 3}${offset [=border]}${template3}${scroll wait 14 2 1 ${cat [=inputDir + "musicplayer.track.artist"]}}
 ${endif}\
 # :::::::::::: transmission
 <#assign height = 4*16+7>
 <@panel.panel x=0 y=y height=height width=width/>
 <#assign y += height + gap>
 ${voffset [=7 + gap]}\
-<#assign inputDir = "/tmp/conky/",
-         activeFile = inputDir + "transmission.active",
+<#assign activeFile = inputDir + "transmission.active",
          peersFile = inputDir + "transmission.peers",
          uploadFile = inputDir + "transmission.speed.up",
          downloadFile = inputDir + "transmission.speed.down">

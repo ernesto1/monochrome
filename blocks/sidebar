@@ -203,11 +203,16 @@ ${image ~/conky/monochrome/images/common/yellow-panel-light-edge-bottom-right.pn
 ${image ~/conky/monochrome/images/common/blank-panel.png -p 0,906}\
 # ------- light panel bottom edge -------
 ${endif}\
+${if_existing /tmp/conky/musicplayer.track.albumArtPath}\
 ${image ~/conky/monochrome/java/albumArt/nowPlaying -p 3,763 -s 89x89 -n}\
 ${voffset 104}\
-${voffset 3}${offset 6}${template3}${scroll wait 14 2 1 ${cat /tmp/conky/musicplayer.title}}
-${voffset 3}${offset 6}${template3}${scroll wait 14 2 1 ${cat /tmp/conky/musicplayer.album}}
-${voffset 3}${offset 6}${template3}${scroll wait 14 2 1 ${cat /tmp/conky/musicplayer.artist}}
+${else}\
+${voffset 88}\
+${voffset 3}${offset 6}${template3}${scroll wait 14 2 1 ${cat /tmp/conky/musicplayer.name}}
+${endif}\
+${voffset 3}${offset 6}${template3}${scroll wait 14 2 1 ${cat /tmp/conky/musicplayer.track.title}}
+${voffset 3}${offset 6}${template3}${scroll wait 14 2 1 ${cat /tmp/conky/musicplayer.track.album}}
+${voffset 3}${offset 6}${template3}${scroll wait 14 2 1 ${cat /tmp/conky/musicplayer.track.artist}}
 ${endif}\
 # :::::::::::: transmission
 # ------- light panel top edge    -------

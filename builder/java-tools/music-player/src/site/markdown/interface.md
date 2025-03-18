@@ -6,16 +6,16 @@ Files are only updated when the media player state changes.
 
 The files are written to the `/tmp/conky` directory.
 
-| No media player running              | Media player running                            |
-|--------------------------------------|-------------------------------------------------|
-| `musicplayer.album:unknown album`    | `musicplayer.album:Coming Home`                 |
-|                                      | `musicplayer.albumArtPath:/some/path/image.png` |
-| `musicplayer.artist:unknown artist`  | `musicplayer.artist:Alex Boychuk`               |
-| `musicplayer.genre:unknown genre`    | `musicplayer.genre:unknown genre`               |
-| `musicplayer.name:no player running` | `musicplayer.name:Spotify`                      |
-| `musicplayer.playbackStatus:Stopped` | `musicplayer.playbackStatus:Playing`            |
-| `musicplayer.status:off`             | `musicplayer.status:on`                        |
-| `musicplayer.title:unknown title`    | `musicplayer.title:Coming Home`                 |
+| No media player running    | A media player is running                               |
+|----------------------------|---------------------------------------------------------|
+|                            | `musicplayer.name = Spotify`                            |
+|                            | `musicplayer.playbackStatus = Playing`                  |
+| `musicplayer.status = off` | `musicplayer.status = on`                               |
+|                            | `musicplayer.track.album = Coming Home`                 |
+|                            | `musicplayer.track.albumArtPath = /some/path/image.png` |
+|                            | `musicplayer.track.artist = Alex Boychuk`               |
+|                            | `musicplayer.track.genre = Synthwave`                   |
+|                            | `musicplayer.track.title = Coming Home`                 |
 
 Media player metadata:
 
@@ -26,5 +26,5 @@ Media player metadata:
 
 Track info metadata:
 
-- The remaining files are the current song details.
+- Files with the `track` prefix are the current song details.
 - The `albumArtPath` file is optional, if no album art is available the file will not exist.

@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static com.conky.musicplayer.MusicPlayerWriter.FILE_PREFIX;
+import static com.conky.musicplayer.MusicPlayerWriter.ALBUM_ART;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 import static java.nio.file.StandardWatchEventKinds.OVERFLOW;
 
@@ -37,7 +37,7 @@ public class AlbumArtHouseKeeper implements Runnable {
         this.albumArtDir = Path.of(albumArtDir);
         sizeLimit = albumCacheSize;
         this.db = playerDatabase;
-        pattern = Pattern.compile(FILE_PREFIX + "\\.albumArt"+ "\\.(?:(?!temp))");
+        pattern = Pattern.compile(ALBUM_ART + "\\.(?:(?!temp))");
     }
 
     /**
@@ -72,7 +72,7 @@ public class AlbumArtHouseKeeper implements Runnable {
                 WatchEvent.Kind kind = event.kind();
                 // edge case: some events were lost
                 if (kind == OVERFLOW) {
-                    logger.error("event overflow :(");
+                    logger.warn("event overflow :(");
                     continue;
                 }
 

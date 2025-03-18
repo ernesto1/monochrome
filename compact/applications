@@ -168,7 +168,7 @@ ${endif}\
 ${lua increment_offsets 0 41}\
 ${voffset 9}\
 # :::::: album art
-${if_existing /tmp/conky/musicplayer.albumArtPath}\
+${if_existing /tmp/conky/musicplayer.track.albumArtPath}\
 # ------- light panel top edge    -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-top-left.png 0 0}\
@@ -180,7 +180,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 189}\
 # ------- light panel bottom edge -------
 ${lua increment_offsets 0 4}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-album-placeholder.png 12 8}\
-${lua_parse load_image ${cat /tmp/conky/musicplayer.albumArtPath} 181x181 4 0}\
+${lua_parse load_image ${cat /tmp/conky/musicplayer.track.albumArtPath} 181x181 4 0}\
 ${lua increment_offsets 0 188}${lua decrease_total_lines 12}\
 ${voffset 192}\
 ${endif}\
@@ -198,14 +198,14 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-sound-wav
 ${endif}\
 # --------- end of table image top ---------
 ${lua increment_offsets 0 15}\
-${voffset 3}${lua_parse add_x_offset offset 5}${color1}title${lua_parse add_x_offset goto 50}${color}${cat /tmp/conky/musicplayer.title}${lua decrease_total_lines 2}
-${if_match "${lua get album ${cat /tmp/conky/musicplayer.album}}" != "unknown album"}\
+${voffset 3}${lua_parse add_x_offset offset 5}${color1}title${lua_parse add_x_offset goto 50}${color}${cat /tmp/conky/musicplayer.track.title}${lua decrease_total_lines 2}
+${if_match "${lua get album ${cat /tmp/conky/musicplayer.track.album}}" != "unknown album"}\
 ${voffset 3}${lua_parse add_x_offset offset 5}${color1}album${lua_parse add_x_offset goto 50}${color}${lua get album}${lua increment_offsets 0 16}${lua decrease_total_lines 1}
 ${endif}\
-${if_match "${lua get artist ${cat /tmp/conky/musicplayer.artist}}" != "unknown artist"}\
+${if_match "${lua get artist ${cat /tmp/conky/musicplayer.track.artist}}" != "unknown artist"}\
 ${voffset 3}${lua_parse add_x_offset offset 5}${color1}artist${lua_parse add_x_offset goto 50}${color}${lua get artist}${lua increment_offsets 0 16}${lua decrease_total_lines 1}
 ${endif}\
-${if_match "${lua get genre ${cat /tmp/conky/musicplayer.genre}}" != "unknown genre"}\
+${if_match "${lua get genre ${cat /tmp/conky/musicplayer.track.genre}}" != "unknown genre"}\
 ${voffset 3}${lua_parse add_x_offset offset 5}${color1}genre${lua_parse add_x_offset goto 50}${color}${lua get genre}${lua increment_offsets 0 16}${lua decrease_total_lines 1}
 ${endif}\
 # ------  vertical table image bottom ------

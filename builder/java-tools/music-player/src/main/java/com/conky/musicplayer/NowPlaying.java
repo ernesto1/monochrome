@@ -101,22 +101,12 @@ public class NowPlaying {
         Thread deleteOutputFiles = new Thread(() -> {
             logger.info("deleting all output files");
             try {
-                Files.list(outputDir)
-                     .filter(p -> p.getFileName().toString().startsWith(MusicPlayerWriter.FILE_PREFIX + "."))
-                     .forEach(file -> {
-                        try {
-                            logger.debug("deleting the output file: {}", file);
-                            Files.deleteIfExists(file);
-                        } catch (IOException e) {
-                            logger.error("unable to delete file", e);
-                        }
-                     });
-
+                MusicPlayerWriter.deleteMusicFiles(outputDir);
                 Path symlink = albumArtDir.resolve(MusicPlayerWriter.ALBUM_ART_SYMLINK_FILENAME);
                 logger.debug("deleting the now playing symlink file: {}", symlink);
                 Files.deleteIfExists(symlink);
             } catch (IOException e) {
-                logger.error("unable to list the output directory contents", e);
+                logger.error("unable to delete file", e);
             }
         });
 

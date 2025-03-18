@@ -118,9 +118,9 @@ ${endif}\
 ${lua increment_offsets 0 [=iconHeight + gap]}\
 ${voffset [= 7 + gap]}\
 # ::: album art
-${if_existing /tmp/conky/musicplayer.albumArtPath}\
+${if_existing /tmp/conky/musicplayer.track.albumArtPath}\
 ${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-music-player-album.png 0 0}\
-${lua_parse load_image ${cat /tmp/conky/musicplayer.albumArtPath} 155x155 2 2}\
+${lua_parse load_image ${cat /tmp/conky/musicplayer.track.albumArtPath} 155x155 2 2}\
 ${voffset [=width + gap]}${lua increment_offsets 0 [=width + gap]}\
 ${endif}\
 # ::: track details

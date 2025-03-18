@@ -80,7 +80,7 @@ public class Registrar {
         }
 
         logger.info("registering a new music player: '{}'", playerName);
-        MusicPlayer musicPlayer = new MusicPlayer(playerName, busName, MusicPlayer.PlayerStatus.ON);
+        MusicPlayer musicPlayer = new MusicPlayer(playerName, busName, MusicPlayer.Status.ON);
         musicPlayer = metadataRetriever.getPlayerState(musicPlayer);
         playerDatabase.save(musicPlayer);
 

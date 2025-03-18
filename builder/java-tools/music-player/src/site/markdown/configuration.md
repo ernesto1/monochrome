@@ -15,8 +15,8 @@ By default the application will write its output files in the `/tmp/conky` direc
 these files for displaying the current track details.
 ```bash
 /tmp/conky$ ls musicplayer.*
-musicplayer.album  musicplayer.albumArtPath    musicplayer.artist  musicplayer.genre  
-musicplayer.name   musicplayer.playbackStatus  musicplayer.title
+musicplayer.name            musicplayer.status       musicplayer.track.albumArtPath  musicplayer.track.genre
+musicplayer.playbackStatus  musicplayer.track.album  musicplayer.track.artist        musicplayer.track.title
 ```
 You can change the output directory by modifying the `outputDir` property.  Do note that the now playing **conky configuration** 
 will have to be **updated** to reflect the directory change as well.

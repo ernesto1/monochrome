@@ -64,18 +64,18 @@ ${voffset 74}${offset 139}${font0}now playing
 ${voffset 0}${offset 139}${font}no music player running
 ${else}\
 # :::::::: album art
-${if_existing /tmp/conky/musicplayer.albumArtPath}\
+${if_existing /tmp/conky/musicplayer.track.albumArtPath}\
 ${image ~/conky/monochrome/images/[=conky]/album-shadow.png -p 0,0}\
-${lua_parse load_image ${cat /tmp/conky/musicplayer.albumArtPath} 110x110 15 22}\
+${lua_parse load_image ${cat /tmp/conky/musicplayer.track.albumArtPath} 110x110 15 22}\
 ${voffset 9}\
 ${endif}\
 # ::::::::: track details
 # artist & genre are optional (not all tracks have it defined) so we don't display if it is not available
 # hence we shift the text when the data point is missing
-${if_match "${lua get artist ${cat /tmp/conky/musicplayer.artist}}" == "unknown artist"}${voffset 22}${endif}\
-${if_match "${lua get genre ${cat /tmp/conky/musicplayer.genre}}" == "unknown genre"}${voffset 22}${endif}\
-${voffset 31}${offset 139}${font0}${color}${cat /tmp/conky/musicplayer.title}
-${offset 139}${font}${color}${cat /tmp/conky/musicplayer.album}
+${if_match "${lua get artist ${cat /tmp/conky/musicplayer.track.artist}}" == "unknown artist"}${voffset 22}${endif}\
+${if_match "${lua get genre ${cat /tmp/conky/musicplayer.track.genre}}" == "unknown genre"}${voffset 22}${endif}\
+${voffset 31}${offset 139}${font0}${color}${cat /tmp/conky/musicplayer.track.title}
+${offset 139}${font}${color}${cat /tmp/conky/musicplayer.track.album}
 ${if_match "${lua get artist}" != "unknown artist"}${voffset 4}${offset 139}${font}${color}${lua get artist}${endif}
 ${if_match "${lua get genre}" != "unknown genre"}${voffset 4}${offset 139}${font}${color}${lua get genre}${endif}
 ${endif}\

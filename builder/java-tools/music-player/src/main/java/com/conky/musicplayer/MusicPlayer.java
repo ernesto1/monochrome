@@ -12,7 +12,7 @@ import java.util.Objects;
  * is played.  Others already have a pre-selected track upon boot.
  */
 public class MusicPlayer {
-    public static final MusicPlayer DUMMY_PLAYER = new MusicPlayer("no player running", ":1.23", PlayerStatus.OFF);
+    public static final MusicPlayer DUMMY_PLAYER = new MusicPlayer("no player running", ":1.23", Status.OFF);
     /**
      * Unique connection name of the music player application under the dbus, ex. :1.23
      */
@@ -22,14 +22,14 @@ public class MusicPlayer {
     /**
      * Determines if the player is running or not
      */
-    private PlayerStatus playerStatus;
+    private Status status;
     private TrackInfo trackInfo;
 
-    public MusicPlayer(String name, String dDusUniqueName, PlayerStatus status) {
+    public MusicPlayer(String name, String dDusUniqueName, Status status) {
         playerName = name;
         this.dBusUniqueName = dDusUniqueName;
         playbackStatus = PlaybackStatus.STOPPED;
-        playerStatus = status;
+        this.status = status;
         trackInfo = new TrackInfo("000");
     }
 
@@ -37,7 +37,7 @@ public class MusicPlayer {
         dBusUniqueName = player.getDBusUniqueName();
         playerName = player.getPlayerName();
         playbackStatus = player.getPlaybackStatus();
-        playerStatus = player.getPlayerStatus();
+        status = player.getStatus();
         trackInfo = new TrackInfo(player.getTrackId());
         trackInfo.setArtist(player.getArtist());
         trackInfo.setTitle(player.getTitle());
@@ -106,8 +106,8 @@ public class MusicPlayer {
         return trackInfo.getTrackId();
     }
 
-    public PlayerStatus getPlayerStatus() {
-        return playerStatus;
+    public Status getStatus() {
+        return status;
     }
 
     @Override
@@ -158,7 +158,7 @@ public class MusicPlayer {
         UNKNOWN
     }
 
-    public enum PlayerStatus {
+    public enum Status {
         /**
          * State when no player is running
          */
