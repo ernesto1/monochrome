@@ -101,8 +101,8 @@ ${endif}\
 #                                       no music player is running
 #                                       dependent java dbus listener application is not running
 # ::: no player available
-${if_existing /tmp/conky/musicplayer.name}\
-${if_existing /tmp/conky/musicplayer.name Nameless}\
+${if_existing /tmp/conky/musicplayer.status}\
+${if_existing /tmp/conky/musicplayer.status off}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-sound-wave.png 0 0}\
 <@panel.noLeftEdgePanel x=0+iconWidth y=0 width=width-iconWidth height=iconHeight isFixed=false/>
 ${voffset 5}${lua_parse add_x_offset offset 45}${color1}now playing

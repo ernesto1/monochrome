@@ -91,12 +91,15 @@ ${voffset 3}${offset [=border]}${color1}[=partition.name]${alignr [=lborder]}${c
 </#list>
 </#list>
 # ::::::::::::::::: media
-${if_existing /tmp/conky/musicplayer.albumArtPath}\
+${if_existing /tmp/conky/musicplayer.status on}\
 ${voffset 6}${offset [=border]}${color3}${cat /tmp/conky/musicplayer.name}${if_existing /tmp/conky/musicplayer.playbackStatus Playing}${alignr}${color}»${endif}
 <#assign y = 362 + border><#-- position of the album art -->
+${if_existing /tmp/conky/musicplayer.albumArtPath}\
 ${image ~/conky/monochrome/java/albumArt/nowPlaying -p [=border],[=y] -s [=width-border*2]x[=width-border*2] -n}\
 ${voffset 89}\
+${endif}\
 ${voffset 6}${offset [=border]}${color}${scroll wait 14 3 1 ${cat /tmp/conky/musicplayer.title}}
+${voffset 3}${offset [=border]}${color}${scroll wait 14 3 1 ${cat /tmp/conky/musicplayer.album}}
 ${voffset 3}${offset [=border]}${color}${scroll wait 14 3 1 ${cat /tmp/conky/musicplayer.artist}}
 ${endif}\
 <#if system == "laptop">

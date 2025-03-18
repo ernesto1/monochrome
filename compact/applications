@@ -121,8 +121,8 @@ ${endif}\
 #                                       no music player is running
 #                                       dependent java dbus listener application is not running
 # :::::: no player available
-${if_existing /tmp/conky/musicplayer.name}\
-${if_existing /tmp/conky/musicplayer.name Nameless}\
+${if_existing /tmp/conky/musicplayer.status}\
+${if_existing /tmp/conky/musicplayer.status off}\
 ${lua_parse draw_image ~/conky/monochrome/images/compact/ochre-sound-wave.png 0 0}\
 # ------- light panel top edge    -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light.png 41 0}\
@@ -281,8 +281,8 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-peers.png
 ${lua_parse head /tmp/conky/transmission.torrents.up 53}${lua increase_y_offset /tmp/conky/transmission.torrents.up}${voffset 10}
 ${lua_parse draw_image ~/conky/monochrome/images/common/ochre-panel-light-edge-bottom-left.png 0 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/ochre-panel-light-edge-bottom-right.png 32 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-left.png 42 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-right.png 182 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/ochre-panel-light-edge-bottom-left.png 42 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/ochre-panel-light-edge-bottom-right.png 182 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 219 0}\
 # ------- 2 column(s) panel | bottom edges -------
@@ -352,10 +352,10 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 189 0}\
 ${lua_parse head /tmp/conky/transmission.peers.up 58}${lua increase_y_offset /tmp/conky/transmission.peers.up}${voffset 10}
 ${lua_parse draw_image ~/conky/monochrome/images/common/ochre-panel-light-edge-bottom-left.png 0 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/ochre-panel-light-edge-bottom-right.png 32 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-left.png 42 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-right.png 134 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-left.png 144 -7}\
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-right.png 182 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/ochre-panel-light-edge-bottom-left.png 42 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/ochre-panel-light-edge-bottom-right.png 134 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/ochre-panel-light-edge-bottom-left.png 144 -7}\
+${lua_parse draw_image ~/conky/monochrome/images/common/ochre-panel-light-edge-bottom-right.png 182 -7}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 219 0}\
 # ------- 3 column(s) panel | bottom edges -------

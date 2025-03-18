@@ -148,10 +148,14 @@ ${voffset 3}${offset [=border]}${color1}top${alignr [=lborder]}${color}${templat
 ${voffset 3}${offset [=border]}${color1}back${alignr [=lborder]}${color}${template2 hwmon\ atk0110\ fan\ 4 400 2300}${hwmon atk0110 fan 4} rpm
 # :::::::::::: now playing
 <#assign height = 3 + width-border + 3*16 + 6>
+<@panel.panel x=0 y=y height=height width=width/>
+${if_existing /tmp/conky/musicplayer.status off}\
+${voffset [=gap + 3 + width + 16]}\
+${voffset 3}${offset [=border]}${color1}now playing
+${voffset 3}${offset [=border]}${color}${scroll wait 14 2 1 no player running}
+${else}\
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
 <@panel.panel x=0 y=y height=height width=width color=image.secondaryColor/>
-${else}\
-<@panel.panel x=0 y=y height=height width=width/>
 ${endif}\
 ${image ~/conky/monochrome/java/albumArt/nowPlaying -p [=3],[=y+3] -s [=width-border]x[=width-border] -n}\
 <#assign y += height + gap>
@@ -159,6 +163,7 @@ ${voffset [=gap + 3 + width]}\
 ${voffset 3}${offset [=border]}${template3}${scroll wait 14 2 1 ${cat /tmp/conky/musicplayer.title}}
 ${voffset 3}${offset [=border]}${template3}${scroll wait 14 2 1 ${cat /tmp/conky/musicplayer.album}}
 ${voffset 3}${offset [=border]}${template3}${scroll wait 14 2 1 ${cat /tmp/conky/musicplayer.artist}}
+${endif}\
 # :::::::::::: transmission
 <#assign height = 4*16+7>
 <@panel.panel x=0 y=y height=height width=width/>

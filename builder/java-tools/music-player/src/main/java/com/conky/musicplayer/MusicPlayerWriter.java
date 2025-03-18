@@ -87,6 +87,7 @@ public class MusicPlayerWriter {
         String playbackStatus = player.getPlaybackStatus().toString().toLowerCase();
         playbackStatus = playbackStatus.substring(0,1).toUpperCase() + playbackStatus.substring(1);
         writeFile("playbackStatus", playbackStatus);
+        writeFile("status", player.getPlayerStatus().toString().toLowerCase());
         writeFile("artist", player.getArtist());
         writeFile("title", player.getTitle());
         writeFile("album", player.getAlbum());

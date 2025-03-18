@@ -56,9 +56,9 @@ conky.text = [[
 #                                                          song with no album art
 #                                                          dependent java dbus listener application is not running
 ${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-album-cover.png -p 0,0}\
-${if_existing /tmp/conky/musicplayer.name}\
+${if_existing /tmp/conky/musicplayer.status}\
 # :::::::: no player available
-${if_existing /tmp/conky/musicplayer.name Nameless}\
+${if_existing /tmp/conky/musicplayer.status off}\
 <#-- top 0 | middle 8 | bottom 62 -->
 ${voffset 74}${offset 139}${font0}now playing
 ${voffset 0}${offset 139}${font}no music player running

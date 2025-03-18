@@ -91,11 +91,12 @@ ${endif}\
 #                                   song with no album art
 #                                   no music player is running
 #                                   dependent java dbus listener application is not running
-<#assign  playerNameFile="/tmp/conky/musicplayer.name",
+<#assign  playerStatusFile="/tmp/conky/musicplayer.status",
+          playerNameFile="/tmp/conky/musicplayer.name",
           iconHeight = 38>
-${if_existing [=playerNameFile]}\
+${if_existing [=playerStatusFile]}\
 # :::::::: no player available
-${if_existing [=playerNameFile] Nameless}\
+${if_existing [=playerStatusFile] off}\
 ${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-sound-wave.png 0 0}\
 <@panel.panel x=iconWidth+gap y=0 width=width-iconWidth-gap height=iconHeight isFixed=false/>
 ${voffset 5}${offset 48}${color1}now playing
@@ -107,11 +108,11 @@ ${lua increment_offsets 0 [=gap]}${voffset [=gap]}${lua load_track_info}\
 ${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-sound-wave.png 0 0}\
 ${if_match "${lua get playbackStatus ${cat /tmp/conky/musicplayer.playbackStatus}}" == "Playing"}\
 <@panel.panel x=41 y=0 width=189-41 height=iconHeight isFixed=false color=image.secondaryColor isDark=true/>
-${voffset 5}${lua_parse add_x_offset offset 48}${color3}${cat /tmp/conky/musicplayer.name}
+${voffset 5}${lua_parse add_x_offset offset 48}${color3}${cat [=playerNameFile]}
 ${voffset 2}${lua_parse add_x_offset offset 48}${color4}${lua get playbackStatus}
 ${else}\
 <@panel.panel x=41 y=0 width=189-41 height=iconHeight isFixed=false/>
-${voffset 5}${lua_parse add_x_offset offset 48}${color1}${cat /tmp/conky/musicplayer.name}
+${voffset 5}${lua_parse add_x_offset offset 48}${color1}${cat [=playerNameFile]}
 ${voffset 2}${lua_parse add_x_offset offset 48}${color}${lua get playbackStatus}
 ${endif}\
 ${lua increment_offsets 0 [=iconHeight + gap]}\

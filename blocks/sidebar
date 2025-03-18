@@ -109,7 +109,7 @@ ${voffset 3}${offset 6}${color1}enp0s${alignr 5}${color}${template1 to_bytes\ ${
 ${voffset 3}${offset 6}${color1}sda${alignr 5}${color}${diskio_read /dev/sda}
 ${voffset 3}${offset 6}${color1}sdb${alignr 5}${color}${diskio_read /dev/sdb}
 ${voffset 3}${offset 6}${color1}sdd${alignr 5}${color}${diskio_read /dev/sdd}
-${voffset 3}${offset 6}${color1}sdf${alignr 5}${color}${diskio_read /dev/sdf}
+${voffset 3}${offset 6}${color1}sde${alignr 5}${color}${diskio_read /dev/sde}
 # :::::::::::: device write
 # ------- light panel top edge    -------
 ${image ~/conky/monochrome/images/common/blue-panel-light.png -p 0,340}\
@@ -125,7 +125,7 @@ ${voffset 3}${offset 6}${color1}enp0s${alignr 5}${color}${template1 to_bytes\ ${
 ${voffset 3}${offset 6}${color1}sda${alignr 5}${color}${diskio_write /dev/sda}
 ${voffset 3}${offset 6}${color1}sdb${alignr 5}${color}${diskio_write /dev/sdb}
 ${voffset 3}${offset 6}${color1}sdd${alignr 5}${color}${diskio_write /dev/sdd}
-${voffset 3}${offset 6}${color1}sdf${alignr 5}${color}${diskio_write /dev/sdf}
+${voffset 3}${offset 6}${color1}sde${alignr 5}${color}${diskio_write /dev/sde}
 # :::::::::::: filesystems
 # ------- light panel top edge    -------
 ${image ~/conky/monochrome/images/common/blue-panel-light.png -p 0,433}\
@@ -178,6 +178,20 @@ ${voffset 3}${offset 6}${color1}cpu${alignr 5}${color}${template2 hwmon\ atk0110
 ${voffset 3}${offset 6}${color1}top${alignr 5}${color}${template2 hwmon\ atk0110\ fan\ 2 400 2300}${hwmon atk0110 fan 2} rpm
 ${voffset 3}${offset 6}${color1}back${alignr 5}${color}${template2 hwmon\ atk0110\ fan\ 4 400 2300}${hwmon atk0110 fan 4} rpm
 # :::::::::::: now playing
+# ------- light panel top edge    -------
+${image ~/conky/monochrome/images/common/blue-panel-light.png -p 0,760}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-top-left.png -p 0,760}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-top-right.png -p 88,760}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 95,760}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-bottom-left.png -p 0,899}\
+${image ~/conky/monochrome/images/common/blue-panel-light-edge-bottom-right.png -p 88,899}\
+${image ~/conky/monochrome/images/common/blank-panel.png -p 0,906}\
+# ------- light panel bottom edge -------
+${if_existing /tmp/conky/musicplayer.status off}\
+${voffset 120}\
+${voffset 3}${offset 6}${color1}now playing
+${voffset 3}${offset 6}${color}${scroll wait 14 2 1 no player running}
+${else}\
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
 # ------- light panel top edge    -------
 ${image ~/conky/monochrome/images/common/yellow-panel-light.png -p 0,760}\
@@ -188,22 +202,13 @@ ${image ~/conky/monochrome/images/common/yellow-panel-light-edge-bottom-left.png
 ${image ~/conky/monochrome/images/common/yellow-panel-light-edge-bottom-right.png -p 88,899}\
 ${image ~/conky/monochrome/images/common/blank-panel.png -p 0,906}\
 # ------- light panel bottom edge -------
-${else}\
-# ------- light panel top edge    -------
-${image ~/conky/monochrome/images/common/blue-panel-light.png -p 0,760}\
-${image ~/conky/monochrome/images/common/blue-panel-light-edge-top-left.png -p 0,760}\
-${image ~/conky/monochrome/images/common/blue-panel-light-edge-top-right.png -p 88,760}\
-${image ~/conky/monochrome/images/common/blank-panel.png -p 95,760}\
-${image ~/conky/monochrome/images/common/blue-panel-light-edge-bottom-left.png -p 0,899}\
-${image ~/conky/monochrome/images/common/blue-panel-light-edge-bottom-right.png -p 88,899}\
-${image ~/conky/monochrome/images/common/blank-panel.png -p 0,906}\
-# ------- light panel bottom edge -------
 ${endif}\
 ${image ~/conky/monochrome/java/albumArt/nowPlaying -p 3,763 -s 89x89 -n}\
 ${voffset 104}\
 ${voffset 3}${offset 6}${template3}${scroll wait 14 2 1 ${cat /tmp/conky/musicplayer.title}}
 ${voffset 3}${offset 6}${template3}${scroll wait 14 2 1 ${cat /tmp/conky/musicplayer.album}}
 ${voffset 3}${offset 6}${template3}${scroll wait 14 2 1 ${cat /tmp/conky/musicplayer.artist}}
+${endif}\
 # :::::::::::: transmission
 # ------- light panel top edge    -------
 ${image ~/conky/monochrome/images/common/blue-panel-light.png -p 0,912}\

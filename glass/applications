@@ -94,9 +94,9 @@ ${endif}\
 #                                   song with no album art
 #                                   no music player is running
 #                                   dependent java dbus listener application is not running
-${if_existing /tmp/conky/musicplayer.name}\
+${if_existing /tmp/conky/musicplayer.status}\
 # :::::::: no player available
-${if_existing /tmp/conky/musicplayer.name Nameless}\
+${if_existing /tmp/conky/musicplayer.status off}\
 ${lua_parse draw_image ~/conky/monochrome/images/glass/blue-sound-wave.png 0 0}\
 # ------- panel | light blue | top     -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/blue-panel-light.png 41 0}\
