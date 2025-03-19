@@ -17,10 +17,12 @@ jobs:
         run: |
           echo ':::::::: build the java applications'
           cd builder/java-tools
-          mvn clean package
+          mvn clean package site
+          mvn site:deploy
           mkdir -p ${GITHUB_WORKSPACE}/java
           echo ":::::::: deploy apps to the project's java folder"
-          cp -vrn */target/{lib,*.jar,*.properties,*.xml} ${GITHUB_WORKSPACE}/java
+          cp -vr */target/{lib,*.jar,*.properties,*.xml} ${GITHUB_WORKSPACE}/java
+          cp -r target/docs ${GITHUB_WORKSPACE}/java
       - name: Create archive
         run: |
           shopt -s extglob
