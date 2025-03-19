@@ -12,6 +12,9 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.concurrent.ExecutorService;
 
+/**
+ * Writes the state of a music player object to disk
+ */
 public class MusicPlayerWriter {
     private static final Logger logger = LoggerFactory.getLogger(MusicPlayerWriter.class);
     /**
@@ -27,9 +30,12 @@ public class MusicPlayerWriter {
     public static final String ALBUM_ART_SYMLINK_FILENAME = "nowPlaying";
 
     /**
-     * Directory to write all music player track info files to
+     * Directory to write all music player track info metadata files to
      */
     private final Path outputDir;
+    /**
+     * Album art image cache directory
+     */
     private final Path albumArtDir;
     private final ExecutorService webArtExecutor;
 
@@ -45,12 +51,43 @@ public class MusicPlayerWriter {
      * @param player music player metadata
      */
     public void writePlayerState(MusicPlayer player) {
+        String albumArtFilePath = resolveAlbumArt(player.getAlbumArtURL());
+        logger.debug("writing track details for {}", player.getTitle());
+
+        if (player.getStatus().equals(MusicPlayer.Status.OFF)) {
+            deleteMetadataFiles(outputDir);
+            writeFile("status", player.getStatus().toString().toLowerCase());
+        } else {
+            writeFile("name", player.getPlayerName());
+            // convert playback status enum to 'Title Case'
+            String playbackStatus = player.getPlaybackStatus().toString().toLowerCase();
+            playbackStatus = playbackStatus.substring(0,1).toUpperCase() + playbackStatus.substring(1);
+            writeFile("playbackStatus", playbackStatus);
+            writeFile("status", player.getStatus().toString().toLowerCase());
+            writeFile(TRACK_PREFIX + "artist", player.getArtist());
+            writeFile(TRACK_PREFIX + "title", player.getTitle());
+            writeFile(TRACK_PREFIX + "album", player.getAlbum());
+            writeFile(TRACK_PREFIX + "genre", player.getGenre());
+            writeFile(TRACK_PREFIX + ALBUM_ART_PATH_FILENAME, albumArtFilePath);
+        }
+
+        logger.debug("wrote track info to disk");
+    }
+
+    /**
+     * Returns the location of the album art on disk.<br>
+     * If the album art is available on the web, the file will be downloaded to disk.
+     * @param url URL of the album image file
+     * @return the full file path on disk to the album art image file, otherwise <code>null</code> if no album art
+     * is available for this track
+     */
+    private String resolveAlbumArt(String url) {
         // is the album art in the local file system or on the web?
         String albumArtFilePath = null;
 
         try {
-            if (player.getAlbumArtURL() != null) {
-                URL coverArtURL = new URL(player.getAlbumArtURL());
+            if (url != null) {
+                URL coverArtURL = new URL(url);
 
                 // image is in the local file system (ex. file://folder/image.jpg)
                 if (coverArtURL.getProtocol().equals("file")) {
@@ -83,26 +120,7 @@ public class MusicPlayerWriter {
             logger.error("incorrect album art URL given by the music player", e);
         }
 
-        logger.debug("writing track details for {}", player.getTitle());
-
-        if (player.getStatus().equals(MusicPlayer.Status.OFF)) {
-            deleteMusicFiles(outputDir);
-            writeFile("status", player.getStatus().toString().toLowerCase());
-        } else {
-            writeFile("name", player.getPlayerName());
-            // convert playback status enum to 'Title Case'
-            String playbackStatus = player.getPlaybackStatus().toString().toLowerCase();
-            playbackStatus = playbackStatus.substring(0,1).toUpperCase() + playbackStatus.substring(1);
-            writeFile("playbackStatus", playbackStatus);
-            writeFile("status", player.getStatus().toString().toLowerCase());
-            writeFile(TRACK_PREFIX + "artist", player.getArtist());
-            writeFile(TRACK_PREFIX + "title", player.getTitle());
-            writeFile(TRACK_PREFIX + "album", player.getAlbum());
-            writeFile(TRACK_PREFIX + "genre", player.getGenre());
-            writeFile(TRACK_PREFIX + ALBUM_ART_PATH_FILENAME, albumArtFilePath);
-        }
-
-        logger.debug("wrote track info to disk");
+        return albumArtFilePath;
     }
 
     /**
@@ -141,10 +159,10 @@ public class MusicPlayerWriter {
     }
 
     /**
-     * Deletes all the metadata music player files in the given directory
+     * Deletes all the music player metadata files in the given directory
      * @param dir directory to delete files from
      */
-    public static void deleteMusicFiles(Path dir) {
+    public static void deleteMetadataFiles(Path dir) {
         try {
             Files.list(dir)
                  .filter(p -> p.getFileName().toString().startsWith(MusicPlayerWriter.FILE_PREFIX))

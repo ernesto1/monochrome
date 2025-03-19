@@ -7,9 +7,9 @@
   <version>1.16.0</version>
   <packaging>pom</packaging>
   
-  <name>Applications for Monochrome Conky</name>
+  <name>Monochrome Conky Java Suite</name>
   <url>https://github.com/ernesto1/monochrome/tree/master/builder/java-tools</url>
-  <description>Suite of java applications for building and supporting the Monochrome Conky</description>
+  <description>Set of java applications for building and supporting the Monochrome Conky</description>
 
   <!-- a project with modules is note as multi module or aggregator project  -->
   <modules>

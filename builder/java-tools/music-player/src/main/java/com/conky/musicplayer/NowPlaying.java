@@ -31,8 +31,10 @@ public class NowPlaying {
 
     public static void main(String[] args) throws IOException, DBusException, InterruptedException {
         // edit the output directories from the properties file: replace ~ with the user's home directory
+        logger.info("reading application configuration from properties file");
         Properties properties = new Properties();
         properties.load(NowPlaying.class.getResourceAsStream("/application.properties"));
+        properties.list(System.out);
         String dir = properties.getProperty("outputDir");
         exitIfPropertyIsEmpty("outputDir", dir);
         dir = replaceTilde(dir);
@@ -100,8 +102,9 @@ public class NowPlaying {
         // shut down hook for deleting the conky music player output files
         Thread deleteOutputFiles = new Thread(() -> {
             logger.info("deleting all output files");
+            MusicPlayerWriter.deleteMetadataFiles(outputDir);
+
             try {
-                MusicPlayerWriter.deleteMusicFiles(outputDir);
                 Path symlink = albumArtDir.resolve(MusicPlayerWriter.ALBUM_ART_SYMLINK_FILENAME);
                 logger.debug("deleting the now playing symlink file: {}", symlink);
                 Files.deleteIfExists(symlink);

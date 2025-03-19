@@ -1,5 +1,5 @@
-## How to use
-List the available conky templates:
+## How to generate conky configurations
+List the available conky collections:
 ```shell
 $ cd ~/conky/monochrome/builder/freemarker
 $ ls -1d !(lib)/
@@ -7,7 +7,6 @@ blocks/
 classic/
 compact/
 glass/
-impact/
 widgets/
 widgets-dock/
 ```

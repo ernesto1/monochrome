@@ -39,12 +39,14 @@ public class ConkyTemplate {
         // ::: create the freemarker data model
         // load hardware data model
         String system = namespace.get("system").toString().toLowerCase();
+
         InputStream globalSettingsStream = new FileInputStream(new File(TEMPLATE_ROOT_DIR, "hardware-" + system + ".yml"));
         Yaml yaml = new Yaml();
         Map<String, Object> root = yaml.load(globalSettingsStream);
         root.put("conky", conky);               // conky theme being configured
         root.put("system", system);
-        root.put("isVerbose", ! namespace.getBoolean("nonverbose"));
+        boolean isVerbose = ! namespace.getBoolean("nonverbose");
+        root.put("isVerbose", isVerbose);
 
         // load conky theme data model
         File conkyTemplateDir = new File(TEMPLATE_ROOT_DIR, conky);
@@ -57,16 +59,26 @@ public class ConkyTemplate {
             java.lang.System.exit(0);
         }
 
+        logger.info("generating configuration files out of the freemarker templates");
+        String setting = String.format("%12s: {}", "conky");
+        logger.info(setting, conky);
+        setting = String.format("%12s: {}", "system");
+        logger.info(setting, system);
+        setting = String.format("%12s: {}", "isVerbose");
+        logger.info(setting, isVerbose);
+
         // select desired color
-        logger.info("creating configuration files for the '{}' conky", conky);
         String color = namespace.getString("color");
+        setting = String.format("%12s: {}", "color scheme");
+        logger.info(setting, color);
 
         if (colorPalettes.containsKey(color)) {
-            logger.info("applying the '{}' color scheme", color);
             root.putAll((Map<String, Object>) colorPalettes.get(color));
             logger.debug("global + theme data model: {}", root);
         } else {
-            logger.error("'{}' color scheme is not configured for this conky, available colors are: {}", color, colorPalettes.keySet());
+            logger.error("the '{}' color scheme is not configured for this conky, available colors are: {}",
+                         color,
+                         colorPalettes.keySet());
             java.lang.System.exit(1);
         }
 
@@ -83,7 +95,7 @@ public class ConkyTemplate {
 
         // :::  freemarker setup
         // configure freemarker engine
-        Configuration cfg = createFreemarkerConfiguration(TEMPLATE_ROOT_DIR);
+        Configuration cfg = createFreemarkerConfiguration();
         // add user defined directives
         root.put("outputFileDirective", new OutputFileDirective(OUTPUT_DIR));
         logger.info("processing template files:");
@@ -126,9 +138,8 @@ public class ConkyTemplate {
         parser.addArgument("--system").type(Arguments.caseInsensitiveEnumType(System.class))
                                                    .setDefault(System.DESKTOP)
                                                    .help("target system (if available)");
-        Namespace namespace = parser.parseArgsOrFail(args);
 
-        return namespace;
+        return parser.parseArgsOrFail(args);
     }
 
     private static void validateArguments(String conky) {
@@ -139,21 +150,21 @@ public class ConkyTemplate {
         }
     }
 
-    private static Configuration createFreemarkerConfiguration(File templateDirectory) throws IOException {
+    private static Configuration createFreemarkerConfiguration() throws IOException {
         // Create your configuration instance and specify if up to what FreeMarker version (here 2.3.29) do you want
         // to apply the fixes that are not 100% backward-compatible. See the Configuration JavaDoc for details.
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_29);
 
         // Specify the source where the template files come from. Here I set a plain directory for it,
         // but non-file-system sources are possible too:
-        cfg.setDirectoryForTemplateLoading(templateDirectory);
+        cfg.setDirectoryForTemplateLoading(TEMPLATE_ROOT_DIR);
 
         // From here we will set the settings recommended for new projects.
         // These aren't the defaults for backward compatibility.
 
         // Set the preferred charset template files are stored in. UTF-8 is a good choice in most applications.
         cfg.setDefaultEncoding("UTF-8");
-        // change interpolation syntax from ${x} to [=x], this is because conky uses ${..} for its variables
+        // change interpolation syntax from ${x} to [=x], this is because conky uses ${...} for its variables
         cfg.setInterpolationSyntax(Configuration.SQUARE_BRACKET_INTERPOLATION_SYNTAX);
         // Sets how errors will appear.
         // During web page *development* TemplateExceptionHandler.HTML_DEBUG_HANDLER is better.
