@@ -1,0 +1,17 @@
+<project name="Conky Freemarker Configuration" xmlns="http://maven.apache.org/DECORATION/1.6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/DECORATION/1.6.0 http://maven.apache.org/xsd/decoration-1.6.0.xsd">
+    <bannerLeft>
+        <name>Conky Freemarker Configuration</name>
+        <src>images/logo.png</src>
+    </bannerLeft>
+    <bannerRight>
+        <src>images/monochromeLogo.png</src>
+    </bannerRight>
+    <body>
+        <menu ref="parent"/>
+        <menu name="Quickstart">
+            <item name="Overview" href="index.html"/>
+            <item name="How to use" href="instructions.html"/>
+        </menu>
+        <menu ref="reports"/>
+    </body>
+</project>
