@@ -16,7 +16,7 @@ conky.config = {
            width = border * 2 + 83>
   minimum_width = [=width],      -- conky will add an extra pixel to this
   maximum_width = [=width],
-  minimum_height = 982,
+  minimum_height = 1029,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
 
@@ -121,6 +121,14 @@ ${voffset [=7 + gap]}\
 ${voffset 3}${offset [=border]}${color1}[=partition.name]${alignr [=lborder]}${color}${template1 fs_used_perc\ [=partition.path] [=threshold.filesystem]}${fs_used_perc [=partition.path]}%
 </#list>
 </#list>
+# :::::::::::: total network usage
+<#assign height = 2*16+7>
+<@panel.panel x=0 y=y height=height width=width/>
+<#assign y += height + gap>
+${voffset [=7 + gap]}\
+<#-- TODO handle multiple network devices -->
+${voffset 3}${offset [=border]}${color1}up${alignr [=lborder]}${color}${totalup [=networkDevices[0].name]}
+${voffset 3}${offset [=border]}${color1}down${alignr [=lborder]}${color}${totaldown [=networkDevices[0].name]}
 # :::::::::::: temperatures
 <#assign height = 9*16+7>
 <@panel.panel x=0 y=y height=height width=width/>
