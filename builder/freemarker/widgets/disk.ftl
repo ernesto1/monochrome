@@ -2,7 +2,7 @@
          x = 1285 - width >   <#-- x is the x coordinate of the first disk conky -->
 <#list hardDisks as hardDisk>
 <#assign diskName = hardDisk.fileSuffix!hardDisk.device>
-<@outputFileDirective file="disk-" + diskName>
+<@outputFileDirective filename="disk-" + diskName>
 conky.config = {
   update_interval = 2,  -- update interval in seconds
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)

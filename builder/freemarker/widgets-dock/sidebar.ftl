@@ -10,7 +10,7 @@ conky.config = {
   -- window alignment
   alignment = 'middle_left',     -- top|middle|bottom_left|middle|right
   gap_x = 0,                     -- same as passing -x at command line
-  <#if system == "desktop"><#assign yOffset = 100><#else><#assign yOffset = -15></#if>
+  <#if device == "desktop"><#assign yOffset = 100><#else><#assign yOffset = -15></#if>
   gap_y = [=yOffset],
 
   -- window settings
@@ -22,7 +22,7 @@ conky.config = {
            width = lso + 90>  <#-- width of the sidebar image -->
   <#if isVerbose><#assign width += 53></#if>
   minimum_width = [=width],
-  <#if system == "desktop"><#assign height = 1135><#else><#assign height = 681></#if>
+  <#if device == "desktop"><#assign height = 1135><#else><#assign height = 681></#if>
   minimum_height = [=height?c],
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -108,7 +108,7 @@ ${font}${voffset -7}\<#rt>
 </#if>
 ]],
 
-<#if system == "laptop" >
+<#if device == "laptop" >
   -- color coded hwmon entry: index/device type index threshold
   template7 = [[${if_match ${hwmon \1 \2 \3} > \4}${color3}${else}${color4}${endif}${hwmon \1 \2 \3}]], 
     
@@ -119,7 +119,7 @@ ${font}${voffset -7}\<#rt>
 
 conky.text = [[
 <#assign y = 0>
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-sidebar-[=system].png -p 0,[=y]}\
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-sidebar-[=device].png -p 0,[=y]}\
 <#assign y += tso>
 # :::::::::::::::::::: cpu
 <#assign y += 9>
@@ -159,27 +159,27 @@ ${font}${voffset -5}\
 ${voffset 4}${offset [=lso + 6]}${color2}${if_match ${swapperc} >= [=threshold.swap]}${color3}${endif}${swapbar 3, 45}<#if isVerbose>${voffset -2}${goto [=lso + 72]}${font}${color}${swapperc}%<#else>${font}${voffset -2}</#if>
 # :::::::::::::::::::: network
 <#-- TODO handle multiple network devices, for now only the main device (wifi) in a laptop is used -->
-<#assign device = networkDevices?first>
-<#if system == "laptop">
-${if_up [=device.name]}\
+<#assign netDevice = networkDevices?first>
+<#if device == "laptop">
+${if_up [=netDevice.name]}\
 <#assign ySection = y,
          y += 9>
-${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-[=device.type].png -p [=lso + 5],[=y]}\
-${voffset 49}${offset [=lso + 6]}${color2}${if_match ${wireless_link_qual_perc [=device.name]} < 30}${color3}${endif}${wireless_link_bar 3,45 [=device.name]}
+${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-[=netDevice.type].png -p [=lso + 5],[=y]}\
+${voffset 49}${offset [=lso + 6]}${color2}${if_match ${wireless_link_qual_perc [=netDevice.name]} < 30}${color3}${endif}${wireless_link_bar 3,45 [=netDevice.name]}
 <#if isVerbose>
 ${image ~/conky/monochrome/images/[=conky]/text-box-99p.png -p [=lso + 68],[=y + 15]}\
-${if_match ${wireless_link_qual_perc [=device.name]} == 100}${image ~/conky/monochrome/images/[=conky]/text-box-100p.png -p [=lso + 110],[=y + 15]}${endif}\
-${voffset -29}${goto [=lso + 72]}${color}${font1}${wireless_link_qual_perc [=device.name]}${font0}%${font}${voffset 4}
+${if_match ${wireless_link_qual_perc [=netDevice.name]} == 100}${image ~/conky/monochrome/images/[=conky]/text-box-100p.png -p [=lso + 110],[=y + 15]}${endif}\
+${voffset -29}${goto [=lso + 72]}${color}${font1}${wireless_link_qual_perc [=netDevice.name]}${font0}%${font}${voffset 4}
 <#else>
 ${font}${voffset 2}\
 </#if>
 ${else}\
-${image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-no-[=device.type].png -p [=lso + 2],[=ySection + 1]}\
+${image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-no-[=netDevice.type].png -p [=lso + 2],[=ySection + 1]}\
 ${font}${voffset 64}\
 ${endif}\
 <#assign y += 46 + 9>
 </#if>
-${if_up [=device.name]}\
+${if_up [=netDevice.name]}\
 # :: upload/download bandwith
 <#assign ySection = y,
          y += 9>
@@ -188,8 +188,8 @@ ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-internet.png -p
 ${image ~/conky/monochrome/images/[=conky]/text-box.png -p [=lso + 68],[=y + 11]}\
 ${image ~/conky/monochrome/images/[=conky]/text-box.png -p [=lso + 68],[=y + 45]}\
 </#if>
-<#assign device = networkDevices?first>
-${template3 [=device.name] [=device.maxUp?c] [=device.maxDown?c]}
+<#assign netDevice = networkDevices?first>
+${template3 [=netDevice.name] [=netDevice.maxUp?c] [=netDevice.maxDown?c]}
 ${else}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-no-internet.png -p [=lso + 2],[=ySection + 1]}\
 ${voffset 86}\
@@ -246,7 +246,7 @@ ${image ~/conky/monochrome/images/[=conky]/text-box-99p.png -p [=lso + 68],[=y +
 ${image ~/conky/monochrome/images/[=conky]/text-box-100p.png -p [=lso + 68 + 31],[=y + 15]}\
 </#if>
 <#assign y += 46 + 9>
-<#if system == "desktop" >
+<#if device == "desktop" >
 # :::::::: ati video card
 <#assign y += 9>
 ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-temp-videocard.png -p [=lso + 5],[=y]}\
@@ -272,7 +272,7 @@ ${image ~/conky/monochrome/images/[=conky]/text-box-fan.png -p [=lso + 68],[=(y 
 </#if>
 <#assign y += 46 + 9>
 </#if>
-<#if system == "laptop" >
+<#if device == "laptop" >
 # :::::::::::::::::::: power
 <#assign y += 9>
 ${voffset 64}\<#-- account for the cpu temperature widget being empty, its temp bar is printed by another conky -->

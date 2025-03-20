@@ -8,7 +8,7 @@ conky.config = {
   -- window alignment
   alignment = 'middle_left',  -- top|middle|bottom_left|right
   gap_x = 0,               -- same as passing -x at command line
-  <#if system == "desktop"><#assign yOffset = -305><#else><#assign yOffset = -225></#if><#lt>
+  <#if device == "desktop"><#assign yOffset = -305><#else><#assign yOffset = -225></#if><#lt>
   gap_y = [=yOffset],
 
   -- window settings | conky width matches the sidebar conky
@@ -49,7 +49,7 @@ conky.config = {
 
 conky.text = [[
 # :::::::: cpu
-<#if system == "desktop" >
+<#if device == "desktop" >
 ${voffset 45}${offset [=lso + 6]}${color2}${if_match ${lua get cpuTemp ${hwmon atk0110 temp 1}} > [=threshold.tempCPU]}${color3}${endif}${lua_bar 3,45 get cpuTemp}
 <#if isVerbose>
 ${voffset -29}${goto [=lso + 72]}${color}${font1}${lua get cpuTemp}${font0}°C${font}${voffset 8}

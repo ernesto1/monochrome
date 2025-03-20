@@ -102,7 +102,7 @@ ${voffset 6}${offset [=border]}${color}${scroll wait 14 3 1 ${cat /tmp/conky/mus
 ${voffset 3}${offset [=border]}${color}${scroll wait 14 3 1 ${cat /tmp/conky/musicplayer.track.album}}
 ${voffset 3}${offset [=border]}${color}${scroll wait 14 3 1 ${cat /tmp/conky/musicplayer.track.artist}}
 ${endif}\
-<#if system == "laptop">
+<#if device == "laptop">
 # ::::::::::::::::: wifi
 <#assign device = networkDevices?first>
 ${if_up [=device.name]}\
@@ -117,14 +117,14 @@ ${endif}\
 # ::::::::::::::::: system
 ${voffset 6}${offset [=border]}${color3}system
 ${voffset 3}${offset [=border]}${color1}uptime${alignr [=lborder]}${color}${uptime_short}
-<#if system == "laptop">
+<#if device == "laptop">
 ${voffset 3}${offset [=border]}${color1}${if_match "${acpiacadapter}"=="on-line"}power${else}battery${endif}${alignr [=lborder]}${color}${template2 battery_percent\ BAT0 [=threshold.bat]}${battery_percent BAT0}%
 </#if>
 <#assign packagesFile = inputDir + "/dnf.packages.formatted">
 ${voffset 3}${offset [=border]}${color1}updates${alignr [=lborder]}${color}${if_existing [=packagesFile]}${lines [=packagesFile]}${else}none${endif}
 # ::::::::::::::::: temperature
 ${voffset 6}${offset [=border]}${color3}temperature
-<#if system == "laptop">
+<#if device == "laptop">
 ${voffset 3}${offset [=border]}${color1}core 1${alignr}${color}${template1 hwmon\ coretemp\ temp\ 2 [=threshold.tempCPUCore]}${hwmon coretemp temp 2}°
 ${voffset 3}${offset [=border]}${color1}core 2${alignr}${color}${template1 hwmon\ coretemp\ temp\ 3 [=threshold.tempCPUCore]}${hwmon coretemp temp 3}°
 </#if>

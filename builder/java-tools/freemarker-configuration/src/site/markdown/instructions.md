@@ -1,5 +1,5 @@
 ## How to generate conky configurations
-List the available conky collections:
+Chose from one of the available conky collections:
 ```shell
 $ cd ~/conky/monochrome/builder/freemarker
 $ ls -1d !(lib)/
@@ -10,20 +10,22 @@ glass/
 widgets/
 widgets-dock/
 ```
-See the available color schemes for a conky:
+Chose a color schemes for it:
 ```shell
 $ java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar --conky blocks --colors
 20:52:52.680 INFO  ConkyTemplate.main:56 - available color schemes: [baltimore, nelson, grape, 
 green, hulk, ticonderoga, yellow, yotsuba]
 ```
-Generate the conky configurations for the desired system and color scheme:
+Generate the conky configurations for the desired device and color scheme:
 ```shell
-$ java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar --conky blocks --color nelson --system desktop
-20:56:26.810 INFO  ConkyTemplate.main:61 - creating configuration files for the 'blocks' conky
-20:56:26.817 INFO  ConkyTemplate.main:65 - applying the 'nelson' color scheme
-20:56:27.033 INFO  ConkyTemplate.main:89 - processing template files:
-20:56:27.034 INFO  ConkyTemplate.main:93 - > bar.ftl
-20:56:27.260 INFO  ConkyTemplate.main:93 - > transmission.ftl
-20:56:27.274 INFO  ConkyTemplate.main:93 - > sidebar.ftl
+$ java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar --conky blocks --color nelson --device desktop
+INFO  ConkyTemplate.main:61 - generating configuration files out of the freemarker templates
+INFO  ConkyTemplate.main:63 -        conky: blocks
+INFO  ConkyTemplate.main:65 -       device: desktop
+INFO  ConkyTemplate.main:67 -    isVerbose: true
+INFO  ConkyTemplate.main:72 - color scheme: nelson
+INFO  ConkyTemplate.main:100 - processing template files:
+INFO  ConkyTemplate.main:104 - > transmission.ftl
+INFO  ConkyTemplate.main:104 - > sidebar.ftl
 ```
-The configurations are written to the `/tmp/monochrome` directory.
+The configurations are written to the collection's corresponding folder in the `~/conky/monochrome` directory.

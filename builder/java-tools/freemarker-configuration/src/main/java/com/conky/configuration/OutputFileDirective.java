@@ -12,13 +12,13 @@ import java.util.Map;
  * User defined directive to create multiple files out of a single template
  */
 public class OutputFileDirective implements TemplateDirectiveModel {
-    String outputDirectory;
+    File outputDirectory;
 
     /**
      * Creates a new instance of the directive
      * @param outputDirectory path to the output directory where all configuration files are being written by this process
      */
-    public OutputFileDirective(String outputDirectory) {
+    public OutputFileDirective(File outputDirectory) {
         this.outputDirectory = outputDirectory;
     }
 
@@ -27,8 +27,8 @@ public class OutputFileDirective implements TemplateDirectiveModel {
                         Map parameters,
                         TemplateModel[] templateModels,
                         TemplateDirectiveBody body) throws TemplateException, IOException {
-        SimpleScalar file = (SimpleScalar) parameters.get("file");
-        FileWriter fileWriter = new FileWriter(new File(outputDirectory, file.getAsString()));
+        SimpleScalar filename = (SimpleScalar) parameters.get("filename");
+        FileWriter fileWriter = new FileWriter(new File(outputDirectory, filename.getAsString()));
         body.render(fileWriter);
         fileWriter.close();
     }

@@ -8,10 +8,10 @@ conky.config = {
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  <#if system == "desktop"><#assign alignment = "middle_left"><#else><#assign alignment = "middle_right"></#if>
+  <#if device == "desktop"><#assign alignment = "middle_left"><#else><#assign alignment = "middle_right"></#if>
   alignment = '[=alignment]',  -- top|middle|bottom_left|right
   gap_x = 97,
-  <#if system == "desktop"><#assign yOffset = 569><#else><#assign yOffset = 227></#if>
+  <#if device == "desktop"><#assign yOffset = 569><#else><#assign yOffset = 227></#if>
   gap_y = [=yOffset],
 
   -- window settings

@@ -6,7 +6,7 @@
   <parent>
     <groupId>com.conky.monochrome</groupId>
     <artifactId>java-tools</artifactId>
-    <version>1.16.0</version>
+    <version>1.17.0</version>
   </parent>
   
   <artifactId>freemarker-configuration</artifactId>

@@ -1,0 +1,9 @@
+:: design notes
+- each row of text adds 16 pixels (lines with a 3px voffset)
+- TODO laptop conkys: wifi power
+
+
+:: time block with clock on the right side
+
+${voffset 30}${goto 5}${color}${time %A}
+${voffset 2}${goto 5}${time %B %d}${voffset -33}${alignr}${color1}${font Promenade de la Croisette:size=40}${time %I}${font Promenade de la Croisette:size=37}:${time %M}${font0}

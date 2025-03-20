@@ -1,14 +1,7 @@
-# ::::::: create the conky configs
-# devices: desktop laptop
-color=grape &&
-device=desktop &&
-java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar --conky widgets-dock --color $color --system $device && \
-mv /tmp/monochrome/!(temperature) ~/conky/monochrome/widgets-dock && \
-sleep 2 && \
-mv /tmp/monochrome/temperature ~/conky/monochrome/widgets-dock
+::::::: target systems
+desktop and laptop support
 
-
-# ::::::: design notes
+::::::: design notes
 images should have a top/bottom border of 9px
 
 :: alignment

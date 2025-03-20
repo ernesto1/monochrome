@@ -23,7 +23,6 @@ public class ConkyTemplate {
      * Root directory with the configuration files for all themes
      */
     private static final File TEMPLATE_ROOT_DIR = new File(MONOCHROME_ROOT_DIR, "builder/freemarker");
-    private static final String OUTPUT_DIR = "/tmp/monochrome";
 
     /**
      * Parses the conky freemarker template files based on the given user inputs
@@ -38,13 +37,13 @@ public class ConkyTemplate {
 
         // ::: create the freemarker data model
         // load hardware data model
-        String system = namespace.get("system").toString().toLowerCase();
+        String device = namespace.get("device").toString().toLowerCase();
 
-        InputStream globalSettingsStream = new FileInputStream(new File(TEMPLATE_ROOT_DIR, "hardware-" + system + ".yml"));
+        InputStream globalSettingsStream = new FileInputStream(new File(TEMPLATE_ROOT_DIR, "hardware-" + device + ".yml"));
         Yaml yaml = new Yaml();
         Map<String, Object> root = yaml.load(globalSettingsStream);
         root.put("conky", conky);               // conky theme being configured
-        root.put("system", system);
+        root.put("device", device);
         boolean isVerbose = ! namespace.getBoolean("nonverbose");
         root.put("isVerbose", isVerbose);
 
@@ -56,14 +55,14 @@ public class ConkyTemplate {
         // print available colors if the option was requested by the user and exit
         if (namespace.getBoolean("colors")) {
             logger.info("available color schemes: {}", colorPalettes.keySet());
-            java.lang.System.exit(0);
+            System.exit(0);
         }
 
         logger.info("generating configuration files out of the freemarker templates");
         String setting = String.format("%12s: {}", "conky");
         logger.info(setting, conky);
-        setting = String.format("%12s: {}", "system");
-        logger.info(setting, system);
+        setting = String.format("%12s: {}", "device");
+        logger.info(setting, device);
         setting = String.format("%12s: {}", "isVerbose");
         logger.info(setting, isVerbose);
 
@@ -79,25 +78,25 @@ public class ConkyTemplate {
             logger.error("the '{}' color scheme is not configured for this conky, available colors are: {}",
                          color,
                          colorPalettes.keySet());
-            java.lang.System.exit(1);
+            System.exit(1);
         }
 
         // :::  create the output directory
-        File outputDirectory = new File(OUTPUT_DIR);
-        outputDirectory.mkdirs();   // will not throw an exception if the directory already exists
+        File outputDirectory = new File(MONOCHROME_ROOT_DIR, conky);
+        outputDirectory.mkdirs();
 
-        if (!outputDirectory.exists()) {
-            logger.error("unable to create the output directory '{}'", OUTPUT_DIR);
-            java.lang.System.exit(1);
+        if (! outputDirectory.exists()) {
+            logger.error("unable to create the output directory '{}'", outputDirectory.getPath());
+            System.exit(1);
         }
 
-        emptyDirectory(outputDirectory);
+        deleteConkyConfigs(outputDirectory);
 
         // :::  freemarker setup
         // configure freemarker engine
         Configuration cfg = createFreemarkerConfiguration();
         // add user defined directives
-        root.put("outputFileDirective", new OutputFileDirective(OUTPUT_DIR));
+        root.put("outputFileDirective", new OutputFileDirective(outputDirectory));
         logger.info("processing template files:");
 
         // ::: merge freemarker templates and the data model to create the conky configuration files
@@ -109,10 +108,35 @@ public class ConkyTemplate {
             template.process(root, out);
             out.close();
         }
+
+        deleteEmptyConfigs(outputDirectory);
     }
 
-    private static void emptyDirectory(File outputDirectory) {
-        for(File f : outputDirectory.listFiles()) {
+    /**
+     * Deletes any conky configurations that are just an empty file
+     *
+     * @param directory folder with conky configurations
+     */
+    private static void deleteEmptyConfigs(File directory) {
+        // edge case to account for templates using a directive that causes an empty config to be created,
+        // ex. widgets disk conky
+        for(File f : directory.listFiles((d, f) -> ! f.contains("."))) {
+            if (f.length() == 0) {
+                logger.warn("deleting the generated empty conky config: {}", f.getName());
+                f.delete();
+            }
+        }
+    }
+
+    /**
+     * Deletes conky configurations from the given directory
+     *
+     * @param directory folder with conky configurations
+     */
+    private static void deleteConkyConfigs(File directory) {
+        // configuration file names are expected to not have any dots '.' in them.  File names with dots are reserved
+        // for settings files such as layout.desktop.cfg or settings.cfg
+        for(File f : directory.listFiles((d, f) -> ! f.contains("."))) {
             f.delete();
         }
     }
@@ -124,8 +148,9 @@ public class ConkyTemplate {
      */
     private static Namespace processArguments(String[] args) {
         StringBuilder sb = new StringBuilder();
-        sb.append("creates conky configuration files based on freemarker templates\n")
-          .append("config files will be written to the ").append(OUTPUT_DIR).append(" directory");
+        sb.append("generates conky configuration files based on freemarker templates.\n")
+          .append("the config files are written to the conky monochrome directory (").append(MONOCHROME_ROOT_DIR).append(") ")
+          .append("under their corresponding conky collection folder.");
         ArgumentParser parser = ArgumentParsers.newFor("ConkyTemplate").build()
                                                .description(sb.toString());
         parser.addArgument("--conky").required(true).help("conky theme to create the configuration for");
@@ -135,9 +160,9 @@ public class ConkyTemplate {
                        .help("list available color schemes for the chosen conky theme");
         parser.addArgument("--nonverbose").action(Arguments.storeTrue()).setDefault(false)
               .help("create a minimal version of the conky (if the theme supports it)");
-        parser.addArgument("--system").type(Arguments.caseInsensitiveEnumType(System.class))
-                                                   .setDefault(System.DESKTOP)
-                                                   .help("target system (if available)");
+        parser.addArgument("--device").type(Arguments.caseInsensitiveEnumType(Device.class))
+                                                   .setDefault(Device.DESKTOP)
+                                                   .help("target device (if the theme supports it)");
 
         return parser.parseArgsOrFail(args);
     }
@@ -146,7 +171,7 @@ public class ConkyTemplate {
         ParameterValidator validator = new ParameterValidator(TEMPLATE_ROOT_DIR.getAbsolutePath());
 
         if (!validator.isTemplateFolderAvailable(conky)) {
-            java.lang.System.exit(1);
+            System.exit(1);
         }
     }
 

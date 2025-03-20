@@ -20,14 +20,14 @@ conky.config = {
   -- window alignment
   alignment = 'middle_right',   -- top|middle|bottom_left|right
   gap_x = 7,
-  <#if system == "desktop"><#assign yOffset = -42><#else><#assign yOffset = -26></#if>
+  <#if device == "desktop"><#assign yOffset = -42><#else><#assign yOffset = -26></#if>
   gap_y = [=yOffset],
 
   -- window settings
   <#assign width = 169>
   minimum_width = [=width],     -- conky will add an extra pixel to this
   maximum_width = [=width],
-  minimum_height = <#if system == "desktop">1354<#else>695</#if>,
+  minimum_height = <#if device == "desktop">1354<#else>695</#if>,
   own_window = true,
   own_window_type = 'desktop',  -- values: desktop (background), panel (bar)
 
@@ -62,7 +62,7 @@ conky.config = {
 
 conky.text = [[
 <#assign totalLines = 72>
-<#if system == "desktop"><#assign packageLines = 13><#else><#assign packageLines = 8></#if>
+<#if device == "desktop"><#assign packageLines = 13><#else><#assign packageLines = 8></#if>
 ${lua set_total_lines [=totalLines]}\
 # :::::::::::: package updates
 <#assign packagesFile = "/tmp/conky/dnf.packages.formatted",

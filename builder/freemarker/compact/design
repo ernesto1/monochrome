@@ -1,0 +1,6 @@
+# design notes
+- images should have a top/bottom border of 7px
+- left border for text is 6px
+- each row of text adds 16 pixels (lines with a 3px voffset)
+- each row of text adds 13 pixels (no voffset like a cat or exec command)
+- measure up to the bottom of the dot, 1px below the words

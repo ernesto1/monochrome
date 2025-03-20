@@ -10,7 +10,7 @@ conky.config = {
   gap_y = 5,
 
   -- window settings
-  <#if system == "desktop"><#assign width = 1135><#else><#assign width = 824></#if>
+  <#if device == "desktop"><#assign width = 1135><#else><#assign width = 824></#if>
   minimum_width = [=width?c],      -- conky will add an extra pixel to this
   maximum_width = [=width?c],
   minimum_height = 23,
@@ -60,7 +60,7 @@ ${goto [=x?c]}${color1}id ${color}${cat [=file]}\
 <#assign x += 2 * charWidth + charWidth + 2 * charWidth + charWidth,
          file = inputDir + "/system.cpu.wa">
 ${goto [=x?c]}${color1}wa ${color}${cat [=file]}\
-<#if system == "desktop">
+<#if device == "desktop">
 <#assign x += 2 * charWidth + charWidth + 2 * charWidth + charWidth>
 ${goto [=x?c]}${color1}used ${color}${mem}\
 <#assign x += 4 * charWidth + charWidth + 7 * charWidth + charWidth>
@@ -90,7 +90,7 @@ ${goto [=x?c]}${color1}write ${color}${diskio_write /dev/[=device.device]}\
 ${goto [=x?c]}${color1}up ${color}${upspeed [=device.name]}\
 <#assign x += 2 * charWidth + charWidth + 7 * charWidth + charWidth>
 ${goto [=x?c]}${color1}down ${color}${downspeed [=device.name]}\
-<#if system == "laptop">
+<#if device == "laptop">
 <#assign x += 4 * charWidth + charWidth + 7 * charWidth + charWidth,
          packagesFile = inputDir + "/dnf.packages.formatted">
 ${goto [=x?c]}${color1}dnf ${color}${if_existing [=packagesFile]}${lines [=packagesFile]}${else}no${endif} updates\
