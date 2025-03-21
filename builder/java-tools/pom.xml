@@ -4,7 +4,7 @@
   
   <groupId>com.conky.monochrome</groupId>
   <artifactId>java-tools</artifactId>
-  <version>1.17.0</version>
+  <version>1.18.0</version>
   <packaging>pom</packaging>
   
   <name>Monochrome Conky Java Suite</name>
@@ -13,7 +13,7 @@
 
   <!-- a project with modules is note as multi module or aggregator project  -->
   <modules>
-    <module>freemarker-configuration</module>
+    <module>configuration-generator</module>
     <module>music-player</module>
   </modules>
   

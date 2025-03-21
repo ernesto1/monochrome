@@ -12,13 +12,13 @@ widgets-dock/
 ```
 Chose a color schemes for it:
 ```shell
-$ java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar --conky blocks --colors
+$ java -jar ~/conky/monochrome/java/configuration-generator-*.jar --conky blocks --colors
 20:52:52.680 INFO  ConkyTemplate.main:56 - available color schemes: [baltimore, nelson, grape, 
 green, hulk, ticonderoga, yellow, yotsuba]
 ```
 Generate the conky configurations for the desired device and color scheme:
 ```shell
-$ java -jar ~/conky/monochrome/java/freemarker-configuration-*.jar --conky blocks --color nelson --device desktop
+$ java -jar ~/conky/monochrome/java/configuration-generator-*.jar --conky blocks --color nelson --device desktop
 INFO  ConkyTemplate.main:61 - generating configuration files out of the freemarker templates
 INFO  ConkyTemplate.main:63 -        conky: blocks
 INFO  ConkyTemplate.main:65 -       device: desktop
