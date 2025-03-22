@@ -6,6 +6,7 @@ import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 import net.sourceforge.argparse4j.ArgumentParsers;
 import net.sourceforge.argparse4j.impl.Arguments;
+import net.sourceforge.argparse4j.inf.ArgumentGroup;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.MutuallyExclusiveGroup;
 import net.sourceforge.argparse4j.inf.Namespace;
@@ -18,24 +19,32 @@ import java.util.Map;
 
 public class ConkyTemplate {
     private static final Logger logger = LoggerFactory.getLogger(ConkyTemplate.class);
-    private static final File MONOCHROME_ROOT_DIR = new File(java.lang.System.getProperty("user.home"), "conky/monochrome");
+    private static final File MONOCHROME_ROOT_DIR = new File(System.getProperty("user.home"), "conky/monochrome");
     /**
      * Root directory with the configuration files for all themes
      */
     private static final File TEMPLATE_ROOT_DIR = new File(MONOCHROME_ROOT_DIR, "builder/freemarker");
 
     /**
-     * Parses the conky freemarker template files based on the given user inputs
+     * Parses the conky freemarker template files based on the user inputs
      * @param args arguments to the java application
      * @throws IOException if an input file is not available
      * @throws TemplateException if a freemarker error occurs while processing the templates
      */
     public static void main(String[] args) throws IOException, TemplateException {
         Namespace namespace = processArguments(args);
-        String conky = namespace.getString("conky");
-        validateArguments(conky);
+
+        // if the --list argument was provided, list available conky collections and exit
+        if (namespace.getBoolean("list")) {
+            for (File f : TEMPLATE_ROOT_DIR.listFiles((f) -> f.isDirectory() && ! f.getName().contentEquals("lib") )) {
+                System.out.println(f.getName());
+            }
+            System.exit(0);
+        }
 
         // ::: create the freemarker data model
+        String conky = namespace.getString("conky");
+        validateArguments(conky);
         // load hardware data model
         String device = namespace.get("device").toString().toLowerCase();
 
@@ -52,9 +61,9 @@ public class ConkyTemplate {
         InputStream colorPaletteStream = new FileInputStream(new File(conkyTemplateDir, "colorPalette.yml"));
         Map<String, Object> colorPalettes = yaml.load(colorPaletteStream);
 
-        // print available colors if the option was requested by the user and exit
+        // if the --colors argument was given, print available colors and exit
         if (namespace.getBoolean("colors")) {
-            logger.info("available color schemes: {}", colorPalettes.keySet());
+            System.out.println("available color schemes: " + colorPalettes.keySet());
             System.exit(0);
         }
 
@@ -148,21 +157,31 @@ public class ConkyTemplate {
      */
     private static Namespace processArguments(String[] args) {
         StringBuilder sb = new StringBuilder();
-        sb.append("generates conky configuration files based on freemarker templates.\n")
-          .append("the config files are written to the conky monochrome directory (").append(MONOCHROME_ROOT_DIR).append(") ")
-          .append("under their corresponding conky collection folder.");
+        sb.append("generates configuration files for a conky collection based on freemarker templates\n")
+          .append("the config files are written to the collection's folder in the conky monochrome directory (").append(MONOCHROME_ROOT_DIR).append(") ");
         ArgumentParser parser = ArgumentParsers.newFor("ConkyTemplate").build()
                                                .description(sb.toString());
-        parser.addArgument("--conky").required(true).help("conky theme to create the configuration for");
+        parser.usage("${prog} [-h] (--list | --conky CONKY [--colors | --color COLOR] [--nonverbose] [--device {DESKTOP,LAPTOP}] )");
+        MutuallyExclusiveGroup listOrGenerate = parser.addMutuallyExclusiveGroup().required(true);
+        listOrGenerate.addArgument("--list").action(Arguments.storeTrue()).setDefault(false).help("list the available conky themes");
+        listOrGenerate.addArgument("--conky").help("conky theme to generate configurations for");
         MutuallyExclusiveGroup colorParameters = parser.addMutuallyExclusiveGroup();
-        colorParameters.addArgument("--color").help("color scheme to apply to the config");
         colorParameters.addArgument("--colors").action(Arguments.storeTrue()).setDefault(false)
                        .help("list available color schemes for the chosen conky theme");
-        parser.addArgument("--nonverbose").action(Arguments.storeTrue()).setDefault(false)
-              .help("create a minimal version of the conky (if the theme supports it)");
-        parser.addArgument("--device").type(Arguments.caseInsensitiveEnumType(Device.class))
-                                                   .setDefault(Device.DESKTOP)
-                                                   .help("target device (if the theme supports it)");
+        colorParameters.addArgument("--color").help("color scheme to apply to the config");
+        ArgumentGroup optionalParameters = parser.addArgumentGroup("optional conky build settings (not all themes support them)");
+        optionalParameters.addArgument("--nonverbose").action(Arguments.storeTrue()).setDefault(false)
+                          .help("create a minimalistic version of the conky");
+        optionalParameters.addArgument("--device").type(Arguments.caseInsensitiveEnumType(Device.class))
+                          .setDefault(Device.DESKTOP)
+                          .help("target device to create conky for, default is DESKTOP");
+        sb = new StringBuilder();
+        sb.append("some examples:\n\n");
+        sb.append("list all available conky themes\n\n");
+        sb.append("\tjava -jar configuration-generator-*.jar --list\n\n");
+        sb.append("generate the blocks conky theme with the green color scheme\n\n");
+        sb.append("\tjava -jar configuration-generator-*.jar --conky blocks --color green");
+        parser.epilog(sb.toString());
 
         return parser.parseArgsOrFail(args);
     }
