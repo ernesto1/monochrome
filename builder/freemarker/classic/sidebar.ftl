@@ -77,12 +77,12 @@ ${voffset 3}${offset [=border]}${color1}so${alignr [=lborder]}${color}${cat /tmp
 ${voffset 3}${offset [=border]}${color1}swap${alignr [=lborder]}${color}${template1 swapperc [=threshold.swap]}${swap}
 # ::::::::::::::::: i/o
 ${voffset 6}${offset [=border]}${color3}device i/o
-<#assign device = networkDevices?first>
-${voffset 3}${offset [=border]}${color1}up${alignr [=lborder]}${color}${upspeed [=device.name]}
-${voffset 3}${offset [=border]}${color1}down${alignr [=lborder]}${color}${downspeed [=device.name]}
-<#assign device = hardDisks?first>
-${voffset 3}${offset [=border]}${color1}read${alignr [=lborder]}${color}${diskio_read /dev/[=device.device]}
-${voffset 3}${offset [=border]}${color1}write${alignr [=lborder]}${color}${diskio_write /dev/[=device.device]}
+<#assign netDevice = networkDevices?first>
+${voffset 3}${offset [=border]}${color1}up${alignr [=lborder]}${color}${upspeed [=netDevice.name]}
+${voffset 3}${offset [=border]}${color1}down${alignr [=lborder]}${color}${downspeed [=netDevice.name]}
+<#assign disk = hardDisks?first>
+${voffset 3}${offset [=border]}${color1}read${alignr [=lborder]}${color}${diskio_read /dev/[=disk.device]}
+${voffset 3}${offset [=border]}${color1}write${alignr [=lborder]}${color}${diskio_write /dev/[=disk.device]}
 # ::::::::::::::::: filesystems
 ${voffset 6}${offset [=border]}${color3}filesystems
 <#list hardDisks as hardDisk>
@@ -104,14 +104,14 @@ ${voffset 3}${offset [=border]}${color}${scroll wait 14 3 1 ${cat /tmp/conky/mus
 ${endif}\
 <#if device == "laptop">
 # ::::::::::::::::: wifi
-<#assign device = networkDevices?first>
-${if_up [=device.name]}\
+<#assign netDevice = networkDevices?first>
+${if_up [=netDevice.name]}\
 # shift the y offset further down in order to move the music album art
 ${voffset 6}${offset [=border]}${color3}wifi
-${voffset 3}${offset [=border]}${color1}net ${color}${scroll wait 10 3 1 ${wireless_essid [=device.name]}}
-${voffset 3}${offset [=border]}${color1}strength${alignr [=lborder]}${color}${template2 wireless_link_qual_perc\ [=device.name] [=threshold.wifi]}${wireless_link_qual_perc [=device.name]}%
-${voffset 3}${offset [=border]}${color1}bit${alignr [=lborder]}${color}${wireless_bitrate [=device.name]}
-${voffset 3}${offset [=border]}${color1}channel${alignr [=lborder]}${color}${wireless_channel [=device.name]}
+${voffset 3}${offset [=border]}${color1}net ${color}${scroll wait 10 3 1 ${wireless_essid [=netDevice.name]}}
+${voffset 3}${offset [=border]}${color1}strength${alignr [=lborder]}${color}${template2 wireless_link_qual_perc\ [=netDevice.name] [=threshold.wifi]}${wireless_link_qual_perc [=netDevice.name]}%
+${voffset 3}${offset [=border]}${color1}bit${alignr [=lborder]}${color}${wireless_bitrate [=netDevice.name]}
+${voffset 3}${offset [=border]}${color1}channel${alignr [=lborder]}${color}${wireless_channel [=netDevice.name]}
 ${endif}\
 </#if>
 # ::::::::::::::::: system
