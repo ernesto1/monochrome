@@ -1,7 +1,7 @@
 ## How to generate conky configurations
 Chose from one of the available conky collections:
 ```shell
-$ java -jar ~/conky/monochrome/java/configuration-generator-1.18.0.jar --list
+$ java -jar ~/conky/monochrome/java/configuration-generator-*.jar --list
 collection   | color schemes
 ------------ | -------------
 bar          | nelson, grape

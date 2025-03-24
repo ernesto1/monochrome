@@ -25,6 +25,7 @@ public class ConkyTemplate {
      * Root directory with the configuration files for all themes
      */
     private static final File TEMPLATE_ROOT_DIR = new File(MONOCHROME_ROOT_DIR, "builder/freemarker");
+    private static final String COLOR_PALETTE_FILENAME = "colorPalette.yml";
     private static Yaml yaml = new Yaml();
 
     /**
@@ -36,59 +37,42 @@ public class ConkyTemplate {
     public static void main(String[] args) throws TemplateException, IOException {
         Namespace namespace = processArguments(args);
 
-        // if the --list argument was provided, list available conky collections with their color schemes and exit
+        // if the --list argument was provided, list available conky collections and exit
         if (namespace.getBoolean("list")) {
-            System.out.println(String.format("%-12s | %s", "collection", "color schemes"));
-            System.out.println("-".repeat(12) + " | " + "-".repeat(13));
-            File[] collections = TEMPLATE_ROOT_DIR.listFiles((f) -> f.isDirectory() && ! f.getName().contentEquals("lib"));
-            Arrays.sort(collections);
-
-            for (File f : collections ) {
-                String conky = f.getName();
-                Map<String, Object> colorPalettes = loadColorPalettes(conky);
-                String colors = colorPalettes.keySet().toString();
-                System.out.println(String.format("%-12s | %s", conky, colors.substring(1, colors.length() - 1)));
-            }
-
+            listConkyCollections();
             System.exit(0);
         }
 
-        // ::: create the freemarker data model
         String conky = namespace.getString("conky");
         validateArguments(conky);
-        // load hardware data model
         String device = namespace.get("device").toString().toLowerCase();
         boolean isVerbose = ! namespace.getBoolean("nonverbose");
-        Map<String, Object> root = null;
-
-        try (InputStream hardwareSettingsStream = new FileInputStream(new File(TEMPLATE_ROOT_DIR, "hardware-" + device + ".yml"))) {
-            root = yaml.load(hardwareSettingsStream);
-            root.put("conky", conky);               // conky theme being configured
-            root.put("device", device);
-            root.put("isVerbose", isVerbose);
-        } catch (FileNotFoundException e) {
-            logger.error("conky collection {} is missing the color palette '{}' file", conky, "colorPalette.yml");
-            System.exit(1);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
         logger.info("generating configuration files for the following setup:");
-        String setting = String.format("%-12s: {}", "conky");
-        logger.info(setting, conky);
-        setting = String.format("%-12s: {}", "device");
-        logger.info(setting, device);
-        setting = String.format("%-12s: {}", "isVerbose");
-        logger.info(setting, isVerbose);
+        String labelFormat = "%-12s: {}";
+        String propertyFormat = String.format(labelFormat, "conky");
+        logger.info(propertyFormat, conky);
+        propertyFormat = String.format(labelFormat, "device");
+        logger.info(propertyFormat, device);
+        propertyFormat = String.format(labelFormat, "isVerbose");
+        logger.info(propertyFormat, isVerbose);
         String color = namespace.getString("color");
-        setting = String.format("%-12s: {}", "color scheme");
-        logger.info(setting, color);
+        propertyFormat = String.format(labelFormat, "color scheme");
+        logger.info(propertyFormat, color);
+
+        // ::: create the freemarker data model
+        // load hardware data model
+        Map<String, Object> root = loadYamlConfig(new File(TEMPLATE_ROOT_DIR, "hardware-" + device + ".yml"));
+        root.put("conky", conky);
+        root.put("device", device);
+        root.put("isVerbose", isVerbose);
         // load conky color palette
-        Map<String, Object> colorPalettes = loadColorPalettes(conky);
+        File conkyTemplateDir = new File(TEMPLATE_ROOT_DIR, conky);
+        File colorConfig = new File(conkyTemplateDir, COLOR_PALETTE_FILENAME);
+        Map<String, Object> colorPalettes = loadYamlConfig(colorConfig);
 
         if (colorPalettes.containsKey(color)) {
             root.putAll((Map<String, Object>) colorPalettes.get(color));
-            logger.debug("global + theme data model: {}", root);
+            logger.debug("device + color scheme data model: {}", root);
         } else {
             logger.error("the '{}' color scheme is not configured for this conky, available colors are: {}",
                          color,
@@ -96,7 +80,7 @@ public class ConkyTemplate {
             System.exit(1);
         }
 
-        // :::  create the output directory
+        // :::  create the output directory if it does not exist
         File outputDirectory = new File(MONOCHROME_ROOT_DIR, conky);
         outputDirectory.mkdirs();
 
@@ -112,9 +96,10 @@ public class ConkyTemplate {
         Configuration cfg = createFreemarkerConfiguration();
         // add user defined directives
         root.put("outputFileDirective", new OutputFileDirective(outputDirectory));
-        logger.info("processing template files:");
 
         // ::: merge freemarker templates and the data model to create the conky configuration files
+        logger.info("processing template files:");
+
         for (String templateFile : new File(TEMPLATE_ROOT_DIR, conky).list((d, f) -> f.endsWith(".ftl"))) {
             logger.info("> {}", templateFile);
             Template template = cfg.getTemplate(conky + "/" + templateFile);
@@ -127,21 +112,45 @@ public class ConkyTemplate {
         deleteEmptyConfigs(outputDirectory);
     }
 
-    private static Map<String, Object> loadColorPalettes(String conky) {
-        Map<String, Object> colorPalettes = null;
-        File conkyTemplateDir = new File(TEMPLATE_ROOT_DIR, conky);
+    /**
+     * Prints to standard output a table containing the available conky collections and their color scheme options
+     */
+    private static void listConkyCollections() {
+        System.out.println(String.format("%-12s | %s", "collection", "color schemes"));
+        System.out.println("-".repeat(12) + " | " + "-".repeat(13));
+        File[] collections = TEMPLATE_ROOT_DIR.listFiles((f) -> f.isDirectory() && ! f.getName().contentEquals("lib"));
+        Arrays.sort(collections);
 
-        try (InputStream colorPaletteStream = new FileInputStream(new File(conkyTemplateDir, "colorPalette.yml"))) {
-            colorPalettes = yaml.load(colorPaletteStream);
+        for (File f : collections ) {
+            String conky = f.getName();
+            File conkyTemplateDir = new File(TEMPLATE_ROOT_DIR, conky);
+            File colorConfig = new File(conkyTemplateDir, COLOR_PALETTE_FILENAME);
+            Map<String, Object> colorPalettes = loadYamlConfig(colorConfig);
+            String colors = colorPalettes.keySet().toString();
+            System.out.println(String.format("%-12s | %s", conky, colors.substring(1, colors.length() - 1)));
+        }
+    }
+
+    /**
+     * Loads the contents of the yaml configuration file into memory.<br>
+     * Configuration files are deemed critical, any i/o error will cause the program to exit.
+     * @param yamlFile yaml configuration file to read
+     * @return the configuration as a <code>Map</code> of <code>String | Object</code> pairs.
+     */
+    private static Map<String, Object> loadYamlConfig(File yamlFile) {
+        Map<String, Object> config = null;
+
+        try (InputStream colorPaletteStream = new FileInputStream(yamlFile)) {
+            config = yaml.load(colorPaletteStream);
         } catch (FileNotFoundException e) {
-            logger.error("conky collection '{}' is missing the color palette configuration file '{}'", conky, "colorPalette.yml");
+            logger.error("configuration file '{}' is missing", yamlFile.getName());
             System.exit(1);
         } catch (IOException e) {
-            logger.error("i/o error while reading the yaml file", e);
+            logger.error("i/o error while reading the yaml file '{}'", yamlFile.getName(), e);
             System.exit(1);
         }
 
-        return colorPalettes;
+        return config;
     }
     /**
      * Deletes any conky configurations that are just an empty file
@@ -173,17 +182,21 @@ public class ConkyTemplate {
     }
 
     /**
-     * Parse the command line arguments into an arguments namespace for the application to query
+     * Parse the command line arguments into an arguments namespace for the application to query.<br>
+     * If incorrect arguments are provided, the program's usage message is printed and the program will exit on error.
      * @param args command line arguments as a <code>String</code> array
      * @return a <code>Namespace</code> object
      */
     private static Namespace processArguments(String[] args) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("generates configuration files for a conky collection based on freemarker templates\n")
-          .append("the config files are written to the collection's folder in the conky monochrome directory (")
-          .append(MONOCHROME_ROOT_DIR).append(") ");
-        ArgumentParser parser = ArgumentParsers.newFor("ConkyTemplate").build().description(sb.toString());
-        parser.usage("${prog} [-h] (--list | --conky CONKY --color COLOR [--nonverbose] [--device {DESKTOP,LAPTOP}] )");
+        String description =
+                "generates configuration files for a conky collection based on freemarker templates\n" +
+                "the config files are written to the collection's folder in the conky monochrome directory " +
+                "(" + MONOCHROME_ROOT_DIR + ")";
+        ArgumentParser parser = ArgumentParsers.newFor("ConkyTemplate").build().description(description);
+        String usage =
+                "${prog} [-h] --list\n" +
+                " ".repeat(7) + "${prog} --conky CONKY --color COLOR [--nonverbose] [--device {DESKTOP,LAPTOP}]";
+        parser.usage(usage);
         MutuallyExclusiveGroup listOrGenerate = parser.addMutuallyExclusiveGroup().required(true);
         listOrGenerate.addArgument("--list")
                       .action(Arguments.storeTrue()).setDefault(false)
@@ -198,13 +211,12 @@ public class ConkyTemplate {
                           .type(Arguments.caseInsensitiveEnumType(Device.class))
                           .setDefault(Device.DESKTOP)
                           .help("target device to create conky for, default is DESKTOP");
-        sb = new StringBuilder();
-        sb.append("some examples:\n\n");
-        sb.append("list all available conky themes\n\n");
-        sb.append("\tjava -jar configuration-generator-*.jar --list\n\n");
-        sb.append("generate the blocks conky theme with the green color scheme\n\n");
-        sb.append("\tjava -jar configuration-generator-*.jar --conky blocks --color green");
-        parser.epilog(sb.toString());
+        String examples = "some examples:\n\n" +
+                          "list all available conky themes\n\n" +
+                          "\tjava -jar configuration-generator-*.jar --list\n\n" +
+                          "generate the blocks conky theme with the green color scheme\n\n" +
+                          "\tjava -jar configuration-generator-*.jar --conky blocks --color green";
+        parser.epilog(examples);
 
         return parser.parseArgsOrFail(args);
     }
