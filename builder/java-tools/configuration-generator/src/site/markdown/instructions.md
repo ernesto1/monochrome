@@ -2,29 +2,26 @@
 Chose from one of the available conky collections:
 ```shell
 $ java -jar ~/conky/monochrome/java/configuration-generator-1.18.0.jar --list
-classic
-bar
-widgets-dock
-glass
-compact
-blocks
-widgets
+collection   | color schemes
+------------ | -------------
+bar          | nelson, grape
+blocks       | baltimore, nelson, grape, green, hulk, ticonderoga, yellow, yotsuba
+classic      | grape, yellow, ticonderoga, nelson, zara
+compact      | burgundy
+glass        | blue, baltimore
+widgets      | hulk, green
+widgets-dock | grape, yellow, purple
 ```
-Chose a color schemes for it:
+Generate the conky configurations for the desired collection and color scheme:
 ```shell
-$ java -jar ~/conky/monochrome/java/configuration-generator-*.jar --conky blocks --colors
-available color schemes: [baltimore, nelson, grape, green, hulk, ticonderoga, yellow, yotsuba]
+$ java -jar ~/conky/monochrome/java/configuration-generator-*.jar --conky blocks --color green
+INFO  ConkyTemplate.main:73 - generating configuration files for the following setup:
+INFO  ConkyTemplate.main:75 - conky       : blocks
+INFO  ConkyTemplate.main:77 - device      : desktop
+INFO  ConkyTemplate.main:79 - isVerbose   : true
+INFO  ConkyTemplate.main:82 - color scheme: green
+INFO  ConkyTemplate.main:112 - processing template files:
+INFO  ConkyTemplate.main:116 - > transmission.ftl
+INFO  ConkyTemplate.main:116 - > sidebar.ftl
 ```
-Generate the conky configurations for the desired device and color scheme:
-```shell
-$ java -jar ~/conky/monochrome/java/configuration-generator-*.jar --conky blocks --color green --device desktop
-INFO  ConkyTemplate.main:61 - generating configuration files out of the freemarker templates
-INFO  ConkyTemplate.main:63 -        conky: blocks
-INFO  ConkyTemplate.main:65 -       device: desktop
-INFO  ConkyTemplate.main:67 -    isVerbose: true
-INFO  ConkyTemplate.main:72 - color scheme: green
-INFO  ConkyTemplate.main:100 - processing template files:
-INFO  ConkyTemplate.main:104 - > transmission.ftl
-INFO  ConkyTemplate.main:104 - > sidebar.ftl
-```
-The configurations are written to the collection's corresponding folder in the `~/conky/monochrome` directory.
+The configuration files are written to the collection's corresponding folder in the `~/conky/monochrome` directory.

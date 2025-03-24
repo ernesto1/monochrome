@@ -1,0 +1,15 @@
+nelson:
+  image:
+    primaryColor: burgundy
+  colors:
+    labels: white
+    text: d9ad8a
+    warning: e32828
+
+grape:
+  image:
+    primaryColor: grape
+  colors:
+    labels: white
+    text: edcaef
+    warning: f3af5a
