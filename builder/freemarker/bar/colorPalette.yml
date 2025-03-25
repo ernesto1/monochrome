@@ -1,3 +1,11 @@
+grape:
+  image:
+    primaryColor: grape
+  colors:
+    labels: white
+    text: edcaef
+    warning: f3af5a
+
 nelson:
   image:
     primaryColor: burgundy
@@ -6,10 +14,10 @@ nelson:
     text: d9ad8a
     warning: e32828
 
-grape:
+ticonderoga:
   image:
-    primaryColor: grape
+    primaryColor: blue
   colors:
-    labels: white
-    text: edcaef
+    labels: cfebf6
+    text: f3e1de
     warning: f3af5a

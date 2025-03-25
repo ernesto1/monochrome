@@ -81,15 +81,15 @@ ${goto [=x?c]}${color1}si ${color}${cat [=file]}\
          file = inputDir + "/system.swap.write">
 ${goto [=x?c]}${color1}so ${color}${cat [=file]}\
 <#assign x += 2 * charWidth + charWidth + 8 * charWidth + charWidth,
-         device = hardDisks?first>
-${goto [=x?c]}${color1}read ${color}${diskio_read /dev/[=device.device]}\
+         disk = hardDisks?first>
+${goto [=x?c]}${color1}read ${color}${diskio_read /dev/[=disk.device]}\
 <#assign x += 4 * charWidth + charWidth + 7 * charWidth + charWidth>
-${goto [=x?c]}${color1}write ${color}${diskio_write /dev/[=device.device]}\
+${goto [=x?c]}${color1}write ${color}${diskio_write /dev/[=disk.device]}\
 <#assign x += 5 * charWidth + charWidth + 7 * charWidth + charWidth,
-         device = networkDevices?first>
-${goto [=x?c]}${color1}up ${color}${upspeed [=device.name]}\
+         netDevice = networkDevices?first>
+${goto [=x?c]}${color1}up ${color}${upspeed [=netDevice.name]}\
 <#assign x += 2 * charWidth + charWidth + 7 * charWidth + charWidth>
-${goto [=x?c]}${color1}down ${color}${downspeed [=device.name]}\
+${goto [=x?c]}${color1}down ${color}${downspeed [=netDevice.name]}\
 <#if device == "laptop">
 <#assign x += 4 * charWidth + charWidth + 7 * charWidth + charWidth,
          packagesFile = inputDir + "/dnf.packages.formatted">
