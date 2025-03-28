@@ -1,23 +1,43 @@
+baltimore:
+  image:
+    primaryColor: blue
+    secondaryColor: green
+  colors:
+    labels: cfebf6
+    text: white
+    warning: yellow
+    secondary:
+      text: f6fdd3
+
 grape:
   image:
     primaryColor: grape
+    secondaryColor: pink
   colors:
     labels: white
     text: edcaef
     warning: f3af5a
+    secondary:
+      text: 3a405a
 
 nelson:
   image:
     primaryColor: burgundy
+    secondaryColor: ochre
   colors:
     labels: white
     text: d9ad8a
     warning: e32828
+    secondary:
+      text: 3d180b
 
 ticonderoga:
   image:
     primaryColor: blue
+    secondaryColor: yellow
   colors:
     labels: cfebf6
     text: f3e1de
     warning: f3af5a
+    secondary:
+      text: 703d0a
