@@ -3,7 +3,10 @@ A collection of graphical [conky](https://github.com/brndnmtthws/conky) interfac
 Keep tabs on your system's cpu, memory, disk, network, battery usage and device temperatures.
 
 ### Blocks
-![blocks](images/screenshots/blocks.png)
+![blocks conky](images/screenshots/blocks.png)
+
+### Classic
+![classic conky](images/screenshots/classic.png)
 
 ### Compact dock
 ![compact dock](images/screenshots/compact.jpg)
@@ -89,13 +92,14 @@ Go into the conky monochrome folder
 
 Run the launch script with the theme you want:
 
-Theme| Command
----|---
-Blocks |`./launch.bash --conky blocks` 
-Compact|`./launch.bash --conky compact`
-Glass|`./launch.bash --conky glass`
+Theme        | Command
+-------------|------------------------------
+Blocks       |`./launch.bash --conky blocks`
+Classic      |`./launch.bash --conky classic --no-torrent`
+Compact	     |`./launch.bash --conky compact`
+Glass        |`./launch.bash --conky glass`
 Widgets dock | `./launch.bash --conky widgets-dock`
-Widgets | `./launch.bash --conky widgets`
+Widgets      | `./launch.bash --conky widgets`
 
 I recommend you take advantage of the launch script's `--silent` flag.  It suppresses conky logging which clutters the terminal (ex. `./launch.bash --conky compact --silent)`.
 
