@@ -53,9 +53,9 @@ conky.config = {
   draw_shades = false,      -- black shadow on text (not good if text is black)
   draw_outline = false,     -- black outline around text (not good if text is black)
   -- colors
-  default_color = '[=colors.panelText]', -- regular text
-  color1 = '[=colors.labels]',
-  color2 = '[=colors.highlight]',        -- highlight important packages
+  default_color = '[=colors.panels.text]', -- regular text
+  color1 = '[=colors.panels.labels]',
+  color2 = '[=colors.panels.highlight]',        -- highlight important packages
   color3 = '[=colors.secondary.labels]',         -- secondary panel labels
   color4 = '[=colors.secondary.text]'         -- secondary panel text
 };

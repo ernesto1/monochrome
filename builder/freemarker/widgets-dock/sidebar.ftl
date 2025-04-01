@@ -61,10 +61,9 @@ conky.config = {
 
   -- colors
   default_color = '[=colors.text]',  -- regular text
-  color1 = '[=colors.labels]',         -- text labels
+  color1 = '[=colors.secondary.labels]',         -- no disk label
   color2 = '[=colors.bar]',        -- bar
   color3 = '[=colors.warning]',        -- bar critical
-  color4 = '[=colors.widgetText]',        -- temperature text
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   --  n.b. the line break escape character '\' is not supported in templates :(
@@ -106,15 +105,7 @@ ${voffset 4}${goto [=lso + 72]}${color}${font1}${fs_used_perc \2}${font0}%${font
 <#else>
 ${font}${voffset -7}\<#rt>
 </#if>
-]],
-
-<#if device == "laptop" >
-  -- color coded hwmon entry: index/device type index threshold
-  template7 = [[${if_match ${hwmon \1 \2 \3} > \4}${color3}${else}${color4}${endif}${hwmon \1 \2 \3}]], 
-    
-  -- temperature: ${template8 index/device type index threshold}
-  template8 = [[${voffset 7}${offset [=lso + 12]}${font2}${template7 \1 \2 \3 \4}${voffset -28}${font0}°${offset 4}${voffset -4}${font2}C${font}${color}${voffset 9}]]
-</#if>
+]]
 };
 
 conky.text = [[

@@ -3,36 +3,35 @@ grape:
     primaryColor: grape
     secondaryColor: pink
   colors:
+    # sidebar
     text: white
-    labels: white
     bar: a36dec
     warning: c33855
-    widgetText: 906c9c
-    widgetTextSmall: f2c7ff   # small thin text requires darker shade to be readable
-    panelText: edcaef         # system bar default text
-    highlight: d7511c         # flag important package updates
     readGraph: 6c1c1b d7511c
     writeGraph: 51295e a36dec
+    panels:
+      labels: white
+      text: edcaef
+      highlight: d7511c         # flag important package updates
     secondary:
       labels: white
       text: f6ced1
-  border: false             # add 1px border to panel sidebar width - optional, default is 'true'
-                            # set to 'false' for sidebars that don't have an accent border
+
 yellow:
   image:
     primaryColor: yellow
     secondaryColor: green
   colors:
+    # sidebar
     text: white
-    labels: white
     bar: c15124
     warning: 1a5c00
-    widgetText: c15124
-    widgetTextSmall: 8a2700
-    panelText: 703d0a
-    highlight: forest green
     readGraph: 123e01 68a315
     writeGraph: c12504 ff3c13
+    panels:
+      labels: 8c0404
+      text: 703d0a
+      highlight: forest green
     secondary:
       labels: white
       text: a7aa71
@@ -43,15 +42,13 @@ purple:
     secondaryColor: teal
   colors:
     text: white
-    labels: white
     bar: c800ea
     warning: d70d2f
-    widgetText: 8a61ad
-    widgetTextSmall: f2c7ff
-    panelText: ff8dfd
-    highlight: a3c2bc
     readGraph: 689693 a3c2bc
     writeGraph: 8a00a1 c800ea
+    labels: white
+    panelText: ff8dfd
+    highlight: a3c2bc
     secondary:
       labels: white
       text: white
