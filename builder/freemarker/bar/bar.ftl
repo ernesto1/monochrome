@@ -50,7 +50,7 @@ conky.config = {
 };
 
 conky.text = [[
-<@panel.panel x=0 y=0 width=width height=23/>
+<@panel.panel x=0 y=0 width=width height=23 isDark=isDark/>
 <#-- char width is 6px, use single space for borders -->
 <#assign charWidth = 6, x = charWidth>
 # :::::: cpu

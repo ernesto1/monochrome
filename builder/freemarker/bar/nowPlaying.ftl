@@ -53,7 +53,7 @@ conky.text = [[
          gap = 6,
          height = 3 + width-border + 3*16 + 6,
          inputDir = "/tmp/conky/">
-<@panel.panel x=0 y=y height=height width=width/>
+<@panel.panel x=0 y=y height=height width=width isDark=isDark/>
 ${if_existing [=inputDir + "musicplayer.status"] off}\
 ${voffset [=3 + width - border + 16 + 1]}\
 ${voffset 3}${offset [=border]}${color1}now playing
