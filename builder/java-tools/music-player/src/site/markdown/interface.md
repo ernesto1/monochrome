@@ -28,3 +28,10 @@ Track info metadata:
 
 - Files with the `track` prefix are the current song details.
 - The `albumArtPath` file is optional, if no album art is available the file will not exist.
+
+### Album art symbolic link
+For songs with album art, a symbolic link is created in the image cache.  This allows conkys that don't want to use the
+lua functions, to still be able to load the image file by using vanilla conky variables.
+
+By default the file is available under `~/conky/monochrome/java/albumArt/nowPlaying`.  
+If the track has no album art, this file will not exist.

@@ -46,19 +46,22 @@ public class ConkyTemplate {
 
         String conky = namespace.getString("conky");
         validateArguments(conky);
-        String device = namespace.get("device").toString().toLowerCase();
-        boolean isVerbose = ! namespace.getBoolean("nonverbose");
-        logger.info("generating configuration files for the following setup:");
+        logger.info("generating configuration files");
         String labelFormat = "%-12s: {}";
         String propertyFormat = String.format(labelFormat, "conky");
         logger.info(propertyFormat, conky);
-        propertyFormat = String.format(labelFormat, "device");
-        logger.info(propertyFormat, device);
-        propertyFormat = String.format(labelFormat, "isVerbose");
-        logger.info(propertyFormat, isVerbose);
         String color = namespace.getString("color");
         propertyFormat = String.format(labelFormat, "color scheme");
         logger.info(propertyFormat, color);
+        String device = namespace.get("device").toString().toLowerCase();
+        propertyFormat = String.format(labelFormat, "device");
+        logger.info(propertyFormat, device);
+        boolean isVerbose = ! namespace.getBoolean("nonverbose");
+        propertyFormat = String.format(labelFormat, "isVerbose");
+        logger.info(propertyFormat, isVerbose);
+        boolean isDark = namespace.getBoolean("dark");
+        propertyFormat = String.format(labelFormat, "dark panels");
+        logger.info(propertyFormat, isDark);
 
         // :::  create the output directory if it does not exist
         File outputDirectory = new File(MONOCHROME_ROOT_DIR, conky);
@@ -76,6 +79,7 @@ public class ConkyTemplate {
         dataModel.put("conky", conky);
         dataModel.put("device", device);
         dataModel.put("isVerbose", isVerbose);
+        dataModel.put("isDark", isDark);
         // load hardware data model
         File deviceConfig = new File(TEMPLATE_ROOT_DIR, "hardware-" + device + ".yml");
 
@@ -122,7 +126,7 @@ public class ConkyTemplate {
         }
 
         // ::: merge freemarker templates and the data model to create the conky configuration files
-        logger.info("processing template files:");
+        logger.info("processing template files");
 
         for (String templateFile : conkyTemplateDir.list((d, f) -> f.endsWith(".ftl"))) {
             logger.info("> {}", templateFile);
@@ -230,7 +234,7 @@ public class ConkyTemplate {
         String usage =
                 "${prog} -h\n" +
                 " ".repeat(7) + "${prog} --list\n" +
-                " ".repeat(7) + "${prog} --conky CONKY --color COLOR [--nonverbose] [--device {DESKTOP,LAPTOP}]";
+                " ".repeat(7) + "${prog} --conky CONKY --color COLOR [--nonverbose] [--dark] [--device {DESKTOP,LAPTOP}]";
         parser.usage(usage);
         MutuallyExclusiveGroup listOrGenerate = parser.addMutuallyExclusiveGroup().required(true);
         listOrGenerate.addArgument("--list")
@@ -247,6 +251,10 @@ public class ConkyTemplate {
                           .type(Arguments.caseInsensitiveEnumType(Device.class))
                           .setDefault(Device.DESKTOP)
                           .help("target device to create conky for, default is DESKTOP");
+        optionalParameters.addArgument("--dark")
+                          .action(Arguments.storeTrue())
+                          .setDefault(false)
+                          .help("use dark color images for the conky panels");
         String examples = "some examples:\n\n" +
                           "list all available conky themes\n\n" +
                           "\tjava -jar configuration-generator-*.jar --list\n\n" +
