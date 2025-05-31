@@ -191,7 +191,9 @@ ${endif}\
 <#-- special handling for the main 'sda' disk
      > partitions do not print their name since their icons are self explanatory
      > no disconnected image used since it does not have any -->
-<#if hardDisk.device != "sda">${if_existing /dev/[=hardDisk.device]}\<#else># main disk</#if>
+<#if hardDisk.partitions?size == 1>
+${if_existing /dev/[=hardDisk.device]}\
+</#if>
 # disk io
 <#assign ySection = y,
          y += 9>
@@ -220,7 +222,7 @@ ${template6 [=partition.name] [=partition.path]}
 </#if>
 <#assign y += 46 + 9>
 </#list>
-<#if hardDisk.device != "sda">
+<#if hardDisk.partitions?size == 1>
 ${else}\
 ${image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-no-disk.png -p [=lso + 2],[=ySection]}\
 ${voffset 9}${offset [=lso + 8 + 10]}${color1}[=hardDisk.device]${voffset 108}

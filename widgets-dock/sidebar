@@ -51,10 +51,9 @@ conky.config = {
 
   -- colors
   default_color = 'white',  -- regular text
-  color1 = 'white',         -- text labels
+  color1 = 'white',         -- no disk label
   color2 = 'a36dec',        -- bar
   color3 = 'c33855',        -- bar critical
-  color4 = '906c9c',        -- temperature text
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   --  n.b. the line break escape character '\' is not supported in templates :(
@@ -81,8 +80,7 @@ ${voffset 13}${goto 99}${color}${font}${diskio_write /dev/\1}${voffset 10}]],
   template6 = [[
 ${voffset 45}${offset 33}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3, 45 \2}
 ${voffset -46}${goto 99}${color}${font}\1
-${voffset 4}${goto 99}${color}${font1}${fs_used_perc \2}${font0}%${font}${voffset 8}]],
-
+${voffset 4}${goto 99}${color}${font1}${fs_used_perc \2}${font0}%${font}${voffset 8}]]
 };
 
 conky.text = [[
@@ -117,7 +115,6 @@ ${image ~/conky/monochrome/images/widgets-dock/pink-no-internet.png -p 29,182}\
 ${voffset 86}\
 ${endif}\
 # :::::::::::::::::::: disk samsung SSD HD
-# main disk
 # disk io
 ${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/grape-diskio-1.png -p 32,272}${endif}\
 ${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/grape-diskio-2.png -p 32,272}${endif}\
