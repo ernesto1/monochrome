@@ -162,15 +162,15 @@ ${offset 22}${color}${font4}not available
 ${voffset 100}
 ${endif}\
 # ::::::::::::::::: disk seagate HD
-${if_existing /dev/sdd}\
+${if_existing /dev/sdc}\
 ${image ~/conky/monochrome/images/glass/blue-divider.png -p 15,817}\
 ${image ~/conky/monochrome/images/glass/blue-disk.png -p 17,823}\
-${template5 sdd 6000 250000}
+${template5 sdc 6000 250000}
 # :::::: partitions
 ${template6 betty /media/betty}
 ${else}\
 ${image ~/conky/monochrome/images/glass/yellow-no-disk.png -p 17,819}\
-${voffset 7}${offset 22}${color}sdd disk
+${voffset 7}${offset 22}${color}sdc disk
 ${offset 22}${color}${font4}not available
 ${voffset 100}
 ${endif}\
@@ -193,7 +193,7 @@ ${image ~/conky/monochrome/images/glass/blue-thermometer.png -p 19,1138}\
 # :::: cpu
 ${voffset 4}${offset 20}${color1}${font0}cpu${font}
 ${voffset -13}${alignr 38}${color}${font2}${template8 atk0110 temp 1 80}°C${font}
-${voffset 2}${alignr 38}${color}${font}cores ${template8 coretemp temp 5 90}°C${voffset -2}
+${voffset 2}${alignr 38}${color}${font}${font}${template8 coretemp temp 2 90}° ${template8 coretemp temp 3 90}° ${font}${template8 coretemp temp 4 90}° ${template8 coretemp temp 5 90}°C${voffset -2}
 # :::: video card
 ${voffset 6}${offset 20}${color1}${font0}video card${font}
 ${voffset -13}${alignr 38}${color}${font2}${template8 radeon temp 1 75}°C${font}

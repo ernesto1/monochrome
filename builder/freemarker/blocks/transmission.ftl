@@ -67,8 +67,8 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 299 0}\
 ${color}${lua_parse add_y_offset voffset 2}${lua_parse head [=activeTorrentsFile] [=max] [=border]}${lua increase_y_offset [=activeTorrentsFile]}
 <@panel.panelsBottom x=0 y=0 widths=[width] gap=colGap isFixed=false/>
 ${else}\
-<@panel.panel x=0 y=conkyHeight-23 height=23 width=width/>
-${voffset [=5+(max-1)*16]}${alignc}${color}no active torrents running
+<@panel.panel x=20 y=conkyHeight-23 height=23 width=257/>
+${voffset [=5+(max-1)*16]}${alignc}${color1}transmission ${color}no active torrents running
 ${endif}\
 ${else}\
 <@panel.panel x=0 y=conkyHeight-23 height=23 width=width color=image.secondaryColor/>

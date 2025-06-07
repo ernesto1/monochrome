@@ -215,7 +215,7 @@ ${image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-thermometer.png
 # :::: cpu
 ${voffset 4}${offset [=lso + iborder]}${color1}${font0}cpu${font}
 ${voffset -13}${alignr [=rso + 6]}${color}${font2}${template8 atk0110 temp 1 [=threshold.tempCPU]}°C${font}
-${voffset 2}${alignr [=rso + 6]}${color}${font}cores ${template8 coretemp temp 5 [=threshold.tempCPUCore]}°C${voffset -2}
+${voffset 2}${alignr [=rso + 6]}${color}${font}${font}${template8 coretemp temp 2 [=threshold.tempCPUCore]}° ${template8 coretemp temp 3 [=threshold.tempCPUCore]}° ${font}${template8 coretemp temp 4 [=threshold.tempCPUCore]}° ${template8 coretemp temp 5 [=threshold.tempCPUCore]}°C${voffset -2}
 # :::: video card
 ${voffset 6}${offset [=lso + iborder]}${color1}${font0}video card${font}
 ${voffset -13}${alignr [=rso + 6]}${color}${font2}${template8 radeon temp 1 [=threshold.tempVideo]}°C${font}

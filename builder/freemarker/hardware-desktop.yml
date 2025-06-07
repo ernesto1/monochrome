@@ -29,7 +29,7 @@ hardDisks:
       - name: veronica
         path: /media/veronica
         icon: partition
-  - device: sdd
+  - device: sdc
     name: seagate HD
     readSpeed: 6000
     writeSpeed: 250000

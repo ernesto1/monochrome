@@ -150,16 +150,16 @@ ${voffset 13}${offset 23}${color1}sdb device
 ${voffset 3}${offset 23}${color1}${font4}is not connected
 ${voffset 48}
 ${endif}\
-# :::: sdd
-${if_existing /dev/sdd}\
+# :::: sdc
+${if_existing /dev/sdc}\
 ${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 20,823}\
 ${image ~/conky/monochrome/images/compact/burgundy-graph-io.png -p 60,823}\
-${template7 sdd 6000 250000}
+${template7 sdc 6000 250000}
 ${voffset 6}\
 ${template8 betty /media/betty}
 ${else}\
 ${image ~/conky/monochrome/images/compact/ochre-no-disk.png -p 15,817}\
-${voffset 13}${offset 23}${color1}sdd device
+${voffset 13}${offset 23}${color1}sdc device
 ${voffset 3}${offset 23}${color1}${font4}is not connected
 ${voffset 48}
 ${endif}\
