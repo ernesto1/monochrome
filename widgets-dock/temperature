@@ -56,5 +56,5 @@ ${voffset 45}${offset 33}${color2}${if_match ${lua get diskTemp} > 42}${color3}$
 ${font}${voffset 6}\
 # :::::::: fans
 ${lua compute fanSpeed ${lua get_max_resource_usage ${hwmon atk0110 fan 3} ${hwmon atk0110 fan 1} ${hwmon atk0110 fan 2} ${hwmon atk0110 fan 4}}}\
-${voffset 45}${offset 33}${color2}${if_match ${lua get fanSpeed} > 2300}${color3}${endif}${lua_bar 3,45 conky_get_usage_percentage 2650 fanSpeed}
+${voffset 45}${offset 33}${color2}${if_match ${lua get fanSpeed} > 2300}${color3}${endif}${lua_bar 3,45 conky_get_usage_percentage 3000 fanSpeed}
 ]];

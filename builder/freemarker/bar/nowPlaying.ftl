@@ -62,8 +62,9 @@ ${else}\
 ${if_existing [=inputDir + "musicplayer.playbackStatus"] Playing}\
 <@panel.panel x=0 y=y height=height width=width color=image.secondaryColor/>
 ${endif}\
-${if_existing [=inputDir + "musicplayer.track.albumArtPath"]}\
-${image ~/conky/monochrome/java/albumArt/nowPlaying -p [=3],[=y+3] -s [=width-border]x[=width-border] -n}\
+<#assign  albumArtFile = inputDir + "musicplayer.track.art">
+${if_existing [=albumArtFile]}\
+${image [=albumArtFile] -p [=3],[=y+3] -s [=width-border]x[=width-border] -n}\
 <#assign y += height + gap>
 ${voffset [=3 + width - border + 1]}\
 ${else}\

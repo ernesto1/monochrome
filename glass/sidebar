@@ -174,16 +174,16 @@ ${voffset 7}${offset 22}${color}sdc disk
 ${offset 22}${color}${font4}not available
 ${voffset 100}
 ${endif}\
-# ::::::::::::::::: disk sde
-${if_existing /dev/sde}\
+# ::::::::::::::::: disk sdd
+${if_existing /dev/sdd}\
 ${image ~/conky/monochrome/images/glass/blue-divider.png -p 15,972}\
 ${image ~/conky/monochrome/images/glass/blue-disk.png -p 17,978}\
-${template5 sde 6000 60000}
+${template5 sdd 6000 60000}
 # :::::: partitions
 ${template6 maxtor /run/media/ernesto/MAXTOR}
 ${else}\
 ${image ~/conky/monochrome/images/glass/yellow-no-disk.png -p 17,974}\
-${voffset 7}${offset 22}${color}sde disk
+${voffset 7}${offset 22}${color}sdd disk
 ${offset 22}${color}${font4}not available
 ${voffset 100}
 ${endif}\

@@ -142,18 +142,18 @@ ${else}\
 ${image ~/conky/monochrome/images/widgets-dock/pink-no-disk.png -p 29,587}\
 ${voffset 9}${offset 45}${color1}sdc${voffset 108}
 ${endif}\
-# :::::::::::::::::::: disk sde
-${if_existing /dev/sde}\
+# :::::::::::::::::::: disk sdd
+${if_existing /dev/sdd}\
 # disk io
 ${if_updatenr 1}${image ~/conky/monochrome/images/widgets-dock/grape-diskio-1.png -p 32,726}${endif}\
 ${if_updatenr 2}${image ~/conky/monochrome/images/widgets-dock/grape-diskio-2.png -p 32,726}${endif}\
-${template4 sde 6000 60000}
+${template4 sdd 6000 60000}
 # partitions
 ${image ~/conky/monochrome/images/widgets-dock/grape-disk-usbdrive.png -p 32,792}\
 ${template6 maxtor /run/media/ernesto/MAXTOR}
 ${else}\
 ${image ~/conky/monochrome/images/widgets-dock/pink-no-disk.png -p 29,717}\
-${voffset 9}${offset 45}${color1}sde${voffset 108}
+${voffset 9}${offset 45}${color1}sdd${voffset 108}
 ${endif}\
 # :::::::::::::::::::: temperatures
 # use of lua variables corrupt the values for the network up/down variables, hence temp details shown in the separate 'temperature' conky

@@ -91,8 +91,9 @@ ${endif}\
 #                                   song with no album art
 #                                   no music player is running
 #                                   dependent java dbus listener application is not running
-<#assign  playerStatusFile="/tmp/conky/musicplayer.status",
-          playerNameFile="/tmp/conky/musicplayer.name",
+<#assign  playerStatusFile = "/tmp/conky/musicplayer.status",
+          playerNameFile = "/tmp/conky/musicplayer.name",
+          albumArtFile = "/tmp/conky/musicplayer.track.art",
           iconHeight = 38>
 ${if_existing [=playerStatusFile]}\
 # :::::::: no player available
@@ -118,9 +119,9 @@ ${endif}\
 ${lua increment_offsets 0 [=iconHeight + gap]}\
 ${voffset [= 7 + gap]}\
 # ::: album art
-${if_existing /tmp/conky/musicplayer.track.albumArtPath}\
+${if_existing [=albumArtFile]}\
 ${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.primaryColor]-music-player-album.png 0 0}\
-${lua_parse load_image ${cat /tmp/conky/musicplayer.track.albumArtPath} 155x155 2 2}\
+${lua_parse draw_image [=albumArtFile] 2 2 155x155}\
 ${voffset [=width + gap]}${lua increment_offsets 0 [=width + gap]}\
 ${endif}\
 # ::: track details

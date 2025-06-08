@@ -15,8 +15,8 @@ By default the application will write its output files in the `/tmp/conky` direc
 You can change the output directory by modifying the `outputDir` property.
 ```bash
 /tmp/conky$ ls musicplayer.*
-musicplayer.name            musicplayer.status       musicplayer.track.albumArtPath  musicplayer.track.genre
-musicplayer.playbackStatus  musicplayer.track.album  musicplayer.track.artist        musicplayer.track.title
+musicplayer.name            musicplayer.status       musicplayer.track.art     musicplayer.track.genre
+musicplayer.playbackStatus  musicplayer.track.album  musicplayer.track.artist  musicplayer.track.title
 ```
 
 ### Image cache

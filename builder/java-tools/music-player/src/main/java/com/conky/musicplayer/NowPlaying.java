@@ -49,7 +49,7 @@ public class NowPlaying {
         Files.createDirectories(outputDir);
         Path albumArtDir = Path.of(properties.getProperty("albumArtDir"));
         Files.createDirectories(albumArtDir);
-        registerShutdownHook(outputDir, albumArtDir);
+        registerShutdownHook(outputDir);
 
         // start the spring context
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
@@ -98,19 +98,11 @@ public class NowPlaying {
     /**
      * Adds a runtime shutdown hook to delete all the temporary files produced by this application
      */
-    private static void registerShutdownHook(Path outputDir, Path albumArtDir) {
+    private static void registerShutdownHook(Path outputDir) {
         // shut down hook for deleting the conky music player output files
         Thread deleteOutputFiles = new Thread(() -> {
             logger.info("deleting all output files");
             MusicPlayerWriter.deleteMetadataFiles(outputDir);
-
-            try {
-                Path symlink = albumArtDir.resolve(MusicPlayerWriter.ALBUM_ART_SYMLINK_FILENAME);
-                logger.debug("deleting the now playing symlink file: {}", symlink);
-                Files.deleteIfExists(symlink);
-            } catch (IOException e) {
-                logger.error("unable to delete file", e);
-            }
         });
 
         Runtime.getRuntime().addShutdownHook(deleteOutputFiles);

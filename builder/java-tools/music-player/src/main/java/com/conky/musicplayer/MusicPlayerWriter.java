@@ -24,10 +24,9 @@ public class MusicPlayerWriter {
     public static final String TRACK_PREFIX = "track.";
     public static final String ALBUM_ART = "albumArt";
     /**
-     * Name of the file that contains the location on disk of the track's cover art
+     * Name of the symbolic link that points to the album art of the current track
      */
-    public static final String ALBUM_ART_PATH_FILENAME = "albumArtPath";
-    public static final String ALBUM_ART_SYMLINK_FILENAME = "nowPlaying";
+    public static final String ALBUM_ART_SYMLINK_FILENAME = FILE_PREFIX + TRACK_PREFIX + "art";
 
     /**
      * Directory to write all music player track info metadata files to
@@ -68,7 +67,6 @@ public class MusicPlayerWriter {
             writeFile(TRACK_PREFIX + "title", player.getTitle());
             writeFile(TRACK_PREFIX + "album", player.getAlbum());
             writeFile(TRACK_PREFIX + "genre", player.getGenre());
-            writeFile(TRACK_PREFIX + ALBUM_ART_PATH_FILENAME, albumArtFilePath);
         }
 
         logger.debug("wrote track info to disk");
@@ -107,10 +105,8 @@ public class MusicPlayerWriter {
             } else {
                 // if no album art is available, delete the conky album art files
                 try {
-                    logger.debug("track has no album art, deleting cover art related files");
-                    Path file = outputDir.resolve(FILE_PREFIX + TRACK_PREFIX + ALBUM_ART_PATH_FILENAME);
-                    Files.deleteIfExists(file);
-                    file = albumArtDir.resolve(ALBUM_ART_SYMLINK_FILENAME);
+                    logger.debug("track has no album art, deleting cover art symbolic link file");
+                    Path file = outputDir.resolve(ALBUM_ART_SYMLINK_FILENAME);
                     Files.deleteIfExists(file);
                 } catch (IOException e) {
                     logger.error("unable to delete the album art file", e);
@@ -130,7 +126,7 @@ public class MusicPlayerWriter {
      */
     private void createSymbolicLink(String albumArtFilePath) {
         logger.debug("updating image symbolic link to {}", albumArtFilePath);
-        Path slCoverArt = albumArtDir.resolve(ALBUM_ART_SYMLINK_FILENAME);
+        Path slCoverArt = outputDir.resolve(ALBUM_ART_SYMLINK_FILENAME);
 
         try {
             Files.deleteIfExists(slCoverArt);

@@ -125,11 +125,12 @@ ${endif}\
 ${lua increment_offsets 0 [=iconHeight + gap]}\
 ${voffset [= 6 + gap]}\
 # ::: album art
-${if_existing /tmp/conky/musicplayer.track.albumArtPath}\
+<#assign albumArtFile = "/tmp/conky/musicplayer.track.art">
+${if_existing [=albumArtFile]}\
 <#assign border = 2>
 <@panel.panel x=0 y=0 width=width height=width isFixed=false/>
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-album-placeholder.png [=border] [=border]}\
-${lua_parse load_image ${cat /tmp/conky/musicplayer.track.albumArtPath} [=width-border*2]x[=width-border*2] [=border] [=border]}\
+${lua_parse draw_image [=albumArtFile] [=border] [=border] [=width-border*2]x[=width-border*2]}\
 ${voffset [=width + gap]}${lua increment_offsets 0 [=width + gap]}${lua decrease_total_lines 12}\
 ${endif}\
 # ::: track details

@@ -130,9 +130,9 @@ ${endif}\
 ${lua increment_offsets 0 41}\
 ${voffset 10}\
 # ::: album art
-${if_existing /tmp/conky/musicplayer.track.albumArtPath}\
+${if_existing /tmp/conky/musicplayer.track.art}\
 ${lua_parse draw_image ~/conky/monochrome/images/glass/blue-music-player-album.png 0 0}\
-${lua_parse load_image ${cat /tmp/conky/musicplayer.track.albumArtPath} 155x155 2 2}\
+${lua_parse draw_image /tmp/conky/musicplayer.track.art 2 2 155x155}\
 ${voffset 162}${lua increment_offsets 0 162}\
 ${endif}\
 # ::: track details

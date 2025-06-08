@@ -80,8 +80,8 @@ ${voffset 3}${offset 6}${color1}home${alignr 5}${color}${template1 fs_used_perc\
 # ::::::::::::::::: media
 ${if_existing /tmp/conky/musicplayer.status on}\
 ${voffset 6}${offset 6}${color3}${cat /tmp/conky/musicplayer.name}${if_existing /tmp/conky/musicplayer.playbackStatus Playing}${alignr}${color}»${endif}
-${if_existing /tmp/conky/musicplayer.track.albumArtPath}\
-${image ~/conky/monochrome/java/albumArt/nowPlaying -p 6,368 -s 83x83 -n}\
+${if_existing /tmp/conky/musicplayer.track.art}\
+${image /tmp/conky/musicplayer.track.art -p 6,368 -s 83x83 -n}\
 ${voffset 89}\
 ${endif}\
 ${voffset 6}${offset 6}${color}${scroll wait 14 3 1 ${cat /tmp/conky/musicplayer.track.title}}

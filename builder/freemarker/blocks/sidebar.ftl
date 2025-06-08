@@ -156,7 +156,8 @@ ${voffset 3}${offset [=border]}${color1}top${alignr [=lborder]}${color}${templat
 ${voffset 3}${offset [=border]}${color1}back${alignr [=lborder]}${color}${template2 hwmon\ atk0110\ fan\ 4 400 2300}${hwmon atk0110 fan 4} rpm
 # :::::::::::: now playing
 <#assign  height = 3 + width-border + 3*16 + 6,
-          inputDir = "/tmp/conky/">
+          inputDir = "/tmp/conky/",
+          albumArtFile = inputDir + "musicplayer.track.art">
 <@panel.panel x=0 y=y height=height width=width/>
 ${if_existing [=inputDir + "musicplayer.status"] off}\
 ${voffset [=gap + 3 + width + 16]}\
@@ -166,8 +167,8 @@ ${else}\
 ${if_existing [=inputDir + "musicplayer.playbackStatus"] Playing}\
 <@panel.panel x=0 y=y height=height width=width color=image.secondaryColor/>
 ${endif}\
-${if_existing [=inputDir + "musicplayer.track.albumArtPath"]}\
-${image ~/conky/monochrome/java/albumArt/nowPlaying -p [=3],[=y+3] -s [=width-border]x[=width-border] -n}\
+${if_existing [=albumArtFile]}\
+${image [=albumArtFile] -p [=3],[=y+3] -s [=width-border]x[=width-border] -n}\
 <#assign y += height + gap>
 ${voffset [=gap + 3 + width]}\
 ${else}\

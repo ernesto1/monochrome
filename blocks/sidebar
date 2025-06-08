@@ -108,8 +108,8 @@ ${voffset 13}\
 ${voffset 3}${offset 6}${color1}enp0s${alignr 5}${color}${template1 to_bytes\ ${upspeed\ enp0s25} 2726297}${upspeed enp0s25}
 ${voffset 3}${offset 6}${color1}sda${alignr 5}${color}${diskio_read /dev/sda}
 ${voffset 3}${offset 6}${color1}sdb${alignr 5}${color}${diskio_read /dev/sdb}
+${voffset 3}${offset 6}${color1}sdc${alignr 5}${color}${diskio_read /dev/sdc}
 ${voffset 3}${offset 6}${color1}sdd${alignr 5}${color}${diskio_read /dev/sdd}
-${voffset 3}${offset 6}${color1}sde${alignr 5}${color}${diskio_read /dev/sde}
 # :::::::::::: device write
 # ------- light panel top edge    -------
 ${image ~/conky/monochrome/images/common/blue-panel-light.png -p 0,340}\
@@ -124,8 +124,8 @@ ${voffset 13}\
 ${voffset 3}${offset 6}${color1}enp0s${alignr 5}${color}${template1 to_bytes\ ${downspeed\ enp0s25} 62914560}${downspeed enp0s25}
 ${voffset 3}${offset 6}${color1}sda${alignr 5}${color}${diskio_write /dev/sda}
 ${voffset 3}${offset 6}${color1}sdb${alignr 5}${color}${diskio_write /dev/sdb}
+${voffset 3}${offset 6}${color1}sdc${alignr 5}${color}${diskio_write /dev/sdc}
 ${voffset 3}${offset 6}${color1}sdd${alignr 5}${color}${diskio_write /dev/sdd}
-${voffset 3}${offset 6}${color1}sde${alignr 5}${color}${diskio_write /dev/sde}
 # :::::::::::: filesystems
 # ------- light panel top edge    -------
 ${image ~/conky/monochrome/images/common/blue-panel-light.png -p 0,433}\
@@ -216,8 +216,8 @@ ${image ~/conky/monochrome/images/common/yellow-panel-light-edge-bottom-right.pn
 ${image ~/conky/monochrome/images/common/blank-panel.png -p 0,951}\
 # ------- light panel bottom edge -------
 ${endif}\
-${if_existing /tmp/conky/musicplayer.track.albumArtPath}\
-${image ~/conky/monochrome/java/albumArt/nowPlaying -p 3,808 -s 89x89 -n}\
+${if_existing /tmp/conky/musicplayer.track.art}\
+${image /tmp/conky/musicplayer.track.art -p 3,808 -s 89x89 -n}\
 ${voffset 104}\
 ${else}\
 ${voffset 88}\

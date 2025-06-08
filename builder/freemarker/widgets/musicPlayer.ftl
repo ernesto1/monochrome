@@ -64,9 +64,10 @@ ${voffset 74}${offset 139}${font0}now playing
 ${voffset 0}${offset 139}${font}no music player running
 ${else}\
 # :::::::: album art
-${if_existing /tmp/conky/musicplayer.track.albumArtPath}\
+<#assign albumArtFile = "/tmp/conky/musicplayer.track.art">
+${if_existing [=albumArtFile]}\
 ${image ~/conky/monochrome/images/[=conky]/album-shadow.png -p 0,0}\
-${lua_parse load_image ${cat /tmp/conky/musicplayer.track.albumArtPath} 110x110 15 22}\
+${lua_parse draw_image [=albumArtFile] 15 22 110x110}\
 ${voffset 9}\
 ${endif}\
 # ::::::::: track details

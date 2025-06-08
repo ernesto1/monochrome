@@ -38,7 +38,7 @@ hardDisks:
       - name: betty
         path: /media/betty
         icon: partition
-  - device: sde
+  - device: sdd
     readSpeed: 6000
     writeSpeed: 60000
     fileSuffix: maxtor  # optional | name to append to the output file name, ex. disk-maxtor

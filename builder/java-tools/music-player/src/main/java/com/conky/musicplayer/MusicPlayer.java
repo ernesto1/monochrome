@@ -8,8 +8,8 @@ import java.util.Objects;
  *     <li>Track playback status: paused, playing, stopped</li>
  *     <li>Current or last played song information</li>
  * </ul>
- * Depending on how the player communicates through the dbus, some are initialized with no details until a song
- * is played.  Others already have a pre-selected track upon boot.
+ * Upon boot a music player initializes some or all of its metadadata. When a song is played, all the metadata
+ * is guarantied to be communicated through the dbus.
  */
 public class MusicPlayer {
     public static final MusicPlayer DUMMY_PLAYER = new MusicPlayer("no player running", ":1.23", Status.OFF);

@@ -168,7 +168,7 @@ ${endif}\
 ${lua increment_offsets 0 41}\
 ${voffset 9}\
 # :::::: album art
-${if_existing /tmp/conky/musicplayer.track.albumArtPath}\
+${if_existing /tmp/conky/musicplayer.track.art}\
 # ------- light panel top edge    -------
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light.png 0 0}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-top-left.png 0 0}\
@@ -180,7 +180,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 189}\
 # ------- light panel bottom edge -------
 ${lua increment_offsets 0 4}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-album-placeholder.png 12 8}\
-${lua_parse load_image ${cat /tmp/conky/musicplayer.track.albumArtPath} 181x181 4 0}\
+${lua_parse draw_image /tmp/conky/musicplayer.track.art 4 0 181x181}\
 ${lua increment_offsets 0 188}${lua decrease_total_lines 12}\
 ${voffset 192}\
 ${endif}\

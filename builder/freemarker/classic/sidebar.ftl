@@ -57,12 +57,12 @@ conky.config = {
 conky.text = [[
 # ::::::::::::::::: cpu
 ${voffset [=border-5]}${offset [=border]}${color3}cpu
-<#assign inputDir = "/tmp/conky",
-         us = inputDir + "/system.cpu.us",
-         id = inputDir + "/system.cpu.id">
+<#assign inputDir = "/tmp/conky/",
+         us = inputDir + "system.cpu.us",
+         id = inputDir + "system.cpu.id">
 ${voffset 3}${offset [=border]}${color1}us ${color}${template1 cat\ [=us] 50}${cat [=us]}%${goto 55}${color1}id${alignr [=lborder]}${color}${cat [=id]}%
-<#assign sy = inputDir + "/system.cpu.sy",
-         wa = inputDir + "/system.cpu.wa">
+<#assign sy = inputDir + "system.cpu.sy",
+         wa = inputDir + "system.cpu.wa">
 ${voffset 3}${offset [=border]}${color1}sy ${color}${template1 cat\ [=sy] 50}${cat [=sy]}%${goto 55}${color1}wa${alignr [=lborder]}${color}${template1 cat\ [=wa] 20}${cat [=wa]}%
 ${voffset 3}${offset [=border]}${color1}load ${color}${loadavg 1} ${loadavg 2}
 # ::::::::::::::::: memory
@@ -72,8 +72,8 @@ ${voffset 3}${offset [=border]}${color1}free${alignr [=lborder]}${color}${memfre
 ${voffset 3}${offset [=border]}${color1}used${alignr [=lborder]}${color}${template1 memperc [=threshold.mem]}${mem}
 ${voffset 3}${offset [=border]}${color1}buff${alignr [=lborder]}${color}${buffers}
 ${voffset 3}${offset [=border]}${color1}cache${alignr [=lborder]}${color}${cached}
-${voffset 3}${offset [=border]}${color1}si${alignr [=lborder]}${color}${cat /tmp/conky/system.swap.read}
-${voffset 3}${offset [=border]}${color1}so${alignr [=lborder]}${color}${cat /tmp/conky/system.swap.write}
+${voffset 3}${offset [=border]}${color1}si${alignr [=lborder]}${color}${cat [=inputDir + "system.swap.read"]}
+${voffset 3}${offset [=border]}${color1}so${alignr [=lborder]}${color}${cat [=inputDir + "system.swap.write"]}
 ${voffset 3}${offset [=border]}${color1}swap${alignr [=lborder]}${color}${template1 swapperc [=threshold.swap]}${swap}
 # ::::::::::::::::: i/o
 ${voffset 6}${offset [=border]}${color3}device i/o
@@ -91,16 +91,17 @@ ${voffset 3}${offset [=border]}${color1}[=partition.name]${alignr [=lborder]}${c
 </#list>
 </#list>
 # ::::::::::::::::: media
-${if_existing /tmp/conky/musicplayer.status on}\
-${voffset 6}${offset [=border]}${color3}${cat /tmp/conky/musicplayer.name}${if_existing /tmp/conky/musicplayer.playbackStatus Playing}${alignr}${color}»${endif}
+${if_existing [=inputDir + "musicplayer.status"] on}\
+${voffset 6}${offset [=border]}${color3}${cat [=inputDir + "musicplayer.name"]}${if_existing [=inputDir + "musicplayer.playbackStatus"] Playing}${alignr}${color}»${endif}
 <#assign y = 362 + border><#-- position of the album art -->
-${if_existing /tmp/conky/musicplayer.track.albumArtPath}\
-${image ~/conky/monochrome/java/albumArt/nowPlaying -p [=border],[=y] -s [=width-border*2]x[=width-border*2] -n}\
+<#assign albumArtFile = inputDir + "musicplayer.track.art">
+${if_existing [=albumArtFile]}\
+${image [=albumArtFile] -p [=border],[=y] -s [=width-border*2]x[=width-border*2] -n}\
 ${voffset 89}\
 ${endif}\
-${voffset 6}${offset [=border]}${color}${scroll wait 14 3 1 ${cat /tmp/conky/musicplayer.track.title}}
-${voffset 3}${offset [=border]}${color}${scroll wait 14 3 1 ${cat /tmp/conky/musicplayer.track.album}}
-${voffset 3}${offset [=border]}${color}${scroll wait 14 3 1 ${cat /tmp/conky/musicplayer.track.artist}}
+${voffset 6}${offset [=border]}${color}${scroll wait 14 3 1 ${cat [=inputDir + "musicplayer.track.title"]}}
+${voffset 3}${offset [=border]}${color}${scroll wait 14 3 1 ${cat [=inputDir + "musicplayer.track.album"]}}
+${voffset 3}${offset [=border]}${color}${scroll wait 14 3 1 ${cat [=inputDir + "musicplayer.track.artist"]}}
 ${endif}\
 <#if device == "laptop">
 # ::::::::::::::::: wifi
@@ -120,7 +121,7 @@ ${voffset 3}${offset [=border]}${color1}uptime${alignr [=lborder]}${color}${upti
 <#if device == "laptop">
 ${voffset 3}${offset [=border]}${color1}${if_match "${acpiacadapter}"=="on-line"}power${else}battery${endif}${alignr [=lborder]}${color}${template2 battery_percent\ BAT0 [=threshold.bat]}${battery_percent BAT0}%
 </#if>
-<#assign packagesFile = inputDir + "/dnf.packages.formatted">
+<#assign packagesFile = inputDir + "dnf.packages.formatted">
 ${voffset 3}${offset [=border]}${color1}updates${alignr [=lborder]}${color}${if_existing [=packagesFile]}${lines [=packagesFile]}${else}none${endif}
 # ::::::::::::::::: temperature
 ${voffset 6}${offset [=border]}${color3}temperature

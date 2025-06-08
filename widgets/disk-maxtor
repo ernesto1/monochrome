@@ -52,19 +52,19 @@ ${voffset 1}${goto 111}${color2}${if_match ${fs_used_perc \1} > 90}${color3}${en
 };
 
 conky.text = [[
-${if_existing /dev/sde}\
+${if_existing /dev/sdd}\
 # disk io
 ${image ~/conky/monochrome/images/widgets/green-disk-single-partition.png -p 0,0}\
-${voffset 13}${offset 32}${diskiograph_read sde 37,67 5c111f c01e20 6000}
-${voffset -7}${offset 32}${diskiograph_write sde 37,67 4c6e3b 9fc14a 60000}
-${voffset 6}${offset 19}${color1}read${alignr 120}${color}${diskio_read sde}
-${voffset 4}${offset 19}${color1}write${alignr 120}${color}${diskio_write sde}
+${voffset 13}${offset 32}${diskiograph_read sdd 37,67 5c111f c01e20 6000}
+${voffset -7}${offset 32}${diskiograph_write sdd 37,67 4c6e3b 9fc14a 60000}
+${voffset 6}${offset 19}${color1}read${alignr 120}${color}${diskio_read sdd}
+${voffset 4}${offset 19}${color1}write${alignr 120}${color}${diskio_write sdd}
 ${voffset -13}${goto 111}${color1}temp${offset 7}${color}n/a
 # partitions
-${voffset -126}${goto 111}${color1}sde partitions${voffset 1}
+${voffset -126}${goto 111}${color1}sdd partitions${voffset 1}
 ${template1 /run/media/ernesto/MAXTOR maxtor}
 ${else}\
 ${image ~/conky/monochrome/images/widgets/burgundy-disk-disconnected.png -p 14,14}\
-${voffset 127}${alignr 125}${color4}sde
+${voffset 127}${alignr 125}${color4}sdd
 ${endif}\
 ]];

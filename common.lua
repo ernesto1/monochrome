@@ -218,25 +218,6 @@ function conky_get_usage_percentage(max, var)
   return perc
 end
 
-
---[[ 
-generates an image conky variable from a conky expression which yields an image file path in the filesystem, 
-ex. if the image path is in a file that must be read; you can use this method to extract said path
-by using the conky ${cat} variable on the file
-
-arguments:
-  expression    conky variable to parse, must yield an image file path, ex. ${cat /dir/somefile.txt}
-  dimensions    image dimensions in WxH format, ex. 200x200
-  x             image x coordinate
-  y             image y coordinate
-returns:
-  ${image picture.jpg -s 100x100 -p 0,0}
-]]
-function conky_load_image(expression, dimensions, x, y)
-  local path = conky_parse(expression)
-  return conky_draw_image(path, x, y, dimensions)
-end
-
 --[[ 
 evaluates a conky variable (ex. ${cat someFile}) and prints its value;
 if the character limit is breached, the string is truncated
