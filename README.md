@@ -62,7 +62,7 @@ This will place all the code under the `~/conky/monochrome` directory.
 Alternatively if you only want the conky configurations and their images, you can download the latest `monochrome.zip` file from the [releases page](https://github.com/ernesto1/monochrome/releases).  This way you don't get any of the build assets.
 
 ### Configuration
-If you are new to conky the [wiki](https://github.com/ernesto1/monochrome/wiki) outlines items that may require configuration in order to customize this conky to your system, ex. device names such as network cards and hard drives
+If you are new to conky, the [wiki](https://github.com/ernesto1/monochrome/wiki) outlines items that may require configuration in order to customize this conky to your system, ex. device names such as network cards and hard drives
 
 ### Building the Music Player App
 The music player conky requires the supporting java app in order to function.  
@@ -76,8 +76,7 @@ dnf install maven
 
 # ::: building the music app from source
 cd ~/conky/monochrome/builder/java-tools
-mvn clean package site
-mvn site:deploy
+mvn clean package site-deploy
 mkdir -p ~/conky/monochrome/java
 rm -rf ~/conky/monochrome/java/*
 cp -r */target/{lib,*.jar,*.properties,*.xml} ~/conky/monochrome/java

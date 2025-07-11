@@ -8,8 +8,7 @@ shopt -s extglob
 ORANGE='\033[0;33m'; NOCOLOR='\033[0m'
 printf "${ORANGE}:::::: building java applications${NOCOLOR}\n"
 pushd ~/conky/monochrome/builder/java-tools
-mvn clean package site
-mvn site:deploy
+mvn clean package site-deploy
 popd
 printf "\n${ORANGE}:::::: deploying java apps${NOCOLOR}\n"
 mkdir -p ~/conky/monochrome/java

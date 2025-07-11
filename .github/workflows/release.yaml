@@ -17,8 +17,7 @@ jobs:
         run: |
           echo ':::::::: build the java applications'
           cd builder/java-tools
-          mvn clean package site
-          mvn site:deploy
+          mvn clean package site-deploy
           mkdir -p ${GITHUB_WORKSPACE}/java
           echo ":::::::: deploy apps to the project's java folder"
           cp -vr */target/{lib,*.jar,*.properties,*.xml} ${GITHUB_WORKSPACE}/java

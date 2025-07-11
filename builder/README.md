@@ -1,11 +1,11 @@
 # Build assets
-This directory contains the source code to build the supporting java applications for this project:
+Source code for building most of the assets in this project.
 
-- Conky configurations generator using freemarker templates
-- D-Bus music player listener
+| Directory | Description |
+| --------- | ----------- |
+| `java-tools` | Supporting java applications |
+| `freemarker` | Freemarker templates for building the conky configuration files |
 
-Java applications are built using maven.  The maven project is under the `java-tools` directory.
-
-### Bug tracking
-Any conky issues I've had to compensate for are tracking in this [log](bugLog.md).  
+## Bug tracking
+Any conky issues I've had to compensate for are tracked in this [log](bugLog.md).  
 This may help explain why I had to make certain design decisions.
