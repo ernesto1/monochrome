@@ -18,6 +18,7 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeSet;
 
 public class ConkyTemplate {
     private static final Logger logger = LoggerFactory.getLogger(ConkyTemplate.class);
@@ -162,7 +163,7 @@ public class ConkyTemplate {
 
                 if (colorConfig.isFile()) {
                     Map<String, Object> colorPalettes = loadYamlConfig(colorConfig);
-                    colors = colorPalettes.keySet().toString();
+                    colors = new TreeSet<>(colorPalettes.keySet()).toString();
                     colors = colors.substring(1, colors.length() - 1);
                 }
 

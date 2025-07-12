@@ -12,12 +12,12 @@ mvn clean package site-deploy
 popd
 printf "\n${ORANGE}:::::: deploying java apps${NOCOLOR}\n"
 mkdir -p ~/conky/monochrome/java
-echo 'currently deployed jars:'
+echo 'currently deployed apps:'
 ls ~/conky/monochrome/java
 rm -rf ~/conky/monochrome/java/!(albumArt)
 cp -r ~/conky/monochrome/builder/java-tools/*/target/{lib,*.jar,*.properties,*.xml} ~/conky/monochrome/java
 cp -r ~/conky/monochrome/builder/java-tools/target/docs ~/conky/monochrome/java
-echo -e '\nnewly deployed jars:'
+echo -e '\nnewly deployed apps:'
 ls ~/conky/monochrome/java
 printf "\n${ORANGE}:::::: launching latest version of the music player app${NOCOLOR}\n"
 pgrep -f 'conky/monochrome/java/music' -l -a | sed 's/ /:/' | column -s ':' -t -N PID,'processes to be killed'
