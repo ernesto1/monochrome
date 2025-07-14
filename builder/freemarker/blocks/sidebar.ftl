@@ -33,6 +33,7 @@ conky.config = {
   
   -- miscellanous settings
   imlib_cache_flush_interval = 250,
+  if_up_strictness = 'address',
 
   -- font settings
   use_xft = false,
@@ -95,7 +96,7 @@ ${voffset 3}${offset [=border]}${color1}swap${alignr [=lborder]}${color}${templa
 <#assign y += height + gap>
 ${voffset [=7 + gap]}\
 <#list networkDevices as device><#-- higlight if upload speed is greater than 2.5MiB -->
-${voffset 3}${offset [=border]}${color1}[=device.name[0..4]]${alignr [=lborder]}${color}${template1 to_bytes\ ${upspeed\ [=device.name]} 2726297}${upspeed [=device.name]}
+${voffset 3}${offset [=border]}${color1}[=device.name[0..4]]${alignr [=lborder]}${if_up [=device.name]}${color}${template1 to_bytes\ ${upspeed\ [=device.name]} 2726297}${upspeed [=device.name]}${else}${color2}unlinked${endif}
 </#list>
 <#list hardDisks as disk>
 ${voffset 3}${offset [=border]}${color1}[=disk.device]${alignr [=lborder]}${color}${diskio_read /dev/[=disk.device]}
@@ -106,7 +107,7 @@ ${voffset 3}${offset [=border]}${color1}[=disk.device]${alignr [=lborder]}${colo
 <#assign y += height + gap>
 ${voffset [=7 + gap]}\
 <#list networkDevices as device><#-- higlight if download speed is greater than 60MiB -->
-${voffset 3}${offset [=border]}${color1}[=device.name[0..4]]${alignr [=lborder]}${color}${template1 to_bytes\ ${downspeed\ [=device.name]} 62914560}${downspeed [=device.name]}
+${voffset 3}${offset [=border]}${color1}[=device.name[0..4]]${alignr [=lborder]}${if_up [=device.name]}${color}${template1 to_bytes\ ${downspeed\ [=device.name]} 62914560}${downspeed [=device.name]}${else}${color2}unlinked${endif}
 </#list>
 <#list hardDisks as disk>
 ${voffset 3}${offset [=border]}${color1}[=disk.device]${alignr [=lborder]}${color}${diskio_write /dev/[=disk.device]}
