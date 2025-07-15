@@ -16,7 +16,7 @@ conky.config = {
            width = border * 2 + 83>
   minimum_width = [=width],      -- conky will add an extra pixel to this
   maximum_width = [=width],
-  minimum_height = 1029,
+  minimum_height = 1045,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
 
@@ -79,11 +79,12 @@ ${voffset 3}${offset [=border]}${color1}us ${color}${template1 cat\ [=us] 50}${c
 ${voffset 3}${offset [=border]}${color1}sy ${color}${cat [=sy]}%${goto 55}${color1}wa${alignr [=lborder]}${color}${template1 cat\ [=wa] 20}${cat [=wa]}%
 ${voffset 3}${offset [=border]}${color1}load${alignr [=lborder]}${color}${loadavg 1} ${loadavg 2}
 # :::::::::::: memory
-<#assign height = 7*16+7>
+<#assign height = 8*16+7>
 <@panel.panel x=0 y=y height=height width=width/>
 <#assign y += height + gap>
 ${voffset [=7 + gap]}\
-${voffset 3}${offset [=border]}${color1}used${alignr [=lborder]}${color}${template1 memperc [=threshold.mem]}${mem}
+${voffset 3}${offset [=border]}${color1}mem${alignr [=lborder]}${color}${template1 memperc [=threshold.mem]}${memperc}%
+${voffset 3}${offset [=border]}${color1}used${alignr [=lborder]}${color}${mem}
 ${voffset 3}${offset [=border]}${color1}free${alignr [=lborder]}${color}${memfree}
 ${voffset 3}${offset [=border]}${color1}buff${alignr [=lborder]}${color}${buffers}
 ${voffset 3}${offset [=border]}${color1}cache${alignr [=lborder]}${color}${cached}
