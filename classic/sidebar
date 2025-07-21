@@ -5,7 +5,7 @@ conky.config = {
 
   -- window alignment
   alignment = 'middle_left',     -- top|middle|bottom_left|middle|right
-  gap_x = 15,                -- same as passing -x at command line
+  gap_x = 3,                -- same as passing -x at command line
   gap_y = -16,
 
   -- window settings
@@ -53,12 +53,13 @@ conky.config = {
 
 conky.text = [[
 # ::::::::::::::::: cpu
-${voffset 1}${offset 6}${color3}cpu
+${voffset 2}${offset 6}${color3}cpu
 ${voffset 3}${offset 6}${color1}us ${color}${template1 cat\ /tmp/conky/system.cpu.us 50}${cat /tmp/conky/system.cpu.us}%${goto 55}${color1}id${alignr 5}${color}${cat /tmp/conky/system.cpu.id}%
 ${voffset 3}${offset 6}${color1}sy ${color}${template1 cat\ /tmp/conky/system.cpu.sy 50}${cat /tmp/conky/system.cpu.sy}%${goto 55}${color1}wa${alignr 5}${color}${template1 cat\ /tmp/conky/system.cpu.wa 20}${cat /tmp/conky/system.cpu.wa}%
 ${voffset 3}${offset 6}${color1}load ${color}${loadavg 1} ${loadavg 2}
 # ::::::::::::::::: memory
-${voffset 6}${offset 6}${color3}memory
+${voffset 6}${offset 6}${color3}memory${alignr 5}
+${voffset 3}${offset 6}${color1}mem${alignr 5}${color}${memperc}%
 ${voffset 3}${offset 6}${color1}total${alignr 5}${color}${memmax}
 ${voffset 3}${offset 6}${color1}free${alignr 5}${color}${memfree}
 ${voffset 3}${offset 6}${color1}used${alignr 5}${color}${template1 memperc 90}${mem}
@@ -81,10 +82,10 @@ ${voffset 3}${offset 6}${color1}home${alignr 5}${color}${template1 fs_used_perc\
 ${if_existing /tmp/conky/musicplayer.status on}\
 ${voffset 6}${offset 6}${color3}${cat /tmp/conky/musicplayer.name}${if_existing /tmp/conky/musicplayer.playbackStatus Playing}${alignr}${color}»${endif}
 ${if_existing /tmp/conky/musicplayer.track.art}\
-${image /tmp/conky/musicplayer.track.art -p 6,368 -s 83x83 -n}\
-${voffset 89}\
+${image /tmp/conky/musicplayer.track.art -p 6,383 -s 83x83 -n}\
+${voffset 88}\
 ${endif}\
-${voffset 6}${offset 6}${color}${scroll wait 14 3 1 ${cat /tmp/conky/musicplayer.track.title}}
+${voffset 3}${offset 6}${color}${scroll wait 14 3 1 ${cat /tmp/conky/musicplayer.track.title}}
 ${voffset 3}${offset 6}${color}${scroll wait 14 3 1 ${cat /tmp/conky/musicplayer.track.album}}
 ${voffset 3}${offset 6}${color}${scroll wait 14 3 1 ${cat /tmp/conky/musicplayer.track.artist}}
 ${endif}\

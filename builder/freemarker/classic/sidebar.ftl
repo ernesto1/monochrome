@@ -5,7 +5,7 @@ conky.config = {
 
   -- window alignment
   alignment = 'middle_left',     -- top|middle|bottom_left|middle|right
-  gap_x = 15,                -- same as passing -x at command line
+  gap_x = 3,                -- same as passing -x at command line
   gap_y = -16,
 
   -- window settings
@@ -56,7 +56,7 @@ conky.config = {
 
 conky.text = [[
 # ::::::::::::::::: cpu
-${voffset [=border-5]}${offset [=border]}${color3}cpu
+${voffset [=border-4]}${offset [=border]}${color3}cpu
 <#assign inputDir = "/tmp/conky/",
          us = inputDir + "system.cpu.us",
          id = inputDir + "system.cpu.id">
@@ -66,7 +66,8 @@ ${voffset 3}${offset [=border]}${color1}us ${color}${template1 cat\ [=us] 50}${c
 ${voffset 3}${offset [=border]}${color1}sy ${color}${template1 cat\ [=sy] 50}${cat [=sy]}%${goto 55}${color1}wa${alignr [=lborder]}${color}${template1 cat\ [=wa] 20}${cat [=wa]}%
 ${voffset 3}${offset [=border]}${color1}load ${color}${loadavg 1} ${loadavg 2}
 # ::::::::::::::::: memory
-${voffset 6}${offset [=border]}${color3}memory
+${voffset 6}${offset [=border]}${color3}memory${alignr [=lborder]}
+${voffset 3}${offset [=border]}${color1}mem${alignr [=lborder]}${color}${memperc}%
 ${voffset 3}${offset [=border]}${color1}total${alignr [=lborder]}${color}${memmax}
 ${voffset 3}${offset [=border]}${color1}free${alignr [=lborder]}${color}${memfree}
 ${voffset 3}${offset [=border]}${color1}used${alignr [=lborder]}${color}${template1 memperc [=threshold.mem]}${mem}
@@ -93,13 +94,13 @@ ${voffset 3}${offset [=border]}${color1}[=partition.name]${alignr [=lborder]}${c
 # ::::::::::::::::: media
 ${if_existing [=inputDir + "musicplayer.status"] on}\
 ${voffset 6}${offset [=border]}${color3}${cat [=inputDir + "musicplayer.name"]}${if_existing [=inputDir + "musicplayer.playbackStatus"] Playing}${alignr}${color}»${endif}
-<#assign y = 362 + border><#-- position of the album art -->
+<#assign y = 377 + border><#-- position of the album art -->
 <#assign albumArtFile = inputDir + "musicplayer.track.art">
 ${if_existing [=albumArtFile]}\
 ${image [=albumArtFile] -p [=border],[=y] -s [=width-border*2]x[=width-border*2] -n}\
-${voffset 89}\
+${voffset 88}\
 ${endif}\
-${voffset 6}${offset [=border]}${color}${scroll wait 14 3 1 ${cat [=inputDir + "musicplayer.track.title"]}}
+${voffset 3}${offset [=border]}${color}${scroll wait 14 3 1 ${cat [=inputDir + "musicplayer.track.title"]}}
 ${voffset 3}${offset [=border]}${color}${scroll wait 14 3 1 ${cat [=inputDir + "musicplayer.track.album"]}}
 ${voffset 3}${offset [=border]}${color}${scroll wait 14 3 1 ${cat [=inputDir + "musicplayer.track.artist"]}}
 ${endif}\
