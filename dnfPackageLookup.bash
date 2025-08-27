@@ -11,7 +11,7 @@ function usage {
   cat <<-END
 	$(basename $0) [--package-width n] [--version-width n] [--offset n] [--interval x]
 	
-	where package width is the number of characters to print for the pacakge name
+	where package width is the number of characters to print for the package name
 	      version width is the number of characters to print for the version number
 	      offset is the number of pixels between the package name and its version number
 	      interval is the wait time between queries, use a time range compatible with the sleep command, ex. 1h
@@ -73,9 +73,9 @@ done
 [[ ${packageWidth} -lt 1 ]] && { logError 'package name width should greater than 0'; exit 1; }
 [[ ${versionWidth} -lt 1 ]] && { logError 'version width (--version-width) should greater than 0'; exit 1; }
 
-log 'starting dnf repo package lookup'
 log "checking for package updates every ${interval}"
-log "new package updates format will be ${packageWidth} | offset ${offset} | ${versionWidth}"
+log "package updates format will be ${packageWidth} characters | offset ${offset}px | ${versionWidth} characters"
+
 outputDir=/tmp/conky
 mkdir -p ${outputDir}
 totalCores=$(grep -c processor /proc/cpuinfo)
