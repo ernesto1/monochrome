@@ -67,7 +67,7 @@ ${else}\
 <#assign albumArtFile = "/tmp/conky/musicplayer.track.art">
 ${if_existing [=albumArtFile]}\
 ${image ~/conky/monochrome/images/[=conky]/album-shadow.png -p 0,0}\
-${lua_parse draw_image [=albumArtFile] 15 22 110x110}\
+${image [=albumArtFile] -p 15,22 -s 110x110 -n}\
 ${voffset 9}\
 ${endif}\
 # ::::::::: track details
