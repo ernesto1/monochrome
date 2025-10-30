@@ -141,7 +141,7 @@ ${template8 home /home}
 ${if_existing /dev/sdb}\
 ${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 20,720}\
 ${image ~/conky/monochrome/images/compact/burgundy-graph-io.png -p 60,720}\
-${template7 sdb 6000 250000}
+${template7 sdb 250000 250000}
 ${voffset 6}\
 ${template8 veronica /media/veronica}
 ${else}\
@@ -154,7 +154,7 @@ ${endif}\
 ${if_existing /dev/sdc}\
 ${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 20,823}\
 ${image ~/conky/monochrome/images/compact/burgundy-graph-io.png -p 60,823}\
-${template7 sdc 6000 250000}
+${template7 sdc 250000 250000}
 ${voffset 6}\
 ${template8 betty /media/betty}
 ${else}\
