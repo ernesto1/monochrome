@@ -22,7 +22,7 @@ hardDisks:
         icon: home
   - device: sdb
     name: seagate HD
-    readSpeed: 6000
+    readSpeed:  250000
     writeSpeed: 250000
     hwmonIndex: 1
     partitions:
@@ -31,7 +31,7 @@ hardDisks:
         icon: partition
   - device: sdc
     name: seagate HD
-    readSpeed: 6000
+    readSpeed:  250000
     writeSpeed: 250000
     hwmonIndex: 2
     partitions:
