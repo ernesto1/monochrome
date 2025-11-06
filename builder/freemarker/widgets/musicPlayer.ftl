@@ -3,7 +3,7 @@ conky.config = {
   lua_load = '~/conky/monochrome/common.lua ~/conky/monochrome/panel.lua',
   lua_draw_hook_pre = 'reset_state',
   
-  update_interval = 2,    -- update interval in seconds
+  update_interval = 0.6,    -- update interval in seconds
   xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
@@ -47,7 +47,7 @@ conky.config = {
   color1 = '[=colors.warning]',        -- error
   
   -- n.b. this conky requires the music-player java app to be running in the background
-  --      it generates the input files under /tmp/conky/musicplayer.* which this conky reads
+  --      it generates the input files which this conky reads under /tmp/conky/musicplayer.*
 };
 
 conky.text = [[
@@ -55,7 +55,7 @@ conky.text = [[
 #                                                          song with album art
 #                                                          song with no album art
 #                                                          dependent java dbus listener application is not running
-${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-album-cover.png -p 0,0}\
+${image ~/conky/monochrome/images/widgets/album-shadow.png -p 0,0}\
 ${if_existing /tmp/conky/musicplayer.status}\
 # :::::::: no player available
 ${if_existing /tmp/conky/musicplayer.status off}\
@@ -66,7 +66,6 @@ ${else}\
 # :::::::: album art
 <#assign albumArtFile = "/tmp/conky/musicplayer.track.art">
 ${if_existing [=albumArtFile]}\
-${image ~/conky/monochrome/images/[=conky]/album-shadow.png -p 0,0}\
 ${image [=albumArtFile] -p 15,22 -s 110x110 -n}\
 ${voffset 9}\
 ${endif}\
@@ -75,8 +74,8 @@ ${endif}\
 # hence we shift the text when the data point is missing
 ${if_match "${lua get artist ${cat /tmp/conky/musicplayer.track.artist}}" == "unknown artist"}${voffset 22}${endif}\
 ${if_match "${lua get genre ${cat /tmp/conky/musicplayer.track.genre}}" == "unknown genre"}${voffset 22}${endif}\
-${voffset 31}${offset 139}${font0}${color}${cat /tmp/conky/musicplayer.track.title}
-${offset 139}${font}${color}${cat /tmp/conky/musicplayer.track.album}
+${voffset 31}${offset 139}${font0}${color}${scroll wait 27 1 5 ${cat /tmp/conky/musicplayer.track.title}}
+${offset 139}${font}${color}${scroll wait 40 1 5 ${cat /tmp/conky/musicplayer.track.album}}
 ${if_match "${lua get artist}" != "unknown artist"}${voffset 4}${offset 139}${font}${color}${lua get artist}${endif}
 ${if_match "${lua get genre}" != "unknown genre"}${voffset 4}${offset 139}${font}${color}${lua get genre}${endif}
 ${endif}\
