@@ -60,6 +60,6 @@ ${voffset 4}${goto 101}${color1}total${alignr 43}${color}${totaldown [=device.na
 # we need to remove the trailing spacing added the moment we voffset'ed the upload graph 
 ${voffset -20}
 ${else}\
-${image ~/conky/monochrome/images/widgets/[=image.secondaryColor]-ethernet-disconnected.png -p 11,30}
+${image ~/conky/monochrome/images/widgets/[=image.secondaryColor]-ethernet-disconnected.png -p 11,0}
 ${endif}\
 ]];
