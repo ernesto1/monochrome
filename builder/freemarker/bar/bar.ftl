@@ -1,16 +1,24 @@
+<#-- use the --nonverbose flag to toggle the landscape vs portrait mode bar  -->
+<#if isVerbose>
 <#import "/lib/panel-round.ftl" as panel>
+<#assign y = 6,
+         width = 1302>
+<#else>
+<#import "/lib/panel-square.ftl" as panel>
+<#assign y = 0,
+         width = 768>
+</#if>
 conky.config = {  
-  update_interval = 2,    -- update interval in seconds
-  xinerama_head = 1,      -- for multi monitor setups, select monitor to run on: 0,1,2
+  update_interval = 1,    -- update interval in seconds
+  xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
   alignment = 'bottom_middle',  -- top|middle|bottom_left|right
   gap_x = 0,
-  gap_y = 6,
+  gap_y = [=y],
 
   -- window settings
-  <#assign width = 1144>
   minimum_width = [=width?c],      -- conky will add an extra pixel to this
   maximum_width = [=width?c],
   minimum_height = 23,
@@ -31,6 +39,7 @@ conky.config = {
   
   -- miscellanous settings
   imlib_cache_flush_interval = 250,
+  if_up_strictness = 'address',
   
   -- font settings
   use_xft = false,
@@ -59,6 +68,8 @@ ${voffset 5}${goto [=x?c]}${color1}load ${color}${loadavg}\
 <#assign x += 4 * charWidth + charWidth + 16 * charWidth + charWidth>
 ${goto [=x?c]}${color1}cpu ${color}${template1 cpu\ 0 [=threshold.cpu]}${cpu 0}%\
 <#assign x += 3 * charWidth + charWidth + 4 * charWidth + charWidth>
+${goto [=x?c]}${color1}temp ${color}${template1 hwmon\ coretemp\ temp\ 2 [=threshold.tempCPUCore]}${hwmon coretemp temp 2}°\
+<#assign x += 4 * charWidth + charWidth + 3 * charWidth + charWidth>
 <#assign x += charWidth><#-- section break -->
 # :::::: memory
 ${goto [=x?c]}${color1}mem ${color}${template1 memperc [=threshold.mem]}${memperc}%\
@@ -66,6 +77,7 @@ ${goto [=x?c]}${color1}mem ${color}${template1 memperc [=threshold.mem]}${memper
 ${goto [=x?c]}${color1}swap ${color}${template1 swapperc [=threshold.swap]}${swapperc}%\
 <#assign x += 4 * charWidth + charWidth + 3 * charWidth + charWidth>
 <#assign x += charWidth><#-- section break -->
+<#if isVerbose>
 # :::::: filesystems
 <#list hardDisks as hardDisk>
 <#list hardDisk.partitions as partition>
@@ -74,6 +86,7 @@ ${goto [=x?c]}${color1}[=partition.name] ${color}${template1 fs_used_perc\ [=par
 </#list>
 </#list>
 <#assign x += charWidth><#-- section break -->
+</#if>
 # :::::: disk i/o
 <#assign disk = hardDisks?first>
 ${goto [=x?c]}${color1}read ${color}${diskio_read /dev/[=disk.device]}\
@@ -81,20 +94,33 @@ ${goto [=x?c]}${color1}read ${color}${diskio_read /dev/[=disk.device]}\
 ${goto [=x?c]}${color1}write ${color}${diskio_write /dev/[=disk.device]}\
 <#assign x += 5 * charWidth + charWidth + 7 * charWidth + charWidth>
 <#assign x += charWidth><#-- section break -->
+<#assign sectionStart = x><#-- keep track of section's x position due to code branching -->
 # :::::: network
 <#assign netDevice = networkDevices?first>
+${if_up [=netDevice.name]}\
 ${goto [=x?c]}${color1}up ${color}${upspeed [=netDevice.name]}\
 <#assign x += 2 * charWidth + charWidth + 7 * charWidth + charWidth>
 ${goto [=x?c]}${color1}down ${color}${downspeed [=netDevice.name]}\
 <#assign x += 4 * charWidth + charWidth + 7 * charWidth + charWidth>
 <#assign x += charWidth><#-- section break -->
-${goto [=x?c]}${color1}wifi ${color}${scroll wait 14 2 1 ${wireless_essid [=netDevice.name]}}\
-<#assign x += 4 * charWidth + charWidth + 14 * charWidth + charWidth>
+<#if isVerbose>
+${goto [=x?c]}${color1}wifi ${color}${scroll wait 20 2 1 ${wireless_essid [=netDevice.name]}}\
+<#assign x += 4 * charWidth + charWidth + 20 * charWidth + charWidth>
 ${goto [=x?c]}${color1}strength ${color}${template2 wireless_link_qual_perc\ [=netDevice.name] [=threshold.wifi]}${wireless_link_qual_perc [=netDevice.name]}%\
 <#assign x += 8 * charWidth + charWidth + 4 * charWidth + charWidth>
+${else}\
+${goto [=sectionStart?c]}${color1}wifi ${color}network device is disconnected, choose a wireless network\
+${endif}\
 <#assign x += charWidth><#-- section break -->
+</#if>
 # :::::: miscellaneous
 ${goto [=x?c]}${color1}${if_match "${acpiacadapter}"=="on-line"}power ${else}battery ${endif}${color}${template2 battery_percent\ BAT0 [=threshold.bat]}${battery_percent BAT0}%\
 <#assign x += 6 * charWidth + charWidth + 4 * charWidth + charWidth>
+<#if isVerbose>
 ${goto [=x?c]}${color1}uptime ${color}${uptime}\
+<#assign x += 7 * charWidth + charWidth + 10 * charWidth + charWidth,
+         packagesFile = "/tmp/conky/dnf.packages.formatted">
+${goto [=x?c]}${color1}dnf ${color}${if_existing [=packagesFile]}${lines [=packagesFile]}${else}0${endif} new\
+<#assign x += 3 * charWidth + charWidth + 6 * charWidth + charWidth>
+</#if>
 ]];

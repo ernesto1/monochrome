@@ -2,13 +2,13 @@
 
 <#-- creates a composite table image with the given dimensions
  (x,y)
-    +-------------+                          -+-
-    |-------------| < header height (px)      |
-    |             |                           |
-    |             | body height (px)        height = header + body
-    |             |                           |
-    |             |                           |
-    +-------------+                          -+-
+    ┌─────────────┐                           ┬
+    ├─────────────┤ < header height (px)      │
+    │             │                           │
+    │             │ body height (px)        height = header + body
+    │             │                           │
+    │             │                           │
+    └─────────────┘                           ┴
        width (px)
        
   fixed   'true' if the given x,y coordinates are final, 'false' if you want to consider the current x,y offsets
@@ -40,7 +40,7 @@
 <#if body gt 0>
 # ------- bottom blank image(s)
 <#local xCoordinate = x, y = y + body, widthToCover = cmn.sum(widths)>
-<#-- the blank image is repeated as many times as necessary in order to cover the table's width -->
+<#-- the blank image is repeated as many times as necessary in order to cover the table width -->
 <#list 0..widths?size as widths>
 <#if widthToCover gt 0>
 <@cmn.drawImage filePath="~/conky/monochrome/images/common/blank-panel.png" x=xCoordinate y=y isFixed=isFixed/>
@@ -56,13 +56,13 @@
 
 <#-- creates a composite vertical table image with the given dimensions
  (x,y)
-    +---------+--------------------+
-    |         |                    |
-    |         |                    |
-    |         |                    |  height
-    |         |                    |
-    |         |                    |
-    +---------+--------------------+
+    ┌─────────┬────────────────────┐
+    │         │                    │
+    │         │                    │
+    │         │                    │  height
+    │         │                    │
+    │         │                    │
+    └─────────┴────────────────────┘
      header       body width (px)
      width (px)
  -->
@@ -78,19 +78,19 @@
 
 <#-- creates a composite panel image with the given dimensions
  (x,y)
-    ╭─────────────╮      -+-
-    │             │       |
-    │             │       |
-    │             │     height (px)
-    │             │       |
-    │             │       |
-    ╰─────────────╯      -+-
+    ┌─────────────┐       ┬
+    │             │       │
+    │             │       │
+    │             │     height (px)     if height is 0, the panel has no bottom edge
+    │             │       │
+    │             │       │
+    └─────────────┘       ┴
        width (px)
  -->
-<#macro panel x y width height=0 isDark=false isFixed=true color=image.primaryColor>
+<#macro panel x y width height isDark=false isFixed=true color=image.primaryColor>
 <#local theme=cmn.getTheme(isDark)>
 # ------- panel | [=theme] [=color] | top     -------
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/[=color]-panel-[=theme].png" x=x y=y isFixed=isFixed/>
+<@cmn.drawContinuosPanel x=x y=y width=width color=color theme=theme isFixed=isFixed/>
 <@cmn.drawImage filePath="~/conky/monochrome/images/common/blank-panel.png" x=x+width y=y isFixed=isFixed/>
 <#if height gt 0>
 <@cmn.drawImage filePath="~/conky/monochrome/images/common/blank-panel.png" x=x y=y+height isFixed=isFixed/>

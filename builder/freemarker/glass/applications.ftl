@@ -126,7 +126,7 @@ ${voffset [=width + gap]}${lua increment_offsets 0 [=width + gap]}\
 ${endif}\
 # ::: track details
 # panel expands based on the track metadata fields available, only 'title' is considered mandatory
-<@panel.panel x=0 y=0 width=width isFixed=false/>
+<@panel.panel x=0 y=0 width=width height=0 isFixed=false/>
 ${if_match "${lua get playbackStatus}" == "Playing"}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-sound-wave.png [=width-69] 0}\
 ${endif}\
