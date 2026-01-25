@@ -24,10 +24,10 @@ yellow:
   colors:
     # sidebar
     text: white
-    bar: c15124
+    bar: c12504
     warning: 1a5c00
     readGraph: 123e01 68a315
-    writeGraph: c12504 ff3c13
+    writeGraph: ff3c13 c12504
     panels:
       labels: 8c0404
       text: 703d0a

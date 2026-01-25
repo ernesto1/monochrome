@@ -131,17 +131,17 @@ ${if_match "${lua get playbackStatus}" == "Playing"}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-sound-wave.png [=width-69] 0}\
 ${endif}\
 ${lua increment_offsets 0 [=23]}\
-${voffset 3}${offset 5}${color}${lua_parse truncate_string ${lua get title} 25}
+${voffset 3}${offset 5}${color}${scroll wait 25 4 1 ${lua get title}}
 ${if_match "${lua get album}" != "unknown album"}\
 <#-- vertical offset would normally be 3px between fields but in order to support optional fields and not introduce
      blank new lines, each field does have a line break.  Hence the use of 16px in order to compensate for this -->
-${voffset 3}${offset 5}${color}${lua_parse truncate_string ${lua get album} 25}${lua increment_offsets 0 16}
+${voffset 3}${offset 5}${color}${scroll wait 25 4 1 ${lua get album}}${lua increment_offsets 0 16}
 ${endif}\
 ${if_match "${lua get artist}" != "unknown artist"}\
-${voffset 3}${offset 5}${color}${lua_parse truncate_string ${lua get artist} 25}${lua increment_offsets 0 16}
+${voffset 3}${offset 5}${color}${scroll wait 25 4 1 ${lua get artist}}${lua increment_offsets 0 16}
 ${endif}\
 ${if_match "${lua get genre}" != "unknown genre"}\
-${voffset 3}${offset 5}${color}${lua_parse truncate_string ${lua get genre} 25}${lua increment_offsets 0 16}
+${voffset 3}${offset 5}${color}${scroll wait 25 4 1 ${lua get genre}}${lua increment_offsets 0 16}
 ${endif}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 0}\
 # ------- panel | light blue | bottom  -------
