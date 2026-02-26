@@ -75,7 +75,7 @@ You require `maven` and the `java jdk` in order to build it from source.
 dnf install maven
 
 # ::: building the music app from source
-cd ~/conky/monochrome/builder/java-tools
+cd ~/conky/monochrome/build/java-tools
 mvn clean package site-deploy
 mkdir -p ~/conky/monochrome/java
 rm -rf ~/conky/monochrome/java/*

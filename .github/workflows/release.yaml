@@ -16,7 +16,7 @@ jobs:
       - name: Build java applications
         run: |
           echo ':::::::: build the java applications'
-          cd builder/java-tools
+          cd build/java-tools
           mvn clean package site-deploy
           mkdir -p ${GITHUB_WORKSPACE}/java
           echo ":::::::: deploy apps to the project's java folder"
@@ -26,10 +26,10 @@ jobs:
         run: |
           shopt -s extglob
           echo ':::::::: adding the files'
-          ls !(builder|images) images/*/*.{png,jpg}
+          ls !(build|images) images/*/*.{png,jpg}
           echo -e '\n:::::::: creating the zip file'
           mkdir monochrome
-          cp -r --parents !(builder|images|monochrome) images/*/*.{png,jpg} monochrome
+          cp -r --parents !(build|images|monochrome) images/*/*.{png,jpg} monochrome
           mkdir build
           zip -r build/monochrome.zip monochrome
       - name: Add the zip to the release

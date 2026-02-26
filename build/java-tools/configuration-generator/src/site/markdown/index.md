@@ -6,9 +6,9 @@ Conky configurations are generated using [Apache Freemarker Templates](https://f
   ![conky with different color schemes](https://raw.githubusercontent.com/ernesto1/monochrome/refs/heads/master/images/screenshots/blocks.png)
 
 - Generate a laptop or desktop version of the same conky  
-  ![desktop vs laptop version](https://raw.githubusercontent.com/ernesto1/monochrome/refs/heads/master/builder/freemarker/system-differences.png)
+  ![desktop vs laptop version](https://raw.githubusercontent.com/ernesto1/monochrome/refs/heads/master/build/freemarker/system-differences.png)
 
 ### Conky Templates
-The available templates for this project are under the `~/conky/monochrome/builder/freemarker` directory.  
+The available templates for this project are under the `~/conky/monochrome/build/freemarker` directory.  
 Each sub directory is a collection of conkys under a specific theme.  Where each `.ftl` file is template that corresponds to a conky configuration.  
 See the [How to use](instructions.html) page for a tutorial on how to build a conky configuration.

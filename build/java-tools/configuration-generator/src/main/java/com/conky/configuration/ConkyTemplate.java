@@ -26,7 +26,7 @@ public class ConkyTemplate {
     /**
      * Root directory with the configuration files for all themes
      */
-    private static final File TEMPLATE_ROOT_DIR = new File(MONOCHROME_ROOT_DIR, "builder/freemarker");
+    private static final File TEMPLATE_ROOT_DIR = new File(MONOCHROME_ROOT_DIR, "build/freemarker");
     private static final String COLOR_PALETTE_FILENAME = "colorPalette.yml";
     private static Yaml yaml = new Yaml();
 

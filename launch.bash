@@ -19,7 +19,7 @@ function usage() {
 	$(basename $0) --conky theme [--monitor n] [--layout-override <tag>] [--silent] [--interval x] [--shutdown]
 	
 	Required flags
-	  --conky $(cd ${monochromeHome}; echo !(builder|images|java|*.*) | tr ' ' '|')
+	  --conky $(cd ${monochromeHome}; echo !(build|images|java|*.*) | tr ' ' '|')
 	    select the theme to launch
 	
 	Optional flags

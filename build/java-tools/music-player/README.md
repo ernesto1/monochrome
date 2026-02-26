@@ -5,7 +5,7 @@ The application can be built from source by running the maven command
 mvn clean package
 ```
 It still has to be deployed to the `monochrome/java` directory for actual use by the launch script.  
-The [buildJavaApps.bash](https://github.com/ernesto1/monochrome/blob/master/builder/buildJavaApps.bash) script 
+The [buildJavaApps.bash](https://github.com/ernesto1/monochrome/blob/master/build/buildJavaApps.bash) script 
 was written to simplify this process.  It builds and deploys all the java applications to the target folder.
 
 ### Documentation
