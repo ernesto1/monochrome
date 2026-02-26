@@ -202,6 +202,7 @@ ${image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-left.p
 ${image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-right.png -p 88,960}\
 ${image ~/conky/monochrome/images/common/blank-panel.png -p 0,967}\
 # ------- light panel bottom edge -------
+${image ~/conky/monochrome/images/blocks/burgundy-album-cover.png -p 22,846 -n}\
 ${if_existing /tmp/conky/musicplayer.status off}\
 ${voffset 120}\
 ${voffset 3}${offset 6}${color1}now playing
