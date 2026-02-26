@@ -50,12 +50,12 @@ conky.config = {
 conky.text = [[
 ${if_up enp0s25}\
 ${image ~/conky/monochrome/images/widgets/green-network.png -p 0,0}\
-${voffset 18}${offset 79}${upspeedgraph enp0s25 37,97 5c111f c01e20 3000}
-${voffset -7}${offset 79}${downspeedgraph enp0s25 37,97 4c6e3b 9fc14a 73000}
-${voffset 6}${offset 18}${color1}up${alignr 128}${color}${upspeed enp0s25}
-${voffset 4}${offset 18}${color1}down${alignr 128}${color}${downspeed enp0s25}
-${voffset -30}${goto 101}${color1}total${alignr 43}${color}${totalup enp0s25}
-${voffset 4}${goto 101}${color1}total${alignr 43}${color}${totaldown enp0s25}
+${voffset 18}${offset 96}${upspeedgraph enp0s25 37,80 5c111f c01e20 3000}
+${voffset -7}${offset 96}${downspeedgraph enp0s25 37,80 4c6e3b 9fc14a 73000}
+${voffset 6}${offset 18}${color1}total${alignr 124}${color}${totalup enp0s25}
+${voffset 4}${offset 18}${color1}total${alignr 124}${color}${totaldown enp0s25}
+${voffset -30}${goto 104}${color1}up${alignr 43}${color}${upspeed enp0s25}
+${voffset 4}${goto 104}${color1}down${alignr 43}${color}${downspeed enp0s25}
 # we need to remove the trailing spacing added the moment we voffset'ed the upload graph 
 ${voffset -20}
 ${else}\

@@ -51,12 +51,12 @@ conky.text = [[
 <#assign device = networkDevices?first>
 ${if_up [=device.name]}\
 ${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-network.png -p 0,0}\
-${voffset 18}${offset 79}${upspeedgraph [=device.name] 37,97 [=colors.readGraph] [=device.maxUp?c]}
-${voffset -7}${offset 79}${downspeedgraph [=device.name] 37,97 [=colors.writeGraph] [=device.maxDown?c]}
-${voffset 6}${offset 18}${color1}up${alignr 128}${color}${upspeed [=device.name]}
-${voffset 4}${offset 18}${color1}down${alignr 128}${color}${downspeed [=device.name]}
-${voffset -30}${goto 101}${color1}total${alignr 43}${color}${totalup [=device.name]}
-${voffset 4}${goto 101}${color1}total${alignr 43}${color}${totaldown [=device.name]}
+${voffset 18}${offset 96}${upspeedgraph [=device.name] 37,80 [=colors.readGraph] [=device.maxUp?c]}
+${voffset -7}${offset 96}${downspeedgraph [=device.name] 37,80 [=colors.writeGraph] [=device.maxDown?c]}
+${voffset 6}${offset 18}${color1}total${alignr 124}${color}${totalup [=device.name]}
+${voffset 4}${offset 18}${color1}total${alignr 124}${color}${totaldown [=device.name]}
+${voffset -30}${goto 104}${color1}up${alignr 43}${color}${upspeed [=device.name]}
+${voffset 4}${goto 104}${color1}down${alignr 43}${color}${downspeed [=device.name]}
 # we need to remove the trailing spacing added the moment we voffset'ed the upload graph 
 ${voffset -20}
 ${else}\
