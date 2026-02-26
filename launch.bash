@@ -69,7 +69,7 @@ function printHeader {
 
 # kills any currently running monochrome conkys and support jobs
 function killSession {
-  printHeader '\n::: killing the currently running processes of this conky suite\n'
+  printHeader '\n::: killing the currently running monochrome conky processes\n'
   pgrep -f 'conky/monochrome/[^l]' -a | sed 's/ /:/' | column -s ':' -t -N PID,process
   printHeader "\nclosing remarks"
   pkill -f 'conky/monochrome/[^l]'

@@ -2,6 +2,7 @@ package com.conky.musicplayer;
 
 import org.freedesktop.dbus.connections.impl.DBusConnection;
 import org.freedesktop.dbus.exceptions.DBusException;
+import org.freedesktop.dbus.exceptions.DBusExecutionException;
 import org.freedesktop.dbus.interfaces.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +37,8 @@ public class ApplicationInquirer {
         try {
             Properties properties = dbus.getRemoteObject(uniqueName, object, Properties.class);
             value = properties.Get(dbusInterface, property);
-        } catch (DBusException e) {
-            logger.warn("unable to retrieve the property '{}' from the object '{}'", property, uniqueName);
+        } catch (DBusException | DBusExecutionException e) {
+            logger.warn("unable to retrieve the property '{}' from the object '{}': {}", property, uniqueName, e);
         }
 
         return Optional.ofNullable(value);

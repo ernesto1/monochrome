@@ -75,7 +75,7 @@ public class Registrar {
         }
 
         if (!isSupported(playerName)) {
-            logger.info("'{}' is not a supported music player, it will not be registered", playerName);
+            logger.info("'{}' is not a supported music player, ignoring", playerName);
             return;
         }
 

@@ -76,7 +76,7 @@ public class MusicPlayerDatabase implements InitializingBean {
         if (activePlayer == null || activePlayer.equals(MusicPlayer.DUMMY_PLAYER)) {
             Optional<MusicPlayer> mp = getBestAvailablePlayer();
             activePlayer = mp.isPresent() ? new MusicPlayer(mp.get()) : MusicPlayer.DUMMY_PLAYER;
-            logger.info("'{}' is the new active player, writing to disk", activePlayer.getPlayerName());
+            logger.info("'{}' is the new active player", activePlayer.getPlayerName());
             writer.writePlayerState(activePlayer);
             return;
         }
@@ -97,7 +97,7 @@ public class MusicPlayerDatabase implements InitializingBean {
 
         if (!activePlayer.isSameState(newPlayerState)) {
             activePlayer = new MusicPlayer(newPlayerState);
-            logger.debug("new state for the active player '{}', writing to disk", activePlayer.getPlayerName());
+            logger.debug("new state for the active player '{}'", activePlayer.getPlayerName());
             writer.writePlayerState(activePlayer);
         }
     }
