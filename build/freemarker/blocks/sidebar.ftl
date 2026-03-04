@@ -161,7 +161,7 @@ ${voffset 3}${offset [=border]}${color1}back${alignr [=lborder]}${color}${templa
           inputDir = "/tmp/conky/",
           albumArtFile = inputDir + "musicplayer.track.art">
 <@panel.panel x=0 y=y height=height width=width/>
-${image ~/conky/monochrome/images/blocks/[=image.primaryColor]-album-cover.png -p 22,[=y+25] -n}\
+${image ~/conky/monochrome/images/common/[=image.primaryColor]-album-cover.png -p 22,[=y+25] -n}\
 ${if_existing [=inputDir + "musicplayer.status"] off}\
 ${voffset [=gap + 3 + width + 16]}\
 ${voffset 3}${offset [=border]}${color1}now playing

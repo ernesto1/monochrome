@@ -54,6 +54,7 @@ conky.text = [[
          height = 3 + width-border + 3*16 + 6,
          inputDir = "/tmp/conky/">
 <@panel.panel x=0 y=y height=height width=width isDark=isDark/>
+${image ~/conky/monochrome/images/common/[=image.primaryColor]-album-cover.png -p 20,[=y+20] -n}\
 ${if_existing [=inputDir + "musicplayer.status"] off}\
 ${voffset [=3 + width - border + 16 + 1]}\
 ${voffset 3}${offset [=border]}${color1}now playing
@@ -68,8 +69,7 @@ ${image [=albumArtFile] -p [=3],[=y+3] -s [=width-border]x[=width-border] -n}\
 <#assign y += height + gap>
 ${voffset [=3 + width - border + 1]}\
 ${else}\
-${voffset [=3 + width - border - 16 + 1]}\
-${voffset 3}${offset [=border]}${template1}${scroll wait 14 2 1 ${cat [=inputDir + "musicplayer.name"]}}
+${voffset [=3 + width - border - 16 + 1 + 16]}\
 ${endif}\
 ${voffset 3}${offset [=border]}${template1}${scroll wait 14 2 1 ${cat [=inputDir + "musicplayer.track.title"]}}
 ${voffset 3}${offset [=border]}${template1}${scroll wait 14 2 1 ${cat [=inputDir + "musicplayer.track.album"]}}
