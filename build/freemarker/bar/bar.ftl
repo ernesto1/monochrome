@@ -4,6 +4,7 @@
 <#assign y = 6,
          width = 1302>
 <#else>
+<#-- conky for portrait display -->
 <#import "/lib/panel-square.ftl" as panel>
 <#assign y = 0,
          width = 768>

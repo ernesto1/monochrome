@@ -161,7 +161,7 @@ ${voffset 3}${offset [=border]}${color1}back${alignr [=lborder]}${color}${templa
           inputDir = "/tmp/conky/",
           albumArtFile = inputDir + "musicplayer.track.art">
 <@panel.panel x=0 y=y height=height width=width/>
-${image ~/conky/monochrome/images/blocks/[=image.primaryColor]-album-cover.png -p 22,[=y+25] -n}\
+${image ~/conky/monochrome/images/common/[=image.primaryColor]-album-cover.png -p 22,[=y+20] -n}\
 ${if_existing [=inputDir + "musicplayer.status"] off}\
 ${voffset [=gap + 3 + width + 16]}\
 ${voffset 3}${offset [=border]}${color1}now playing
@@ -175,8 +175,7 @@ ${image [=albumArtFile] -p [=3],[=y+3] -s [=width-border]x[=width-border] -n}\
 <#assign y += height + gap>
 ${voffset [=gap + 3 + width]}\
 ${else}\
-${voffset [=gap + 3 + width - 16]}\
-${voffset 3}${offset [=border]}${template3}${scroll wait 14 2 1 ${cat [=inputDir + "musicplayer.name"]}}
+${voffset [=gap + 3 + width]]}\
 ${endif}\
 ${voffset 3}${offset [=border]}${template3}${scroll wait 14 2 1 ${cat [=inputDir + "musicplayer.track.title"]}}
 ${voffset 3}${offset [=border]}${template3}${scroll wait 14 2 1 ${cat [=inputDir + "musicplayer.track.album"]}}

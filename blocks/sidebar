@@ -202,7 +202,7 @@ ${image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-left.p
 ${image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-right.png -p 88,960}\
 ${image ~/conky/monochrome/images/common/blank-panel.png -p 0,967}\
 # ------- light panel bottom edge -------
-${image ~/conky/monochrome/images/blocks/burgundy-album-cover.png -p 22,846 -n}\
+${image ~/conky/monochrome/images/common/burgundy-album-cover.png -p 22,841 -n}\
 ${if_existing /tmp/conky/musicplayer.status off}\
 ${voffset 120}\
 ${voffset 3}${offset 6}${color1}now playing
@@ -223,8 +223,7 @@ ${if_existing /tmp/conky/musicplayer.track.art}\
 ${image /tmp/conky/musicplayer.track.art -p 3,824 -s 89x89 -n}\
 ${voffset 104}\
 ${else}\
-${voffset 88}\
-${voffset 3}${offset 6}${template3}${scroll wait 14 2 1 ${cat /tmp/conky/musicplayer.name}}
+${voffset 104]}\
 ${endif}\
 ${voffset 3}${offset 6}${template3}${scroll wait 14 2 1 ${cat /tmp/conky/musicplayer.track.title}}
 ${voffset 3}${offset 6}${template3}${scroll wait 14 2 1 ${cat /tmp/conky/musicplayer.track.album}}
