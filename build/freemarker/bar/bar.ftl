@@ -9,7 +9,7 @@
          width = 768>
 </#if>
 conky.config = {  
-  update_interval = 1,    -- update interval in seconds
+  update_interval = 1.5,    -- update interval in seconds
   xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 

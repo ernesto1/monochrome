@@ -3,7 +3,7 @@ this conky requires the 'system.bash' script running in the background,
 output files from this script are read from /tmp/conky
 ]]
 conky.config = {
-  update_interval = 2,  -- update interval in seconds
+  update_interval = 1.5,  -- update interval in seconds
   total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
   xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)

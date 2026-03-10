@@ -4,7 +4,7 @@
 <#assign diskName = hardDisk.fileSuffix!hardDisk.device>
 <@outputFileDirective filename="disk-" + diskName>
 conky.config = {
-  update_interval = 2,  -- update interval in seconds
+  update_interval = 1.5,  -- update interval in seconds
   double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
