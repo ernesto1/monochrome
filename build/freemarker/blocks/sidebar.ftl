@@ -11,7 +11,7 @@ conky.config = {
   gap_y = [=yOffset],
 
   -- window settings
-  <#assign border = 6,
+  <#assign border = 7,
            lborder = border - 1,
            width = border * 2 + 83>
   minimum_width = [=width],      -- conky will add an extra pixel to this
@@ -73,7 +73,7 @@ ${voffset 3}${offset [=border]}${color1}updates${alignr [=lborder]}${color}${if_
 <#assign us = inputDir + "/system.cpu.us",
          id = inputDir + "/system.cpu.id">
 ${voffset [=7 + gap]}\
-${voffset 3}${offset [=border]}${color1}us ${color}${template1 cat\ [=us] 50}${cat [=us]}%${goto 55}${color1}id${alignr [=lborder]}${color}${cat [=id]}%
+${voffset 3}${offset [=border]}${color1}us ${color}${template1 cat\ [=us] 70}${cat [=us]}%${goto 55}${color1}id${alignr [=lborder]}${color}${cat [=id]}%
 <#assign sy = inputDir + "/system.cpu.sy",
          wa = inputDir + "/system.cpu.wa">
 ${voffset 3}${offset [=border]}${color1}sy ${color}${cat [=sy]}%${goto 55}${color1}wa${alignr [=lborder]}${color}${template1 cat\ [=wa] 20}${cat [=wa]}%
@@ -163,7 +163,7 @@ ${voffset 3}${offset [=border]}${color1}back${alignr [=lborder]}${color}${templa
 <@panel.panel x=0 y=y height=height width=width/>
 ${image ~/conky/monochrome/images/common/[=image.primaryColor]-album-cover.png -p 22,[=y+20] -n}\
 ${if_existing [=inputDir + "musicplayer.status"] off}\
-${voffset [=gap + 3 + width + 16]}\
+${voffset [=gap + 2 + width + 16]}\
 ${voffset 3}${offset [=border]}${color1}now playing
 ${voffset 3}${offset [=border]}${color}${scroll wait 14 2 1 no player running}
 ${else}\
@@ -173,10 +173,8 @@ ${endif}\
 ${if_existing [=albumArtFile]}\
 ${image [=albumArtFile] -p [=3],[=y+3] -s [=width-border]x[=width-border] -n}\
 <#assign y += height + gap>
-${voffset [=gap + 3 + width]}\
-${else}\
-${voffset [=gap + 3 + width]]}\
 ${endif}\
+${voffset [=gap + 2 + width]]}\
 ${voffset 3}${offset [=border]}${template3}${scroll wait 14 2 1 ${cat [=inputDir + "musicplayer.track.title"]}}
 ${voffset 3}${offset [=border]}${template3}${scroll wait 14 2 1 ${cat [=inputDir + "musicplayer.track.album"]}}
 ${voffset 3}${offset [=border]}${template3}${scroll wait 14 2 1 ${cat [=inputDir + "musicplayer.track.artist"]}}
