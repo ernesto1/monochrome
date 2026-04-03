@@ -138,7 +138,7 @@ ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph-io.png -p 
 <#assign y += 36 + 46>
 ${template6 [=device.name] [=device.maxUp?c] [=device.maxDown?c]}
 ${else}\
-${image ~/conky/monochrome/images/compact/[=image.secondaryColor]-no-network.png -p [=lso],[=ySection-7]}\
+${image ~/conky/monochrome/images/compact/[=image.secondaryColor]-no-network.png -p [=lso+3],[=ySection-7]}\
 ${voffset 12}${offset [=lso + iborder + 2]}${color1}no network
 ${voffset 3}${offset [=lso + iborder + 2]}connection
 ${voffset 73}
@@ -163,7 +163,7 @@ ${template8 [=partition.name] [=partition.path]}
 </#list>
 <#if disk.partitions?size == 1>
 ${else}\
-${image ~/conky/monochrome/images/compact/[=image.secondaryColor]-no-disk.png -p [=lso],[=ySection - 6]}\
+${image ~/conky/monochrome/images/compact/[=image.secondaryColor]-no-disk.png -p [=lso+3],[=ySection - 6]}\
 ${voffset 13}${offset [=lso + iborder + 2]}${color1}[=disk.device] device
 ${voffset 3}${offset [=lso + iborder + 2]}${color1}${font4}is not connected
 ${voffset 48}
