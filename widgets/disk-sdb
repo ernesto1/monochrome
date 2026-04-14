@@ -54,7 +54,7 @@ ${voffset 1}${goto 111}${color2}${if_match ${fs_used_perc \1} > 90}${color3}${en
 conky.text = [[
 ${if_existing /dev/sdb}\
 # disk io
-${image ~/conky/monochrome/images/widgets/green-disk-single-partition.png -p 0,0}\
+${image ~/conky/monochrome/images/widgets/green-disk.png -p 0,0}\
 ${voffset 13}${offset 32}${diskiograph_read sdb 37,67 5c111f c01e20 250000}
 ${voffset -7}${offset 32}${diskiograph_write sdb 37,67 4c6e3b 9fc14a 250000}
 ${voffset 6}${offset 19}${color1}read${alignr 120}${color}${diskio_read sdb}

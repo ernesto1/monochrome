@@ -12,7 +12,7 @@ conky.config = {
   gap_y = 5,
 
   -- window settings
-  minimum_width = 367,
+  minimum_width = 368,
   minimum_height = 131,
   own_window = true,
   own_window_type = 'desktop',              -- values: desktop (background), panel (bar)
@@ -82,6 +82,7 @@ ${image ~/conky/monochrome/images/common/blank-panel.png -p 368,19}\
 # ------- bottom blank image(s)
 ${image ~/conky/monochrome/images/common/blank-panel.png -p 185,89}\
 # ------- table | 1 column(s) | bottom -------
+${image ~/conky/monochrome/images/common/green-panel-dark-edge-top-right.png -p 361,0}\
 ${voffset -72}${goto 191}${color1}fan${alignr 4}revolutions${voffset 5}
 ${voffset 3}${goto 191}${color}chasis front intake${alignr 4}${template1 atk0110 fan 3 2400} rpm
 ${voffset 3}${goto 191}${color}cpu fan${alignr 4}${template1 atk0110 fan 1 2500} rpm
@@ -99,6 +100,7 @@ ${image ~/conky/monochrome/images/common/blank-panel.png -p 368,113}\
 # ------- bottom blank image(s)
 ${image ~/conky/monochrome/images/common/blank-panel.png -p 185,133}\
 # ------- table | 1 column(s) | bottom -------
+${image ~/conky/monochrome/images/common/green-panel-light-edge-bottom-right.png -p 361,125}\
 ${goto 191}${color1}device${alignr 4}temperature
 ${voffset 6}${goto 191}${color}AMD Radeon HD7570${alignr}${template1 radeon temp 1 75}°C
 ]];

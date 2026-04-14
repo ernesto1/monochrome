@@ -48,13 +48,13 @@ conky.config = {
   
   -- :::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
   -- memory process
-  template0 = [[${voffset 3}${offset 5}${color}${top_mem name \1}${alignr 2}${top_mem mem_res \1}${top_mem mem \1}%]]
+  template0 = [[${voffset 3}${offset 6}${color}${top_mem name \1}${alignr 3}${top_mem mem_res \1}${top_mem mem \1}%]]
 };
 
 conky.text = [[
 # a bug in conky causes the memory graph to jitter if the ${top_mem} variables are used in the same file
 # hence why the memory processes had to be placed in their own conky : /
-${voffset 1}${offset 5}${color1}process${alignr 2}mem   perc${voffset 5}
+${voffset 1}${offset 6}${color1}process${alignr 3}mem   perc${voffset 5}
 <#list 1..4 as x>
 ${template0 [=x]}
 </#list>

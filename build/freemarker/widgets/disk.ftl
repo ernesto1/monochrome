@@ -61,11 +61,7 @@ ${voffset 1}${goto [=offset+97]}${color2}${if_match ${fs_used_perc \1} > [=thres
 conky.text = [[
 ${if_existing /dev/[=hardDisk.device]}\
 # disk io
-<#if hardDisk.partitions?size gt 1 >
 ${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-disk.png -p 0,0}\
-<#else>
-${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-disk-single-partition.png -p 0,0}\
-</#if>
 <#assign voffset = 14><#-- offset to account for border added by the background image -->
 ${voffset [=voffset-1]}${offset [=offset+18]}${diskiograph_read [=hardDisk.device] 37,67 [=colors.readGraph] [=hardDisk.readSpeed?c]}
 ${voffset -7}${offset [=offset+18]}${diskiograph_write [=hardDisk.device] 37,67 [=colors.writeGraph] [=hardDisk.writeSpeed?c]}

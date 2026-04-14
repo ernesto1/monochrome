@@ -51,6 +51,6 @@ ${image ~/conky/monochrome/images/widgets/[=image.primaryColor]-memory-high.png 
 ${endif}\
 <#assign voffset = 20><#-- offset to account for border added by the background image -->
 ${voffset [=voffset]]}${color}${offset 29}${memgraph 78, 42 [=colors.writeGraph]}
-${voffset 7}${goto 98}${color1}mem${goto 131}${color}${memperc}%${goto 163}${mem} / ${memmax}
-${voffset 4}${goto 98}${color1}swap${goto 131}${color}${swapperc}%${goto 163}${color2}${if_match ${swapperc} >= [=threshold.swap]}${color3}${endif}${swapbar 3, 100}
+${voffset 7}${goto [=15+7]}${color1}mem${goto 57}${color}${memperc}%${goto 99}${mem} / ${memmax}${alignr 6}${cat /tmp/conky/system.swap.read}  si
+${voffset 4}${goto [=15+7]}${color1}swap${goto 57}${color}${if_match ${swapperc} >= [=threshold.swap]}${color3}${endif}${swapperc}%${goto 99}${color}${swap} / ${swapmax}${alignr 6}${color}${cat /tmp/conky/system.swap.write}  so
 ]];

@@ -1,11 +1,11 @@
 conky.config = {
   update_interval = 1.5,  -- update interval in seconds
-  xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
-  double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
+  xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
+  double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
   alignment = 'bottom_left',  -- top|middle|bottom_left|right
-  gap_x = 456,               -- same as passing -x at command line
+  gap_x = 456,                -- same as passing -x at command line
   gap_y = 5,
 
   -- window settings
@@ -38,7 +38,7 @@ conky.config = {
   imlib_cache_flush_interval = 250,
 
   -- font settings
-  draw_shades = false,    -- black shadow on text (not good if text is black)
+  draw_shades = false,      -- black shadow on text (not good if text is black)
   
   -- colors
   default_color = '[=colors.text]', -- regular text

@@ -13,7 +13,8 @@ conky.config = {
   gap_y = 5,
 
   -- window settings
-  minimum_width = 367,
+  <#assign width = 368>
+  minimum_width = [=width],
   minimum_height = 131,
   own_window = true,
   own_window_type = 'desktop',              -- values: desktop (background), panel (bar)
@@ -56,26 +57,27 @@ conky.text = [[
 # :::::::::::: o/s
 <#assign y = 0,
          header = 69,
-         width = 180 - header
+         tableWidth = 180 - header
          height = 53,
          gap = 5>     <#-- empty space between windows -->
-<@panel.verticalTable x=0 y=y header=header body=width height=height/>
+<@panel.verticalTable x=0 y=y header=header body=tableWidth height=height/>
 <#assign y += height + gap>
 ${voffset 3}${offset 5}${color1}kernel${goto 75}${color}${lua truncate_string ${kernel} 17}
 ${voffset 3}${offset 5}${color1}uptime${goto 75}${color}${uptime}
 ${voffset 3}${offset 5}${color1}compositor${goto 75}${color}${execi 3600 echo $XDG_SESSION_TYPE}
 ${voffset [= 7 + gap]}\
 # :::::::::::: applications
-<@panel.verticalTable x=0 y=y header=header body=width height=21/>
+<@panel.verticalTable x=0 y=y header=header body=tableWidth height=21/>
 <#assign packagesFile = "/tmp/conky/dnf.packages.formatted">
 ${voffset 2}${offset 5}${color1}dnf${goto 75}${color}${if_existing [=packagesFile]}${lines [=packagesFile]} new${else}no${endif} updates
-<#assign x = header + width + gap,
+<#assign x = header + tableWidth + gap,
          y = 0,
          header = 19,
-         width = 183,
+         tableWidth = 183,
          body = 70>
 # :::::::::::: fans
-<@panel.table x=x y=0 widths=[width] header=header body=body/>
+<@panel.table x=x y=0 widths=[tableWidth] header=header body=body/>
+${image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-dark-edge-top-right.png -p [=width-7],[=0]}\
 <#assign y += header + body + gap>
 ${voffset -72}${goto [=x+6]}${color1}fan${alignr 4}revolutions${voffset 5}
 ${voffset 3}${goto [=x+6]}${color}chasis front intake${alignr 4}${template1 atk0110 fan 3 2400} rpm
@@ -85,7 +87,8 @@ ${voffset 3}${goto [=x+6]}${color}case back exhaust${alignr 4}${template1 atk011
 ${voffset [= 7 + gap]}\
 # :::::::::::: temperatures
 <#assign body = 20>
-<@panel.table x=x y=y widths=[width] header=header body=body/>
+<@panel.table x=x y=y widths=[tableWidth] header=header body=body/>
+${image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-light-edge-bottom-right.png -p [=width-7],[=y+19+19-7]}\
 ${goto [=x+6]}${color1}device${alignr 4}temperature
 ${voffset 6}${goto [=x+6]}${color}AMD Radeon HD7570${alignr}${template1 radeon temp 1 [=threshold.tempVideo]}°C
 ]];
