@@ -167,6 +167,8 @@
                  gap
 
   widths      list of column widths in pixels
+  gap         number of pixels in between columns, defaults to 3px
+              set to 0 if you just want to higlight columns
   higlight    list of columns positions to highlight by using the conky theme's secondary color
               first column starts at 1
  -->
@@ -185,14 +187,14 @@
   y           y coordinate where the panel ends
   widths      list of column widths in pixels
 -->
-<#macro panelsBottom x y widths gap=3 isFixed=true theme="light" highlight=[], color=image.primaryColor>
+<#macro panelsBottom x y widths gap=3 isFixed=true theme="light" highlight=[]>
 <#local xCoordinate = x, totalWidth = 0>
 <#list widths as width>
   <#if highlight?seq_contains(width?counter)>
     <#local color=image.secondaryColor>
   </#if>
   <@panelBottomCorners x=xCoordinate y=y width=width isFixed=isFixed isEdge=false color=color/>
-  <#local xCoordinate = xCoordinate + width + gap, color=color, totalWidth += totalWidth + width>
+  <#local xCoordinate = xCoordinate + width + gap, color=image.primaryColor, totalWidth += totalWidth + width>
 </#list>
 <@cmn.drawContinuosPanel x=x y=y width=totalWidth color="blank" isFixed=isFixed/>
 # ------- [=widths?size] column(s) panel | bottom edges -------

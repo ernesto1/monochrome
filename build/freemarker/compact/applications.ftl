@@ -80,12 +80,12 @@ ${if_existing [=packagesFile]}\
 ${voffset 5}${lua_parse add_x_offset offset 48}${color1}dandified yum
 ${voffset 2}${lua_parse add_x_offset offset 48}${color}${lines [=packagesFile]} package updates${voffset 10}
 ${lua increment_offsets 0 [=iconHeight + gap]}\
-<#assign packageCol = 134, colGap = gap, versionCol = width - packageCol - colGap>
-<@panel.panels x=0 y=0 widths=[packageCol,versionCol] gap=colGap isFixed=false/>
+<#assign packageCol = 134>
+<@panel.panel x=0 y=0 width=width isFixed=false/>
 # optional dnf branding, can be removed or won't matter if the image does not exist
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-dnf.png [=packageCol-35-2] 5}\
 ${color}${lua_parse paginate [=packagesFile] [=packageLines]}${lua increase_y_offset [=packagesFile]}${voffset [= 7 + sectionGap]}
-<@panel.panelsBottom x=0 y=0 widths=[packageCol,versionCol] gap=colGap isFixed=false/>
+<@panel.panelBottomCorners x=0 y=0 width=width isFixed=false/>
 ${lua increment_offsets 0 [=sectionGap]}\
 ${else}\
 # :::::: no package updates
@@ -200,6 +200,7 @@ ${lua increment_offsets 0 [=iconHeight + gap]}\
 # the torrent uploads table is composed of 2 columns: upload | torrent name
 ${if_match ${lines [=torrentsUpFile]} > 0}\
 <#assign speedColWidth = 39,                          <#-- width of upload/download columns -->
+         colGap = gap,
          panelWidth = width - speedColWidth - colGap>
 <@panel.panels x=0 y=0 widths=[speedColWidth, panelWidth] gap=colGap isFixed=false highlight=[1]/>
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-peers.png [=speedColWidth + colGap + 17] 22}\
@@ -209,9 +210,9 @@ ${lua increment_offsets 0 [=gap]}\
 ${endif}\
 # ::: torrent downloads
 ${if_match ${lines [=torrentsDownFile]} > 0}\
-<@panel.panels x=0 y=0 widths=[speedColWidth, panelWidth] gap=colGap isFixed=false/>
+<@panel.panel x=0 y=0 width=width isFixed=false/>
 ${lua_parse head [=torrentsDownFile] [=torrentLines - 5]}${lua increase_y_offset [=torrentsDownFile]}${voffset [= 7 + gap]}
-<@panel.panelsBottom x=0 y=0 widths=[speedColWidth, panelWidth] gap=colGap isFixed=false/>
+<@panel.panelBottomCorners x=0 y=0 width=width isFixed=false/>
 ${lua increment_offsets 0 [=gap]}\
 ${endif}\
 # ::: no peers
@@ -220,23 +221,23 @@ ${if_match ${lines [=peersFile]} == 0}\
 ${voffset 2}${lua_parse add_x_offset offset 48}${color}no peers connected${voffset [= 8 + sectionGap]}
 ${else}\
 <@panel.panel x=speedColWidth + colGap y=0 width=panelWidth height=22 isFixed=false isDark=true/>
-${voffset 2}${lua_parse add_x_offset offset 48}${color}${lines [=peersFile]} peers in the swarm${voffset [= 7 + gap]}
+${voffset 2}${lua_parse add_x_offset offset 48}${color}${lines [=peersFile]} peer(s) in the swarm${voffset [= 7 + gap]}
 ${lua increment_offsets 0 [=22 + gap]}\
 # ::: peers upload
 # the peers table is composed of 3 columns: upload | ip | client
 ${if_match ${lines [=peersUpFile]} > 0}\
 <#assign ipCol = 99, clientCol = 87>
-<@panel.panels x=0 y=0 widths=[speedColWidth,ipCol,panelWidth-ipCol-colGap] gap=colGap isFixed=false highlight=[1]/>
+<@panel.panels x=0 y=0 widths=[speedColWidth,panelWidth] gap=colGap isFixed=false highlight=[1]/>
 ${lua_parse head [=peersUpFile] [=torrentLines]}${lua increase_y_offset [=peersUpFile]}${voffset [= 7 + gap]}
-<@panel.panelsBottom x=0 y=0 widths=[speedColWidth,ipCol,panelWidth-ipCol-colGap] gap=colGap isFixed=false highlight=[1]/>
+<@panel.panelsBottom x=0 y=0 widths=[speedColWidth,panelWidth] gap=colGap isFixed=false highlight=[1]/>
 ${lua increment_offsets 0 [=gap]}\
 ${endif}\
 # download peers are only displayed if we have enough total lines left
 ${if_match ${lua get totalLines} > 0}\
 ${if_match ${lines [=peersDownFile]} > 0}\
-<@panel.panels x=0 y=0 widths=[speedColWidth,ipCol,panelWidth-ipCol-colGap] gap=colGap isFixed=false/>
+<@panel.panel x=0 y=0 width=width isFixed=false/>
 ${lua_parse head [=peersDownFile] [=torrentLines]}${lua increase_y_offset [=peersDownFile]}
-<@panel.panelsBottom x=0 y=0 widths=[speedColWidth,ipCol,panelWidth-ipCol-colGap] gap=colGap isFixed=false/>
+<@panel.panelBottomCorners x=0 y=0 width=width isFixed=false/>
 ${lua increment_offsets 0 [=gap]}\
 ${endif}\
 ${endif}\
