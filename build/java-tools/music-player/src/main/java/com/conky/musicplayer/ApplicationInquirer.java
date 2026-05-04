@@ -38,7 +38,7 @@ public class ApplicationInquirer {
             Properties properties = dbus.getRemoteObject(uniqueName, object, Properties.class);
             value = properties.Get(dbusInterface, property);
         } catch (DBusException | DBusExecutionException e) {
-            logger.warn("unable to retrieve the property '{}' from the object '{}': {}", property, uniqueName, e);
+            logger.warn("unable to retrieve the property '{}' from the object '{}'", property, uniqueName, e);
         }
 
         return Optional.ofNullable(value);

@@ -37,12 +37,12 @@ function usage() {
 	        /    \        /  \\
 
 	  --layout-override tag
-	    applys any settings in a layout override file 
+	    applies any setting overrides configured in a layout override file:
 
 	      > changing the alignment of a conky
-	      > excludes a particular conky in the theme from being launched 
+	      > excluding a particular conky from being launched
 
-	    the override file follows the naming convention: layout.<tag>.cfg
+	    the override file must follow the naming convention: layout.<tag>.cfg
 
 	  --silent
 	    all conky output (STDOUT and STDERR) is suppressed
@@ -153,8 +153,8 @@ fi
 
 if [[ -n ${fileTag} ]]; then
   layoutFile=${conkyDir}/layout.${fileTag}.cfg
-  echo "layout override file: ${layoutFile}"
-  [[ -f ${layoutFile} ]] || { logError "layout override file 'layout.${fileTag}.cfg' not present in the conky directory"; exit 2;}
+  echo "layout override file: $(basename ${layoutFile})"
+  [[ -f ${layoutFile} ]] || { logError "layout override file 'layout.${fileTag}.cfg' not present in the '${theme}' directory"; exit 2;}
   detectDuplicateEntries "${layoutFile}"
   # TODO file integrity: ensure number of elements per override is 2 or 3
 fi
