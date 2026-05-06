@@ -15,8 +15,8 @@ conky.config = {
   lua_draw_hook_pre = 'reset_state',
   
   update_interval = 1.5,    -- update interval in seconds
-  xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
-  double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
+  xinerama_head = 0,        -- for multi monitor setups, select monitor to run on: 0,1,2
+  double_buffer = true,     -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
   alignment = 'middle_right',  -- top|middle|bottom_left|right
@@ -24,7 +24,7 @@ conky.config = {
   gap_y = -16,
 
   -- window settings
-  <#assign width = 189>
+  <#assign width = 191>
   minimum_width = [=width],      -- conky will add an extra pixel to this
   maximum_width = [=width],
   minimum_height = 1351,
@@ -61,39 +61,13 @@ conky.config = {
 };
 
 conky.text = [[
-<#assign totalLines = 72,
-         packageLines = 14,
-         gap = 3>             <#-- empty space between panels of the same context -->
-${lua set_total_lines [=totalLines]}\
-${lua increment_offsets 0 0}\
-#
-# :::::::::::::::: package updates ::::::::::::::::
-#
 <#assign y = 0,
-         iconHeight = 38, <#-- icon is a square -->
-         sectionGap = 5>      <#-- empty space between panels of different applications -->
-${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-packages.png 0 0}\
-<#assign packagesFile = "/tmp/conky/dnf.packages.formatted">
-${if_existing [=packagesFile]}\
-# :::::: updates vailable
-<@panel.panel x=iconHeight+gap y=0 width=width-(iconHeight+3) height=iconHeight isFixed=false isDark=true/>
-${voffset 5}${lua_parse add_x_offset offset 48}${color1}dandified yum
-${voffset 2}${lua_parse add_x_offset offset 48}${color}${lines [=packagesFile]} package updates${voffset 10}
-${lua increment_offsets 0 [=iconHeight + gap]}\
-<#assign packageCol = 134>
-<@panel.panel x=0 y=0 width=width isFixed=false/>
-# optional dnf branding, can be removed or won't matter if the image does not exist
-${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-dnf.png [=packageCol-35-2] 5}\
-${color}${lua_parse paginate [=packagesFile] [=packageLines]}${lua increase_y_offset [=packagesFile]}${voffset [= 7 + sectionGap]}
-<@panel.panelBottomCorners x=0 y=0 width=width isFixed=false/>
-${lua increment_offsets 0 [=sectionGap]}\
-${else}\
-# :::::: no package updates
-<@panel.panel x=iconHeight+3 y=0 width=width-(iconHeight+3) height=iconHeight isFixed=false/>
-${voffset 5}${lua_parse add_x_offset offset 48}${color1}dandified yum
-${voffset 2}${lua_parse add_x_offset offset 48}${color}no package updates${voffset [= 7 + sectionGap]}
-${lua increment_offsets 0 [=iconHeight + sectionGap]}\
-${endif}\
+         gap = 3,              <#-- empty space between panels of the same context -->
+         sectionGap = 5        <#-- empty space between panels of different applications -->
+         totalLines = 72,      <#-- number of lines for the conky to dynamically print text from files -->
+         iconHeight = 38>      <#-- icon height in pixels, the icon is a square -->
+${lua set_total_lines [=totalLines]}\
+${voffset 2}\
 #
 # :::::::::::::::: now playing ::::::::::::::::
 # the UI of this conky has four states: song with album art
@@ -105,72 +79,99 @@ ${if_existing /tmp/conky/musicplayer.status}\
 ${if_existing /tmp/conky/musicplayer.status off}\
 ${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-sound-wave.png 0 0}\
 <@panel.panel x=41 y=0 width=width-41 height=iconHeight isFixed=false/>
-${voffset 3}${lua_parse add_x_offset offset 48}${color1}now playing
-${voffset 2}${lua_parse add_x_offset offset 48}${color}no music player running${voffset [= 8 + sectionGap]}
+${voffset 3}${offset 48}${color1}now playing
+${voffset 2}${offset 48}${color}no music player running
 ${lua increment_offsets 0 [=iconHeight + sectionGap]}\
 ${else}\
-# :::::: player status
+# :::::: player available
+# ::: player status
 ${lua increment_offsets 0 [=gap]}${voffset [=gap]}\
 ${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-sound-wave.png 0 0}\
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
 <@panel.panel x=41 y=0 width=width-41 height=iconHeight isFixed=false color=image.secondaryColor/>
-${voffset 3}${lua_parse add_x_offset offset 48}${color3}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}
-${voffset 2}${lua_parse add_x_offset offset 48}${color4}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
+${voffset 3}${offset 48}${color3}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}
+${voffset 2}${offset 48}${color4}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
 ${else}\
 <@panel.panel x=41 y=0 width=width-41 height=iconHeight isFixed=false/>
-${voffset 3}${lua_parse add_x_offset offset 48}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}
-${voffset 2}${lua_parse add_x_offset offset 48}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
+${voffset 3}${offset 48}${color1}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}
+${voffset 2}${offset 48}${color}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.playbackStatus}}
 ${endif}\
 ${lua increment_offsets 0 [=iconHeight + gap]}\
-${voffset [= 6 + gap]}\
-# :::::: album art
+${voffset [= 7 + gap]}\
+# ::: album art
 <#assign border = 4,
          albumArtFile = "/tmp/conky/musicplayer.track.art">
 ${if_existing [=albumArtFile]}\
 <@panel.panel x=0 y=0 width=width height=width isFixed=false/>
-${lua increment_offsets 0 [=border]}\
-${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-album-placeholder.png [=border+8] 8}\
-${lua_parse draw_image [=albumArtFile] 4 0 181x181}\
-${lua increment_offsets 0 [=width - border + gap]}${lua decrease_total_lines 12}\
-${voffset 192}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-album-placeholder.png [=(width-91)/2] [=(width-91)/2]}\
+${lua_parse draw_image [=albumArtFile] [=border] [=border] [=width-border*2]x[=width-border*2]}\
+${lua increment_offsets 0 [=width + gap]}${lua decrease_total_lines 12}\
+${voffset [=width+gap]}\
 ${endif}\
-# :::::: track details
+# ::: track details
 # panel expands based on the track metadata fields available
 # the position of the bottom edge images is shifted down 16px for each field
 <#-- 3 px top border | 16 px text | 3 px bottom border -->
 # -------  vertical table image top -------
-<#assign header = 45, height = 22>
+<#assign header = 45, height = 23>
 <@panel.verticalMenuHeader x=0 y=0 header=header body=width-header isFixed=false/>
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-sound-wave.png [=width-53-7] 0}\
 ${endif}\
 # --------- end of table image top ---------
 ${lua increment_offsets 0 [=height - 7]}\<#-- edges are 7x7 px, therefore reduce the height of the bottom edges from the panel -->
-${voffset 3}${lua_parse add_x_offset offset 5}${color1}title${lua_parse add_x_offset goto 50}${color}${scroll wait 23 4 1 ${cat /tmp/conky/musicplayer.track.title}}${lua decrease_total_lines 2}
+${voffset 3}${offset 5}${color1}title${lua_parse add_x_offset goto 50}${color}${scroll wait 23 4 1 ${cat /tmp/conky/musicplayer.track.title}}${lua decrease_total_lines 2}
 ${if_match "${lua get album ${cat /tmp/conky/musicplayer.track.album}}" != "unknown album"}\
-${voffset 3}${lua_parse add_x_offset offset 5}${color1}album${lua_parse add_x_offset goto 50}${color}${scroll wait 23 4 1 ${lua get album}}${lua increment_offsets 0 16}${lua decrease_total_lines 1}
+${voffset 3}${offset 5}${color1}album${lua_parse add_x_offset goto 50}${color}${scroll wait 23 4 1 ${lua get album}}${lua increment_offsets 0 16}${lua decrease_total_lines 1}
 ${endif}\
 ${if_match "${lua get artist ${cat /tmp/conky/musicplayer.track.artist}}" != "unknown artist"}\
-${voffset 3}${lua_parse add_x_offset offset 5}${color1}artist${lua_parse add_x_offset goto 50}${color}${scroll wait 23 4 1 ${lua get artist}}${lua increment_offsets 0 16}${lua decrease_total_lines 1}
+${voffset 3}${offset 5}${color1}artist${lua_parse add_x_offset goto 50}${color}${scroll wait 23 4 1 ${lua get artist}}${lua increment_offsets 0 16}${lua decrease_total_lines 1}
 ${endif}\
 ${if_match "${lua get genre ${cat /tmp/conky/musicplayer.track.genre}}" != "unknown genre"}\
-${voffset 3}${lua_parse add_x_offset offset 5}${color1}genre${lua_parse add_x_offset goto 50}${color}${lua get genre}${lua increment_offsets 0 16}${lua decrease_total_lines 1}
+${voffset 3}${offset 5}${color1}genre${lua_parse add_x_offset goto 50}${color}${lua get genre}${lua increment_offsets 0 16}${lua decrease_total_lines 1}
 ${endif}\
 # ------  vertical table image bottom ------
 <#-- draw the bottom edges at the final calculated location -->
 <@panel.verticalMenuBottom x=0 y=0 header=header body=width-header isFixed=false/>
 # -------- end of table image bottom -------
 ${lua increment_offsets 0 [=7 + sectionGap]}\<#-- edges are 7x7 px -->
-${voffset [= 8 + sectionGap]}\
-${lua increment_offsets 0 [=gap]}${voffset [=gap]}\
 ${endif}\
 ${else}\
+# :::::: error state | input files missing
 ${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-sound-wave.png 0 0}\
 <@panel.panel x=41 y=0 width=width-41 height=iconHeight isFixed=false color=image.secondaryColor/>
-${voffset 3}${lua_parse add_x_offset offset 48}${color3}now playing
-${voffset 2}${lua_parse add_x_offset offset 48}${color4}input files are missing${voffset [= 8 + sectionGap]}
+${voffset 3}${offset 48}${color3}now playing
+${voffset 2}${offset 48}${color4}input files are missing
 ${lua increment_offsets 0 [=iconHeight + sectionGap]}\
 ${endif}\
+${voffset [=7 + sectionGap]}\
+#
+# :::::::::::::::: package updates ::::::::::::::::
+#
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-packages.png 0 0}\
+<#assign packagesFile = "/tmp/conky/dnf.packages.formatted",
+         packageLines = 14>
+${if_existing [=packagesFile]}\
+# :::::: updates vailable
+<@panel.panel x=iconHeight+gap y=0 width=width-(iconHeight+3) height=iconHeight isFixed=false isDark=true/>
+${voffset 3}${offset 48}${color1}dandified yum
+${voffset 2}${offset 48}${color}${lines [=packagesFile]} package updates${voffset 10}
+${lua increment_offsets 0 [=iconHeight + gap]}\
+<#assign packageCol = 134>
+<@panel.panel x=0 y=0 width=width isFixed=false/>
+# optional dnf branding, can be removed or won't matter if the image does not exist
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-dnf.png [=packageCol-35-2] 5}\
+${color}${lua_parse paginate [=packagesFile] [=packageLines]}${lua increase_y_offset [=packagesFile]}
+<@panel.panelBottomCorners x=0 y=0 width=width isFixed=false/>
+${lua increment_offsets 0 [=sectionGap]}\
+${else}\
+# :::::: no package updates
+<@panel.panel x=iconHeight+3 y=0 width=width-(iconHeight+3) height=iconHeight isFixed=false/>
+${voffset 3}${offset 48}${color1}dandified yum
+${voffset 2}${offset 48}${color}no package updates
+${lua increment_offsets 0 [=iconHeight + sectionGap]}\
+${endif}\
+${voffset [=7 + sectionGap]}\
 #
 # :::::::::::::::: torrents ::::::::::::::::
 #
@@ -185,16 +186,16 @@ ${endif}\
 ${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-torrents.png 0 0}\
 # :::::: transmission script running
 ${if_existing [=torrentsFile]}\
-${voffset 2}${lua_parse add_x_offset offset 48}${color1}transmission
+${voffset 3}${offset 48}${color1}transmission
 # ::: no active torrents
 ${if_match ${lua get activeNum ${lines [=torrentsFile]}} == 0}\
 <@panel.panel x=iconHeight+3 y=0 width=width-(iconHeight+3) height=iconHeight isFixed=false/>
-${voffset 2}${lua_parse add_x_offset offset 48}${color}no active torrents${voffset [= 8 + sectionGap]}
+${voffset 2}${offset 48}${color}no active torrents
 ${lua increment_offsets 0 [=iconHeight + sectionGap]}\
 ${else}\
 # ::: torrents overview
 <@panel.panel x=iconHeight+3 y=0 width=width-(iconHeight+3) height=iconHeight isFixed=false isDark=true/>
-${voffset 2}${lua_parse add_x_offset offset 48}${color}${lines [=torrentsFile]} active torrents ${voffset [= 7 + gap]}
+${voffset 2}${offset 48}${color}${lines [=torrentsFile]} active torrents ${voffset [= 7 + gap]}
 ${lua increment_offsets 0 [=iconHeight + gap]}\
 # ::: torrent uploads
 # the torrent uploads table is composed of 2 columns: upload | torrent name
@@ -218,10 +219,10 @@ ${endif}\
 # ::: no peers
 ${if_match ${lines [=peersFile]} == 0}\
 <@panel.panel x=speedColWidth + colGap y=0 width=panelWidth height=22 isFixed=false/>
-${voffset 2}${lua_parse add_x_offset offset 48}${color}no peers connected${voffset [= 8 + sectionGap]}
+${voffset 2}${offset 48}${color}no peers connected
 ${else}\
 <@panel.panel x=speedColWidth + colGap y=0 width=panelWidth height=22 isFixed=false isDark=true/>
-${voffset 2}${lua_parse add_x_offset offset 48}${color}${lines [=peersFile]} peer(s) in the swarm${voffset [= 7 + gap]}
+${voffset 2}${offset 48}${color}${lines [=peersFile]} peer(s) in the swarm${voffset [= 7 + gap]}
 ${lua increment_offsets 0 [=22 + gap]}\
 # ::: peers upload
 # the peers table is composed of 3 columns: upload | ip | client
@@ -246,8 +247,9 @@ ${endif}\
 ${else}\
 # :::::: error state: input file not available
 <@panel.panel x=iconHeight+3 y=0 width=width-(iconHeight+3) height=iconHeight isFixed=false color=image.secondaryColor/>
-${voffset 3}${lua_parse add_x_offset offset 48}${color3}transmission
-${voffset 2}${lua_parse add_x_offset offset 48}${color4}input files are missing${voffset [= 8 + sectionGap]}
+${voffset 3}${offset 48}${color3}transmission
+${voffset 2}${offset 48}${color4}input files are missing
 ${lua increment_offsets 0 [=iconHeight + sectionGap]}\
 ${endif}\
+${voffset [=7 + sectionGap]}\
 ]];

@@ -1,8 +1,7 @@
 conky.config = {
   update_interval = 1.5,  -- update interval in seconds
-  total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
-  xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
-  double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
+  xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
+  double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
   alignment = 'middle_left',      -- top|middle|bottom_left|middle|right
@@ -32,21 +31,12 @@ conky.config = {
   draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
                               -- does not include bars, ie. wifi strength bar, cpu bar
 
-  imlib_cache_flush_interval = 250,
-  -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
-  
-  if_up_strictness = 'address', -- network device must be up, having link and an assigned IP address
-                                -- to be considered "up" by ${if_up}
-                                -- values are: up, link or address
-
   -- font settings
   draw_shades = false,    -- black shadow on text (not good if text is black)
   draw_outline = false,   -- black outline around text (not good if text is black)
   -- colors
   default_color = '[=colors.text]',  -- regular text
   color1 = '[=colors.labels]',         -- text labels
-  color2 = '[=colors.bar]',        -- bar
-  color3 = '[=colors.warning]',        -- bar critical
 
   -- ::::::::::::: templates
   -- cpu/mem/download/disk write graph color
