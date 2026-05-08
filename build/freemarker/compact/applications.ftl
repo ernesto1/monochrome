@@ -21,15 +21,15 @@ conky.config = {
   -- window alignment
   alignment = 'middle_right',  -- top|middle|bottom_left|right
   gap_x = 10,
-  gap_y = -16,
+  gap_y = 0,
 
   -- window settings
   <#assign width = 191>
-  minimum_width = [=width],      -- conky will add an extra pixel to this
+  minimum_width = [=width],     -- conky will add an extra pixel to this
   maximum_width = [=width],
-  minimum_height = 1351,
+  minimum_height = 1445,        -- must match the conky sidebar's heigh (the colored bar itself)
   own_window = true,
-  own_window_type = 'desktop',   -- values: desktop (background), panel (bar)
+  own_window_type = 'desktop',  -- values: desktop (background), panel (bar)
 
   -- window borders
   draw_borders = false,     -- draw borders around the conky window

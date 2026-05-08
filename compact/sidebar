@@ -15,7 +15,7 @@ conky.config = {
 
   -- window settings
   minimum_width = 238,
-  minimum_height = 1382,
+  minimum_height = 1509,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
 
@@ -35,8 +35,8 @@ conky.config = {
   draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
                               -- does not include bars, ie. wifi strength bar, cpu bar
 
-  imlib_cache_flush_interval = 250,
-  -- use the parameter -n on ${image ..} to never cache and always update the image upon a change
+  imlib_cache_flush_interval = 1,   -- use the parameter -n on ${image ..} to never cache and always update 
+                                    -- the image upon a change
   
   if_up_strictness = 'address', -- network device must be up, having link and an assigned IP address
                                 -- to be considered "up" by ${if_up}
@@ -79,6 +79,7 @@ ${voffset 2}${alignr 38}${color}${fs_used \2} / ${fs_size \2}]]
 
 conky.text = [[
 ${image ~/conky/monochrome/images/compact/burgundy-sidebar.png -p 0,0}\
+${image ~/conky/monochrome/images/compact/burgundy-sidebar-bottom.png -p 0,1457}\
 # -------------- cpu
 ${if_match ${cpu cpu0} < 90}\
 ${image ~/conky/monochrome/images/compact/burgundy-cpu.png -p 20,39}\
@@ -167,7 +168,7 @@ ${endif}\
 ${if_existing /dev/sdd}\
 ${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 20,926}\
 ${image ~/conky/monochrome/images/compact/burgundy-graph-io.png -p 60,926}\
-${template7 sdd 6000 60000}
+${template7 sdd 60000 60000}
 ${voffset 6}\
 ${template8 maxtor /run/media/ernesto/MAXTOR}
 ${else}\
@@ -176,16 +177,25 @@ ${voffset 13}${offset 23}${color1}sdd device
 ${voffset 3}${offset 23}${color1}${font4}is not connected
 ${voffset 48}
 ${endif}\
+# --- disk processes i/o
+${image ~/conky/monochrome/images/compact/burgundy-table-fields.png -p 18,1029}\
+${voffset 13}${color1}${offset 21}process${alignr 39}read    write${voffset 5}
+${voffset 3}${color}${offset 21}${top_io name 1} ${top_io io_read 1}${goto 170}${top_io io_write 1}
+${voffset 3}${color}${offset 21}${top_io name 2} ${top_io io_read 2}${goto 170}${top_io io_write 2}
+${voffset 3}${color}${offset 21}${top_io name 3} ${top_io io_read 3}${goto 170}${top_io io_write 3}
+${voffset 3}${color}${offset 21}${top_io name 4} ${top_io io_read 4}${goto 170}${top_io io_write 4}
+${voffset 3}${color}${offset 21}${top_io name 5} ${top_io io_read 5}${goto 170}${top_io io_write 5}
+${voffset 3}${color}${offset 21}${top_io name 6} ${top_io io_read 6}${goto 170}${top_io io_write 6}
 # -------------- system
-${image ~/conky/monochrome/images/compact/burgundy-system.png -p 20,1029}\
+${image ~/conky/monochrome/images/compact/burgundy-system.png -p 20,1156}\
 ${voffset 15}${goto 63}${color1}uptime     ${color}${uptime}
 ${voffset 3}${goto 63}${color1}compositor ${color}${execi 3600 echo $XDG_SESSION_TYPE}
 ${voffset 9}${offset 21}${color1}kernel ${color}${kernel}
 # due to a conky/lua bug the temperature items had to be moved to their own conky
-${image ~/conky/monochrome/images/compact/burgundy-table-fields.png -p 18,1088}\
-${if_updatenr 1}${image ~/conky/monochrome/images/compact/burgundy-thermometer1.png -p 130,1138}${endif}\
-${if_updatenr 2}${image ~/conky/monochrome/images/compact/burgundy-thermometer2.png -p 130,1138}${endif}\
-${image ~/conky/monochrome/images/compact/burgundy-table-fields.png -p 18,1259}\
-${if_updatenr 1}${image ~/conky/monochrome/images/compact/burgundy-fan1.png -p 79,1281}${endif}\
-${if_updatenr 2}${image ~/conky/monochrome/images/compact/burgundy-fan2.png -p 79,1281}${endif}\
+${image ~/conky/monochrome/images/compact/burgundy-table-fields.png -p 18,1215}\
+${if_updatenr 1}${image ~/conky/monochrome/images/compact/burgundy-thermometer1.png -p 130,1265}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/compact/burgundy-thermometer2.png -p 130,1265}${endif}\
+${image ~/conky/monochrome/images/compact/burgundy-table-fields.png -p 18,1386}\
+${if_updatenr 1}${image ~/conky/monochrome/images/compact/burgundy-fan1.png -p 79,1408}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/compact/burgundy-fan2.png -p 79,1408}${endif}\
 ]]

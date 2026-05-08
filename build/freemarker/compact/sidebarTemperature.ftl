@@ -8,7 +8,7 @@ conky.config = {
   -- window alignment
   alignment = 'middle_left',      -- top|middle|bottom_left|middle|right
   gap_x = 15,                     -- same as passing -x at command line
-  gap_y = -524,
+  gap_y = -588,
 
   -- window settings
   <#assign celsiousOffset = 1><#-- using the celsius ° symbol adds additional offset to the right of the text, so we have to counter it -->
