@@ -2,19 +2,18 @@ conky.config = {
   lua_load = '~/conky/monochrome/common.lua',
 
   update_interval = 1.5,    -- update interval in seconds
-  xinerama_head = 1,      -- for multi monitor setups, select monitor to run on: 0,1,2
-  double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
+  xinerama_head = 1,        -- for multi monitor setups, select monitor to run on: 0,1,2
+  double_buffer = true,     -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
   alignment = 'middle_left',  -- top|middle|bottom_left|right
-  gap_x = 0,               -- same as passing -x at command line
+  gap_x = 0,                  -- same as passing -x at command line
   <#if device == "desktop"><#assign yOffset = -305><#else><#assign yOffset = -225></#if><#lt>
   gap_y = [=yOffset],
 
   -- window settings | conky width matches the sidebar conky
   <#assign lso = 27,          <#-- horizontal offset to account for sidebar image's left shadow -->
-           width = lso + 90>  <#-- width of the sidebar image -->
-  <#if isVerbose><#assign width += 53></#if>
+           width = isVerbose?then(lso + 90 + 53, lso + 90)>     <#-- width of the sidebar conky -->
   minimum_width = [=width],
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)

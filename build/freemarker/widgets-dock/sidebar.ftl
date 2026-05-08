@@ -10,17 +10,16 @@ conky.config = {
   -- window alignment
   alignment = 'middle_left',     -- top|middle|bottom_left|middle|right
   gap_x = 0,                     -- same as passing -x at command line
-  <#if device == "desktop"><#assign yOffset = 100><#else><#assign yOffset = -15></#if>
+  <#assign yOffset = (device == "desktop")?then(100,-15)>
   gap_y = [=yOffset],
 
   -- window settings
   <#-- offsets are used to account for the image's shadows on the left, top and right side -->
-  <#assign tso = 32,    <#-- top shadow offset -->
-           lso = 27,    <#-- left shadow offset -->
-           iborder = 6, <#-- inner sidebar horizontal border -->
-           rso = 32,    <#-- right shadow offset -->
-           width = lso + 90>  <#-- width of the sidebar image -->
-  <#if isVerbose><#assign width += 53></#if>
+  <#assign tso = 32,      <#-- top shadow offset -->
+           lso = 27,      <#-- left shadow offset -->
+           iborder = 6,   <#-- inner sidebar horizontal border -->
+           rso = 32,      <#-- right shadow offset -->
+           width = isVerbose?then(lso + 90 + 53, lso + 90)>  <#-- width of the conky -->
   minimum_width = [=width],
   <#if device == "desktop"><#assign height = 1135><#else><#assign height = 681></#if>
   minimum_height = [=height?c],
