@@ -4,18 +4,20 @@ output files from this script are read from /tmp/conky
 ]]
 conky.config = {
   update_interval = 1.5,  -- update interval in seconds
-  total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
-  xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
-  double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
+  xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
+  double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'middle_left',       -- top|middle|bottom_left|middle|right
+  alignment = 'middle_left',    -- top|middle|bottom_left|middle|right
   gap_x = 0,                    -- same as passing -x at command line
   gap_y = 0,
 
   -- window settings
   minimum_width = 238,
-  minimum_height = 1509,
+  <#assign processes     = isVerbose?then(6,4),   <#-- number of top processes to display -->
+           optionalDisks = isVerbose?then(0,1),   <#-- number of hard disks that can be ommitted to save height -->
+           height        = 1221+(processes*16*3)-optionalDisks*103>
+  minimum_height = [=height?c],
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
 
@@ -35,7 +37,7 @@ conky.config = {
   draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
                               -- does not include bars, ie. wifi strength bar, cpu bar
 
-  imlib_cache_flush_interval = 1,   -- use the parameter -n on ${image ..} to never cache and always update 
+  imlib_cache_flush_interval = 250, -- use the parameter -n on ${image ..} to never cache and always update 
                                     -- the image upon a change
   
   if_up_strictness = 'address', -- network device must be up, having link and an assigned IP address
@@ -84,7 +86,6 @@ ${voffset 2}${alignr [=rso+iborder]}${color}${fs_used \2} / ${fs_size \2}]]
 conky.text = [[
 <#assign y = 0>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-sidebar.png -p 0,[=y]}\
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-sidebar-bottom.png -p 0,1457}\
 # -------------- cpu
 <#assign y += tso+7>
 ${if_match ${cpu cpu0} < [=threshold.cpu]}\
@@ -99,10 +100,10 @@ ${voffset -2}${offset [=lso+iborder]}${color1}load${goto [=lso+iborder+6 * 6]}${
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png -p [=lso+3],[=y]}\
 <#assign y += 18>
 ${voffset 6}${color1}${offset [=lso+iborder]}process${alignr [=rso+iborder]}cpu    mem${voffset 5}
-<#list 1..6 as x>
+<#list 1..processes as x>
 ${template3 [=x]}
 </#list>
-<#assign y += 109>
+<#assign y += 13+processes*16>
 # -------------- memory
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-mem.png -p [=lso+5],[=y]}\
 ${if_match ${memperc} > [=threshold.mem]}\
@@ -121,10 +122,10 @@ ${voffset 3}${offset [=lso+iborder]}${color1}si${goto [=lso+iborder+6 * 6]}${col
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png -p [=lso+3],[=y]}\
 <#assign y += 18>
 ${voffset 6}${offset [=lso+iborder]}${color1}process${alignr [=rso+iborder]}memory   perc${voffset 5}
-<#list 1..6 as x>
+<#list 1..processes as x>
 ${template4 [=x]}
 </#list>
-<#assign y += 109, ySection = y>
+<#assign y += 13+processes*16, ySection = y>
 # -------------- network
 <#assign device = networkDevices?first>
 ${if_up [=device.name]}\
@@ -145,6 +146,7 @@ ${voffset 3}${offset [=lso+iborder+2]}connection
 ${voffset 73}
 ${endif}\
 # -------------- disks
+<#assign hardDisks = isVerbose?then(hardDisks, hardDisks?filter(d -> d.required!true))>
 <#list hardDisks as disk>
 # :::: [=disk.device]
 <#assign ySection = y>
@@ -175,10 +177,10 @@ ${endif}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png -p [=lso+3],[=y?c]}\
 <#assign y += 18>
 ${voffset 13}${color1}${offset [=lso+iborder]}process${alignr [=rso+iborder+1]}read    write${voffset 5}
-<#list 1..6 as x>
+<#list 1..processes as x>
 ${voffset 3}${color}${offset [=lso+iborder]}${top_io name [=x]} ${top_io io_read [=x]}${goto 170}${top_io io_write [=x]}
 </#list>
-<#assign y += 109>
+<#assign y += 13+processes*16>
 # -------------- system
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-system.png -p [=lso+5],[=y?c]}\
 <#assign y += 36>
@@ -193,7 +195,9 @@ ${if_updatenr 1}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-
 ${if_updatenr 2}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-thermometer2.png -p [=lso+115],[=y?c]}${endif}\
 <#assign y += 90+31>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png -p [=lso+3],[=y?c]}\
-<#assign y += 18+4>
-${if_updatenr 1}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-fan1.png -p [=lso+64],[=y?c]}${endif}\
-${if_updatenr 2}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-fan2.png -p [=lso+64],[=y?c]}${endif}\
+<#assign y += 18>
+<#-- place the bottom edge of the sidebar so that the fan animation can be overlayed on top of it -->
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-sidebar-bottom.png -p 0,[=(y+53)?c]}\
+${if_updatenr 1}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-fan1.png -p [=lso+64],[=(y+4)?c]}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-fan2.png -p [=lso+64],[=(y+4)?c]}${endif}\
 ]]

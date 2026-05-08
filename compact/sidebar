@@ -4,18 +4,17 @@ output files from this script are read from /tmp/conky
 ]]
 conky.config = {
   update_interval = 1.5,  -- update interval in seconds
-  total_run_times = 0,  -- this is the number of times conky will update before quitting, set to zero to run forever
-  xinerama_head = 0,    -- for multi monitor setups, select monitor to run on: 0,1,2
-  double_buffer = true, -- use double buffering (reduces flicker, may not work for everyone)
+  xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
+  double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'middle_left',       -- top|middle|bottom_left|middle|right
+  alignment = 'middle_left',    -- top|middle|bottom_left|middle|right
   gap_x = 0,                    -- same as passing -x at command line
   gap_y = 0,
 
   -- window settings
   minimum_width = 238,
-  minimum_height = 1509,
+    minimum_height = 1509,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
 
@@ -35,7 +34,7 @@ conky.config = {
   draw_graph_borders = false, -- borders around the graph, ex. cpu graph, network down speed grah
                               -- does not include bars, ie. wifi strength bar, cpu bar
 
-  imlib_cache_flush_interval = 1,   -- use the parameter -n on ${image ..} to never cache and always update 
+  imlib_cache_flush_interval = 250, -- use the parameter -n on ${image ..} to never cache and always update 
                                     -- the image upon a change
   
   if_up_strictness = 'address', -- network device must be up, having link and an assigned IP address
@@ -79,7 +78,6 @@ ${voffset 2}${alignr 38}${color}${fs_used \2} / ${fs_size \2}]]
 
 conky.text = [[
 ${image ~/conky/monochrome/images/compact/burgundy-sidebar.png -p 0,0}\
-${image ~/conky/monochrome/images/compact/burgundy-sidebar-bottom.png -p 0,1457}\
 # -------------- cpu
 ${if_match ${cpu cpu0} < 90}\
 ${image ~/conky/monochrome/images/compact/burgundy-cpu.png -p 20,39}\
@@ -168,7 +166,7 @@ ${endif}\
 ${if_existing /dev/sdd}\
 ${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 20,926}\
 ${image ~/conky/monochrome/images/compact/burgundy-graph-io.png -p 60,926}\
-${template7 sdd 60000 60000}
+${template7 sdd 23552 23552}
 ${voffset 6}\
 ${template8 maxtor /run/media/ernesto/MAXTOR}
 ${else}\
@@ -196,6 +194,7 @@ ${image ~/conky/monochrome/images/compact/burgundy-table-fields.png -p 18,1215}\
 ${if_updatenr 1}${image ~/conky/monochrome/images/compact/burgundy-thermometer1.png -p 130,1265}${endif}\
 ${if_updatenr 2}${image ~/conky/monochrome/images/compact/burgundy-thermometer2.png -p 130,1265}${endif}\
 ${image ~/conky/monochrome/images/compact/burgundy-table-fields.png -p 18,1386}\
+${image ~/conky/monochrome/images/compact/burgundy-sidebar-bottom.png -p 0,1457}\
 ${if_updatenr 1}${image ~/conky/monochrome/images/compact/burgundy-fan1.png -p 79,1408}${endif}\
 ${if_updatenr 2}${image ~/conky/monochrome/images/compact/burgundy-fan2.png -p 79,1408}${endif}\
 ]]

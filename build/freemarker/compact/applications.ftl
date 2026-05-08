@@ -24,10 +24,11 @@ conky.config = {
   gap_y = 0,
 
   -- window settings
-  <#assign width = 191>
+  <#assign width  = 191,
+           height = isVerbose?then(1445,1246)>
   minimum_width = [=width],     -- conky will add an extra pixel to this
   maximum_width = [=width],
-  minimum_height = 1445,        -- must match the conky sidebar's heigh (the colored bar itself)
+  minimum_height = [=height?c],        -- must match the conky sidebar's heigh (the colored bar itself)
   own_window = true,
   own_window_type = 'desktop',  -- values: desktop (background), panel (bar)
 

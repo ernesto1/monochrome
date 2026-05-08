@@ -39,9 +39,10 @@ hardDisks:
         path: /media/betty
         icon: partition
   - device: sdd
-    readSpeed: 60000
-    writeSpeed: 60000
+    readSpeed: 23552
+    writeSpeed: 23552
     fileSuffix: maxtor  # optional | name to append to the output file name, ex. disk-maxtor
+    required: false     # optional | hard disk can be ommitted by a 'non verbose' conky
     partitions:
       - name: maxtor
         path: /run/media/ernesto/MAXTOR
