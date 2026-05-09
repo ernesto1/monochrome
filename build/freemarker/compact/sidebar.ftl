@@ -52,39 +52,15 @@ conky.config = {
   default_color = '[=colors.text]',  -- regular text
   color1 = '[=colors.labels]',         -- text labels
   color2 = '[=colors.bar]',        -- bar
-  color3 = '[=colors.warning]',        -- bar critical
-  
-  -- ::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
-  --  n.b. the line break escape character '\' is not supported in templates :(
-
-  -- cpu/mem/download/disk write graph color
-  template1 = [[[=colors.writeGraph]]],
-  -- upload/disk read graph
-  template2 = [[[=colors.readGraph]]],
-  <#assign tso = 32,    <#-- vertical offset to account for background sidebar image's top shadow -->
-           lso = 15,    <#-- horizontal offset to account for background sidebar image's left shadow -->
-           iborder = 6, <#-- inner horizontal border -->
-           rso = 32>    <#-- horizontal offset to account for background sidebar image's right shadow -->
-  -- top cpu process: ${template3 processNumber}
-  template3 = [[${voffset 3}${color}${offset [=lso+iborder]}${top name \1}${alignr [=rso+iborder]}${top cpu \1}%${top mem \1}%]],
-  -- top mem process: ${template4 processNumber}
-  template4 = [[${voffset 3}${color}${offset [=lso+iborder]}${top_mem name \1}${alignr [=rso+iborder]}${top_mem mem_res \1}${top_mem mem \1}%]],
-  -- ethernet speed: ${template5 ethernetDevice}
-  template5 = [[${execi 180 ethtool \1 2>/dev/null | grep -i speed | cut -d ' ' -f 2}]],
-  -- network bandwith: ${template4 device uploadSpeed downloadSpeed}
-  template6 = [[${voffset 8}${offset [=lso+45]}${color}${upspeedgraph \1 35,68 ${template2} \2}${offset 3}${downspeedgraph \1 35,68 ${template1} \3}
-${voffset -2}${offset [=lso+iborder]}${color1}up    ${color}${upspeed \1}${alignr [=rso+iborder]}${color}${downspeed \1}  ${color1}down
-${voffset 3}${offset [=lso+iborder]}${color1}total ${color}${totalup \1}${alignr [=rso+iborder]}${color}${totaldown \1} ${color1}total]],
-  -- hard disk: ${template7 device readSpeed writeSpeed}
-  template7 = [[${voffset 7}${offset [=lso+45]}${color}${diskiograph_read /dev/\1 35,68 ${template2} \2}${offset 3}${diskiograph_write /dev/\1 35,68 ${template1} \3}
-${voffset -2}${offset [=lso+iborder]}${color1}read  ${color}${diskio_read /dev/\1}${alignr [=rso+iborder]}${color}${diskio_write /dev/\1} ${color1}write]],
-  -- filesystem: ${template8 filesystemName fileSystemPath}
-  template8 = [[${voffset 2}${offset [=lso+iborder]}${color}\1${alignr [=rso+iborder+2]}${voffset 1}${color2}${if_match ${fs_used_perc \2} > [=threshold.filesystem]}${color3}${endif}${fs_bar 3,97 \2}
-${voffset 2}${alignr [=rso+iborder]}${color}${fs_used \2} / ${fs_size \2}]]
+  color3 = '[=colors.warning]'         -- bar critical
 };
 
 conky.text = [[
-<#assign y = 0>
+<#assign y = 0,
+         tso = 32,      <#-- vertical offset to account for background sidebar image's top shadow -->
+         lso = 15,      <#-- horizontal offset to account for background sidebar image's left shadow -->
+         iborder = 6,   <#-- inner horizontal border -->
+         rso = 32>      <#-- horizontal offset to account for background sidebar image's right shadow -->
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-sidebar.png -p 0,[=y]}\
 # -------------- cpu
 <#assign y += tso+7>
@@ -95,13 +71,13 @@ ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-cpu-high.png -p 
 ${endif}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph.png -p [=lso+45],[=y]}\
 <#assign y += 36+23>
-${voffset [=tso+2]}${offset [=lso+45]}${cpugraph cpu0 35,139 ${template1}}
+${voffset [=tso+2]}${offset [=lso+45]}${cpugraph cpu0 35,139 [=colors.writeGraph]}
 ${voffset -2}${offset [=lso+iborder]}${color1}load${goto [=lso+iborder+6 * 6]}${color}${loadavg}${alignr [=rso+iborder]}${color}${cpu cpu0}%
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png -p [=lso+3],[=y]}\
 <#assign y += 18>
 ${voffset 6}${color1}${offset [=lso+iborder]}process${alignr [=rso+iborder]}cpu    mem${voffset 5}
 <#list 1..processes as x>
-${template3 [=x]}
+${voffset 3}${color}${offset [=lso+iborder]}${top name [=x]}${alignr [=rso+iborder]}${top cpu [=x]}%${top mem [=x]}%
 </#list>
 <#assign y += 13+processes*16>
 # -------------- memory
@@ -123,7 +99,7 @@ ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png
 <#assign y += 18>
 ${voffset 6}${offset [=lso+iborder]}${color1}process${alignr [=rso+iborder]}memory   perc${voffset 5}
 <#list 1..processes as x>
-${template4 [=x]}
+${voffset 3}${color}${offset [=lso+iborder]}${top_mem name [=x]}${alignr [=rso+iborder]}${top_mem mem_res [=x]}${top_mem mem [=x]}%
 </#list>
 <#assign y += 13+processes*16, ySection = y>
 # -------------- network
@@ -132,13 +108,15 @@ ${if_up [=device.name]}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-ethernet.png -p [=lso+5],[=y]}\
 <#assign y += 36>
 ${voffset 15}${goto [=lso+iborder+7 * 6]}${color1}local ip ${color}${addr [=device.name]}
-${voffset 3}${goto [=lso+iborder+7 * 6]}${color1}speed    ${color}${template5 [=device.name]}
+${voffset 3}${goto [=lso+iborder+7 * 6]}${color1}speed    ${color}${execi 180 ethtool [=device.name] 2>/dev/null | grep -i speed | cut -d ' ' -f 2}
 # :: upload/download speeds
 <#assign y += 9>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-internet.png -p [=lso+5],[=y]}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph-io.png -p [=lso+45],[=y]}\
 <#assign y += 36+46>
-${template6 [=device.name] [=device.maxUp?c] [=device.maxDown?c]}
+${voffset 8}${offset [=lso+45]}${color}${upspeedgraph [=device.name] 35,68 [=colors.readGraph] [=device.maxUp?c]}${offset 3}${downspeedgraph [=device.name] 35,68 [=colors.writeGraph] [=device.maxDown?c]}
+${voffset -2}${offset [=lso+iborder]}${color1}up    ${color}${upspeed [=device.name]}${alignr [=rso+iborder]}${color}${downspeed [=device.name]}  ${color1}down
+${voffset 3}${offset [=lso+iborder]}${color1}total ${color}${totalup [=device.name]}${alignr [=rso+iborder]}${color}${totaldown [=device.name]} ${color1}total
 ${else}\
 ${image ~/conky/monochrome/images/compact/[=image.secondaryColor]-no-network.png -p [=lso+3],[=ySection-7]}\
 ${voffset 12}${offset [=lso+iborder+2]}${color1}no network
@@ -156,12 +134,14 @@ ${if_existing /dev/[=disk.device]}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-disk.png -p [=lso+5],[=y]}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph-io.png -p [=lso+45],[=y]}\
 <#assign y += 36+36>
-${template7 [=disk.device] [=disk.readSpeed?c] [=disk.writeSpeed?c]}
+${voffset 7}${offset [=lso+45]}${color}${diskiograph_read /dev/[=disk.device] 35,68 [=colors.readGraph] [=disk.readSpeed?c]}${offset 3}${diskiograph_write /dev/[=disk.device] 35,68 [=colors.writeGraph] [=disk.writeSpeed?c]}
+${voffset -2}${offset [=lso+iborder]}${color1}read  ${color}${diskio_read /dev/[=disk.device]}${alignr [=rso+iborder]}${color}${diskio_write /dev/[=disk.device]} ${color1}write
 <#list disk.partitions>
 ${voffset 6}\
 <#items as partition>
 <#assign y += 31>
-${template8 [=partition.name] [=partition.path]}
+${voffset 2}${offset [=lso+iborder]}${color}[=partition.name]${alignr [=rso+iborder+2]}${voffset 1}${color2}${if_match ${fs_used_perc [=partition.path]} > [=threshold.filesystem]}${color3}${endif}${fs_bar 3,97 [=partition.path]}
+${voffset 2}${alignr [=rso+iborder]}${color}${fs_used [=partition.path]} / ${fs_size [=partition.path]}
 </#items>
 </#list>
 <#if disk.partitions?size == 1>

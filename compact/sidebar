@@ -49,31 +49,7 @@ conky.config = {
   default_color = 'd9ad8a',  -- regular text
   color1 = 'white',         -- text labels
   color2 = '94131f',        -- bar
-  color3 = 'c01e20',        -- bar critical
-  
-  -- ::::::::::::::::::::::::::::::: templates ::::::::::::::::::::::::::::::::
-  --  n.b. the line break escape character '\' is not supported in templates :(
-
-  -- cpu/mem/download/disk write graph color
-  template1 = [[5c111f c01e20]],
-  -- upload/disk read graph
-  template2 = [[a98162 d3b699]],
-  -- top cpu process: ${template3 processNumber}
-  template3 = [[${voffset 3}${color}${offset 21}${top name \1}${alignr 38}${top cpu \1}%${top mem \1}%]],
-  -- top mem process: ${template4 processNumber}
-  template4 = [[${voffset 3}${color}${offset 21}${top_mem name \1}${alignr 38}${top_mem mem_res \1}${top_mem mem \1}%]],
-  -- ethernet speed: ${template5 ethernetDevice}
-  template5 = [[${execi 180 ethtool \1 2>/dev/null | grep -i speed | cut -d ' ' -f 2}]],
-  -- network bandwith: ${template4 device uploadSpeed downloadSpeed}
-  template6 = [[${voffset 8}${offset 60}${color}${upspeedgraph \1 35,68 ${template2} \2}${offset 3}${downspeedgraph \1 35,68 ${template1} \3}
-${voffset -2}${offset 21}${color1}up    ${color}${upspeed \1}${alignr 38}${color}${downspeed \1}  ${color1}down
-${voffset 3}${offset 21}${color1}total ${color}${totalup \1}${alignr 38}${color}${totaldown \1} ${color1}total]],
-  -- hard disk: ${template7 device readSpeed writeSpeed}
-  template7 = [[${voffset 7}${offset 60}${color}${diskiograph_read /dev/\1 35,68 ${template2} \2}${offset 3}${diskiograph_write /dev/\1 35,68 ${template1} \3}
-${voffset -2}${offset 21}${color1}read  ${color}${diskio_read /dev/\1}${alignr 38}${color}${diskio_write /dev/\1} ${color1}write]],
-  -- filesystem: ${template8 filesystemName fileSystemPath}
-  template8 = [[${voffset 2}${offset 21}${color}\1${alignr 40}${voffset 1}${color2}${if_match ${fs_used_perc \2} > 90}${color3}${endif}${fs_bar 3,97 \2}
-${voffset 2}${alignr 38}${color}${fs_used \2} / ${fs_size \2}]]
+  color3 = 'c01e20'         -- bar critical
 };
 
 conky.text = [[
@@ -85,16 +61,16 @@ ${else}\
 ${image ~/conky/monochrome/images/compact/burgundy-cpu-high.png -p 20,39}\
 ${endif}\
 ${image ~/conky/monochrome/images/compact/burgundy-graph.png -p 60,39}\
-${voffset 34}${offset 60}${cpugraph cpu0 35,139 ${template1}}
+${voffset 34}${offset 60}${cpugraph cpu0 35,139 5c111f c01e20}
 ${voffset -2}${offset 21}${color1}load${goto 57}${color}${loadavg}${alignr 38}${color}${cpu cpu0}%
 ${image ~/conky/monochrome/images/compact/burgundy-table-fields.png -p 18,98}\
 ${voffset 6}${color1}${offset 21}process${alignr 38}cpu    mem${voffset 5}
-${template3 1}
-${template3 2}
-${template3 3}
-${template3 4}
-${template3 5}
-${template3 6}
+${voffset 3}${color}${offset 21}${top name 1}${alignr 38}${top cpu 1}%${top mem 1}%
+${voffset 3}${color}${offset 21}${top name 2}${alignr 38}${top cpu 2}%${top mem 2}%
+${voffset 3}${color}${offset 21}${top name 3}${alignr 38}${top cpu 3}%${top mem 3}%
+${voffset 3}${color}${offset 21}${top name 4}${alignr 38}${top cpu 4}%${top mem 4}%
+${voffset 3}${color}${offset 21}${top name 5}${alignr 38}${top cpu 5}%${top mem 5}%
+${voffset 3}${color}${offset 21}${top name 6}${alignr 38}${top cpu 6}%${top mem 6}%
 # -------------- memory
 ${image ~/conky/monochrome/images/compact/burgundy-mem.png -p 20,225}\
 ${if_match ${memperc} > 90}\
@@ -107,21 +83,23 @@ ${voffset 3}${offset 21}${color1}free${goto 57}${color}${memfree}${alignr 38}${c
 ${voffset 3}${offset 21}${color1}si${goto 57}${color}${cat /tmp/conky/system.swap.read}${alignr 38}${cat /tmp/conky/system.swap.write}${color1}    so
 ${image ~/conky/monochrome/images/compact/burgundy-table-fields.png -p 18,332}\
 ${voffset 6}${offset 21}${color1}process${alignr 38}memory   perc${voffset 5}
-${template4 1}
-${template4 2}
-${template4 3}
-${template4 4}
-${template4 5}
-${template4 6}
+${voffset 3}${color}${offset 21}${top_mem name 1}${alignr 38}${top_mem mem_res 1}${top_mem mem 1}%
+${voffset 3}${color}${offset 21}${top_mem name 2}${alignr 38}${top_mem mem_res 2}${top_mem mem 2}%
+${voffset 3}${color}${offset 21}${top_mem name 3}${alignr 38}${top_mem mem_res 3}${top_mem mem 3}%
+${voffset 3}${color}${offset 21}${top_mem name 4}${alignr 38}${top_mem mem_res 4}${top_mem mem 4}%
+${voffset 3}${color}${offset 21}${top_mem name 5}${alignr 38}${top_mem mem_res 5}${top_mem mem 5}%
+${voffset 3}${color}${offset 21}${top_mem name 6}${alignr 38}${top_mem mem_res 6}${top_mem mem 6}%
 # -------------- network
 ${if_up enp0s25}\
 ${image ~/conky/monochrome/images/compact/burgundy-ethernet.png -p 20,459}\
 ${voffset 15}${goto 63}${color1}local ip ${color}${addr enp0s25}
-${voffset 3}${goto 63}${color1}speed    ${color}${template5 enp0s25}
+${voffset 3}${goto 63}${color1}speed    ${color}${execi 180 ethtool enp0s25 2>/dev/null | grep -i speed | cut -d ' ' -f 2}
 # :: upload/download speeds
 ${image ~/conky/monochrome/images/compact/burgundy-internet.png -p 20,504}\
 ${image ~/conky/monochrome/images/compact/burgundy-graph-io.png -p 60,504}\
-${template6 enp0s25 3000 73000}
+${voffset 8}${offset 60}${color}${upspeedgraph enp0s25 35,68 a98162 d3b699 3000}${offset 3}${downspeedgraph enp0s25 35,68 5c111f c01e20 73000}
+${voffset -2}${offset 21}${color1}up    ${color}${upspeed enp0s25}${alignr 38}${color}${downspeed enp0s25}  ${color1}down
+${voffset 3}${offset 21}${color1}total ${color}${totalup enp0s25}${alignr 38}${color}${totaldown enp0s25} ${color1}total
 ${else}\
 ${image ~/conky/monochrome/images/compact/ochre-no-network.png -p 18,452}\
 ${voffset 12}${offset 23}${color1}no network
@@ -132,17 +110,22 @@ ${endif}\
 # :::: sda
 ${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 20,586}\
 ${image ~/conky/monochrome/images/compact/burgundy-graph-io.png -p 60,586}\
-${template7 sda 200000 280000}
+${voffset 7}${offset 60}${color}${diskiograph_read /dev/sda 35,68 a98162 d3b699 200000}${offset 3}${diskiograph_write /dev/sda 35,68 5c111f c01e20 280000}
+${voffset -2}${offset 21}${color1}read  ${color}${diskio_read /dev/sda}${alignr 38}${color}${diskio_write /dev/sda} ${color1}write
 ${voffset 6}\
-${template8 fedora /}
-${template8 home /home}
+${voffset 2}${offset 21}${color}fedora${alignr 40}${voffset 1}${color2}${if_match ${fs_used_perc /} > 90}${color3}${endif}${fs_bar 3,97 /}
+${voffset 2}${alignr 38}${color}${fs_used /} / ${fs_size /}
+${voffset 2}${offset 21}${color}home${alignr 40}${voffset 1}${color2}${if_match ${fs_used_perc /home} > 90}${color3}${endif}${fs_bar 3,97 /home}
+${voffset 2}${alignr 38}${color}${fs_used /home} / ${fs_size /home}
 # :::: sdb
 ${if_existing /dev/sdb}\
 ${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 20,720}\
 ${image ~/conky/monochrome/images/compact/burgundy-graph-io.png -p 60,720}\
-${template7 sdb 250000 250000}
+${voffset 7}${offset 60}${color}${diskiograph_read /dev/sdb 35,68 a98162 d3b699 250000}${offset 3}${diskiograph_write /dev/sdb 35,68 5c111f c01e20 250000}
+${voffset -2}${offset 21}${color1}read  ${color}${diskio_read /dev/sdb}${alignr 38}${color}${diskio_write /dev/sdb} ${color1}write
 ${voffset 6}\
-${template8 veronica /media/veronica}
+${voffset 2}${offset 21}${color}veronica${alignr 40}${voffset 1}${color2}${if_match ${fs_used_perc /media/veronica} > 90}${color3}${endif}${fs_bar 3,97 /media/veronica}
+${voffset 2}${alignr 38}${color}${fs_used /media/veronica} / ${fs_size /media/veronica}
 ${else}\
 ${image ~/conky/monochrome/images/compact/ochre-no-disk.png -p 18,714}\
 ${voffset 13}${offset 23}${color1}sdb device
@@ -153,9 +136,11 @@ ${endif}\
 ${if_existing /dev/sdc}\
 ${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 20,823}\
 ${image ~/conky/monochrome/images/compact/burgundy-graph-io.png -p 60,823}\
-${template7 sdc 250000 250000}
+${voffset 7}${offset 60}${color}${diskiograph_read /dev/sdc 35,68 a98162 d3b699 250000}${offset 3}${diskiograph_write /dev/sdc 35,68 5c111f c01e20 250000}
+${voffset -2}${offset 21}${color1}read  ${color}${diskio_read /dev/sdc}${alignr 38}${color}${diskio_write /dev/sdc} ${color1}write
 ${voffset 6}\
-${template8 betty /media/betty}
+${voffset 2}${offset 21}${color}betty${alignr 40}${voffset 1}${color2}${if_match ${fs_used_perc /media/betty} > 90}${color3}${endif}${fs_bar 3,97 /media/betty}
+${voffset 2}${alignr 38}${color}${fs_used /media/betty} / ${fs_size /media/betty}
 ${else}\
 ${image ~/conky/monochrome/images/compact/ochre-no-disk.png -p 18,817}\
 ${voffset 13}${offset 23}${color1}sdc device
@@ -166,9 +151,11 @@ ${endif}\
 ${if_existing /dev/sdd}\
 ${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 20,926}\
 ${image ~/conky/monochrome/images/compact/burgundy-graph-io.png -p 60,926}\
-${template7 sdd 23552 23552}
+${voffset 7}${offset 60}${color}${diskiograph_read /dev/sdd 35,68 a98162 d3b699 23552}${offset 3}${diskiograph_write /dev/sdd 35,68 5c111f c01e20 23552}
+${voffset -2}${offset 21}${color1}read  ${color}${diskio_read /dev/sdd}${alignr 38}${color}${diskio_write /dev/sdd} ${color1}write
 ${voffset 6}\
-${template8 maxtor /run/media/ernesto/MAXTOR}
+${voffset 2}${offset 21}${color}maxtor${alignr 40}${voffset 1}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 3,97 /run/media/ernesto/MAXTOR}
+${voffset 2}${alignr 38}${color}${fs_used /run/media/ernesto/MAXTOR} / ${fs_size /run/media/ernesto/MAXTOR}
 ${else}\
 ${image ~/conky/monochrome/images/compact/ochre-no-disk.png -p 18,920}\
 ${voffset 13}${offset 23}${color1}sdd device

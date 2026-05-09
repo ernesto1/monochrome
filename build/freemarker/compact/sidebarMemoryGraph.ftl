@@ -37,16 +37,12 @@ conky.config = {
   draw_outline = false,   -- black outline around text (not good if text is black)
   -- colors
   default_color = '[=colors.text]',  -- regular text
-  color1 = '[=colors.labels]',         -- text labels
-
-  -- ::::::::::::: templates
-  -- cpu/mem/download/disk write graph color
-  template1 = [[[=colors.writeGraph]]],
+  color1 = '[=colors.labels]'          -- text labels
 };
 
 conky.text = [[
 #  memory graph and usage are displayed on a separate conky due to a bug with these memory variables computing bad data if other variables like ${top ...} and one of the network upload/download ones exists in the same conky
-${offset 45}${memgraph 35,139 ${template1}}
+${offset 45}${memgraph 35,139 [=colors.writeGraph]}
 <#assign iborder = 6> <#-- inner horizontal border -->
 ${voffset -2}${offset [=iborder]}${color1}used  ${color}${mem}${alignr [=iborder]}/ ${memmax}   ${memperc}%
 ]]
