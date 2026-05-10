@@ -86,7 +86,6 @@ ${lua increment_offsets 0 43}\
 ${else}\
 # :::::: player available
 # ::: player status
-${lua increment_offsets 0 3}${voffset 3}\
 ${lua_parse draw_image ~/conky/monochrome/images/compact/ochre-sound-wave.png 0 0}\
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
 # ------- light panel top edge    -------

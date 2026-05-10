@@ -86,7 +86,6 @@ ${lua increment_offsets 0 [=iconHeight + sectionGap]}\
 ${else}\
 # :::::: player available
 # ::: player status
-${lua increment_offsets 0 [=gap]}${voffset [=gap]}\
 ${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-sound-wave.png 0 0}\
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
 <@panel.panel x=41 y=0 width=width-41 height=iconHeight isFixed=false color=image.secondaryColor/>
