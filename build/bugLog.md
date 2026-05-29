@@ -4,8 +4,9 @@ Due to bugs in the latest conky version available on the distro, I am stuck with
 
 The problems always comes down to conky variables that don't play well together, making me have to physically separate things in order to get it to work >.<
 
-### `top mem` variables mess up `memgraph` and `memperc`
-The graph jitters at random intervals.  It looks bad.  It is as if it calculated memory to be 0 or negative for certain intervals.
+### `top mem` variables mess up `memgraph`, `memperc` and `mem`
+`${mem}` will produce negative memory values, ex. -160MB for some intervals.  
+The memory graph will jitter.  It looks bad.
 
 Impact
 
@@ -25,8 +26,8 @@ Just drawing a vertical table with the lua draw image function alone (8 images) 
 ### `${if_existing processId}` does not mix with `lua` variables
 The cost of the variable increases the conky cpu usage from 1% to 15%
 
-### `goto` off by 1px
-When aligning a 6px per character monospace font using the `${goto}` variable, I have to add 1px to the calculation in order for characters to align properly.
+### `${goto}` off by 1px
+When aligning a 6px per character monospace font using the `${goto}` variable, I have to add 1px to the offset in order for characters to align properly.
 
 ## Introduce delays when launching conkys
 Having to separate elements of the same conky (ex. memory conky) due to the variable conflicts required me to introduce special logic to the `launch.bash` script in order to introduce delays to certain conkys when launching them.  

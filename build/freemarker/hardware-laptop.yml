@@ -24,15 +24,17 @@ hardDisks:
         icon: home
 
 # thresholds for the different conky meters
-# when these limits are breached, the conky will change colors
+# when these limits are breached, conky will change colors
 # n.b. for values over 1000 you need to parse them individually in freemarker with the '?c' built in
 #      or freemarker will parse it as 1,000 instead
 threshold:
-  cpu: 90         # percentages
+  # percentages
+  cpu: 90
   mem: 90
   swap: 70
-  bat: 20
   filesystem: 90
-  tempCPU: 78     # temperatures in degrees celsius
-  tempCPUCore: 85
+  bat: 20
   wifi: 50        # wifi signal strength
+  # temperatures in degrees celsius
+  tempCPU: 78
+  tempCPUCore: 94

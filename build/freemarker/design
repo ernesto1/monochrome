@@ -1,0 +1,22 @@
+lessons learned after creating conkys with a monospace font
+
+::::: borders
+- ${goto} add the +1px bug
+- be consistent, use multiples of 6 for offsets
+- ${alignr} offset depends on what background approach you are using in order
+  for the characters from left to rigth to align
+  conky adds 1px to the defined width, so 203 becomes 204
+
+    vanilla bg, ie. a simple window with no fancy image just a solid color
+    use desired width -1 for the setting
+    alignr requires -1 as well
+    otherwise you end up with a window 1px fatter than what you want
+
+    complex bg, ie. image with shadow
+    to keep things simple, have your image width be a multiple of 6\
+    set the image to be desired width
+    conky will add the extra pixel
+    the ${alignr 6} will work as intended
+
+::::: default monospace font
+- ° takes two characters in this ASCII font

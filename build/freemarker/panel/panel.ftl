@@ -68,7 +68,7 @@ ${voffset 5}${goto [=x?c]}${color1}load ${color}${loadavg}\
 <#assign x += 4 * charWidth + charWidth + 16 * charWidth + charWidth>
 ${goto [=x?c]}${color1}cpu ${color}${template1 cpu\ 0 [=threshold.cpu]}${cpu 0}%\
 <#assign x += 3 * charWidth + charWidth + 4 * charWidth + charWidth>
-${goto [=x?c]}${color1}temp ${color}${template1 hwmon\ coretemp\ temp\ 2 [=threshold.tempCPUCore]}${hwmon coretemp temp 2}°\
+${goto [=x?c]}${color1}temp ${color}${template1 hwmon\ coretemp\ temp\ 3 [=threshold.tempCPUCore]}${hwmon coretemp temp 3}°\
 <#assign x += 4 * charWidth + charWidth + 3 * charWidth + charWidth>
 <#assign x += charWidth><#-- section break -->
 # :::::: memory
@@ -109,7 +109,7 @@ ${goto [=x?c]}${color1}wifi ${color}${scroll wait 20 2 1 ${wireless_essid [=netD
 ${goto [=x?c]}${color1}strength ${color}${template2 wireless_link_qual_perc\ [=netDevice.name] [=threshold.wifi]}${wireless_link_qual_perc [=netDevice.name]}%\
 <#assign x += 8 * charWidth + charWidth + 4 * charWidth + charWidth>
 ${else}\
-${goto [=sectionStart?c]}${color1}wifi ${color}network device is disconnected, choose a wireless network\
+${goto [=sectionStart?c]}${color1}wifi ${color}network device disconnected\
 ${endif}\
 <#assign x += charWidth><#-- section break -->
 </#if>
