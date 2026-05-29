@@ -25,8 +25,8 @@ Just drawing a vertical table with the lua draw image function alone (8 images) 
 ### `${if_existing processId}` does not mix with `lua` variables
 The cost of the variable increases the conky cpu usage from 1% to 15%
 
-### `execpi` not honoring intervals
-The command invoked by this variable was being executed on each conky iteration instead of each interval, neglecting the whole point.  According to the conky project bug tracker, this seems to have been fixed on a newer version of conky.
+### `goto` off by 1px
+When aligning a 6px per character monospace font using the `${goto}` variable, I have to add 1px to the calculation in order for characters to align properly.
 
 ## Introduce delays when launching conkys
 Having to separate elements of the same conky (ex. memory conky) due to the variable conflicts required me to introduce special logic to the `launch.bash` script in order to introduce delays to certain conkys when launching them.  
