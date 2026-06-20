@@ -1,3 +1,4 @@
+<#if isVerbose>
 <#import "/lib/panel-round.ftl" as panel>
 --[[
 this conky requires the following supporting scripts running in the background:
@@ -253,3 +254,4 @@ ${lua increment_offsets 0 [=iconHeight + sectionGap]}\
 ${endif}\
 ${voffset [=7 + sectionGap]}\
 ]];
+</#if>

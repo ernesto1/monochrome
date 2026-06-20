@@ -10,13 +10,15 @@ conky.config = {
   -- window alignment
   alignment = 'middle_left',    -- top|middle|bottom_left|middle|right
   gap_x = 0,                    -- same as passing -x at command line
-  gap_y = 0,
+  gap_y = [=isVerbose?then(0,-10)],
 
   -- window settings
-  minimum_width = 238,
-  <#assign processes     = isVerbose?then(6,4),   <#-- number of top processes to display -->
+  <#assign width = 255,
+           height = isVerbose?then(1221,1500),
+           processes     = isVerbose?then(6,4),   <#-- number of top processes to display -->
            optionalDisks = isVerbose?then(0,1),   <#-- number of hard disks that can be ommitted to save height -->
-           height        = 1221+(processes*16*3)-optionalDisks*103>
+           height        = height+(processes*16*3)-optionalDisks*103>
+  minimum_width = [=width],
   minimum_height = [=height?c],
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -58,7 +60,7 @@ conky.config = {
 conky.text = [[
 <#assign y = 0,
          tso = 32,      <#-- vertical offset to account for background sidebar image's top shadow -->
-         lso = 15,      <#-- horizontal offset to account for background sidebar image's left shadow -->
+         lso = 32,      <#-- horizontal offset to account for background sidebar image's left shadow -->
          iborder = 6,   <#-- inner horizontal border -->
          rso = 32>      <#-- horizontal offset to account for background sidebar image's right shadow -->
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-sidebar.png -p 0,[=y]}\
@@ -88,12 +90,12 @@ ${endif}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph.png -p [=lso+45],[=y]}\
 <#assign y += 36>
 # memory graph and usage are displayed on a separate conky due to a bug with these memory variables computing bad data if other variables like ${top ...} and one of the network upload/download exists in the same conky
-${voffset 69}${offset [=lso+iborder]}${color1}buff${goto [=lso+iborder+6 * 6]}${color}${buffers}${alignr [=rso+iborder]}${color}${cached}${color1} cache
-${voffset 3}${offset [=lso+iborder]}${color1}free${goto [=lso+iborder+6 * 6]}${color}${memfree}${alignr [=rso+iborder]}${color}${swap}${color1}  swap
+${voffset 69}${offset [=lso+iborder]}${color1}free${goto [=lso+iborder+6 * 6]}${color}${memfree}${alignr [=rso+iborder]}${color}${swap}${color1} swap
 <#assign inputDir = "/tmp/conky",
          swapRead = inputDir+"/system.swap.read",
          swapWrite = inputDir+"/system.swap.write">
-${voffset 3}${offset [=lso+iborder]}${color1}si${goto [=lso+iborder+6 * 6]}${color}${cat [=swapRead]}${alignr [=rso+iborder]}${cat [=swapWrite]}${color1}    so
+${voffset 3}${offset [=lso+iborder]}${color1}buff${goto [=lso+iborder+6 * 6]}${color}${buffers}${alignr [=rso+iborder]}${color}${cat [=swapRead]}${color1}   si
+${voffset 3}${offset [=lso+iborder]}${color1}cache${goto [=lso+iborder+6 * 6]}${color}${cached}${alignr [=rso+iborder]}${cat [=swapWrite]}${color1}   so
 <#assign y += 71>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png -p [=lso+3],[=y]}\
 <#assign y += 18>
@@ -140,7 +142,7 @@ ${voffset -2}${offset [=lso+iborder]}${color1}read  ${color}${diskio_read /dev/[
 ${voffset 6}\
 <#items as partition>
 <#assign y += 31>
-${voffset 2}${offset [=lso+iborder]}${color}[=partition.name]${alignr [=rso+iborder+2]}${voffset 1}${color2}${if_match ${fs_used_perc [=partition.path]} > [=threshold.filesystem]}${color3}${endif}${fs_bar 3,97 [=partition.path]}
+${voffset 2}${offset [=lso+iborder]}${color}[=partition.name]${alignr [=rso+iborder+2]}${voffset 1}${color2}${if_match ${fs_used_perc [=partition.path]} > [=threshold.filesystem]}${color3}${endif}${fs_bar 3,100 [=partition.path]}
 ${voffset 2}${alignr [=rso+iborder]}${color}${fs_used [=partition.path]} / ${fs_size [=partition.path]}
 </#items>
 </#list>
@@ -156,16 +158,16 @@ ${endif}\
 # --- disk processes i/o
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png -p [=lso+3],[=y?c]}\
 <#assign y += 18>
-${voffset 13}${color1}${offset [=lso+iborder]}process${alignr [=rso+iborder+1]}read    write${voffset 5}
+${voffset 13}${color1}${offset [=lso+iborder]}process${goto [=lso+iborder+16*6+6]}read${goto [=lso+iborder+16*6+6+7*6+6]}write${voffset 5}
 <#list 1..processes as x>
-${voffset 3}${color}${offset [=lso+iborder]}${top_io name [=x]} ${top_io io_read [=x]}${goto 170}${top_io io_write [=x]}
+${voffset 3}${color}${offset [=lso+iborder]}${top_io name [=x]} ${top_io io_read [=x]}${goto [=lso+iborder+16*6+6+7*6+6]}${top_io io_write [=x]}
 </#list>
 <#assign y += 13+processes*16>
 # -------------- system
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-system.png -p [=lso+5],[=y?c]}\
 <#assign y += 36>
-${voffset 15}${goto [=lso+iborder+7 * 6]}${color1}uptime     ${color}${uptime}
-${voffset 3}${goto [=lso+iborder+7 * 6]}${color1}compositor ${color}${execi 3600 echo $XDG_SESSION_TYPE}
+${voffset 15}${goto [=lso+iborder+7*6]}${color1}uptime     ${color}${uptime}
+${voffset 3}${goto [=lso+iborder+7*6]}${color1}compositor ${color}${execi 3600 echo $XDG_SESSION_TYPE}
 ${voffset 9}${offset [=lso+iborder]}${color1}kernel ${color}${kernel}
 # due to a conky/lua bug the temperature items had to be moved to their own conky
 <#assign y += 23>
@@ -177,7 +179,33 @@ ${if_updatenr 2}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png -p [=lso+3],[=y?c]}\
 <#assign y += 18>
 <#-- place the bottom edge of the sidebar so that the fan animation can be overlayed on top of it -->
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-sidebar-bottom.png -p 0,[=(y+53)?c]}\
+<#if isVerbose>${image ~/conky/monochrome/images/compact/[=image.primaryColor]-sidebar-bottom.png -p 0,[=(y+53)?c]}\</#if>
 ${if_updatenr 1}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-fan1.png -p [=lso+64],[=(y+4)?c]}${endif}\
 ${if_updatenr 2}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-fan2.png -p [=lso+64],[=(y+4)?c]}${endif}\
+<#assign y += 4+60>
+${voffset [=(15*16)+6]}\
+<#if !isVerbose>
+# -------------- now playing
+<#assign y += 13>
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-disk.png -p [=lso+5],[=y?c]}\
+<#assign y += 36>
+${if_existing /tmp/conky/musicplayer.status off}\
+${voffset 15}${goto [=lso+iborder+7*6]}${color1}now playing
+${voffset 3}${goto [=lso+iborder+7*6]}${color}no music player running${voffset 6}
+${else}\
+${voffset 15}${goto [=lso+iborder+7*6]}${color1}${cat /tmp/conky/musicplayer.name}
+${voffset 3}${goto [=lso+iborder+7*6]}${color}${cat /tmp/conky/musicplayer.playbackStatus}${voffset 6}
+<#assign y += 6,
+         albumArtFile = "/tmp/conky/musicplayer.track.art">
+${if_existing [=albumArtFile]}\
+${image [=albumArtFile] -p [=lso+iborder],[=y?c] -s [=width-lso-rso-iborder*2]x[=width-lso-rso-iborder*2] -n}\
+<#assign y += width-lso-rso-iborder*2>
+${voffset [=width-lso-rso-6]}\
+${endif}\
+${voffset 3}${offset [=lso+iborder]}${color1}title${goto [=lso+48]}${color}${scroll wait 23 4 1 ${cat /tmp/conky/musicplayer.track.title}}
+${voffset 3}${offset [=lso+iborder]}${color1}album${goto [=lso+48]}${color}${scroll wait 23 4 1 ${cat /tmp/conky/musicplayer.track.album}}
+${voffset 3}${offset [=lso+iborder]}${color1}artist${goto [=lso+48]}${color}${scroll wait 23 4 1 ${cat /tmp/conky/musicplayer.track.artist}}
+${endif}\
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-sidebar-bottom.png -p 0,[=(y+(16*2)+5)?c]}\
+</#if>
 ]]
