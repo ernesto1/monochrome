@@ -1,0 +1,7 @@
+design lessons
+--------------
+
+::: working with monospace fonts
+- conky window size should be a multiple of a character width, ex. if char 6px then window can be 36, 90, ...
+- conky adds 1px to the window width, you would not be able to tell unless you set the window to 'panel' mode
+  and maximize another app.  Then the invisible pixel would show.

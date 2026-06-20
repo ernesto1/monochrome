@@ -1,3 +1,18 @@
+grape:
+  image:
+    primaryColor: grape
+    secondaryColor: ochre
+  colors:
+    text: edcaef
+    labels: white
+    bar: 78428e
+    warning: red
+    writeGraph: 3f2264 78428e
+    readGraph: 540d45 ef3ebb
+    highlight: bf241f
+    secondary:
+      labels: white
+      text: f6ced1
 nelson:
   image:
     primaryColor: burgundy
@@ -8,7 +23,7 @@ nelson:
     bar: 94131f
     warning: c01e20
     writeGraph: 5c111f c01e20
-    readGraph: a98162 d3b699
+    readGraph: 665d1e bdb76b
     highlight: bf241f
     # secondary/alternate panel colors
     secondary:

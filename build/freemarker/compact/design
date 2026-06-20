@@ -4,3 +4,10 @@
 - each row of text adds 16 pixels (lines with a 3px voffset)
 - each row of text adds 13 pixels (no voffset like a cat or exec command)
 - measure up to the bottom of the dot, 1px below the words
+
+# TODO
+
+deprecation of sidebarTemperature conky
+- detect 0 rpm fan with conky templates
+  old lua method: print_resource_usage
+  cpu fan ${lua_parse print_resource_usage ${hwmon atk0110 fan 1} 2300 ${color3}} rpm

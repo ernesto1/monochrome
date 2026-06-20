@@ -13,7 +13,7 @@ conky.config = {
   gap_y = [=isVerbose?then(0,-10)],
 
   -- window settings
-  <#assign width = 255,
+  <#assign width = 267,                           <#-- conky adds 1px, width is 268 -->
            height = isVerbose?then(1221,1500),
            processes     = isVerbose?then(6,4),   <#-- number of top processes to display -->
            optionalDisks = isVerbose?then(0,1),   <#-- number of hard disks that can be ommitted to save height -->
@@ -53,8 +53,11 @@ conky.config = {
   -- colors
   default_color = '[=colors.text]',  -- regular text
   color1 = '[=colors.labels]',         -- text labels
-  color2 = '[=colors.bar]',        -- bar
-  color3 = '[=colors.warning]'         -- bar critical
+  color2 = '[=colors.warning]',        -- resource usage too high
+  color3 = '[=colors.bar]',        -- bar
+  
+  -- hwmon entry: ${template9 index/device type index threshold}
+  template1 = [[${if_match ${hwmon \1 \2 \3} > \4}${color2}${endif}${hwmon \1 \2 \3}]]
 };
 
 conky.text = [[
@@ -73,7 +76,7 @@ ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-cpu-high.png -p 
 ${endif}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph.png -p [=lso+45],[=y]}\
 <#assign y += 36+23>
-${voffset [=tso+2]}${offset [=lso+45]}${cpugraph cpu0 35,139 [=colors.writeGraph]}
+${voffset [=tso+2]}${offset [=lso+45]}${cpugraph cpu0 35,151 [=colors.writeGraph]}
 ${voffset -2}${offset [=lso+iborder]}${color1}load${goto [=lso+iborder+6 * 6]}${color}${loadavg}${alignr [=rso+iborder]}${color}${cpu cpu0}%
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png -p [=lso+3],[=y]}\
 <#assign y += 18>
@@ -90,12 +93,12 @@ ${endif}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph.png -p [=lso+45],[=y]}\
 <#assign y += 36>
 # memory graph and usage are displayed on a separate conky due to a bug with these memory variables computing bad data if other variables like ${top ...} and one of the network upload/download exists in the same conky
-${voffset 69}${offset [=lso+iborder]}${color1}free${goto [=lso+iborder+6 * 6]}${color}${memfree}${alignr [=rso+iborder]}${color}${swap}${color1} swap
+${voffset 69}${offset [=lso+iborder]}${color1}free${goto [=lso+iborder+6 * 6]}${color}${memfree}${alignr [=rso+iborder]}${color}${swap}${color1} swap    
 <#assign inputDir = "/tmp/conky",
          swapRead = inputDir+"/system.swap.read",
          swapWrite = inputDir+"/system.swap.write">
-${voffset 3}${offset [=lso+iborder]}${color1}buff${goto [=lso+iborder+6 * 6]}${color}${buffers}${alignr [=rso+iborder]}${color}${cat [=swapRead]}${color1}   si
-${voffset 3}${offset [=lso+iborder]}${color1}cache${goto [=lso+iborder+6 * 6]}${color}${cached}${alignr [=rso+iborder]}${cat [=swapWrite]}${color1}   so
+${voffset 3}${offset [=lso+iborder]}${color1}buff${goto [=lso+iborder+6 * 6]}${color}${buffers}${alignr [=rso+iborder]}${color}${cat [=swapRead]}${color1} swap in 
+${voffset 3}${offset [=lso+iborder]}${color1}cache${goto [=lso+iborder+6 * 6]}${color}${cached}${alignr [=rso+iborder]}${cat [=swapWrite]}${color1} swap out
 <#assign y += 71>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png -p [=lso+3],[=y]}\
 <#assign y += 18>
@@ -116,11 +119,11 @@ ${voffset 3}${goto [=lso+iborder+7 * 6]}${color1}speed    ${color}${execi 180 et
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-internet.png -p [=lso+5],[=y]}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph-io.png -p [=lso+45],[=y]}\
 <#assign y += 36+46>
-${voffset 8}${offset [=lso+45]}${color}${upspeedgraph [=device.name] 35,68 [=colors.readGraph] [=device.maxUp?c]}${offset 3}${downspeedgraph [=device.name] 35,68 [=colors.writeGraph] [=device.maxDown?c]}
+${voffset 8}${offset [=lso+45]}${color}${upspeedgraph [=device.name] 35,74 [=colors.readGraph] [=device.maxUp?c]}${offset 3}${downspeedgraph [=device.name] 35,74 [=colors.writeGraph] [=device.maxDown?c]}
 ${voffset -2}${offset [=lso+iborder]}${color1}up    ${color}${upspeed [=device.name]}${alignr [=rso+iborder]}${color}${downspeed [=device.name]}  ${color1}down
 ${voffset 3}${offset [=lso+iborder]}${color1}total ${color}${totalup [=device.name]}${alignr [=rso+iborder]}${color}${totaldown [=device.name]} ${color1}total
 ${else}\
-${image ~/conky/monochrome/images/compact/[=image.secondaryColor]-no-network.png -p [=lso+3],[=ySection-7]}\
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-no-network.png -p [=lso+3],[=ySection-7]}\
 ${voffset 12}${offset [=lso+iborder+2]}${color1}no network
 ${voffset 3}${offset [=lso+iborder+2]}connection
 ${voffset 73}
@@ -136,19 +139,19 @@ ${if_existing /dev/[=disk.device]}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-disk.png -p [=lso+5],[=y]}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph-io.png -p [=lso+45],[=y]}\
 <#assign y += 36+36>
-${voffset 7}${offset [=lso+45]}${color}${diskiograph_read /dev/[=disk.device] 35,68 [=colors.readGraph] [=disk.readSpeed?c]}${offset 3}${diskiograph_write /dev/[=disk.device] 35,68 [=colors.writeGraph] [=disk.writeSpeed?c]}
+${voffset 7}${offset [=lso+45]}${color}${diskiograph_read /dev/[=disk.device] 35,74 [=colors.readGraph] [=disk.readSpeed?c]}${offset 3}${diskiograph_write /dev/[=disk.device] 35,74 [=colors.writeGraph] [=disk.writeSpeed?c]}
 ${voffset -2}${offset [=lso+iborder]}${color1}read  ${color}${diskio_read /dev/[=disk.device]}${alignr [=rso+iborder]}${color}${diskio_write /dev/[=disk.device]} ${color1}write
 <#list disk.partitions>
 ${voffset 6}\
 <#items as partition>
 <#assign y += 31>
-${voffset 2}${offset [=lso+iborder]}${color}[=partition.name]${alignr [=rso+iborder+2]}${voffset 1}${color2}${if_match ${fs_used_perc [=partition.path]} > [=threshold.filesystem]}${color3}${endif}${fs_bar 3,100 [=partition.path]}
+${voffset 2}${offset [=lso+iborder]}${color}[=partition.name]${alignr [=rso+iborder+2]}${voffset 1}${color3}${if_match ${fs_used_perc [=partition.path]} > [=threshold.filesystem]}${color2}${endif}${fs_bar 3,100 [=partition.path]}
 ${voffset 2}${alignr [=rso+iborder]}${color}${fs_used [=partition.path]} / ${fs_size [=partition.path]}
 </#items>
 </#list>
 <#if disk.partitions?size == 1>
 ${else}\
-${image ~/conky/monochrome/images/compact/[=image.secondaryColor]-no-disk.png -p [=lso+3],[=ySection - 6]}\
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-no-disk.png -p [=lso+3],[=ySection - 6]}\
 ${voffset 13}${offset [=lso+iborder+2]}${color1}[=disk.device] device
 ${voffset 3}${offset [=lso+iborder+2]}${color1}${font4}is not connected
 ${voffset 48}
@@ -158,9 +161,10 @@ ${endif}\
 # --- disk processes i/o
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png -p [=lso+3],[=y?c]}\
 <#assign y += 18>
-${voffset 13}${color1}${offset [=lso+iborder]}process${goto [=lso+iborder+16*6+6]}read${goto [=lso+iborder+16*6+6+7*6+6]}write${voffset 5}
+${voffset 13}${color1}${offset [=lso+iborder]}process${alignr [=rso+iborder]}read    write${voffset 5}
 <#list 1..processes as x>
-${voffset 3}${color}${offset [=lso+iborder]}${top_io name [=x]} ${top_io io_read [=x]}${goto [=lso+iborder+16*6+6+7*6+6]}${top_io io_write [=x]}
+${voffset 3}${color}${offset [=lso+iborder]}${top_io name [=x]}${alignr [=rso+iborder+9*6]}${top_io io_read [=x]}
+${voffset -13}${alignr [=rso+iborder]}${top_io io_write [=x]}
 </#list>
 <#assign y += 13+processes*16>
 # -------------- system
@@ -169,21 +173,34 @@ ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-system.png -p [=
 ${voffset 15}${goto [=lso+iborder+7*6]}${color1}uptime     ${color}${uptime}
 ${voffset 3}${goto [=lso+iborder+7*6]}${color1}compositor ${color}${execi 3600 echo $XDG_SESSION_TYPE}
 ${voffset 9}${offset [=lso+iborder]}${color1}kernel ${color}${kernel}
-# due to a conky/lua bug the temperature items had to be moved to their own conky
 <#assign y += 23>
+# ::: device temperature
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png -p [=lso+3],[=y?c]}\
 <#assign y += 18+32>
+${voffset 6}${offset [=lso+iborder]}${color1}device${alignr [=rso+iborder]}temperature${voffset 5}
 ${if_updatenr 1}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-thermometer1.png -p [=lso+115],[=y?c]}${endif}\
 ${if_updatenr 2}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-thermometer2.png -p [=lso+115],[=y?c]}${endif}\
+${if_updatenr 3}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-thermometer3.png -p [=lso+115],[=y?c]}${endif}\
+${if_updatenr 4}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-thermometer2.png -p [=lso+115],[=y?c]}${endif}\
+<#list temperatures + hardDisks as device>
+<#if device.module?? || device.hwmonIndex??>
+${voffset 3}${offset [=lso+iborder]}${color}[=device.name]${alignr [=rso]}${template1 [=device.module!device.hwmonIndex] temp [=device.number!1] [=threshold[device.thresholdType]]}°C
+</#if>
+</#list>
 <#assign y += 90+31>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png -p [=lso+3],[=y?c]}\
 <#assign y += 18>
-<#-- place the bottom edge of the sidebar so that the fan animation can be overlayed on top of it -->
+${voffset 9}${offset [=lso+iborder]}${color1}fan${alignr [=rso+iborder]}revolutions${voffset 5}
 <#if isVerbose>${image ~/conky/monochrome/images/compact/[=image.primaryColor]-sidebar-bottom.png -p 0,[=(y+53)?c]}\</#if>
 ${if_updatenr 1}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-fan1.png -p [=lso+64],[=(y+4)?c]}${endif}\
 ${if_updatenr 2}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-fan2.png -p [=lso+64],[=(y+4)?c]}${endif}\
+${if_updatenr 3}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-fan1.png -p [=lso+64],[=(y+4)?c]}${endif}\
+${if_updatenr 4}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-fan2.png -p [=lso+64],[=(y+4)?c]}${endif}\
 <#assign y += 4+60>
-${voffset [=(15*16)+6]}\
+<#list fans as fan>
+${voffset 3}${offset [=lso+iborder]}${color}[=fan.name]${alignr [=rso+iborder]}${template1 [=fan.module] fan [=fan.number] [=threshold.fanSpeed?c]} rpm
+</#list>
+${voffset 6}\
 <#if !isVerbose>
 # -------------- now playing
 <#assign y += 13>

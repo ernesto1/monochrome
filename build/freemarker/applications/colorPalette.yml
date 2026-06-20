@@ -1,0 +1,14 @@
+grape:
+  image:
+    primaryColor: grape
+  colors:
+    text: edcaef
+    labels: white
+    highlight: yellow
+nelson:
+  image:
+    primaryColor: burgundy
+  colors:
+    text: d9ad8a
+    labels: white
+    highlight: bf241f

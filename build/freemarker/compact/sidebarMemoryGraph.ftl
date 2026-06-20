@@ -10,7 +10,7 @@ conky.config = {
   gap_y = [=gap_y],
 
   -- window settings
-  minimum_width = 191,
+  minimum_width = 203,            -- conky adds 1px, width is 268
   minimum_height = 60,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -42,7 +42,7 @@ conky.config = {
 
 conky.text = [[
 #  memory graph and usage are displayed on a separate conky due to a bug with these memory variables computing bad data if other variables like ${top ...} and one of the network upload/download ones exists in the same conky
-${offset 45}${memgraph 35,139 [=colors.writeGraph]}
+${offset 45}${memgraph 35,151 [=colors.writeGraph]}
 <#assign iborder = 6> <#-- inner horizontal border -->
-${voffset -2}${offset [=iborder]}${color1}used  ${color}${mem}${alignr [=iborder]}/ ${memmax}  ${memperc}%
+${voffset -2}${offset [=iborder]}${color1}used  ${color}${mem}${alignr [=iborder]}/ ${memmax}      ${memperc}%
 ]]

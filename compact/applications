@@ -125,7 +125,7 @@ ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edg
 ${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-right.png 184 184}\
 ${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 0 191}\
 # ------- light panel bottom edge -------
-${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-album-placeholder.png 50 50}\
+${lua_parse draw_image ~/conky/monochrome/images/common/burgundy-panel-album-placeholder.png 13 13}\
 ${lua_parse draw_image /tmp/conky/musicplayer.track.art 4 4 183x183}\
 ${lua increment_offsets 0 194}${lua decrease_total_lines 12}\
 ${voffset 194}\

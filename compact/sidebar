@@ -13,7 +13,7 @@ conky.config = {
   gap_y = 0,
 
   -- window settings
-  minimum_width = 255,
+  minimum_width = 267,
   minimum_height = 1509,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -48,8 +48,11 @@ conky.config = {
   -- colors
   default_color = 'd9ad8a',  -- regular text
   color1 = 'white',         -- text labels
-  color2 = '94131f',        -- bar
-  color3 = 'c01e20'         -- bar critical
+  color2 = 'c01e20',        -- resource usage too high
+  color3 = '94131f',        -- bar
+  
+  -- hwmon entry: ${template9 index/device type index threshold}
+  template1 = [[${if_match ${hwmon \1 \2 \3} > \4}${color2}${endif}${hwmon \1 \2 \3}]]
 };
 
 conky.text = [[
@@ -61,7 +64,7 @@ ${else}\
 ${image ~/conky/monochrome/images/compact/burgundy-cpu-high.png -p 37,39}\
 ${endif}\
 ${image ~/conky/monochrome/images/compact/burgundy-graph.png -p 77,39}\
-${voffset 34}${offset 77}${cpugraph cpu0 35,139 5c111f c01e20}
+${voffset 34}${offset 77}${cpugraph cpu0 35,151 5c111f c01e20}
 ${voffset -2}${offset 38}${color1}load${goto 74}${color}${loadavg}${alignr 38}${color}${cpu cpu0}%
 ${image ~/conky/monochrome/images/compact/burgundy-table-fields.png -p 35,98}\
 ${voffset 6}${color1}${offset 38}process${alignr 38}cpu    mem${voffset 5}
@@ -78,9 +81,9 @@ ${image ~/conky/monochrome/images/compact/burgundy-mem-high.png -p 37,225}\
 ${endif}\
 ${image ~/conky/monochrome/images/compact/burgundy-graph.png -p 77,225}\
 # memory graph and usage are displayed on a separate conky due to a bug with these memory variables computing bad data if other variables like ${top ...} and one of the network upload/download exists in the same conky
-${voffset 69}${offset 38}${color1}free${goto 74}${color}${memfree}${alignr 38}${color}${swap}${color1} swap
-${voffset 3}${offset 38}${color1}buff${goto 74}${color}${buffers}${alignr 38}${color}${cat /tmp/conky/system.swap.read}${color1}   si
-${voffset 3}${offset 38}${color1}cache${goto 74}${color}${cached}${alignr 38}${cat /tmp/conky/system.swap.write}${color1}   so
+${voffset 69}${offset 38}${color1}free${goto 74}${color}${memfree}${alignr 38}${color}${swap}${color1} swap    
+${voffset 3}${offset 38}${color1}buff${goto 74}${color}${buffers}${alignr 38}${color}${cat /tmp/conky/system.swap.read}${color1} swap in 
+${voffset 3}${offset 38}${color1}cache${goto 74}${color}${cached}${alignr 38}${cat /tmp/conky/system.swap.write}${color1} swap out
 ${image ~/conky/monochrome/images/compact/burgundy-table-fields.png -p 35,332}\
 ${voffset 6}${offset 38}${color1}process${alignr 38}memory   perc${voffset 5}
 ${voffset 3}${color}${offset 38}${top_mem name 1}${alignr 38}${top_mem mem_res 1}${top_mem mem 1}%
@@ -97,11 +100,11 @@ ${voffset 3}${goto 80}${color1}speed    ${color}${execi 180 ethtool enp0s25 2>/d
 # :: upload/download speeds
 ${image ~/conky/monochrome/images/compact/burgundy-internet.png -p 37,504}\
 ${image ~/conky/monochrome/images/compact/burgundy-graph-io.png -p 77,504}\
-${voffset 8}${offset 77}${color}${upspeedgraph enp0s25 35,68 a98162 d3b699 3000}${offset 3}${downspeedgraph enp0s25 35,68 5c111f c01e20 73000}
+${voffset 8}${offset 77}${color}${upspeedgraph enp0s25 35,74 665d1e bdb76b 3000}${offset 3}${downspeedgraph enp0s25 35,74 5c111f c01e20 73000}
 ${voffset -2}${offset 38}${color1}up    ${color}${upspeed enp0s25}${alignr 38}${color}${downspeed enp0s25}  ${color1}down
 ${voffset 3}${offset 38}${color1}total ${color}${totalup enp0s25}${alignr 38}${color}${totaldown enp0s25} ${color1}total
 ${else}\
-${image ~/conky/monochrome/images/compact/ochre-no-network.png -p 35,452}\
+${image ~/conky/monochrome/images/compact/burgundy-no-network.png -p 35,452}\
 ${voffset 12}${offset 40}${color1}no network
 ${voffset 3}${offset 40}connection
 ${voffset 73}
@@ -110,24 +113,24 @@ ${endif}\
 # :::: sda
 ${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 37,586}\
 ${image ~/conky/monochrome/images/compact/burgundy-graph-io.png -p 77,586}\
-${voffset 7}${offset 77}${color}${diskiograph_read /dev/sda 35,68 a98162 d3b699 200000}${offset 3}${diskiograph_write /dev/sda 35,68 5c111f c01e20 280000}
+${voffset 7}${offset 77}${color}${diskiograph_read /dev/sda 35,74 665d1e bdb76b 200000}${offset 3}${diskiograph_write /dev/sda 35,74 5c111f c01e20 280000}
 ${voffset -2}${offset 38}${color1}read  ${color}${diskio_read /dev/sda}${alignr 38}${color}${diskio_write /dev/sda} ${color1}write
 ${voffset 6}\
-${voffset 2}${offset 38}${color}fedora${alignr 40}${voffset 1}${color2}${if_match ${fs_used_perc /} > 90}${color3}${endif}${fs_bar 3,100 /}
+${voffset 2}${offset 38}${color}fedora${alignr 40}${voffset 1}${color3}${if_match ${fs_used_perc /} > 90}${color2}${endif}${fs_bar 3,100 /}
 ${voffset 2}${alignr 38}${color}${fs_used /} / ${fs_size /}
-${voffset 2}${offset 38}${color}home${alignr 40}${voffset 1}${color2}${if_match ${fs_used_perc /home} > 90}${color3}${endif}${fs_bar 3,100 /home}
+${voffset 2}${offset 38}${color}home${alignr 40}${voffset 1}${color3}${if_match ${fs_used_perc /home} > 90}${color2}${endif}${fs_bar 3,100 /home}
 ${voffset 2}${alignr 38}${color}${fs_used /home} / ${fs_size /home}
 # :::: sdb
 ${if_existing /dev/sdb}\
 ${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 37,720}\
 ${image ~/conky/monochrome/images/compact/burgundy-graph-io.png -p 77,720}\
-${voffset 7}${offset 77}${color}${diskiograph_read /dev/sdb 35,68 a98162 d3b699 250000}${offset 3}${diskiograph_write /dev/sdb 35,68 5c111f c01e20 250000}
+${voffset 7}${offset 77}${color}${diskiograph_read /dev/sdb 35,74 665d1e bdb76b 250000}${offset 3}${diskiograph_write /dev/sdb 35,74 5c111f c01e20 250000}
 ${voffset -2}${offset 38}${color1}read  ${color}${diskio_read /dev/sdb}${alignr 38}${color}${diskio_write /dev/sdb} ${color1}write
 ${voffset 6}\
-${voffset 2}${offset 38}${color}veronica${alignr 40}${voffset 1}${color2}${if_match ${fs_used_perc /media/veronica} > 90}${color3}${endif}${fs_bar 3,100 /media/veronica}
+${voffset 2}${offset 38}${color}veronica${alignr 40}${voffset 1}${color3}${if_match ${fs_used_perc /media/veronica} > 90}${color2}${endif}${fs_bar 3,100 /media/veronica}
 ${voffset 2}${alignr 38}${color}${fs_used /media/veronica} / ${fs_size /media/veronica}
 ${else}\
-${image ~/conky/monochrome/images/compact/ochre-no-disk.png -p 35,714}\
+${image ~/conky/monochrome/images/compact/burgundy-no-disk.png -p 35,714}\
 ${voffset 13}${offset 40}${color1}sdb device
 ${voffset 3}${offset 40}${color1}${font4}is not connected
 ${voffset 48}
@@ -136,13 +139,13 @@ ${endif}\
 ${if_existing /dev/sdc}\
 ${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 37,823}\
 ${image ~/conky/monochrome/images/compact/burgundy-graph-io.png -p 77,823}\
-${voffset 7}${offset 77}${color}${diskiograph_read /dev/sdc 35,68 a98162 d3b699 250000}${offset 3}${diskiograph_write /dev/sdc 35,68 5c111f c01e20 250000}
+${voffset 7}${offset 77}${color}${diskiograph_read /dev/sdc 35,74 665d1e bdb76b 250000}${offset 3}${diskiograph_write /dev/sdc 35,74 5c111f c01e20 250000}
 ${voffset -2}${offset 38}${color1}read  ${color}${diskio_read /dev/sdc}${alignr 38}${color}${diskio_write /dev/sdc} ${color1}write
 ${voffset 6}\
-${voffset 2}${offset 38}${color}betty${alignr 40}${voffset 1}${color2}${if_match ${fs_used_perc /media/betty} > 90}${color3}${endif}${fs_bar 3,100 /media/betty}
+${voffset 2}${offset 38}${color}betty${alignr 40}${voffset 1}${color3}${if_match ${fs_used_perc /media/betty} > 90}${color2}${endif}${fs_bar 3,100 /media/betty}
 ${voffset 2}${alignr 38}${color}${fs_used /media/betty} / ${fs_size /media/betty}
 ${else}\
-${image ~/conky/monochrome/images/compact/ochre-no-disk.png -p 35,817}\
+${image ~/conky/monochrome/images/compact/burgundy-no-disk.png -p 35,817}\
 ${voffset 13}${offset 40}${color1}sdc device
 ${voffset 3}${offset 40}${color1}${font4}is not connected
 ${voffset 48}
@@ -151,38 +154,63 @@ ${endif}\
 ${if_existing /dev/sdd}\
 ${image ~/conky/monochrome/images/compact/burgundy-disk.png -p 37,926}\
 ${image ~/conky/monochrome/images/compact/burgundy-graph-io.png -p 77,926}\
-${voffset 7}${offset 77}${color}${diskiograph_read /dev/sdd 35,68 a98162 d3b699 23552}${offset 3}${diskiograph_write /dev/sdd 35,68 5c111f c01e20 23552}
+${voffset 7}${offset 77}${color}${diskiograph_read /dev/sdd 35,74 665d1e bdb76b 23552}${offset 3}${diskiograph_write /dev/sdd 35,74 5c111f c01e20 23552}
 ${voffset -2}${offset 38}${color1}read  ${color}${diskio_read /dev/sdd}${alignr 38}${color}${diskio_write /dev/sdd} ${color1}write
 ${voffset 6}\
-${voffset 2}${offset 38}${color}maxtor${alignr 40}${voffset 1}${color2}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color3}${endif}${fs_bar 3,100 /run/media/ernesto/MAXTOR}
+${voffset 2}${offset 38}${color}maxtor${alignr 40}${voffset 1}${color3}${if_match ${fs_used_perc /run/media/ernesto/MAXTOR} > 90}${color2}${endif}${fs_bar 3,100 /run/media/ernesto/MAXTOR}
 ${voffset 2}${alignr 38}${color}${fs_used /run/media/ernesto/MAXTOR} / ${fs_size /run/media/ernesto/MAXTOR}
 ${else}\
-${image ~/conky/monochrome/images/compact/ochre-no-disk.png -p 35,920}\
+${image ~/conky/monochrome/images/compact/burgundy-no-disk.png -p 35,920}\
 ${voffset 13}${offset 40}${color1}sdd device
 ${voffset 3}${offset 40}${color1}${font4}is not connected
 ${voffset 48}
 ${endif}\
 # --- disk processes i/o
 ${image ~/conky/monochrome/images/compact/burgundy-table-fields.png -p 35,1029}\
-${voffset 13}${color1}${offset 38}process${goto 140}read${goto 188}write${voffset 5}
-${voffset 3}${color}${offset 38}${top_io name 1} ${top_io io_read 1}${goto 188}${top_io io_write 1}
-${voffset 3}${color}${offset 38}${top_io name 2} ${top_io io_read 2}${goto 188}${top_io io_write 2}
-${voffset 3}${color}${offset 38}${top_io name 3} ${top_io io_read 3}${goto 188}${top_io io_write 3}
-${voffset 3}${color}${offset 38}${top_io name 4} ${top_io io_read 4}${goto 188}${top_io io_write 4}
-${voffset 3}${color}${offset 38}${top_io name 5} ${top_io io_read 5}${goto 188}${top_io io_write 5}
-${voffset 3}${color}${offset 38}${top_io name 6} ${top_io io_read 6}${goto 188}${top_io io_write 6}
+${voffset 13}${color1}${offset 38}process${alignr 38}read    write${voffset 5}
+${voffset 3}${color}${offset 38}${top_io name 1}${alignr 92}${top_io io_read 1}
+${voffset -13}${alignr 38}${top_io io_write 1}
+${voffset 3}${color}${offset 38}${top_io name 2}${alignr 92}${top_io io_read 2}
+${voffset -13}${alignr 38}${top_io io_write 2}
+${voffset 3}${color}${offset 38}${top_io name 3}${alignr 92}${top_io io_read 3}
+${voffset -13}${alignr 38}${top_io io_write 3}
+${voffset 3}${color}${offset 38}${top_io name 4}${alignr 92}${top_io io_read 4}
+${voffset -13}${alignr 38}${top_io io_write 4}
+${voffset 3}${color}${offset 38}${top_io name 5}${alignr 92}${top_io io_read 5}
+${voffset -13}${alignr 38}${top_io io_write 5}
+${voffset 3}${color}${offset 38}${top_io name 6}${alignr 92}${top_io io_read 6}
+${voffset -13}${alignr 38}${top_io io_write 6}
 # -------------- system
 ${image ~/conky/monochrome/images/compact/burgundy-system.png -p 37,1156}\
 ${voffset 15}${goto 80}${color1}uptime     ${color}${uptime}
 ${voffset 3}${goto 80}${color1}compositor ${color}${execi 3600 echo $XDG_SESSION_TYPE}
 ${voffset 9}${offset 38}${color1}kernel ${color}${kernel}
-# due to a conky/lua bug the temperature items had to be moved to their own conky
+# ::: device temperature
 ${image ~/conky/monochrome/images/compact/burgundy-table-fields.png -p 35,1215}\
+${voffset 6}${offset 38}${color1}device${alignr 38}temperature${voffset 5}
 ${if_updatenr 1}${image ~/conky/monochrome/images/compact/burgundy-thermometer1.png -p 147,1265}${endif}\
 ${if_updatenr 2}${image ~/conky/monochrome/images/compact/burgundy-thermometer2.png -p 147,1265}${endif}\
+${if_updatenr 3}${image ~/conky/monochrome/images/compact/burgundy-thermometer3.png -p 147,1265}${endif}\
+${if_updatenr 4}${image ~/conky/monochrome/images/compact/burgundy-thermometer2.png -p 147,1265}${endif}\
+${voffset 3}${offset 38}${color}cpu${alignr 32}${template1 atk0110 temp 1 90}°C
+${voffset 3}${offset 38}${color}cpu core 1${alignr 32}${template1 coretemp temp 2 93}°C
+${voffset 3}${offset 38}${color}cpu core 2${alignr 32}${template1 coretemp temp 3 93}°C
+${voffset 3}${offset 38}${color}cpu core 3${alignr 32}${template1 coretemp temp 4 93}°C
+${voffset 3}${offset 38}${color}cpu core 4${alignr 32}${template1 coretemp temp 5 93}°C
+${voffset 3}${offset 38}${color}AMD Radeon HD7570${alignr 32}${template1 radeon temp 1 75}°C
+${voffset 3}${offset 38}${color}samsung SSD HD${alignr 32}${template1 0 temp 1 42}°C
+${voffset 3}${offset 38}${color}seagate HD${alignr 32}${template1 1 temp 1 42}°C
+${voffset 3}${offset 38}${color}seagate HD${alignr 32}${template1 2 temp 1 42}°C
 ${image ~/conky/monochrome/images/compact/burgundy-table-fields.png -p 35,1386}\
+${voffset 9}${offset 38}${color1}fan${alignr 38}revolutions${voffset 5}
 ${image ~/conky/monochrome/images/compact/burgundy-sidebar-bottom.png -p 0,1457}\
 ${if_updatenr 1}${image ~/conky/monochrome/images/compact/burgundy-fan1.png -p 96,1408}${endif}\
 ${if_updatenr 2}${image ~/conky/monochrome/images/compact/burgundy-fan2.png -p 96,1408}${endif}\
-${voffset 246}\
+${if_updatenr 3}${image ~/conky/monochrome/images/compact/burgundy-fan1.png -p 96,1408}${endif}\
+${if_updatenr 4}${image ~/conky/monochrome/images/compact/burgundy-fan2.png -p 96,1408}${endif}\
+${voffset 3}${offset 38}${color}chasis front intake${alignr 38}${template1 atk0110 fan 3 2300} rpm
+${voffset 3}${offset 38}${color}cpu fan${alignr 38}${template1 atk0110 fan 1 2300} rpm
+${voffset 3}${offset 38}${color}chasis top exhaust${alignr 38}${template1 atk0110 fan 2 2300} rpm
+${voffset 3}${offset 38}${color}chasis back exhaust${alignr 38}${template1 atk0110 fan 4 2300} rpm
+${voffset 6}\
 ]]
