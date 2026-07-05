@@ -9,6 +9,10 @@ this conky requires the following supporting scripts running in the background:
    requires the 'remote control' feature enabled in the transmission bittorrent client: edit > preferences > remote
 
 output files from these supporting apps are read from /tmp/conky
+
+transmission script settings required for this conky to read data:
+format=flipped
+offsetTorrent=12
 ]]
 
 conky.config = {
@@ -79,7 +83,7 @@ ${voffset 2}\
 # :::::: no player available
 ${if_existing /tmp/conky/musicplayer.status}\
 ${if_existing /tmp/conky/musicplayer.status off}\
-${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-sound-wave.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/ochre-sound-wave.png 0 0}\
 <@panel.panel x=41 y=0 width=width-41 height=iconHeight isFixed=false/>
 ${voffset 3}${offset 48}${color1}now playing
 ${voffset 2}${offset 48}${color}no music player running
@@ -87,7 +91,7 @@ ${lua increment_offsets 0 [=iconHeight + sectionGap]}\
 ${else}\
 # :::::: player available
 # ::: player status
-${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-sound-wave.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/ochre-sound-wave.png 0 0}\
 ${if_existing /tmp/conky/musicplayer.playbackStatus Playing}\
 <@panel.panel x=41 y=0 width=width-41 height=iconHeight isFixed=false color=image.secondaryColor/>
 ${voffset 3}${offset 48}${color3}${lua_parse truncate_string ${cat /tmp/conky/musicplayer.name}}
@@ -139,7 +143,7 @@ ${lua increment_offsets 0 [=7 + sectionGap]}\<#-- edges are 7x7 px -->
 ${endif}\
 ${else}\
 # :::::: error state | input files missing
-${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-sound-wave.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/ochre-sound-wave.png 0 0}\
 <@panel.panel x=41 y=0 width=width-41 height=iconHeight isFixed=false color=image.secondaryColor/>
 ${voffset 3}${offset 48}${color3}now playing
 ${voffset 2}${offset 48}${color4}input files are missing
@@ -149,7 +153,7 @@ ${voffset [=7 + sectionGap]}\
 #
 # :::::::::::::::: package updates ::::::::::::::::
 #
-${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-packages.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/ochre-packages.png 0 0}\
 <#assign packagesFile = "/tmp/conky/dnf.packages.formatted",
          packageLines = 14>
 ${if_existing [=packagesFile]}\
@@ -184,7 +188,7 @@ ${voffset [=7 + sectionGap]}\
          peersUpFile = inputDir + "transmission.peers.up",
          peersDownFile = inputDir + "transmission.peers.down",
          torrentLines = totalLines - packageLines>
-${lua_parse draw_image ~/conky/monochrome/images/[=conky]/[=image.secondaryColor]-torrents.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/[=conky]/ochre-torrents.png 0 0}\
 # :::::: transmission script running
 ${if_existing [=torrentsFile]}\
 ${voffset 3}${offset 48}${color1}transmission

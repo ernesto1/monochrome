@@ -1,14 +1,24 @@
 grape:
   image:
-    primaryColor: grape
+    primaryColor: grape    
+    secondaryColor: pink
   colors:
     text: edcaef
     labels: white
     highlight: yellow
+    secondary:
+      labels: white
+      text: f6ced1
+
 nelson:
   image:
-    primaryColor: burgundy
+    primaryColor: burgundy    
+    secondaryColor: ochre
   colors:
     text: d9ad8a
     labels: white
-    highlight: bf241f
+    highlight: bf241f     # higlight important packages
+    # secondary/alternate panel colors
+    secondary:
+      labels: white
+      text: 3d180b

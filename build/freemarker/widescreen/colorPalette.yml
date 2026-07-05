@@ -2,19 +2,20 @@ grape:
   image:
     primaryColor: grape
   colors:
-    panelColor: 200d21
     text: edcaef
     labels: white
     warning: red
     writeGraph: 3f2264 78428e
     readGraph: 540d45 ef3ebb
+    panelColor: 200d21
+    
 nelson:
   image:
     primaryColor: burgundy
   colors:
-    panelColor: 37010f
     text: d9ad8a
     labels: white
     warning: red
     writeGraph: 5c111f c01e20
     readGraph: 665d1e bdb76b
+    panelColor: 37010f

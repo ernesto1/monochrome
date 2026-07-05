@@ -62,11 +62,6 @@ conky.config = {
 
 conky.text = [[
 ${voffset 3}\
-<#assign y = 0,
-         gap = 3,              <#-- empty space between panels of the same context -->
-         sectionGap = 5        <#-- empty space between panels of different applications -->
-         totalLines = 72,      <#-- number of lines for the conky to dynamically print text from files -->
-         iconHeight = 36>      <#-- icon height in pixels, the icon is a square -->
 #
 # :::::::::::::::: now playing ::::::::::::::::
 # the UI of this conky has four states: song with album art
@@ -76,9 +71,11 @@ ${voffset 3}\
 # :::::: no player available
 ${if_existing /tmp/conky/musicplayer.status}\
 ${if_existing /tmp/conky/musicplayer.status off}\
-${lua increment_offsets [=((width-height)/2)?round] 0}\
-<@panel.panel x=0 y=0 width=height height=height isFixed=false/>
-${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-album-cover.png [=((height-iconHeight)/2)?round] [=((height-iconHeight)/2)?round] [=iconHeight]x[=iconHeight]}\
+<@panel.panel x=0 y=0 width=176 height=height/>
+<#assign defaultAlbumHeight = 45>
+${image ~/conky/monochrome/images/common/[=image.primaryColor]-album-cover.png -p 10,[=((height-defaultAlbumHeight)/2)?round] -s [=defaultAlbumHeight]x[=defaultAlbumHeight]}\
+${voffset [=3+16]}${offset [=6+4+defaultAlbumHeight+6+4]}${color1}now playing
+${voffset 3}${offset [=6+4+defaultAlbumHeight+6+4]}${color}no player running
 ${else}\
 # :::::: player running
 <#assign labelWidth = 5+albumWidth+6+6*6+6> <#-- width of the dark portion of the vertical table -->
