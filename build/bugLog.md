@@ -29,6 +29,10 @@ The cost of the variable increases the conky cpu usage from 1% to 15%
 ### `${goto}` off by 1px
 When aligning a 6px per character monospace font using the `${goto}` variable, I have to add 1px to the offset in order for characters to align properly.
 
+### `${alignr 6}${cat ..}` misalignment
+Right alignment of 6 pixels is not honored if the file has only one character, the text is displayed with 0 offset.  
+DNF package, number of active torrents, number of peers will be misaligned if the number is below 10.
+
 ## Introduce delays when launching conkys
 Having to separate elements of the same conky (ex. memory conky) due to the variable conflicts required me to introduce special logic to the `launch.bash` script in order to introduce delays to certain conkys when launching them.  
 This would guarantee the conkys would load on top of each other properly.

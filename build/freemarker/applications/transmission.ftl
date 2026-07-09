@@ -1,7 +1,7 @@
 <#import "/lib/panel-round.ftl" as panel>
 --[[
 transmission script settings required for this conky to read data:
-format=flipped
+numTorrentCharacters=28
 offsetTorrent=12
 ]]
 
@@ -14,14 +14,16 @@ conky.config = {
   double_buffer = true,   -- use double buffering (reduces flicker, may not work for everyone)
 
   -- window alignment
-  alignment = 'bottom_left',  -- header|middle|bottom_left|right
-  gap_x = 1299,
-  gap_y = 141,
+  alignment = 'bottom_middle',  -- top|middle|bottom_left|right|middle
+  gap_x = 0,
+  gap_y = 6,
 
   -- window settings
-  minimum_width = 589,      -- conky will add an extra pixel to this
-  maximum_width = 589,
-  minimum_height = 345,
+  <#assign width = 299>
+  minimum_width = [=width],      -- conky will add an extra pixel to this
+  maximum_width = [=width],
+  <#assign conkyHeight = 359>
+  minimum_height = [=conkyHeight],
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
 
@@ -35,10 +37,8 @@ conky.config = {
   draw_blended = false,
   own_window_transparent = true,
   own_window_argb_visual = true,  -- turn on transparency
-  own_window_argb_value = 255,    -- range from 0 (transparent) to 255 (opaque)
   
   imlib_cache_flush_interval = 250,
-  text_buffer_size=2096,
 
   -- font settings
   use_xft = false,
@@ -47,6 +47,7 @@ conky.config = {
   -- colors
   default_color = '[=colors.text]', -- regular text
   color1 = '[=colors.labels]',        -- text labels
+  color4 = '[=colors.secondary.text]',        -- secondary panel text
 };
 
 conky.text = [[
@@ -54,74 +55,32 @@ conky.text = [[
 # - the 'remote control' feature enabled in the transmission bittorrent client: edit > preferences > remote
 # - the transmission.bash script running in the background
 # :::::::::::: torrents overview
-<#assign x = 0,
-         y = 0,
-         header = 19,     <#-- panel header -->
-         body = 70,       <#-- panel area without the header -->
-         width = 201,     <#-- activity torrents column width -->
-         gap = 5,         <#-- empty space between windows -->
+<#assign border = 6,
          inputDir = "/tmp/conky",
          activeTorrentsFile = inputDir + "/transmission.active",
-         speedCol = 39,
-         colGap = 1,
-         max = 20>
+         max = 22>
 # :::::::::::: active torrents
 ${if_existing [=activeTorrentsFile]}\
 ${if_match ${lines [=activeTorrentsFile]} > 0}\
 ${lua read_file [=activeTorrentsFile]}${lua calculate_voffset [=activeTorrentsFile] [=max]}\
-<@panel.table x=0 y=y width=width header=header isFixed=false/>
-<#assign x += width + colGap>
-<@panel.table x=x y=y width=speedCol header=header isFixed=false/>
-<#assign x += speedCol+colGap>
-<@panel.table x=x y=y width=speedCol header=header isFixed=false/>
-<#assign x += speedCol+colGap>
-<@panel.table x=x y=y width=speedCol-6 header=header isFixed=false/>
-${lua_parse add_y_offset voffset 2}${offset 5}${color1}active torrents${goto 226}up${goto 254}down${goto 306}%${voffset 6}
-${lua increment_offsets 0 [=header]}\
-<#assign y += header>
-${color}${lua_parse head [=activeTorrentsFile] [=max]}${lua increase_y_offset [=activeTorrentsFile]}${voffset 4}
-<@panel.panelsBottom x=0 y=0 widths=[width,speedCol,speedCol,speedCol-6] gap=colGap isFixed=false/>
-<#assign x += speedCol-6+5>
-${lua reset_state}${lua increment_offsets [=x] 0}\
+${lua increment_offsets 0 -2}\<#-- hack to counter calculate_voffset() formula -->
+# ------- light panel top edge    -------
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-light.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-light-edge-top-left.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-dark.png 180 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-light.png 221 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-light-edge-top-right.png 292 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/blank-panel.png 299 0}\
+${lua increment_offsets 0 1}\<#-- hack to match internal border with bar conky -->
+${color}${lua_parse add_y_offset voffset 2}${lua_parse head [=activeTorrentsFile] [=max] [=border]}${lua increase_y_offset [=activeTorrentsFile]}
+${lua increment_offsets 0 1}\<#-- hack to match internal border with bar conky -->
+<@panel.panelsBottom x=0 y=0 widths=[width] gap=colGap isFixed=false/>
 ${else}\
-${lua increment_offsets 0 326}\
-<@panel.panel x=0 y=0 width=width height=3+16+1 isFixed=false/>
-${lua_parse add_y_offset voffset 2}${goto 49}${color}no active torrents${voffset 4}
-${lua reset_state}${lua increment_offsets [=width + 14] 0}\
+<@panel.panel x=50 y=conkyHeight-23 height=23 width=197/>
+${voffset [=5+(max-1)*16]}${alignc}${color1}transmission ${color}no active torrents
 ${endif}\
 ${else}\
-<#assign body = 36>
-${lua increment_offsets 0 310}\
-<@panel.panel x=0 y=0 width=width height=body isFixed=false/>
-${lua_parse add_y_offset voffset 2}${goto 24}${color}active torrents input file
-${voffset 3}${goto 72}is missing${voffset 4}
-${lua reset_state}${lua increment_offsets [=width + 14] 0}\
-${endif}\
-# :::::::::::: peers
-# peers panel is displayed on the right side of the active torrents panel
-${voffset -345}\
-<#assign peersFile = inputDir + "/transmission.peers">
-${if_existing [=peersFile]}\
-${if_match ${lines [=peersFile]} > 0}\
-${lua read_file [=peersFile]}${lua calculate_voffset [=peersFile] [=max]}\
-<#assign ipCol = 101, clientCol = 87>
-<@panel.table x=0 y=0 width=ipCol header=header isFixed=false/>
-<@panel.table x=ipCol+colGap y=0 width=clientCol header=header isFixed=false/>
-<@panel.table x=ipCol+colGap+clientCol+colGap y=0 width=39 header=header isFixed=false/>
-<@panel.table x=ipCol+colGap+clientCol+colGap+speedCol+colGap y=0 width=39 header=header isFixed=false/>
-${lua_parse add_y_offset voffset 2}${lua_parse add_x_offset offset 5}${color1}ip address${offset 43}client${offset 69}up${offset 16}down${voffset 6}
-${lua increment_offsets 0 [=header]}\
-${color}${lua_parse head_mem [=peersFile] [=max]}${lua increase_y_offset [=peersFile]}
-<@panel.panelsBottom x=0 y=0 widths=[ipCol,clientCol,speedCol,speedCol] gap=colGap isFixed=false/>
-${else}\
-${lua increment_offsets 0 326}\
-<@panel.panel x=0 y=0 width=width height=3+16+1 isFixed=false/>
-${lua_parse add_y_offset voffset 2}${lua_parse add_x_offset offset 47}${color}no peers connected${voffset 4}
-${endif}\
-${else}\
-${lua increment_offsets 0 310}\
-<@panel.panel x=0 y=0 width=width height=body isFixed=false/>
-${lua_parse add_y_offset voffset 2}${lua_parse add_x_offset offset 27}${color}torrent peers input file
-${voffset 3}${lua_parse add_x_offset offset 72}is missing
+<@panel.panel x=0 y=conkyHeight-23 height=23 width=width color=image.secondaryColor/>
+${voffset [=5+(max-1)*16]}${alignc}${color4}active torrents input file is missing
 ${endif}\
 ]];

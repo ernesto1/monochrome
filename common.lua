@@ -30,6 +30,7 @@ vars = {}
 function conky_reset_state()
   vars["xOffset"] = 0
   vars["yOffset"] = 0
+  vars["alignrOffset"] = 0
   vars["totalLines"] = 1000   -- total lines to print for dynamic text, ie. files read within the conky
   return ''
 end
@@ -78,7 +79,7 @@ The client can then call the following methods which will take these offsets int
 This method is cumulative, ie. the numbers are increased each times the method is called.
 On each conky session the offsets are meant to be reset to 0 (see the conky_reset_state() method).
 ]]
-function conky_increment_offsets(xOffset, yOffset)
+function conky_increment_offsets(xOffset, yOffset, rOffset)
   local x = vars["xOffset"] or 0
   x = x + tonumber(xOffset)
   vars["xOffset"] = x
@@ -87,12 +88,22 @@ function conky_increment_offsets(xOffset, yOffset)
   y = y + tonumber(yOffset)
   vars["yOffset"] = y
   
+  rOffset = (rOffset ~= nil) and rOffset or 0
+  local r = vars["alignrOffset"] or 0
+  r = r + tonumber(rOffset)
+  vars["alignrOffset"] = r
+  
   return ''
 end
 
 --[[
 add the 'x' offset to the given conky variable argument
 call this method with the ${goto} or ${offset} conky variables
+ex. {lua_parse add_x_offset goto 45} => ${goto x+45}
+
+arguments:
+    variable    conky variable to create with the current offset: goto or offset
+    x           additional increment to add to the current offset, if none use 0
 ]]
 function conky_add_x_offset(variable, x)
   local xOffset = vars["xOffset"] or 0
@@ -108,6 +119,10 @@ function conky_add_y_offset(variable, y)
   return "${" .. variable .. " " .. tonumber(y) + yOffset .. "}"
 end
 
+function conky_alignr(r)
+  local rOffset = vars["alignrOffset"] or 0
+  return "${alignr " .. tonumber(r) + rOffset .. "}"
+end
 --[[
 creates a conky image variable string at the x,y coordinate position after any available offsets are applied,
 ex. calling conky_draw_image(/directory/image.jpg, 0, 50)

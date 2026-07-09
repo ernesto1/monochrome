@@ -63,14 +63,16 @@
     │         │                    │
     │         │                    │
     └─────────┴────────────────────┘
-     header       body width (px)
+     header
      width (px)
+     
+    |------------ width -----------|
  -->
-<#macro verticalTable x y header body height isFixed=true>
+<#macro verticalTable x y header width height isFixed=true>
 # ------- vertical table | top    -------
 <@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-panel-dark.png" x=x y=y isFixed=isFixed/>
 <@cmn.drawImage filePath="~/conky/monochrome/images/common/[=image.primaryColor]-panel-light.png" x=x+header y=y isFixed=isFixed/>
-<@cmn.drawImage filePath="~/conky/monochrome/images/common/blank-panel.png" x=x+header+body y=y isFixed=isFixed/>
+<@cmn.drawImage filePath="~/conky/monochrome/images/common/blank-panel.png" x=x+width y=y isFixed=isFixed/>
 <@cmn.drawImage filePath="~/conky/monochrome/images/common/blank-panel.png" x=x y=y+height isFixed=isFixed/>
 # ------- vertical table | bottom -------
 </#macro>

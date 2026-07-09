@@ -1,4 +1,4 @@
-<#import "/lib/panel-round.ftl" as panel>
+<#import "/lib/panel-square.ftl" as panel>
 --[[
 this conky requires the following supporting scripts running in the background:
 
@@ -26,7 +26,8 @@ conky.config = {
   -- window settings
   <#assign height = 73,
            albumWidth = height-2,       <#-- album art width -->
-           width  = 5+albumWidth+33*6>
+           
+           width  = 2+albumWidth+33*6+126>
   minimum_width = [=width],     -- conky will add an extra pixel to this
   maximum_width = [=width],
   minimum_height = [=height?c],        -- must match the conky sidebar's heigh (the colored bar itself)
@@ -47,8 +48,6 @@ conky.config = {
   
   -- images
   imlib_cache_flush_interval = 250,
-  max_user_text = 26000,    -- max size of user text buffer in bytes, i.e. text inside conky.text section
-                            -- default is 16,384 bytes
 
   -- font settings
   use_xft = false,
@@ -56,10 +55,13 @@ conky.config = {
   draw_outline = false,     -- black outline around text (not good if text is black)
   -- colors
   default_color = '[=colors.text]', -- regular text
-  color1 = '[=colors.labels]',
-  color2 = '[=colors.highlight]'         -- highlight important packages
+  color1 = '[=colors.labels]'
 };
 
+--[[
+this conky is a dynamic bar that changes width depending on the size of the 'now playing' section
+hence the use of the lua increment_offsets(), draw_image(), add_x_offset() and alignr() functions
+]]
 conky.text = [[
 ${voffset 3}\
 #
@@ -67,30 +69,75 @@ ${voffset 3}\
 # the UI of this conky has four states: song with album art
 #                                       song with no album art
 #                                       no music player is running
-#                                       dependent java dbus listener application is not running
+#                                       input files are missing (java dbus listener application is not running)
 # :::::: no player available
 ${if_existing /tmp/conky/musicplayer.status}\
 ${if_existing /tmp/conky/musicplayer.status off}\
-<@panel.panel x=0 y=0 width=176 height=height/>
+<#assign nowPlayingWidth = height+20*6,
+         panelOffset = ((width - nowPlayingWidth-126)/2)?round>
+${lua increment_offsets [=panelOffset] 0 [=panelOffset]}\
+<@panel.panel x=0 y=0 width=nowPlayingWidth height=height isFixed=false/>
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-light-edge-top-left.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-light-edge-bottom-left.png 0 [=height-7]}\
+${lua increment_offsets [=nowPlayingWidth] 0}\
 <#assign defaultAlbumHeight = 45>
-${image ~/conky/monochrome/images/common/[=image.primaryColor]-album-cover.png -p 10,[=((height-defaultAlbumHeight)/2)?round] -s [=defaultAlbumHeight]x[=defaultAlbumHeight]}\
-${voffset [=3+16]}${offset [=6+4+defaultAlbumHeight+6+4]}${color1}now playing
-${voffset 3}${offset [=6+4+defaultAlbumHeight+6+4]}${color}no player running
+${image ~/conky/monochrome/images/common/[=image.primaryColor]-album-cover.png -p [=panelOffset+((height-defaultAlbumHeight)/2)?round],[=((height-defaultAlbumHeight)/2)?round] -s [=defaultAlbumHeight]x[=defaultAlbumHeight]}\
+${voffset [=3+16]}${offset [=panelOffset+height]}${color1}now playing
+${voffset 3}${offset [=panelOffset+height]}${color}no player running
+${voffset [=-1*(16*3)]}\
 ${else}\
 # :::::: player running
-<#assign labelWidth = 5+albumWidth+6+6*6+6> <#-- width of the dark portion of the vertical table -->
-<@panel.verticalTable x=0 y=0 header=labelWidth body=width-labelWidth height=height/>
+<#assign albumSection = 2+albumWidth+6,
+         labelWidth = 2+albumWidth+6+6*6+6,   <#-- width of the dark portion of the vertical table -->
+         nowPlayingWidth = 271>
+<@panel.verticalTable x=0 y=0 header=labelWidth width=nowPlayingWidth height=height/>
+${image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-dark-edge-top-left.png -p 0,0}\
+${image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-dark-edge-bottom-left.png -p 0,[=height-7]}\
+${lua increment_offsets [=nowPlayingWidth] 0}\
 <#assign defaultAlbumHeight = 50>
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-album-cover.png -p [=((5+height-defaultAlbumHeight)/2)?round],[=((height-defaultAlbumHeight)/2)?round] -s [=defaultAlbumHeight]x[=defaultAlbumHeight]}\
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-album-cover.png -p [=2+((albumWidth-defaultAlbumHeight)/2)?round],[=((height-defaultAlbumHeight)/2)?round] -s [=defaultAlbumHeight]x[=defaultAlbumHeight]}\
 ${if_existing /tmp/conky/musicplayer.track.art}\
-${image /tmp/conky/musicplayer.track.art -p 7,1 -s [=albumWidth]x[=albumWidth] -n}\
+${image /tmp/conky/musicplayer.track.art -p 2,1 -s [=albumWidth]x[=albumWidth] -n}\
 ${endif}\
-${voffset 3}${offset [=5+albumWidth+6]}${color1}title${goto [=labelWidth+6]}${color}${scroll wait 23 4 1 ${cat /tmp/conky/musicplayer.track.title}}
-${voffset 3}${offset [=5+albumWidth+6]}${color1}album${goto [=labelWidth+6]}${color}${scroll wait 23 4 1 ${cat /tmp/conky/musicplayer.track.album}}
-${voffset 3}${offset [=5+albumWidth+6]}${color1}artist${goto [=labelWidth+6]}${color}${scroll wait 23 4 1 ${cat /tmp/conky/musicplayer.track.artist}}
-${voffset 3}${offset [=5+albumWidth+6]}${color1}genre${goto [=labelWidth+6]}${color}${cat /tmp/conky/musicplayer.track.genre}
+${voffset 3}${offset [=albumSection]}${color1}title${goto [=labelWidth+6]}${color}${scroll wait 23 4 1 ${cat /tmp/conky/musicplayer.track.title}}
+${voffset 3}${offset [=albumSection]}${color1}album${goto [=labelWidth+6]}${color}${scroll wait 23 4 1 ${cat /tmp/conky/musicplayer.track.album}}
+${voffset 3}${offset [=albumSection]}${color1}artist${goto [=labelWidth+6]}${color}${scroll wait 23 4 1 ${cat /tmp/conky/musicplayer.track.artist}}
+${voffset 3}${offset [=albumSection]}${color1}genre${goto [=labelWidth+6]}${color}${cat /tmp/conky/musicplayer.track.genre}
+${voffset [=-1*(16*4)]}\
 ${endif}\
 ${else}\
-no files!
+# :::::: error state
+<#assign nowPlayingWidth = height+20*6,
+         panelOffset = ((width - nowPlayingWidth-126)/2)?round>
+${lua increment_offsets [=panelOffset] 0 [=panelOffset]}\
+<@panel.panel x=0 y=0 width=nowPlayingWidth height=height isFixed=false/>
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-light-edge-top-left.png 0 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-light-edge-bottom-left.png 0 [=height-7]}\
+${lua increment_offsets [=nowPlayingWidth] 0}\
+<#assign defaultAlbumHeight = 45>
+${image ~/conky/monochrome/images/common/[=image.primaryColor]-album-cover.png -p [=panelOffset+((height-defaultAlbumHeight)/2)?round],[=((height-defaultAlbumHeight)/2)?round] -s [=defaultAlbumHeight]x[=defaultAlbumHeight]}\
+${voffset 3}${offset [=panelOffset+height]}${color1}now playing
+${voffset 3}${offset [=panelOffset+height]}${color}input files missing
+${voffset 3}${offset [=panelOffset+height]}${color}is the java dbus
+${voffset 3}${offset [=panelOffset+height]}${color}listener running?
+${voffset [=-1*(16*4)]}\
 ${endif}\
+#
+# :::::::::::::::: transmission ::::::::::::::::
+#
+<#assign header = 6+8*6+6,
+         tableWidth = header+6+9*6+6>
+<@panel.verticalTable x=0 y=0 header=header width=tableWidth height=height isFixed=false/>
+<#assign inputDir = "/tmp/conky/",
+         torrentsFile = inputDir + "transmission.torrents",
+         peersFile = inputDir + "transmission.peers.raw",
+         uploadFile = inputDir + "transmission.speed.up"
+         downloadFile = inputDir + "transmission.speed.down">
+${voffset 3}${lua_parse add_x_offset offset 6}${color1}torrents${lua_parse alignr 0}${color}${lines [=torrentsFile]} 
+${voffset 3}${lua_parse add_x_offset offset 6}${color1}swarm${lua_parse alignr 0}${color}${lines [=peersFile]} 
+${voffset 3}${lua_parse add_x_offset offset 6}${color1}up${lua_parse alignr 6}${color}${cat [=uploadFile]}
+${voffset 3}${lua_parse add_x_offset offset 6}${color1}down${lua_parse alignr 6}${color}${cat [=downloadFile]}
+${lua increment_offsets [=tableWidth] 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-light-edge-top-right.png -7 0}\
+${lua_parse draw_image ~/conky/monochrome/images/common/[=image.primaryColor]-panel-light-edge-bottom-right.png -7 [=height-7]}\
 ]];

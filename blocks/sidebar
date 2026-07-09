@@ -168,11 +168,11 @@ ${image ~/conky/monochrome/images/common/burgundy-panel-light-edge-bottom-right.
 ${image ~/conky/monochrome/images/common/blank-panel.png -p 0,738}\
 # ------- light panel bottom edge -------
 ${voffset 13}\
-${voffset 3}${offset 7}${color1}cpu${alignr}${color}${template1 hwmon\ atk0110\ temp\ 1 80}${hwmon atk0110 temp 1}°
-${voffset 3}${offset 7}${color1}core 1${alignr}${color}${template1 hwmon\ coretemp\ temp\ 2 90}${hwmon coretemp temp 2}°
-${voffset 3}${offset 7}${color1}core 2${alignr}${color}${template1 hwmon\ coretemp\ temp\ 3 90}${hwmon coretemp temp 3}°
-${voffset 3}${offset 7}${color1}core 3${alignr}${color}${template1 hwmon\ coretemp\ temp\ 4 90}${hwmon coretemp temp 4}°
-${voffset 3}${offset 7}${color1}core 4${alignr}${color}${template1 hwmon\ coretemp\ temp\ 5 90}${hwmon coretemp temp 5}°
+${voffset 3}${offset 7}${color1}cpu${alignr}${color}${template1 hwmon\ atk0110\ temp\ 1 90}${hwmon atk0110 temp 1}°
+${voffset 3}${offset 7}${color1}core 1${alignr}${color}${template1 hwmon\ coretemp\ temp\ 2 93}${hwmon coretemp temp 2}°
+${voffset 3}${offset 7}${color1}core 2${alignr}${color}${template1 hwmon\ coretemp\ temp\ 3 93}${hwmon coretemp temp 3}°
+${voffset 3}${offset 7}${color1}core 3${alignr}${color}${template1 hwmon\ coretemp\ temp\ 4 93}${hwmon coretemp temp 4}°
+${voffset 3}${offset 7}${color1}core 4${alignr}${color}${template1 hwmon\ coretemp\ temp\ 5 93}${hwmon coretemp temp 5}°
 ${voffset 3}${offset 7}${color1}radeon${alignr}${color}${template1 hwmon\ radeon\ temp\ 1 75}${hwmon radeon temp 1}°
 ${voffset 3}${offset 7}${color1}samsung S${alignr}${color}${template1 hwmon\ 0\ temp\ 1 42}${hwmon 0 temp 1}°
 ${voffset 3}${offset 7}${color1}seagate H${alignr}${color}${template1 hwmon\ 1\ temp\ 1 42}${hwmon 1 temp 1}°
