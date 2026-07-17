@@ -258,6 +258,7 @@ lua improved version of the conky ${head} variable, it provides:
 - content of the file can be parsed if invoked with ${lua_parse}, same effect as using ${catp}
   so you can insert things like ${color red}hi!${color} in your file and have it correctly parsed by conky
 - if the text contains a new line on its last line, it will be removed
+- internal offsets already configured by prior invocations of the increment_offsets() function are considered
 
 arguments:
     filepath  absolute path to the file
