@@ -37,7 +37,7 @@ function usage() {
 	        /    \        /  \\
 
 	  --layout-override tag
-	    applies any setting overrides configured in a layout override file:
+	    applies any overrides configured in a layout override file:
 
 	      > changing the alignment of a conky
 	      > excluding a particular conky from being launched
@@ -50,6 +50,9 @@ function usage() {
 	  --interval 10m,1h,6h
 	    wait time between package update queries, the default is 15 minutes
 	    use a time period compatible with the sleep command, ex. 1h
+	  
+	  --no-torrent
+	    do not launch the transmission torrent data gatherer service
 
 	  --shutdown
 	    kills the current running monochrome conkys and any supporting jobs launched
