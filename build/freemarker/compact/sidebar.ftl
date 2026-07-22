@@ -178,10 +178,10 @@ ${voffset 9}${offset [=lso+iborder]}${color1}kernel ${color}${kernel}
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png -p [=lso+3],[=y?c]}\
 <#assign y += 18+32>
 ${voffset 6}${offset [=lso+iborder]}${color1}device${alignr [=rso+iborder]}temperature${voffset 5}
-${if_updatenr 1}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-thermometer1.png -p [=lso+115],[=y?c]}${endif}\
-${if_updatenr 2}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-thermometer2.png -p [=lso+115],[=y?c]}${endif}\
-${if_updatenr 3}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-thermometer3.png -p [=lso+115],[=y?c]}${endif}\
-${if_updatenr 4}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-thermometer2.png -p [=lso+115],[=y?c]}${endif}\
+${if_updatenr 1}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-thermometer1.png -p [=lso+125],[=y?c]}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-thermometer2.png -p [=lso+125],[=y?c]}${endif}\
+${if_updatenr 3}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-thermometer3.png -p [=lso+125],[=y?c]}${endif}\
+${if_updatenr 4}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-thermometer2.png -p [=lso+125],[=y?c]}${endif}\
 <#list temperatures + hardDisks as device>
 <#if device.module?? || device.hwmonIndex??>
 ${voffset 3}${offset [=lso+iborder]}${color}[=device.name]${alignr [=rso]}${template1 [=device.module!device.hwmonIndex] temp [=device.number!1] [=threshold[device.thresholdType]]}°C
@@ -192,10 +192,10 @@ ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png
 <#assign y += 18>
 ${voffset 9}${offset [=lso+iborder]}${color1}fan${alignr [=rso+iborder]}revolutions${voffset 5}
 <#if isVerbose>${image ~/conky/monochrome/images/compact/[=image.primaryColor]-sidebar-bottom.png -p 0,[=(y+53)?c]}\</#if>
-${if_updatenr 1}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-fan1.png -p [=lso+64],[=(y+4)?c]}${endif}\
-${if_updatenr 2}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-fan2.png -p [=lso+64],[=(y+4)?c]}${endif}\
-${if_updatenr 3}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-fan1.png -p [=lso+64],[=(y+4)?c]}${endif}\
-${if_updatenr 4}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-fan2.png -p [=lso+64],[=(y+4)?c]}${endif}\
+${if_updatenr 1}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-fan1.png -p [=lso+((204-60)/2)?round],[=(y+4)?c]}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-fan2.png -p [=lso+((204-60)/2)?round],[=(y+4)?c]}${endif}\
+${if_updatenr 3}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-fan1.png -p [=lso+((204-60)/2)?round],[=(y+4)?c]}${endif}\
+${if_updatenr 4}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-fan2.png -p [=lso+((204-60)/2)?round],[=(y+4)?c]}${endif}\
 <#assign y += 4+60>
 <#list fans as fan>
 ${voffset 3}${offset [=lso+iborder]}${color}[=fan.name]${alignr [=rso+iborder]}${template1 [=fan.module] fan [=fan.number] [=threshold.fanSpeed?c]} rpm

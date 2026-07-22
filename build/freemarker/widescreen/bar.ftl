@@ -84,7 +84,7 @@ ${voffset -2}${offset [=rsection*block+iborder]}${color1}load${goto [=rsection*b
          id = inputDir + "system.cpu.id",
          wa = inputDir + "system.cpu.wa",
          column = 2*6+6+3*6+6*2>
-${voffset 3}${offset [=rsection*block+iborder]}${color1}us ${color}${template1 cat\ [=us] 50}${cat [=us]}%${goto [=rsection*block+iborder+column]}${color1}sy ${color}${template1 cat\ [=sy] 50}${cat [=sy]}%${goto [=rsection*block+iborder+column*2]}${color1}id ${color}${cat [=id]}%${goto [=rsection*block+iborder+column*3+6]}${color1}wa${alignr [=(lsection*block+waste+iborder)?c]}${color}${template1 cat\ [=wa] 40}${cat [=wa]}%
+${voffset 3}${offset [=rsection*block+iborder]}${color1}us ${color}${cat [=us]}%${goto [=rsection*block+iborder+column]}${color1}sy ${color}${cat [=sy]}%${goto [=rsection*block+iborder+column*2]}${color1}id ${color}${cat [=id]}%${goto [=rsection*block+iborder+column*3+6]}${color1}wa${alignr [=(lsection*block+waste+iborder)?c]}${color}${template1 cat\ [=wa] 40}${cat [=wa]}%
 ${voffset 3}${offset [=rsection*block+iborder]}${color1}processes ${color}${running_processes}${alignr [=(lsection*block+waste+iborder)?c]}${color}${running_threads} ${color1}threads
 ${voffset 3}${offset [=rsection*block+iborder]}${color1}uptime    ${color}${uptime}
 ${voffset 3}${offset [=rsection*block+iborder]}${color1}kernel    ${color}${kernel}

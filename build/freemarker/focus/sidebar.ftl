@@ -13,7 +13,7 @@ conky.config = {
   gap_y = 32,
 
   -- window settings
-  <#assign width = 204>
+  <#assign width = 203>
   minimum_width = [=width],
   maximum_width = [=width],
   <#assign processes     = isVerbose?then(6,4),   <#-- number of top processes to display -->
@@ -73,12 +73,12 @@ ${endif}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph.png -p [=45],[=y]}\
 <#assign y += 36+23>
 ${voffset [=tso+2]}${offset [=45]}${cpugraph cpu0 35,151 [=colors.writeGraph]}
-${voffset -2}${offset [=iborder]}${color1}load${goto [=iborder+6 * 6]}${color}${loadavg}${alignr [=iborder]}${color}${cpu cpu0}%
+${voffset -2}${offset [=iborder]}${color1}load${goto [=iborder+6 * 6]}${color}${loadavg}${alignr [=iborder-1]}${color}${cpu cpu0}%
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png -p [=3],[=y]}\
 <#assign y += 18>
-${voffset 6}${color1}${offset [=iborder]}process${alignr [=iborder]}cpu    mem${voffset 5}
+${voffset 6}${color1}${offset [=iborder]}process${alignr [=iborder-1]}cpu    mem${voffset 5}
 <#list 1..processes as x>
-${voffset 3}${color}${offset [=iborder]}${top name [=x]}${alignr [=iborder]}${top cpu [=x]}%${top mem [=x]}%
+${voffset 3}${color}${offset [=iborder]}${top name [=x]}${alignr [=iborder-1]}${top cpu [=x]}%${top mem [=x]}%
 </#list>
 <#assign y += 13+processes*16>
 # -------------- memory
@@ -89,18 +89,18 @@ ${endif}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph.png -p [=45],[=y]}\
 <#assign y += 36>
 # memory graph and usage are displayed on a separate conky due to a bug with these memory variables computing bad data if other variables like ${top ...} and one of the network upload/download exists in the same conky
-${voffset 69}${offset [=iborder]}${color1}free${goto [=iborder+6 * 6]}${color}${memfree}${alignr [=iborder]}${color}${swap}${color1} swap    
+${voffset 69}${offset [=iborder]}${color1}free${goto [=iborder+6 * 6]}${color}${memfree}${alignr [=iborder-1]}${color}${swap}${color1} swap    
 <#assign inputDir = "/tmp/conky",
          swapRead = inputDir+"/system.swap.read",
          swapWrite = inputDir+"/system.swap.write">
-${voffset 3}${offset [=iborder]}${color1}buff${goto [=iborder+6 * 6]}${color}${buffers}${alignr [=iborder]}${color}${cat [=swapRead]}${color1} swap in 
-${voffset 3}${offset [=iborder]}${color1}cache${goto [=iborder+6 * 6]}${color}${cached}${alignr [=iborder]}${cat [=swapWrite]}${color1} swap out
+${voffset 3}${offset [=iborder]}${color1}buff${goto [=iborder+6 * 6]}${color}${buffers}${alignr [=iborder-1]}${color}${cat [=swapRead]}${color1} swap in 
+${voffset 3}${offset [=iborder]}${color1}cache${goto [=iborder+6 * 6]}${color}${cached}${alignr [=iborder-1]}${cat [=swapWrite]}${color1} swap out
 <#assign y += 71>
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png -p [=3],[=y]}\
 <#assign y += 18>
-${voffset 6}${offset [=iborder]}${color1}process${alignr [=iborder]}memory   perc${voffset 5}
+${voffset 6}${offset [=iborder]}${color1}process${alignr [=iborder-1]}memory   perc${voffset 5}
 <#list 1..processes as x>
-${voffset 3}${color}${offset [=iborder]}${top_mem name [=x]}${alignr [=iborder]}${top_mem mem_res [=x]}${top_mem mem [=x]}%
+${voffset 3}${color}${offset [=iborder]}${top_mem name [=x]}${alignr [=iborder-1]}${top_mem mem_res [=x]}${top_mem mem [=x]}%
 </#list>
 <#assign y += 13+processes*16, ySection = y>
 # -------------- network
@@ -116,8 +116,8 @@ ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-internet.png -p 
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph-io.png -p [=45],[=y]}\
 <#assign y += 36+46>
 ${voffset 8}${offset [=45]}${color}${upspeedgraph [=device.name] 35,74 [=colors.readGraph] [=device.maxUp?c]}${offset 3}${downspeedgraph [=device.name] 35,74 [=colors.writeGraph] [=device.maxDown?c]}
-${voffset -2}${offset [=iborder]}${color1}up    ${color}${upspeed [=device.name]}${alignr [=iborder]}${color}${downspeed [=device.name]}  ${color1}down
-${voffset 3}${offset [=iborder]}${color1}total ${color}${totalup [=device.name]}${alignr [=iborder]}${color}${totaldown [=device.name]} ${color1}total
+${voffset -2}${offset [=iborder]}${color1}up    ${color}${upspeed [=device.name]}${alignr [=iborder-1]}${color}${downspeed [=device.name]}  ${color1}down
+${voffset 3}${offset [=iborder]}${color1}total ${color}${totalup [=device.name]}${alignr [=iborder-1]}${color}${totaldown [=device.name]} ${color1}total
 ${else}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-no-network.png -p [=3],[=ySection-7]}\
 ${voffset 12}${offset [=iborder+2]}${color1}no network
@@ -136,13 +136,13 @@ ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-disk.png -p [=5]
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph-io.png -p [=45],[=y]}\
 <#assign y += 36+36>
 ${voffset 7}${offset [=45]}${color}${diskiograph_read /dev/[=disk.device] 35,74 [=colors.readGraph] [=disk.readSpeed?c]}${offset 3}${diskiograph_write /dev/[=disk.device] 35,74 [=colors.writeGraph] [=disk.writeSpeed?c]}
-${voffset -2}${offset [=iborder]}${color1}read  ${color}${diskio_read /dev/[=disk.device]}${alignr [=iborder]}${color}${diskio_write /dev/[=disk.device]} ${color1}write
+${voffset -2}${offset [=iborder]}${color1}read  ${color}${diskio_read /dev/[=disk.device]}${alignr [=iborder-1]}${color}${diskio_write /dev/[=disk.device]} ${color1}write
 <#list disk.partitions>
 ${voffset 6}\
 <#items as partition>
 <#assign y += 31>
 ${voffset 2}${offset [=iborder]}${color}[=partition.name]${alignr [=iborder+1]}${voffset 1}${color3}${if_match ${fs_used_perc [=partition.path]} > [=threshold.filesystem]}${color2}${endif}${fs_bar 3,100 [=partition.path]}
-${voffset 2}${alignr [=iborder]}${color}${fs_used [=partition.path]} / ${fs_size [=partition.path]}
+${voffset 2}${alignr [=iborder-1]}${color}${fs_used [=partition.path]} / ${fs_size [=partition.path]}
 </#items>
 </#list>
 <#if disk.partitions?size == 1>
@@ -157,10 +157,10 @@ ${endif}\
 # --- disk processes i/o
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png -p [=3],[=y?c]}\
 <#assign y += 18>
-${voffset 13}${offset [=iborder]}${color1}process${alignr [=iborder]}read    write${voffset 5}
+${voffset 13}${offset [=iborder]}${color1}process${alignr [=iborder-1]}read    write${voffset 5}
 <#list 1..processes as x>
 ${voffset 3}${offset [=iborder]}${color}${top_io name [=x]}${alignr [=iborder+9*6]}${top_io io_read [=x]}
-${voffset -13}${alignr [=iborder]}${top_io io_write [=x]}
+${voffset -13}${alignr [=iborder-1]}${top_io io_write [=x]}
 </#list>
 <#assign y += 13+processes*16>
 # -------------- system
@@ -175,11 +175,11 @@ ${voffset 3}${offset [=iborder]}${color1}dnf    ${color}${lines /tmp/conky/dnf.p
 # ::: device temperature
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png -p [=3],[=y?c]}\
 <#assign y += 18+32>
-${voffset 6}${offset [=iborder]}${color1}device${alignr [=iborder]}temperature${voffset 5}
-${if_updatenr 1}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-thermometer1.png -p [=115],[=y?c]}${endif}\
-${if_updatenr 2}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-thermometer2.png -p [=115],[=y?c]}${endif}\
-${if_updatenr 3}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-thermometer3.png -p [=115],[=y?c]}${endif}\
-${if_updatenr 4}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-thermometer2.png -p [=115],[=y?c]}${endif}\
+${voffset 6}${offset [=iborder]}${color1}device${alignr [=iborder-1]}temperature${voffset 5}
+${if_updatenr 1}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-thermometer1.png -p [=122],[=y?c]}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-thermometer2.png -p [=122],[=y?c]}${endif}\
+${if_updatenr 3}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-thermometer3.png -p [=122],[=y?c]}${endif}\
+${if_updatenr 4}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-thermometer2.png -p [=122],[=y?c]}${endif}\
 <#list temperatures + hardDisks as device>
 <#if device.module?? || device.hwmonIndex??>
 ${voffset 3}${offset [=iborder]}${color}[=device.name]${alignr}${template1 [=device.module!device.hwmonIndex] temp [=device.number!1] [=threshold[device.thresholdType]]}°C
@@ -189,27 +189,27 @@ ${voffset 3}${offset [=iborder]}${color}[=device.name]${alignr}${template1 [=dev
 # ::: fan revolutions
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png -p [=3],[=y?c]}\
 <#assign y += 18>
-${voffset 9}${offset [=iborder]}${color1}fan${alignr [=iborder]}revolutions${voffset 5}
+${voffset 9}${offset [=iborder]}${color1}fan${alignr [=iborder-1]}revolutions${voffset 5}
 <#assign y += 4>
-${if_updatenr 1}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-fan1.png -p [=64],[=y?c]}${endif}\
-${if_updatenr 2}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-fan2.png -p [=64],[=y?c]}${endif}\
-${if_updatenr 3}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-fan1.png -p [=64],[=y?c]}${endif}\
-${if_updatenr 4}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-fan2.png -p [=64],[=y?c]}${endif}\
+${if_updatenr 1}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-fan1.png -p [=((width-64)/2)?round],[=y?c]}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-fan2.png -p [=((width-64)/2)?round],[=y?c]}${endif}\
+${if_updatenr 3}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-fan1.png -p [=((width-64)/2)?round],[=y?c]}${endif}\
+${if_updatenr 4}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-fan2.png -p [=((width-64)/2)?round],[=y?c]}${endif}\
 <#assign y += 60>
 <#list fans as fan>
-${voffset 3}${offset [=iborder]}${color}[=fan.name]${alignr [=iborder]}${template1 [=fan.module] fan [=fan.number] [=threshold.fanSpeed?c]} rpm
+${voffset 3}${offset [=iborder]}${color}[=fan.name]${alignr [=iborder-1]}${template1 [=fan.module] fan [=fan.number] [=threshold.fanSpeed?c]} rpm
 </#list>
 # -------------- now playing
 <#assign y += 13>
-${image ~/conky/monochrome/images/compact/[=image.primaryColor]-disk.png -p [=5],[=y?c]}\
-<#assign y += 36>
 ${if_existing /tmp/conky/musicplayer.status off}\
-${voffset 15}${goto [=iborder+7*6]}${color1}now playing
-${voffset 3}${goto [=iborder+7*6]}${color}no music player running${voffset 6}
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-album-cover.png -p [=((width-60)/2)?round],[=(y+20)?c]}\
+${voffset [=20+60+35]}${alignc}${color1}now playing
+${voffset 3}${alignc}${color}no music player running${voffset 6}
 ${else}\
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-disk.png -p [=5],[=y?c]}\
 ${voffset 15}${goto [=iborder+7*6]}${color1}${cat /tmp/conky/musicplayer.name}
 ${voffset 3}${goto [=iborder+7*6]}${color}${cat /tmp/conky/musicplayer.playbackStatus}${voffset 6}
-<#assign y += 6
+<#assign y += 36+6,
          albumArtFile = "/tmp/conky/musicplayer.track.art">
 ${if_existing [=albumArtFile]}\
 ${image [=albumArtFile] -p [=iborder],[=y?c] -s [=width-iborder*2]x[=width-iborder*2] -n}\

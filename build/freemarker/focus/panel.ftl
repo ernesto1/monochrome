@@ -9,7 +9,7 @@ conky.config = {
   gap_y = 0,
 
   -- window settings
-  minimum_width = 203,      -- panel width should be 1px less than the sidebar
+  minimum_width = 202,      -- panel width should be 1px less than the sidebar
   minimum_height = 60,
   own_window = true,
   own_window_type = 'panel',    -- values: desktop (background), panel (bar)
