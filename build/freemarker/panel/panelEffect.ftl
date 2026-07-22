@@ -1,3 +1,4 @@
+<#if device == "desktop">
 conky.config = {
   update_interval = 1.5,  -- update interval in seconds
   xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
@@ -33,3 +34,4 @@ conky.text = [[
 # empty conky
 # used to create the panel effect (with no 1px gap) between the sidebar conky and a maximized window
 ]]
+</#if>

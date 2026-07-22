@@ -1,3 +1,4 @@
+<#if device == "desktop">
 conky.config = {
   update_interval = 1.5,  -- update interval in seconds
   xinerama_head = 0,      -- for multi monitor setups, select monitor to run on: 0,1,2
@@ -47,3 +48,4 @@ ${offset 45}${memgraph 35,151 [=colors.writeGraph]}
 <#assign iborder = 6> <#-- inner horizontal border -->
 ${voffset -2}${offset [=iborder]}${color1}used  ${color}${mem}${alignr [=iborder-1]}/ ${memmax}      ${memperc}%
 ]]
+</#if>

@@ -214,7 +214,7 @@ public class ConkyTemplate {
     private static void deleteConkyConfigs(File directory) {
         // configuration file names are expected to not have any dots '.' in them.  File names with dots are reserved
         // for settings files such as layout.desktop.cfg or settings.cfg
-        for(File f : directory.listFiles((d, f) -> ! (f.contains(".") || f.contains("support")))) {
+        for(File f : directory.listFiles((d, f) -> ! (f.contains(".") || f.startsWith("app")))) {
             f.delete();
         }
     }

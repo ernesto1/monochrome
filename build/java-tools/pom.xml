@@ -4,7 +4,7 @@
   
   <groupId>com.conky.monochrome</groupId>
   <artifactId>java-tools</artifactId>
-  <version>1.19.2</version>
+  <version>1.20.0</version>
   <packaging>pom</packaging>
   
   <name>Monochrome Conky Java Suite</name>

@@ -1,4 +1,6 @@
 <#import "/lib/panel-square.ftl" as panel>
+<#if device == "laptop">
+<@outputFileDirective filename="panel">
 <#-- use the --nonverbose flag to toggle the landscape vs portrait mode bar  -->
 <#if isVerbose>
 <#assign y = 0,
@@ -33,9 +35,9 @@ conky.config = {
   
   -- transparency configuration
   draw_blended = false,
-  own_window_transparent = true,
-  own_window_argb_visual = true,    -- turn on transparency
-  own_window_argb_value = 255,      -- range from 0 (transparent) to 255 (opaque)
+  own_window_transparent = false,
+  own_window_argb_visual = false,  -- turn on transparency
+  own_window_colour = '[=colors.panelColor]',
   
   -- miscellanous settings
   imlib_cache_flush_interval = 250,
@@ -59,7 +61,6 @@ conky.config = {
 };
 
 conky.text = [[
-<@panel.panel x=0 y=0 width=width height=23 isDark=true/>
 <#-- char width is 6px, use single space for borders -->
 <#assign charWidth = 6, x = 26+charWidth>
 # :::::: cpu
@@ -124,3 +125,5 @@ ${goto [=x?c]}${color1}dnf ${color}${if_existing [=packagesFile]}${lines [=packa
 <#assign x += 3 * charWidth + charWidth + 6 * charWidth + charWidth>
 </#if>
 ]];
+</@outputFileDirective>
+</#if>
