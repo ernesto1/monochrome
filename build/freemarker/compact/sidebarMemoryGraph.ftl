@@ -6,7 +6,7 @@ conky.config = {
   -- window alignment
   alignment = 'middle_left',      -- top|middle|bottom_left|middle|right
   gap_x = 32,                     -- same as passing -x at command line
-  <#assign gap_y = isVerbose?then(504,566)>
+  <#assign gap_y = isPortrait?then(695,504)>
   gap_y = [=gap_y],
 
   -- window settings

@@ -57,6 +57,9 @@ public class ConkyTemplate {
         String device = namespace.get("device").toString().toLowerCase();
         propertyFormat = String.format(labelFormat, "device");
         logger.info(propertyFormat, device);
+        boolean isPortrait = namespace.getBoolean("portrait");
+        propertyFormat = String.format(labelFormat, "isPortrait");
+        logger.info(propertyFormat, isPortrait);
         boolean isVerbose = ! namespace.getBoolean("nonverbose");
         propertyFormat = String.format(labelFormat, "isVerbose");
         logger.info(propertyFormat, isVerbose);
@@ -79,6 +82,7 @@ public class ConkyTemplate {
         Map<String, Object> dataModel = new HashMap<>();
         dataModel.put("conky", conky);
         dataModel.put("device", device);
+        dataModel.put("isPortrait", isPortrait);
         dataModel.put("isVerbose", isVerbose);
         dataModel.put("isDark", isDark);
         // load hardware data model
@@ -235,7 +239,7 @@ public class ConkyTemplate {
         String usage =
                 "${prog} -h\n" +
                 " ".repeat(7) + "${prog} --list\n" +
-                " ".repeat(7) + "${prog} --conky CONKY --color COLOR [--nonverbose] [--dark] [--device {DESKTOP,LAPTOP}]";
+                " ".repeat(7) + "${prog} --conky CONKY --color COLOR [--nonverbose|--portrait] [--dark] [--device {DESKTOP,LAPTOP}]";
         parser.usage(usage);
         MutuallyExclusiveGroup listOrGenerate = parser.addMutuallyExclusiveGroup().required(true);
         listOrGenerate.addArgument("--list")
@@ -243,15 +247,19 @@ public class ConkyTemplate {
                       .help("list the available conky themes");
         listOrGenerate.addArgument("--conky").help("conky theme to generate configurations for");
         parser.addArgument("--color").help("color scheme to apply to the config");
-        ArgumentGroup optionalParameters = parser.addArgumentGroup("optional conky build settings (not all themes support them)");
+        ArgumentGroup optionalParameters = parser.addArgumentGroup("optional build settings to modify the conky, not all themes support them");
+        optionalParameters.addArgument("--portrait")
+                          .action(Arguments.storeTrue())
+                          .setDefault(false)
+                          .help("tailor the conky for a portrait screen orientation");
         optionalParameters.addArgument("--nonverbose")
                           .action(Arguments.storeTrue())
                           .setDefault(false)
-                          .help("create a minimalistic version of the conky");
+                          .help("create a minimalistic version of the conky, ie. the conky will print less text/information");
         optionalParameters.addArgument("--device")
                           .type(Arguments.caseInsensitiveEnumType(Device.class))
                           .setDefault(Device.DESKTOP)
-                          .help("target device to create conky for, default is DESKTOP");
+                          .help("target device to create the conky for, default is DESKTOP\nthis setting drives the available hardware");
         optionalParameters.addArgument("--dark")
                           .action(Arguments.storeTrue())
                           .setDefault(false)

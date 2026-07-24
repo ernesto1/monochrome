@@ -13,7 +13,7 @@ conky.config = {
   gap_y = 0,
 
   -- window settings
-  minimum_width = 267,
+    minimum_width = 267,
   minimum_height = 1509,
   own_window = true,
   own_window_type = 'desktop',    -- values: desktop (background), panel (bar)
@@ -188,10 +188,10 @@ ${voffset 9}${offset 38}${color1}kernel ${color}${kernel}
 # ::: device temperature
 ${image ~/conky/monochrome/images/compact/burgundy-table-fields.png -p 35,1215}\
 ${voffset 6}${offset 38}${color1}device${alignr 38}temperature${voffset 5}
-${if_updatenr 1}${image ~/conky/monochrome/images/compact/burgundy-thermometer1.png -p 147,1265}${endif}\
-${if_updatenr 2}${image ~/conky/monochrome/images/compact/burgundy-thermometer2.png -p 147,1265}${endif}\
-${if_updatenr 3}${image ~/conky/monochrome/images/compact/burgundy-thermometer3.png -p 147,1265}${endif}\
-${if_updatenr 4}${image ~/conky/monochrome/images/compact/burgundy-thermometer2.png -p 147,1265}${endif}\
+${if_updatenr 1}${image ~/conky/monochrome/images/compact/burgundy-thermometer1.png -p 157,1265}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/compact/burgundy-thermometer2.png -p 157,1265}${endif}\
+${if_updatenr 3}${image ~/conky/monochrome/images/compact/burgundy-thermometer3.png -p 157,1265}${endif}\
+${if_updatenr 4}${image ~/conky/monochrome/images/compact/burgundy-thermometer2.png -p 157,1265}${endif}\
 ${voffset 3}${offset 38}${color}cpu${alignr 32}${template1 atk0110 temp 1 90}°C
 ${voffset 3}${offset 38}${color}cpu core 1${alignr 32}${template1 coretemp temp 2 93}°C
 ${voffset 3}${offset 38}${color}cpu core 2${alignr 32}${template1 coretemp temp 3 93}°C
@@ -201,16 +201,16 @@ ${voffset 3}${offset 38}${color}AMD Radeon HD7570${alignr 32}${template1 radeon 
 ${voffset 3}${offset 38}${color}samsung SSD HD${alignr 32}${template1 0 temp 1 42}°C
 ${voffset 3}${offset 38}${color}seagate HD${alignr 32}${template1 1 temp 1 42}°C
 ${voffset 3}${offset 38}${color}seagate HD${alignr 32}${template1 2 temp 1 42}°C
+# ::: fans
 ${image ~/conky/monochrome/images/compact/burgundy-table-fields.png -p 35,1386}\
 ${voffset 9}${offset 38}${color1}fan${alignr 38}revolutions${voffset 5}
 ${image ~/conky/monochrome/images/compact/burgundy-sidebar-bottom.png -p 0,1457}\
-${if_updatenr 1}${image ~/conky/monochrome/images/compact/burgundy-fan1.png -p 96,1408}${endif}\
-${if_updatenr 2}${image ~/conky/monochrome/images/compact/burgundy-fan2.png -p 96,1408}${endif}\
-${if_updatenr 3}${image ~/conky/monochrome/images/compact/burgundy-fan1.png -p 96,1408}${endif}\
-${if_updatenr 4}${image ~/conky/monochrome/images/compact/burgundy-fan2.png -p 96,1408}${endif}\
+${if_updatenr 1}${image ~/conky/monochrome/images/compact/burgundy-fan1.png -p 104,1408}${endif}\
+${if_updatenr 2}${image ~/conky/monochrome/images/compact/burgundy-fan2.png -p 104,1408}${endif}\
+${if_updatenr 3}${image ~/conky/monochrome/images/compact/burgundy-fan1.png -p 104,1408}${endif}\
+${if_updatenr 4}${image ~/conky/monochrome/images/compact/burgundy-fan2.png -p 104,1408}${endif}\
 ${voffset 3}${offset 38}${color}chasis front intake${alignr 38}${template1 atk0110 fan 3 2300} rpm
 ${voffset 3}${offset 38}${color}cpu fan${alignr 38}${template1 atk0110 fan 1 2300} rpm
 ${voffset 3}${offset 38}${color}chasis top exhaust${alignr 38}${template1 atk0110 fan 2 2300} rpm
 ${voffset 3}${offset 38}${color}chasis back exhaust${alignr 38}${template1 atk0110 fan 4 2300} rpm
-${voffset 6}\
 ]]

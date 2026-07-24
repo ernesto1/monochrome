@@ -10,14 +10,11 @@ conky.config = {
   -- window alignment
   alignment = 'middle_left',    -- top|middle|bottom_left|middle|right
   gap_x = 0,                    -- same as passing -x at command line
-  gap_y = [=isVerbose?then(0,-10)],
+  gap_y = 0,
 
   -- window settings
   <#assign width = 267,                           <#-- conky adds 1px, width is 268 -->
-           height = isVerbose?then(1221,1500),
-           processes     = isVerbose?then(6,4),   <#-- number of top processes to display -->
-           optionalDisks = isVerbose?then(0,1),   <#-- number of hard disks that can be ommitted to save height -->
-           height        = height+(processes*16*3)-optionalDisks*103>
+           height = isPortrait?then(1891,1509)>
   minimum_width = [=width],
   minimum_height = [=height?c],
   own_window = true,
@@ -79,7 +76,8 @@ ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-graph.png -p [=l
 ${voffset [=tso+2]}${offset [=lso+45]}${cpugraph cpu0 35,151 [=colors.writeGraph]}
 ${voffset -2}${offset [=lso+iborder]}${color1}load${goto [=lso+iborder+6 * 6]}${color}${loadavg}${alignr [=rso+iborder]}${color}${cpu cpu0}%
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png -p [=lso+3],[=y]}\
-<#assign y += 18>
+<#assign y += 18
+         processes = 6> <#-- number of top processes to display -->
 ${voffset 6}${color1}${offset [=lso+iborder]}process${alignr [=rso+iborder]}cpu    mem${voffset 5}
 <#list 1..processes as x>
 ${voffset 3}${color}${offset [=lso+iborder]}${top name [=x]}${alignr [=rso+iborder]}${top cpu [=x]}%${top mem [=x]}%
@@ -129,7 +127,6 @@ ${voffset 3}${offset [=lso+iborder+2]}connection
 ${voffset 73}
 ${endif}\
 # -------------- disks
-<#assign hardDisks = isVerbose?then(hardDisks, hardDisks?filter(d -> d.required!true))>
 <#list hardDisks as disk>
 # :::: [=disk.device]
 <#assign ySection = y>
@@ -188,10 +185,13 @@ ${voffset 3}${offset [=lso+iborder]}${color}[=device.name]${alignr [=rso]}${temp
 </#if>
 </#list>
 <#assign y += 90+31>
+# ::: fans
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-table-fields.png -p [=lso+3],[=y?c]}\
 <#assign y += 18>
 ${voffset 9}${offset [=lso+iborder]}${color1}fan${alignr [=rso+iborder]}revolutions${voffset 5}
-<#if isVerbose>${image ~/conky/monochrome/images/compact/[=image.primaryColor]-sidebar-bottom.png -p 0,[=(y+53)?c]}\</#if>
+<#if !isPortrait>
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-sidebar-bottom.png -p 0,[=(y+53)?c]}\
+</#if>
 ${if_updatenr 1}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-fan1.png -p [=lso+((204-60)/2)?round],[=(y+4)?c]}${endif}\
 ${if_updatenr 2}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-fan2.png -p [=lso+((204-60)/2)?round],[=(y+4)?c]}${endif}\
 ${if_updatenr 3}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-fan1.png -p [=lso+((204-60)/2)?round],[=(y+4)?c]}${endif}\
@@ -200,25 +200,26 @@ ${if_updatenr 4}${image ~/conky/monochrome/images/compact/[=image.primaryColor]-
 <#list fans as fan>
 ${voffset 3}${offset [=lso+iborder]}${color}[=fan.name]${alignr [=rso+iborder]}${template1 [=fan.module] fan [=fan.number] [=threshold.fanSpeed?c]} rpm
 </#list>
-${voffset 6}\
-<#if !isVerbose>
+<#if isPortrait>
 # -------------- now playing
 <#assign y += 13>
+${if_existing /tmp/conky/musicplayer.status off}\
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-album-cover.png -p [=((width-60)/2)?round],[=(y+70)?c]}\
+${voffset [=70+60+35]}${alignc}${color1}now playing
+${voffset 3}${alignc}${color}no music player running
+${else}\
 ${image ~/conky/monochrome/images/compact/[=image.primaryColor]-disk.png -p [=lso+5],[=y?c]}\
 <#assign y += 36>
-${if_existing /tmp/conky/musicplayer.status off}\
-${voffset 15}${goto [=lso+iborder+7*6]}${color1}now playing
-${voffset 3}${goto [=lso+iborder+7*6]}${color}no music player running${voffset 6}
-${else}\
 ${voffset 15}${goto [=lso+iborder+7*6]}${color1}${cat /tmp/conky/musicplayer.name}
-${voffset 3}${goto [=lso+iborder+7*6]}${color}${cat /tmp/conky/musicplayer.playbackStatus}${voffset 6}
+${voffset 3}${goto [=lso+iborder+7*6]}${color}${cat /tmp/conky/musicplayer.playbackStatus}
+${image ~/conky/monochrome/images/compact/[=image.primaryColor]-album-cover.png -p [=((width-60)/2)?round],[=(y+((204-60)/2)?round)?c]}\
 <#assign y += 6,
          albumArtFile = "/tmp/conky/musicplayer.track.art">
 ${if_existing [=albumArtFile]}\
 ${image [=albumArtFile] -p [=lso+iborder],[=y?c] -s [=width-lso-rso-iborder*2]x[=width-lso-rso-iborder*2] -n}\
 <#assign y += width-lso-rso-iborder*2>
-${voffset [=width-lso-rso-6]}\
 ${endif}\
+${voffset [=width-lso-rso]}\
 ${voffset 3}${offset [=lso+iborder]}${color1}title${goto [=lso+48]}${color}${scroll wait 23 4 1 ${cat /tmp/conky/musicplayer.track.title}}
 ${voffset 3}${offset [=lso+iborder]}${color1}album${goto [=lso+48]}${color}${scroll wait 23 4 1 ${cat /tmp/conky/musicplayer.track.album}}
 ${voffset 3}${offset [=lso+iborder]}${color1}artist${goto [=lso+48]}${color}${scroll wait 23 4 1 ${cat /tmp/conky/musicplayer.track.artist}}
