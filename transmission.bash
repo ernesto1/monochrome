@@ -113,8 +113,9 @@ while [ true ]; do
   #   - UTF characters replaced with a dot, the default conky font only supports ascii
   #     japanese characters would yield multiple giberish characters
   #     utf characters get replaced with 3 dots, then the 3 dots get replaced with a single dot
+  #   - '$' replaced with S, '$' its replaced with '${}' characters by the lua parse function
   grep -E '(Seeding|Downloading|Uploading|Up & Down)' ${torrentsRaw} \
-    | LANG=C sed -e 's/  \+/:/g' -e 's/#//g' -e 's/[\x80-\xFF]/./g' -e 's/\.\.\././g' \
+    | LANG=C sed -e 's/  \+/:/g' -e 's/#//g' -e 's/[\x80-\xFF]/./g' -e 's/\.\.\././g' -e 's/\$/S/g' \
     | cut -d ':' -f 3,6,7,8,9,10 \
     | sort -t ':' -k 6 > ${torrents}.$$
     
