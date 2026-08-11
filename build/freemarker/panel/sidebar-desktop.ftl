@@ -1,4 +1,5 @@
 <#if device == "desktop">
+<@outputFileDirective filename="sidebar">
 --[[
 this conky requires the 'system.bash' script running in the background,
 output files from this script are read from /tmp/conky
@@ -225,4 +226,5 @@ ${voffset 3}${offset [=iborder]}${color1}artist${goto 48}${color}${scroll wait 2
 ${voffset 3}${offset [=iborder]}${color1}genre${goto 48}${color}${cat /tmp/conky/musicplayer.track.genre}
 ${endif}\
 ]]
+</@outputFileDirective>
 </#if>
