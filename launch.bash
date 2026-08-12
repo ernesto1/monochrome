@@ -191,12 +191,11 @@ do
   if [[ ${override} ]]; then
     IFS=: layoutOverride=(${override})      # create an array out of the string in order to have it word split by bash
     # construct the position parameters for conky, ie. -x 10 -y 50 -a top_right
-    alignment="${layoutOverride[3]}"  # optional field, may not exist
-    layoutOverride=(-x "${layoutOverride[1]}" -y "${layoutOverride[2]}")
+    [[ ${layoutOverride[1]} != '~' ]] && arguments+=(-x "${layoutOverride[1]}")
+    [[ ${layoutOverride[2]} != '~' ]] && arguments+=(-y "${layoutOverride[2]}")
     # if alignment is provided, add the -a flag
-    [[ ${alignment} ]] && layoutOverride+=(-a "${alignment}")
-    echo "  applying the position override: ${layoutOverride[@]}"
-    arguments=(${layoutOverride[@]})
+    [[ ${layoutOverride[3]} ]] && arguments+=(-a "${layoutOverride[3]}")
+    echo "  applying the position override: ${arguments[@]}"
   fi
 
   # 3. monitor/screen override
